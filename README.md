@@ -17,7 +17,9 @@ DTL/NSL Helper scripts page:
 ## INSTALLATION
 
 ### Manual
-Assuming you already have working helper scripts installed
+Assuming you already have working helper scripts installed.
+
+Note: `current_helpers_install_path` is the parent path, not the path of helper/ subfolder.
 ``
 mv flexible.helpers /current_helpers_install_path/
 cd /current_helpers_install_path/
