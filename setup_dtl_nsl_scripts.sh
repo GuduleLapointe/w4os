@@ -1,10 +1,34 @@
 #!/bin/sh
 
-INSTALLPATH=$(dirname $(realpath "$0"))
 KEEPFILES="config/config.php"
+
+yesno() {
+    default=n
+    choice="y/N"
+    [ "$1" = "y" ] && default=y && choice="Y/n" && shift
+    [ "$@" ] && message="$@" || message="Answer"
+    message="$message ($choice) "
+    read -p "$message" answer
+    [ "$answer" = "" ] && answer=$default
+    answer=$(echo "$answer" | tr "[:upper:]" "[:lower:]")
+    [ "$answer" = "y" ] && return 0
+    [ "$answer" = "yes" ] && return 0
+    return 1
+}
+
+INSTALLPATH=$(dirname $(realpath "$0"))
+PGM=$(basename $0)
+TMP=/tmp/$PGM.$$
+trap 'rm -f $TMP $TMP.*' EXIT
 
 cd "$INSTALLPATH" || exit 1
 echo "installing in $INSTALLPATH"
+echo
+echo "Download DTL/NSL helper scripts?"
+echo "If there is already a version of the scripts, it will be replaced"
+echo "Your config files will be preserved."
+echo "It is mandatory if you have no scripts yet"
+yesno "Download DTL/NSL helper scripts?" || exit 0
 
 mkdir -p tmp || exit 1
 
