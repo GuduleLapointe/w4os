@@ -18,4 +18,4 @@ DTL/NSL Helper scripts page:
 - run `./setup_dtl_nsl_scripts.sh` to install, 
 - then edit config/config.php to add your grid specific settings
 
-(if you run again the setup script, your config.php file will be preserved)
+(if you run the setup script again, your config.php file will be preserved)
