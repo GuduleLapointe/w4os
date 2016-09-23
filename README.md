@@ -21,7 +21,7 @@ INSTALLATION
 
 - `git clone https://gitlab.magiiic.com/GuduleLapointe/hg_helper_scripts.git`
 - Chose one of the config methods:
-  - *Easiest*: `mv hg_helpers_scripts /var/www/html/` (or whereever your web root directory is)
+  - *Easiest*: `mv hg_helpers_scripts /var/www/html/` (or whatever your web root directory is)
   - *Safests*: recommanded): add this line in your apache config:
   `Alias /helper /opt/opensim/lib/hg_helper_scripts/helper`
   (replace path with your hg_helper_scripts directory location, keep "/helper" subfolder even if it does not exiqst for now)
