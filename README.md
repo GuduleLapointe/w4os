@@ -12,3 +12,8 @@ DTL/NSL Project:
   http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer
 DTL/NSL Helper scripts page:
   http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer%2FHelper%20Script
+
+- run `./setup_dtl_nsl_scripts.sh` to install, 
+- then edit config/config.php to add your grid specific settings
+
+(if you run again the setup script, your config.php file will be preserved)
