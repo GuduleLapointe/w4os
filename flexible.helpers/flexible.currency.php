@@ -53,7 +53,7 @@
 
 require_once('../include/env_interface.php');
 require_once('./helpers.php');
-if(file_exists('../config/gloebit.config.php') include_once('../config/gloebit.php');
+if(file_exists('../config/gloebit.config.php')) include_once('../config/gloebit.config.php');
 
 #
 # The XMLRPC server object
