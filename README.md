@@ -23,16 +23,18 @@ DTL/NSL Helper scripts page:
 ### Manual
 Assuming you already have working helper scripts installed
 
-`
+``
 mv /your/install/path/helper/currency.php /your/install/path/helper/currency.php.backup
 cp flexible.helpers/flexible.currency.php /your/install/path//currency.php
-`
-The script should be compatible with your installations.
+``
+The new currency.php script should be compatible with your installations.
+New functionalties are only enabled when specific config files are present.
 
 To enable Gloebit currency:
 ``
-flexible.helpers/gloebit.config.php.example /your/install/path/config/gloebit.config.php
+cp flexible.helpers/gloebit.config.php.example /your/install/path/config/gloebit.config.php
 ``
+Check gloebit.config.php to fit your needs, but it should work out of the box.
 
 ### Automatic
 Assuming you don't have working helper scripts or want to replace them. 
