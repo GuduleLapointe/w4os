@@ -1,7 +1,5 @@
 #!/bin/sh
 
-KEEPFILES="config/config.php"
-
 yesno() {
     default=n
     choice="y/N"
@@ -31,8 +29,8 @@ echo "It is mandatory if you have no scripts yet"
 yesno "Download DTL/NSL helper scripts?" || exit 0
 
 mkdir -p tmp || exit 1
-
 echo "saving current customised files"
+KEEPFILES=config/*.php
 for file in $KEEPFILES
 do
   [ -f $file ] || continue
@@ -52,6 +50,9 @@ archive=tmp/$(basename "$archive_url")
 echo "Extracting $archive"
 tar xvfz $archive --strip 1 || exit 1
 
+yesno "Enable Gloebit currency? " \
+  && cp flexible.helpers/gloebit.config.php.example config/gloebit.config.php
+
 echo "restoring local config files"
 for file in $KEEPFILES
 do
@@ -60,3 +61,12 @@ do
   mv $file $file.dist
   mv $file.local $file
 done
+
+config=config/config.php
+
+grep -q  "define('WEBSITE_LOGO_URL'," $config \
+  || echo "define('WEBSITE_LOGO_URL', '/helper/images/login_screens/logo.png');" >> $TMP.config
+grep -q  "define('CURRENCY_MODULE'," $config \
+  || echo "define('CURRENCY_MODULE', 'Gloebit');" >> $TMP.config
+
+cat $TMP.config
