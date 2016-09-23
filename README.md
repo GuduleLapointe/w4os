@@ -1,5 +1,4 @@
-HG helper scripts
------------------
+# Flexible helper scripts
 
 This is an addition to NSL helpers scripts collection to allow better integration in
 hypergrid environment.
@@ -16,10 +15,26 @@ DTL/NSL Helper scripts page:
   http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer%2FHelper%20Script
 
 
-INSTALLATION
-------------
+## INSTALLATION
 
-- `git clone https://gitlab.magiiic.com/GuduleLapointe/hg_helper_scripts.git`
+
+`git clone https://gitlab.magiiic.com/GuduleLapointe/hg_helper_scripts.git`
+
+### Manual
+Assuming you already have working helper scripts installed
+
+``` mv /your/install/path/helper/currency.php /your/install/path/helper/currency.php.backup
+cp flexible.helpers/flexible.currency.php /your/install/path//currency.php
+```
+The script should be compatible with your installations.
+
+To enable Gloebit currency:
+``` flexible.helpers/gloebit.config.php.example /your/install/path/config/gloebit.config.php
+```
+
+### Automatic
+Assuming you don't have working helper scripts or want to replace them. 
+
 - Chose one of the config methods:
   - *Easiest*: `mv hg_helpers_scripts /var/www/html/` (or whatever your web root directory is)
   - *Safests*: recommanded): add this line in your apache config:
