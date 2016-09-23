@@ -50,6 +50,9 @@ archive=tmp/$(basename "$archive_url")
 echo "Extracting $archive"
 tar xvfz $archive --strip 1 || exit 1
 
+echo "Replacing core currency script by flexible one"
+ln -frs flexible.helpers/flexible.currency.php helper/currency.php
+
 yesno "Enable Gloebit currency? " \
   && cp flexible.helpers/gloebit.config.php.example config/gloebit.config.php
 
