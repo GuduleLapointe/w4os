@@ -1,7 +1,7 @@
 HG helper scripts
 -----------------
 
-This is a modification of NSL helpers scripts to allow better integration in
+This is an addition to NSL helpers scripts collection to allow better integration in
 hypergrid environment.
 
 Developed for Speculoos.world grid, it should be useable as is by other grids
@@ -15,7 +15,18 @@ DTL/NSL Project:
 DTL/NSL Helper scripts page:
   http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer%2FHelper%20Script
 
+
+INSTALLATION
+------------
+
+- `git clone https://gitlab.magiiic.com/GuduleLapointe/hg_helper_scripts.git`
+- Chose one of the config methods:
+  - Easiest: `mv hg_helpers_scripts /var/www/html/` (or whereever your web root directory is)
+  - Safest: recommanded): add this line in your apache config:
+  `Alias /helper /opt/opensim/lib/hg_helper_scripts/helper`
+  (replace path with your hg_helper_scripts directory location, keep "/helper" subfolder even if it does not exiqst for now)
+- cd to the new location
 - run `./setup_dtl_nsl_scripts.sh` to install, 
-- then edit config/config.php to add your grid specific settings
+- edit config/*.php to suit your grid specific settings
 
 (if you run the setup script again, your config.php file will be preserved)
