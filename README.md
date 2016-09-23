@@ -8,8 +8,10 @@ Developed for Speculoos.world grid, it should be useable as is by other grids
 (with config changes of course).
 
 Based on Network System Laboratory scripts version 0.8.1, part of DTL/NSL project
+
 DTL/NSL Project:
   http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer
+
 DTL/NSL Helper scripts page:
   http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer%2FHelper%20Script
 
