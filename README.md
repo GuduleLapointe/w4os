@@ -14,14 +14,15 @@ DTL/NSL Project:
 DTL/NSL Helper scripts page:
   http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer%2FHelper%20Script
 
-
 ## INSTALLATION
 
 ### Manual
 Assuming you already have working helper scripts installed
 ``
-mv /your/install/path/helper/currency.php /your/install/path/helper/currency.php.backup
-cp flexible.helpers/flexible.currency.php /your/install/path//currency.php
+mv flexible.helpers /current_helpers_install_path/
+cd /current_helpers_install_path/
+mv helper/currency.php  helper/currency.php.saved
+ln -frs flexible.helpers/flexible.currency.php helper/currency.php
 ``
 The new currency.php script should be compatible with your installations.
 
