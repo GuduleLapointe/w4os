@@ -4,3 +4,12 @@
 .#*
 ._*
 tmp/
+config/
+flotsam_XmlRpcGroup/
+helper/
+images/
+include/
+jbxl/
+opensim.helper/
+opensim.phplib/
+rm_symblink
