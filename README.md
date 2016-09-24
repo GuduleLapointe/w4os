@@ -25,7 +25,6 @@ Assuming you already have working helper scripts installed. Note: `current_helpe
 - `ln -frs flexible.helpers/flexible.currency.php helper/currency.php`
 
 The new currency.php script should be compatible with your installations.
-
 New functionalties are only enabled when specific config files are present.
 
 To enable Gloebit currency:
