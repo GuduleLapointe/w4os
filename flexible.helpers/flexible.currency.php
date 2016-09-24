@@ -49,11 +49,20 @@
 ########################################################################
 #
 # Modified by Fumi.Iseki for XoopenSim/Modlos
-# Modified by Olivier van Helden to include Gloebit (optional)
+# Modified by Olivier van Helden for modular optional currencies, including Gloebit
 
 require_once('../include/env_interface.php');
 require_once('./helpers.php');
-if(file_exists('../config/gloebit.config.php')) include_once('../config/gloebit.config.php');
+if(file_exists('../config/gloebit.config.php')) {
+  $server_info = opensim_get_server_info($agentid);
+  $serverip  = $server_info["serverIP"];
+  $httpport  = $server_info["serverHttpPort"];
+  $informurl="http://${serverip}:${httpport}/gloebit/buy_complete?agentId=${agentid}";
+
+  $result=readfile($informurl);
+  if($result) include_once('../config/gloebit.config.php');
+}
+  
 
 #
 # The XMLRPC server object
