@@ -49,28 +49,66 @@
 ########################################################################
 #
 # Modified by Fumi.Iseki for XoopenSim/Modlos
+
+########################################################################
+#
 # Modified by Olivier van Helden for modular optional currencies, including Gloebit
+#
+# To add a currency module, 
+#    add "if()" section in  load_money_module to load the preferences
+#       config file must be saved in as
+#       ../flexible.helpers/yourcurrency.config.php.example to avoid 
+#       overwriting it during updates
+#    add "case ..." sections in get_currency_quote() and buy_currency()
+#       to do specific function
+# Do not remove other sections, to maintain the script as versatile as possible
+#
+# Please submit your changes for inclusion to
+#    https://github.com/GuduleLapointe/flexible_helper_scripts
 
 require_once('../include/env_interface.php');
 require_once('./helpers.php');
-if(file_exists('../config/gloebit.config.php')) {
-  $server_info = opensim_get_server_info($agentid);
-  $serverip  = $server_info["serverIP"];
-  $httpport  = $server_info["serverHttpPort"];
-  $informurl="http://${serverip}:${httpport}/gloebit/buy_complete?agentId=${agentid}";
 
-  $result=readfile($informurl);
-  if($result) include_once('../config/gloebit.config.php');
+#
+# Money module arbitrage
+# Check the current region money module and try to load the good one
+
+function load_money_module($request_xml)
+{
+  global $conversion_table;
+
+  $params=xmlrpc_decode($request_xml);
+  $agentid=$params[0]["agentId"];
+
+  if(file_exists('../config/gloebit.config.php')) {
+    $server_info = opensim_get_server_info($agentid);
+    $serverip  = $server_info["serverIP"];
+    $httpport  = $server_info["serverHttpPort"];
+    $informurl="http://${serverip}:${httpport}/gloebit/buy_complete?agentId=${agentid}";
+    $headers = get_headers($informurl);
+    $code = $headers[0];
+
+    if($code != "HTTP/1.0 200 OK") return;
+    
+    include_once('../config/gloebit.config.php');
+    return;
+  }
+/*
+  if(file_exists('../config/yourcurrency.config.php')) {
+    
+    include_once('../config/yourcurrency.config.php');
+    // always return, we can configure only one money module
+    return;
+  }
+*/
 }
-  
+
 
 #
 # The XMLRPC server object
 #
 
 $xmlrpc_server = xmlrpc_server_create();
-
-
 
 #
 # Viewer retrieves currency buy quote
@@ -87,6 +125,8 @@ function get_currency_quote($method_name, $params, $app_data)
 	$sessionid = $req['secureSessionId'];
 	$amount	   = $req['currencyBuy'];
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
+
+//  check_money_module($agentid);
 
 	$ret = opensim_check_secure_session($agentid, null, $sessionid);
 
@@ -112,6 +152,11 @@ function get_currency_quote($method_name, $params, $app_data)
           }
         }
         break;
+/*
+      case "YourCurrency":
+        // some code
+        break;
+*/
       default:
     		$cost = convert_to_real($amount);
        	$realamount=$amount;
@@ -187,6 +232,12 @@ function buy_currency($method_name, $params, $app_data)
 										'errorURI'	  => "".$url.""));
       break;
       
+/*
+      case "YourCurrency":
+        // some code
+        break;
+*/
+
     default:
     	$ret  = false;
     	$cost = convert_to_real($amount);
@@ -381,6 +432,8 @@ function claimUser_func($method_name, $params, $app_data)
 
 $request_xml = $HTTP_RAW_POST_DATA;
 //error_log("currency.php: ".$request_xml);
+
+load_money_module($request_xml);
 
 xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
 xmlrpc_server_destroy($xmlrpc_server);
