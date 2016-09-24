@@ -72,4 +72,4 @@ grep -q  "define('WEBSITE_LOGO_URL'," $config \
 grep -q  "define('CURRENCY_MODULE'," $config \
   || echo "define('CURRENCY_MODULE', 'Gloebit');" >> $TMP.config
 
-cat $TMP.config
+#cat $TMP.config
