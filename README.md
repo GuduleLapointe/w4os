@@ -29,7 +29,7 @@ New functionalties are only enabled when specific config files are present.
 
 To enable Gloebit currency:
 
-- `cp flexible.helpers/gloebit.config.php.example /your/install/path/config/gloebit.config.php`
+- `cp flexible.helpers/gloebit.config.php.example /current_helpers_install_path/config/gloebit.config.php`
 
 Check gloebit.config.php to fit your needs, but it should work out of the box.
 
