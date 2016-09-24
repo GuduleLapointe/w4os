@@ -16,19 +16,13 @@ yesno() {
 
 INSTALLPATH=$(dirname $(realpath "$0"))
 PGM=$(basename $0)
-TMP=/tmp/$PGM.$$
+mkdir -p tmp || exit 1
+TMP=$PWD/tmp/$PGM.$$
 trap 'rm -f $TMP $TMP.*' EXIT
 
 cd "$INSTALLPATH" || exit 1
 echo "installing in $INSTALLPATH"
-echo
-echo "Download DTL/NSL helper scripts?"
-echo "If there is already a version of the scripts, it will be replaced"
-echo "Your config files will be preserved."
-echo "It is mandatory if you have no scripts yet"
-yesno "Download DTL/NSL helper scripts?" || exit 0
 
-mkdir -p tmp || exit 1
 echo "saving current customised files"
 KEEPFILES=config/*.php
 for file in $KEEPFILES
@@ -38,25 +32,38 @@ do
   rm -f $file.local
   cp -L $file $file.local || exit 1
 done
+echo
 
-echo "Downloading DTL/NSL scripts archive"
-archive_url=http://www.nsl.tuis.ac.jp/DownLoad/SoftWare/OpenSim/helper_scripts-0.8.1.tar.gz
-archive=tmp/$(basename "$archive_url")
-
-[ -f $archive ] \
-  && echo "archive already downloaded in $archive, remove it before launching install if you want to replace it" \
-  || wget -P tmp/ $archive_url || exit 1
-
-echo "Extracting $archive"
-tar xvfz $archive --strip 1 || exit 1
+echo "(Re)Install DTL/NSL helper scripts"
+echo "   If there is already a version of the scripts, it will be replaced"
+echo "   Your config files will be preserved."
+echo "   It is mandatory if you have no scripts yet"
+if yesno "Download DTL/NSL helper scripts?"
+then
+  echo "Downloading DTL/NSL scripts archive"
+  archive_url=http://www.nsl.tuis.ac.jp/DownLoad/SoftWare/OpenSim/helper_scripts-0.8.1.tar.gz
+  archive=tmp/$(basename "$archive_url")
+  
+  [ -f $archive ] \
+    && echo "archive already downloaded in $archive, remove it before launching install if you want to replace it" \
+    || wget -P tmp/ $archive_url || exit 1
+  
+  echo "Extracting $archive"
+  tar xvfz $archive --strip 1 || exit 1
+fi
+echo
 
 echo "Replacing core currency script by flexible one"
 ln -frs flexible.helpers/flexible.currency.php helper/currency.php
+echo
 
-yesno "Enable Gloebit currency? " \
-  && cp flexible.helpers/gloebit.config.php.example config/gloebit.config.php
+if yesno "Enable Gloebit currency? "
+then
+  cp flexible.helpers/gloebit.config.php.example config/gloebit.config.php
+fi
+echo
 
-echo "restoring local config files"
+echo "Restoring local config files"
 for file in $KEEPFILES
 do
   [ -f $file.local ] || continue
