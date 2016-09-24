@@ -38,7 +38,7 @@ Assuming you don't have working helper scripts or want to replace them.
 
 - Chose one of the config methods:
   - *Easiest*: `mv hg_helpers_scripts /var/www/html/` (or whatever your web root directory is)
-  - *Safest*: (recommended): add this line in your apache config:
+  - *Safest* (recommended): add this line in your apache config:
   `Alias /helper /opt/opensim/lib/flexible_helper_scripts/helper`
   (replace path with your flexible_helper_scripts directory location, keep "/helper" subfolder even if it does not exiqst for now)
 - cd to the new location
