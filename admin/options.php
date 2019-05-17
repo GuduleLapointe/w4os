@@ -32,7 +32,7 @@
 			</tr>
 			<tr valign="top">
 			  <th scope="row"><label for="opensim_db_pass">Password</label></th>
-			  <td><input type="text" class=regular-text id="opensim_db_pass" name="opensim_db_pass" value="<?php echo get_option('opensim_db_pass'); ?>" /></td>
+			  <td><input type="password" class=regular-text id="opensim_db_pass" name="opensim_db_pass" value="<?php echo get_option('opensim_db_pass'); ?>" /></td>
 			</tr>
 		</table>
 		<?php  submit_button(); ?>
