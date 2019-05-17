@@ -131,6 +131,14 @@ function opensim_register_options_page() {
 		plugin_dir_url(__FILE__) . 'images/opensimulator-logo-32x32.png', // icon url
 		2 // position
 	);
+	// add_submenu_page(
+	// 	'opensim',
+	// 	'OpenSimulator Settings', // page title
+	// 	'Settings', // menu title
+	// 	'manage_options', // capability
+	// 	'opensim_pother', // menu slug
+	// 	'opensim_options_other_page' // function
+	// );
 }
 add_action('admin_menu', 'opensim_register_options_page');
 
