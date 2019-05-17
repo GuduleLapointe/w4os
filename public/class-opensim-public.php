@@ -106,18 +106,18 @@ function opensim_shortcodes_init()
 	function opensim_gridinfo_shortcode($atts = [], $content = null)
 	{
 		// Gridinfo: http://robust.server:8002/get_grid_info
-		empty($atts['title']) ? $title="Grid info" : $title=$atts['title'];
-		if (!empty($content)) $content="<div>$content</div>";
+		isset($atts['title']) ? $title=$atts['title'] : $title="Grid info";
+		empty($content) ? : $content="<div>$content</div>";
 		$content="<h4>$title</h4>$content";
 		$content.="
 			<table>
 				<tr valign='top'>
 					<th scope='row'><label for='opensim_grid_name'>Grid name</label></th>
-					<td> ". get_option('opensim_grid_name') . "</td>
+					<td> ". get_option('opensim_grid_name') . "&nbsp;</td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row'><label for='opensim_login_uri'>Login URI</label></th>
-					<td> ". get_option('opensim_login_uri') . "</td>
+					<td> ". get_option('opensim_login_uri') . "&nbsp;</td>
 				</tr>
 			</table>
 		";
