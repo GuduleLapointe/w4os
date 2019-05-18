@@ -118,29 +118,30 @@ function opensim_register_settings() {
 }
 add_action( 'admin_init', 'opensim_register_settings' );
 
-function opensim_register_options_page() {
+function opensim_register_options_pages() {
 	// add_options_page('OpenSim settings', 'OpenSim', 'manage_options', 'opensim', 'opensim_options_page');
 	add_menu_page(
-		'OpenSim', // page title
+		'OpenSimulator', // page title
 		'OpenSimulator', // menu title
 		'manage_options', // capability
 		'opensim', // slug
-		'opensim_options_page', // callable function
+		'opensim_status_page', // callable function
 		// plugin_dir_path(__FILE__) . 'options.php', // slug
 		// null,	// callable function
 		plugin_dir_url(__FILE__) . 'images/opensim-logo-24x14.png', // icon url
 		2 // position
 	);
-	// add_submenu_page(
-	// 	'opensim',
-	// 	'OpenSimulator Settings', // page title
-	// 	'Settings', // menu title
-	// 	'manage_options', // capability
-	// 	'opensim_pother', // menu slug
-	// 	'opensim_options_other_page' // function
-	// );
+	add_submenu_page('opensim', __('OpenSim Status'), __('Status'), 'manage_options', 'opensim', 'opensim_status_page');
+	add_submenu_page(
+		'opensim', // parent
+		__('OpenSim Settings'), // page title
+		__('Settings'), // menu title
+		'manage_options', // capability
+		'opensim_settings', // menu slug
+		'opensim_options_page' // function
+	);
 }
-add_action('admin_menu', 'opensim_register_options_page');
+add_action('admin_menu', 'opensim_register_options_pages');
 
 function opensim_options_page()
 {
@@ -148,4 +149,12 @@ function opensim_options_page()
 			return;
 	}
 	require(plugin_dir_path(__FILE__) . 'options.php');
+}
+
+function opensim_status_page()
+{
+	if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+	}
+	require(plugin_dir_path(__FILE__) . 'status.php');
 }
