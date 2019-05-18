@@ -216,36 +216,3 @@ class OpenSim {
 	}
 
 }
-
-$w4osdb = new WPDB(
-	get_option('opensim_db_user'),
-	get_option('opensim_db_pass'),
-	get_option('opensim_db_database'),
-	get_option('opensim_db_host')
-);
-$w4osdb -> show_errors();
-
-function opensim_grid_status()
-{
-	$url=get_option('opensim_login_uri');
-	$urlinfo=explode(":", $url);
-	$host=$urlinfo['0'];
-	$port=$urlinfo['1'];
-
-	$fp = @fsockopen($host, $port, $errno, $errstr, 1.0);
-	if (! $fp) return __("Server offline $errno $errstr");
-
-	$lines[]=__("Grid online");
-	// $db = mysqli_connect(
-	// 	get_option('opensim_db_host'),
-	// 	get_option('opensim_db_user'),
-	// 	get_option('opensim_db_pass'),
-	// 	get_option('opensim_db_database')
-	// );
-	$query="select count(*) from presence;";
-	$dbresult=$w4osdb->get_results($query);
-	return;
-	// $lines[]=$w4osdb->get_var("SELECT COUNT(*) FROM Presence");
-	$result=implode("<br>", $lines);
-	return $result;
-}
