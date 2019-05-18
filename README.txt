@@ -4,7 +4,7 @@ Donate link: http://speculoos.world/
 Tags: comments, spam
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 5.2
+Stable tag: 0.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,12 @@ OpenSim Wordpress plugin is an OpenSimulator web interface for WordPress.
 
 The goal is to allow user registration, grid basic info and monitoring and, in
 a perfect world, regions and simulators administration.
+
+= Current status =
+
+Code is a mess. Don't blame me. I want to do it the right way but I'm not used to
+WordPress plugins standards yet. I try to puth things on the right places
+while getting more familiar with it. Feel free to give advices.
 
 = Current features =
 
