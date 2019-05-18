@@ -216,3 +216,19 @@ class OpenSim {
 	}
 
 }
+
+$w4osdb = new WPDB(
+	get_option('opensim_db_user'),
+	get_option('opensim_db_pass'),
+	get_option('opensim_db_database'),
+	get_option('opensim_db_host')
+);
+
+function w4os_array2table($array) {
+	if(empty($array)) return;
+	while (list($key, $value) = each($array)) {
+		$result.="<tr><td class=gridvar>" . __($key) . "</td><td class=gridvalue>$value</td></tr>";
+	}
+	if($result) $result="<table>$result</table>";
+	return $result;
+}

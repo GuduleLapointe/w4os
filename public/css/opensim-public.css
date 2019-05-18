@@ -2,3 +2,9 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ td.gridvar {
+   padding-right: 20px;
+   font-size: 80%;
+   width: 30%;
+ }
