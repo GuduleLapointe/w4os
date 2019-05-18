@@ -258,7 +258,7 @@ function w4os_shortcodes_init()
 	{
 		global $w4osdb;
 		global $wp_locale;
-		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info");
+		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid status");
 		if(!empty($content)) $content="<div>$content</div>";
 
 		$content="<h4>$title</h4>$content";
