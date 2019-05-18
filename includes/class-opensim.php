@@ -258,7 +258,7 @@ function opensim_shortcodes_init()
 	{
 		global $w4osdb;
 		global $wp_locale;
-		empty($atts['title']) ? $title=__("Grid status") : $title=$atts['title'];
+		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info");
 		if(!empty($content)) $content="<div>$content</div>";
 
 		$content="<h4>$title</h4>$content";
