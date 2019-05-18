@@ -73,7 +73,7 @@ class OpenSim_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->opensim, plugin_dir_url( __FILE__ ) . 'css/opensim-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->opensim, plugin_dir_url( __FILE__ ) . 'css/w4os-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class OpenSim_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->opensim, plugin_dir_url( __FILE__ ) . 'js/opensim-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->opensim, plugin_dir_url( __FILE__ ) . 'js/w4os-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 }

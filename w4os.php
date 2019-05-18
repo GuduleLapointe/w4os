@@ -39,19 +39,19 @@ define( 'OPENSIM_VERSION', '0.1.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-opensim-activator.php
+ * This action is documented in includes/class-w4os-activator.php
  */
 function activate_opensim() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-opensim-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-w4os-activator.php';
 	OpenSim_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-opensim-deactivator.php
+ * This action is documented in includes/class-w4os-deactivator.php
  */
 function deactivate_opensim() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-opensim-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-w4os-deactivator.php';
 	OpenSim_Deactivator::deactivate();
 }
 
@@ -62,7 +62,7 @@ register_deactivation_hook( __FILE__, 'deactivate_opensim' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-opensim.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-w4os.php';
 
 /**
  * Begins execution of the plugin.

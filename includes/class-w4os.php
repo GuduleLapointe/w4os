@@ -103,24 +103,24 @@ class OpenSim {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-opensim-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-w4os-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-opensim-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-w4os-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-opensim-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-w4os-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-opensim-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-w4os-public.php';
 
 		$this->loader = new OpenSim_Loader();
 

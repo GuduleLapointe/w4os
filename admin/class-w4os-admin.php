@@ -73,7 +73,7 @@ class OpenSim_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->opensim, plugin_dir_url( __FILE__ ) . 'css/opensim-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->opensim, plugin_dir_url( __FILE__ ) . 'css/w4os-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -128,7 +128,7 @@ function w4os_register_options_pages() {
 		'w4os_status_page', // callable function
 		// plugin_dir_path(__FILE__) . 'options.php', // slug
 		// null,	// callable function
-		plugin_dir_url(__FILE__) . 'images/opensim-logo-24x14.png', // icon url
+		plugin_dir_url(__FILE__) . 'images/w4os-logo-24x14.png', // icon url
 		2 // position
 	);
 	add_submenu_page('opensim', __('OpenSim Status'), __('Status'), 'manage_options', 'opensim', 'w4os_status_page');
