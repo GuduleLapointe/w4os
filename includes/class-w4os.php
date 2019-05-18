@@ -44,9 +44,9 @@ class OpenSim {
 	 *
 	 * @since    0.1.0
 	 * @access   protected
-	 * @var      string    $opensim    The string used to uniquely identify this plugin.
+	 * @var      string    $w4os    The string used to uniquely identify this plugin.
 	 */
-	protected $opensim;
+	protected $w4os;
 
 	/**
 	 * The current version of the plugin.
@@ -72,7 +72,7 @@ class OpenSim {
 		} else {
 			$this->version = '0.1.0';
 		}
-		$this->opensim = 'opensim';
+		$this->w4os = 'w4os';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -152,7 +152,7 @@ class OpenSim {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new OpenSim_Admin( $this->get_opensim(), $this->get_version() );
+		$plugin_admin = new OpenSim_Admin( $this->get_w4os(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -168,7 +168,7 @@ class OpenSim {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new OpenSim_Public( $this->get_opensim(), $this->get_version() );
+		$plugin_public = new OpenSim_Public( $this->get_w4os(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -191,8 +191,8 @@ class OpenSim {
 	 * @since     0.1.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_opensim() {
-		return $this->opensim;
+	public function get_w4os() {
+		return $this->w4os;
 	}
 
 	/**
@@ -264,7 +264,7 @@ function w4os_shortcodes_init()
 		$content="<h4>$title</h4>$content";
 
 		$cached="in cache";
-		$status = wp_cache_get( 'gridstatus', 'opensim' );
+		$status = wp_cache_get( 'gridstatus', 'w4os' );
 		if (false === $status) {
 			$cached="uncached";
 			if($w4osdb -> check_connection())
@@ -307,7 +307,7 @@ function w4os_shortcodes_init()
 					FROM regions") . "km²", 2),
 				);
 			}
-			wp_cache_add( 'gridstatus', $status, 'opensim"');
+			wp_cache_add( 'gridstatus', $status, 'w4os');
 		}
 		$result=w4os_array2table($status) .  " ($cached)";
 

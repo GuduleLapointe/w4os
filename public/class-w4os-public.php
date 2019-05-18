@@ -27,9 +27,9 @@ class OpenSim_Public {
 	 *
 	 * @since    0.1.0
 	 * @access   private
-	 * @var      string    $opensim    The ID of this plugin.
+	 * @var      string    $w4os    The ID of this plugin.
 	 */
-	private $opensim;
+	private $w4os;
 
 	/**
 	 * The version of this plugin.
@@ -44,12 +44,12 @@ class OpenSim_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.1.0
-	 * @param      string    $opensim       The name of the plugin.
+	 * @param      string    $w4os       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $opensim, $version ) {
+	public function __construct( $w4os, $version ) {
 
-		$this->opensim = $opensim;
+		$this->w4os = $w4os;
 		$this->version = $version;
 
 	}
@@ -73,7 +73,7 @@ class OpenSim_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->opensim, plugin_dir_url( __FILE__ ) . 'css/w4os-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->w4os, plugin_dir_url( __FILE__ ) . 'css/w4os-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class OpenSim_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->opensim, plugin_dir_url( __FILE__ ) . 'js/w4os-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->w4os, plugin_dir_url( __FILE__ ) . 'js/w4os-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 }

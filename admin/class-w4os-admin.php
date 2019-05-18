@@ -27,9 +27,9 @@ class OpenSim_Admin {
 	 *
 	 * @since    0.1.0
 	 * @access   private
-	 * @var      string    $opensim    The ID of this plugin.
+	 * @var      string    $w4os    The ID of this plugin.
 	 */
-	private $opensim;
+	private $w4os;
 
 	/**
 	 * The version of this plugin.
@@ -44,12 +44,12 @@ class OpenSim_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.1.0
-	 * @param      string    $opensim       The name of this plugin.
+	 * @param      string    $w4os       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $opensim, $version ) {
+	public function __construct( $w4os, $version ) {
 
-		$this->opensim = $opensim;
+		$this->w4os = $w4os;
 		$this->version = $version;
 
 	}
@@ -73,7 +73,7 @@ class OpenSim_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->opensim, plugin_dir_url( __FILE__ ) . 'css/w4os-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->w4os, plugin_dir_url( __FILE__ ) . 'css/w4os-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class OpenSim_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->opensim, plugin_dir_url( __FILE__ ) . 'js/w4os-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->w4os, plugin_dir_url( __FILE__ ) . 'js/w4os-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -109,7 +109,7 @@ function w4os_register_settings() {
 	register_setting( 'w4os_options_group', 'w4os_login_uri', 'w4os_callback' );
 	add_option( 'w4os_db_host', 'localhost');
 	register_setting( 'w4os_options_group', 'w4os_db_host', 'w4os_callback' );
-	add_option( 'w4os_db_database', 'opensim');
+	add_option( 'w4os_db_database', 'w4os');
 	register_setting( 'w4os_options_group', 'w4os_db_database', 'w4os_callback' );
 	add_option( 'w4os_db_user', 'localhost');
 	register_setting( 'w4os_options_group', 'w4os_db_user', 'w4os_callback' );
@@ -119,21 +119,21 @@ function w4os_register_settings() {
 add_action( 'admin_init', 'w4os_register_settings' );
 
 function w4os_register_options_pages() {
-	// add_options_page('OpenSim settings', 'OpenSim', 'manage_options', 'opensim', 'w4os_options_page');
+	// add_options_page('OpenSim settings', 'w4os', 'manage_options', 'w4os', 'w4os_options_page');
 	add_menu_page(
 		'OpenSimulator', // page title
 		'OpenSimulator', // menu title
 		'manage_options', // capability
-		'opensim', // slug
+		'w4os', // slug
 		'w4os_status_page', // callable function
 		// plugin_dir_path(__FILE__) . 'options.php', // slug
 		// null,	// callable function
 		plugin_dir_url(__FILE__) . 'images/w4os-logo-24x14.png', // icon url
 		2 // position
 	);
-	add_submenu_page('opensim', __('OpenSim Status'), __('Status'), 'manage_options', 'opensim', 'w4os_status_page');
+	add_submenu_page('w4os', __('OpenSim Status'), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
 	add_submenu_page(
-		'opensim', // parent
+		'w4os', // parent
 		__('OpenSim Settings'), // page title
 		__('Settings'), // menu title
 		'manage_options', // capability

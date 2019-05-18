@@ -21,7 +21,7 @@
  * Author URI:        http://speculoos.world
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       opensim
+ * Text Domain:       w4os
  * Domain Path:       /languages
  */
 
@@ -41,7 +41,7 @@ define( 'OPENSIM_VERSION', '0.1.0' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-w4os-activator.php
  */
-function activate_opensim() {
+function activate_w4os() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-w4os-activator.php';
 	OpenSim_Activator::activate();
 }
@@ -50,13 +50,13 @@ function activate_opensim() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-w4os-deactivator.php
  */
-function deactivate_opensim() {
+function deactivate_w4os() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-w4os-deactivator.php';
 	OpenSim_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_opensim' );
-register_deactivation_hook( __FILE__, 'deactivate_opensim' );
+register_activation_hook( __FILE__, 'activate_w4os' );
+register_deactivation_hook( __FILE__, 'deactivate_w4os' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -73,10 +73,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-w4os.php';
  *
  * @since    0.1.0
  */
-function run_opensim() {
+function run_w4os() {
 
 	$plugin = new OpenSim();
 	$plugin->run();
 
 }
-run_opensim();
+run_w4os();
