@@ -128,7 +128,7 @@ function opensim_register_options_page() {
 		'opensim_options_page', // callable function
 		// plugin_dir_path(__FILE__) . 'options.php', // slug
 		// null,	// callable function
-		plugin_dir_url(__FILE__) . 'images/opensim-wordpress-logo-32x32.png', // icon url
+		plugin_dir_url(__FILE__) . 'images/opensim-logo-24x14.png', // icon url
 		2 // position
 	);
 	// add_submenu_page(
