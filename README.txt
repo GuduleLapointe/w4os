@@ -4,7 +4,7 @@ Donate link: http://speculoos.world/
 Tags: comments, spam
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 0.0.0
+Stable tag: 0.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,16 +58,16 @@ while getting more familiar with it. Feel free to give advices.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Visit OpenSim settings page and setup grid info and database connection
 4. Visit admin OpenSim status page to see status
-   
+
 = shortcodes =
 
 * [gridinfo] displays grid name and login URI
 * [gridstatus] displays number of users (current, active, local and HG) and regions
 
-Both accept a title parameter to overwrite the defaults "Grid info" 
+Both accept a title parameter to overwrite the defaults "Grid info"
 and "Grid status". If set to "" the title is not displayed.
 
-Example: 
+Example:
     [gridinfo title="Who's there"]
     [gridstatus title=""]
 
