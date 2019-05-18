@@ -106,17 +106,17 @@ function opensim_shortcodes_init()
 	function opensim_gridinfo_shortcode($atts = [], $content = null)
 	{
 		// Gridinfo: http://robust.server:8002/get_grid_info
-		isset($atts['title']) ? $title=$atts['title'] : $title="Grid info";
+		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info");
 		empty($content) ? : $content="<div>$content</div>";
 		$content="<h4>$title</h4>$content";
 		$content.="
 			<table>
 				<tr valign='top'>
-					<th scope='row'><label for='opensim_grid_name'>Grid name</label></th>
+					<th scope='row'><label for='opensim_grid_name'>" . __("Grid name") . "</label></th>
 					<td> ". get_option('opensim_grid_name') . "&nbsp;</td>
 				</tr>
 				<tr valign='top'>
-					<th scope='row'><label for='opensim_login_uri'>Login URI</label></th>
+					<th scope='row'><label for='opensim_login_uri'>" . __("Login URI") . "</label></th>
 					<td> ". get_option('opensim_login_uri') . "&nbsp;</td>
 				</tr>
 			</table>
@@ -128,13 +128,15 @@ function opensim_shortcodes_init()
 	function opensim_gridstatus_shortcode($atts = [], $content = null)
 	{
 		// not ready
-		return;
+		// return;
 		// [ ! empty($atts['title']) ] && $title=$atts['title'] ||  $title="Grid status";
-		empty($atts['title']) ? $title="Grid status" : $title=$atts['title'];
+		empty($atts['title']) ? $title=__("Grid status") : $title=$atts['title'];
 		if(!empty($content)) $content="<div>$content</div>";
 		$content="<h4>$title</h4>$content";
 
-		$content.="Nothing to say";
+		$status=opensim_grid_status();
+		if(empty($status)) $status=__("No result") ;
+		$content.=$status;
 		return $content;
 	}
 	add_shortcode('gridstatus', 'opensim_gridstatus_shortcode');
