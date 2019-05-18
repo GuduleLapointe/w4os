@@ -23,7 +23,7 @@ Code is a mess. Don't blame me. I want to do it the right way but I'm not used t
 WordPress plugins standards yet. I try to puth things on the right places
 while getting more familiar with it. Feel free to give advices.
 
-= Current features =
+= Features =
 
 * OpenSim settings: grid name, login uri and database connection settings
 * Grid info, as a shortcode and in admin pages
