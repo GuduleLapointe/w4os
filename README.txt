@@ -56,7 +56,20 @@ while getting more familiar with it. Feel free to give advices.
 
 1. Upload to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Visit OpenSim admin page or use shortcodes
+3. Visit OpenSim settings page and setup grid info and database connection
+4. Visit admin OpenSim status page to see status
+   
+= shortcodes =
+
+* [gridinfo] displays grid name and login URI
+* [gridstatus] displays number of users (current, active, local and HG) and regions
+
+Both accept a title parameter to overwrite the defaults "Grid info" 
+and "Grid status". If set to "" the title is not displayed.
+
+Example: 
+    [gridinfo title="Who's there"]
+    [gridstatus title=""]
 
 == Frequently Asked Questions ==
 
