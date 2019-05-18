@@ -263,10 +263,10 @@ function w4os_shortcodes_init()
 
 		$content="<h4>$title</h4>$content";
 
-		$cached="in cache";
+		// $cached="in cache";
 		$status = wp_cache_get( 'gridstatus', 'w4os' );
 		if (false === $status) {
-			$cached="uncached";
+			// $cached="uncached";
 			if($w4osdb -> check_connection())
 			{
 				$lastmonth=time() - 30*86400;
@@ -309,7 +309,7 @@ function w4os_shortcodes_init()
 			}
 			wp_cache_add( 'gridstatus', $status, 'w4os');
 		}
-		$result=w4os_array2table($status) .  " ($cached)";
+		$result=w4os_array2table($status);
 
 		if(empty($result)) $result=__("No result") ;
 		return $content . $result;
