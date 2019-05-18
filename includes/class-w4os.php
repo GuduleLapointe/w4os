@@ -67,8 +67,8 @@ class OpenSim {
 	 * @since    0.1.0
 	 */
 	public function __construct() {
-		if ( defined( 'OPENSIM_VERSION' ) ) {
-			$this->version = OPENSIM_VERSION;
+		if ( defined( 'W4OS_VERSION' ) ) {
+			$this->version = W4OS_VERSION;
 		} else {
 			$this->version = '0.1.0';
 		}
