@@ -29,20 +29,22 @@ a perfect world, regions and simulators administration.
 
 * *Use cache for grid info*
 * *Clean up code to properly use classes*
-* Use sim configuration file to fetch settings if accessible from the web server
+* Use sim/grid configuration file to fetch settings if on the same host
 * Users grid registration
 
 = middle term =
 
 * Integrate various helpers (profile, search, currency, map...)
+* User profile
 * Start / Stop regions
 * Create region from admin
-* option to use console connection instead of database
+* Option to use console connection instead of database
 
 = Long term =
 * Start / Stop / Backup own regions from user profile
 * Create own regions from user profile
 * Subscriptions
+* WooCommerce integration
 
 == Installation ==
 
