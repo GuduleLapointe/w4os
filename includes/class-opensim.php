@@ -224,12 +224,12 @@ $w4osdb = new WPDB(
 	get_option('opensim_db_host')
 );
 
-function w4os_array2table($array) {
+function w4os_array2table($array, $class="") {
 	if(empty($array)) return;
 	while (list($key, $value) = each($array)) {
 		$result.="<tr><td class=gridvar>" . __($key) . "</td><td class=gridvalue>$value</td></tr>";
 	}
-	if($result) $result="<table>$result</table>";
+	if($result) $result="<table class='$class'>$result</table>";
 	return $result;
 }
 
@@ -263,48 +263,54 @@ function opensim_shortcodes_init()
 
 		$content="<h4>$title</h4>$content";
 
-		if($w4osdb -> check_connection())
-		{
-			$lastmonth=time() - 30*86400;
+		$cached="in cache";
+		$status = wp_cache_get( 'gridstatus', 'opensim' );
+		if (false === $status) {
+			$cached="uncached";
+			if($w4osdb -> check_connection())
+			{
+				$lastmonth=time() - 30*86400;
 
-			$urlinfo=explode(":", get_option('opensim_login_uri'));
-			$host=$urlinfo['0'];
-			$port=$urlinfo['1'];
-			// $port = variable_get('opensim_default_users_server_port', '8002');
-			$fp = @fsockopen($host, $port, $errno, $errstr, 1.0);
-			if ($fp) {
-				$gridonline = __("Yes");
-			} else {
-				$gridonline=__("No");
+				$urlinfo=explode(":", get_option('opensim_login_uri'));
+				$host=$urlinfo['0'];
+				$port=$urlinfo['1'];
+				$fp = @fsockopen($host, $port, $errno, $errstr, 1.0);
+				if ($fp) {
+					$gridonline = __("Yes");
+				} else {
+					$gridonline=__("No");
+				}
+				$status = array(
+					'World online' => $gridonline,
+					'Citizens' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					FROM UserAccounts" )),
+					'Citizens in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					FROM Presence AS p, UserAccounts AS u
+					WHERE RegionID != '00000000-0000-0000-0000-000000000000'
+					AND p.UserID = u.PrincipalID;" )),
+					// 'Active citizens (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					// FROM GridUser as g, UserAccounts as u WHERE g.UserID = u.PrincipalID AND Login > $lastmonth" )),
+					'Users in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					FROM Presence
+					WHERE RegionID != '00000000-0000-0000-0000-000000000000';	")),
+					'Active users (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					FROM GridUser WHERE Login > $lastmonth" )),
+					// 'Known users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					// FROM GridUser")),
+					// 'Known online users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					// FROM GridUser WHERE Online = 'true'")),
+					'Regions' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					FROM Regions")),
+					// 'Total area (m²)' => number_format_i18n($w4osdb->get_var("SELECT sum(sizex * sizey)
+					// FROM regions") . "km²", 2),
+					'Total area (km²)' => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)
+					FROM regions") . "km²", 2),
+				);
 			}
-			$stats = array(
-				'World online' => $gridonline,
-				'Citizens' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				FROM UserAccounts" )),
-				'Citizens in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				FROM Presence AS p, UserAccounts AS u
-				WHERE RegionID != '00000000-0000-0000-0000-000000000000'
-				AND p.UserID = u.PrincipalID;" )),
-				// 'Active citizens (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				// FROM GridUser as g, UserAccounts as u WHERE g.UserID = u.PrincipalID AND Login > $lastmonth" )),
-				'Users in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				FROM Presence
-				WHERE RegionID != '00000000-0000-0000-0000-000000000000';	")),
-				'Active users (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				FROM GridUser WHERE Login > $lastmonth" )),
-				// 'Known users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				// FROM GridUser")),
-				// 'Known online users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				// FROM GridUser WHERE Online = 'true'")),
-				'Regions' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-				FROM Regions")),
-				// 'Total area (m²)' => number_format_i18n($w4osdb->get_var("SELECT sum(sizex * sizey)
-				// FROM regions") . "km²", 2),
-				'Total area (km²)' => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)
-				FROM regions") . "km²", 2),
-			);
-			$result=w4os_array2table($stats);
+			wp_cache_add( 'gridstatus', $status, 'opensim"');
 		}
+		$result=w4os_array2table($status) .  " ($cached)";
+
 		if(empty($result)) $result=__("No result") ;
 		return $content . $result;
 	}
