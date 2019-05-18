@@ -232,3 +232,82 @@ function w4os_array2table($array) {
 	if($result) $result="<table>$result</table>";
 	return $result;
 }
+
+function opensim_shortcodes_init()
+{
+	function opensim_gridinfo_shortcode($atts = [], $content = null)
+	{
+		// Gridinfo: http://robust.server:8002/get_grid_info
+		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info");
+		empty($content) ? : $content="<div>$content</div>";
+		$content="<h4>$title</h4>$content";
+		$info=array(
+			"Grid name" => get_option('opensim_grid_name'),
+			"Login URI" => get_option('opensim_login_uri'),
+		);
+		if(!empty($info)) {
+			$content .= w4os_array2table($info);
+		} else {
+			$content .= "OpenSim " . __("not configured");
+		}
+		return $content;
+	}
+	add_shortcode('gridinfo', 'opensim_gridinfo_shortcode');
+
+	function opensim_gridstatus_shortcode($atts = [], $content = null)
+	{
+		global $w4osdb;
+		global $wp_locale;
+		empty($atts['title']) ? $title=__("Grid status") : $title=$atts['title'];
+		if(!empty($content)) $content="<div>$content</div>";
+
+		$content="<h4>$title</h4>$content";
+
+		if($w4osdb -> check_connection())
+		{
+			$lastmonth=time() - 30*86400;
+
+			$urlinfo=explode(":", get_option('opensim_login_uri'));
+			$host=$urlinfo['0'];
+			$port=$urlinfo['1'];
+			// $port = variable_get('opensim_default_users_server_port', '8002');
+			$fp = @fsockopen($host, $port, $errno, $errstr, 1.0);
+			if ($fp) {
+				$gridonline = __("Yes");
+			} else {
+				$gridonline=__("No");
+			}
+			$stats = array(
+				'World online' => $gridonline,
+				'Citizens' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				FROM UserAccounts" )),
+				'Citizens in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				FROM Presence AS p, UserAccounts AS u
+				WHERE RegionID != '00000000-0000-0000-0000-000000000000'
+				AND p.UserID = u.PrincipalID;" )),
+				// 'Active citizens (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				// FROM GridUser as g, UserAccounts as u WHERE g.UserID = u.PrincipalID AND Login > $lastmonth" )),
+				'Users in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				FROM Presence
+				WHERE RegionID != '00000000-0000-0000-0000-000000000000';	")),
+				'Active users (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				FROM GridUser WHERE Login > $lastmonth" )),
+				// 'Known users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				// FROM GridUser")),
+				// 'Known online users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				// FROM GridUser WHERE Online = 'true'")),
+				'Regions' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+				FROM Regions")),
+				// 'Total area (m²)' => number_format_i18n($w4osdb->get_var("SELECT sum(sizex * sizey)
+				// FROM regions") . "km²", 2),
+				'Total area (km²)' => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)
+				FROM regions") . "km²", 2),
+			);
+			$result=w4os_array2table($stats);
+		}
+		if(empty($result)) $result=__("No result") ;
+		return $content . $result;
+	}
+	add_shortcode('gridstatus', 'opensim_gridstatus_shortcode');
+}
+add_action('init', 'opensim_shortcodes_init');
