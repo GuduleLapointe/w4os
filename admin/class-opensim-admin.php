@@ -102,48 +102,48 @@ class OpenSim_Admin {
 
 }
 
-function opensim_register_settings() {
-	add_option( 'opensim_grid_name', 'Hippo');
-	register_setting( 'opensim_options_group', 'opensim_grid_name', 'opensim_callback' );
-	add_option( 'opensim_login_uri', 'localhost:8002');
-	register_setting( 'opensim_options_group', 'opensim_login_uri', 'opensim_callback' );
-	add_option( 'opensim_db_host', 'localhost');
-	register_setting( 'opensim_options_group', 'opensim_db_host', 'opensim_callback' );
-	add_option( 'opensim_db_database', 'opensim');
-	register_setting( 'opensim_options_group', 'opensim_db_database', 'opensim_callback' );
-	add_option( 'opensim_db_user', 'localhost');
-	register_setting( 'opensim_options_group', 'opensim_db_user', 'opensim_callback' );
-	add_option( 'opensim_db_pass', 'localhost');
-	register_setting( 'opensim_options_group', 'opensim_db_pass', 'opensim_callback' );
+function w4os_register_settings() {
+	add_option( 'w4os_grid_name', 'Hippo');
+	register_setting( 'w4os_options_group', 'w4os_grid_name', 'w4os_callback' );
+	add_option( 'w4os_login_uri', 'localhost:8002');
+	register_setting( 'w4os_options_group', 'w4os_login_uri', 'w4os_callback' );
+	add_option( 'w4os_db_host', 'localhost');
+	register_setting( 'w4os_options_group', 'w4os_db_host', 'w4os_callback' );
+	add_option( 'w4os_db_database', 'opensim');
+	register_setting( 'w4os_options_group', 'w4os_db_database', 'w4os_callback' );
+	add_option( 'w4os_db_user', 'localhost');
+	register_setting( 'w4os_options_group', 'w4os_db_user', 'w4os_callback' );
+	add_option( 'w4os_db_pass', 'localhost');
+	register_setting( 'w4os_options_group', 'w4os_db_pass', 'w4os_callback' );
 }
-add_action( 'admin_init', 'opensim_register_settings' );
+add_action( 'admin_init', 'w4os_register_settings' );
 
-function opensim_register_options_pages() {
-	// add_options_page('OpenSim settings', 'OpenSim', 'manage_options', 'opensim', 'opensim_options_page');
+function w4os_register_options_pages() {
+	// add_options_page('OpenSim settings', 'OpenSim', 'manage_options', 'opensim', 'w4os_options_page');
 	add_menu_page(
 		'OpenSimulator', // page title
 		'OpenSimulator', // menu title
 		'manage_options', // capability
 		'opensim', // slug
-		'opensim_status_page', // callable function
+		'w4os_status_page', // callable function
 		// plugin_dir_path(__FILE__) . 'options.php', // slug
 		// null,	// callable function
 		plugin_dir_url(__FILE__) . 'images/opensim-logo-24x14.png', // icon url
 		2 // position
 	);
-	add_submenu_page('opensim', __('OpenSim Status'), __('Status'), 'manage_options', 'opensim', 'opensim_status_page');
+	add_submenu_page('opensim', __('OpenSim Status'), __('Status'), 'manage_options', 'opensim', 'w4os_status_page');
 	add_submenu_page(
 		'opensim', // parent
 		__('OpenSim Settings'), // page title
 		__('Settings'), // menu title
 		'manage_options', // capability
-		'opensim_settings', // menu slug
-		'opensim_options_page' // function
+		'w4os_settings', // menu slug
+		'w4os_options_page' // function
 	);
 }
-add_action('admin_menu', 'opensim_register_options_pages');
+add_action('admin_menu', 'w4os_register_options_pages');
 
-function opensim_options_page()
+function w4os_options_page()
 {
 	if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -151,7 +151,7 @@ function opensim_options_page()
 	require(plugin_dir_path(__FILE__) . 'options.php');
 }
 
-function opensim_status_page()
+function w4os_status_page()
 {
 	if ( ! current_user_can( 'manage_options' ) ) {
 			return;

@@ -218,10 +218,10 @@ class OpenSim {
 }
 
 $w4osdb = new WPDB(
-	get_option('opensim_db_user'),
-	get_option('opensim_db_pass'),
-	get_option('opensim_db_database'),
-	get_option('opensim_db_host')
+	get_option('w4os_db_user'),
+	get_option('w4os_db_pass'),
+	get_option('w4os_db_database'),
+	get_option('w4os_db_host')
 );
 
 function w4os_array2table($array, $class="") {
@@ -233,17 +233,17 @@ function w4os_array2table($array, $class="") {
 	return $result;
 }
 
-function opensim_shortcodes_init()
+function w4os_shortcodes_init()
 {
-	function opensim_gridinfo_shortcode($atts = [], $content = null)
+	function w4os_gridinfo_shortcode($atts = [], $content = null)
 	{
 		// Gridinfo: http://robust.server:8002/get_grid_info
 		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info");
 		empty($content) ? : $content="<div>$content</div>";
 		$content="<h4>$title</h4>$content";
 		$info=array(
-			"Grid name" => get_option('opensim_grid_name'),
-			"Login URI" => get_option('opensim_login_uri'),
+			"Grid name" => get_option('w4os_grid_name'),
+			"Login URI" => get_option('w4os_login_uri'),
 		);
 		if(!empty($info)) {
 			$content .= w4os_array2table($info);
@@ -252,9 +252,9 @@ function opensim_shortcodes_init()
 		}
 		return $content;
 	}
-	add_shortcode('gridinfo', 'opensim_gridinfo_shortcode');
+	add_shortcode('gridinfo', 'w4os_gridinfo_shortcode');
 
-	function opensim_gridstatus_shortcode($atts = [], $content = null)
+	function w4os_gridstatus_shortcode($atts = [], $content = null)
 	{
 		global $w4osdb;
 		global $wp_locale;
@@ -271,7 +271,7 @@ function opensim_shortcodes_init()
 			{
 				$lastmonth=time() - 30*86400;
 
-				$urlinfo=explode(":", get_option('opensim_login_uri'));
+				$urlinfo=explode(":", get_option('w4os_login_uri'));
 				$host=$urlinfo['0'];
 				$port=$urlinfo['1'];
 				$fp = @fsockopen($host, $port, $errno, $errstr, 1.0);
@@ -314,6 +314,6 @@ function opensim_shortcodes_init()
 		if(empty($result)) $result=__("No result") ;
 		return $content . $result;
 	}
-	add_shortcode('gridstatus', 'opensim_gridstatus_shortcode');
+	add_shortcode('gridstatus', 'w4os_gridstatus_shortcode');
 }
-add_action('init', 'opensim_shortcodes_init');
+add_action('init', 'w4os_shortcodes_init');
