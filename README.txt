@@ -20,7 +20,7 @@ a perfect world, regions and simulators administration.
 = Current status =
 
 Code is a mess. Don't blame me. I want to do it the right way but I'm not used to
-WordPress plugins standards yet. I try to puth things on the right places
+WordPress plugins standards yet. I'll try to puth things on the right places
 while getting more familiar with it. Feel free to give advices.
 
 = Features =
@@ -54,7 +54,14 @@ while getting more familiar with it. Feel free to give advices.
 
 == Installation ==
 
-1. Upload to the `/wp-content/plugins/` directory
+1. Get the plugin
+  * From wordpress
+    * Download latest release as zip, from https://git.magiiic.com/opensimulator/w4os/releases
+    * Go to Admin > Extensions > Add > Upload and select the zip file.
+  * From git
+    * go to wp-content/plugins folder
+    * type
+      git clone https://git.magiiic.com/opensimulator/w4os.git
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Visit OpenSim settings page and setup grid info and database connection
 4. Visit admin OpenSim status page to see status
