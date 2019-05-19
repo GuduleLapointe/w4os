@@ -4,7 +4,7 @@ Donate link: http://speculoos.world/
 Tags: comments, spam
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,8 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 * use settings page as main OpenSim admin page
 * added shortcode explanation to admin status page
 
+= 0.3.2 =
+* gridinfo and gridstatus dashboard
 
 == Upgrade Notice ==
 

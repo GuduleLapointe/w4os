@@ -158,3 +158,5 @@ function w4os_status_page()
 	}
 	require(plugin_dir_path(__FILE__) . 'status.php');
 }
+
+require(plugin_dir_path(__FILE__) . 'dashboard.php');
