@@ -4,7 +4,7 @@ Donate link: http://speculoos.world/
 Tags: comments, spam
 Requires at least: 5.0
 Tested up to: 5.2
-Stable tag: 0.2.4
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,10 +91,25 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 * grit status shortcode
 * admin grid status page
 
+= 0.2.2 =
+* grid status admin page
+
+= 0.2.4 =
+* marked as "stable"
+
+= 0.3.0 =
+* slug changed from opensim to w4os to avoid confusion between this project main and childes and side projects
+
+= 0.3.1 =
+* use settings page as main OpenSim admin page
+* added shortcode explanation to admin status page
+
+
 == Upgrade Notice ==
 
-= 1.0 =
-Nothing special
+= 0.3.0 =
+The slug has changed. If updating from previous version, you must enable the plugin and enter the settings again.
+I am the only user for now, so I don't care making it automatic.
 
 
 `<?php code(); // goes in backticks ?>`
