@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       OpenSimulator
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           0.3.2
+ * Description:       OpenSimulator web interface for WordPress.
+ * Version:           0.3.4
  * Author:            Speculoos
  * Author URI:        http://speculoos.world
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 0.1.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'W4OS_VERSION', '0.1.0' );
+// define( 'W4OS_VERSION', $version );
 
 /**
  * The code that runs during plugin activation.
