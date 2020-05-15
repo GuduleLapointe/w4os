@@ -16,9 +16,10 @@
  * Plugin Name:       OpenSimulator
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
  * Description:       OpenSimulator web interface for WordPress.
- * Version:           0.4.0-dev
+ * Version:           0.4.1
  * Author:            Speculoos
  * Author URI:        http://speculoos.world
+ * GitLab Plugin URI: https://git.magiiic.com/opensimulator/w4os
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       w4os
