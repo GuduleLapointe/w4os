@@ -1,7 +1,7 @@
 === OpenSim Wordpress plugin ===
 Contributors: magicoli69
-Donate link: http://speculoos.world/
-Tags: comments, spam
+Donate link: https://paypal.me/magicoli
+Tags: opensimulator, second life, web interface
 Requires at least: 5.0
 Tested up to: 5.4.1
 Stable tag: master
@@ -87,35 +87,3 @@ the /assets directory or the directory that contains the stable readme.txt (tags
 directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
 (or jpg, jpeg, gif).
 2. This is the second screen shot
-
-== Changelog ==
-
-= 0.1.0 =
-* settings page
-* grid info shortcode
-
-= 0.2.0 =
-* grit status shortcode
-* admin grid status page
-
-= 0.2.2 =
-* grid status admin page
-
-= 0.2.4 =
-* marked as "stable"
-
-= 0.3.0 =
-* slug changed from opensim to w4os to avoid confusion between this project main and childes and side projects
-
-= 0.3.1 =
-* use settings page as main OpenSim admin page
-* added shortcode explanation to admin status page
-
-= 0.3.2 =
-* gridinfo and gridstatus dashboard
-
-== Upgrade Notice ==
-
-= 0.3.0 =
-The slug has changed. If updating from previous version, you must enable the plugin and enter the settings again.
-I am the only user for now, so I don't care making it automatic.

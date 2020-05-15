@@ -1,29 +1,21 @@
 <?php
-
 /**
- * The plugin bootstrap file
- *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
- *
- * @link              http://speculoos.world
- * @since             0.1.0
- * @package           OpenSim
- *
- * @wordpress-plugin
  * Plugin Name:       OpenSimulator
- * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
  * Description:       OpenSimulator web interface for WordPress.
- * Version:           0.4.1
+ * Version:           0.4.2
  * Author:            Speculoos
  * Author URI:        http://speculoos.world
+ * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
  * GitLab Plugin URI: https://git.magiiic.com/opensimulator/w4os
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       w4os
  * Domain Path:       /languages
+ *
+ * @link              http://speculoos.world
+ * @since             0.1.0
+ * @package           OpenSim
+ *
  */
 
 // If this file is called directly, abort.
