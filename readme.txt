@@ -30,28 +30,26 @@ while getting more familiar with it. Feel free to give advices.
 * Grid info, as a shortcode and in admin pages
 * Grid status, as a shortcode and in admin pages
 
-## Roadmap
 
-### short term
+### Roadmap
 
-* *Use cache for grid info*
-* *Clean up code to properly use classes*
-* Use sim/grid configuration file to fetch settings if on the same host
-* Users grid registration
+* short term
+  * *Use cache for grid info*
+  * Use sim/grid configuration file to fetch settings if on the same host
+  * Users grid registration
 
-### middle term
+* middle term
+  * Integrate various helpers (profile, search, currency, map...)
+  * User profile
+  * Start / Stop regions
+  * Create region from admin
+  * Option to use console connection instead of database
 
-* Integrate various helpers (profile, search, currency, map...)
-* User profile
-* Start / Stop regions
-* Create region from admin
-* Option to use console connection instead of database
-
-### Long term
-* Start / Stop / Backup own regions from user profile
-* Create own regions from user profile
-* Subscriptions
-* WooCommerce integration
+* long term
+  * Start / Stop / Backup own regions from user profile
+  * Create own regions from user profile
+  * Subscriptions
+  * WooCommerce integration
 
 ## Installation
 
