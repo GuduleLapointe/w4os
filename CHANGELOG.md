@@ -1,3 +1,11 @@
+### [unreleased]
+
+### 0.6.0
+* added avatar names to user list
+* added check for required tables in os database
+* added github updater to roadmap
+* fixed bug (is_user_logged_in constant instead of function)
+
 ### 0.5.2
 * added icons and banner
 

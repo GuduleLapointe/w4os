@@ -72,3 +72,29 @@ function w4os_settings_link( $links ) {
 	return $links;
 }
 add_filter( 'plugin_action_links_w4os/w4os.php', 'w4os_settings_link' );
+
+
+function register_avatar_column($columns) {
+    $columns['avatar'] = 'Avatar';
+    return $columns;
+}
+add_action('manage_users_columns', 'register_avatar_column');
+
+function register_avatar_column_view($value, $column_name, $user_id) {
+    // $user_info = get_userdata( $user_id );
+    if($column_name == 'avatar') {
+			if(!empty(get_the_author_meta( 'w4os_uuid', $user_id ))) {
+				return get_the_author_meta( 'w4os_firstname', $user_id ) . " "
+				. get_the_author_meta( 'w4os_lastname', $user_id );
+			}
+		}
+    return $value;
+
+}
+add_action('manage_users_custom_column', 'register_avatar_column_view', 10, 3);
+
+function avatar_sortable_columns( $columns ) {
+	$columns['avatar'] = 'avatar';
+  return $columns;
+}
+add_filter( 'manage_edit-avatar_sortable_columns', 'avatar_sortable_columns');
