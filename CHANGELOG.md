@@ -1,3 +1,8 @@
+### 0.5.0
+* simplify
+* simplify
+* and simplify
+
 ### 0.4.2
 * Minor changes
 

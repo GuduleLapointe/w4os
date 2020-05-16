@@ -1,4 +1,3 @@
-<?php include_once( plugin_dir_path(__FILE__) . 'updater.php'); ?>
 <div class="wrap">
 	<!-- <h1>OpenSimulator</h1>	 -->
 	<h1><?= esc_html(get_admin_page_title()); ?></h1>
