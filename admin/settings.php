@@ -29,10 +29,10 @@ function w4os_register_options_pages() {
 		plugin_dir_url(__FILE__) . 'images/w4os-logo-24x14.png', // icon url
 		2 // position
 	);
-	add_submenu_page('w4os', __('OpenSim Status'), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
+	add_submenu_page('w4os', __('OpenSim Status', "w4os"), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
 	add_submenu_page(
 		'w4os', // parent
-		__('OpenSim Settings'), // page title
+		__('OpenSim Settings', "w4os"), // page title
 		__('Settings'), // menu title
 		'manage_options', // capability
 		'w4os_settings', // menu slug

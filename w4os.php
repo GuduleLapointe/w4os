@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       OpenSimulator
  * Description:       OpenSimulator web interface for WordPress.
- * Version:           0.6.0
+ * Version:           0.6.1
  * Author:            Speculoos
  * Author URI:        http://speculoos.world
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
@@ -28,12 +28,12 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
 
 if(is_admin()) {
-	require(plugin_dir_path(__FILE__) . 'admin/settings.php');
-	if($pagenow == "index.php") require(plugin_dir_path(__FILE__) . 'admin/dashboard.php');
+	require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');
+	if($pagenow == "index.php")
+	require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
 }
 
 if(W4OS_DB_CONNECTED) {
-	if($pagenow == "profile.php") require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
-	if($pagenow == "user-edit.php") require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
-
+	if($pagenow == "profile.php" || $pagenow == "user-edit.php")
+	require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
 }

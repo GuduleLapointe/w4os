@@ -8,38 +8,41 @@ add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
 
 function w4os_profile_fields( $user ) {
   global $w4osdb;
-  $uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
+  $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
+  // $uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
+  update_user_meta( $user->ID, 'w4os_uuid', $uuid );
   if(empty($uuid)) {
-    $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
-    if(!empty($uuid)) update_user_meta( $user->ID, 'w4os_uuid', $uuid );
-  }
-  if(!empty($uuid)) {
-    if(empty(get_the_author_meta( 'w4os_firstname', $user->ID )) && empty(get_the_author_meta( 'w4os_lastname', $user->ID ))  ) {
+    update_user_meta( $user->ID, 'w4os_firstname', $w4osdb->get_var("SELECT FirstName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
+    update_user_meta( $user->ID, 'w4os_lastname', $w4osdb->get_var("SELECT LastName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
+    // if(!empty($uuid)) update_user_meta( $user->ID, 'w4os_uuid', $uuid );
+  } else {
+  // if(!empty($uuid)) {
+    // if(empty(get_the_author_meta( 'w4os_firstname', $user->ID )) && empty(get_the_author_meta( 'w4os_lastname', $user->ID ))  ) {
       update_user_meta( $user->ID, 'w4os_firstname', $w4osdb->get_var("SELECT FirstName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
       update_user_meta( $user->ID, 'w4os_lastname', $w4osdb->get_var("SELECT LastName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
-    }
+    // }
   }
    ?>
-    <h3><?php _e("OpenSimulator", "blank"); ?></h3>
+    <h3><?php _e("OpenSimulator", "w4os"); ?></h3>
 
     <table class="form-table">
     <tr>
-        <th><label for="w4os_uuid"><?php _e("Avatar UUID"); ?></label></th>
+        <th><label for="w4os_uuid"><?php _e("Avatar UUID", "w4os"); ?></label></th>
         <td>
             <?php echo esc_attr( get_the_author_meta( 'w4os_uuid', $user->ID ) ); ?>
         </td>
     </tr>
     <tr>
-        <th><label for="w4os_firstname"><?php _e("Avatar name"); ?></label></th>
+        <th><label for="w4os_firstname"><?php _e("Avatar name", "w4os"); ?></label></th>
         <td>
           <?php echo esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) ) . " " . esc_attr( get_the_author_meta( 'w4os_lastname', $user->ID ) ); ?>
         </td>
     </tr>
     <tr>
-        <th><label for="w4os_dummy"><?php _e("Useless parameter"); ?></label></th>
+        <th><label for="w4os_dummy"><?php _e("Useless parameter", "w4os"); ?></label></th>
         <td>
             <input type="text" name="w4os_dummy" id="w4os_dummy" value="<?php echo esc_attr( get_the_author_meta( 'w4os_dummy', $user->ID ) ); ?>" class="regular-text" /><br />
-            <span class="description"><?php _e("I mean it. It's not even stored. I only want to keep the code on hand."); ?></span>
+            <span class="description"><?php _e("I mean it. It's not even stored. I only want to keep the code on hand.", "w4os"); ?></span>
         </td>
     </tr>
     <tr>
