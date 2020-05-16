@@ -27,12 +27,13 @@ if ( ! defined( 'WPINC' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
 
-if(is_user_logged_in) {
+if(is_admin()) {
+	require(plugin_dir_path(__FILE__) . 'admin/settings.php');
+	if($pagenow == "index.php") require(plugin_dir_path(__FILE__) . 'admin/dashboard.php');
+}
+
+if(W4OS_DB_CONNECTED) {
 	if($pagenow == "profile.php") require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
 	if($pagenow == "user-edit.php") require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
 
-	if(is_admin()) {
-		require(plugin_dir_path(__FILE__) . 'admin/settings.php');
-		if($pagenow == "index.php") require(plugin_dir_path(__FILE__) . 'admin/dashboard.php');
-	}
 }

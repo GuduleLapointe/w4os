@@ -1,9 +1,12 @@
-<?php 
+<?php
 
 function w4os_shortcodes_init()
 {
 	function w4os_gridinfo_shortcode($atts = [], $content = null)
 	{
+		if(! W4OS_DB_CONNECTED) {
+			return;
+		}
 		// Gridinfo: http://robust.server:8002/get_grid_info
 		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info");
 		empty($content) ? : $content="<div>$content</div>";
@@ -23,6 +26,9 @@ function w4os_shortcodes_init()
 
 	function w4os_gridstatus_shortcode($atts = [], $content = null)
 	{
+		if(! W4OS_DB_CONNECTED) {
+			return;
+		}
 		global $w4osdb;
 		global $wp_locale;
 		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid status");
