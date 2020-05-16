@@ -16,11 +16,11 @@
 				<td><input type="text" class=regular-text id="w4os_login_uri" name="w4os_login_uri" value="<?php echo get_option('w4os_login_uri'); ?>" /></td>
 			</tr>
 			<tr><th colspan=2>
-				<h2><?php _e("Database connection");?></h2>
+				<h2><?php _e("Robust server connection", "w4os");?></h2>
 			</th></tr>
 			<?php if(! W4OS_DB_CONNECTED) { ?>
 				<tr><td colspan=2>
-					<strong><?php _e("Required tables are missing");?></strong>
+					<strong><?php _e("Required tables are missing, check your connection settings or your database");?></strong>
 				</td></tr>
 			<?php } ?>
 			<tr valign="top">

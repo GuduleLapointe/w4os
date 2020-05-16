@@ -1,5 +1,10 @@
 ### [unreleased]
 
+### 0.6.2
+* fix wp-cli crashing
+* fix some PHP warnings
+* updated some strings
+
 ### 0.6.1
 * added resync uuid and avatar name from os db before opening user profile
 * fixed use translation domain for plugin-specific strings

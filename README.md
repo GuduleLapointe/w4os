@@ -24,9 +24,9 @@ while getting more familiar with it. Feel free to give advices.
 
 * short term
   * *Use cache for grid info*
-  * add suggestion to install GitHub Updater plugin
+  * avatar registration
+  * add instructions to install GitHub Updater plugin
   * Use sim/grid configuration file to fetch settings if on the same host
-  * Users grid registration
 
 * middle term
   * Integrate various helpers (profile, search, currency, map...)

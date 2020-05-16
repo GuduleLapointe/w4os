@@ -9,6 +9,7 @@ $w4osdb = new WPDB(
 
 function check_w4os_db_tables() {
 	global $w4osdb;
+	if(!is_object($w4osdb)) return false;
 	$required_tables = array(
 		'useraccounts',
 		'presence',
@@ -30,8 +31,11 @@ function w4os_array2table($array, $class="") {
 	while (list($key, $value) = each($array)) {
 		$result.="<tr><td class=gridvar>" . __($key) . "</td><td class=gridvalue>$value</td></tr>";
 	}
-	if($result) $result="<table class='$class'>$result</table>";
-	return $result;
+	if($result) {
+		$result="<table class='$class'>$result</table>";
+		return $result;
+	}
+	return;
 }
 
 // Simple and useless workaround (calling is_user_logged_in too early produces a fatal error)
