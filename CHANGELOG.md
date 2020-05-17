@@ -1,4 +1,5 @@
 ### [unreleased]
+* fix undefined result variable
 
 ### 0.6.2
 * fix wp-cli crashing

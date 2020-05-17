@@ -28,14 +28,14 @@ if (!defined('W4OS_DB_CONNECTED')) define('W4OS_DB_CONNECTED', check_w4os_db_tab
 
 function w4os_array2table($array, $class="") {
 	if(empty($array)) return;
+	$result="";
 	while (list($key, $value) = each($array)) {
 		$result.="<tr><td class=gridvar>" . __($key) . "</td><td class=gridvalue>$value</td></tr>";
 	}
-	if($result) {
+	if(!empty($result)) {
 		$result="<table class='$class'>$result</table>";
-		return $result;
 	}
-	return;
+	return $result;
 }
 
 // Simple and useless workaround (calling is_user_logged_in too early produces a fatal error)
