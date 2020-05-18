@@ -292,6 +292,15 @@ function w4os_update_avatar( $user, $params ) {
 }
 
 function w4os_profile_wc_edit( $user ) {
+  if($user->ID == 0) {
+    $content = __("Log in to display your avatar");
+    return $content;
+  }
+  ####
+  ## TODO: Check if user is current user
+  ## Otherwise, do not allow edit, and display profile only if public
+  ####
+
   global $w4osdb;
 
   if ( $_REQUEST['w4os_update_avatar'] ) {
@@ -390,8 +399,8 @@ function w4os_profile_shortcodes_init()
 {
 	function w4os_profile_shortcode($atts = [], $content = null)
 	{
-    $current_user = wp_get_current_user();
-    $content .= w4os_profile_edit($current_user);
+    // $current_user = wp_get_current_user();
+    $content .= w4os_profile_wc_edit(wp_get_current_user());
     // $content .= "<pre>" . print_r($atts, true) . "</pre>";
     // $content .= "<pre>" . print_r($current_user, true) . "</pre>";
 		return $content;
