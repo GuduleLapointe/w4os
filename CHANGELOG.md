@@ -1,5 +1,8 @@
 ### [unreleased]
 
+### 0.7.3
+* added language pack repository, testing translations updates
+
 ### 0.7.2
 * localisation updates, including French translation and .pot
 
