@@ -37,35 +37,23 @@ function w4os_profile_fields( $user ) {
           <?php echo esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) ) . " " . esc_attr( get_the_author_meta( 'w4os_lastname', $user->ID ) ); ?>
         </td>
     </tr>
-    <tr>
-        <th><label for="w4os_dummy"><?php _e("Useless parameter", "w4os"); ?></label></th>
-        <td>
-            <input type="text" name="w4os_dummy" id="w4os_dummy" value="<?php echo esc_attr( get_the_author_meta( 'w4os_dummy', $user->ID ) ); ?>" class="regular-text" /><br />
-            <span class="description"><?php _e("I mean it. It's not even stored. I only want to keep the code on hand.", "w4os"); ?></span>
-        </td>
-    </tr>
-    <tr>
     </table>
 <?php }
 }
 
 function w4os_profile_edit( $user ) {
   global $w4osdb;
-  $content.="<h3>" . _("OpenSimulator profile") . "</h3>";
+  $content.="<h3>" . __("OpenSimulator profile") . "</h3>";
   $content.='<table class="form-table">'
   . '<tr>'
-  . '<th>' . _("Avatar UUID") . '</th>'
+  . '<th>' . __("Avatar UUID") . '</th>'
   . '<td>' . get_the_author_meta( 'w4os_uuid', $user->ID ) . '</td>'
   . '</tr>'
   . '<tr>'
-  . '<th>' . _("Avatar name") . '</th>'
+  . '<th>' . __("Avatar name") . '</th>'
   . '<td>' . get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID ) . '</td>'
   . '</tr>'
   . '</table>';
-  $keepforreference='<tr>'
-    . '<th><label for="w4os_dummy">' . _("Useless parameter") . '</label></th>'
-    . '<td><input type="text" name="w4os_dummy" id="w4os_dummy" value="' . esc_attr( get_the_author_meta( 'w4os_dummy', $user->ID ) ) . '" class="regular-text" /></td>'
-    . '</tr>';
 
   return $content;
 }

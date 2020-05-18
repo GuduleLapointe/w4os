@@ -3,15 +3,16 @@
 # https://wpml.org
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version:WPML_EXPORT_w4os\n"
+"Project-Id-Version: OpenSimulator Wordpress plugin\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: \n"
-"Language:fr\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.2.1\n"
 
 # wpml-name: 49b0606cfa6b774669ce9025e83d93c4
 msgid "Total area (km²)"
@@ -50,8 +51,9 @@ msgid "Avatar %s created successfully."
 msgstr "L'avatar %s a été créé avec succès."
 
 # wpml-name: 91030b181f530fca5da4314a6aabe283
+#
 msgid "Password must contain at least %s characters, including uppercase, lowercase and number"
-msgstr "Le mot de passe doit contenir au moins %s caractères, dont une majuscule, une minuscule et un chiffre."
+msgstr "Le mot de passe doit contenir au moins %s caractères, dont une majuscule, une minuscule et un chiffre"
 
 # wpml-name: 4eb86d524f30b9885871ed68c24b0f29
 msgid "The name %s is not allowed"
@@ -83,7 +85,7 @@ msgstr "Mot de passe actuel"
 
 # wpml-name: 877a81d559efa8e5dac0cccac9f80a09
 msgid "leave blank to leave unchanged"
-msgstr "Laisser vide pour ne pas faire de modification"
+msgstr "laisser vide pour ne pas faire de modification"
 
 # wpml-name: 5a54d9ad87f7c4c1c70c8f05b9515d5a
 msgid "UUID"
@@ -118,8 +120,9 @@ msgid "Action %s not implemented"
 msgstr "Action %s non implémentée"
 
 # wpml-name: 2ac66b2144baca76994f174ce4cb120c
+#
 msgid "OpenSimulator web interface for WordPress."
-msgstr "Interface OpenSimulator pour WordPress"
+msgstr "Interface OpenSimulator pour WordPress."
 
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab
 msgid "Grid status"
