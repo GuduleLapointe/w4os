@@ -1,4 +1,6 @@
 ### [unreleased]
+* added required tag to required fields on avatar register form
+* languages updates
 
 ### 0.7.3
 * added language pack repository, testing translations updates
