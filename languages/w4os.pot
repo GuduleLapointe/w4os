@@ -13,6 +13,70 @@ msgstr ""
 "Language:fr\n"
 "MIME-Version: 1.0\n"
 
+# wpml-name: 49b0606cfa6b774669ce9025e83d93c4
+msgid "Total area (km²)"
+msgstr ""
+
+# wpml-name: 5948f3347ebc02ebc690227c059661e1
+msgid "Regions"
+msgstr ""
+
+# wpml-name: 7400c075f728251b64f2210e53a5577c
+msgid "Citizens in world"
+msgstr ""
+
+# wpml-name: 73f5d7be0c0947d90a5ef8ed3da5c602
+msgid "Citizens"
+msgstr ""
+
+# wpml-name: 4b019a446b69944645eaa3a1b2aed2af
+msgid "World online"
+msgstr ""
+
+# wpml-name: 751cfef8ad45902372601aeac58bdad7
+msgid "Login URI"
+msgstr ""
+
+# wpml-name: 46eb01f349dc6c317e78cd1830545358
+msgid "Grid name"
+msgstr ""
+
+# wpml-name: 0d3e39fb622d9e6d7b389757aa651fff
+msgid "This user already has an avatar."
+msgstr ""
+
+# wpml-name: 02cb97a68e5137af44e882dbe2180485
+msgid "Avatar %s created successfully."
+msgstr ""
+
+# wpml-name: 91030b181f530fca5da4314a6aabe283
+msgid "Password must contain at least %s characters, including uppercase, lowercase and number"
+msgstr ""
+
+# wpml-name: 4eb86d524f30b9885871ed68c24b0f29
+msgid "The name %s is not allowed"
+msgstr ""
+
+# wpml-name: 8ffca1456a2308a5556a750be1ecbac0
+msgid "Password required"
+msgstr ""
+
+# wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
+msgid "Last name required"
+msgstr ""
+
+# wpml-name: b2d0fb30e09bf39693f6183c33455748
+msgid "First name required"
+msgstr ""
+
+# wpml-name: 867cee98fdd724e7d5bc87f61ce657bc
+msgid "Passwords do not match"
+msgstr ""
+
+# wpml-name: fc4e1af5d2d469ea179cee95817ed54f
+msgid "Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost."
+msgstr ""
+
 # wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
 msgid "Current password"
 msgstr ""
@@ -65,12 +129,8 @@ msgstr ""
 msgid "Grid info"
 msgstr ""
 
-# wpml-name: f279731266ee1b5ff0b7bd85e585dfef
-msgid "https://speculoos.world"
-msgstr ""
-
-# wpml-name: 1f1f2dbee41fbf293b58439226ee0faf
-msgid "Speculoos"
+# wpml-name: 8706391d288aeb21cf94903c37888b0f
+msgid "This is a short description of what the plugin does. It's displayed in the WordPress admin area."
 msgstr ""
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b

@@ -12,13 +12,13 @@ function w4os_shortcodes_init()
 		empty($content) ? : $content="<div>$content</div>";
 		$content="<h4>$title</h4>$content";
 		$info=array(
-			"Grid name" => get_option('w4os_grid_name'),
-			"Login URI" => get_option('w4os_login_uri'),
+			__("Grid name", 'w4os') => get_option('w4os_grid_name'),
+			__("Login URI", 'w4os') => get_option('w4os_login_uri'),
 		);
 		if(!empty($info)) {
 			$content .= w4os_array2table($info);
 		} else {
-			$content .= "OpenSim " . __("not configured");
+			$content .= __("OpenSimulator not configured", 'w4os');
 		}
 		return $content;
 	}
@@ -54,10 +54,10 @@ function w4os_shortcodes_init()
 					$gridonline=__("No");
 				}
 				$status = array(
-					'World online' => $gridonline,
-					'Citizens' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					__('World online', 'w4os') => $gridonline,
+					__('Citizens', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM UserAccounts" )),
-					'Citizens in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					__('Citizens in world', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM Presence AS p, UserAccounts AS u
 					WHERE RegionID != '00000000-0000-0000-0000-000000000000'
 					AND p.UserID = u.PrincipalID;" )),
@@ -72,11 +72,11 @@ function w4os_shortcodes_init()
 					// FROM GridUser")),
 					// 'Known online users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					// FROM GridUser WHERE Online = 'true'")),
-					'Regions' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					__('Regions', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM Regions")),
 					// 'Total area (m²)' => number_format_i18n($w4osdb->get_var("SELECT sum(sizex * sizey)
 					// FROM regions") . "km²", 2),
-					'Total area (km²)' => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)
+					__('Total area (km²)', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)
 					FROM regions") . "km²", 2),
 				);
 			}

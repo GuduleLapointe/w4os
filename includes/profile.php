@@ -92,20 +92,20 @@ function w4os_update_avatar( $user, $params ) {
     case "w4os_create_avatar":
     // w4os_notice(print_r($_REQUEST, true), "code");
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
-
     if ( $uuid ) {
-      w4os_notice("This user has already a grid account", 'fail');
+      w4os_notice(__("This user already has an avatar.", 'w4os'), 'fail');
       return $uuid;
     }
+
     $firstname = trim($params['w4os_firstname']);
     $lastname = trim($params['w4os_lastname']);
     // Check required fields
     // $errors="hop";
     $required=array('w4os_firstname', 'w4os_lastname', 'w4os_password_1', 'w4os_password_2');
-      if ( ! $firstname ) { $errors=true; w4os_notice("First name missing", 'fail') ; }
-    if ( ! $lastname ) { $errors=true; w4os_notice("First name missing", 'fail') ; }
-    if ( ! $params['w4os_password_1'] && ! $params['w4os_password_2'] ) { $errors=true; w4os_notice("Password missing", 'fail') ; }
-    else if ( $params['w4os_password_1'] != $params['w4os_password_2'] ) { $errors=true; w4os_notice("Passwords do not match", 'fail') ; }
+      if ( ! $firstname ) { $errors=true; w4os_notice(__("First name required", "w4os"), 'fail') ; }
+    if ( ! $lastname ) { $errors=true; w4os_notice(__("Last name required", 'w4os'), 'fail') ; }
+    if ( ! $params['w4os_password_1'] && ! $params['w4os_password_2'] ) { $errors=true; w4os_notice(__("Password required", 'w4os'), 'fail') ; }
+    else if ( $params['w4os_password_1'] != $params['w4os_password_2'] ) { $errors=true; w4os_notice(__("Passwords do not match", 'w4os'), 'fail') ; }
     if ( $errors == true ) return false;
     $password=stripcslashes($params['w4os_password_1']);
     if ( ! w4os_is_strong ($password)) return false;
@@ -275,7 +275,7 @@ function w4os_update_avatar( $user, $params ) {
       return false;
     }
 
-    w4os_notice("User $firstname $lastname created successfully", success);
+    w4os_notice(sprintf( __( 'Avatar %s created successfully.', 'w4os' ), "$firstname $lastname"), 'success');
 
     $check_uuid = w4os_profile_sync($user); // refresh opensim data for this user
     return $new_user_uuid;

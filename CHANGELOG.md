@@ -1,5 +1,8 @@
 ### [unreleased]
 
+### 0.7.2
+* localisation updates, including French translation and .pot
+
 ### 0.7.1
 * added: translation .pot file
 * changed: w4os_profile shortcode now shows new wc_edit output

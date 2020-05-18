@@ -2,13 +2,6 @@
 
 /**
  * The admin-specific functionality of the plugin.
- *
- * @link       http://speculoos.world
- * @since      0.3.2
- *
- * @package    OpenSim
- * @subpackage OpenSim/admin
- * @author     Olivier van Helden <olivier@van-helden.net>
  */
 
 add_action( 'wp_dashboard_setup', 'w4os_dashboard_add_widgets' );
