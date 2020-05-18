@@ -1,0 +1,42 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+td.gridvar {
+  padding-right: 20px;
+  font-size: 80%;
+  width: 30%;
+}
+
+div.notice {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-left-color: #666;
+  border-left-width: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.04);
+  margin: 0px 0 10px;
+  padding: 1px 12px;
+  /* padding-right: 12px; */
+}
+
+div.notice-success {
+  background: #f0fff0;
+  border-color: #9d9;
+  border-left-color: #090;
+}
+
+div.notice-fail {
+  background: #fff0f0;
+  border-color: #f99;
+  border-left-color: #c00;
+}
+
+div.notice-code {
+  background: #f9f9f9;
+  font-family: monospace;
+  white-space: pre;
+  border: 1px solid #ccc;
+  font-size: 0.8em;
+  padding: 6px 12px 0;
+}

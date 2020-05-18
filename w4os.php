@@ -4,7 +4,7 @@
  * Description:       OpenSimulator web interface for WordPress.
  * Version:           0.6.2
  * Author:            Speculoos World
- * Author URI:        http://speculoos.world
+ * Author URI:        https://speculoos.world
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
  * GitLab Plugin URI: https://git.magiiic.com/opensimulator/w4os
  * Release Asset:     true
@@ -20,6 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 //
 require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
 
 if(is_admin()) {
 	require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');
@@ -28,6 +29,9 @@ if(is_admin()) {
 }
 
 if(W4OS_DB_CONNECTED) {
-	if($pagenow == "profile.php" || $pagenow == "user-edit.php")
+	// if($pagenow == "profile.php" || $pagenow == "user-edit.php")
 	require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
 }
+
+wp_register_style('w4os_css', plugin_dir_url(__FILE__) . 'css/w4os.css');
+wp_enqueue_style( 'w4os_css');

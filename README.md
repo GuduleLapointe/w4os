@@ -18,28 +18,36 @@ while getting more familiar with it. Feel free to give advices.
 * OpenSim settings: grid name, login uri and database connection settings
 * Grid info, as a shortcode and in admin pages
 * Grid status, as a shortcode and in admin pages
-
+* Create avatar from WooCommerce 'My account' dashboard
 
 ### Roadmap
 
 * short term
-  * *Use cache for grid info*
-  * avatar registration
-  * add instructions to install GitHub Updater plugin
-  * Use sim/grid configuration file to fetch settings if on the same host
+  * Change avatar password
+  * Sync avatar and website passwords
+  * Auth with avatar credential (as fallback to wp auth)
+  * Create new web user if avatar exists with same e-mail
+
+  * Create avatar from wp standard profile page
+  * Custom avatar profile page
+
+  * Instructions to install GitHub Updater plugin
 
 * middle term
-  * Integrate various helpers (profile, search, currency, map...)
   * User profile
+
   * Start / Stop regions
   * Create region from admin
-  * Option to use console connection instead of database
+
+  * Integrate various helpers (profile, search, currency, map...)
+  * Use sim/grid configuration file to fetch settings if on the same host
+  * *Use cache for grid info*
 
 * long term
-  * Start / Stop / Backup own regions from user profile
+  * Option to use console connection instead of database
   * Create own regions from user profile
-  * Subscriptions
-  * WooCommerce integration
+  * Start / Stop / Backup own regions from user profile
+  * Subscriptions with WooCommerce integration
 
 ## Installation
 

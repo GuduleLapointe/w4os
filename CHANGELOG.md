@@ -1,4 +1,8 @@
 ### [unreleased]
+
+### 0.7 Avatar registration working
+* Now it is possible to register an avatar from WooCommerce account page.
+  It should now be easy to integrate in WP profile page and/or a custom page.
 * fix undefined result variable
 
 ### 0.6.2
