@@ -1,4 +1,5 @@
 ### [unreleased]
+* added translation .pot file
 
 ### 0.7 Avatar registration working
 * Now it is possible to register an avatar from WooCommerce account page.
