@@ -1,7 +1,8 @@
 ### [unreleased]
 * added required tag to required fields on avatar register form
 * languages updates
-* fixed: notices styles only affect frontend page, no more changes for admin section
+* fixed notices css affecting admin section
+* added avatar registration screen capture in assets
 
 ### 0.7.3
 * added language pack repository, testing translations updates
