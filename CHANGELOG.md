@@ -1,4 +1,6 @@
 ### [unreleased]
+
+### 0.7.4
 * added required tag to required fields on avatar register form
 * languages updates
 * fixed notices css affecting admin section
