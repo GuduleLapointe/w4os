@@ -1,4 +1,4 @@
-# OpenSim Wordpress plugin
+# WordPress interface for OpenSimulator
 Contributors: magicoli69
 Donate link: https://paypal.me/magicoli
 Tags: opensimulator, second life, web interface
@@ -11,7 +11,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description
 
-OpenSim Wordpress plugin is an WordPress interface for OpenSimulator.
+WordPress interface for OpenSimulator is an WordPress plugin to allow
+OpenSimulator administration and user registration.
 
 The goal is to allow user registration, grid basic info and monitoring and, in
 a perfect world, regions and simulators administration.
