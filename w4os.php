@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       OpenSimulator
  * Description:       OpenSimulator web interface for WordPress.
- * Version:           0.7.4
+ * Version:           0.7.5
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
@@ -19,7 +19,7 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-//
+
 require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';

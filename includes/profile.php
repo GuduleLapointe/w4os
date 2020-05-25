@@ -74,6 +74,58 @@ function w4os_is_strong ($password) {
   }
 }
 
+function w4os_set_avatar_password( $user_id, $new_pass ) {
+	global $w4osdb;
+
+	if( $user_id && $new_pass && current_user_can('edit_user',$user_id ) ) {
+
+		$user = get_userdata( $user_id );
+		if (! $user ) return;
+		$uuid = w4os_profile_sync($user); // refresh opensim data for this user
+		$password=stripcslashes($new_pass);
+		$salt = md5(gen_uuid());
+		$hash = md5(md5($password) . ":" . $salt);
+		$w4osdb->update (
+			'Auth',
+			array (
+				'passwordHash'   => $hash,
+				'passwordSalt'   => $salt,
+				// 'webLoginKey' => NULL_KEY,
+			),
+			array (
+				'UUID' => $uuid,
+			)
+		);
+	}
+}
+
+function w4os_save_account_details ( $args ) {
+	// not verified
+	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
+	w4os_set_avatar_password( $user_id, $_REQUEST['password_1'] );
+}
+add_action('save_account_details', 'w4os_save_account_details', 10, 1);
+
+function w4os_woocommerce_save_account_details ( $user_id ) {
+	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
+	w4os_set_avatar_password( $user_id, $_REQUEST['password_1'] );
+}
+add_action('woocommerce_save_account_details', 'w4os_woocommerce_save_account_details', 10, 1);
+
+function my_profile_update( $user_id, $old_user_data ) {
+	if($_REQUEST['pass1'] == $_REQUEST['pass2'])
+	w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
+}
+add_action( 'profile_update', 'my_profile_update', 10, 2 );
+
+function other_user_profile_update($user_id) {
+	if ( current_user_can('edit_user',$user_id) ) {
+		w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
+	}
+}
+add_action( 'edit_user_profile_update', 'other_user_profile_update', 10, 1);
+
+
 function w4os_update_avatar( $user, $params ) {
   global $w4osdb;
   switch ($params['action'] ) {

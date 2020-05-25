@@ -1,5 +1,8 @@
 ### [unreleased]
 
+### 0.7.5
+* website password change syncs avatar password
+
 ### 0.7.4
 * added required tag to required fields on avatar register form
 * languages updates
