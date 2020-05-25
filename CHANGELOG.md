@@ -1,4 +1,5 @@
 ### [unreleased]
+* renamed as "WordPress interface for OpenSimulator" which is more accurate
 * updated features and roadmap
 
 ### 0.7.6
