@@ -118,7 +118,7 @@ msgid "Action %s not implemented"
 msgstr ""
 
 # wpml-name: 2ac66b2144baca76994f174ce4cb120c
-msgid "OpenSimulator web interface for WordPress."
+msgid "WordPress interface for OpenSimulator."
 msgstr ""
 
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab

@@ -2,7 +2,7 @@
 
 ## Description
 
-OpenSim Wordpress plugin is an OpenSimulator web interface for WordPress.
+OpenSim Wordpress plugin is an WordPress interface for OpenSimulator.
 
 The goal is to allow user registration, grid basic info and monitoring and, in
 a perfect world, regions and simulators administration.

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       OpenSimulator
- * Description:       OpenSimulator web interface for WordPress.
+ * Description:       WordPress interface for OpenSimulator.
  * Version:           0.7.6
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
