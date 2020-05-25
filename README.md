@@ -19,17 +19,20 @@ while getting more familiar with it. Feel free to give advices.
 * Grid info, as a shortcode and in admin pages
 * Grid status, as a shortcode and in admin pages
 * Create avatar from WooCommerce 'My account' dashboard
+* Create avatar from custom profile page (partial, missing notifications)
+* Change avatar password (via web user password)
+* Sync avatar and website passwords (partially done, not on avatar creation)
 
 ### Roadmap
 
-* short term
-  * Change avatar password
-  * Sync avatar and website passwords
-  * Auth with avatar credential (as fallback to wp auth)
-  * Create new web user if avatar exists with same e-mail
+* short term (for 1.0 release)
+  * Create avatar from custom profile page (fix notifications)
+  * Create avatar from standard wp-admin/profile.php page
+  * Verify and use website password when creating avatar
 
-  * Create avatar from wp standard profile page
-  * Custom avatar profile page
+  * Check if avatar password is properly updated after a password reset request
+  * Auth with avatar credential (as fallback to wp auth)
+    * Create new web user if auth by avatar
 
   * Instructions to install GitHub Updater plugin
 

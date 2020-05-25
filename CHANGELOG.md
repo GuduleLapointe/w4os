@@ -1,4 +1,5 @@
 ### [unreleased]
+* updated features and roadmap
 
 ### 0.7.6
 * fixed deleted language pack url (not working)
