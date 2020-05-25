@@ -1,5 +1,8 @@
 ### [unreleased]
 
+### 0.7.6
+* fixed deleted language pack url (not working)
+
 ### 0.7.5
 * website password change syncs avatar password
 
