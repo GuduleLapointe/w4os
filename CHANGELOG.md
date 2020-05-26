@@ -1,5 +1,8 @@
 ### [unreleased]
+
+### 0.7.7
 * renamed as "WordPress interface for OpenSimulator" which is more accurate
+* update avatar password when registering corresponding new user on the website
 * updated features and roadmap
 
 ### 0.7.6
