@@ -1,4 +1,5 @@
 ### [unreleased]
+* fix wrong password hash for new registrations
 
 ### 0.7.7
 * renamed as "WordPress interface for OpenSimulator" which is more accurate

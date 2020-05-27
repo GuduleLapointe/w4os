@@ -132,8 +132,9 @@ function() {
     $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $_REQUEST['email']));
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
     if( $uuid ) {
+      $password=stripcslashes($_REQUEST['password']);
       $salt = md5(gen_uuid());
-      $hash = md5(md5($_REQUEST['password']) . ":" . $salt);
+      $hash = md5(md5($password) . ":" . $salt);
       update_user_meta( $user->ID, 'w4os_tmp_salt', $salt );
       update_user_meta( $user->ID, 'w4os_tmp_hash', $hash );
     }
