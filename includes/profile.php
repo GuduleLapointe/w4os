@@ -230,21 +230,24 @@ function w4os_update_avatar( $user, $params ) {
     );
 
     if ( $result ) {
+      $bodypartsfolder_uuid = gen_uuid();
+      $defaultfolder_uuid = gen_uuid();
       $folders = array(
-        array('Textures', 0, 1 ),
-        array('Sounds', 1, 1 ),
-        array('Calling Cards', 2, 2 ),
-        array('Landmarks', 3, 1 ),
-        array('Photo Album', 15, 1 ),
-        array('Clothing', 5, 3 ),
-        array('Objects', 6, 1 ),
-        array('Notecards', 7, 1 ),
-        array('Scripts', 10, 1 ),
-        array('Body Parts', 13, 5 ),
-        array('Trash', 14, 1 ),
-        array('Animations', 20, 1 ),
-        array('Gestures', 21, 1 ),
-        array('Lost And Found', 16, 1 ),
+        array('Textures', 0, 1, gen_uuid(), $inventory_uuid ),
+        array('Sounds', 1, 1, gen_uuid(), $inventory_uuid ),
+        array('Calling Cards', 2, 2, gen_uuid(), $inventory_uuid ),
+        array('Landmarks', 3, 1, gen_uuid(), $inventory_uuid ),
+        array('Photo Album', 15, 1, gen_uuid(), $inventory_uuid ),
+        array('Clothing', 5, 3, gen_uuid(), $inventory_uuid ),
+        array('Objects', 6, 1, gen_uuid(), $inventory_uuid ),
+        array('Notecards', 7, 1, gen_uuid(), $inventory_uuid ),
+        array('Scripts', 10, 1, gen_uuid(), $inventory_uuid ),
+        array('Body Parts', 13, 5, $bodypartsfolder_uuid, $inventory_uuid ),
+        array('Trash', 14, 1, gen_uuid(), $inventory_uuid ),
+        array('Animations', 20, 1, gen_uuid(), $inventory_uuid ),
+        array('Gestures', 21, 1, gen_uuid(), $inventory_uuid ),
+        array('Lost And Found', 16, 1, gen_uuid(), $inventory_uuid ),
+        array("$default_firstname $default_lastname", -1, 1, $defaultfolder_uuid, $bodypartsfolder_uuid ),
         // array('Friends', 2, 2 ),
         // array('Favorites', 23, 1 ),
         // array('Current Outfit', 46, 1 ),
@@ -298,6 +301,34 @@ function w4os_update_avatar( $user, $params ) {
       // foreach($avatars_prefs as $var => $val) {
       if($result) {
         foreach($result as $row) {
+          $Name = $row->Name;
+          $Value = $row->Value;
+          if (strpos($Name, 'Wearable') !== FALSE) {
+            // Must add a copy of item in inventory
+            $uuids = explode(":", $Value);
+            $item = $uuids[0];
+            $asset = $uuids[1];
+            $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$new_user_uuid'");
+            if(!$destitem) {
+              $destinventoryid = gen_uuid();
+              $newitem = $w4osdb->get_results("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$default_uuid'");
+              $newitem['inventoryID'] = $destinventoryid;
+              $newitem['parentFolderID'] = $defaultfolder_uuid;
+              $Value = "$destinventoryid:$asset";
+            }
+          } else if (strpos($Name, '_ap_') !== FALSE) {
+            $asset = $w4osdb->get_var("SELECT assetID FROM inventoryitems WHERE inventoryID='$Value'");
+            $destinventoryid = $w4osdb->get_results("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$new_user_uuid'");
+            if(!$destitem) {
+              $destinventoryid = gen_uuid();
+              $newitem = $w4osdb->get_results("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$default_uuid'");
+              $newitem['inventoryID'] = $destinventoryid;
+              $newitem['parentFolderID'] = $defaultfolder_uuid;
+              $Value = $destinventoryid;
+            }
+          }
+          if($newitem) $w4osdb->insert ('inventoryitems', $newitem);
+
           $w4osdb->insert (
             'Avatars', array (
               'PrincipalID' => $new_user_uuid,
