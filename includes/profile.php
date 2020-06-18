@@ -29,7 +29,7 @@ function w4os_profile_fields( $user ) {
         <th><label for="w4os_uuid"><?php _e("Avatar UUID", "w4os"); ?></label></th>
         <td>
             <?php echo esc_attr( get_the_author_meta( 'w4os_uuid', $user->ID ) ); ?>
-        </td>
+        </td>$uuid =
     </tr>
     <tr>
         <th><label for="w4os_firstname"><?php _e("Avatar name", "w4os"); ?></label></th>
@@ -125,6 +125,58 @@ function other_user_profile_update($user_id) {
 }
 add_action( 'edit_user_profile_update', 'other_user_profile_update', 10, 1);
 
+add_action( 'user_register',
+function() {
+  if ( $_REQUEST['email'] ) {
+    global $wpdb;
+    $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $_REQUEST['email']));
+    $uuid = w4os_profile_sync($user); // refresh opensim data for this user
+    if( $uuid ) {
+      $password=stripcslashes($_REQUEST['password']);
+      $salt = md5(gen_uuid());
+      $hash = md5(md5($password) . ":" . $salt);
+      update_user_meta( $user->ID, 'w4os_tmp_salt', $salt );
+      update_user_meta( $user->ID, 'w4os_tmp_hash', $hash );
+    }
+  }
+}
+, 10, 1);
+
+add_action('woocommerce_before_customer_login_form', 'w4os_verify_user', 5);
+function w4os_verify_user() {
+  if(!is_user_logged_in()) {
+    if(isset($_GET['action']) && $_GET['action'] == 'verify_account') {
+      $verify = 'false';
+      if(isset($_GET['user_login']) && isset($_GET['key'])) {
+        global $wpdb;
+        $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_login = %s and user_activation_key = %s", $_GET['user_login'], $_GET['key']));
+        $uuid = w4os_profile_sync($user); // refresh opensim data for this user
+        if($uuid) {
+          $salt = get_user_meta( $user->ID, 'w4os_tmp_salt', true );
+          $hash = get_user_meta( $user->ID, 'w4os_tmp_hash', true );
+          if( $salt && $hash ) {
+            global $w4osdb;
+            $w4osdb->update (
+              'Auth',
+              array (
+                'passwordHash'   => $hash,
+                'passwordSalt'   => $salt,
+                // 'webLoginKey' => NULL_KEY,
+              ),
+              array (
+                'UUID' => $uuid,
+              )
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+function debug_log($string) {
+  file_put_contents ( "../tmp/w4os_debug.log", $string . "\n", FILE_APPEND );
+}
 
 function w4os_update_avatar( $user, $params ) {
   global $w4osdb;
