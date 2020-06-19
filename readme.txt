@@ -6,8 +6,8 @@ Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 5.4.2
 Stable tag: master
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: AGPLv3 (GNU Affero General Public License)
+License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
 ## Description
 

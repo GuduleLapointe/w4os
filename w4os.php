@@ -8,10 +8,15 @@
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
  * GitLab Plugin URI: https://git.magiiic.com/opensimulator/w4os
  * Release Asset:     true
- * License:           GNU General Public License v2
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           AGPLv3 (GNU Affero General Public License)
+ * License URI:       https://www.gnu.org/licenses/agpl-3.0.txt
  * Domain Path:       /languages
  * Text Domain:       w4os
+ *
+ * Contributing:
+ * If you improve this software, please give back to the community, by
+ * submitting your changes on the git repository or sending them to the authors.
+ * That's one of the meanings of Affero GPL!
  */
 
 // If this file is called directly, abort.

@@ -1,4 +1,5 @@
 ### [unreleased]
+* Upgraded LICENSE to AGPLv3
 * renamed "Asset server" setting to "Web asset server" for disambiguation with Robust asset server
 * added instructions to install a web asset server to Readme files
 
