@@ -361,6 +361,9 @@ function w4os_update_avatar( $user, $params ) {
       // foreach($avatars_prefs as $var => $val) {
       if($result) {
         foreach($result as $row) {
+          unset($newitem);
+          unset($newitems);
+          unset($newvalues);
           $Name = $row->Name;
           $Value = $row->Value;
           if (strpos($Name, 'Wearable') !== FALSE) {
@@ -372,33 +375,44 @@ function w4os_update_avatar( $user, $params ) {
             if(!$destitem) {
               $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
               $destinventoryid = gen_uuid();
+              $newitem['inventoryID'] = $destinventoryid;
+              $newitems[] = $newitem;
               $Value = "$destinventoryid:$asset";
             }
           } else if (strpos($Name, '_ap_') !== FALSE) {
-            $asset = $w4osdb->get_var("SELECT assetID FROM inventoryitems WHERE inventoryID='$Value'");
-            $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
-            if(!$destitem) {
-              $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
-              $destinventoryid = gen_uuid();
-              $Value = $destinventoryid;
+            $items = explode(",", $Value);
+            foreach($items as $item) {
+              $asset = $w4osdb->get_var("SELECT assetID FROM inventoryitems WHERE inventoryID='$item'");
+              $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
+              if(!$destitem) {
+                $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
+                $destinventoryid = gen_uuid();
+                $newitem['inventoryID'] = $destinventoryid;
+                // $Value = $destinventoryid;
+                $newitems[] = $newitem;
+                $newvalues[] = $destinventoryid;
+              }
             }
+            if($newvalues) $Value = implode(",", $newvalues);
           }
-          if($newitem) {
-            // w4os_notice("Creating inventory item '$Name' for $firstname");
-            $newitem['inventoryID'] = $destinventoryid;
-            $newitem['parentFolderID'] = $bodyparts_model_uuid;
-            $newitem['avatarID'] = $newavatar_uuid;
-            $result = $w4osdb->insert ('inventoryitems', $newitem);
-            // w4os_notice(print_r($newitem, true), 'code');
-            // echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
+          if(!empty($newitems)) {
+            foreach($newitems as $newitem) {
+              // $destinventoryid = gen_uuid();
+              // w4os_notice("Creating inventory item '$Name' for $firstname");
+              $newitem['parentFolderID'] = $bodyparts_model_uuid;
+              $newitem['avatarID'] = $newavatar_uuid;
+              $result = $w4osdb->insert ('inventoryitems', $newitem);
+              // w4os_notice(print_r($newitem, true), 'code');
+              // echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
 
-            // Adding aliases in "Current Outfit" folder to avoid FireStorm error message
-            $outfit_link=$newitem;
-            $outfit_link['assetType']=24;
-            $outfit_link['assetID']=$newitem['inventoryID'];
-            $outfit_link['inventoryID'] = gen_uuid();
-            $outfit_link['parentFolderID'] = $currentoutfit_uuid;
-            $result = $w4osdb->insert ('inventoryitems', $outfit_link);
+              // Adding aliases in "Current Outfit" folder to avoid FireStorm error message
+              $outfit_link=$newitem;
+              $outfit_link['assetType']=24;
+              $outfit_link['assetID']=$newitem['inventoryID'];
+              $outfit_link['inventoryID'] = gen_uuid();
+              $outfit_link['parentFolderID'] = $currentoutfit_uuid;
+              $result = $w4osdb->insert ('inventoryitems', $outfit_link);
+            }
           // } else {
           //   w4os_notice("Not creating inventory item '$Name' for $firstname");
           }
