@@ -1,5 +1,17 @@
 ### [unreleased]
-* fix wrong password hash for new registrations
+
+### 0.9
+* choose avatar apparence from a choice of models.
+    For now, available choices are existing avatars with
+    FirstName or LastName = "Default" (they have to be created from the
+    console as these names are disallowed from the website)
+
+### 0.8
+* copy needed inventory items from default avatar
+* fixed multiple attachments not added in inventory
+* fixed missing outfit error message in FireStorm
+* fixed hardcoded home region uuid, use "Welcome" instead (still need an option in settings page)
+* fixed wrong password hash for new registrations
 
 ### 0.7.7
 * renamed as "WordPress interface for OpenSimulator" which is more accurate
