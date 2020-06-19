@@ -44,7 +44,7 @@
 				<h2><?php _e("Asset server");?></h2>
 			</th></tr>
 			<tr valign="top">
-				<th scope="row"><label for="w4os_asset_server_uri"><?php _e("Asset server", "w4os");?></label></th>
+				<th scope="row"><label for="w4os_asset_server_uri"><?php _e("Web asset server", "w4os");?></label></th>
 				<td><input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo get_option('w4os_asset_server_uri'); ?>" /></td>
 			</tr>
 		</table>

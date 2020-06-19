@@ -1,4 +1,6 @@
 ### [unreleased]
+* renamed "Asset server" setting to "Web asset server" for disambiguation with Robust asset server
+* added instructions to install a web asset server to Readme files
 
 ### 0.9
 * choose avatar apparence from a choice of models.
