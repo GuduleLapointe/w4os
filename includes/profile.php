@@ -191,6 +191,8 @@ function w4os_update_avatar( $user, $params ) {
 
     $firstname = trim($params['w4os_firstname']);
     $lastname = trim($params['w4os_lastname']);
+    $model = trim($params['w4os_model']);
+    if (empty($model)) $model = DEFAULT_AVATAR;
     // Check required fields
     // $errors="hop";
     $required=array('w4os_firstname', 'w4os_lastname', 'w4os_password_1', 'w4os_password_2');
@@ -266,8 +268,8 @@ function w4os_update_avatar( $user, $params ) {
       )
     );
 
-    $model_firstname=strstr(DEFAULT_AVATAR, " ", true);
-    $model_lastname=trim(strstr(DEFAULT_AVATAR, " "));
+    $model_firstname=strstr($model, " ", true);
+    $model_lastname=trim(strstr($model, " "));
     $model_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$model_firstname' AND LastName = '$model_lastname'");
 
     $inventory_uuid = gen_uuid();
@@ -528,9 +530,33 @@ function w4os_profile_wc_edit( $user ) {
       <label for='w4os_password_2'>" . __('Confirm new password') . "</label>
       <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_2' id='w4os_password_2' autocomplete='off' required><span class='show-password-input'></span></span>
       </p>";
+
+      $models=$w4osdb->get_results("SELECT FirstName, LastName, profileImage, profileAboutText
+        FROM UserAccounts, userProfile
+        WHERE PrincipalID = userUUID
+        AND (FirstName = 'Default' OR LastName = 'Default')
+        ");
+      if($models) {
+        $content.= "<div class='clear'></div>";
+        $content.= "<div class=field-model>";
+        $content .= "<p>Avatar <small><em>(You can change later, in-world)</em></small></p>";
+        foreach($models as $model) {
+          $model_name = $model->FirstName . " " . $model->LastName;
+          $model_display_name = preg_replace('/ *Default */', '', $model_name);
+          // if($model->profileImage != NULL_KEY)
+          // $model_img =  "<img src='/assets/asset.php?id=" . $model->profileImage ."'>";
+          $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', ASSET_SERVER_URI) . $model->profileImage ."'>";
+          if($model_name == DEFAULT_AVATAR) $checked = " checked"; else $checked="";
+
+          $content .= "<label for='w4os_model'>
+          <input type='radio' id='w4os_model' name='w4os_model' value='$model_name'$checked>
+          $model_img <div class=model-name>$model_display_name</div>
+          </label>";
+        }
+        $content.= "</div>";
+      }
+
       if ($uuid) $content.="    	</fieldset>";
-
-
 
       $content .= "
       <p>

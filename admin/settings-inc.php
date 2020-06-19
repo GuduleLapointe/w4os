@@ -39,6 +39,14 @@
 			  <th scope="row"><label for="w4os_db_pass"><?php _e("Password");?></label></th>
 			  <td><input type="password" class=regular-text id="w4os_db_pass" name="w4os_db_pass" value="<?php echo get_option('w4os_db_pass'); ?>" /></td>
 			</tr>
+
+			<tr><th colspan=2>
+				<h2><?php _e("Asset server");?></h2>
+			</th></tr>
+			<tr valign="top">
+				<th scope="row"><label for="w4os_asset_server_uri"><?php _e("Asset server", "w4os");?></label></th>
+				<td><input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo get_option('w4os_asset_server_uri'); ?>" /></td>
+			</tr>
 		</table>
 		<?php  submit_button(); ?>
 	</form>

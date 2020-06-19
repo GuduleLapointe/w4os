@@ -5,6 +5,7 @@ function w4os_register_settings() {
 	register_setting( 'w4os_options_group', 'w4os_grid_name', 'w4os_callback' );
 	add_option( 'w4os_login_uri', 'localhost:8002');
 	register_setting( 'w4os_options_group', 'w4os_login_uri', 'w4os_callback' );
+
 	add_option( 'w4os_db_host', 'localhost');
 	register_setting( 'w4os_options_group', 'w4os_db_host', 'w4os_callback' );
 	add_option( 'w4os_db_database', 'w4os');
@@ -13,6 +14,9 @@ function w4os_register_settings() {
 	register_setting( 'w4os_options_group', 'w4os_db_user', 'w4os_callback' );
 	add_option( 'w4os_db_pass', 'localhost');
 	register_setting( 'w4os_options_group', 'w4os_db_pass', 'w4os_callback' );
+
+	add_option( 'w4os_asset_server_uri', ASSET_SERVER_URI);
+	register_setting( 'w4os_options_group', 'w4os_asset_server_uri', 'w4os_callback' );
 }
 add_action( 'admin_init', 'w4os_register_settings' );
 
