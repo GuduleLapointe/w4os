@@ -284,6 +284,9 @@ function w4os_update_avatar( $user, $params ) {
 
     $bodyparts_uuid = gen_uuid();
     $bodyparts_model_uuid = gen_uuid();
+    $currentoutfit_uuid = gen_uuid();
+    // $myoutfits_uuid = gen_uuid();
+    // $myoutfits_model_uuid = gen_uuid();
     if ( $result ) {
       $folders = array(
         array('Textures', 0, 1, gen_uuid(), $inventory_uuid ),
@@ -301,7 +304,9 @@ function w4os_update_avatar( $user, $params ) {
         array('Gestures', 21, 1, gen_uuid(), $inventory_uuid ),
         array('Lost And Found', 16, 1, gen_uuid(), $inventory_uuid ),
         array("$model_firstname $model_lastname outfit", -1, 1, $bodyparts_model_uuid, $bodyparts_uuid ),
-        array('Current Outfit', 46, 1, gen_uuid(), $inventory_uuid ),
+        array('Current Outfit', 46, 1, $currentoutfit_uuid, $inventory_uuid ),
+        // array('My Outfits', 48, 1, $myoutfits_uuid, $inventory_uuid ),
+        // array("$model_firstname $model_lastname", 47, 1, $myoutfits_model_uuid, $myoutfits_uuid ),
         // array('Friends', 2, 2, gen_uuid(), $inventory_uuid ),
         // array('Favorites', 23, gen_uuid(), $inventory_uuid ),
         // array('All', 2, 1, gen_uuid(), $inventory_uuid ),
@@ -379,15 +384,24 @@ function w4os_update_avatar( $user, $params ) {
             }
           }
           if($newitem) {
+            // w4os_notice("Creating inventory item '$Name' for $firstname");
             $newitem['inventoryID'] = $destinventoryid;
             $newitem['parentFolderID'] = $bodyparts_model_uuid;
             $newitem['avatarID'] = $newavatar_uuid;
             $result = $w4osdb->insert ('inventoryitems', $newitem);
-            if(!$result) w4os_notice("Error creating inventory item '$Name' for $firstname");
             // w4os_notice(print_r($newitem, true), 'code');
             // echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
-          }
 
+            // Adding aliases in "Current Outfit" folder to avoid FireStorm error message
+            $outfit_link=$newitem;
+            $outfit_link['assetType']=24;
+            $outfit_link['assetID']=$newitem['inventoryID'];
+            $outfit_link['inventoryID'] = gen_uuid();
+            $outfit_link['parentFolderID'] = $currentoutfit_uuid;
+            $result = $w4osdb->insert ('inventoryitems', $outfit_link);
+          // } else {
+          //   w4os_notice("Not creating inventory item '$Name' for $firstname");
+          }
           $w4osdb->insert (
             'Avatars', array (
               'PrincipalID' => $newavatar_uuid,
