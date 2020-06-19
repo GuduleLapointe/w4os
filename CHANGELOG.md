@@ -1,4 +1,4 @@
-### [unreleased]
+### 0.9.2
 * Upgraded LICENSE to AGPLv3
 * added instructions to install a web asset server
 * moved installation instructions in a specific INSTALLATION file
