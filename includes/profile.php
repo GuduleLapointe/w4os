@@ -548,8 +548,8 @@ function w4os_profile_wc_edit( $user ) {
           $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', ASSET_SERVER_URI) . $model->profileImage ."'>";
           if($model_name == DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 
-          $content .= "<label for='w4os_model'>
-          <input type='radio' id='w4os_model' name='w4os_model' value='$model_name'$checked>
+          $content .= "<label>
+          <input type='radio' name='w4os_model' value='$model_name'$checked>
           $model_img <div class=model-name>$model_display_name</div>
           </label>";
         }

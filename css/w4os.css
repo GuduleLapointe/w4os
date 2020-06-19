@@ -55,7 +55,7 @@ td.gridvar {
   text-align: right;
 }
 img.model-picture {
-  max-height: 256px;
+  max-width: 256px;
   opacity: 0.5;
 }
 
