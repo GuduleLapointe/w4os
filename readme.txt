@@ -4,7 +4,7 @@ Donate link: https://paypal.me/magicoli
 Tags: opensimulator, second life, web interface
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 5.4.1
+Tested up to: 5.4.2
 Stable tag: master
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -32,11 +32,12 @@ while getting more familiar with it. Feel free to give advices.
 * Create avatar from custom profile page (partial, missing notifications)
 * Change avatar password (via web user password)
 * Sync avatar and website passwords (partially done, not on avatar creation)
+* Create avatar from custom profile page
+* Choose avatar apparence from models
 
 ### Roadmap
 
 * short term (for 1.0 release)
-  * Create avatar from custom profile page (fix notifications)
   * Create avatar from standard wp-admin/profile.php page
   * Verify and use website password when creating avatar
 
