@@ -235,6 +235,7 @@ function w4os_update_avatar( $user, $params ) {
     $hash = md5(md5($password) . ":" . $salt);
     $user_email = get_userdata($user->ID)->data->user_email;
     $created = mktime();
+    $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM Regions WHERE regionName = '" . DEFAULT_HOME . "'");
 
     $result = $w4osdb->insert (
       'UserAccounts', array (
@@ -258,10 +259,10 @@ function w4os_update_avatar( $user, $params ) {
     if ($result) $result = $w4osdb->insert (
       'GridUser', array (
         'UserID' => $newavatar_uuid,
-        'HomeRegionID' => 'd996deab-4247-4634-92a5-98808a65878e', // TODO: should be replaced by default home
-        'HomePosition' => '<127,127,21>',
-        'LastRegionID' => 'd996deab-4247-4634-92a5-98808a65878e',
-        'LastPosition' => '<127,127,21>',
+        'HomeRegionID' => $HomeRegionID,
+        'HomePosition' => '<128,128,21>',
+        'LastRegionID' => $HomeRegionID,
+        'LastPosition' => '<128,128,21>',
       )
     );
 
@@ -381,7 +382,8 @@ function w4os_update_avatar( $user, $params ) {
             $newitem['inventoryID'] = $destinventoryid;
             $newitem['parentFolderID'] = $bodyparts_model_uuid;
             $newitem['avatarID'] = $newavatar_uuid;
-            $w4osdb->insert ('inventoryitems', $newitem);
+            $result = $w4osdb->insert ('inventoryitems', $newitem);
+            if(!$result) w4os_notice("Error creating inventory item '$Name' for $firstname");
             // w4os_notice(print_r($newitem, true), 'code');
             // echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
           }
@@ -398,7 +400,7 @@ function w4os_update_avatar( $user, $params ) {
     }
 
     if( ! $result ) {
-      w4os_notice("Could not insert the user", fail);
+      w4os_notice("Could not insert the user", 'fail');
       w4os_notice($sql, 'code');
       return false;
     }
