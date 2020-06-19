@@ -29,7 +29,7 @@ function w4os_profile_fields( $user ) {
         <th><label for="w4os_uuid"><?php _e("Avatar UUID", "w4os"); ?></label></th>
         <td>
             <?php echo esc_attr( get_the_author_meta( 'w4os_uuid', $user->ID ) ); ?>
-        </td>$uuid =
+        </td>
     </tr>
     <tr>
         <th><label for="w4os_firstname"><?php _e("Avatar name", "w4os"); ?></label></th>
@@ -224,8 +224,8 @@ function w4os_update_avatar( $user, $params ) {
     }
     // Hash password
 
-    $new_user_uuid = gen_uuid();
-    $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE PrincipalID = '$new_user_uuid'");
+    $newavatar_uuid = gen_uuid();
+    $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE PrincipalID = '$newavatar_uuid'");
     if ( $check_uuid ) {
       w4os_notice(__( 'This should never happen! Generated a random UUID that already existed. Sorry. Try again.', 'w4os' ), 'fail');
       return false;
@@ -238,7 +238,7 @@ function w4os_update_avatar( $user, $params ) {
 
     $result = $w4osdb->insert (
       'UserAccounts', array (
-        'PrincipalID' => $new_user_uuid,
+        'PrincipalID' => $newavatar_uuid,
         'ScopeID' => NULL_KEY,
         'FirstName'   => $firstname,
         'LastName'   => $lastname,
@@ -249,7 +249,7 @@ function w4os_update_avatar( $user, $params ) {
     );
     if ($result) $result = $w4osdb->insert (
       'Auth', array (
-        'UUID' => $new_user_uuid,
+        'UUID' => $newavatar_uuid,
         'passwordHash'   => $hash,
         'passwordSalt'   => $salt,
         'webLoginKey' => NULL_KEY,
@@ -257,7 +257,7 @@ function w4os_update_avatar( $user, $params ) {
     );
     if ($result) $result = $w4osdb->insert (
       'GridUser', array (
-        'UserID' => $new_user_uuid,
+        'UserID' => $newavatar_uuid,
         'HomeRegionID' => 'd996deab-4247-4634-92a5-98808a65878e', // TODO: should be replaced by default home
         'HomePosition' => '<127,127,21>',
         'LastRegionID' => 'd996deab-4247-4634-92a5-98808a65878e',
@@ -265,9 +265,9 @@ function w4os_update_avatar( $user, $params ) {
       )
     );
 
-    $default_firstname=strstr(DEFAULT_AVATAR, " ", true);
-    $default_lastname=trim(strstr(DEFAULT_AVATAR, " "));
-    $default_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$default_firstname' AND LastName = '$default_lastname'");
+    $model_firstname=strstr(DEFAULT_AVATAR, " ", true);
+    $model_lastname=trim(strstr(DEFAULT_AVATAR, " "));
+    $model_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$model_firstname' AND LastName = '$model_lastname'");
 
     $inventory_uuid = gen_uuid();
     if ($result) $result = $w4osdb->insert (
@@ -276,14 +276,14 @@ function w4os_update_avatar( $user, $params ) {
         'type' => 8,
         'version' => 1,
         'folderID' => $inventory_uuid,
-        'agentID' => $new_user_uuid,
+        'agentID' => $newavatar_uuid,
         'parentFolderID' => NULL_KEY,
       )
     );
 
+    $bodyparts_uuid = gen_uuid();
+    $bodyparts_model_uuid = gen_uuid();
     if ( $result ) {
-      $bodypartsfolder_uuid = gen_uuid();
-      $defaultfolder_uuid = gen_uuid();
       $folders = array(
         array('Textures', 0, 1, gen_uuid(), $inventory_uuid ),
         array('Sounds', 1, 1, gen_uuid(), $inventory_uuid ),
@@ -294,29 +294,31 @@ function w4os_update_avatar( $user, $params ) {
         array('Objects', 6, 1, gen_uuid(), $inventory_uuid ),
         array('Notecards', 7, 1, gen_uuid(), $inventory_uuid ),
         array('Scripts', 10, 1, gen_uuid(), $inventory_uuid ),
-        array('Body Parts', 13, 5, $bodypartsfolder_uuid, $inventory_uuid ),
+        array('Body Parts', 13, 5, $bodyparts_uuid, $inventory_uuid ),
         array('Trash', 14, 1, gen_uuid(), $inventory_uuid ),
         array('Animations', 20, 1, gen_uuid(), $inventory_uuid ),
         array('Gestures', 21, 1, gen_uuid(), $inventory_uuid ),
         array('Lost And Found', 16, 1, gen_uuid(), $inventory_uuid ),
-        array("$default_firstname $default_lastname", -1, 1, $defaultfolder_uuid, $bodypartsfolder_uuid ),
-        // array('Friends', 2, 2 ),
-        // array('Favorites', 23, 1 ),
-        // array('Current Outfit', 46, 1 ),
-        // array('All', 2, 1 ),
+        array("$model_firstname $model_lastname outfit", -1, 1, $bodyparts_model_uuid, $bodyparts_uuid ),
+        array('Current Outfit', 46, 1, gen_uuid(), $inventory_uuid ),
+        // array('Friends', 2, 2, gen_uuid(), $inventory_uuid ),
+        // array('Favorites', 23, gen_uuid(), $inventory_uuid ),
+        // array('All', 2, 1, gen_uuid(), $inventory_uuid ),
       );
       foreach($folders as $folder) {
         $name = $folder[0];
         $type = $folder[1];
         $version = $folder[2];
+        $folderid = $folder[3];
+        $parentid = $folder[4];
         if ($result) $result = $w4osdb->insert (
           'inventoryfolders', array (
             'folderName' => $name,
             'type' => $type,
             'version' => $version,
-            'folderID' => gen_uuid(),
-            'agentID' => $new_user_uuid,
-            'parentFolderID' => $inventory_uuid,
+            'folderID' => $folderid,
+            'agentID' => $newavatar_uuid,
+            'parentFolderID' => $parentid,
           )
         );
         if( ! $result ) break;
@@ -324,7 +326,7 @@ function w4os_update_avatar( $user, $params ) {
     }
 
     // if ( $result ) {
-    //   $result = $w4osdb->get_results("SELECT folderName,type,version FROM inventoryfolders WHERE agentID = '$default_uuid' AND type != 8");
+    //   $result = $w4osdb->get_results("SELECT folderName,type,version FROM inventoryfolders WHERE agentID = '$model_uuid' AND type != 8");
     //   if($result) {
     //     foreach($result as $row) {
     //       $result = $w4osdb->insert (
@@ -333,7 +335,7 @@ function w4os_update_avatar( $user, $params ) {
     //           'type' => $row->type,
     //           'version' => $row->version,
     //           'folderID' => gen_uuid(),
-    //           'agentID' => $new_user_uuid,
+    //           'agentID' => $newavatar_uuid,
     //           'parentFolderID' => $inventory_uuid,
     //         )
     //       );
@@ -343,7 +345,7 @@ function w4os_update_avatar( $user, $params ) {
     // }
 
     if ( $result ) {
-      $result = $w4osdb->get_results("SELECT Name, Value FROM Avatars WHERE PrincipalID = '$default_uuid'");
+      $result = $w4osdb->get_results("SELECT Name, Value FROM Avatars WHERE PrincipalID = '$model_uuid'");
       // w4os_notice(print_r($result, true), 'code');
       // foreach($result as $row) {
       //   w4os_notice(print_r($row, true), 'code');
@@ -360,32 +362,35 @@ function w4os_update_avatar( $user, $params ) {
             $uuids = explode(":", $Value);
             $item = $uuids[0];
             $asset = $uuids[1];
-            $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$new_user_uuid'");
+            $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
             if(!$destitem) {
+              $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
               $destinventoryid = gen_uuid();
-              $newitem = $w4osdb->get_results("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$default_uuid'");
-              $newitem['inventoryID'] = $destinventoryid;
-              $newitem['parentFolderID'] = $defaultfolder_uuid;
               $Value = "$destinventoryid:$asset";
             }
           } else if (strpos($Name, '_ap_') !== FALSE) {
             $asset = $w4osdb->get_var("SELECT assetID FROM inventoryitems WHERE inventoryID='$Value'");
-            $destinventoryid = $w4osdb->get_results("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$new_user_uuid'");
+            $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
             if(!$destitem) {
+              $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
               $destinventoryid = gen_uuid();
-              $newitem = $w4osdb->get_results("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$default_uuid'");
-              $newitem['inventoryID'] = $destinventoryid;
-              $newitem['parentFolderID'] = $defaultfolder_uuid;
               $Value = $destinventoryid;
             }
           }
-          if($newitem) $w4osdb->insert ('inventoryitems', $newitem);
+          if($newitem) {
+            $newitem['inventoryID'] = $destinventoryid;
+            $newitem['parentFolderID'] = $bodyparts_model_uuid;
+            $newitem['avatarID'] = $newavatar_uuid;
+            $w4osdb->insert ('inventoryitems', $newitem);
+            // w4os_notice(print_r($newitem, true), 'code');
+            // echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
+          }
 
           $w4osdb->insert (
             'Avatars', array (
-              'PrincipalID' => $new_user_uuid,
-              'Name' => $row->Name,
-              'Value' => $row->Value,
+              'PrincipalID' => $newavatar_uuid,
+              'Name' => $Name,
+              'Value' => $Value,
             )
           );
         }
@@ -401,7 +406,7 @@ function w4os_update_avatar( $user, $params ) {
     w4os_notice(sprintf( __( 'Avatar %s created successfully.', 'w4os' ), "$firstname $lastname"), 'success');
 
     $check_uuid = w4os_profile_sync($user); // refresh opensim data for this user
-    return $new_user_uuid;
+    return $newavatar_uuid;
     // $result = $w4osdb->get_var("$sql");
 
     //   $uuid = w4os_profile_sync($user); // refresh opensim data for this user
