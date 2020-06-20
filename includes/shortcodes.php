@@ -55,11 +55,11 @@ function w4os_shortcodes_init()
 				}
 				if(get_option(w4os_exclude_models)) {
 					$filter .= "u.FirstName != '" . get_option('w4os_model_firstname') . "'"
-					. "AND u.LastName != '" . get_option('w4os_model_lastname') . "'";
+					. " AND u.LastName != '" . get_option('w4os_model_lastname') . "'";
 				}
-				if(get_option(w4os_exclude_nomail)) {
-					$filter .= "u.Email != ''";
-				}
+				// if(get_option(w4os_exclude_nomail)) {
+				// 	$filter .= " AND u.Email != ''";
+				// }
 				if($filter) $filter = "$filter AND ";
 				$status = array(
 					__('World online', 'w4os') => $gridonline,
