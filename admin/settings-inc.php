@@ -4,9 +4,6 @@
 	<form method="post" action="options.php">
 		<?php settings_fields( 'w4os_options_group' ); ?>
 		<table class=form-table>
-			<tr><th colspan=2>
-				<h2><?php _e("Grid");?></h2>
-			</th></tr>
 			<tr valign="top">
 				<th scope="row"><label for="w4os_grid_name"><?php _e("Grid name", "w4os");?></label></th>
 				<td><input type="text" class=regular-text id="w4os_grid_name" name="w4os_grid_name" value="<?php echo get_option('w4os_grid_name'); ?>" /></td>
