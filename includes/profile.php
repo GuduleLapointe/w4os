@@ -544,7 +544,14 @@ function w4os_profile_wc_edit( $user ) {
         $content .= "<p>Avatar <small><em>(You can change later, in-world)</em></small></p>";
         foreach($models as $model) {
           $model_name = $model->FirstName . " " . $model->LastName;
-          $model_display_name = preg_replace('/ *Default */', '', $model_name);
+          $model_display_name = $model_name;
+          if(get_option('w4os_model_firstname') != "")
+          $model_display_name = preg_replace('/ *' . get_option('w4os_model_firstname'). ' */', '', $model_display_name);
+          if(get_option('w4os_model_lastname') != "")
+          $model_display_name = preg_replace('/ *' . get_option('w4os_model_lastname'). ' */', '', $model_display_name);
+          $model_display_name = preg_replace('/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $model_display_name);
+          $model_display_name = preg_replace('/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $model_display_name);
+
           // if($model->profileImage != NULL_KEY)
           // $model_img =  "<img src='/assets/asset.php?id=" . $model->profileImage ."'>";
           if(!empty(get_option('w4os_asset_server_uri', ASSET_SERVER_URI)))

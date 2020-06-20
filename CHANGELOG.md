@@ -1,3 +1,11 @@
+### 0.9.3.2
+* fix modelname display: strip value from model first and last name setting instead of 'Default'
+* strip "Ruth2" in model name, and add "Ruth 2.0" at the end
+* same for Roth2
+
+### 0.9.3.1
+* regression: disabled check for account with no emails for now until fixed (currently always returns no result)
+
 ### 0.9.3
 * added settings for model selection
 * exclude models from stats count (optional, default yes)
