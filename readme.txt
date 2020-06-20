@@ -33,17 +33,21 @@ while getting more familiar with it. Feel free to give advices.
 * Create avatar from custom profile page
 * Choose new avatar apparence from default models
 * Change avatar password (via web user password)
-* Sync avatar and website passwords (partially done, not on avatar creation)
+* Sync avatar and website passwords (partial, not on avatar creation)
 
 ### Roadmap
 
 * short term (for 1.0 release)
+  * check and use website password when creating an avatar
+  * option to use WordPress name as avatar name (in this case, lock WordPress
+    name changes once an avatar is set)
   * Create avatar from standard wp-admin/profile.php page
-  * Verify and use website password when creating avatar
 
   * Check if avatar password is properly updated after a password reset request
   * Auth with avatar credential (as fallback to wp auth)
-    * Create new web user if auth by avatar
+    * Create new WordPress user if auth by avatar
+
+  * integrate web asset server
 
 * middle term
   * User profile
@@ -51,7 +55,7 @@ while getting more familiar with it. Feel free to give advices.
   * Start / Stop regions
   * Create region from admin
 
-  * Integrate various helpers (profile, search, currency, map...)
+  * Helpers (search, currency, map...)
   * Use sim/grid configuration file to fetch settings if on the same host
   * *Use cache for grid info*
 

@@ -1,22 +1,19 @@
+### [unreleased]
+* cosmetic changes. Clarify OpenSim settings page, readmes and changelog
+
 ### 0.9.3.3
-* fixed check for account with no emails
-
-### 0.9.3.2
-* fix modelname display: strip value from model first and last name setting instead of 'Default'
-* strip "Ruth2" in model name, and add "Ruth 2.0" at the end
-* same for Roth2
-
-### 0.9.3.1
-* regression: disabled check for account with no emails for now until fixed (currently always returns no result)
-
-### 0.9.3
 * added settings for model selection
+* sort models alphabetically
+
 * exclude models from stats count (optional, default yes)
 * exclude accounts without mail adddress from stats count (optional, default yes)
 * exclude  accounts with 'active' field set to false from stats
-* sort models alphabetically
+
 * fix: don't try to show model picture if web asset server is not set
 * fix: model name display without pictures when no picture
+* fix: modelname display strip value from model first and last name setting instead of 'Default'
+* strip "Ruth2" in model name, and add "Ruth 2.0" at the end
+* same for Roth2
 * fix: picture max-width relative, to be more responsive
 
 ### 0.9.2
