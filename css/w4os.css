@@ -41,7 +41,7 @@ td.gridvar {
   padding: 6px 12px 0;
 }
 
-.field-model label {
+.field-model label.with_picture {
   display: inline-block;
   width: 30%;
   margin-right: 10px;
@@ -49,17 +49,20 @@ td.gridvar {
   position: relative;
 }
 .field-model .model-name {
+  display: inline-block;
+}
+.field-model .with_picture .model-name {
   position: absolute;
   bottom: 0.5em;
   right: 1em;
   text-align: right;
 }
 img.model-picture {
-  max-width: 256px;
+  max-width: 100%;
   opacity: 0.5;
 }
 
-.field-model [type=radio] {
+.field-model .with_picture [type=radio] {
   position: absolute;
   opacity: 0;
   width: 0;

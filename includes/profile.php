@@ -534,7 +534,9 @@ function w4os_profile_wc_edit( $user ) {
       $models=$w4osdb->get_results("SELECT FirstName, LastName, profileImage, profileAboutText
         FROM UserAccounts, userProfile
         WHERE PrincipalID = userUUID
-        AND (FirstName = 'Default' OR LastName = 'Default')
+        AND (FirstName = '" . get_option('w4os_model_firstname') . "'
+        OR LastName = '" . get_option('w4os_model_lastname') . "')
+        ORDER BY FirstName, LastName
         ");
       if($models) {
         $content.= "<div class='clear'></div>";
@@ -545,10 +547,13 @@ function w4os_profile_wc_edit( $user ) {
           $model_display_name = preg_replace('/ *Default */', '', $model_name);
           // if($model->profileImage != NULL_KEY)
           // $model_img =  "<img src='/assets/asset.php?id=" . $model->profileImage ."'>";
-          $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', ASSET_SERVER_URI) . $model->profileImage ."'>";
+          if(!empty(get_option('w4os_asset_server_uri', ASSET_SERVER_URI)))
+            $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', ASSET_SERVER_URI) . $model->profileImage ."'>";
+          if(empty($model_img)) $modelclass="no_picture";
+          else $modelclass = "with_picture";
           if($model_name == DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 
-          $content .= "<label>
+          $content .= "<label class='$modelclass'>
           <input type='radio' name='w4os_model' value='$model_name'$checked>
           $model_img <div class=model-name>$model_display_name</div>
           </label>";

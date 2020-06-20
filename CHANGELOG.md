@@ -1,3 +1,13 @@
+### 0.9.3
+* added settings for model selection
+* exclude models from stats count (optional, default yes)
+* exclude accounts without mail adddress from stats count (optional, default yes)
+* exclude  accounts with 'active' field set to false from stats
+* sort models alphabetically
+* fix: don't try to show model picture if web asset server is not set
+* fix: model name display without pictures when no picture
+* fix: picture max-width relative, to be more responsive
+
 ### 0.9.2
 * Upgraded LICENSE to AGPLv3
 * added instructions to install a web asset server

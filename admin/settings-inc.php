@@ -47,6 +47,25 @@
 				<th scope="row"><label for="w4os_asset_server_uri"><?php _e("Web asset server", "w4os");?></label></th>
 				<td><input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo get_option('w4os_asset_server_uri'); ?>" /></td>
 			</tr>
+
+			<tr><th colspan=2>
+				<h2><?php _e("Models");?></h2>
+			</th></tr>
+			<tr valign="top">
+				<th scope="row"><label for="w4os_model_firstname"><?php _e("First name =", "w4os");?></label></th>
+				<td><input type="text" class=regular-text id="w4os_model_firstname" name="w4os_model_firstname" value="<?php echo get_option('w4os_model_firstname'); ?>" /></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label for="w4os_model_lastname"><?php _e("OR last name =", "w4os");?></label></th>
+				<td><input type="text" class=regular-text id="w4os_model_lastname" name="w4os_model_lastname" value="<?php echo get_option('w4os_model_lastname'); ?>" /></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e("Exclude from stats", "w4os");?></label></th>
+				<td>
+					<input type="checkbox" class=regular-text id="w4os_exclude_models" name="w4os_exclude_models" value="1" <?php if (get_option('w4os_exclude_models')==1) echo "checked"; ?>/><label for="w4os_exclude_models"><?php _e('Models', 'w4os') ?></label>
+					<br><input type="checkbox" class=regular-text id="w4os_exclude_nomail" name="w4os_exclude_nomail" value="1" <?php if (get_option('w4os_exclude_nomail')==1) echo "checked"; ?>/><label for="w4os_exclude_nomail"><?php _e('Accounts without mail address', 'w4os') ?></label>
+				</td>
+			</tr>
 		</table>
 		<?php  submit_button(); ?>
 	</form>

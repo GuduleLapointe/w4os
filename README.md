@@ -36,8 +36,6 @@ while getting more familiar with it. Feel free to give advices.
   * Auth with avatar credential (as fallback to wp auth)
     * Create new web user if auth by avatar
 
-  * Instructions to install GitHub Updater plugin
-
 * middle term
   * User profile
 

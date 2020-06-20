@@ -17,6 +17,18 @@ function w4os_register_settings() {
 
 	add_option( 'w4os_asset_server_uri', ASSET_SERVER_URI);
 	register_setting( 'w4os_options_group', 'w4os_asset_server_uri', 'w4os_callback' );
+
+	add_option( 'w4os_model_firstname', 'Default');
+	register_setting( 'w4os_options_group', 'w4os_model_firstname', 'w4os_callback' );
+	add_option( 'w4os_model_lastname', 'Default');
+	register_setting( 'w4os_options_group', 'w4os_model_lastname', 'w4os_callback' );
+
+	add_option( 'w4os_exclude_models', true);
+	register_setting( 'w4os_options_group', 'w4os_exclude_models', 'w4os_callback' );
+	add_option( 'w4os_exclude_tests', true);
+	register_setting( 'w4os_options_group', 'w4os_exclude_tests', 'w4os_callback' );
+	add_option( 'w4os_exclude_nomail', true);
+	register_setting( 'w4os_options_group', 'w4os_exclude_nomail', 'w4os_callback' );
 }
 add_action( 'admin_init', 'w4os_register_settings' );
 

@@ -53,13 +53,21 @@ function w4os_shortcodes_init()
 				} else {
 					$gridonline=__("No");
 				}
+				if(get_option(w4os_exclude_models)) {
+					$filter .= "u.FirstName != '" . get_option('w4os_model_firstname') . "'"
+					. "AND u.LastName != '" . get_option('w4os_model_lastname') . "'";
+				}
+				if(get_option(w4os_exclude_nomail)) {
+					$filter .= "u.Email != ''";
+				}
+				if($filter) $filter = "$filter AND ";
 				$status = array(
 					__('World online', 'w4os') => $gridonline,
 					__('Citizens', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-					FROM UserAccounts" )),
+					FROM UserAccounts as u WHERE $filter active=1" )),
 					__('Citizens in world', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM Presence AS p, UserAccounts AS u
-					WHERE RegionID != '00000000-0000-0000-0000-000000000000'
+					WHERE $filter RegionID != '00000000-0000-0000-0000-000000000000'
 					AND p.UserID = u.PrincipalID;" )),
 					// 'Active citizens (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					// FROM GridUser as g, UserAccounts as u WHERE g.UserID = u.PrincipalID AND Login > $lastmonth" )),
