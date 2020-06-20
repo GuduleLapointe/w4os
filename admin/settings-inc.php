@@ -63,7 +63,7 @@
 				<th scope="row"><label><?php _e("Exclude from stats", "w4os");?></label></th>
 				<td>
 					<input type="checkbox" class=regular-text id="w4os_exclude_models" name="w4os_exclude_models" value="1" <?php if (get_option('w4os_exclude_models')==1) echo "checked"; ?>/><label for="w4os_exclude_models"><?php _e('Models', 'w4os') ?></label>
-					<br><input type="checkbox" class=regular-text id="w4os_exclude_nomail" name="w4os_exclude_nomail" value="1" <?php if (get_option('w4os_exclude_nomail')==1) echo "checked"; ?>/><label for="w4os_exclude_nomail"><?php _e('Accounts without mail address (not implemented)', 'w4os') ?></label>
+					<br><input type="checkbox" class=regular-text id="w4os_exclude_nomail" name="w4os_exclude_nomail" value="1" <?php if (get_option('w4os_exclude_nomail')==1) echo "checked"; ?>/><label for="w4os_exclude_nomail"><?php _e('Accounts without mail address', 'w4os') ?></label>
 				</td>
 			</tr>
 		</table>

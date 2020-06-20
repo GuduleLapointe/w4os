@@ -1,3 +1,6 @@
+### 0.9.3.3
+* fixed check for account with no emails
+
 ### 0.9.3.2
 * fix modelname display: strip value from model first and last name setting instead of 'Default'
 * strip "Ruth2" in model name, and add "Ruth 2.0" at the end
