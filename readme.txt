@@ -38,7 +38,6 @@ while getting more familiar with it. Feel free to give advices.
 ### Roadmap
 
 * short term (for 1.0 release)
-  * *NEXT MOVE: check and use website password when creating an avatar*
   * option to use WordPress name as avatar name (in this case, lock WordPress
     name changes once an avatar is set)
   * Create avatar from standard wp-admin/profile.php page
@@ -48,6 +47,8 @@ while getting more familiar with it. Feel free to give advices.
     * Create new WordPress user if auth by avatar
 
   * integrate web asset server
+
+  * sidebar grid info and grid status widgets
 
 * middle term
   * User profile

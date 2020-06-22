@@ -188,21 +188,23 @@ function w4os_update_avatar( $user, $params ) {
       w4os_notice(__("This user already has an avatar.", 'w4os'), 'fail');
       return $uuid;
     }
+    // echo  "<pre>" . $user->user_pass . "\n" . print_r($user, true) . "</pre>";
 
     $firstname = trim($params['w4os_firstname']);
     $lastname = trim($params['w4os_lastname']);
     $model = trim($params['w4os_model']);
     if (empty($model)) $model = DEFAULT_AVATAR;
+
     // Check required fields
-    // $errors="hop";
-    $required=array('w4os_firstname', 'w4os_lastname', 'w4os_password_1', 'w4os_password_2');
-      if ( ! $firstname ) { $errors=true; w4os_notice(__("First name required", "w4os"), 'fail') ; }
+    $required=array('w4os_firstname', 'w4os_lastname', 'w4os_password_1');
+    if ( ! $firstname ) { $errors=true; w4os_notice(__("First name required", "w4os"), 'fail') ; }
     if ( ! $lastname ) { $errors=true; w4os_notice(__("Last name required", 'w4os'), 'fail') ; }
-    if ( ! $params['w4os_password_1'] && ! $params['w4os_password_2'] ) { $errors=true; w4os_notice(__("Password required", 'w4os'), 'fail') ; }
-    else if ( $params['w4os_password_1'] != $params['w4os_password_2'] ) { $errors=true; w4os_notice(__("Passwords do not match", 'w4os'), 'fail') ; }
+    if ( ! $params['w4os_password_1'] ) { $errors=true; w4os_notice(__("Password required", 'w4os'), 'fail') ; }
+    else if ( ! wp_check_password($params['w4os_password_1'], $user->user_pass)) { $errors=true; w4os_notice(__("Wrong password", 'w4os'), 'fail') ; }
     if ( $errors == true ) return false;
+
     $password=stripcslashes($params['w4os_password_1']);
-    if ( ! w4os_is_strong ($password)) return false;
+    // if ( ! w4os_is_strong ($password)) return false; // We now only rely on WP password requirements
 
     if (in_array(strtolower($firstname), array_map('strtolower', DEFAULT_RESTRICTED_NAMES))) {
       w4os_notice(sprintf( __( 'The name %s is not allowed', 'w4os' ), "$firstname"), 'fail');
@@ -506,12 +508,14 @@ function w4os_profile_wc_edit( $user ) {
 
     $firstname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_firstname]) ? $_REQUEST[w4os_firstname] : get_user_meta( $user->ID, 'first_name', true ));
     $lastname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_lastname]) ? $_REQUEST[w4os_lastname] : get_user_meta( $user->ID, 'last_name', true ));
+
+    $content .= "<p class=description>" . __('Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed.', 'w4os') . "</p>";
+
     $content .= "
       <div class='clear'></div>
 
       <p class='woocommerce-form-row woocommerce-form-row--first form-row form-row-first'>
     		<label for='w4os_firstname'>" . __("Avatar first name", "w4os") . "&nbsp;<span class='required'>*</span></label>
-        <span class=description>" . __("Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost.", "w4os") . "</span>
     		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_firstname' id='w4os_firstname' autocomplete='given-name' value='$firstname' required>
     	</p>
     	<p class='woocommerce-form-row woocommerce-form-row--last form-row form-row-last'>
@@ -521,17 +525,15 @@ function w4os_profile_wc_edit( $user ) {
       <div class='clear'></div>
       ";
 
-      ### This common part should be moved after the end of if clause, once we implement password change
-      ###
+      // <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
+      // <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
+      // <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
+      // <span class=description>" . __("The password to log in-world is the same as your password on this website.", "w4os") . "</span>
+      // </p>
       $content.= "
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-      <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
-      <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
-      <span class=description>" . __("The password to log in-world is the same as your password on this website.", "w4os") . "</span>
-      </p>
-      <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-        <label for='w4os_password_2'>" . __('Confirm your password') . "</label>
-        <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_2' id='w4os_password_2' autocomplete='off' required><span class='show-password-input'></span></span>
+        <label for='w4os_password_1'>" . __('Confirm your password') . "</label>
+        <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
       </p>
       ";
 
@@ -544,8 +546,9 @@ function w4os_profile_wc_edit( $user ) {
         ");
       if($models) {
         $content.= "<div class='clear'></div>";
-        // $content.= "<div class>";
-        $content .= "<p>Avatar <span class=description>You can change later, in-world</span></p>";
+        $content.= "<div class=form-row>";
+        $content .= "<label>" . __('Your avatar', 'w4os') . "</label>";
+        $content .= "<p class=description>" . __('You can change and customize it in-world, as often as you want.', 'w4os') . "</p>";
         $content .= "
         <p class='field-model woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>";
         foreach($models as $model) {
@@ -574,7 +577,7 @@ function w4os_profile_wc_edit( $user ) {
         }
         $content.= "
         </p>";
-        // $content.= "</div>";
+        $content.= "</div>";
       }
 
       if ($uuid) $content.="    	</fieldset>";
@@ -584,8 +587,6 @@ function w4os_profile_wc_edit( $user ) {
       <input type='hidden' name='action' value='$action'>
       <button type='submit' class='woocommerce-Button button' name='w4os_update_avatar' value='$action'>" . __("Save") . "</button>
       </p>";
-      ###
-      ### End of common part to move
   }
   $content .= "  </form>";
   return $content;

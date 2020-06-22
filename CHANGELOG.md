@@ -1,5 +1,7 @@
-### [unreleased]
-* cosmetic changes. Clarify OpenSim settings page, readmes and changelog
+### 0.9.4
+* use WordPress password for avatar creation
+* auto-fill Avatar name with WordPress user name
+* some cosmetic changes including clarify OpenSim settings page, readmes and changelog
 
 ### 0.9.3.3
 * added settings for model selection
