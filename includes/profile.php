@@ -523,15 +523,15 @@ function w4os_profile_wc_edit( $user ) {
 
       ### This common part should be moved after the end of if clause, once we implement password change
       ###
-      // <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-      // <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
-      // <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
-      // </p>
       $content.= "
+      <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
+      <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
+      <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
+      <span class=description>" . __("The password to log in-world is the same as your password on this website.", "w4os") . "</span>
+      </p>
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
         <label for='w4os_password_2'>" . __('Confirm your password') . "</label>
         <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_2' id='w4os_password_2' autocomplete='off' required><span class='show-password-input'></span></span>
-        <span class=description>" . __("The password to log in-world is the same as your password on this website.", "w4os") . "</span>
       </p>
       ";
 
