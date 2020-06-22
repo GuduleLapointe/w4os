@@ -40,11 +40,15 @@ td.gridvar {
   font-size: 0.8em;
   padding: 6px 12px 0;
 }
-
+.field-model {
+  margin: 0 -5px;
+  padding: 0;
+}
 .field-model label.with_picture {
   display: inline-block;
-  width: 30%;
-  margin-right: 10px;
+  box-sizing: border-box;
+  width: calc(100% / 3 - 15px);
+  margin: 0 5px 5px;
   text-align: center;
   position: relative;
 }
@@ -70,17 +74,28 @@ img.model-picture {
 }
 
 /* IMAGE STYLES */
-.field-model [type=radio] + img {
+.field-model [type=radio] + span + img {
   cursor: pointer;
 }
 
-.field-model [type=radio] + img.model-picture:hover {
+.field-model [type=radio]  + span + img.model-picture:hover {
   /* outline: 2px solid #f00; */
   opacity: 0.75;
 }
 
 /* CHECKED STYLES */
-.field-model [type=radio]:checked + img {
+.field-model [type=radio]:checked + span + img {
   outline: 2px solid #f00;
   opacity: 1;
+}
+
+.form-wrap p, p.description, p.help, span.description {
+  margin-top: 0;
+  /* margin-bottom: 0; */
+}
+.form-wrap p, p.description, p.help, span.description {
+  font-size: 70%;
+  line-height: 70%;
+    font-style: italic;
+
 }

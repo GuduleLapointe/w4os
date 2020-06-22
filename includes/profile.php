@@ -471,7 +471,7 @@ function w4os_profile_wc_edit( $user ) {
   }
 
   $content="
-  <form class='woocommerce-EditAccountForm edit-account' action='' method='post'>";
+  <form class='woocommerce-EditAccountForm edit-account wrap' action='' method='post'>";
 
   if ($uuid) {
     $action = 'w4os_update_avatar';
@@ -504,7 +504,6 @@ function w4os_profile_wc_edit( $user ) {
   } else {
     $action = 'w4os_create_avatar';
     $content .= "
-      <span><em>" . __("Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost.", "w4os") . "</em></span>
       <div class='clear'></div>
 
       <p class='woocommerce-form-row woocommerce-form-row--first form-row form-row-first'>
@@ -515,13 +514,13 @@ function w4os_profile_wc_edit( $user ) {
     		<label for='w4os_lastname'>" . __("Avatar last name", "w4os") . "&nbsp;<span class='required'>*</span></label>
     		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='$_REQUEST[w4os_lastname]' required>
     	</p>
+      <p class=description>" . __("Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost.", "w4os") . "</p>
       <div class='clear'></div>
       ";
 
       ### This common part should be moved after the enf of if close, once we implement password change
       ###
       $content.= "
-      <span><em>" . __("Your avatar password is not required to be the same as your website account password. Changes made here will not affect your website password.", "w4os") . "</em></span>
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
       <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
       <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
@@ -529,7 +528,9 @@ function w4os_profile_wc_edit( $user ) {
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
       <label for='w4os_password_2'>" . __('Confirm new password') . "</label>
       <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_2' id='w4os_password_2' autocomplete='off' required><span class='show-password-input'></span></span>
-      </p>";
+      </p>
+      <p class=description>" . __("Your avatar password is not required to be the same as your website account password. Changes made here will not affect your website password.", "w4os") . "</p>
+      ";
 
       $models=$w4osdb->get_results("SELECT FirstName, LastName, profileImage, profileAboutText
         FROM UserAccounts, userProfile
@@ -540,8 +541,10 @@ function w4os_profile_wc_edit( $user ) {
         ");
       if($models) {
         $content.= "<div class='clear'></div>";
-        $content.= "<div class=field-model>";
-        $content .= "<p>Avatar <small><em>(You can change later, in-world)</em></small></p>";
+        // $content.= "<div class>";
+        $content .= "<p>Avatar <span class=description>(You can change later, in-world)</span></p>";
+        $content .= "
+        <p class='field-model woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>";
         foreach($models as $model) {
           $model_name = $model->FirstName . " " . $model->LastName;
           $model_display_name = $model_name;
@@ -554,18 +557,21 @@ function w4os_profile_wc_edit( $user ) {
 
           // if($model->profileImage != NULL_KEY)
           // $model_img =  "<img src='/assets/asset.php?id=" . $model->profileImage ."'>";
-          if(!empty(get_option('w4os_asset_server_uri', ASSET_SERVER_URI)))
-            $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', ASSET_SERVER_URI) . $model->profileImage ."'>";
+          if(!empty(get_option('w4os_asset_server_uri', ASSET_SERVER_URI))) $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', ASSET_SERVER_URI) . $model->profileImage ."'>";
           if(empty($model_img)) $modelclass="no_picture";
           else $modelclass = "with_picture";
           if($model_name == DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 
-          $content .= "<label class='$modelclass'>
-          <input type='radio' name='w4os_model' value='$model_name'$checked>
-          $model_img <div class=model-name>$model_display_name</div>
+          $content .= "
+          <label class='$modelclass'>
+            <input type='radio' name='w4os_model' value='$model_name'$checked>
+            <span class=model-name>$model_display_name</span>
+            $model_img
           </label>";
         }
-        $content.= "</div>";
+        $content.= "
+        </p>";
+        // $content.= "</div>";
       }
 
       if ($uuid) $content.="    	</fieldset>";

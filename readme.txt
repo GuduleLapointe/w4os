@@ -33,12 +33,12 @@ while getting more familiar with it. Feel free to give advices.
 * Create avatar from custom profile page
 * Choose new avatar apparence from default models
 * Change avatar password (via web user password)
-* Sync avatar and website passwords (partial, not on avatar creation)
+* Sync avatar and website passwords (partially done, not on avatar creation)
 
 ### Roadmap
 
 * short term (for 1.0 release)
-  * check and use website password when creating an avatar
+  * *NEXT MOVE: check and use website password when creating an avatar*
   * option to use WordPress name as avatar name (in this case, lock WordPress
     name changes once an avatar is set)
   * Create avatar from standard wp-admin/profile.php page
