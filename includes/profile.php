@@ -503,32 +503,35 @@ function w4os_profile_wc_edit( $user ) {
   	### End current password part
   } else {
     $action = 'w4os_create_avatar';
+
+    $firstname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_firstname]) ? $_REQUEST[w4os_firstname] : get_user_meta( $user->ID, 'first_name', true ));
+    $lastname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_lastname]) ? $_REQUEST[w4os_lastname] : get_user_meta( $user->ID, 'last_name', true ));
     $content .= "
       <div class='clear'></div>
 
       <p class='woocommerce-form-row woocommerce-form-row--first form-row form-row-first'>
     		<label for='w4os_firstname'>" . __("Avatar first name", "w4os") . "&nbsp;<span class='required'>*</span></label>
-    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_firstname' id='w4os_firstname' autocomplete='given-name' value='$_REQUEST[w4os_firstname]' required>
         <span class=description>" . __("Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost.", "w4os") . "</span>
+    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_firstname' id='w4os_firstname' autocomplete='given-name' value='$firstname' required>
     	</p>
     	<p class='woocommerce-form-row woocommerce-form-row--last form-row form-row-last'>
     		<label for='w4os_lastname'>" . __("Avatar last name", "w4os") . "&nbsp;<span class='required'>*</span></label>
-    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='$_REQUEST[w4os_lastname]' required>
+    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='$lastname' required>
     	</p>
       <div class='clear'></div>
       ";
 
-      ### This common part should be moved after the enf of if close, once we implement password change
+      ### This common part should be moved after the end of if clause, once we implement password change
       ###
+      // <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
+      // <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
+      // <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
+      // </p>
       $content.= "
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-      <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
-      <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
-      <span class=description>" . __("Your avatar password is not required to be the same as your website account password. Changes made here will not affect your website password.", "w4os") . "</span>
-      </p>
-      <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-      <label for='w4os_password_2'>" . __('Confirm new password') . "</label>
-      <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_2' id='w4os_password_2' autocomplete='off' required><span class='show-password-input'></span></span>
+        <label for='w4os_password_2'>" . __('Confirm your password') . "</label>
+        <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_2' id='w4os_password_2' autocomplete='off' required><span class='show-password-input'></span></span>
+        <span class=description>" . __("The password to log in-world is the same as your password on this website.", "w4os") . "</span>
       </p>
       ";
 
