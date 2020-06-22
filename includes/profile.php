@@ -467,7 +467,7 @@ function w4os_profile_wc_edit( $user ) {
     $uuid = w4os_update_avatar( $user, $_REQUEST);
   } else {
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
-    if(! $uuid) w4os_notice(__("You have no grid account yet. Fill the form below to create your avatar."));
+    if(! $uuid) echo "<p>" . __("You have no grid account yet. Fill the form below to create your avatar.") . "</p>";
   }
 
   $content="
@@ -509,12 +509,12 @@ function w4os_profile_wc_edit( $user ) {
       <p class='woocommerce-form-row woocommerce-form-row--first form-row form-row-first'>
     		<label for='w4os_firstname'>" . __("Avatar first name", "w4os") . "&nbsp;<span class='required'>*</span></label>
     		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_firstname' id='w4os_firstname' autocomplete='given-name' value='$_REQUEST[w4os_firstname]' required>
+        <span class=description>" . __("Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost.", "w4os") . "</span>
     	</p>
     	<p class='woocommerce-form-row woocommerce-form-row--last form-row form-row-last'>
     		<label for='w4os_lastname'>" . __("Avatar last name", "w4os") . "&nbsp;<span class='required'>*</span></label>
     		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='$_REQUEST[w4os_lastname]' required>
     	</p>
-      <p class=description>" . __("Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost.", "w4os") . "</p>
       <div class='clear'></div>
       ";
 
@@ -524,12 +524,12 @@ function w4os_profile_wc_edit( $user ) {
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
       <label for='w4os_password_1'>" . __('New password') . "$leaveblank</label>
       <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
+      <span class=description>" . __("Your avatar password is not required to be the same as your website account password. Changes made here will not affect your website password.", "w4os") . "</span>
       </p>
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
       <label for='w4os_password_2'>" . __('Confirm new password') . "</label>
       <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_2' id='w4os_password_2' autocomplete='off' required><span class='show-password-input'></span></span>
       </p>
-      <p class=description>" . __("Your avatar password is not required to be the same as your website account password. Changes made here will not affect your website password.", "w4os") . "</p>
       ";
 
       $models=$w4osdb->get_results("SELECT FirstName, LastName, profileImage, profileAboutText
@@ -542,7 +542,7 @@ function w4os_profile_wc_edit( $user ) {
       if($models) {
         $content.= "<div class='clear'></div>";
         // $content.= "<div class>";
-        $content .= "<p>Avatar <span class=description>(You can change later, in-world)</span></p>";
+        $content .= "<p>Avatar <span class=description>You can change later, in-world</span></p>";
         $content .= "
         <p class='field-model woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>";
         foreach($models as $model) {
