@@ -1,5 +1,7 @@
-### 0.9.9
+### 0.10
 * welcome back languages/ folder, force loading with load_plugin_textdomain()
+  and now it works
+* found some untranslated strings
 * added missing text domains in localizations
 
 ### 0.9.8.3
