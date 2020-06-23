@@ -1,3 +1,6 @@
+### 0.9.7
+* changed language repo to github
+
 ### 0.9.6
 * removed languages/ folder, it doesn't seem to be taken in account and
   localizations have their own git repo

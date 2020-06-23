@@ -6,12 +6,12 @@
  *
  * Plugin Name:       W4OS OpenSimulator Interface
  * Description:       WordPress interface for OpenSimulator.
- * Version:           0.9.6
+ * Version:           0.9.7
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
  * GitLab Plugin URI: https://git.magiiic.com/opensimulator/w4os
- * GitLab Languages:  https://git.magiiic.com/opensimulator/w4os-translations
+ * GitHub Languages:  https://github.com/GuduleLapointe/w4os-translations
  * Release Asset:     true
  * License:           AGPLv3
  * License URI:       https://www.gnu.org/licenses/agpl-3.0.txt
