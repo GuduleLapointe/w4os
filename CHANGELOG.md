@@ -1,5 +1,6 @@
-### 0.9.7
-* changed language repo to github
+### 0.9.8.1
+* tried to switch to GitHub repo for translations but it doesn't work either
+  so switch back to GitLab repo for consistency
 
 ### 0.9.6
 * removed languages/ folder, it doesn't seem to be taken in account and
