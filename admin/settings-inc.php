@@ -17,7 +17,7 @@
 			</th></tr>
 			<?php if(! W4OS_DB_CONNECTED) { ?>
 				<tr><td colspan=2>
-					<strong><?php _e("Required tables are missing, check your connection settings or your database");?></strong>
+					<strong><?php _e("Required tables are missing, check your connection settings or your database", 'w4os');?></strong>
 				</td></tr>
 			<?php } ?>
 			<tr valign="top">
@@ -25,7 +25,7 @@
 				<td><input type="text" class=regular-text id="w4os_db_host" name="w4os_db_host" value="<?php echo get_option('w4os_db_host'); ?>" /></td>
 			</tr>
 			<tr valign="top">
-			  <th scope="row"><label for="w4os_db_database"><?php _e("Database name");?></label></th>
+			  <th scope="row"><label for="w4os_db_database"><?php _e("Database name", 'w4os');?></label></th>
 			  <td><input type="text" class=regular-text id="w4os_db_database" name="w4os_db_database" value="<?php echo get_option('w4os_db_database'); ?>" /></td>
 			</tr>
 			<tr valign="top">
@@ -38,16 +38,16 @@
 			</tr>
 
 			<tr><th colspan=2>
-				<h2><?php _e("Avatar creation");?></h2>
+				<h2><?php _e("Avatar creation", 'w4os');?></h2>
 			</th></tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e("Models");?></th>
+				<th scope="row"><?php _e("Models", 'w4os');?></th>
 				<td>
 					<p class=description>
-						<?php _e('Grid accounts matching first name or last name set below will apear as avatar models, with their profile picture if set, on the avatar registration form.') ?>
+						<?php _e('Grid accounts matching first name or last name set below will apear as avatar models, with their profile picture if set, on the avatar registration form.', 'w4os') ?>
 					<br/>
-						<?php _e('If both left empty, no model will be displayed and avatars will be created with default OpenSim appearance (most probably Ugly Ruth).') ?>
+						<?php _e('If both left empty, no model will be displayed and avatars will be created with default OpenSim appearance (most probably Ugly Ruth).', 'w4os') ?>
 					</p>
 				</td>
 			</tr>
@@ -61,7 +61,7 @@
 				<td><input type="text" class=regular-text id="w4os_model_lastname" name="w4os_model_lastname" value="<?php echo get_option('w4os_model_lastname'); ?>" /></td>
 			</tr>
 			<tr><th colspan=2>
-				<h2><?php _e("Misc");?></h2>
+				<h2><?php _e("Misc", 'w4os');?></h2>
 			</th></tr>
 			<tr valign="top">
 				<th scope="row"><label for="w4os_asset_server_uri"><?php _e("Web asset server", "w4os");?></label></th>
@@ -73,7 +73,7 @@
 					<input type="checkbox" class=regular-text id="w4os_exclude_models" name="w4os_exclude_models" value="1" <?php if (get_option('w4os_exclude_models')==1) echo "checked"; ?>/><label for="w4os_exclude_models"><?php _e('Models', 'w4os') ?></label>
 					<br><input type="checkbox" class=regular-text id="w4os_exclude_nomail" name="w4os_exclude_nomail" value="1" <?php if (get_option('w4os_exclude_nomail')==1) echo "checked"; ?>/><label for="w4os_exclude_nomail"><?php _e('Accounts without mail address', 'w4os') ?></label>
 					<p class=description>
-						<?php _e('Accounts without email address are usually test accounts created from the console. Uncheck if you have real avatars without email address.') ?>
+						<?php _e('Accounts without email address are usually test accounts created from the console. Uncheck if you have real avatars without email address.', 'w4os') ?>
 					</p>
 				</td>
 			</tr>

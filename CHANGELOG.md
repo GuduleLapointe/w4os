@@ -1,5 +1,6 @@
-### 0.9.8.4
-* added missing domains in localizations
+### 0.9.9
+* welcome back languages/ folder, force loading with load_plugin_textdomain()
+* added missing text domains in localizations
 
 ### 0.9.8.3
 * since 0.9.6.1, many unsuccessful attemps to get the localizations updates with
