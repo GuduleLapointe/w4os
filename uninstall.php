@@ -1,7 +1,9 @@
 <?php
-
 /**
  * Fired when the plugin is uninstalled.
+ *
+ * @package	w4os
+ * @author Olivier van Helden <olivier@van-helden.net>
  *
  * When populating this file, consider the following flow
  * of control:

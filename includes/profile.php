@@ -1,11 +1,21 @@
 <?php
-// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.php';
+/**
+ * Profile
+ *
+ * @package	w4os
+ * @author Olivier van Helden <olivier@van-helden.net>
+ */
 
 add_action( 'show_user_profile', 'w4os_profile_fields' );
 add_action( 'edit_user_profile', 'w4os_profile_fields' );
 add_action( 'personal_options_update', 'w4os_profile_fields_save' );
 add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
 
+/**
+ * Sync avatar info from OpenSimulator
+ * @param  object $user [description]
+ * @return object       [description]
+ */
 function w4os_profile_sync($user) {
   global $w4osdb;
   $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
@@ -15,6 +25,10 @@ function w4os_profile_sync($user) {
   return $uuid;
 }
 
+/**
+ * Avatar fields for WP user profile page
+ * @param  [type] $user
+ */
 function w4os_profile_fields( $user ) {
   global $w4osdb;
   $uuid = w4os_profile_sync($user);
@@ -41,6 +55,11 @@ function w4os_profile_fields( $user ) {
 <?php }
 }
 
+/**
+ * Avatar edit fields for WP user profile page (deprecated?)
+ * @param  [type] $user [description]
+ * @return [type]       [description]
+ */
 function w4os_profile_edit( $user ) {
   global $w4osdb;
   $content.="<h3>" . __("OpenSimulator profile") . "</h3>";
@@ -58,6 +77,13 @@ function w4os_profile_edit( $user ) {
   return $content;
 }
 
+/**
+ * Check if password is strong enough
+ * Deprecated since the avatar password is the same as WP password, so we rely
+ * on WP mechanisms.
+ * @param  string  $password
+ * @return boolean
+ */
 function w4os_is_strong ($password) {
   $min_length = 8;
   // Given password
@@ -74,6 +100,12 @@ function w4os_is_strong ($password) {
   }
 }
 
+/**
+ * Update avatar password in OpenSimulator
+ * Fired when user changes WP account password
+ * @param integer $user_id
+ * @param string  $new_pass new password
+ */
 function w4os_set_avatar_password( $user_id, $new_pass ) {
 	global $w4osdb;
 
@@ -99,6 +131,10 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
 	}
 }
 
+/**
+ * Catch password change from user profile page and save it to OpenSimulator
+ * @param  [type] $args [description]
+ */
 function w4os_save_account_details ( $args ) {
 	// not verified
 	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
@@ -106,18 +142,31 @@ function w4os_save_account_details ( $args ) {
 }
 add_action('save_account_details', 'w4os_save_account_details', 10, 1);
 
+/**
+ * Catch password change from WooCommerceand save it to OpenSimulator
+ * @param  integer $user_id
+ */
 function w4os_woocommerce_save_account_details ( $user_id ) {
 	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
 	w4os_set_avatar_password( $user_id, $_REQUEST['password_1'] );
 }
 add_action('woocommerce_save_account_details', 'w4os_woocommerce_save_account_details', 10, 1);
 
+/**
+ * Catch password change and save it to OpenSimulator
+ * I don't remember when this is fired
+ * @param  integer $user_id
+ */
 function my_profile_update( $user_id, $old_user_data ) {
 	if($_REQUEST['pass1'] == $_REQUEST['pass2'])
 	w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
 }
 add_action( 'profile_update', 'my_profile_update', 10, 2 );
 
+/**
+ * Catch password change made by admin and save it to OpenSimulator
+ * @param  integer $user_id
+ */
 function other_user_profile_update($user_id) {
 	if ( current_user_can('edit_user',$user_id) ) {
 		w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );

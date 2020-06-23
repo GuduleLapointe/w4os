@@ -1,4 +1,4 @@
-# W4OS
+# W4OS OpenSimulator Interface
 Contributors: magicoli69
 Tags: opensimulator, second life, web interface
 Donate link: https://paypal.me/magicoli

@@ -1,10 +1,20 @@
 <?php
-/*
+/**
+ * WooCommerce fixes
  *
+ * @package	w4os
+ * @author Olivier van Helden <olivier@van-helden.net>
+ *
+ * Remove Dashboard sections that have no content, to clarify My Account page.
+ * As OpenSimulator is virtual-product oriented, no need for sections like
+ * Adresses until the user actually buy something and gives a billing address)
  */
 
-// Check if user has already bought something
-
+/**
+ * Check if user has already bought something
+ * @param  integer $user_id User ID
+ * @return boolean          True if user bought something
+ */
 function has_bought( $user_id = 0 ) {
   if ( ! class_exists( 'woocommerce' ) ) return false;
   global $wpdb;
@@ -21,12 +31,14 @@ function has_bought( $user_id = 0 ) {
   AND pm.meta_value = $customer_id
   " );
 
-  // Count number of orders and return a boolean value depending if higher than 0
   return count( $results ) > 0 ? true : false;
 }
 
-// Remove unneeded woocommerce menus
-
+/**
+ * Remove unneeded woocommerce menus
+ * @param  array $menu_links [description]
+ * @return array             updated menu links
+ */
 function w4os_remove_my_account_links( $menu_links ){
   $endpoint = WC()->query->get_current_endpoint();
 
@@ -52,8 +64,11 @@ function w4os_remove_my_account_links( $menu_links ){
 add_filter ( 'woocommerce_account_menu_items', 'w4os_remove_my_account_links' );
 
 
-// Rename woocommerce menus
-
+/**
+ * Rename woocommerce download tab (not implemented yet)
+ * @param  arrray $menu_links [description]
+ * @return array              [description]
+ */
 function w4os_rename_downloads( $menu_links ){
   global $pagenow;
   // $menu_links['TAB ID HERE'] = 'NEW TAB NAME HERE';
@@ -63,34 +78,35 @@ function w4os_rename_downloads( $menu_links ){
 add_filter ( 'woocommerce_account_menu_items', 'w4os_rename_downloads' );
 
 
-// Add woocommerce menu and page
-
-/*
+/**
+ * Add Avatar link to woocommerce
  * Step 1. Add Link (Tab) to My Account menu
+ * @param  array $menu_links [description]
+ * @return array             [description]
  */
-add_filter ( 'woocommerce_account_menu_items', 'w4os_log_history_link', 40 );
 function w4os_log_history_link( $menu_links ){
-
 	$menu_links = array_slice( $menu_links, 0, 2, true )
 	+ array( 'avatar' => 'Avatar' )
 	+ array_slice( $menu_links, 2, NULL, true );
 
 	return $menu_links;
-
 }
+add_filter ( 'woocommerce_account_menu_items', 'w4os_log_history_link', 40 );
 
-/*
+/**
+ * Add Avatar link to woocommerce
  * Step 2. Register Permalink Endpoint
  */
-add_action( 'init', 'w4os_add_endpoint' );
 function w4os_add_endpoint() {
-
 	// WP_Rewrite is my Achilles' heel, so please do not ask me for detailed explanation
 	add_rewrite_endpoint( 'avatar', EP_PAGES );
-
 }
-/*
+add_action( 'init', 'w4os_add_endpoint' );
+
+/**
+ * Add Avatar link to woocommerce
  * Step 3. Content for the new page in My Account, woocommerce_account_{ENDPOINT NAME}_endpoint
+ * @return void
  */
 function w4os_my_account_endpoint_content() {
   $user = wp_get_current_user();
@@ -98,6 +114,11 @@ function w4os_my_account_endpoint_content() {
 }
 add_action( 'woocommerce_account_avatar_endpoint', 'w4os_my_account_endpoint_content' );
 
+/**
+ * Add filter for avatar to WooCommerce
+ * @var array
+ * @return array             [description]
+ */
 add_filter("woocommerce_get_query_vars", function ($vars) {
     foreach (["avatar"] as $e) {
         $vars[$e] = $e;
@@ -105,9 +126,11 @@ add_filter("woocommerce_get_query_vars", function ($vars) {
     return $vars;
 });
 
-/*
- * Step 4
+/**
+ * Add Avatar link to woocommerce
+ * Step 4:
+ *  Go to Settings > Permalinks and just push "Save Changes" button.
+ *
+ *  To replace rough, dirty and not working "flush_rewrite_rules()" method.
+ *  To implement in install section as soon as possible. Doesn't work anyway.
  */
-// Go to Settings > Permalinks and just push "Save Changes" button.
-// rough and dirty method. Move that to install section as soon as possible. Doesn't work anyway
-// flush_rewrite_rules();

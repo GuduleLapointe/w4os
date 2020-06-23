@@ -1,4 +1,4 @@
-# W4OS
+# W4OS OpenSimulator Interface
 
 WordPress interface for OpenSimulator
 
