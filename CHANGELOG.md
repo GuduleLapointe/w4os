@@ -1,7 +1,18 @@
+### 0.9.6
+* removed languages/ folder, it doesn't seem to be taken in account and
+  localizations have their own git repo
+* Added short install instructions for git page
+
+### 0.9.5
+* Renamed project W4OS OpenSimulator Inter
+* Attempt to phpdoc but it's long, not finished
+
+
 ### 0.9.4
 * use WordPress password for avatar creation
 * auto-fill Avatar name with WordPress user name
-* some cosmetic changes including clarify OpenSim settings page, readmes and changelog
+* some cosmetic changes including clarify OpenSim settings page, readmes and
+  changelog
 
 ### 0.9.3.3
 * added settings for model selection
@@ -13,7 +24,8 @@
 
 * fix: don't try to show model picture if web asset server is not set
 * fix: model name display without pictures when no picture
-* fix: modelname display strip value from model first and last name setting instead of 'Default'
+* fix: modelname display strip value from model first and last name setting
+  instead of 'Default'
 * strip "Ruth2" in model name, and add "Ruth 2.0" at the end
 * same for Roth2
 * fix: picture max-width relative, to be more responsive
@@ -34,7 +46,8 @@
 * copy needed inventory items from default avatar
 * fixed multiple attachments not added in inventory
 * fixed missing outfit error message in FireStorm
-* fixed hardcoded home region uuid, use "Welcome" instead (still need an option in settings page)
+* fixed hardcoded home region uuid, use "Welcome" instead (still need an option
+  in settings page)
 * fixed wrong password hash for new registrations
 
 ### 0.7.7
@@ -100,7 +113,8 @@
 * gridinfo and gridstatus dashboard
 
 ### 0.3.0
-* slug changed from "opensim" to "w4os" to avoid confusion between this project main and childes and side projects
+* slug changed from "opensim" to "w4os" to avoid confusion between this project
+  main and childs and side projects
 
 ### 0.2.4
 * marked as "stable"

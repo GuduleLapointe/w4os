@@ -84,16 +84,16 @@ function w4os_shortcodes_init()
 				}
 				if($filter) $filter = "$filter AND ";
 				$status = array(
-					__('World online', 'w4os') => $gridonline,
-					__('Citizens', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					__('Grid online', 'w4os') => $gridonline,
+					__('Members', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM UserAccounts as u WHERE $filter active=1" )),
-					__('Citizens in world', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					__('Members in world', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM Presence AS p, UserAccounts AS u
 					WHERE $filter RegionID != '00000000-0000-0000-0000-000000000000'
 					AND p.UserID = u.PrincipalID;" )),
 					// 'Active citizens (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					// FROM GridUser as g, UserAccounts as u WHERE g.UserID = u.PrincipalID AND Login > $lastmonth" )),
-					'Users in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					'Total users in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM Presence
 					WHERE RegionID != '00000000-0000-0000-0000-000000000000';	")),
 					'Active users (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
@@ -106,8 +106,8 @@ function w4os_shortcodes_init()
 					FROM Regions")),
 					// 'Total area (m²)' => number_format_i18n($w4osdb->get_var("SELECT sum(sizex * sizey)
 					// FROM regions") . "km²", 2),
-					__('Total area (km²)', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)
-					FROM regions") . "km²", 2),
+					__('Total area', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)
+					FROM regions"), 2)  . "&nbsp;km²",
 				);
 			}
 			wp_cache_add( 'gridstatus', $status, 'w4os');

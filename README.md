@@ -41,3 +41,4 @@ your changes on the git repository or sending them to the authors.
 
 * GitLab repository: https://git.magiiic.com/opensimulator/w4os
 * GitHub repository: https://github.com/GuduleLapointe/w4os
+* Localization repository: https://git.magiiic.com/opensimulator/w4os-translations
