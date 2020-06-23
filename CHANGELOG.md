@@ -1,11 +1,8 @@
-### 0.9.8.2
-* translations updates issue seem to come from a bug in GitHub updater which
-  doesn't take the real server name in account, so switch to a gitlab.com repo
-  for testing
-
-### 0.9.8.1
-* tried to switch to GitHub repo for translations but it doesn't work either
-  so switch back to GitLab repo for consistency
+### 0.9.8.3
+* since 0.9.6.1, many unsuccessful attemps to get the localizations updates with
+  GitHub updater, switch back to our own gitlab server for now, but it won't
+  work until a bug in GitHub Updater is fixed
+  https://github.com/afragen/github-updater/issues/890
 
 ### 0.9.6
 * removed languages/ folder, it doesn't seem to be taken in account and
