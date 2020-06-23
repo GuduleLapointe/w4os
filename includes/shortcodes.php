@@ -1,7 +1,23 @@
 <?php
+/**
+ * Shortcodes
+ *
+ * @package	w4os
+ * @author Olivier van Helden <olivier@van-helden.net>
+ */
 
+/**
+ * Initialize w4os shortcodes
+ * @return [type] [description]
+ */
 function w4os_shortcodes_init()
 {
+	/**
+	 * Grid info shortcode
+	 * @param  array  $atts    [description]
+	 * @param  string $content html
+	 * @return string          html
+	 */
 	function w4os_gridinfo_shortcode($atts = [], $content = null)
 	{
 		if(! W4OS_DB_CONNECTED) {
@@ -24,6 +40,12 @@ function w4os_shortcodes_init()
 	}
 	add_shortcode('gridinfo', 'w4os_gridinfo_shortcode');
 
+	/**
+	 * Grid status shortcode
+	 * @param  array  $atts    [description]
+	 * @param  string $content html
+	 * @return string          html
+	 */
 	function w4os_gridstatus_shortcode($atts = [], $content = null)
 	{
 		if(! W4OS_DB_CONNECTED) {

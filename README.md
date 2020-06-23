@@ -8,6 +8,15 @@ The first ready to use WordPress interface for OpenSimulator. Provides user
 registration and basic grid info. See enabled features below and ROADMAP file
 for upcoming functionalties.
 
+## Installation
+
+### From git repo
+
+* Download the latest pagkage https://git.magiiic.com/opensimulator/w4os/-/archive/master/w4os-master.zip
+* Unzip it, rename w4os-master to w4os and place it inside your wp-content/plugins folder
+* Activate from your plugins page
+* Go to admin menu OpenSimulator > Settings to enter your grid details
+
 ## Features
 
 * **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
