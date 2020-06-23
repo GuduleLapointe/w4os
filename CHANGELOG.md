@@ -1,3 +1,8 @@
+### 0.9.8.2
+* translations updates issue seem to come from a bug in GitHub updater which
+  doesn't take the real server name in account, so switch to a gitlab.com repo
+  for testing
+
 ### 0.9.8.1
 * tried to switch to GitHub repo for translations but it doesn't work either
   so switch back to GitLab repo for consistency
