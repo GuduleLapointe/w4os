@@ -1,15 +1,82 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: Olivier van Helden\n"
+"POT-Creation-Date: 2020-06-23 19:18:41-0400\n"
+"PO-Revision-Date: 2020-06-23 19:23-0400\n"
+"Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: Speculoos World\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-06-23 16:18:55-0400\n"
-"PO-Revision-Date: 2020-06-23 16:20:00-0400\n"
-"Language: nl_NL\n"
+"X-Generator: Poedit 2.2.1\n"
+
+# wpml-name: 90efd059f58183a99038e138b8fe17f0
+msgid "You can change and customize it in-world, as often as you want."
+msgstr "Je kunt het wijzigen en aanpassen in de wereld, zo vaak als je wilt."
+
+# wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
+msgid "Your avatar"
+msgstr "Jouw avatar"
+
+# wpml-name: 1a87f41bc2db648685564cf6fa5b2903
+msgid ""
+"Choose your avatar name below. This is how people will see you in-world. "
+"Once the avatar is created, it cannot be changed."
+msgstr ""
+"Kies hieronder uw avatar-naam. Dit is hoe mensen je in de wereld zullen "
+"zien. Zodra de avatar is gemaakt, kan deze niet meer worden gewijzigd."
+
+# wpml-name: bc2068f5bf9d75b50d1f046f1e57c23c
+msgid ""
+"You have no grid account yet. Fill the form below to create your avatar."
+msgstr ""
+"U heeft nog geen roosteraccount. Vul het onderstaande formulier in om uw "
+"avatar te maken."
+
+# wpml-name: 317e8940a1b9f03b83ef85393bd49552
+msgid "Avatar profile"
+msgstr "Avatar profiel"
+
+# wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
+msgid "Online users, regions, etc."
+msgstr "Online gebruikers, regio's, enz."
+
+# wpml-name: 119154a6f7028c6f8ebe3e470e626296
+msgid "General information (grid name and login uri)"
+msgstr "Algemene informatie (gridnaam en login-uri)"
+
+# wpml-name: 6bdda8124d6ca549428567dfc1c0532d
+msgid "Available shortcodes"
+msgstr "Beschikbare shortcodes"
+
+# wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
+msgid "Active users (30 days)"
+msgstr "Actieve gebruikers (30 dagen)"
+
+# wpml-name: 9143e8053fefd25ce03ae81136931586
+msgid "Total users in world"
+msgstr "Gebruikers op grid"
+
+# wpml-name: 6834699b2d08455d0475c76d54356191
+msgid "Total area"
+msgstr "Totale oppervlakte"
+
+# wpml-name: 67ea4b3432b974a20b2c8ee6609e363c
+msgid "Members in world"
+msgstr "Leden op grid"
+
+# wpml-name: ef53538ae41a651c7f72ab6cb1135d8c
+msgid "Members"
+msgstr "Leden"
+
+# wpml-name: 69675902f4d4a3da44638540557562af
+msgid "Grid online"
+msgstr "Grid online"
+
+# wpml-name: 89e15c20b6fff50f9caa1f171381251d
+msgid "W4OS OpenSimulator Interface"
+msgstr "W4OS OpenSimulator Interface"
 
 # wpml-name: 374124f21084c34d958491bf98d72af4
 msgid "WordPress interface for OpenSimulator."
@@ -19,7 +86,10 @@ msgstr "WordPress-interface voor OpenSimulator."
 msgid "Robust server connection"
 msgstr "Robust server verbinding"
 
+# #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
 # wpml-name: 8a556ddad981269d9764cbf640cfd337
+# #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
+# wpml-name: f279731266ee1b5ff0b7bd85e585dfef
 msgid "https://speculoos.world"
 msgstr "https://speculoos.world/nl"
 
@@ -32,8 +102,12 @@ msgid "UUID"
 msgstr "UUID"
 
 # wpml-name: fc4e1af5d2d469ea179cee95817ed54f
-msgid "Your name in the virtual world (not required to be your real name). You can pick anything you want. Almost."
-msgstr "Uw naam in de virtuele wereld (niet noodzakelijk uw echte naam). Je kunt kiezen wat je wilt. Of bijna."
+msgid ""
+"Your name in the virtual world (not required to be your real name). You can "
+"pick anything you want. Almost."
+msgstr ""
+"Uw naam in de virtuele wereld (niet noodzakelijk uw echte naam). Je kunt "
+"kiezen wat je wilt. Of bijna."
 
 # wpml-name: 867cee98fdd724e7d5bc87f61ce657bc
 msgid "Passwords do not match"
@@ -56,8 +130,12 @@ msgid "The name %s is not allowed"
 msgstr "Naam% s is niet toegestaan"
 
 # wpml-name: 91030b181f530fca5da4314a6aabe283
-msgid "Password must contain at least %s characters, including uppercase, lowercase and number"
-msgstr "Het wachtwoord moet ten minste %s tekens bevatten, inclusief hoofdletters, kleine letters en een cijfer."
+msgid ""
+"Password must contain at least %s characters, including uppercase, lowercase "
+"and number"
+msgstr ""
+"Het wachtwoord moet ten minste %s tekens bevatten, inclusief hoofdletters, "
+"kleine letters en een cijfer"
 
 # wpml-name: 02cb97a68e5137af44e882dbe2180485
 msgid "Avatar %s created successfully."
@@ -100,8 +178,13 @@ msgid "Action %s not implemented"
 msgstr "Actie %s is niet geïmplementeerd"
 
 # wpml-name: 8014d55bac80ddaf07c8994175601b04
-msgid "Your avatar password is not required to be the same as your website account password. Changes made here will not affect your website password."
-msgstr "Het wachtwoord van uw avatar hoeft niet hetzelfde te zijn als dat van uw account op de site. Hier aangebrachte wijzigingen hebben geen invloed op uw account op de site."
+msgid ""
+"Your avatar password is not required to be the same as your website account "
+"password. Changes made here will not affect your website password."
+msgstr ""
+"Het wachtwoord van uw avatar hoeft niet hetzelfde te zijn als dat van uw "
+"account op de site. Hier aangebrachte wijzigingen hebben geen invloed op uw "
+"account op de site."
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 msgid "OpenSim Status"
@@ -112,8 +195,12 @@ msgid "OpenSim Settings"
 msgstr "OpenSim-instellingen"
 
 # wpml-name: 2f4688fcbce23b3ad3066bc66120522f
-msgid "Your name in the virtual world, not required to be your real name. You can pick anything you want. Almost."
-msgstr "Uw naam in de virtuele wereld (niet noodzakelijk uw echte naam). Je kunt kiezen wat je wilt. Of bijna."
+msgid ""
+"Your name in the virtual world, not required to be your real name. You can "
+"pick anything you want. Almost."
+msgstr ""
+"Uw naam in de virtuele wereld (niet noodzakelijk uw echte naam). Je kunt "
+"kiezen wat je wilt. Of bijna."
 
 # wpml-name: bfc045552fb736eb0e776baee784de42
 msgid "Avatar first name"
@@ -125,7 +212,7 @@ msgstr "Avatar achternaam"
 
 # wpml-name: 877a81d559efa8e5dac0cccac9f80a09
 msgid "leave blank to leave unchanged"
-msgstr "Laat leeg om geen wijzigingen aan te brengen"
+msgstr "laat leeg om geen wijzigingen aan te brengen"
 
 # wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
 msgid "Current password"
@@ -133,7 +220,7 @@ msgstr "Huidig wachtwoord"
 
 # wpml-name: 2ac66b2144baca76994f174ce4cb120c
 msgid "OpenSimulator web interface for WordPress."
-msgstr "OpenSimulator-interface voor WordPress"
+msgstr "OpenSimulator-interface voor WordPress."
 
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab
 msgid "Grid status"
@@ -148,29 +235,25 @@ msgid "Speculoos"
 msgstr "Speculoos"
 
 # wpml-name: 8706391d288aeb21cf94903c37888b0f
-msgid "This is a short description of what the plugin does. It's displayed in the WordPress admin area."
+msgid ""
+"This is a short description of what the plugin does. It's displayed in the "
+"WordPress admin area."
 msgstr ""
+"This is a short description of what the plugin does. It's displayed in the "
+"WordPress admin area."
 
 # wpml-name: dca56d6af7010d3d34aadf3fd1666bf7
 msgid "https://git.magiiic.com/opensimulator/w4os"
-msgstr ""
+msgstr "https://git.magiiic.com/opensimulator/w4os"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
-# 
-msgid "Members in world"
-msgstr "Leden op grid"
+# wpml-name: 67307c208d2161c2f079f99e0c554f12
+#~ msgid "Surface totale"
+#~ msgstr "Totale oppervlakte"
 
-# 
-msgid "Total users in world"
-msgstr "Gebruikers op grid"
-
-# 
-msgid "Active users (30 days)"
-msgstr "Actieve gebruikers (30 dagen)"
-
-# 
-msgid "Total area"
-msgstr "Totale oppervlakte"
+# wpml-name: 12e3251b47122fde56704c1607205066
+#~ msgid "Régions"
+#~ msgstr "Regio's"
