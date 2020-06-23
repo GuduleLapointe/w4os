@@ -24,7 +24,7 @@ function w4os_shortcodes_init()
 			return;
 		}
 		// Gridinfo: http://robust.server:8002/get_grid_info
-		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info");
+		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info", 'w4os');
 		empty($content) ? : $content="<div>$content</div>";
 		$content="<h4>$title</h4>$content";
 		$info=array(
@@ -53,7 +53,7 @@ function w4os_shortcodes_init()
 		}
 		global $w4osdb;
 		global $wp_locale;
-		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid status");
+		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid status", 'w4os');
 		if(!empty($content)) $content="<div>$content</div>";
 
 		$content="<h4>$title</h4>$content";
@@ -114,7 +114,7 @@ function w4os_shortcodes_init()
 		}
 		$result=w4os_array2table($status);
 
-		if(empty($result)) $result=__("No result") ;
+		if(empty($result)) $result=__("No result", 'w4os') ;
 		return $content . $result;
 	}
 	add_shortcode('gridstatus', 'w4os_gridstatus_shortcode');

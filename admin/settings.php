@@ -82,7 +82,7 @@ function w4os_settings_link( $links ) {
 
 	array_push(
 		$links,
-		"<a href='$url'>" . __( 'Settings' ) . "</a>"
+		"<a href='$url'>" . __('Settings') . "</a>"
 	);
 
 	return $links;

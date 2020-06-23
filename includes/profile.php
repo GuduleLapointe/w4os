@@ -34,7 +34,7 @@ function w4os_profile_fields( $user ) {
   $uuid = w4os_profile_sync($user);
   echo "    <h3>" . __("OpenSimulator", "w4os") ."</h3>";
   if(!$uuid) {
-    echo "<p>" . __("No avatar") . "</p>";
+    echo "<p>" . __("No avatar", 'w4os') . "</p>";
   } else {
    ?>
 
@@ -62,14 +62,14 @@ function w4os_profile_fields( $user ) {
  */
 function w4os_profile_edit( $user ) {
   global $w4osdb;
-  $content.="<h3>" . __("OpenSimulator profile") . "</h3>";
+  $content.="<h3>" . __("OpenSimulator profile", 'w4os') . "</h3>";
   $content.='<table class="form-table">'
   . '<tr>'
-  . '<th>' . __("Avatar UUID") . '</th>'
+  . '<th>' . __("Avatar UUID", 'w4os') . '</th>'
   . '<td>' . get_the_author_meta( 'w4os_uuid', $user->ID ) . '</td>'
   . '</tr>'
   . '<tr>'
-  . '<th>' . __("Avatar name") . '</th>'
+  . '<th>' . __("Avatar name", 'w4os') . '</th>'
   . '<td>' . get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID ) . '</td>'
   . '</tr>'
   . '</table>';
@@ -504,7 +504,7 @@ function w4os_update_avatar( $user, $params ) {
 
 function w4os_profile_wc_edit( $user ) {
   if($user->ID == 0) {
-    $content = __("Log in to display your avatar");
+    $content = __("Log in to display your avatar", 'w4os');
     return $content;
   }
   ####
@@ -518,7 +518,7 @@ function w4os_profile_wc_edit( $user ) {
     $uuid = w4os_update_avatar( $user, $_REQUEST);
   } else {
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
-    if(! $uuid) echo "<p>" . __("You have no grid account yet. Fill the form below to create your avatar.") . "</p>";
+    if(! $uuid) echo "<p>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
   }
 
   $content="
