@@ -1,63 +1,26 @@
-# WordPress interface for OpenSimulator
+# W4OS
+
+WordPress interface for OpenSimulator
 
 ## Description
 
-WordPress interface for OpenSimulator is an WordPress plugin to allow
-OpenSimulator administration and user registration.
+The first ready to use WordPress interface for OpenSimulator. Provides user
+registration and basic grid info. See enabled features below and ROADMAP file
+for upcoming functionalties.
 
-The goal is to allow user registration, grid basic info and monitoring and, in
-a perfect world, regions and simulators administration.
+## Features
 
-### Current status
-
-Code is a mess. Don't blame me. I want to do it the right way but I'm not used to
-WordPress plugins standards yet. I'll try to puth things on the right places
-while getting more familiar with it. Feel free to give advices.
-
-### Features
-
-* OpenSim settings: grid name, login uri and database connection settings
-* Grid info, as a shortcode and in admin pages
-* Grid status, as a shortcode and in admin pages
-
-* Create avatar from WooCommerce 'My account' dashboard
-* Create avatar from custom profile page
-* Choose new avatar apparence from default models
-* Change avatar password (via web user password)
-* Sync avatar and website passwords (partially done, not on avatar creation)
-
-### Roadmap
-
-* short term (for 1.0 release)
-  * option to use WordPress name as avatar name (in this case, lock WordPress
-    name changes once an avatar is set)
-  * Create avatar from standard wp-admin/profile.php page
-
-  * Check if avatar password is properly updated after a password reset request
-  * Auth with avatar credential (as fallback to wp auth)
-    * Create new WordPress user if auth by avatar
-
-  * include web asset server in the plugin
-  * sidebar grid info and grid status widgets
-
-* middle term
-  * User profile
-
-  * Start / Stop regions
-  * Create region from admin
-
-  * Helpers (search, currency, map...)
-  * Use sim/grid configuration file to fetch settings if on the same host
-  * *Use cache for grid info*
-
-* long term
-  * Option to use console connection instead of database
-  * Create own regions from user profile
-  * Start / Stop / Backup own regions from user profile
-  * Subscriptions with WooCommerce integration
-
-## Frequently Asked Questions
-
-## Screenshots
-
-1. Avatar registration
+* **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
+* **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
+* **Avatar creation**:
+  - `[w4os_profile]` shortcode can be inserted in any page
+  - Avatar tab in account dashboard on WooCommerce websites
+  - Choose avatar look from default models
+* Avatar and website passwords are synchronized
+* **Reserved names**: avatar whose first name or last name is "Default",
+  "Test", "Admin" or the pattern used for appearance models are disallowed for
+  public (such avatars must be created by admins from Robust console)
+* **OpenSimulator settings page**:
+  - grid name, login uri and database connection settings
+  - naming scheme of default models
+  - exclude models from grid stats

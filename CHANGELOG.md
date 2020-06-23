@@ -25,7 +25,7 @@
 * disambiguation renamed "Asset server" setting to "Web asset server"
 
 ### 0.9
-* choose avatar apparence from a choice of models.
+* choose avatar look from a choice of models.
     For now, available choices are existing avatars with
     FirstName or LastName = "Default" (they have to be created from the
     console as these names are disallowed from the website)

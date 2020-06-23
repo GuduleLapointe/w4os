@@ -219,8 +219,8 @@ function w4os_update_avatar( $user, $params ) {
       w4os_notice(__( 'Names can only contain alphanumeric characters', 'w4os' ), 'fail');
       return false;
     }
-    // Check if there is already an avatar with this name
 
+    // Check if there is already an avatar with this name
     $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$firstname' AND LastName = '$lastname'");
     if ( $check_uuid ) {
       w4os_notice(sprintf( __( 'There is already a grid user named %s', 'w4os' ), "$firstname $lastname"), 'fail');
