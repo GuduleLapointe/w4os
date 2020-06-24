@@ -1,4 +1,6 @@
-### unreleased
+### 0.10.2
+* fixed https://github.com/GuduleLapointe/w4os/issues/1 undefined constant. Thx djphil
+* merged latest translations from https://git.magiiic.com/opensimulator/w4os-translations
 * Changed OpenSim to OpenSimulator
 
 ### 0.10.1
