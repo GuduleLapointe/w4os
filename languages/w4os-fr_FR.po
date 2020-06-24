@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
-"POT-Creation-Date: 2020-06-23 19:18:41-0400\n"
-"PO-Revision-Date: 2020-06-23 19:21-0400\n"
+"POT-Creation-Date: 2020-06-23 22:29:20-0400\n"
+"PO-Revision-Date: 2020-06-23 22:30-0400\n"
 "Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: Speculoos World\n"
 "Language: fr_FR\n"
@@ -49,7 +49,7 @@ msgstr "Informations générales (nom de la grille et URI de connexion)"
 
 # wpml-name: 6bdda8124d6ca549428567dfc1c0532d
 msgid "Available shortcodes"
-msgstr "Code courts disponibles"
+msgstr "Code courts (shortcodes) disponibles"
 
 # wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
 msgid "Active users (30 days)"
@@ -185,12 +185,12 @@ msgstr ""
 "n'affecteront pas votre compte sur le site."
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-msgid "OpenSim Status"
-msgstr "Statut OpenSim"
+msgid "OpenSimulator Status"
+msgstr "Statut OpenSimulator"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-msgid "OpenSim Settings"
-msgstr "Réglages OpenSim"
+msgid "OpenSimulator Settings"
+msgstr "Réglages OpenSimulator"
 
 # wpml-name: 2f4688fcbce23b3ad3066bc66120522f
 msgid ""

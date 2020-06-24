@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
-"POT-Creation-Date: 2020-06-23 19:18:41-0400\n"
-"PO-Revision-Date: 2020-06-23 19:23-0400\n"
+"POT-Creation-Date: 2020-06-23 22:29:20-0400\n"
+"PO-Revision-Date: 2020-06-23 22:30-0400\n"
 "Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: Speculoos World\n"
 "Language: nl_NL\n"
@@ -187,12 +187,12 @@ msgstr ""
 "account op de site."
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-msgid "OpenSim Status"
-msgstr "OpenSim-status"
+msgid "OpenSimulator Status"
+msgstr "OpenSimulator-status"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-msgid "OpenSim Settings"
-msgstr "OpenSim-instellingen"
+msgid "OpenSimulator Settings"
+msgstr "OpenSimulator-instellingen"
 
 # wpml-name: 2f4688fcbce23b3ad3066bc66120522f
 msgid ""
