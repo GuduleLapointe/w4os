@@ -1,3 +1,9 @@
+### 0.10.1
+* Translation bug was fixed, translations updates are now working with the
+  develop branch of GitHub Updater, probably available soon in the stable
+  release too.
+* fix grid info and grid status tables
+
 ### 0.10
 * welcome back languages/ folder, force loading with load_plugin_textdomain()
   and now it works

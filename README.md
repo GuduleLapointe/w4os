@@ -33,6 +33,7 @@ for upcoming functionalties.
 * Go to admin menu OpenSimulator > Settings to enter your grid details
 
 To receive updates, install [GitHub Updater](https://github.com/afragen/github-updater)
+(if you get a PCLZIP_ERR_BAD_FORMAT error message, install the develop branch)
 
 ## Contributing
 
