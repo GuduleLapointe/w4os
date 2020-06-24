@@ -14,8 +14,8 @@
       git repository address. Select GitLab as Remote Repository Host if taken
       from git.magiiic.com
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Visit OpenSim settings page and setup grid info and database connection
-4. Visit admin OpenSim status page to see status
+3. Visit OpenSimulator settings page and setup grid info and database connection
+4. Visit admin OpenSimulator status page to see status
 
 ### Dependencies
 
@@ -29,7 +29,7 @@ opensimWebAssets is very efficient and easy to install:
     with your WordPress installation, WordPress will ignore it.
   - edit assets/inc/config.php to suit your needs (essentially, change the value
     of ASSET_SERVER to http://your.login.uri:8002/assets/)
-  - in WordPress OpenSim settings, change web asset server to
+  - in WordPress OpenSimulator settings, change web asset server to
     http://your.website/assets/asset.php?id=
 
 While in pre-release status, to get automatic updates, install GitHub Updater:

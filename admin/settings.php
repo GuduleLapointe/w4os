@@ -33,7 +33,7 @@ function w4os_register_settings() {
 add_action( 'admin_init', 'w4os_register_settings' );
 
 function w4os_register_options_pages() {
-	// add_options_page('OpenSim settings', 'w4os', 'manage_options', 'w4os', 'w4os_options_page');
+	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_options_page');
 	add_menu_page(
 		'OpenSimulator', // page title
 		'OpenSimulator', // menu title
@@ -45,10 +45,10 @@ function w4os_register_options_pages() {
 		plugin_dir_url(__FILE__) . 'images/w4os-logo-24x14.png', // icon url
 		2 // position
 	);
-	add_submenu_page('w4os', __('OpenSim Status', "w4os"), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
+	add_submenu_page('w4os', __('OpenSimulator Status', "w4os"), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
 	add_submenu_page(
 		'w4os', // parent
-		__('OpenSim Settings', "w4os"), // page title
+		__('OpenSimulator Settings', "w4os"), // page title
 		__('Settings'), // menu title
 		'manage_options', // capability
 		'w4os_settings', // menu slug

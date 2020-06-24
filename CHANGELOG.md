@@ -1,3 +1,6 @@
+### unreleased
+* Changed OpenSim to OpenSimulator
+
 ### 0.10.1
 * Translation bug was fixed, translations updates are now working with the
   develop branch of GitHub Updater, probably available soon in the stable
@@ -29,7 +32,7 @@
 ### 0.9.4
 * use WordPress password for avatar creation
 * auto-fill Avatar name with WordPress user name
-* some cosmetic changes including clarify OpenSim settings page, readmes and
+* some cosmetic changes including clarify OpenSimulator settings page, readmes and
   changelog
 
 ### 0.9.3.3

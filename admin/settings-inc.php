@@ -47,7 +47,7 @@
 					<p class=description>
 						<?php _e('Grid accounts matching first name or last name set below will apear as avatar models, with their profile picture if set, on the avatar registration form.', 'w4os') ?>
 					<br/>
-						<?php _e('If both left empty, no model will be displayed and avatars will be created with default OpenSim appearance (most probably Ugly Ruth).', 'w4os') ?>
+						<?php _e('If both left empty, no model will be displayed and avatars will be created with default OpenSimulator appearance (most probably Ugly Ruth).', 'w4os') ?>
 					</p>
 				</td>
 			</tr>
