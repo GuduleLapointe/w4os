@@ -36,30 +36,32 @@ section for upcoming functionalties.
 
 ### Roadmap
 
-#### short term (for 1.0 release)
+#### Short term (version 1.0, WordPress repository release)
 
+- Auth with avatar credential (as fallback to wp auth).
+  Create new WordPress user if auth by avatar
 - option to use WordPress name as avatar name (in this case, lock WordPress
   name changes once an avatar is set)
 - Create avatar from standard wp-admin/profile.php page
 - Check if avatar password is properly updated after a password reset request
-- Auth with avatar credential (as fallback to wp auth)
-  * Create new WordPress user if auth by avatar
 - integrate web asset server
 - sidebar grid info and grid status widgets
 
-#### middle term
+#### Middle term
 
 - User profile
-- Start / Stop regions
-- Create region from admin
+- Admin Start / Stop regions
+- Admin Create region
+- Admin Use sim/grid configuration file to fetch settings if on the same host
 - Helpers (assets, search, currency, map...)
-- Use sim/grid configuration file to fetch settings if on the same host
-- *Use cache for grid info*
+- Use cache for grid info
 
-#### long term
+#### Long term
 
+- Admin create users
+- Admin create models (from current appearance)
 - Choice between Robust console or database connection
-- User own regions control (Create / Start / Stop / Backup)
+- User's own regions control (create, start, stop, backup)
 - WooCommerce Subscriptions integration for user-owned Regions or other pay-for services
 
 ## Frequently Asked Questions
