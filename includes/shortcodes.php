@@ -32,7 +32,7 @@ function w4os_shortcodes_init()
 			__("Login URI", 'w4os') => get_option('w4os_login_uri'),
 		);
 		if(!empty($info)) {
-			$content .= w4os_array2table($info);
+			$content .= w4os_array2table($info, 'gridinfo');
 		} else {
 			$content .= __("OpenSimulator not configured", 'w4os');
 		}
@@ -112,7 +112,7 @@ function w4os_shortcodes_init()
 			}
 			wp_cache_add( 'gridstatus', $status, 'w4os');
 		}
-		$result=w4os_array2table($status);
+		$result=w4os_array2table($status, 'gridstatus');
 
 		if(empty($result)) $result=__("No result", 'w4os') ;
 		return $content . $result;

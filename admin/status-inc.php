@@ -1,4 +1,4 @@
-<div class="wrap">
+<div class="w4os-status-page wrap">
 	<h1><?= esc_html(get_admin_page_title()); ?></h1>
 	<p><?php echo $version_info; ?></p>
 	<!-- <h1>OpenSimulator</h1>	 -->
