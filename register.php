@@ -2,12 +2,14 @@
 /*
  * register.php
  *
- * This file contains the registration of a simulator to the database
- * and checks if the simulator is new in the database or a reconnected one
+ * Part of "flexible_helpers_scripts" collection
+ * Source: https://git.magiiic.com/opensimulator/flexible_helper_scripts
  *
- * If the simulator is old, check if the nextcheck date > registration
- * When the date is older, make a request to the Parser to grab new data
+ * This file contains the registration of a simulator to the database and checks
+ * if the simulator is new in the database or a reconnected one
  *
+ * If the simulator is old, check if the nextcheck date > registration When the
+ * date is older, make a request to the Parser to grab new data
  */
 
 require("config/config.php");
@@ -24,7 +26,7 @@ $service = $_GET['service'];
 if ($host == "" || $port == "")
 {
   header("HTTP/1.0 404 Bad Request");
-  echo "Missing host and/or port\n";
+  echo "Missing region host and/or port\n";
   exit;
 }
 

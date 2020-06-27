@@ -81,7 +81,7 @@ grep -q  "define('CURRENCY_MODULE'," $config \
 grep -q  "\$otherRegistrars *=" $config \
   || echo "
 //
-// Forward registrations to other compatible registrars
+// Forward regions registrations to other compatible registrars
 //
 // \$otherRegistrars=array(
 // 	'http://metaverseink.com/cgi-bin/register.py',
