@@ -32,7 +32,7 @@ define('XMLGROUP_RKEY', '1234');	// Read Key
 define('XMLGROUP_WKEY', '1234');	// Write key
 
 define('WEBSITE_LOGO_URL', '/helper/images/login_screens/logo.png');
-define('CURRENCY_MODULE', 'Gloebit');
+// define('CURRENCY_MODULE', 'Gloebit');
 
 //
 // Forward registrations to other compatible registrars
@@ -40,14 +40,10 @@ define('CURRENCY_MODULE', 'Gloebit');
 // $otherRegistrars=array(
 // 	'http://metaverseink.com/cgi-bin/register.py',
 // );
-  
-
-
-
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// You need not change the below usually. 
+// You need not change the below usually.
 
 define('USE_CURRENCY_SERVER', 1);
 define('USE_UTC_TIME',		  1);
@@ -90,7 +86,7 @@ define('MUTE_LIST_TBL',             'mute_list');
 ////////////////////////////////////////////////////////////
 // External other Modules
 
-// XML Group.  see also xmlgroups_config.php 
+// XML Group.  see also xmlgroups_config.php
 define('XMLGROUP_ACTIVE_TBL',		'osagent');
 define('XMLGROUP_LIST_TBL',			'osgroup');
 define('XMLGROUP_INVITE_TBL',		'osgroupinvite');
@@ -108,7 +104,7 @@ define('PROFILE_USERPROFILE_TBL',	'userprofile');
 define('PROFILE_USERSETTINGS_TBL',	'usersettings');
 
 
-// Search the In World. see also search_config.php 
+// Search the In World. see also search_config.php
 define('SEARCH_ALLPARCELS_TBL',		'allparcels');
 define('SEARCH_EVENTS_TBL',			'events');
 define('SEARCH_HOSTSREGISTER_TBL',	'hostsregister');
@@ -122,5 +118,3 @@ define('SEARCH_CLASSIFIEDS_TBL',	PROFILE_CLASSIFIEDS_TBL);
 
 //
 if (!defined('ENV_READED_CONFIG')) define('ENV_READED_CONFIG', 'YES');
-
-?>
