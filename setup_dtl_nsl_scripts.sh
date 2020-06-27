@@ -43,11 +43,11 @@ then
   echo "Downloading DTL/NSL scripts archive"
   archive_url=http://www.nsl.tuis.ac.jp/DownLoad/SoftWare/OpenSim/helper_scripts-0.8.1.tar.gz
   archive=tmp/$(basename "$archive_url")
-  
+
   [ -f $archive ] \
     && echo "archive already downloaded in $archive, remove it before launching install if you want to replace it" \
     || wget -P tmp/ $archive_url || exit 1
-  
+
   echo "Extracting $archive"
   tar xvfz $archive --strip 1 || exit 1
 fi
@@ -78,5 +78,24 @@ grep -q  "define('WEBSITE_LOGO_URL'," $config \
   || echo "define('WEBSITE_LOGO_URL', '/helper/images/login_screens/logo.png');" >> $TMP.config
 grep -q  "define('CURRENCY_MODULE'," $config \
   || echo "define('CURRENCY_MODULE', 'Gloebit');" >> $TMP.config
+grep -q  "\$otherRegistrars *=" $config \
+  || echo "
+//
+// Forward registrations to other compatible registrars
+//
+// \$otherRegistrars=array(
+// 	'http://metaverseink.com/cgi-bin/register.py',
+// );
+  " >> $TMP.config
+if [ -f $TMP.config ]
+then
+  egrep -B1000 "XMLGROUP_WKEY|WEBSITE_LOGO_URL|CURRENCY_MODULE" $config > $TMP.config.compiled
+  echo >> $TMP.config.compiled
+  cat $TMP.config >> $TMP.config.compiled
+  echo >> $TMP.config.compiled
+  egrep -A1000 "XMLGROUP_WKEY|WEBSITE_LOGO_URL|CURRENCY_MODULE" $config \
+  | egrep -v "XMLGROUP_WKEY|WEBSITE_LOGO_URL|CURRENCY_MODULE" >> $TMP.config.compiled
+  cat $TMP.config.compiled > config/config.php
+fi
 
 #cat $TMP.config
