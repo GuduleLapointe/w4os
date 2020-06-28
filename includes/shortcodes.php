@@ -118,5 +118,33 @@ function w4os_shortcodes_init()
 		return $content . $result;
 	}
 	add_shortcode('gridstatus', 'w4os_gridstatus_shortcode');
+
+	function w4os_newusers_shortcode($atts = [], $content = null)
+	{
+		return w4os_newusers();
+	}
+	add_shortcode('w4os_newusers_shortcode', 'w4os_newusers');
 }
 add_action('init', 'w4os_shortcodes_init');
+
+function w4os_newusers() {
+	if(! W4OS_DB_CONNECTED) {
+		return;
+	}
+	global $wpdb;
+	$recentusers = '<ul class="recently-user">';
+	$usernames = $wpdb->get_results("SELECT user_nicename, user_url, user_email FROM $wpdb->users ORDER BY ID DESC LIMIT 5");
+	foreach ($usernames as $username) {
+		$user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $username->user_email));
+		$uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
+		if($uuid) {
+			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID ) ."</a></li>";
+		} else if (!$username->user_url) {
+			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . $username->user_nicename." ($uuid)</a></li>";
+		} else {
+			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . '<a href="'.$username->user_url.'">'.$username->user_nicename."</a></li>";
+		}
+	}
+	$recentusers .= '</ul>';
+	return $recentusers;
+}

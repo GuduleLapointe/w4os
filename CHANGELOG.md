@@ -1,3 +1,6 @@
+### 0.11.0
+* added shortcode and dashboard widget to show last users
+
 ### 0.10.2
 * fixed https://github.com/GuduleLapointe/w4os/issues/1 undefined constant. Thx djphil
 * merged latest translations from https://git.magiiic.com/opensimulator/w4os-translations
