@@ -115,3 +115,15 @@ img.model-picture {
     margin-top: 4px;
 
 }
+
+.recent-users li {
+  clear: both;
+}
+.recent-users .profilepic {
+  display: inline-block;
+  padding-right: 0.5em;
+  float: left;
+}
+.recent-users .avatar-name {
+  font-weight: bold;
+}

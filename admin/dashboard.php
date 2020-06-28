@@ -18,7 +18,7 @@ function w4os_dashboard_add_widgets() {
   );
   wp_add_dashboard_widget(
     'w4os_dashboard_widget_newusers',
-    "OpenSimulator: " . __( 'New users', 'w4os' ),
+    "OpenSimulator: " . __( 'Recent users', 'w4os' ),
     'w4os_dashboard_widget_newusers_handler'
   );
 }

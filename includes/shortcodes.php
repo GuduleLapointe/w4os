@@ -132,15 +132,19 @@ function w4os_newusers() {
 		return;
 	}
 	global $wpdb;
-	$recentusers = '<ul class="recently-user">';
+	$recentusers = '<ul class="recent-users">';
 	$usernames = $wpdb->get_results("SELECT user_nicename, user_url, user_email FROM $wpdb->users ORDER BY ID DESC LIMIT 5");
 	foreach ($usernames as $username) {
 		$user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $username->user_email));
 		$uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
 		if($uuid) {
-			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID ) ."</a></li>";
+			$recentusers .= '<li><span class=profilepic>' .get_avatar($username->user_email, 32) . "</span>"
+			. " <span class=avatar-name>" . get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID ) . "</span>"
+			. " <span class=nicename> ($username->user_nicename)</span>"
+			. " <span class=email>$username->user_email</span>"
+			 ."</li>";
 		} else if (!$username->user_url) {
-			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . $username->user_nicename." ($uuid)</a></li>";
+			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . $username->user_nicename."</a></li>";
 		} else {
 			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . '<a href="'.$username->user_url.'">'.$username->user_nicename."</a></li>";
 		}
