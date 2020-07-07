@@ -16,11 +16,13 @@ function w4os_dashboard_add_widgets() {
     "OpenSimulator: " . __( 'Grid status', 'w4os' ),
     'w4os_dashboard_widget_gridstatus_handler'
   );
-  wp_add_dashboard_widget(
-    'w4os_dashboard_widget_newusers',
-    "OpenSimulator: " . __( 'Recent users', 'w4os' ),
-    'w4os_dashboard_widget_newusers_handler'
-  );
+  if (current_user_can( 'list_users' ) ) {
+    wp_add_dashboard_widget(
+      'w4os_dashboard_widget_newusers',
+      "OpenSimulator: " . __( 'Recent users', 'w4os' ),
+      'w4os_dashboard_widget_newusers_handler'
+    );
+  }
 }
 
 function w4os_dashboard_widget_gridstatus_handler() {

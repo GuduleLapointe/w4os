@@ -128,9 +128,8 @@ function w4os_shortcodes_init()
 add_action('init', 'w4os_shortcodes_init');
 
 function w4os_newusers() {
-	if(! W4OS_DB_CONNECTED) {
-		return;
-	}
+	if (! W4OS_DB_CONNECTED) return;
+	if (! current_user_can( 'list_users' ) ) return;
 	global $wpdb;
 	$recentusers = '<ul class="recent-users">';
 	$usernames = $wpdb->get_results("SELECT user_nicename, user_url, user_email
