@@ -1,6 +1,7 @@
-### unreleased
+### 0.12.0
 * fix: show only in-world users in "new users" dashboard widget
 * fix: new users dashboard and shortcode only shown to users with list_users capability
+* added: avatar creation from standard wp-admin/profile.php page
 
 ### 0.11.0
 * added shortcode and dashboard widget to show last users

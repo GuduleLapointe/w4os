@@ -33,26 +33,11 @@ function w4os_profile_fields( $user ) {
   global $w4osdb;
   $uuid = w4os_profile_sync($user);
   echo "    <h3>" . __("OpenSimulator", "w4os") ."</h3>";
-  if(!$uuid) {
-    echo "<p>" . __("No avatar", 'w4os') . "</p>";
-  } else {
-   ?>
-
-    <table class="form-table">
-    <tr>
-        <th><label for="w4os_uuid"><?php _e("Avatar UUID", "w4os"); ?></label></th>
-        <td>
-            <?php echo esc_attr( get_the_author_meta( 'w4os_uuid', $user->ID ) ); ?>
-        </td>
-    </tr>
-    <tr>
-        <th><label for="w4os_firstname"><?php _e("Avatar name", "w4os"); ?></label></th>
-        <td>
-          <?php echo esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) ) . " " . esc_attr( get_the_author_meta( 'w4os_lastname', $user->ID ) ); ?>
-        </td>
-    </tr>
-    </table>
-<?php }
+  echo "<div class=avatar_profile>";
+  // if(!$uuid) {
+    echo w4os_profile_wc_edit($user);
+    // echo "<p>" . __("No avatar", 'w4os') . "</p>";
+  echo "</div>";
 }
 
 /**

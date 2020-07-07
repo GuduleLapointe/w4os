@@ -24,6 +24,7 @@ section for upcoming functionalties.
 - **Avatar creation**:
   - `[w4os_profile]` shortcode can be inserted in any page
   - Avatar tab in account dashboard on WooCommerce websites
+  - Section in standard wp profile page
   - Choose avatar look from default models
 - Avatar and website passwords are synchronized
 - **Reserved names**: avatar whose first name or last name is "Default",
@@ -44,7 +45,6 @@ section for upcoming functionalties.
   Optional redirect of standard login page
 - Option to use WordPress name as avatar name (in this case, lock WordPress
   name changes once an avatar is set)
-- Create avatar from standard wp-admin/profile.php page
 - Use avatar profile pic
 - Check if avatar password is properly updated after a password reset request
 - sidebar grid info and grid status widgets
