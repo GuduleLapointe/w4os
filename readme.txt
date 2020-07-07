@@ -40,11 +40,13 @@ section for upcoming functionalties.
 
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar
-- option to use WordPress name as avatar name (in this case, lock WordPress
+- Login page (with grid FirstName, LastName and password).
+  Optional redirect of standard login page
+- Option to use WordPress name as avatar name (in this case, lock WordPress
   name changes once an avatar is set)
 - Create avatar from standard wp-admin/profile.php page
+- Use avatar profile pic
 - Check if avatar password is properly updated after a password reset request
-- integrate web asset server
 - sidebar grid info and grid status widgets
 
 #### Middle term
@@ -53,8 +55,10 @@ section for upcoming functionalties.
 - Admin Start / Stop regions
 - Admin Create region
 - Admin Use sim/grid configuration file to fetch settings if on the same host
+- get grid info from http://login.uri:8002/get_grid_info
 - Helpers (assets, search, currency, map...)
 - Use cache for grid info
+- Integrate web asset server
 
 #### Long term
 
