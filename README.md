@@ -17,9 +17,10 @@ file.
 - **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
 - **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
 - **Avatar creation**:
-  - `[w4os_profile]` shortcode can be inserted in any page
+  - Opensimulator section in standard wp profile page
+  - `[w4os_profile]` shortcode can be inserted in any custom page
   - Avatar tab in account dashboard on WooCommerce websites
-  - Choose avatar look from default models
+- Choose avatar look from default models
 - Avatar and website passwords are synchronized
 - **Reserved names**: avatar whose first name or last name is "Default",
   "Test", "Admin" or the pattern used for appearance models are disallowed for
