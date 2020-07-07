@@ -1,3 +1,6 @@
+### unreleased
+* fix: show only in-world users in "new users" dashboard widget
+
 ### 0.11.0
 * added shortcode and dashboard widget to show last users
 
