@@ -39,10 +39,10 @@ section for upcoming functionalties.
 
 #### Short term (version 1.0, WordPress repository release)
 
-- Auth with avatar credential (as fallback to wp auth).
-  Create new WordPress user if auth by avatar
 - Login page (with grid FirstName, LastName and password).
   Optional redirect of standard login page
+- Auth with avatar credential (as fallback to wp auth).
+  Create new WordPress user if auth by avatar
 - Option to use WordPress name as avatar name (in this case, lock WordPress
   name changes once an avatar is set)
 - Use avatar profile pic

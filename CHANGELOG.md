@@ -1,3 +1,6 @@
+### 0.12.1
+* added active members count (as opposite to active users including visitors)
+
 ### 0.12.0
 * fix: show only in-world users in "new users" dashboard widget
 * fix: new users dashboard and shortcode only shown to users with list_users capability
