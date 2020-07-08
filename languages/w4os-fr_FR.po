@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "POT-Creation-Date: 2020-06-23 22:29:20-0400\n"
-"PO-Revision-Date: 2020-06-23 22:30-0400\n"
+"PO-Revision-Date: 2020-07-08 18:35-0400\n"
 "Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: Speculoos World\n"
 "Language: fr_FR\n"
@@ -247,3 +247,7 @@ msgstr "https://git.magiiic.com/opensimulator/w4os"
 # wpml-name: d0f651f1495d346088ae49450c620e9b
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
+
+# wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
+msgid "Active members (30 days)"
+msgstr "Membres actifs (30 jours)"

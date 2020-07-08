@@ -230,3 +230,7 @@ msgstr ""
 # wpml-name: d0f651f1495d346088ae49450c620e9b
 msgid "OpenSimulator"
 msgstr ""
+
+#
+msgid "Active members (30 days)"
+msgstr ""

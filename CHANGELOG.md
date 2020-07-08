@@ -1,7 +1,8 @@
-### 0.12.2
+### 0.12.3
 * changed stats order
 * fix some missing localizations
 * added active members count (as opposite to active users including visitors)
+* merge translations from https://git.magiiic.com/opensimulator/w4os-translations
 
 ### 0.12.0
 * fix: show only in-world users in "new users" dashboard widget
