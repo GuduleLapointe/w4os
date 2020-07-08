@@ -87,19 +87,19 @@ function w4os_shortcodes_init()
 					__('Grid online', 'w4os') => $gridonline,
 					__('Members', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM UserAccounts as u WHERE $filter active=1" )),
+					__('Active members (30 days)', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					FROM GridUser as g, UserAccounts as u WHERE $filter PrincipalID = UserID AND g.Login > $lastmonth" )),
 					__('Members in world', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM Presence AS p, UserAccounts AS u
 					WHERE $filter RegionID != '00000000-0000-0000-0000-000000000000'
 					AND p.UserID = u.PrincipalID;" )),
-					'Active members (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-					FROM GridUser as g, UserAccounts as u WHERE $filter PrincipalID = UserID AND g.Login > $lastmonth" )),
 					// 'Active citizens (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					// FROM GridUser as g, UserAccounts as u WHERE g.UserID = u.PrincipalID AND Login > $lastmonth" )),
-					'Total users in world' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					__('Active users (30 days)', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
+					FROM GridUser WHERE Login > $lastmonth" )),
+					__('Total users in world', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					FROM Presence
 					WHERE RegionID != '00000000-0000-0000-0000-000000000000';	")),
-					'Active users (30 days)' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-					FROM GridUser WHERE Login > $lastmonth" )),
 					// 'Known users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					// FROM GridUser")),
 					// 'Known online users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)

@@ -1,4 +1,6 @@
-### 0.12.1
+### 0.12.2
+* changed stats order
+* fix some missing localizations
 * added active members count (as opposite to active users including visitors)
 
 ### 0.12.0
