@@ -1,3 +1,6 @@
+### 0.12.4
+* minified css
+
 ### 0.12.3
 * changed stats order
 * fix some missing localizations
