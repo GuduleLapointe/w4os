@@ -1,3 +1,6 @@
+### 1.0.1
+* Fix view details not shown
+
 ## 1.0
 * use plugin repository for stable releases updates, GitHub Updater no longer
   required

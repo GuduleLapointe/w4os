@@ -1,4 +1,4 @@
-# W4OS OpenSimulator Interface
+=== W4OS OpenSimulator Interface ===
 Contributors: magicoli69
 Tags: opensimulator, second life, web interface
 Donate link: https://paypal.me/magicoli
@@ -11,13 +11,13 @@ License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
 WordPress interface for OpenSimulator
 
-## Description
+== Description ==
 
 The first ready to use WordPress interface for OpenSimulator. Provides user
 registration and basic grid info. See current Features below, and Roadmap
 section for upcoming functionalties.
 
-## Features
+== Features ==
 
 - **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
 - **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
@@ -35,16 +35,16 @@ section for upcoming functionalties.
   - naming scheme of default models
   - exclude models from grid stats
 
-## Installation
+== Installation ==
 
 1. Download the last stable release from
     https://magiiic.com/updates/?action=download&slug=w4os
     and unzip it in your wp-content/plugins
 2. Activate
 
-### Roadmap
+== Roadmap ==
 
-#### Short term (version 1.0, WordPress repository release)
+= Short term (version 1.0, WordPress repository release) =
 
 - Login page (with grid FirstName, LastName and password).
   Optional redirect of standard login page
@@ -56,7 +56,7 @@ section for upcoming functionalties.
 - Check if avatar password is properly updated after a password reset request
 - sidebar grid info and grid status widgets
 
-#### Middle term
+= Middle term =
 
 - Public avatar profile
 - Admin Start / Stop regions
@@ -67,7 +67,7 @@ section for upcoming functionalties.
 - Use cache for grid info
 - Integrate web asset server
 
-#### Long term
+= Long term =
 
 - Admin create users
 - Admin create models (from current appearance)
@@ -75,14 +75,14 @@ section for upcoming functionalties.
 - User's own regions control (create, start, stop, backup)
 - WooCommerce Subscriptions integration for user-owned Regions or other pay-for services
 
-## Frequently Asked Questions
+== Frequently Asked Questions ==
 
-### Current status
+= Current status =
 
 Code is a mess. Don't blame me. I want to do it the right way but I'm learning
 as I progress in the project. I'll try to put things on the right places while
 getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
 
-## Screenshots
+== Screenshots ==
 1. Avatar registration
