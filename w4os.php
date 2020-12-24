@@ -6,7 +6,7 @@
  *
  * Plugin Name:       W4OS OpenSimulator Interface
  * Description:       WordPress interface for OpenSimulator.
- * Version:           0.12.4
+ * Version:           1.0
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
@@ -26,10 +26,14 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+if (!defined('PLUGIN_SLUG')) define('PLUGIN_SLUG', basename(plugin_dir_path( __FILE__ )));
+if (!defined('PLUGIN_NAME')) define('PLUGIN_NAME', get_plugin_data( __FILE__ )['Name'] );
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
+
+require_once plugin_dir_path( __FILE__ ) . 'plugin-update-magiiic.php';
 
 if(is_admin()) {
 	require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');

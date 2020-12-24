@@ -4,7 +4,7 @@ Tags: opensimulator, second life, web interface
 Donate link: https://paypal.me/magicoli
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 5.4.2
+Tested up to: 5.6
 Stable tag: master
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -34,6 +34,13 @@ section for upcoming functionalties.
   - grid name, login uri and database connection settings
   - naming scheme of default models
   - exclude models from grid stats
+
+## Installation
+
+1. Download the last stable release from
+    https://magiiic.com/updates/?action=download&slug=w4os
+    and unzip it in your wp-content/plugins
+2. Activate
 
 ### Roadmap
 

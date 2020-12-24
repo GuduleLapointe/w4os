@@ -1,3 +1,7 @@
+## 1.0
+* use plugin repository for stable releases updates, GitHub Updater no longer
+  required
+
 ### 0.12.4
 * minified css
 

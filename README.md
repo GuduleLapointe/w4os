@@ -30,6 +30,13 @@ file.
   - naming scheme of default models
   - exclude models from grid stats
 
+## Install stable release
+
+1. Download the last stable release from
+    https://magiiic.com/updates/?action=download&slug=w4os
+    and unzip it in your wp-content/plugins
+2. Activate
+
 ## Install from git repository
 
 * Download the latest pagkage
@@ -38,7 +45,7 @@ file.
 * Activate from your plugins page
 * Go to admin menu OpenSimulator > Settings to enter your grid details
 
-To receive updates, install
+To receive updates from git, install
 [GitHub Updater](https://github.com/afragen/github-updater)
 (temporarily, if you get a PCLZIP_ERR_BAD_FORMAT error message, be sure to use
 their develop branch instead of the master release).
@@ -48,6 +55,6 @@ their develop branch instead of the master release).
 If you improve this software, please give back to the community, by submitting
 your changes on the git repository or sending them to the authors.
 
-* GitLab repository: https://git.magiiic.com/opensimulator/w4os
 * GitHub repository: https://github.com/GuduleLapointe/w4os
+* GitLab repository: https://git.magiiic.com/opensimulator/w4os
 * Localization repository: https://git.magiiic.com/opensimulator/w4os-translations
