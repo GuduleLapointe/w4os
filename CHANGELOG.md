@@ -1,3 +1,6 @@
+### 1.0.2
+* New update server
+
 ### 1.0.1
 * Fix view details not shown
 
