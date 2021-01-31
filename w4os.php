@@ -6,7 +6,7 @@
  *
  * Plugin Name:       W4OS OpenSimulator Interface
  * Description:       WordPress interface for OpenSimulator.
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
@@ -26,21 +26,20 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-if (!defined('PLUGIN_SLUG')) define('PLUGIN_SLUG', basename(plugin_dir_path( __FILE__ )));
-if (!defined('PLUGIN_NAME')) define('PLUGIN_NAME', get_plugin_data( __FILE__ )['Name'] );
+if (!defined('PLUGIN_SLUG')) define('PLUGIN_SLUG', 'w4os');
+if (!defined('PLUGIN_NAME')) define('PLUGIN_NAME', 'W4OS' );
+
+/** Enable plugin updates **/
+require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
+$w4os_updater = new WP_Package_Updater(
+	'https://magiiic.com',
+	wp_normalize_path( __FILE__ ),
+	wp_normalize_path( plugin_dir_path( __FILE__ ) )
+);
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
-
-/** Enable plugin updates with or without license check **/
-require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
-$W4OS_updater = new WP_Package_Updater(
-	'https://magiiic.com',
-	wp_normalize_path( __FILE__ ),
-	wp_normalize_path( plugin_dir_path( __FILE__ ) ),
-	// true
-);
 
 if ( !class_exists('Puc_v4_Factory', false) ) {
 	if(is_admin) {
@@ -66,12 +65,6 @@ if ( !class_exists('Puc_v4_Factory', false) ) {
 			1
 		);
 	}
-} else {
-	$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-		'https://magiiic.com/updates/?action=get_metadata&slug=' . PLUGIN_SLUG,
-		__FILE__, //Full path to the main plugin file or functions.php.
-		PLUGIN_SLUG
-	);
 }
 
 if(is_admin()) {
