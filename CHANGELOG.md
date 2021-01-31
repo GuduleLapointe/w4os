@@ -1,3 +1,6 @@
+### 1.0.3
+* Fix $W4OS_updater var name
+
 ### 1.0.2
 * New update server
 
