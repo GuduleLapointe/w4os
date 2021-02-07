@@ -82,3 +82,25 @@ Code is a mess. Don't blame me. I want to do it the right way but I'm learning
 as I progress in the project. I'll try to put things on the right places while
 getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
+
+== Changelog ==
+
+= 1.0.6 =
+* fix conflict with other extensions settings pages
+
+= 1.0.4 =
+* fix: removed remaining old update checker code
+* Fix $w4os_updater var name
+
+= 1.0.2 =
+* New update server
+
+= 1.0.1 =
+* Fix view details not shown
+
+= 1.0 =
+* use plugin repository for stable releases updates, GitHub Updater no longer
+  required
+
+= Previous =
+* See full history in changelog.txt

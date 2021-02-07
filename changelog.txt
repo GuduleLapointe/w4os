@@ -1,16 +1,3 @@
-= 1.0.6 =
-* fix conflict with other extensions settings pages
-
-= 1.0.4 =
-* fix: removed remaining old update checker code
-* Fix $w4os_updater var name
-
-= 1.0.2 =
-* New update server
-
-= 1.0.1 =
-* Fix view details not shown
-
 = 1.0 =
 * use plugin repository for stable releases updates, GitHub Updater no longer
   required
