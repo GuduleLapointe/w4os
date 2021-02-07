@@ -85,19 +85,12 @@ question, but you might wonder.
 
 == Changelog ==
 
-= 1.0.6 =
-* fix conflict with other extensions settings pages
-* fix banners and icons
-
-= 1.0.4 =
-* fix: removed remaining old update checker code
-* Fix $w4os_updater var name
-
-= 1.0.2 =
-* New update server
-
-= 1.0.1 =
-* Fix view details not shown
+= 1.1 =
+* added changelog, banners and icons to view details
+* changed update server to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
+* fixed conflict with other extensions settings pages
+* fixed w4os_updater var name
+* fixed view details not shown
 
 = 1.0 =
 * use plugin repository for stable releases updates, GitHub Updater no longer
