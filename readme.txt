@@ -17,7 +17,7 @@ The first ready to use WordPress interface for OpenSimulator. Provides user
 registration and basic grid info. See current Features below, and Roadmap
 section for upcoming functionalties.
 
-== Features ==
+= Features =
 
 - **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
 - **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
@@ -82,6 +82,3 @@ Code is a mess. Don't blame me. I want to do it the right way but I'm learning
 as I progress in the project. I'll try to put things on the right places while
 getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
-
-== Screenshots ==
-1. Avatar registration
