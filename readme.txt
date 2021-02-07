@@ -37,8 +37,7 @@ section for upcoming functionalties.
 
 == Installation ==
 
-1. Download the last stable release from
-    https://magiiic.com/updates/?action=download&slug=w4os
+1. Download [the latest stable release](https://magiiic.com/updates/?action=download&slug=w4os)
     and unzip it in your wp-content/plugins
 2. Activate
 

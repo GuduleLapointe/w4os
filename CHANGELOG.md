@@ -1,3 +1,6 @@
+### 1.0.6
+* fix conflict with other extensions settings pages
+
 ### 1.0.4
 * fix: removed remaining old update checker code
 * Fix $w4os_updater var name
