@@ -6,7 +6,7 @@
  *
  * Plugin Name:       W4OS OpenSimulator Interface
  * Description:       WordPress interface for OpenSimulator.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
  * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
@@ -17,10 +17,10 @@
  * Text Domain:       w4os
  * Domain Path:       /languages/
  *
- * Icon1x: =https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/icon-128x128.png
- * Icon2x: =https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/icon-256x256.png
- * BannerHigh: =https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/banner-1544x500.jpg
- * BannerLow: =https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/banner-772x250.jpg
+ * Icon1x: https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/icon-128x128.png
+ * Icon2x: https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/icon-256x256.png
+ * BannerHigh: https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/banner-1544x500.jpg
+ * BannerLow: https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/banner-772x250.jpg
  *
  * Contributing: If you improve this software, please give back to the
  * community, by submitting your changes on the git repository or sending them
