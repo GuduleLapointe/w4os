@@ -87,6 +87,7 @@ question, but you might wonder.
 
 = 1.0.6 =
 * fix conflict with other extensions settings pages
+* fix banners and icons
 
 = 1.0.4 =
 * fix: removed remaining old update checker code
