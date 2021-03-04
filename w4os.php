@@ -1,9 +1,5 @@
 <?php
 /**
- * W4OS OpenSimulator Interface
- * @package	w4os
- * @author Olivier van Helden <olivier@van-helden.net>
- *
  * Plugin Name:       W4OS OpenSimulator Interface
  * Description:       WordPress interface for OpenSimulator.
  * Version:           1.1.2
@@ -16,6 +12,8 @@
  * License URI:       https://www.gnu.org/licenses/agpl-3.0.txt
  * Text Domain:       w4os
  * Domain Path:       /languages/
+ *
+ * @package	w4os
  *
  * Icon1x: https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/icon-128x128.png
  * Icon2x: https://git.magiiic.com/opensimulator/w4os/-/raw/master/assets/icon-256x256.png
