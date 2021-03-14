@@ -71,9 +71,9 @@ function w4os_shortcodes_init()
 				$port=$urlinfo['1'];
 				$fp = @fsockopen($host, $port, $errno, $errstr, 1.0);
 				if ($fp) {
-					$gridonline = __("Yes");
+					$gridonline = __("Yes", 'w4os' );
 				} else {
-					$gridonline=__("No");
+					$gridonline=\1, 'w4os' ), "w4os");
 				}
 				if(get_option('w4os_exclude_models')) {
 					$filter .= "u.FirstName != '" . get_option('w4os_model_firstname') . "'"
