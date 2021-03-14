@@ -85,9 +85,18 @@ question, but you might wonder.
 
 ## Changelog
 
+### 1.1.4
+* fix bug in d6fe07c62bb6be189a820c416bc8402f7f5de56a
+
 ### 1.1.3
 * update authors
 * fix "Yes" and "No" translations
+
+### 1.1.2
+* fix typo in banners and icons urls, can't believe I didn't see this before...
+
+### 1.1.1
+* use transparent icons
 
 ### 1.1
 * added changelog, banners and icons to view details
