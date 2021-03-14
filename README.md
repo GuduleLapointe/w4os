@@ -1,4 +1,13 @@
 # W4OS OpenSimulator Interface
+* Contributors: gudulelapointe,magicoli69
+* Donate link: https://paypal.me/magicoli
+* Tags: opensimulator, second life, web interface
+* Requires at least: 5.0
+* Requires PHP: 5.6
+* Tested up to: 5.6
+* Requires PHP: master
+* License: AGPLv3
+* License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
 WordPress interface for OpenSimulator
 
@@ -6,13 +15,9 @@ WordPress interface for OpenSimulator
 
 The first ready to use WordPress interface for OpenSimulator. Provides user
 registration and basic grid info. See current Features below, and Roadmap
-section in readme.txt for upcoming functionalties.
+section for upcoming functionalties.
 
-This README.md contains a brief introduction and information specific to the git
-development version. Complimentary details in WordPress standard readme.txt
-file.
-
-## Features
+### Features
 
 - **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
 - **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
@@ -30,31 +35,70 @@ file.
   - naming scheme of default models
   - exclude models from grid stats
 
-## Install stable release
+## Installation
 
-1. Download the last stable release from
-    https://magiiic.com/updates/?action=download&slug=w4os
+1. Download [the latest stable release](https://magiiic.com/updates/?action=download&slug=w4os)
     and unzip it in your wp-content/plugins
 2. Activate
 
-## Install from git repository
+## Roadmap
 
-* Download the latest pagkage
-  https://git.magiiic.com/opensimulator/w4os/-/archive/master/w4os-master.zip
-* Unzip it, rename `w4os-master` to `w4os`, move it inside `wp-content/plugins/`
-* Activate from your plugins page
-* Go to admin menu OpenSimulator > Settings to enter your grid details
+### Short term (version 1.0, WordPress repository release)
 
-To receive updates from git, install
-[GitHub Updater](https://github.com/afragen/github-updater)
-(temporarily, if you get a PCLZIP_ERR_BAD_FORMAT error message, be sure to use
-their develop branch instead of the master release).
+- Login page (with grid FirstName, LastName and password).
+  Optional redirect of standard login page
+- Auth with avatar credential (as fallback to wp auth).
+  Create new WordPress user if auth by avatar
+- Option to use WordPress name as avatar name (in this case, lock WordPress
+  name changes once an avatar is set)
+- Use avatar profile pic
+- Check if avatar password is properly updated after a password reset request
+- sidebar grid info and grid status widgets
 
-## Contributing
+### Middle term
 
-If you improve this software, please give back to the community, by submitting
-your changes on the git repository or sending them to the authors.
+- Public avatar profile
+- Admin Start / Stop regions
+- Admin Create region
+- Admin Use sim/grid configuration file to fetch settings if on the same host
+- get grid info from http://login.uri:8002/get_grid_info
+- Helpers (assets, search, currency, map...)
+- Use cache for grid info
+- Integrate web asset server
 
-* GitHub repository: https://github.com/GuduleLapointe/w4os
-* GitLab repository: https://git.magiiic.com/opensimulator/w4os
-* Localization repository: https://git.magiiic.com/opensimulator/w4os-translations
+### Long term
+
+- Admin create users
+- Admin create models (from current appearance)
+- Choice between Robust console or database connection
+- User's own regions control (create, start, stop, backup)
+- WooCommerce Subscriptions integration for user-owned Regions or other pay-for services
+
+## Frequently Asked Questions
+
+### Current status
+
+Code is a mess. Don't blame me. I want to do it the right way but I'm learning
+as I progress in the project. I'll try to put things on the right places while
+getting more familiar with it. Feel free to give advices. Yeah, it's not a
+question, but you might wonder.
+
+## Changelog
+
+### 1.1.3
+* update authors
+* fix "Yes" and "No" translations
+
+### 1.1
+* added changelog, banners and icons to view details
+* changed update server to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
+* fixed conflict with other extensions settings pages
+* fixed w4os_updater var name
+* fixed view details not shown
+
+### 1.0
+* use plugin repository for stable releases updates, GitHub Updater no longer
+  required
+
+### Previous
+* See full history in changelog.txt

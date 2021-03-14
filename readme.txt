@@ -85,6 +85,10 @@ question, but you might wonder.
 
 == Changelog ==
 
+= 1.1.3 =
+* update authors
+* fix "Yes" and "No" translations
+
 = 1.1 =
 * added changelog, banners and icons to view details
 * changed update server to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
