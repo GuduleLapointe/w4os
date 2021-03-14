@@ -1,253 +1,442 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
-"POT-Creation-Date: 2020-06-23 22:29:20-0400\n"
-"PO-Revision-Date: 2020-07-08 18:35-0400\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
 "Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: Speculoos World\n"
-"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
-
-# wpml-name: 90efd059f58183a99038e138b8fe17f0
-msgid "You can change and customize it in-world, as often as you want."
-msgstr "Vous pourrez le changer et le personnaliser à votre guise en ligne."
-
-# wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-msgid "Your avatar"
-msgstr "Votre avatar"
-
-# wpml-name: 1a87f41bc2db648685564cf6fa5b2903
-msgid ""
-"Choose your avatar name below. This is how people will see you in-world. "
-"Once the avatar is created, it cannot be changed."
-msgstr ""
-"Choisissez le nom de votre avatar. C'est sous ce nom que les autres vous "
-"verront en ligne. Une fois que l'avatar est créé, il n'est plus possible de "
-"modifier ce nom."
-
-# wpml-name: bc2068f5bf9d75b50d1f046f1e57c23c
-msgid ""
-"You have no grid account yet. Fill the form below to create your avatar."
-msgstr ""
-"Vous n'avez pas encore de compte sur la grille. Remplissez le formulaire ci-"
-"dessous pour créer votre avatar."
-
-# wpml-name: 317e8940a1b9f03b83ef85393bd49552
-msgid "Avatar profile"
-msgstr "Profil de l'avatar"
-
-# wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
-msgid "Online users, regions, etc."
-msgstr "Utilisateurs en ligne, régions, etc."
-
-# wpml-name: 119154a6f7028c6f8ebe3e470e626296
-msgid "General information (grid name and login uri)"
-msgstr "Informations générales (nom de la grille et URI de connexion)"
-
-# wpml-name: 6bdda8124d6ca549428567dfc1c0532d
-msgid "Available shortcodes"
-msgstr "Code courts (shortcodes) disponibles"
-
-# wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
-msgid "Active users (30 days)"
-msgstr "Utilisateurs actifs (30 jours)"
-
-# wpml-name: 9143e8053fefd25ce03ae81136931586
-msgid "Total users in world"
-msgstr "Utilisateurs sur la grille"
-
-# wpml-name: 6834699b2d08455d0475c76d54356191
-msgid "Total area"
-msgstr "Surface totale"
-
-# wpml-name: 67ea4b3432b974a20b2c8ee6609e363c
-msgid "Members in world"
-msgstr "Membres sur la grille"
-
-# wpml-name: ef53538ae41a651c7f72ab6cb1135d8c
-msgid "Members"
-msgstr "Membres"
-
-# wpml-name: 69675902f4d4a3da44638540557562af
-msgid "Grid online"
-msgstr "Grille en ligne"
+"POT-Creation-Date: 2021-03-14T17:33:11-04:00\n"
+"PO-Revision-Date: 2021-03-14 17:46-0400\n"
+"Language: fr_FR\n"
+"X-Generator: Poedit 2.3\n"
 
 # wpml-name: 89e15c20b6fff50f9caa1f171381251d
+#. Plugin Name of the plugin
 msgid "W4OS OpenSimulator Interface"
 msgstr "W4OS OpenSimulator Interface"
 
+# wpml-name: dca56d6af7010d3d34aadf3fd1666bf7
+#. Plugin URI of the plugin
+msgid "https://git.magiiic.com/opensimulator/w4os"
+msgstr "https://git.magiiic.com/opensimulator/w4os"
+
 # wpml-name: 374124f21084c34d958491bf98d72af4
+#. Description of the plugin
 msgid "WordPress interface for OpenSimulator."
 msgstr "Interface WordPress pour OpenSimulator."
 
-# wpml-name: 193fe27dd7fcd662652841a7b7e6c912
-msgid "Robust server connection"
-msgstr "Connexion au serveur Robust"
-
-# wpml-name: 8a556ddad981269d9764cbf640cfd337
-msgid "https://speculoos.world"
-msgstr "https://speculoos.world/fr"
-
 # wpml-name: 6dfd7d212f1bf0f6121142f105f7c704
+#. Author of the plugin
 msgid "Speculoos World"
 msgstr "Speculoos World"
 
-# wpml-name: 5a54d9ad87f7c4c1c70c8f05b9515d5a
-msgid "UUID"
-msgstr "UUID"
+# wpml-name: 8a556ddad981269d9764cbf640cfd337
+#. Author URI of the plugin
+msgid "https://speculoos.world"
+msgstr "https://speculoos.world/fr"
 
-# wpml-name: fc4e1af5d2d469ea179cee95817ed54f
-msgid ""
-"Your name in the virtual world (not required to be your real name). You can "
-"pick anything you want. Almost."
-msgstr ""
-"Votre nom dans le monde virtuel (pas nécessairement votre nom réel). Vous "
-"pouvez choisir ce que vous voulez. Ou presque."
+# wpml-name: 6b8467e13ae11c479efa8843f1b95826
+#: admin/dashboard.php:11
+#: includes/shortcodes.php:27
+msgid "Grid info"
+msgstr "Infos sur la grille"
 
-# wpml-name: 867cee98fdd724e7d5bc87f61ce657bc
-msgid "Passwords do not match"
-msgstr "Les mots de passe ne correspondent pas"
+# wpml-name: 17db1cfe008f83e7d0181762eda3daab
+#: admin/dashboard.php:16
+#: includes/shortcodes.php:56
+msgid "Grid status"
+msgstr "Statut de la grille"
 
-# wpml-name: b2d0fb30e09bf39693f6183c33455748
-msgid "First name required"
-msgstr "Prénom requis"
-
-# wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
-msgid "Last name required"
-msgstr "Nom de famille requis"
-
-# wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-msgid "Password required"
-msgstr "Mot de passe requis"
-
-# wpml-name: 4eb86d524f30b9885871ed68c24b0f29
-msgid "The name %s is not allowed"
-msgstr "Le nom %s n'est pas autorisé"
-
-# wpml-name: 91030b181f530fca5da4314a6aabe283
-msgid ""
-"Password must contain at least %s characters, including uppercase, lowercase "
-"and number"
-msgstr ""
-"Le mot de passe doit contenir au moins %s caractères, dont une majuscule, "
-"une minuscule et un chiffre"
-
-# wpml-name: 02cb97a68e5137af44e882dbe2180485
-msgid "Avatar %s created successfully."
-msgstr "L'avatar %s a été créé avec succès."
-
-# wpml-name: 0d3e39fb622d9e6d7b389757aa651fff
-msgid "This user already has an avatar."
-msgstr "Cet utilisateur a déjà un avatar."
+#: admin/dashboard.php:22
+msgid "Recent users"
+msgstr "Utilisateurs récents"
 
 # wpml-name: 46eb01f349dc6c317e78cd1830545358
+#: admin/settings-inc.php:8
+#: includes/shortcodes.php:31
 msgid "Grid name"
 msgstr "Nom de la grille"
 
 # wpml-name: 751cfef8ad45902372601aeac58bdad7
+#: admin/settings-inc.php:12
+#: includes/shortcodes.php:32
 msgid "Login URI"
 msgstr "URI de connexion"
 
-# wpml-name: 4b019a446b69944645eaa3a1b2aed2af
-msgid "World online"
-msgstr "Monde en ligne"
+# wpml-name: 193fe27dd7fcd662652841a7b7e6c912
+#: admin/settings-inc.php:16
+msgid "Robust server database"
+msgstr "Base de données du serveur Robust"
 
-# wpml-name: 73f5d7be0c0947d90a5ef8ed3da5c602
-msgid "Citizens"
-msgstr "Citoyens"
+#: admin/settings-inc.php:20
+msgid "Required tables are missing, check your connection settings or your database"
+msgstr "Des tables requises sont manquantes. Vérifiez vos réglages de connexion ou votre base de donées"
 
-# wpml-name: 7400c075f728251b64f2210e53a5577c
-msgid "Citizens in world"
-msgstr "Citoyens présents"
+#: admin/settings-inc.php:24
+msgid "Hostname"
+msgstr "Nom d'hôte"
 
-# wpml-name: 5948f3347ebc02ebc690227c059661e1
-msgid "Regions"
-msgstr "Régions"
+# wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
+#: admin/settings-inc.php:28
+msgid "Database name"
+msgstr "Nom de la base de données"
 
-# wpml-name: 49b0606cfa6b774669ce9025e83d93c4
-msgid "Total area (km²)"
-msgstr "Surface totale (km²)"
+#: admin/settings-inc.php:32
+msgid "Username"
+msgstr "Nom d'utilisateur"
 
-# wpml-name: 9e186e1c05cc43a7c8e119a8ad12e201
-msgid "Action %s not implemented"
-msgstr "Action %s non implémentée"
+# wpml-name: 8ffca1456a2308a5556a750be1ecbac0
+#: admin/settings-inc.php:36
+msgid "Password"
+msgstr "Mot de passe"
 
-# wpml-name: 8014d55bac80ddaf07c8994175601b04
-msgid ""
-"Your avatar password is not required to be the same as your website account "
-"password. Changes made here will not affect your website password."
-msgstr ""
-"Votre mot de passe d'avatar ne doit pas obligatoirement être le même que "
-"celui de votre compte sur le site. Les changements effectués ici "
-"n'affecteront pas votre compte sur le site."
+# wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
+#: admin/settings-inc.php:41
+msgid "Avatar creation"
+msgstr "Création d'avatar"
+
+#: admin/settings-inc.php:45
+#: admin/settings-inc.php:73
+msgid "Models"
+msgstr "Modèles"
+
+#: admin/settings-inc.php:48
+msgid "Grid accounts matching first name or last name set below will apear as avatar models, with their profile picture if set, on the avatar registration form."
+msgstr "Les comptes avec un prénom ou un nom identique à ceux spécifiés ci-dessous apparaîtront comme modèles d'avatar, avec leur image de profil, sur le formulaire d'enregistrement d'un avatar."
+
+#: admin/settings-inc.php:50
+msgid "If both left empty, no model will be displayed and avatars will be created with default OpenSimulator appearance (most probably Ugly Ruth)."
+msgstr "Si les deux sont laissés vides, aucun modèle ne sera affiché et les avatars seront créés avec l'apparence par défaut d'OpenSimulator (probablement Ruth)."
+
+# wpml-name: b2d0fb30e09bf39693f6183c33455748
+#: admin/settings-inc.php:55
+msgid "First name ="
+msgstr "Prénom ="
+
+# wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
+#: admin/settings-inc.php:60
+msgid "OR Last name ="
+msgstr "ou Nom de famille ="
+
+#: admin/settings-inc.php:64
+msgid "Misc"
+msgstr "Divers"
+
+#: admin/settings-inc.php:67
+msgid "Web asset server"
+msgstr "Serveur web de ressources"
+
+#: admin/settings-inc.php:71
+msgid "Exclude from stats"
+msgstr "Exclure des statistiques"
+
+#: admin/settings-inc.php:74
+msgid "Accounts without mail address"
+msgstr "Comptes sans adresse e=mail"
+
+#: admin/settings-inc.php:76
+msgid "Accounts without email address are usually test accounts created from the console. Uncheck if you have real avatars without email address."
+msgstr "Les comptes sans adresse e-mail sont généralement des comptes tests créés à partir de la console. Décochez cette case si vous avez des avatars réels sans adresse e-mail."
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
+#: admin/settings.php:48
 msgid "OpenSimulator Status"
 msgstr "Statut OpenSimulator"
 
+#: admin/settings.php:48
+msgid "Status"
+msgstr "Statut"
+
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
+#: admin/settings.php:51
 msgid "OpenSimulator Settings"
 msgstr "Réglages OpenSimulator"
 
-# wpml-name: 2f4688fcbce23b3ad3066bc66120522f
-msgid ""
-"Your name in the virtual world, not required to be your real name. You can "
-"pick anything you want. Almost."
-msgstr ""
-"Votre nom dans le monde virtuel, n'est pas obligatoirement votre nom réel. "
-"Vous pouvez choisir ce que vous voulez. Ou presque."
+#: admin/settings.php:52
+#: admin/settings.php:85
+msgid "Settings"
+msgstr "Réglages"
+
+# wpml-name: 6bdda8124d6ca549428567dfc1c0532d
+#: admin/status-inc.php:11
+msgid "Available shortcodes"
+msgstr "Code courts (shortcodes) disponibles"
+
+# wpml-name: 119154a6f7028c6f8ebe3e470e626296
+#: admin/status-inc.php:17
+msgid "General information (grid name and login uri)"
+msgstr "Informations générales (nom de la grille et URI de connexion)"
+
+# wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
+#: admin/status-inc.php:23
+msgid "Online users, regions, etc."
+msgstr "Utilisateurs en ligne, régions, etc."
+
+# wpml-name: 317e8940a1b9f03b83ef85393bd49552
+#: admin/status-inc.php:29
+msgid "Avatar profile"
+msgstr "Profil de l'avatar"
+
+# wpml-name: d0f651f1495d346088ae49450c620e9b
+#: includes/profile.php:35
+msgid "OpenSimulator"
+msgstr "OpenSimulator"
+
+# wpml-name: d0f651f1495d346088ae49450c620e9b
+#: includes/profile.php:50
+msgid "OpenSimulator profile"
+msgstr "Profil OpenSimulator"
+
+#: includes/profile.php:53
+msgid "Avatar UUID"
+msgstr "UUID de l'avatar"
+
+# wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
+#: includes/profile.php:57
+msgid "Avatar name"
+msgstr "Nom de l'avatar"
+
+# wpml-name: 91030b181f530fca5da4314a6aabe283
+#: includes/profile.php:81
+msgid "Password must contain at least %s characters, including uppercase, lowercase and number"
+msgstr "Le mot de passe doit contenir au moins %s caractères, dont une majuscule, une minuscule et un chiffre"
+
+# wpml-name: 0d3e39fb622d9e6d7b389757aa651fff
+#: includes/profile.php:222
+msgid "This user already has an avatar."
+msgstr "Cet utilisateur a déjà un avatar."
+
+# wpml-name: b2d0fb30e09bf39693f6183c33455748
+#: includes/profile.php:234
+msgid "First name required"
+msgstr "Prénom requis"
+
+# wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
+#: includes/profile.php:235
+msgid "Last name required"
+msgstr "Nom de famille requis"
+
+# wpml-name: 8ffca1456a2308a5556a750be1ecbac0
+#: includes/profile.php:236
+msgid "Password required"
+msgstr "Mot de passe requis"
+
+# wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
+#: includes/profile.php:237
+msgid "Wrong password"
+msgstr "Mot de passe erroné"
+
+# wpml-name: 4eb86d524f30b9885871ed68c24b0f29
+#: includes/profile.php:244
+#: includes/profile.php:248
+msgid "The name %s is not allowed"
+msgstr "Le nom %s n'est pas autorisé"
+
+#: includes/profile.php:253
+msgid "Names can only contain alphanumeric characters"
+msgstr "Les noms ne peuvent contenir que des caractères alphanumériques"
+
+#: includes/profile.php:260
+msgid "There is already a grid user named %s"
+msgstr "Il y a déjà un utilisateur appelé %s"
+
+#: includes/profile.php:268
+msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
+msgstr "Ceci ne devrait jamais arriver. L'UUID généré existe déjà. Désolé. Essayez encore."
+
+# wpml-name: 02cb97a68e5137af44e882dbe2180485
+#: includes/profile.php:474
+msgid "Avatar %s created successfully."
+msgstr "L'avatar %s a été créé avec succès."
+
+# wpml-name: 9e186e1c05cc43a7c8e119a8ad12e201
+#: includes/profile.php:484
+msgid "Action %s not implemented"
+msgstr "Action %s non implémentée"
+
+#: includes/profile.php:492
+msgid "Log in to display your avatar"
+msgstr "Connectez-vous pour afficher votre avatar"
+
+# wpml-name: bc2068f5bf9d75b50d1f046f1e57c23c
+#: includes/profile.php:506
+msgid "You have no grid account yet. Fill the form below to create your avatar."
+msgstr "Vous n'avez pas encore de compte sur la grille. Remplissez le formulaire ci-dessous pour créer votre avatar."
+
+# wpml-name: 877a81d559efa8e5dac0cccac9f80a09
+#: includes/profile.php:514
+msgid "leave blank to leave unchanged"
+msgstr "laissez vide pour ne pas faire de modification"
 
 # wpml-name: bfc045552fb736eb0e776baee784de42
+#: includes/profile.php:517
+#: includes/profile.php:552
 msgid "Avatar first name"
 msgstr "Prénom de l'avatar"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
+#: includes/profile.php:521
+#: includes/profile.php:556
 msgid "Avatar last name"
 msgstr "Nom de famille de l'avatar"
 
-# wpml-name: 877a81d559efa8e5dac0cccac9f80a09
-msgid "leave blank to leave unchanged"
-msgstr "laissez vide pour ne pas faire de modification"
+# wpml-name: 5a54d9ad87f7c4c1c70c8f05b9515d5a
+#: includes/profile.php:525
+msgid "UUID"
+msgstr "UUID"
+
+# wpml-name: 1a87f41bc2db648685564cf6fa5b2903
+#: includes/profile.php:546
+msgid "Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed."
+msgstr "Choisissez le nom de votre avatar. C'est sous ce nom que les autres vous verront en ligne. Une fois que l'avatar est créé, il n'est plus possible de modifier ce nom."
 
 # wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
-msgid "Current password"
-msgstr "Mot de passe actuel"
+#: includes/profile.php:569
+msgid "Confirm your password"
+msgstr "Confirmez votre mot de passe"
 
-# wpml-name: 2ac66b2144baca76994f174ce4cb120c
-msgid "OpenSimulator web interface for WordPress."
-msgstr "Interface OpenSimulator pour WordPress."
+# wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
+#: includes/profile.php:584
+msgid "Your avatar"
+msgstr "Votre avatar"
 
-# wpml-name: 17db1cfe008f83e7d0181762eda3daab
-msgid "Grid status"
-msgstr "Statut de la grille"
+# wpml-name: 90efd059f58183a99038e138b8fe17f0
+#: includes/profile.php:585
+msgid "You can change and customize it in-world, as often as you want."
+msgstr "Vous pourrez le changer et le personnaliser à votre guise en ligne."
 
-# wpml-name: 6b8467e13ae11c479efa8843f1b95826
-msgid "Grid info"
-msgstr "Infos sur la grille"
+#: includes/profile.php:622
+msgid "Save"
+msgstr "Enregistrer"
 
-# wpml-name: 1f1f2dbee41fbf293b58439226ee0faf
-msgid "Speculoos"
-msgstr "Speculoos"
+# wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
+#: includes/shortcodes.php:37
+msgid "OpenSimulator not configured"
+msgstr "OpenSimulator n'est pas configuré"
 
-# wpml-name: 8706391d288aeb21cf94903c37888b0f
-msgid ""
-"This is a short description of what the plugin does. It's displayed in the "
-"WordPress admin area."
-msgstr ""
-"This is a short description of what the plugin does. It's displayed in the "
-"WordPress admin area."
+#: includes/shortcodes.php:74
+msgid "Yes"
+msgstr "Oui"
 
-# wpml-name: dca56d6af7010d3d34aadf3fd1666bf7
-msgid "https://git.magiiic.com/opensimulator/w4os"
-msgstr "https://git.magiiic.com/opensimulator/w4os"
+# wpml-name: 69675902f4d4a3da44638540557562af
+#: includes/shortcodes.php:87
+msgid "Grid online"
+msgstr "Grille en ligne"
 
-# wpml-name: d0f651f1495d346088ae49450c620e9b
-msgid "OpenSimulator"
-msgstr "OpenSimulator"
+# wpml-name: ef53538ae41a651c7f72ab6cb1135d8c
+#: includes/shortcodes.php:88
+msgid "Members"
+msgstr "Membres"
 
 # wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
+#: includes/shortcodes.php:90
 msgid "Active members (30 days)"
 msgstr "Membres actifs (30 jours)"
+
+# wpml-name: 67ea4b3432b974a20b2c8ee6609e363c
+#: includes/shortcodes.php:92
+msgid "Members in world"
+msgstr "Membres sur la grille"
+
+# wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
+#: includes/shortcodes.php:98
+msgid "Active users (30 days)"
+msgstr "Utilisateurs actifs (30 jours)"
+
+# wpml-name: 9143e8053fefd25ce03ae81136931586
+#: includes/shortcodes.php:100
+msgid "Total users in world"
+msgstr "Utilisateurs sur la grille"
+
+# wpml-name: 5948f3347ebc02ebc690227c059661e1
+#: includes/shortcodes.php:107
+msgid "Regions"
+msgstr "Régions"
+
+# wpml-name: 6834699b2d08455d0475c76d54356191
+#: includes/shortcodes.php:111
+msgid "Total area"
+msgstr "Surface totale"
+
+#: includes/shortcodes.php:119
+msgid "No result"
+msgstr "Aucun résultat"
+
+#: w4os.php:63
+msgid "Stable updates are now delivered from a plugin server instead of the git repository. You need to reinstall the plugin from official repository to get future stable updates. GitHub Updater is no longer required for official releases."
+msgstr "Les versions stables sont désormais fournies par un serveur de mises à jour au lieu du répertoire git. Vous devez réinstaller le plugin depuis le site officiel pour obtenir les futures mises à jour. GitHub Udpater n'est plus nécessaire pour les mises à jour."
+
+#: w4os.php:64
+msgid "Download"
+msgstr "Télécharger"
+
+# wpml-name: fc4e1af5d2d469ea179cee95817ed54f
+#~ msgid ""
+"\n"
+"name in the virtual world (not required to be your real name). You \"\n"
+"pick anything you want. Almost.\""
+#~ msgstr ""
+"\n"
+"nom dans le monde virtuel (pas nécessairement votre nom réel). Vous \"\n"
+"choisir ce que vous voulez. Ou presque.\""
+
+# wpml-name: 867cee98fdd724e7d5bc87f61ce657bc
+#~ msgid "Passwords do not match"
+#~ msgstr "Les mots de passe ne correspondent pas"
+
+# wpml-name: 4b019a446b69944645eaa3a1b2aed2af
+#~ msgid "World online"
+#~ msgstr "Monde en ligne"
+
+# wpml-name: 73f5d7be0c0947d90a5ef8ed3da5c602
+#~ msgid "Citizens"
+#~ msgstr "Citoyens"
+
+# wpml-name: 7400c075f728251b64f2210e53a5577c
+#~ msgid "Citizens in world"
+#~ msgstr "Citoyens présents"
+
+# wpml-name: 49b0606cfa6b774669ce9025e83d93c4
+#~ msgid "Total area (km²)"
+#~ msgstr "Surface totale (km²)"
+
+# wpml-name: 8014d55bac80ddaf07c8994175601b04
+#~ msgid ""
+"\n"
+"avatar password is not required to be the same as your website \"\n"
+"password. Changes made here will not affect your website password.\""
+#~ msgstr ""
+"\n"
+"mot de passe d'avatar ne doit pas obligatoirement être le même que \"\n"
+"de votre compte sur le site. Les changements effectués ici \"\n"
+"pas votre compte sur le site.\""
+
+# wpml-name: 2f4688fcbce23b3ad3066bc66120522f
+#~ msgid ""
+"\n"
+"name in the virtual world, not required to be your real name. You \"\n"
+"pick anything you want. Almost.\""
+#~ msgstr ""
+"\n"
+"nom dans le monde virtuel, n'est pas obligatoirement votre nom \"\n"
+"Vous pouvez choisir ce que vous voulez. Ou presque.\""
+
+# wpml-name: 2ac66b2144baca76994f174ce4cb120c
+#~ msgid "OpenSimulator web interface for WordPress."
+#~ msgstr "Interface OpenSimulator pour WordPress."
+
+# wpml-name: 1f1f2dbee41fbf293b58439226ee0faf
+#~ msgid "Speculoos"
+#~ msgstr "Speculoos"
+
+# wpml-name: 8706391d288aeb21cf94903c37888b0f
+#~ msgid ""
+"\n"
+"is a short description of what the plugin does. It's displayed in \"\n"
+"WordPress admin area.\""
+#~ msgstr ""
+"\n"
+"is a short description of what the plugin does. It's displayed in \"\n"
+"WordPress admin area.\""
