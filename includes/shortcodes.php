@@ -73,7 +73,7 @@ function w4os_shortcodes_init()
 				if ($fp) {
 					$gridonline = __("Yes", 'w4os' );
 				} else {
-					$gridonline=\1, 'w4os' ), "w4os");
+					$gridonline = __("No", 'w4os' );
 				}
 				if(get_option('w4os_exclude_models')) {
 					$filter .= "u.FirstName != '" . get_option('w4os_model_firstname') . "'"
