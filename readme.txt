@@ -89,6 +89,12 @@ question, but you might wonder.
 * update authors
 * fix "Yes" and "No" translations
 
+= 1.1.2 =
+* fix typo in banners and icons urls, can't believe I didn't see this before...
+
+= 1.1.1 =
+* use transparent icons
+
 = 1.1 =
 * added changelog, banners and icons to view details
 * changed update server to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
