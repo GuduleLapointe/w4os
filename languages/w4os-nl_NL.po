@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-14T17:33:11-04:00\n"
-"PO-Revision-Date: 2021-03-14 17:50-0400\n"
+"POT-Creation-Date: 2021-03-14T18:11:55-04:00\n"
+"PO-Revision-Date: 2021-03-14 18:12-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.3\n"
 
@@ -322,6 +322,10 @@ msgstr ""
 msgid "Yes"
 msgstr "Ja"
 
+#: includes/shortcodes.php:76
+msgid "No"
+msgstr "Nee"
+
 # wpml-name: 69675902f4d4a3da44638540557562af
 #: includes/shortcodes.php:87
 msgid "Grid online"
@@ -373,80 +377,3 @@ msgstr ""
 #: w4os.php:64
 msgid "Download"
 msgstr ""
-
-# wpml-name: fc4e1af5d2d469ea179cee95817ed54f
-#~ msgid ""
-"\n"
-"name in the virtual world (not required to be your real name). You \"\n"
-"pick anything you want. Almost.\""
-#~ msgstr ""
-"\n"
-"naam in de virtuele wereld (niet noodzakelijk uw echte naam). Je kunt \"\n"
-"wat je wilt. Of bijna.\""
-
-# wpml-name: 867cee98fdd724e7d5bc87f61ce657bc
-#~ msgid "Passwords do not match"
-#~ msgstr "Wachtwoorden komen niet overeen"
-
-# wpml-name: 4b019a446b69944645eaa3a1b2aed2af
-#~ msgid "World online"
-#~ msgstr "Wereld online"
-
-# wpml-name: 73f5d7be0c0947d90a5ef8ed3da5c602
-#~ msgid "Citizens"
-#~ msgstr "Inwoners"
-
-# wpml-name: 7400c075f728251b64f2210e53a5577c
-#~ msgid "Citizens in world"
-#~ msgstr "Inwoners in de wereld"
-
-# wpml-name: 49b0606cfa6b774669ce9025e83d93c4
-#~ msgid "Total area (km²)"
-#~ msgstr "Totale oppervlakte (km²)"
-
-# wpml-name: 8014d55bac80ddaf07c8994175601b04
-#~ msgid ""
-"\n"
-"avatar password is not required to be the same as your website \"\n"
-"password. Changes made here will not affect your website password.\""
-#~ msgstr ""
-"\n"
-"wachtwoord van uw avatar hoeft niet hetzelfde te zijn als dat van uw \"\n"
-"op de site. Hier aangebrachte wijzigingen hebben geen invloed op \"\n"
-"account op de site.\""
-
-# wpml-name: 2f4688fcbce23b3ad3066bc66120522f
-#~ msgid ""
-"\n"
-"name in the virtual world, not required to be your real name. You \"\n"
-"pick anything you want. Almost.\""
-#~ msgstr ""
-"\n"
-"naam in de virtuele wereld (niet noodzakelijk uw echte naam). Je kunt \"\n"
-"wat je wilt. Of bijna.\""
-
-# wpml-name: 2ac66b2144baca76994f174ce4cb120c
-#~ msgid "OpenSimulator web interface for WordPress."
-#~ msgstr "OpenSimulator-interface voor WordPress."
-
-# wpml-name: 1f1f2dbee41fbf293b58439226ee0faf
-#~ msgid "Speculoos"
-#~ msgstr "Speculoos"
-
-# wpml-name: 8706391d288aeb21cf94903c37888b0f
-#~ msgid ""
-"\n"
-"is a short description of what the plugin does. It's displayed in \"\n"
-"WordPress admin area.\""
-#~ msgstr ""
-"\n"
-"is a short description of what the plugin does. It's displayed in \"\n"
-"WordPress admin area.\""
-
-# wpml-name: 67307c208d2161c2f079f99e0c554f12
-#~ msgid "Surface totale"
-#~ msgstr "Totale oppervlakte"
-
-# wpml-name: 12e3251b47122fde56704c1607205066
-#~ msgid "Régions"
-#~ msgstr "Regio's"
