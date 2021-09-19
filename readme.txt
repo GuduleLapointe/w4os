@@ -85,6 +85,9 @@ question, but you might wonder.
 
 == Changelog ==
 
+= 1.2.3 =
+* updated assets (icons and banners)
+
 = 1.2.2 =
 * fix some remaining case-sensitive mysql requests issue #1
 
