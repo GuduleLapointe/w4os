@@ -20,17 +20,22 @@ function check_w4os_db_tables() {
 	global $w4osdb;
 	if(!is_object($w4osdb)) return false;
 	$required_tables = array(
-		'UserAccounts',
-		'Presence',
+		'Avatars',
 		'GridUser',
+		'inventoryfolders',
+		'inventoryitems',
+		'Presence',
 		'regions',
+		'UserAccounts',
+		'userProfile',
 	);
 	foreach($required_tables as $table_name) {
 		$lower_name = strtolower($table_name);
-		if($w4osdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) continue;
-		if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) continue;
-		return false;
-		break;
+		unset($actual_name);
+		if($w4osdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) $actual_name=$table_name;
+		if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) $actual_name=$lower_name;
+		if(empty($actual_name)) return false;
+		define('W4OS_' . $table_name, $actual_name);
 	}
 	return true;
 }
