@@ -20,16 +20,17 @@ function check_w4os_db_tables() {
 	global $w4osdb;
 	if(!is_object($w4osdb)) return false;
 	$required_tables = array(
-		'useraccounts',
-		'presence',
-		'griduser',
+		'UserAccounts',
+		'Presence',
+		'GridUser',
 		'regions',
 	);
 	foreach($required_tables as $table_name) {
-		if(strtolower($w4osdb->get_var("SHOW TABLES LIKE '$table_name'")) != $table_name) {
-			return false;
-			break;
-		}
+		$lower_name = strtolower($table_name);
+		if($w4osdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) continue;
+		if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) continue;
+		return false;
+		break;
 	}
 	return true;
 }
