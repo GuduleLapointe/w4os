@@ -86,6 +86,7 @@ question, but you might wonder.
 == Changelog ==
 
 = 1.2 =
+* fix issue #1 Database check fails if mysql is case insensitive
 
 = 1.1.4 =
 * fix bug in d6fe07c62bb6be189a820c416bc8402f7f5de56a
