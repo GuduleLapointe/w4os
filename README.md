@@ -92,10 +92,10 @@ question, but you might wonder.
 * updated assets (icons and banners)
 
 ### 1.2.2
-* fix some remaining case-sensitive mysql requests issue #1
+* fix some remaining case-sensitive mysql requests issue #2
 
 ### 1.2.1
-* fix issue #1 Database check fails if mysql is case insensitive
+* fix issue #2 Database check fails if mysql is case insensitive
 
 ### 1.1.4
 * fix bug in d6fe07c62bb6be189a820c416bc8402f7f5de56a
