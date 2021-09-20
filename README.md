@@ -85,6 +85,9 @@ question, but you might wonder.
 
 ## Changelog
 
+### 1.2.5
+* fix #4  Database connection error triggered if userprofile table is absent
+
 ### 1.2.4
 * added a hint in grid URI settings field example.org:8002
 
