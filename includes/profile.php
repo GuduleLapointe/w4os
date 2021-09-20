@@ -18,10 +18,10 @@ add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
  */
 function w4os_profile_sync($user) {
   global $w4osdb;
-  $uuid = $w4osdb->get_var("SELECT PrincipalID FROM " . W4OS_UserAccounts . " WHERE Email = '$user->user_email'");
+  $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
   update_user_meta( $user->ID, 'w4os_uuid', $uuid );
-  update_user_meta( $user->ID, 'w4os_firstname', $w4osdb->get_var("SELECT FirstName FROM " . W4OS_UserAccounts . " WHERE PrincipalID = '$uuid'") );
-  update_user_meta( $user->ID, 'w4os_lastname', $w4osdb->get_var("SELECT LastName FROM " . W4OS_UserAccounts . " WHERE PrincipalID = '$uuid'") );
+  update_user_meta( $user->ID, 'w4os_firstname', $w4osdb->get_var("SELECT FirstName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
+  update_user_meta( $user->ID, 'w4os_lastname', $w4osdb->get_var("SELECT LastName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
   return $uuid;
 }
 
@@ -255,7 +255,7 @@ function w4os_update_avatar( $user, $params ) {
     }
 
     // Check if there is already an avatar with this name
-    $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM " . W4OS_UserAccounts . " WHERE FirstName = '$firstname' AND LastName = '$lastname'");
+    $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$firstname' AND LastName = '$lastname'");
     if ( $check_uuid ) {
       w4os_notice(sprintf( __( 'There is already a grid user named %s', 'w4os' ), "$firstname $lastname"), 'fail');
       return false;
@@ -263,7 +263,7 @@ function w4os_update_avatar( $user, $params ) {
     // Hash password
 
     $newavatar_uuid = gen_uuid();
-    $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM " . W4OS_UserAccounts . " WHERE PrincipalID = '$newavatar_uuid'");
+    $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE PrincipalID = '$newavatar_uuid'");
     if ( $check_uuid ) {
       w4os_notice(__( 'This should never happen! Generated a random UUID that already existed. Sorry. Try again.', 'w4os' ), 'fail');
       return false;
@@ -273,7 +273,7 @@ function w4os_update_avatar( $user, $params ) {
     $hash = md5(md5($password) . ":" . $salt);
     $user_email = get_userdata($user->ID)->data->user_email;
     $created = mktime();
-    $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM " . W4OS_regions . " WHERE regionName = '" . DEFAULT_HOME . "'");
+    $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM Regions WHERE regionName = '" . DEFAULT_HOME . "'");
 
     $result = $w4osdb->insert (
       'UserAccounts', array (
@@ -306,7 +306,7 @@ function w4os_update_avatar( $user, $params ) {
 
     $model_firstname=strstr($model, " ", true);
     $model_lastname=trim(strstr($model, " "));
-    $model_uuid = $w4osdb->get_var("SELECT PrincipalID FROM " . W4OS_UserAccounts . " WHERE FirstName = '$model_firstname' AND LastName = '$model_lastname'");
+    $model_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$model_firstname' AND LastName = '$model_lastname'");
 
     $inventory_uuid = gen_uuid();
     if ($result) $result = $w4osdb->insert (
@@ -389,7 +389,7 @@ function w4os_update_avatar( $user, $params ) {
     // }
 
     if ( $result ) {
-      $result = $w4osdb->get_results("SELECT Name, Value FROM " . W4OS_Avatars . " WHERE PrincipalID = '$model_uuid'");
+      $result = $w4osdb->get_results("SELECT Name, Value FROM Avatars WHERE PrincipalID = '$model_uuid'");
       // w4os_notice(print_r($result, true), 'code');
       // foreach($result as $row) {
       //   w4os_notice(print_r($row, true), 'code');
@@ -409,9 +409,9 @@ function w4os_update_avatar( $user, $params ) {
             $uuids = explode(":", $Value);
             $item = $uuids[0];
             $asset = $uuids[1];
-            $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM " . W4OS_inventoryitems . " WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
+            $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
             if(!$destitem) {
-              $newitem = $w4osdb->get_row("SELECT * FROM " . W4OS_inventoryitems . " WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
+              $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
               $destinventoryid = gen_uuid();
               $newitem['inventoryID'] = $destinventoryid;
               $newitems[] = $newitem;
@@ -420,10 +420,10 @@ function w4os_update_avatar( $user, $params ) {
           } else if (strpos($Name, '_ap_') !== FALSE) {
             $items = explode(",", $Value);
             foreach($items as $item) {
-              $asset = $w4osdb->get_var("SELECT assetID FROM " . W4OS_inventoryitems . " WHERE inventoryID='$item'");
-              $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM " . W4OS_inventoryitems . " WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
+              $asset = $w4osdb->get_var("SELECT assetID FROM inventoryitems WHERE inventoryID='$item'");
+              $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
               if(!$destitem) {
-                $newitem = $w4osdb->get_row("SELECT * FROM " . W4OS_inventoryitems . " WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
+                $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
                 $destinventoryid = gen_uuid();
                 $newitem['inventoryID'] = $destinventoryid;
                 // $Value = $destinventoryid;
@@ -572,7 +572,7 @@ function w4os_profile_wc_edit( $user ) {
       ";
 
       $models=$w4osdb->get_results("SELECT FirstName, LastName, profileImage, profileAboutText
-        FROM " . W4OS_UserAccounts . ", " . W4OS_userProfile . "
+        FROM UserAccounts, userProfile
         WHERE PrincipalID = userUUID
         AND (FirstName = '" . get_option('w4os_model_firstname') . "'
         OR LastName = '" . get_option('w4os_model_lastname') . "')
