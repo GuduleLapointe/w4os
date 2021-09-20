@@ -33,6 +33,15 @@ profiles in Robust.ini (see [UserProfilesService], [ServiceList] and
   - create a profile page for registered users, including `[w4os_profile]` shortcode.
     This will display the an avatar creation form for users without in-world avatar.
     For accounts already having an avatar, it will display avatar details.
+3. To create default avatars:
+  - from ROBUST console (defaults creation is not allowed from the website),
+    create users for your models. Name them according to W4OS settings: one part
+    of the name is "Default", the other part is the name displayed on the form
+    (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't
+    mention e-mail address to avoid counting them as regular accounts in stats.
+  - log in-world with each of these model accounts and give them the desire
+    appearance. Take a snapshot and use it as profile picture. It will be used
+    for the web site avatar choosing form.
 
 ### Dependencies
 

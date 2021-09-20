@@ -58,6 +58,15 @@ Robust server must be installed before setting up W4OS.
     shortcode. This will display the an avatar creation form for users without
     in-world avatar. For accounts already having an avatar, it will display
     avatar details.
+3. To create default avatars:
+  - from ROBUST console (defaults creation is not allowed from the website),
+    create users for your models. Name them according to W4OS settings: one part
+    of the name is "Default", the other part is the name displayed on the form
+    (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't
+    mention e-mail address to avoid counting them as regular accounts in stats.
+  - log in-world with each of these model accounts and give them the desire
+    appearance. Take a snapshot and use it as profile picture. It will be used
+    for the web site avatar choosing form.
 
 See INSTALLATION.md for more details.
 
@@ -104,6 +113,9 @@ getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
 
 ## Changelog
+
+### 1.2.8
+* added avatar models creation instructions
 
 ### 1.2.7
 * added web assets server in README, updated INSTALLATION
