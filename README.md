@@ -39,9 +39,10 @@ section for upcoming functionalties.
 
 Robust server must be installed before setting up W4OS.
 
-To allow users to choose an avatar on registration, you must enable user profiles
-in Robust.ini (see [UserProfilesService], [ServiceList] and [UserProfiles]
-sections)
+- To allow users to choose an avatar on registration, you must enable user
+  profiles in Robust.ini (see [UserProfilesService], [ServiceList] and
+  [UserProfiles] sections)
+- Install a web assets server (see Dependencies in INSTALLATION.md)
 
 1. Download [the latest stable
    release](https://magiiic.com/updates/?action=download&slug=w4os), unzip it in
@@ -51,10 +52,14 @@ sections)
   - Enter your robust database connection details and submit. If you get a
     database connection error, it might come from a case-sensitivity issue (see
     https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
-  - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar widget
-  - create a profile page for registered users, including `[w4os_profile]` shortcode.
-    This will display the an avatar creation form for users without in-world avatar.
-    For accounts already having an avatar, it will display avatar details.
+  - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar
+    widget
+  - create a profile page for registered users, including `[w4os_profile]`
+    shortcode. This will display the an avatar creation form for users without
+    in-world avatar. For accounts already having an avatar, it will display
+    avatar details.
+
+See INSTALLATION.md for more details.
 
 ## Roadmap
 
@@ -99,6 +104,9 @@ getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
 
 ## Changelog
+
+### 1.2.7
+* added web assets server in README, updated INSTALLATION
 
 ### 1.2.6
 * added more installation instructions to readme
