@@ -85,6 +85,9 @@ question, but you might wonder.
 
 == Changelog ==
 
+= 1.2.4 =
+* added a hint in grid URI settings field example.org:8002
+
 = 1.2.3 =
 * updated assets (icons and banners)
 
