@@ -273,7 +273,7 @@ function w4os_update_avatar( $user, $params ) {
     $hash = md5(md5($password) . ":" . $salt);
     $user_email = get_userdata($user->ID)->data->user_email;
     $created = mktime();
-    $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM Regions WHERE regionName = '" . DEFAULT_HOME . "'");
+    $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM regions WHERE regionName = '" . DEFAULT_HOME . "'");
 
     $result = $w4osdb->insert (
       'UserAccounts', array (
@@ -572,7 +572,7 @@ function w4os_profile_wc_edit( $user ) {
       ";
 
       $models=$w4osdb->get_results("SELECT FirstName, LastName, profileImage, profileAboutText
-        FROM UserAccounts, userProfile
+        FROM UserAccounts, userprofile
         WHERE PrincipalID = userUUID
         AND (FirstName = '" . get_option('w4os_model_firstname') . "'
         OR LastName = '" . get_option('w4os_model_lastname') . "')

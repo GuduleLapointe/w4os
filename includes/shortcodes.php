@@ -105,7 +105,7 @@ function w4os_shortcodes_init()
 					// 'Known online users' => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 					// FROM GridUser WHERE Online = 'true'")),
 					__('Regions', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
-					FROM Regions")),
+					FROM regions")),
 					// 'Total area (m²)' => number_format_i18n($w4osdb->get_var("SELECT sum(sizex * sizey)
 					// FROM regions") . "km²", 2),
 					__('Total area', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT round(sum(sizex * sizey / 1000000),2)

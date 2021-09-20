@@ -20,10 +20,20 @@ function check_w4os_db_tables() {
 	global $w4osdb;
 	if(!is_object($w4osdb)) return false;
 	$required_tables = array(
-		'UserAccounts',
-		'Presence',
+		// 'AgentPrefs',
+		// 'assets',
+		// 'auth',
+		'Avatars',
+		// 'Friends',
 		'GridUser',
+		'inventoryfolders',
+		'inventoryitems',
+		// 'migrations',
+		// 'MuteList',
+		'Presence',
 		'regions',
+		// 'tokens',
+		'UserAccounts',
 	);
 	foreach($required_tables as $table_name) {
 		$lower_name = strtolower($table_name);
