@@ -10,7 +10,7 @@
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label for="w4os_login_uri"><?php _e("Login URI", "w4os");?></label></th>
-				<td><input type="text" class=regular-text id="w4os_login_uri" name="w4os_login_uri" value="<?php echo get_option('w4os_login_uri'); ?>" /></td>
+				<td><input type="text" class=regular-text id="w4os_login_uri" name="w4os_login_uri" value="<?php echo get_option('w4os_login_uri'); ?>" placeholder='example.org:8002'/></td>
 			</tr>
 			<tr><th colspan=2>
 				<h2><?php _e("Robust server database", "w4os");?></h2>
