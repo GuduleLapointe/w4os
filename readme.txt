@@ -100,6 +100,9 @@ question, but you might wonder.
 
 == Changelog ==
 
+= 1.2.6 =
+* added more installation instructions to readme
+
 = 1.2.5 =
 * fix #4  Database connection error triggered if userprofile table is absent
 
