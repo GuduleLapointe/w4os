@@ -4,7 +4,7 @@ Donate link: https://paypal.me/magicoli
 Tags: opensimulator, second life, web interface
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 5.6
+Tested up to: 5.8.1
 Stable tag: master
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -113,6 +113,9 @@ getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
 
 == Changelog ==
+
+= 1.2.9 =
+* tested up to 5.8.1
 
 = 1.2.8 =
 * added avatar models creation instructions
