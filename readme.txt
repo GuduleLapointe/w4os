@@ -72,6 +72,8 @@ See INSTALLATION.md for more details.
 
 == Roadmap ==
 
+See https://github.com/GuduleLapointe/w4os/projects/1 for up-to-date status.
+
 = Short term (version 1.0, WordPress repository release) =
 
 - Login page (with grid FirstName, LastName and password).
@@ -142,24 +144,16 @@ question, but you might wonder.
 * fix issue #2 Database check fails if mysql is case insensitive
 
 = 1.1.4 =
-* fix bug in d6fe07c62bb6be189a820c416bc8402f7f5de56a
-
-= 1.1.3 =
-* update authors
-* fix "Yes" and "No" translations
-
-= 1.1.2 =
-* fix typo in banners and icons urls, can't believe I didn't see this before...
-
-= 1.1.1 =
-* use transparent icons
-
-= 1.1 =
 * added changelog, banners and icons to view details
-* changed update server to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
+* fix bug in d6fe07c62bb6be189a820c416bc8402f7f5de56a
+* fix "Yes" and "No" translations
+* fix typo in banners and icons urls, can't believe I didn't see this before...
 * fixed conflict with other extensions settings pages
 * fixed w4os_updater var name
 * fixed view details not shown
+* update authors
+* use transparent icons
+* changed update server library to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
 
 = 1.0 =
 * use plugin repository for stable releases updates, GitHub Updater no longer

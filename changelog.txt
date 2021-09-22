@@ -1,3 +1,26 @@
+= 1.2.9 =
+* tested up to 5.8.1
+* added avatar models creation instructions
+* added web assets server in README, updated INSTALLATION
+* added more installation instructions to readme
+* added a hint in grid URI settings field example.org:8002
+* fix #4  Database connection error triggered if userprofile table is absent
+* fix some remaining case-sensitive mysql requests issue #2
+* fix issue #2 Database check fails if mysql is case insensitive
+* updated assets (icons and banners)
+
+= 1.1.4 =
+* added changelog, banners and icons to view details
+* fix bug in d6fe07c62bb6be189a820c416bc8402f7f5de56a
+* fix "Yes" and "No" translations
+* fix typo in banners and icons urls, can't believe I didn't see this before...
+* fixed conflict with other extensions settings pages
+* fixed w4os_updater var name
+* fixed view details not shown
+* update authors
+* use transparent icons
+* changed update server library to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
+
 = 1.0 =
 * use plugin repository for stable releases updates, GitHub Updater no longer
   required
