@@ -116,6 +116,12 @@ question, but you might wonder.
 
 == Changelog ==
 
+= 1.2.11 =
+* fix error when home region is not set
+* fix wrong letter cases in auth table name
+* added login page link to message displayed when trying to see profile while not connected
+* more detailed error messages for avatar creation
+
 = 1.2.10 =
 * fix #10 invalid JSON response when adding [w4os_profile] shortcode element
 * don't render w4os_profile shortcode in json response
