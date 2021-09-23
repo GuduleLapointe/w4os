@@ -287,14 +287,17 @@ function w4os_update_avatar( $user, $params ) {
         'Created' => $created,
       )
     );
+    if ( !$result ) w4os_notice("Error while creating user", 'fail');
     if ($result) $result = $w4osdb->insert (
-      'Auth', array (
+      'auth', array (
         'UUID' => $newavatar_uuid,
         'passwordHash'   => $hash,
         'passwordSalt'   => $salt,
         'webLoginKey' => NULL_KEY,
       )
     );
+    if ( !$result ) w4os_notice("Error while setting password", 'fail');
+
     if ($result) $result = $w4osdb->insert (
       'GridUser', array (
         'UserID' => $newavatar_uuid,
@@ -304,6 +307,7 @@ function w4os_update_avatar( $user, $params ) {
         'LastPosition' => '<128,128,21>',
       )
     );
+    if ( !$result ) w4os_notice("Error while setting home region", 'fail');
 
     $model_firstname=strstr($model, " ", true);
     $model_lastname=trim(strstr($model, " "));
@@ -320,6 +324,7 @@ function w4os_update_avatar( $user, $params ) {
         'parentFolderID' => NULL_KEY,
       )
     );
+    if ( !$result ) w4os_notice("Error while creating user inventory", 'fail');
 
     $bodyparts_uuid = gen_uuid();
     $bodyparts_model_uuid = gen_uuid();
@@ -366,6 +371,7 @@ function w4os_update_avatar( $user, $params ) {
             'parentFolderID' => $parentid,
           )
         );
+        if( !$result ) w4os_notice("Error while adding folder $folder", 'fail');
         if( ! $result ) break;
       }
     }
@@ -390,7 +396,7 @@ function w4os_update_avatar( $user, $params ) {
     // }
 
     if ( $result ) {
-      $result = $w4osdb->get_results("SELECT Name, Value FROM Avatars WHERE PrincipalID = '$model_uuid'");
+      $model_exist = $w4osdb->get_results("SELECT Name, Value FROM Avatars WHERE PrincipalID = '$model_uuid'");
       // w4os_notice(print_r($result, true), 'code');
       // foreach($result as $row) {
       //   w4os_notice(print_r($row, true), 'code');
@@ -398,7 +404,7 @@ function w4os_update_avatar( $user, $params ) {
       // }
 
       // foreach($avatars_prefs as $var => $val) {
-      if($result) {
+      if($model_exist) {
         foreach($result as $row) {
           unset($newitem);
           unset($newitems);
@@ -441,6 +447,7 @@ function w4os_update_avatar( $user, $params ) {
               $newitem['parentFolderID'] = $bodyparts_model_uuid;
               $newitem['avatarID'] = $newavatar_uuid;
               $result = $w4osdb->insert ('inventoryitems', $newitem);
+              if( !$result ) w4os_notice("Error while adding inventory item", 'fail');
               // w4os_notice(print_r($newitem, true), 'code');
               // echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
 
@@ -451,17 +458,19 @@ function w4os_update_avatar( $user, $params ) {
               $outfit_link['inventoryID'] = gen_uuid();
               $outfit_link['parentFolderID'] = $currentoutfit_uuid;
               $result = $w4osdb->insert ('inventoryitems', $outfit_link);
+              if( !$result ) w4os_notice("Error while adding inventory outfit link", 'fail');
             }
           // } else {
           //   w4os_notice("Not creating inventory item '$Name' for $firstname");
           }
-          $w4osdb->insert (
+          $result = $w4osdb->insert (
             'Avatars', array (
               'PrincipalID' => $newavatar_uuid,
               'Name' => $Name,
               'Value' => $Value,
             )
           );
+          if( !$result ) w4os_notice("Error while adding avatar", 'fail');
         }
       }
     }
