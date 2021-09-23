@@ -103,7 +103,7 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
 		$salt = md5(gen_uuid());
 		$hash = md5(md5($password) . ":" . $salt);
 		$w4osdb->update (
-			'Auth',
+			'auth',
 			array (
 				'passwordHash'   => $hash,
 				'passwordSalt'   => $salt,
@@ -191,7 +191,7 @@ function w4os_verify_user() {
           if( $salt && $hash ) {
             global $w4osdb;
             $w4osdb->update (
-              'Auth',
+              'auth',
               array (
                 'passwordHash'   => $hash,
                 'passwordSalt'   => $salt,
