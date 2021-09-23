@@ -116,6 +116,13 @@ question, but you might wonder.
 
 == Changelog ==
 
+= 1.2.10 =
+* fix #10 invalid JSON response when adding [w4os_profile] shortcode element
+* don't render w4os_profile shortcode in json response
+* don't render w4os_profile shortcode in edit pages
+* only check once if w4os db is connected
+* avoid undefined constant warning
+
 = 1.2.9 =
 * tested up to 5.8.1
 
