@@ -39,11 +39,15 @@ function check_w4os_db_tables() {
 		'UserAccounts',
 	);
 	foreach($required_tables as $table_name) {
+		unset($actual_name);
 		$lower_name = strtolower($table_name);
-		if($w4osdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) continue;
-		if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) continue;
+		if($w4osdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) $actual_name = $table_name;
+		else if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) $actual_name = $lower_name;
+		if(isset($actual_name)) {
+			if (!defined($table_name)) define($table_name, $actual_name);
+			continue;
+		}
 		return false;
-		break;
 	}
 	return true;
 }
