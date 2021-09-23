@@ -274,6 +274,7 @@ function w4os_update_avatar( $user, $params ) {
     $user_email = get_userdata($user->ID)->data->user_email;
     $created = mktime();
     $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM regions WHERE regionName = '" . DEFAULT_HOME . "'");
+    if(empty($HomeRegionID)) $HomeRegionID = '00000000-0000-0000-0000-000000000000';
 
     $result = $w4osdb->insert (
       'UserAccounts', array (
