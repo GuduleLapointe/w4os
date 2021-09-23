@@ -540,8 +540,8 @@ function w4os_profile_wc_edit( $user ) {
   } else {
     $action = 'w4os_create_avatar';
 
-    $firstname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_firstname]) ? $_REQUEST[w4os_firstname] : get_user_meta( $user->ID, 'first_name', true ));
-    $lastname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_lastname]) ? $_REQUEST[w4os_lastname] : get_user_meta( $user->ID, 'last_name', true ));
+    $firstname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST['w4os_firstname']) ? $_REQUEST['w4os_firstname'] : get_user_meta( $user->ID, 'first_name', true ));
+    $lastname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST['w4os_lastname']) ? $_REQUEST['w4os_lastname'] : get_user_meta( $user->ID, 'last_name', true ));
 
     $content .= "<p class=description>" . __('Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed.', 'w4os') . "</p>";
 
