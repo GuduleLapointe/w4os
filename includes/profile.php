@@ -489,8 +489,7 @@ function w4os_update_avatar( $user, $params ) {
 
 function w4os_profile_wc_edit( $user ) {
   if($user->ID == 0) {
-    $content = __("Log in to display your avatar", 'w4os');
-    return $content;
+    return "<p>" . __(sprintf("<a href='%s'>Log in</a> to display your avatar or create one.", wp_login_url()), 'w4os') . "</p>";
   }
   ####
   ## TODO: Check if user is current user
