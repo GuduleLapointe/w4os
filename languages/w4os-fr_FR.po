@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-19T09:10:16-04:00\n"
-"PO-Revision-Date: 2021-09-19 09:11-0400\n"
+"POT-Creation-Date: 2021-09-23T16:18:07-04:00\n"
+"PO-Revision-Date: 2021-09-23 16:21-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 
@@ -223,10 +223,9 @@ msgstr "Nom de famille requis"
 msgid "Password required"
 msgstr "Mot de passe requis"
 
-# wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
 #: includes/profile.php:237
-msgid "Wrong password"
-msgstr "Mot de passe erroné"
+msgid "The password does not match."
+msgstr "Le mot de passe ne correspond pas."
 
 # wpml-name: 4eb86d524f30b9885871ed68c24b0f29
 #: includes/profile.php:244
@@ -246,68 +245,97 @@ msgstr "Il y a déjà un utilisateur appelé %s"
 msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
 msgstr "Ceci ne devrait jamais arriver. L'UUID généré existe déjà. Désolé. Essayez encore."
 
+#: includes/profile.php:290
+msgid "Error while creating user"
+msgstr "Erreur lors de la création de l'utilisateur"
+
+# wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
+#: includes/profile.php:299
+msgid "Error while setting password"
+msgstr "Erreur lors de l'enregistrement du mot de passe"
+
+#: includes/profile.php:310
+msgid "Error while setting home region"
+msgstr "Erreur lors du réglage de la région domicile"
+
+#: includes/profile.php:327
+msgid "Error while creating user inventory"
+msgstr "Erreur lors de la création de l'inventaire"
+
+#: includes/profile.php:450
+msgid "Error while adding inventory item"
+msgstr "Erreur lors de l'ajout d'un élément d'inventaire"
+
+#: includes/profile.php:461
+msgid "Error while adding inventory outfit link"
+msgstr "Erreur lors de l'ajout du lien d'apparence"
+
+#: includes/profile.php:473
+msgid "Error while adding avatar"
+msgstr "Erreur lors de la création de l'avatar"
+
 # wpml-name: 02cb97a68e5137af44e882dbe2180485
-#: includes/profile.php:474
+#: includes/profile.php:484
 msgid "Avatar %s created successfully."
 msgstr "L'avatar %s a été créé avec succès."
 
 # wpml-name: 9e186e1c05cc43a7c8e119a8ad12e201
-#: includes/profile.php:484
+#: includes/profile.php:494
 msgid "Action %s not implemented"
 msgstr "Action %s non implémentée"
 
-#: includes/profile.php:492
-msgid "Log in to display your avatar"
-msgstr "Connectez-vous pour afficher votre avatar"
-
 # wpml-name: bc2068f5bf9d75b50d1f046f1e57c23c
-#: includes/profile.php:506
+#: includes/profile.php:515
 msgid "You have no grid account yet. Fill the form below to create your avatar."
 msgstr "Vous n'avez pas encore de compte sur la grille. Remplissez le formulaire ci-dessous pour créer votre avatar."
 
 # wpml-name: 877a81d559efa8e5dac0cccac9f80a09
-#: includes/profile.php:514
+#: includes/profile.php:523
 msgid "leave blank to leave unchanged"
 msgstr "laissez vide pour ne pas faire de modification"
 
 # wpml-name: bfc045552fb736eb0e776baee784de42
-#: includes/profile.php:517
-#: includes/profile.php:552
+#: includes/profile.php:526
+#: includes/profile.php:561
 msgid "Avatar first name"
 msgstr "Prénom de l'avatar"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: includes/profile.php:521
-#: includes/profile.php:556
+#: includes/profile.php:530
+#: includes/profile.php:565
 msgid "Avatar last name"
 msgstr "Nom de famille de l'avatar"
 
 # wpml-name: 5a54d9ad87f7c4c1c70c8f05b9515d5a
-#: includes/profile.php:525
+#: includes/profile.php:534
 msgid "UUID"
 msgstr "UUID"
 
 # wpml-name: 1a87f41bc2db648685564cf6fa5b2903
-#: includes/profile.php:546
+#: includes/profile.php:555
 msgid "Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed."
 msgstr "Choisissez le nom de votre avatar. C'est sous ce nom que les autres vous verront en ligne. Une fois que l'avatar est créé, il n'est plus possible de modifier ce nom."
 
+#: includes/profile.php:577
+msgid "Your in-world Avatar password is the same as your password on this website"
+msgstr "Votre mot de passe d'avatar est le même que votre mot de passe sur ce site"
+
 # wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
-#: includes/profile.php:569
+#: includes/profile.php:579
 msgid "Confirm your password"
 msgstr "Confirmez votre mot de passe"
 
 # wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#: includes/profile.php:584
+#: includes/profile.php:594
 msgid "Your avatar"
 msgstr "Votre avatar"
 
 # wpml-name: 90efd059f58183a99038e138b8fe17f0
-#: includes/profile.php:585
+#: includes/profile.php:595
 msgid "You can change and customize it in-world, as often as you want."
 msgstr "Vous pourrez le changer et le personnaliser à votre guise en ligne."
 
-#: includes/profile.php:622
+#: includes/profile.php:632
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -375,3 +403,6 @@ msgstr "Les versions stables sont désormais fournies par un serveur de mises à
 #: w4os.php:64
 msgid "Download"
 msgstr "Télécharger"
+
+#~ msgid "Log in to display your avatar"
+#~ msgstr "Connectez-vous pour afficher votre avatar"
