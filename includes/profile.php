@@ -30,6 +30,7 @@ function w4os_profile_sync($user) {
  * @param  [type] $user
  */
 function w4os_profile_fields( $user ) {
+  if($user->ID != wp_get_current_user()) return;
   global $w4osdb;
   $uuid = w4os_profile_sync($user);
   echo "    <h3>" . __("OpenSimulator", "w4os") ."</h3>";
