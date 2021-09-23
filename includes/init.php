@@ -17,7 +17,10 @@ $w4osdb = new WPDB(
 );
 
 function check_w4os_db_tables() {
+	if(defined('W4OS_DB_CONNECTED')) return true;
+
 	global $w4osdb;
+
 	if(!is_object($w4osdb)) return false;
 	$required_tables = array(
 		// 'AgentPrefs',
