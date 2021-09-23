@@ -234,7 +234,7 @@ function w4os_update_avatar( $user, $params ) {
     if ( ! $firstname ) { $errors=true; w4os_notice(__("First name required", "w4os"), 'fail') ; }
     if ( ! $lastname ) { $errors=true; w4os_notice(__("Last name required", 'w4os'), 'fail') ; }
     if ( ! $params['w4os_password_1'] ) { $errors=true; w4os_notice(__("Password required", 'w4os'), 'fail') ; }
-    else if ( ! wp_check_password($params['w4os_password_1'], $user->user_pass)) { $errors=true; w4os_notice(__("Wrong password", 'w4os'), 'fail') ; }
+    else if ( ! wp_check_password($params['w4os_password_1'], $user->user_pass)) { $errors=true; w4os_notice(__("The password does not match.", 'w4os'), 'fail') ; }
     if ( $errors == true ) return false;
 
     $password=stripcslashes($params['w4os_password_1']);
@@ -574,8 +574,9 @@ function w4os_profile_wc_edit( $user ) {
       // <span class=description>" . __("The password to log in-world is the same as your password on this website.", "w4os") . "</span>
       // </p>
       $content.= "
+      <p class=description>" . __('Your in-world Avatar password is the same as your password on this website', 'w4os') . "</p>
       <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-        <label for='w4os_password_1'>" . __('Confirm your password') . "</label>
+        <label for='w4os_password_1'>" . __('Confirm your password', 'w4os') . "</label>
         <span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
       </p>
       ";
