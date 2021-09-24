@@ -30,6 +30,20 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
+if(W4OS_DB_CONNECTED) {
+	// if($pagenow == "profile.php" || $pagenow == "user-edit.php")
+	require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
+}
+
+if(is_admin()) {
+	require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');
+	if($pagenow == "index.php")
+	require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
+}
+
 /** Enable plugin updates **/
 require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
 $w4os_updater = new WP_Package_Updater(
@@ -37,10 +51,6 @@ $w4os_updater = new WP_Package_Updater(
 	wp_normalize_path( __FILE__ ),
 	wp_normalize_path( plugin_dir_path( __FILE__ ) )
 );
-
-require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
 
 if ( !class_exists('Puc_v4_Factory', false) ) {
 	if(is_admin) {
@@ -66,15 +76,4 @@ if ( !class_exists('Puc_v4_Factory', false) ) {
 			1
 		);
 	}
-}
-
-if(is_admin()) {
-	require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');
-	if($pagenow == "index.php")
-	require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
-}
-
-if(W4OS_DB_CONNECTED) {
-	// if($pagenow == "profile.php" || $pagenow == "user-edit.php")
-	require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
 }
