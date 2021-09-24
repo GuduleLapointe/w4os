@@ -78,6 +78,3 @@ if(W4OS_DB_CONNECTED) {
 	// if($pagenow == "profile.php" || $pagenow == "user-edit.php")
 	require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
 }
-
-wp_register_style('w4os_css', plugin_dir_url(__FILE__) . 'css/w4os-min.css');
-wp_enqueue_style( 'w4os_css');

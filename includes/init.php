@@ -9,6 +9,29 @@ define('DEFAULT_HOME', "Welcome");
 define('DEFAULT_RESTRICTED_NAMES', array("Default", "Test", "Admin", str_replace(' ', '', get_option('w4os_grid_name'))));
 define('ASSET_SERVER_URI', '/assets/asset.php?id=');
 
+$plugin_data = get_file_data(WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, array(
+  // 'Name' => 'Plugin Name',
+  // 'PluginURI' => 'Plugin URI',
+  'Version' => 'Version',
+  // 'Description' => 'Description',
+  // 'Author' => 'Author',
+  // 'AuthorURI' => 'Author URI',
+  // 'TextDomain' => 'Text Domain',
+  // 'DomainPath' => 'Domain Path',
+  // 'Network' => 'Network',
+));
+
+// if ( ! defined( 'W4OS_PLUGIN_NAME' ) ) define('W4OS_PLUGIN_NAME', $plugin_data['Name'] );
+// if ( ! defined( 'W4OS_SHORTNAME' ) ) define('W4OS_SHORTNAME', preg_replace('/ - .*/', '', W4OS_PLUGIN_NAME ) );
+// if ( ! defined( 'W4OS_PLUGIN_URI' ) ) define('W4OS_PLUGIN_URI', $plugin_data['PluginURI'] );
+if ( ! defined( 'W4OS_VERSION' ) ) define('W4OS_VERSION', $plugin_data['Version'] );
+// if ( ! defined( 'W4OS_AUTHOR_NAME' ) ) define('W4OS_AUTHOR_NAME', $plugin_data['Author'] );
+// if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain']) ? $plugin_data['TextDomain'] : W4OS_SLUG );
+// if ( ! defined( 'W4OS_DATA_SLUG' ) ) define('W4OS_DATA_SLUG', sanitize_title(W4OS_PLUGIN_NAME) );
+// if ( ! defined( 'W4OS_STORE_LINK' ) ) define('W4OS_STORE_LINK', "<a href=" . W4OS_PLUGIN_URI . " target=_blank>" . W4OS_AUTHOR_NAME . "</a>");
+// /* translators: %s is replaced by the name of the plugin, untranslated */
+// if ( ! defined( 'W4OS_REGISTER_TEXT' ) ) define('W4OS_REGISTER_TEXT', sprintf(__('Get a license key on %s website', W4OS_TXDOM), W4OS_STORE_LINK) );
+
 $w4osdb = new WPDB(
 	get_option('w4os_db_user'),
 	get_option('w4os_db_pass'),
@@ -121,3 +144,7 @@ function gen_uuid() {
 
  return $uuid;
 }
+
+add_action( 'wp_enqueue_scripts', function() {
+  wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
+} );

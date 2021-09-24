@@ -139,3 +139,9 @@ img.model-picture {
   font-weight: bold;
   margin-right: 20px;
 }
+
+.avatar.not-created,
+.avatar.not-connected {
+  text-align: center;
+  font-weight: bold;
+}
