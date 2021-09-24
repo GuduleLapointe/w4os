@@ -9,6 +9,14 @@ define('DEFAULT_HOME', "Welcome");
 define('DEFAULT_RESTRICTED_NAMES', array("Default", "Test", "Admin", str_replace(' ', '', get_option('w4os_grid_name'))));
 define('ASSET_SERVER_URI', '/assets/asset.php?id=');
 
+function w4os_load_textdomain() {
+	load_plugin_textdomain( 'w4os', false, dirname(dirname( plugin_basename( __FILE__ )) ) . '/languages/' );
+}
+w4os_load_textdomain();
+
+if ( ! defined( 'W4OS_SLUG' ) ) define('W4OS_SLUG', 'w4os' );
+if ( ! defined( 'W4OS_PLUGIN' ) ) define('W4OS_PLUGIN', W4OS_SLUG . "/" . W4OS_SLUG . ".php" );
+
 $plugin_data = get_file_data(WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, array(
   // 'Name' => 'Plugin Name',
   // 'PluginURI' => 'Plugin URI',
@@ -38,12 +46,6 @@ $w4osdb = new WPDB(
 	get_option('w4os_db_database'),
 	get_option('w4os_db_host')
 );
-
-function w4os_load_textdomain() {
-	$textdomain = "w4os";
-	load_plugin_textdomain( $textdomain, false, dirname( dirname(plugin_basename( __FILE__ )) ) . '/languages/' );
-}
-w4os_load_textdomain();
 
 function check_w4os_db_tables() {
 	if(defined('W4OS_DB_CONNECTED')) return true;
