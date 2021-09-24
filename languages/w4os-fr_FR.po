@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-24T18:32:22-04:00\n"
-"PO-Revision-Date: 2021-09-24 18:32-0400\n"
+"POT-Creation-Date: 2021-09-24T19:44:38-04:00\n"
+"PO-Revision-Date: 2021-09-24 19:44-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 
@@ -400,11 +400,11 @@ msgstr "Surface totale"
 msgid "No result"
 msgstr "Aucun résultat"
 
-#: w4os.php:63
+#: w4os.php:73
 msgid "Stable updates are now delivered from a plugin server instead of the git repository. You need to reinstall the plugin from official repository to get future stable updates. GitHub Updater is no longer required for official releases."
 msgstr "Les versions stables sont désormais fournies par un serveur de mises à jour au lieu du répertoire git. Vous devez réinstaller le plugin depuis le site officiel pour obtenir les futures mises à jour. GitHub Udpater n'est plus nécessaire pour les mises à jour."
 
-#: w4os.php:64
+#: w4os.php:74
 msgid "Download"
 msgstr "Télécharger"
 
