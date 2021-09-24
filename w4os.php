@@ -81,8 +81,3 @@ if(W4OS_DB_CONNECTED) {
 
 wp_register_style('w4os_css', plugin_dir_url(__FILE__) . 'css/w4os-min.css');
 wp_enqueue_style( 'w4os_css');
-
-function w4os_load_textdomain() {
-	load_plugin_textdomain( 'w4os', false, basename( dirname( __FILE__ ) ) . '/languages' );
-}
-add_action( 'init', 'w4os_load_textdomain' );

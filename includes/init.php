@@ -16,6 +16,12 @@ $w4osdb = new WPDB(
 	get_option('w4os_db_host')
 );
 
+function w4os_load_textdomain() {
+	$textdomain = "w4os";
+	load_plugin_textdomain( $textdomain, false, dirname( dirname(plugin_basename( __FILE__ )) ) . '/languages/' );
+}
+w4os_load_textdomain();
+
 function check_w4os_db_tables() {
 	if(defined('W4OS_DB_CONNECTED')) return true;
 

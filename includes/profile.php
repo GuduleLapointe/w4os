@@ -500,7 +500,7 @@ function w4os_update_avatar( $user, $params ) {
 
 function w4os_profile_wc_edit( $user ) {
   if($user->ID == 0) {
-    return "<p>" . __(sprintf("<a href='%s'>Log in</a> to display your avatar or create one.", wp_login_url()), 'w4os') . "</p>";
+    return "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose your avatar.", 'w4os'), wp_login_url()) ."</p>";
   }
   ####
   ## TODO: Check if user is current user
@@ -513,7 +513,7 @@ function w4os_profile_wc_edit( $user ) {
     $uuid = w4os_update_avatar( $user, $_REQUEST);
   } else {
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
-    if(! $uuid) echo "<p>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
+    if(! $uuid) echo "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
   }
 
   $content="
