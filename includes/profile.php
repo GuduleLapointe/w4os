@@ -500,9 +500,10 @@ function w4os_update_avatar( $user, $params ) {
 
 function w4os_profile_wc_edit( $user ) {
   if($user->ID == 0) {
-    return "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose your avatar.", 'w4os'), wp_login_url()) ."</p>";
+    $wp_login_url=wp_login_url();
+    return "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
   }
-  
+
   ####
   ## TODO: Check if user is current user
   ## Otherwise, do not allow edit, and display profile only if public
