@@ -116,6 +116,11 @@ question, but you might wonder.
 
 ## Changelog
 
+### 1.2.12
+* fix: only show profile form for current user
+* better css loading
+* load textdomain first in init
+
 ### 1.2.11
 * fix error when home region is not set
 * fix wrong letter cases in auth table name
