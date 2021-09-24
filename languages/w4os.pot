@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-23T16:18:07-04:00\n"
+"POT-Creation-Date: 2021-09-24T17:47:11-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0-alpha-3f4c34b\n"
 
@@ -159,142 +159,146 @@ msgstr ""
 msgid "Avatar profile"
 msgstr ""
 
-#: includes/profile.php:35
+#: includes/profile.php:36
 msgid "OpenSimulator"
 msgstr ""
 
-#: includes/profile.php:50
+#: includes/profile.php:51
 msgid "OpenSimulator profile"
 msgstr ""
 
-#: includes/profile.php:53
+#: includes/profile.php:54
 msgid "Avatar UUID"
 msgstr ""
 
-#: includes/profile.php:57
+#: includes/profile.php:58
 msgid "Avatar name"
 msgstr ""
 
-#: includes/profile.php:81
+#: includes/profile.php:82
 msgid "Password must contain at least %s characters, including uppercase, lowercase and number"
 msgstr ""
 
-#: includes/profile.php:222
+#: includes/profile.php:223
 msgid "This user already has an avatar."
 msgstr ""
 
-#: includes/profile.php:234
+#: includes/profile.php:235
 msgid "First name required"
 msgstr ""
 
-#: includes/profile.php:235
+#: includes/profile.php:236
 msgid "Last name required"
 msgstr ""
 
-#: includes/profile.php:236
+#: includes/profile.php:237
 msgid "Password required"
 msgstr ""
 
-#: includes/profile.php:237
+#: includes/profile.php:238
 msgid "The password does not match."
 msgstr ""
 
-#: includes/profile.php:244
-#: includes/profile.php:248
+#: includes/profile.php:245
+#: includes/profile.php:249
 msgid "The name %s is not allowed"
 msgstr ""
 
-#: includes/profile.php:253
+#: includes/profile.php:254
 msgid "Names can only contain alphanumeric characters"
 msgstr ""
 
-#: includes/profile.php:260
+#: includes/profile.php:261
 msgid "There is already a grid user named %s"
 msgstr ""
 
-#: includes/profile.php:268
+#: includes/profile.php:269
 msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
 msgstr ""
 
-#: includes/profile.php:290
+#: includes/profile.php:291
 msgid "Error while creating user"
 msgstr ""
 
-#: includes/profile.php:299
+#: includes/profile.php:300
 msgid "Error while setting password"
 msgstr ""
 
-#: includes/profile.php:310
+#: includes/profile.php:311
 msgid "Error while setting home region"
 msgstr ""
 
-#: includes/profile.php:327
+#: includes/profile.php:328
 msgid "Error while creating user inventory"
 msgstr ""
 
-#: includes/profile.php:450
+#: includes/profile.php:451
 msgid "Error while adding inventory item"
 msgstr ""
 
-#: includes/profile.php:461
+#: includes/profile.php:462
 msgid "Error while adding inventory outfit link"
 msgstr ""
 
-#: includes/profile.php:473
+#: includes/profile.php:474
 msgid "Error while adding avatar"
 msgstr ""
 
-#: includes/profile.php:484
+#: includes/profile.php:485
 msgid "Avatar %s created successfully."
 msgstr ""
 
-#: includes/profile.php:494
+#: includes/profile.php:495
 msgid "Action %s not implemented"
 msgstr ""
 
-#: includes/profile.php:515
+#: includes/profile.php:503
+msgid "<a href='%s'>Log in</a> to display your avatar or create one."
+msgstr ""
+
+#: includes/profile.php:516
 msgid "You have no grid account yet. Fill the form below to create your avatar."
 msgstr ""
 
-#: includes/profile.php:523
+#: includes/profile.php:524
 msgid "leave blank to leave unchanged"
 msgstr ""
 
-#: includes/profile.php:526
-#: includes/profile.php:561
+#: includes/profile.php:527
+#: includes/profile.php:562
 msgid "Avatar first name"
 msgstr ""
 
-#: includes/profile.php:530
-#: includes/profile.php:565
+#: includes/profile.php:531
+#: includes/profile.php:566
 msgid "Avatar last name"
 msgstr ""
 
-#: includes/profile.php:534
+#: includes/profile.php:535
 msgid "UUID"
 msgstr ""
 
-#: includes/profile.php:555
+#: includes/profile.php:556
 msgid "Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed."
 msgstr ""
 
-#: includes/profile.php:577
+#: includes/profile.php:578
 msgid "Your in-world Avatar password is the same as your password on this website"
 msgstr ""
 
-#: includes/profile.php:579
+#: includes/profile.php:580
 msgid "Confirm your password"
 msgstr ""
 
-#: includes/profile.php:594
+#: includes/profile.php:595
 msgid "Your avatar"
 msgstr ""
 
-#: includes/profile.php:595
+#: includes/profile.php:596
 msgid "You can change and customize it in-world, as often as you want."
 msgstr ""
 
-#: includes/profile.php:632
+#: includes/profile.php:633
 msgid "Save"
 msgstr ""
 
