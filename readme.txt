@@ -1,4 +1,4 @@
-=== W4OS OpenSimulator Interface ===
+=== W4OS - WordPress interface for OpenSimulator ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://paypal.me/magicoli
 Tags: opensimulator, second life, web interface
@@ -14,8 +14,8 @@ WordPress interface for OpenSimulator
 == Description ==
 
 The first ready to use WordPress interface for OpenSimulator. Provides user
-registration and basic grid info. See current Features below, and Roadmap
-section for upcoming functionalties.
+registration and basic grid info. See Features and Roadmap sections for current
+and upcoming functionalties.
 
 = Features =
 

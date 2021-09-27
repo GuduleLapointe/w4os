@@ -1,13 +1,11 @@
 <?php
 /**
- * Plugin Name:       W4OS OpenSimulator Interface
+ * Plugin Name:       W4OS
  * Description:       WordPress interface for OpenSimulator.
  * Version:           1.2.12
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
- * Plugin URI:        https://git.magiiic.com/opensimulator/w4os
- * GitLab Plugin URI: https://git.magiiic.com/opensimulator/w4os
- * GitLab Languages:  https://git.magiiic.com/opensimulator/w4os-translations
+ * Plugin URI:        https://github.com/GuduleLapointe/w4os/
  * License:           AGPLv3
  * License URI:       https://www.gnu.org/licenses/agpl-3.0.txt
  * Text Domain:       w4os
@@ -44,36 +42,5 @@ if(is_admin()) {
 	require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
 }
 
-/** Enable plugin updates **/
-require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
-$w4os_updater = new WP_Package_Updater(
-	'https://magiiic.com',
-	wp_normalize_path( __FILE__ ),
-	wp_normalize_path( plugin_dir_path( __FILE__ ) )
-);
-
-if ( !class_exists('Puc_v4_Factory', false) ) {
-	if(is_admin) {
-		add_action(
-			'admin_notices',
-			function() {
-				$class   = 'notice notice-error is-dismissible';
-				$label   = 'W4OS';
-				$file    = 'https://magiiic.com/updates/?action=download&slug=w4ps';
-				// $file    = wp_nonce_url(
-				// 	add_query_arg(
-				// 		array(
-				// 			'action' => 'install-plugin',
-				// 			'plugin' => urlencode('https://magiiic.com/updates/?action=download&slug=' . 'w4os')
-				// 		),
-				// 		admin_url( 'update.php' )
-				// 	),
-				// 	$action.'_'.$slug
-				// );
-				$message = __( 'Stable updates are now delivered from a plugin server instead of the git repository. You need to reinstall the plugin from official repository to get future stable updates. GitHub Updater is no longer required for official releases.', 'w4os' );
-				printf( '<div class="%1$s"><p><strong>%2$s:</strong> %3$s</p><a href="%4$s">%5$s</a></div>', esc_attr( $class ), esc_html( $label ), esc_html( $message ), esc_html( $file ), __("Download") );
-			},
-			1
-		);
-	}
-}
+if(file_exists(plugin_dir_path( __FILE__ ) . 'updates.php'))
+include_once plugin_dir_path( __FILE__ ) . 'updates.php';
