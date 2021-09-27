@@ -14,8 +14,8 @@ function w4os_load_textdomain() {
 }
 w4os_load_textdomain();
 
-if ( ! defined( 'W4OS_SLUG' ) ) define('W4OS_SLUG', 'w4os' );
-if ( ! defined( 'W4OS_PLUGIN' ) ) define('W4OS_PLUGIN', W4OS_SLUG . "/" . W4OS_SLUG . ".php" );
+if ( ! defined( 'W4OS_SLUG' ) ) define('W4OS_SLUG', basename(dirname(dirname(__FILE__))) );
+if ( ! defined( 'W4OS_PLUGIN' ) ) define('W4OS_PLUGIN', W4OS_SLUG . "/w4os.php" );
 
 $plugin_data = get_file_data(WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, array(
   // 'Name' => 'Plugin Name',
