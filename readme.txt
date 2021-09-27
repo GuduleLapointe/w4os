@@ -116,6 +116,13 @@ question, but you might wonder.
 
 == Changelog ==
 
+= 2.0 =
+* updated to meet WordPress plugins directory requirements (remove self-update and related instructions, git installation instructions, updated names, readme, urls)
+* renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility
+* gridprofile shows avatar name instead of separate avatar first and last name when avatar exists
+* replaced gitlab urls by github
+* added web asset server instructions in settings page
+
 = 1.2.12 =
 * fix: only show profile form for current user
 * better css loading

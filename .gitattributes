@@ -42,3 +42,7 @@ Thumbs.db export-ignore
 webpack.config.js export-ignore
 wp-cli.local.yml export-ignore
 yarn.lock export-ignore
+README.md export-ignore
+lib/plugin-update-checker export-ignore
+lib/wp-package-updater export-ignore
+admin/updater.php export-ignore

@@ -1,4 +1,4 @@
-# W4OS OpenSimulator Interface
+# W4OS - WordPress interface for OpenSimulator
 * Contributors: gudulelapointe,magicoli69
 * Donate link: https://paypal.me/magicoli
 * Tags: opensimulator, second life, web interface
@@ -14,8 +14,8 @@ WordPress interface for OpenSimulator
 ## Description
 
 The first ready to use WordPress interface for OpenSimulator. Provides user
-registration and basic grid info. See current Features below, and Roadmap
-section for upcoming functionalties.
+registration and basic grid info. See Features and Roadmap sections for current
+and upcoming functionalties.
 
 ### Features
 
@@ -23,7 +23,7 @@ section for upcoming functionalties.
 - **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
 - **Avatar creation**:
   - Opensimulator section in standard wp profile page
-  - `[w4os_profile]` shortcode can be inserted in any custom page
+  - `[gridprofile]` shortcode can be inserted in any custom page
   - Avatar tab in account dashboard on WooCommerce websites
 - Choose avatar look from default models
 - Avatar and website passwords are synchronized
@@ -54,7 +54,7 @@ Robust server must be installed before setting up W4OS.
     https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
   - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar
     widget
-  - create a profile page for registered users, including `[w4os_profile]`
+  - create a profile page for registered users and include `[gridprofile]`
     shortcode. This will display the an avatar creation form for users without
     in-world avatar. For accounts already having an avatar, it will display
     avatar details.
@@ -115,6 +115,13 @@ getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
 
 ## Changelog
+
+### 2.0
+* updated to meet WordPress plugins directory requirements (remove self-update and related instructions, git installation instructions, updated names, readme, urls)
+* renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility
+* gridprofile shows avatar name instead of separate avatar first and last name when avatar exists
+* replaced gitlab urls by github
+* added web asset server instructions in settings page
 
 ### 1.2.12
 * fix: only show profile form for current user
