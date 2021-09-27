@@ -8,7 +8,7 @@ if ( ! defined( 'WPINC' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
 $w4os_updater = new WP_Package_Updater(
 	'https://magiiic.com',
-	wp_normalize_path( __FILE__ ),
+	wp_normalize_path( plugin_dir_path( __FILE__ ) . "/w4os.php" ),
 	wp_normalize_path( plugin_dir_path( __FILE__ ) )
 );
 
