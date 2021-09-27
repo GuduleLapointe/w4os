@@ -23,7 +23,7 @@
 			<?php _e("Online users, regions, etc.", 'w4os') ?>
 		</dd>
 		<dt>
-			<code>[w4os_profile]</code>
+			<code>[gridprofile]</code>
 		</dt>
 		<dd>
 			<?php _e("Avatar profile", 'w4os') ?>

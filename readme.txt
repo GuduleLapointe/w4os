@@ -23,7 +23,7 @@ and upcoming functionalties.
 - **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
 - **Avatar creation**:
   - Opensimulator section in standard wp profile page
-  - `[w4os_profile]` shortcode can be inserted in any custom page
+  - `[gridprofile]` shortcode can be inserted in any custom page
   - Avatar tab in account dashboard on WooCommerce websites
 - Choose avatar look from default models
 - Avatar and website passwords are synchronized
@@ -54,7 +54,7 @@ Robust server must be installed before setting up W4OS.
     https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
   - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar
     widget
-  - create a profile page for registered users, including `[w4os_profile]`
+  - create a profile page for registered users and include `[gridprofile]`
     shortcode. This will display the an avatar creation form for users without
     in-world avatar. For accounts already having an avatar, it will display
     avatar details.

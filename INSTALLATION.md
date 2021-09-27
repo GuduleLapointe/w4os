@@ -13,7 +13,7 @@
     database connection error, it might come from a case-sensitivity issue (see
     https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
   - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar widget
-  - create a profile page for registered users, including `[w4os_profile]` shortcode.
+  - create a profile page for registered users, including `[gridprofile]` shortcode.
     This will display the an avatar creation form for users without in-world avatar.
     For accounts already having an avatar, it will display avatar details.
 3. To create default avatars:
@@ -45,7 +45,7 @@ opensimWebAssets is very efficient and easy to install:
 
 - `[gridinfo]` display grid name and login URI
 - `[gridstatus]` display users and regions stats
-- `[w4os_profile]` display users and regions stats
+- `[gridprofile]` display users and regions stats
 
 Both accept a title parameter to overwrite the defaults "Grid info"
 and "Grid status". If set to "" the title is not displayed.
@@ -54,7 +54,7 @@ Example:
 [gridinfo title="Who's there"]
 [gridstatus title=""]
 
-* `[w4os_profile]` show in-world profile if user has an avatar, or avatar
+* `[gridprofile]` show in-world profile if user has an avatar, or avatar
   creation form otherwise. It can be inserted on any page
 
 * Websites using WooCommerce don't need to set a specific profile page, as it is

@@ -660,6 +660,7 @@ function w4os_profile_shortcodes_init()
     $content .= w4os_profile_wc_edit(wp_get_current_user());
 		return $content;
 	}
-	add_shortcode('w4os_profile', 'w4os_profile_shortcode');
+  add_shortcode('w4os_profile', 'w4os_profile_shortcode');
+	add_shortcode('gridprofile', 'w4os_profile_shortcode');
 }
 add_action('init', 'w4os_profile_shortcodes_init');
