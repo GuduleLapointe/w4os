@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenSimulator Web Interface 2.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/opensimulator-web-interface\n"
+"Project-Id-Version: OpenSimulator Web Interface 2.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-27T16:32:20-04:00\n"
+"POT-Creation-Date: 2021-09-27T18:31:05-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0-alpha-3f4c34b\n"
 
@@ -355,4 +355,12 @@ msgstr ""
 
 #: includes/shortcodes.php:120
 msgid "No result"
+msgstr ""
+
+#: updates.php:33
+msgid "Stable updates are now delivered from a plugin server instead of the git repository. You need to reinstall the plugin from official repository to get future stable updates. GitHub Updater is no longer required for official releases."
+msgstr ""
+
+#: updates.php:34
+msgid "Download"
 msgstr ""

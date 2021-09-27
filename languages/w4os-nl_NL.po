@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/opensimulator-web-interface\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
 "Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: Speculoos World\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-27T16:32:20-04:00\n"
-"PO-Revision-Date: 2021-09-27 16:33-0400\n"
+"POT-Creation-Date: 2021-09-27T18:31:05-04:00\n"
+"PO-Revision-Date: 2021-09-27 18:33-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 
@@ -406,6 +406,14 @@ msgstr "Totale oppervlakte"
 #: includes/shortcodes.php:120
 msgid "No result"
 msgstr "Geen resultaat"
+
+#: updates.php:33
+msgid "Stable updates are now delivered from a plugin server instead of the git repository. You need to reinstall the plugin from official repository to get future stable updates. GitHub Updater is no longer required for official releases."
+msgstr ""
+
+#: updates.php:34
+msgid "Download"
+msgstr ""
 
 #~ msgid "W4OS"
 #~ msgstr "W4OS"
