@@ -1,6 +1,6 @@
 <div class="w4os-status-page wrap">
 	<h1><?= esc_html(get_admin_page_title()); ?></h1>
-	<p><?php echo $version_info; ?></p>
+	<p><?= W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
 	<!-- <h1>OpenSimulator</h1>	 -->
 	<p>
 		<?php echo w4os_gridinfo_shortcode(); ?>

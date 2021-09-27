@@ -54,6 +54,7 @@ function w4os_shortcodes_init()
 		global $w4osdb;
 		global $wp_locale;
 		isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid status", 'w4os');
+		$filter="";
 		if(!empty($content)) $content="<div>$content</div>";
 
 		$content="<h4>$title</h4>$content";
@@ -82,7 +83,7 @@ function w4os_shortcodes_init()
 				if(get_option('w4os_exclude_nomail')) {
 					$filter .= " AND u.Email != ''";
 				}
-				if($filter) $filter = "$filter AND ";
+				if(!empty($filter)) $filter = "$filter AND ";
 				$status = array(
 					__('Grid online', 'w4os') => $gridonline,
 					__('Members', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
