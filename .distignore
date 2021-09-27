@@ -44,3 +44,4 @@ yarn.lock
 README.md
 lib/plugin-update-checker
 lib/wp-package-updater
+admin/updater.php
