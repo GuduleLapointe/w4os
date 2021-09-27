@@ -1,20 +1,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/opensimulator-web-interface\n"
 "Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
 "Language-Team: Speculoos World\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-27T14:39:35-04:00\n"
-"PO-Revision-Date: 2021-09-27 14:40-0400\n"
+"POT-Creation-Date: 2021-09-27T16:32:20-04:00\n"
+"PO-Revision-Date: 2021-09-27 16:33-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 
+# wpml-name: d0f651f1495d346088ae49450c620e9b
 #. Plugin Name of the plugin
-msgid "W4OS"
-msgstr "W4OS"
+msgid "OpenSimulator Web Interface"
+msgstr "OpenSimulator Web Interface"
 
 # wpml-name: dca56d6af7010d3d34aadf3fd1666bf7
 #. Plugin URI of the plugin
@@ -23,8 +24,8 @@ msgstr "https://github.com/GuduleLapointe/w4os/"
 
 # wpml-name: 374124f21084c34d958491bf98d72af4
 #. Description of the plugin
-msgid "WordPress interface for OpenSimulator."
-msgstr "Interface WordPress pour OpenSimulator."
+msgid "WordPress interface for OpenSimulator (w4os)."
+msgstr "Interface W pour OpenSimulator (w4os)."
 
 # wpml-name: 6dfd7d212f1bf0f6121142f105f7c704
 #. Author of the plugin
@@ -353,54 +354,57 @@ msgstr "Enregistrer"
 msgid "OpenSimulator not configured"
 msgstr "OpenSimulator n'est pas configuré"
 
-#: includes/shortcodes.php:74
+#: includes/shortcodes.php:75
 msgid "Yes"
 msgstr "Oui"
 
-#: includes/shortcodes.php:76
+#: includes/shortcodes.php:77
 msgid "No"
 msgstr "Non"
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: includes/shortcodes.php:87
+#: includes/shortcodes.php:88
 msgid "Grid online"
 msgstr "Grille en ligne"
 
 # wpml-name: ef53538ae41a651c7f72ab6cb1135d8c
-#: includes/shortcodes.php:88
+#: includes/shortcodes.php:89
 msgid "Members"
 msgstr "Membres"
 
 # wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
-#: includes/shortcodes.php:90
+#: includes/shortcodes.php:91
 msgid "Active members (30 days)"
 msgstr "Membres actifs (30 jours)"
 
 # wpml-name: 67ea4b3432b974a20b2c8ee6609e363c
-#: includes/shortcodes.php:92
+#: includes/shortcodes.php:93
 msgid "Members in world"
 msgstr "Membres sur la grille"
 
 # wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
-#: includes/shortcodes.php:98
+#: includes/shortcodes.php:99
 msgid "Active users (30 days)"
 msgstr "Utilisateurs actifs (30 jours)"
 
 # wpml-name: 9143e8053fefd25ce03ae81136931586
-#: includes/shortcodes.php:100
+#: includes/shortcodes.php:101
 msgid "Total users in world"
 msgstr "Utilisateurs sur la grille"
 
 # wpml-name: 5948f3347ebc02ebc690227c059661e1
-#: includes/shortcodes.php:107
+#: includes/shortcodes.php:108
 msgid "Regions"
 msgstr "Régions"
 
 # wpml-name: 6834699b2d08455d0475c76d54356191
-#: includes/shortcodes.php:111
+#: includes/shortcodes.php:112
 msgid "Total area"
 msgstr "Surface totale"
 
-#: includes/shortcodes.php:119
+#: includes/shortcodes.php:120
 msgid "No result"
 msgstr "Aucun résultat"
+
+#~ msgid "W4OS"
+#~ msgstr "W4OS"

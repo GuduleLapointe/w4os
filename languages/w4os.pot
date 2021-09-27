@@ -2,19 +2,19 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: W4OS 1.2.12\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
+"Project-Id-Version: OpenSimulator Web Interface 2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/opensimulator-web-interface\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-27T14:39:35-04:00\n"
+"POT-Creation-Date: 2021-09-27T16:32:20-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0-alpha-3f4c34b\n"
 
 #. Plugin Name of the plugin
-msgid "W4OS"
+msgid "OpenSimulator Web Interface"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -22,7 +22,7 @@ msgid "https://github.com/GuduleLapointe/w4os/"
 msgstr ""
 
 #. Description of the plugin
-msgid "WordPress interface for OpenSimulator."
+msgid "WordPress interface for OpenSimulator (w4os)."
 msgstr ""
 
 #. Author of the plugin
@@ -313,46 +313,46 @@ msgstr ""
 msgid "OpenSimulator not configured"
 msgstr ""
 
-#: includes/shortcodes.php:74
+#: includes/shortcodes.php:75
 msgid "Yes"
 msgstr ""
 
-#: includes/shortcodes.php:76
+#: includes/shortcodes.php:77
 msgid "No"
 msgstr ""
 
-#: includes/shortcodes.php:87
+#: includes/shortcodes.php:88
 msgid "Grid online"
 msgstr ""
 
-#: includes/shortcodes.php:88
+#: includes/shortcodes.php:89
 msgid "Members"
 msgstr ""
 
-#: includes/shortcodes.php:90
+#: includes/shortcodes.php:91
 msgid "Active members (30 days)"
 msgstr ""
 
-#: includes/shortcodes.php:92
+#: includes/shortcodes.php:93
 msgid "Members in world"
 msgstr ""
 
-#: includes/shortcodes.php:98
+#: includes/shortcodes.php:99
 msgid "Active users (30 days)"
 msgstr ""
 
-#: includes/shortcodes.php:100
+#: includes/shortcodes.php:101
 msgid "Total users in world"
 msgstr ""
 
-#: includes/shortcodes.php:107
+#: includes/shortcodes.php:108
 msgid "Regions"
 msgstr ""
 
-#: includes/shortcodes.php:111
+#: includes/shortcodes.php:112
 msgid "Total area"
 msgstr ""
 
-#: includes/shortcodes.php:119
+#: includes/shortcodes.php:120
 msgid "No result"
 msgstr ""
