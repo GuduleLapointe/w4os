@@ -120,6 +120,9 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 
 == Changelog ==
 
+= 2.0.2 =
+* fix fatal error if both new official version and old devel version are activated
+
 = 2.0.1 =
 * changed plugin name (and slug) to match WordPress standards (w4os was too short)
 * use plugin dir to detect slug instead of hardcoded value
