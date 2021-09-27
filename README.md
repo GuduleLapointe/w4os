@@ -120,6 +120,9 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 
 ## Changelog
 
+### 2.0.4
+* fix regression, automatic updates restored. Users with version 2.0 to 2.0.3 will need to reinstall the plugin from source. Sorry.
+
 ### 2.0.3
 * fix fatal error in last update, restored update libraries for dev version
 
