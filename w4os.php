@@ -28,19 +28,29 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
-require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
-if(W4OS_DB_CONNECTED) {
-	// if($pagenow == "profile.php" || $pagenow == "user-edit.php")
-	require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
-}
+$plugin_dir_check = basename(dirname(__FILE__));
+if ( $plugin_dir_check != 'opensimulator-web-interface' && in_array( 'opensimulator-web-interface/w4os.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	add_action( 'admin_notices', function() {
+		echo "<div class='notice notice-error'>";
+		echo "<p><strong>W4OS:</strong> You already have installed the official release of <strong>OpenSimulator Web Interface</strong>, from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.</p>";
+		echo "</div>";
+	} );
+	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
+} else if ( ! defined( 'W4OS_SLUG' ) ) {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
+	if(W4OS_DB_CONNECTED) {
+		// if($pagenow == "profile.php" || $pagenow == "user-edit.php")
+		require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
+	}
 
-if(is_admin()) {
-	require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');
-	if($pagenow == "index.php")
-	require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
-}
+	if(is_admin()) {
+		require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');
+		if($pagenow == "index.php")
+		require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
+	}
 
-if(file_exists(plugin_dir_path( __FILE__ ) . 'updates.php'))
-include_once plugin_dir_path( __FILE__ ) . 'updates.php';
+	if(file_exists(plugin_dir_path( __FILE__ ) . 'updates.php'))
+	include_once plugin_dir_path( __FILE__ ) . 'updates.php';
+}
