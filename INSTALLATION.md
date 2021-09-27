@@ -28,6 +28,8 @@
 
 ### Dependencies
 
+#### Web Asset Server
+
 The project relies on an an external web asset server to display images from
 simulator assets (profile pictures, model avatars...). In an undefined future
 this will be handled by the plugin. In the meantime, Anthony Le Mansec's

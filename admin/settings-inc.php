@@ -65,7 +65,15 @@
 			</th></tr>
 			<tr valign="top">
 				<th scope="row"><label for="w4os_asset_server_uri"><?php _e("Web asset server", "w4os");?></label></th>
-				<td><input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo get_option('w4os_asset_server_uri'); ?>" /></td>
+				<td>
+					<p class=description><?php
+					printf(
+						__("A web asset server is needed to display images from the simulator assets (model avatars, profile pictures...). See %s for instructions to install one.", 'w4os'),
+						"<a href='https://github.com/GuduleLapointe/w4os/blob/master/INSTALLATION.md#dependencies' target=_blank>INSTALLATION.md</a>",
+						);
+					?></p>
+					<input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo get_option('w4os_asset_server_uri'); ?>" />
+				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e("Exclude from stats", "w4os");?></label></th>
