@@ -120,6 +120,9 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 
 ## Changelog
 
+### 2.0.3
+* fix fatal error in last update, restored update libraries for dev version
+
 ### 2.0.2
 * fix fatal error if both new official version and old devel version are activated
 
