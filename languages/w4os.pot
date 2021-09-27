@@ -2,23 +2,23 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: W4OS OpenSimulator Interface 1.2.11\n"
+"Project-Id-Version: W4OS 1.2.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-24T19:44:38-04:00\n"
+"POT-Creation-Date: 2021-09-27T14:39:35-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0-alpha-3f4c34b\n"
 
 #. Plugin Name of the plugin
-msgid "W4OS OpenSimulator Interface"
+msgid "W4OS"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://github.com/GuduleLapointe/w4os"
+msgid "https://github.com/GuduleLapointe/w4os/"
 msgstr ""
 
 #. Description of the plugin
@@ -86,12 +86,12 @@ msgid "Avatar creation"
 msgstr ""
 
 #: admin/settings-inc.php:45
-#: admin/settings-inc.php:73
+#: admin/settings-inc.php:81
 msgid "Models"
 msgstr ""
 
 #: admin/settings-inc.php:48
-msgid "Grid accounts matching first name or last name set below will apear as avatar models, with their profile picture if set, on the avatar registration form."
+msgid "Grid accounts matching first name or last name set below will appear as avatar models, with their profile picture if set, on the avatar registration form."
 msgstr ""
 
 #: admin/settings-inc.php:50
@@ -115,15 +115,19 @@ msgid "Web asset server"
 msgstr ""
 
 #: admin/settings-inc.php:71
+msgid "A web asset server is needed to display images from the simulator assets (model avatars, profile pictures...). See %s for instructions to install one."
+msgstr ""
+
+#: admin/settings-inc.php:79
 msgid "Exclude from stats"
 msgstr ""
 
-#: admin/settings-inc.php:74
+#: admin/settings-inc.php:82
 msgid "Accounts without mail address"
 msgstr ""
 
-#: admin/settings-inc.php:76
-msgid "Accounts without email address are usually test accounts created from the console. Uncheck if you have real avatars without email address."
+#: admin/settings-inc.php:84
+msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr ""
 
 #: admin/settings.php:48
@@ -156,7 +160,11 @@ msgid "Online users, regions, etc."
 msgstr ""
 
 #: admin/status-inc.php:29
-msgid "Avatar profile"
+msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
+msgstr ""
+
+#: admin/status-inc.php:30
+msgid "(formerly %s)"
 msgstr ""
 
 #: includes/profile.php:36
@@ -172,6 +180,7 @@ msgid "Avatar UUID"
 msgstr ""
 
 #: includes/profile.php:58
+#: includes/profile.php:529
 msgid "Avatar name"
 msgstr ""
 
@@ -264,41 +273,39 @@ msgstr ""
 msgid "leave blank to leave unchanged"
 msgstr ""
 
-#: includes/profile.php:529
-#: includes/profile.php:564
-msgid "Avatar first name"
-msgstr ""
-
-#: includes/profile.php:533
-#: includes/profile.php:568
-msgid "Avatar last name"
-msgstr ""
-
-#: includes/profile.php:537
+#: includes/profile.php:534
 msgid "UUID"
 msgstr ""
 
-#: includes/profile.php:558
+#: includes/profile.php:555
 msgid "Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed."
 msgstr ""
 
-#: includes/profile.php:580
+#: includes/profile.php:561
+msgid "Avatar first name"
+msgstr ""
+
+#: includes/profile.php:565
+msgid "Avatar last name"
+msgstr ""
+
+#: includes/profile.php:577
 msgid "Your in-world Avatar password is the same as your password on this website"
 msgstr ""
 
-#: includes/profile.php:582
+#: includes/profile.php:579
 msgid "Confirm your password"
 msgstr ""
 
-#: includes/profile.php:597
+#: includes/profile.php:594
 msgid "Your avatar"
 msgstr ""
 
-#: includes/profile.php:598
+#: includes/profile.php:595
 msgid "You can change and customize it in-world, as often as you want."
 msgstr ""
 
-#: includes/profile.php:635
+#: includes/profile.php:632
 msgid "Save"
 msgstr ""
 
@@ -348,12 +355,4 @@ msgstr ""
 
 #: includes/shortcodes.php:119
 msgid "No result"
-msgstr ""
-
-#: w4os.php:73
-msgid "Stable updates are now delivered from a plugin server instead of the git repository. You need to reinstall the plugin from official repository to get future stable updates. GitHub Updater is no longer required for official releases."
-msgstr ""
-
-#: w4os.php:74
-msgid "Download"
 msgstr ""

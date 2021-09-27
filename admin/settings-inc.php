@@ -45,7 +45,7 @@
 				<th scope="row"><?php _e("Models", 'w4os');?></th>
 				<td>
 					<p class=description>
-						<?php _e('Grid accounts matching first name or last name set below will apear as avatar models, with their profile picture if set, on the avatar registration form.', 'w4os') ?>
+						<?php _e('Grid accounts matching first name or last name set below will appear as avatar models, with their profile picture if set, on the avatar registration form.', 'w4os') ?>
 					<br/>
 						<?php _e('If both left empty, no model will be displayed and avatars will be created with default OpenSimulator appearance (most probably Ugly Ruth).', 'w4os') ?>
 					</p>
@@ -81,7 +81,7 @@
 					<input type="checkbox" class=regular-text id="w4os_exclude_models" name="w4os_exclude_models" value="1" <?php if (get_option('w4os_exclude_models')==1) echo "checked"; ?>/><label for="w4os_exclude_models"><?php _e('Models', 'w4os') ?></label>
 					<br><input type="checkbox" class=regular-text id="w4os_exclude_nomail" name="w4os_exclude_nomail" value="1" <?php if (get_option('w4os_exclude_nomail')==1) echo "checked"; ?>/><label for="w4os_exclude_nomail"><?php _e('Accounts without mail address', 'w4os') ?></label>
 					<p class=description>
-						<?php _e('Accounts without email address are usually test accounts created from the console. Uncheck if you have real avatars without email address.', 'w4os') ?>
+						<?php _e('Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os') ?>
 					</p>
 				</td>
 			</tr>
