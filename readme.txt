@@ -120,6 +120,10 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 
 == Changelog ==
 
+= 2.0.1 =
+* changed plugin name (and slug) to match WordPress standards (w4os was too short)
+* use plugin dir to detect slug instead of hardcoded value
+
 = 2.0 =
 * updated to meet WordPress plugins directory requirements (remove self-update and related instructions, git installation instructions, updated names, readme, urls)
 * renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility

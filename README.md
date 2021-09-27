@@ -1,4 +1,4 @@
-# W4OS - WordPress interface for OpenSimulator
+# OpenSimulator Web Interface
 * Contributors: gudulelapointe,magicoli69
 * Donate link: https://paypal.me/magicoli
 * Tags: opensimulator, second life, web interface
@@ -9,13 +9,13 @@
 * License: AGPLv3
 * License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
-WordPress interface for OpenSimulator
+WordPress interface for OpenSimulator (w4os)
 
 ## Description
 
-The first ready to use WordPress interface for OpenSimulator. Provides user
-registration and basic grid info. See Features and Roadmap sections for current
-and upcoming functionalties.
+Ready to use WordPress interface for [OpenSimulator grids](http://opensimulator.org/). Provide user registration, default avatar model choice and basic grid info.
+
+See Features and Roadmap sections for current and upcoming functionalties.
 
 ### Features
 
@@ -114,7 +114,15 @@ as I progress in the project. I'll try to put things on the right places while
 getting more familiar with it. Feel free to give advices. Yeah, it's not a
 question, but you might wonder.
 
+### Can I use this plugin for my standalone simulator?
+
+This plugin is intended for grids. For standalone simulators, see [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/).
+
 ## Changelog
+
+### 2.0.1
+* changed plugin name (and slug) to match WordPress standards (w4os was too short)
+* use plugin dir to detect slug instead of hardcoded value
 
 ### 2.0
 * updated to meet WordPress plugins directory requirements (remove self-update and related instructions, git installation instructions, updated names, readme, urls)
