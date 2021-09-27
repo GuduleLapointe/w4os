@@ -26,7 +26,8 @@
 			<code>[gridprofile]</code>
 		</dt>
 		<dd>
-			<?php _e("Avatar profile", 'w4os') ?>
+			<?php _e("Grid profile if user is connected and has an avatar, avatar registration form otherwise", 'w4os') ?>
+			<?php echo sprintf(__("(formerly %s)", 'w4os'), "<code>[w4os_profile]</code>"); ?>
 		</dd>
 	</p>
 </div>
