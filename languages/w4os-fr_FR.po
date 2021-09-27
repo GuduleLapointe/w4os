@@ -19,8 +19,8 @@ msgstr "W4OS OpenSimulator Interface"
 
 # wpml-name: dca56d6af7010d3d34aadf3fd1666bf7
 #. Plugin URI of the plugin
-msgid "https://git.magiiic.com/opensimulator/w4os"
-msgstr "https://git.magiiic.com/opensimulator/w4os"
+msgid "https://github.com/GuduleLapointe/w4os"
+msgstr "https://github.com/GuduleLapointe/w4os"
 
 # wpml-name: 374124f21084c34d958491bf98d72af4
 #. Description of the plugin

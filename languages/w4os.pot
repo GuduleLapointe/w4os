@@ -18,7 +18,7 @@ msgid "W4OS OpenSimulator Interface"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://git.magiiic.com/opensimulator/w4os"
+msgid "https://github.com/GuduleLapointe/w4os"
 msgstr ""
 
 #. Description of the plugin

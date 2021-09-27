@@ -32,7 +32,7 @@
 * changed stats order
 * fix some missing localizations
 * added active members count (as opposite to active users including visitors)
-* merge translations from https://git.magiiic.com/opensimulator/w4os-translations
+* merge translations from https://github.com/GuduleLapointe/w4os-translations
 
 = 0.12.0 =
 * fix: show only in-world users in "new users" dashboard widget
@@ -44,7 +44,7 @@
 
 = 0.10.2 =
 * fixed https://github.com/GuduleLapointe/w4os/issues/1 undefined constant. Thx djphil
-* merged latest translations from https://git.magiiic.com/opensimulator/w4os-translations
+* merged latest translations from https://github.com/GuduleLapointe/w4os-translations
 * Changed OpenSim to OpenSimulator
 
 = 0.10.1 =
