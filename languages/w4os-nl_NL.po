@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-09-27T20:01:36-04:00\n"
-"PO-Revision-Date: 2021-09-27 20:02-0400\n"
+"PO-Revision-Date: 2021-09-28 11:18-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 
@@ -413,11 +413,11 @@ msgstr "Geen resultaat"
 
 #: updates.php:33
 msgid "Stable updates are now delivered from a plugin server instead of the git repository. You need to reinstall the plugin from official repository to get future stable updates. GitHub Updater is no longer required for official releases."
-msgstr ""
+msgstr "Stabiele updates worden nu geleverd vanaf een plug-inserver in plaats van de git-repository. U moet de plug-in opnieuw installeren vanuit de officiële repository om toekomstige stabiele updates te krijgen. GitHub Updater is niet langer vereist voor officiële releases."
 
 #: updates.php:34
 msgid "Download"
-msgstr ""
+msgstr "Downloaden"
 
 #~ msgid "W4OS"
 #~ msgstr "W4OS"
