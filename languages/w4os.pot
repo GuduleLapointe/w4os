@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenSimulator Web Interface 2.0.1\n"
+"Project-Id-Version: OpenSimulator Web Interface 2.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-27T18:31:05-04:00\n"
+"POT-Creation-Date: 2021-09-27T20:01:36-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0-alpha-3f4c34b\n"
 
@@ -47,86 +47,90 @@ msgstr ""
 msgid "Recent users"
 msgstr ""
 
-#: admin/settings-inc.php:8
+#: admin/settings-inc.php:5
+msgid "Translation test"
+msgstr ""
+
+#: admin/settings-inc.php:9
 #: includes/shortcodes.php:31
 msgid "Grid name"
 msgstr ""
 
-#: admin/settings-inc.php:12
+#: admin/settings-inc.php:13
 #: includes/shortcodes.php:32
 msgid "Login URI"
 msgstr ""
 
-#: admin/settings-inc.php:16
+#: admin/settings-inc.php:17
 msgid "Robust server database"
 msgstr ""
 
-#: admin/settings-inc.php:20
+#: admin/settings-inc.php:21
 msgid "Required tables are missing, check your connection settings or your database"
 msgstr ""
 
-#: admin/settings-inc.php:24
+#: admin/settings-inc.php:25
 msgid "Hostname"
 msgstr ""
 
-#: admin/settings-inc.php:28
+#: admin/settings-inc.php:29
 msgid "Database name"
 msgstr ""
 
-#: admin/settings-inc.php:32
+#: admin/settings-inc.php:33
 msgid "Username"
 msgstr ""
 
-#: admin/settings-inc.php:36
+#: admin/settings-inc.php:37
 msgid "Password"
 msgstr ""
 
-#: admin/settings-inc.php:41
+#: admin/settings-inc.php:42
 msgid "Avatar creation"
 msgstr ""
 
-#: admin/settings-inc.php:45
-#: admin/settings-inc.php:81
+#: admin/settings-inc.php:46
+#: admin/settings-inc.php:82
 msgid "Models"
 msgstr ""
 
-#: admin/settings-inc.php:48
+#: admin/settings-inc.php:49
 msgid "Grid accounts matching first name or last name set below will appear as avatar models, with their profile picture if set, on the avatar registration form."
 msgstr ""
 
-#: admin/settings-inc.php:50
+#: admin/settings-inc.php:51
 msgid "If both left empty, no model will be displayed and avatars will be created with default OpenSimulator appearance (most probably Ugly Ruth)."
 msgstr ""
 
-#: admin/settings-inc.php:55
+#: admin/settings-inc.php:56
 msgid "First name ="
 msgstr ""
 
-#: admin/settings-inc.php:60
+#: admin/settings-inc.php:61
 msgid "OR Last name ="
 msgstr ""
 
-#: admin/settings-inc.php:64
+#: admin/settings-inc.php:65
 msgid "Misc"
 msgstr ""
 
-#: admin/settings-inc.php:67
+#: admin/settings-inc.php:68
 msgid "Web asset server"
 msgstr ""
 
-#: admin/settings-inc.php:71
+#: admin/settings-inc.php:72
 msgid "A web asset server is needed to display images from the simulator assets (model avatars, profile pictures...). See %s for instructions to install one."
 msgstr ""
 
-#: admin/settings-inc.php:79
+#: admin/settings-inc.php:80
 msgid "Exclude from stats"
 msgstr ""
 
-#: admin/settings-inc.php:82
+#: admin/settings-inc.php:83
 msgid "Accounts without mail address"
 msgstr ""
 
-#: admin/settings-inc.php:84
+#: admin/settings-inc.php:85
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr ""
 

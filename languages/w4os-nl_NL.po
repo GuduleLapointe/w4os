@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-27T18:31:05-04:00\n"
-"PO-Revision-Date: 2021-09-27 18:33-0400\n"
+"POT-Creation-Date: 2021-09-27T20:01:36-04:00\n"
+"PO-Revision-Date: 2021-09-27 20:02-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 
@@ -55,94 +55,98 @@ msgstr "Grid status"
 msgid "Recent users"
 msgstr "Recente gebruikers"
 
+#: admin/settings-inc.php:5
+msgid "Translation test"
+msgstr "Vertaal test"
+
 # wpml-name: 46eb01f349dc6c317e78cd1830545358
-#: admin/settings-inc.php:8
+#: admin/settings-inc.php:9
 #: includes/shortcodes.php:31
 msgid "Grid name"
 msgstr "Grid naam"
 
 # wpml-name: 751cfef8ad45902372601aeac58bdad7
-#: admin/settings-inc.php:12
+#: admin/settings-inc.php:13
 #: includes/shortcodes.php:32
 msgid "Login URI"
 msgstr "Inloggen URI"
 
 # wpml-name: 193fe27dd7fcd662652841a7b7e6c912
-#: admin/settings-inc.php:16
+#: admin/settings-inc.php:17
 msgid "Robust server database"
 msgstr "Robust server database"
 
-#: admin/settings-inc.php:20
+#: admin/settings-inc.php:21
 msgid "Required tables are missing, check your connection settings or your database"
 msgstr "Vereiste tabellen ontbreken, controleer uw verbindingsinstellingen of uw database"
 
-#: admin/settings-inc.php:24
+#: admin/settings-inc.php:25
 msgid "Hostname"
 msgstr "Hostnaam"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/settings-inc.php:28
+#: admin/settings-inc.php:29
 msgid "Database name"
 msgstr "Database naam"
 
-#: admin/settings-inc.php:32
+#: admin/settings-inc.php:33
 msgid "Username"
 msgstr "Gebruikersnaam"
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/settings-inc.php:36
+#: admin/settings-inc.php:37
 msgid "Password"
 msgstr "Wachtwoord"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/settings-inc.php:41
+#: admin/settings-inc.php:42
 msgid "Avatar creation"
 msgstr "Avatar creatie"
 
-#: admin/settings-inc.php:45
-#: admin/settings-inc.php:81
+#: admin/settings-inc.php:46
+#: admin/settings-inc.php:82
 msgid "Models"
 msgstr "Modellen"
 
-#: admin/settings-inc.php:48
+#: admin/settings-inc.php:49
 msgid "Grid accounts matching first name or last name set below will appear as avatar models, with their profile picture if set, on the avatar registration form."
 msgstr "Grid-accounts die overeenkomen met de hieronder ingestelde voornaam of achternaam, verschijnen als avatar-modellen, met hun profielfoto, indien ingesteld, op het avatar-registratieformulier."
 
-#: admin/settings-inc.php:50
+#: admin/settings-inc.php:51
 msgid "If both left empty, no model will be displayed and avatars will be created with default OpenSimulator appearance (most probably Ugly Ruth)."
 msgstr "Als beide leeg blijven, wordt er geen model weergegeven en worden avatars gemaakt met het standaard OpenSimulator-uiterlijk (waarschijnlijk Ugly Ruth)."
 
 # wpml-name: b2d0fb30e09bf39693f6183c33455748
-#: admin/settings-inc.php:55
+#: admin/settings-inc.php:56
 msgid "First name ="
 msgstr "Voornaam ="
 
 # wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
-#: admin/settings-inc.php:60
+#: admin/settings-inc.php:61
 msgid "OR Last name ="
 msgstr "OF Achternaam ="
 
-#: admin/settings-inc.php:64
+#: admin/settings-inc.php:65
 msgid "Misc"
 msgstr "Diversen"
 
-#: admin/settings-inc.php:67
+#: admin/settings-inc.php:68
 msgid "Web asset server"
 msgstr "Web asset-server"
 
-#: admin/settings-inc.php:71
+#: admin/settings-inc.php:72
 msgid "A web asset server is needed to display images from the simulator assets (model avatars, profile pictures...). See %s for instructions to install one."
 msgstr "Er is een webassetserver nodig om afbeeldingen van de simulatorassets (modelavatars, profielfoto's...) weer te geven. Zie %s voor instructies om er een te installeren."
 
-#: admin/settings-inc.php:79
+#: admin/settings-inc.php:80
 msgid "Exclude from stats"
 msgstr "Uitsluiten van statistieken"
 
-#: admin/settings-inc.php:82
+#: admin/settings-inc.php:83
 msgid "Accounts without mail address"
 msgstr "Accounts zonder e-mailadres"
 
-#: admin/settings-inc.php:84
+#: admin/settings-inc.php:85
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr "Accounts zonder e-mailadres zijn meestal testaccounts die vanaf de console zijn gemaakt. Schakel het vinkje alleen uit als je echte avatars hebt zonder e-mailadres."
 
