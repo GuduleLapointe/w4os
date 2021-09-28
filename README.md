@@ -120,6 +120,9 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 
 ## Changelog
 
+### 2.0.6
+* renamed plugin as W4OS - OpenSimulator Web Interface
+
 ### 2.0.5
 * fix localizations not loading
 

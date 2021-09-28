@@ -43,3 +43,6 @@ wp-cli.local.yml
 yarn.lock
 README.md
 admin/updater.php
+lib/plugin-update-checker
+lib/wp-package-updater
+updates.php
