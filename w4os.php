@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       OpenSimulator Web Interface
+ * Plugin Name:       W4OS - OpenSimulator Web Interface
  * Description:       WordPress interface for OpenSimulator (w4os).
  * Version:           2.0.5
  * Author:            Speculoos World
@@ -29,10 +29,10 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 $plugin_dir_check = basename(dirname(__FILE__));
-if ( $plugin_dir_check != 'opensimulator-web-interface' && in_array( 'opensimulator-web-interface/w4os.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-opensimulator-web-interface/w4os.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	add_action( 'admin_notices', function() {
 		echo "<div class='notice notice-error'>";
-		echo "<p><strong>W4OS:</strong> You already have installed the official release of <strong>OpenSimulator Web Interface</strong>, from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.</p>";
+		echo "<p><strong>W4OS:</strong> You already have installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong>, from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.</p>";
 		echo "</div>";
 	} );
 	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));

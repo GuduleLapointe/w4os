@@ -1,4 +1,4 @@
-=== OpenSimulator Web Interface ===
+=== W4OS - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://paypal.me/magicoli
 Tags: opensimulator, second life, web interface
