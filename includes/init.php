@@ -9,11 +9,6 @@ define('DEFAULT_HOME', "Welcome");
 define('DEFAULT_RESTRICTED_NAMES', array("Default", "Test", "Admin", str_replace(' ', '', get_option('w4os_grid_name'))));
 define('ASSET_SERVER_URI', '/assets/asset.php?id=');
 
-function w4os_load_textdomain() {
-	load_plugin_textdomain( 'w4os', false, dirname(dirname( plugin_basename( __FILE__ )) ) . '/languages/' );
-}
-w4os_load_textdomain();
-
 if ( ! defined( 'W4OS_SLUG' ) ) define('W4OS_SLUG', basename(dirname(dirname(__FILE__))) );
 if ( ! defined( 'W4OS_PLUGIN' ) ) define('W4OS_PLUGIN', W4OS_SLUG . "/w4os.php" );
 
@@ -24,7 +19,7 @@ $plugin_data = get_file_data(WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, array(
   // 'Description' => 'Description',
   // 'Author' => 'Author',
   // 'AuthorURI' => 'Author URI',
-  // 'TextDomain' => 'Text Domain',
+  'TextDomain' => 'Text Domain',
   // 'DomainPath' => 'Domain Path',
   // 'Network' => 'Network',
 ));
@@ -34,11 +29,31 @@ if ( ! defined( 'W4OS_PLUGIN_NAME' ) ) define('W4OS_PLUGIN_NAME', $plugin_data['
 // if ( ! defined( 'W4OS_PLUGIN_URI' ) ) define('W4OS_PLUGIN_URI', $plugin_data['PluginURI'] );
 if ( ! defined( 'W4OS_VERSION' ) ) define('W4OS_VERSION', $plugin_data['Version'] );
 // if ( ! defined( 'W4OS_AUTHOR_NAME' ) ) define('W4OS_AUTHOR_NAME', $plugin_data['Author'] );
-// if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain']) ? $plugin_data['TextDomain'] : W4OS_SLUG );
+if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain']) ? $plugin_data['TextDomain'] : W4OS_SLUG );
 // if ( ! defined( 'W4OS_DATA_SLUG' ) ) define('W4OS_DATA_SLUG', sanitize_title(W4OS_PLUGIN_NAME) );
 // if ( ! defined( 'W4OS_STORE_LINK' ) ) define('W4OS_STORE_LINK', "<a href=" . W4OS_PLUGIN_URI . " target=_blank>" . W4OS_AUTHOR_NAME . "</a>");
 // /* translators: %s is replaced by the name of the plugin, untranslated */
 // if ( ! defined( 'W4OS_REGISTER_TEXT' ) ) define('W4OS_REGISTER_TEXT', sprintf(__('Get a license key on %s website', W4OS_TXDOM), W4OS_STORE_LINK) );
+
+function w4os_load_textdomain() {
+	// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );
+
+	global $locale;
+
+	if ( is_textdomain_loaded( W4OS_TXDOM ) ) {
+		unload_textdomain( W4OS_TXDOM );
+	}
+	$mofile = sprintf( '%s-%s.mo', W4OS_TXDOM, $locale );
+	//check the installation language path first.
+	$domain_path = path_join( WP_LANG_DIR, 'plugins' );
+	$loaded = load_textdomain( W4OS_TXDOM, path_join( $domain_path, $mofile ) );
+
+	if ( ! $loaded ) { //else, check the plugin language folder.
+		$domain_path = path_join( WP_PLUGIN_DIR, W4OS_SLUG."/languages" );
+		$loaded = load_textdomain( W4OS_TXDOM, path_join( $domain_path, $mofile ) );
+	}
+}
+add_action( 'init', 'w4os_load_textdomain' );
 
 $w4osdb = new WPDB(
 	get_option('w4os_db_user'),
