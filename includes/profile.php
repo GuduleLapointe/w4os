@@ -30,7 +30,7 @@ function w4os_profile_sync($user) {
  * @param  [type] $user
  */
 function w4os_profile_fields( $user ) {
-  if($user->ID != wp_get_current_user()) return;
+  if($user->ID != wp_get_current_user()->ID) return;
   global $w4osdb;
   $uuid = w4os_profile_sync($user);
   echo "    <h3>" . __("OpenSimulator", "w4os") ."</h3>";
@@ -512,7 +512,13 @@ function w4os_profile_wc_edit( $user ) {
   global $w4osdb;
 
   if ( $_REQUEST['w4os_update_avatar'] ) {
-    $uuid = w4os_update_avatar( $user, $_REQUEST);
+    $uuid = w4os_update_avatar( $user, array(
+      'action' => sanitize_text_field($_REQUEST['action']),
+  		'w4os_firstname' => sanitize_text_field($_REQUEST['w4os_firstname']),
+  		'w4os_lastname' => sanitize_text_field($_REQUEST['w4os_lastname']),
+  		'w4os_model' => sanitize_text_field($_REQUEST['w4os_model']),
+  		'w4os_password_1' => $_REQUEST['w4os_password_1'],
+    ));
   } else {
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
     if(! $uuid) echo "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
@@ -549,8 +555,8 @@ function w4os_profile_wc_edit( $user ) {
   } else {
     $action = 'w4os_create_avatar';
 
-    $firstname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_firstname]) ? $_REQUEST[w4os_firstname] : get_user_meta( $user->ID, 'first_name', true ));
-    $lastname = preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_lastname]) ? $_REQUEST[w4os_lastname] : get_user_meta( $user->ID, 'last_name', true ));
+    $firstname = esc_attr(preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_firstname]) ? $_REQUEST[w4os_firstname] : get_user_meta( $user->ID, 'first_name', true )));
+    $lastname = esc_attr(preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_lastname]) ? $_REQUEST[w4os_lastname] : get_user_meta( $user->ID, 'last_name', true )));
 
     $content .= "<p class=description>" . __('Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed.', 'w4os') . "</p>";
 
