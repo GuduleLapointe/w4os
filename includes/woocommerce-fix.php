@@ -15,7 +15,7 @@
  * @param  integer $user_id User ID
  * @return boolean          True if user bought something
  */
-function has_bought( $user_id = 0 ) {
+function w4os_has_bought( $user_id = 0 ) {
   if ( ! class_exists( 'woocommerce' ) ) return false;
   global $wpdb;
 
@@ -49,7 +49,7 @@ function w4os_remove_my_account_links( $menu_links ){
   unset( $menu_links['edit-address'] ); // Addresses
   // unset( $menu_links['customer-logout'] ); // Remove Logout link
 
-  // if(!has_bought()) {
+  // if(!w4os_has_bought()) {
     // unset( $menu_links['orders'] ); // Remove Orders
     // unset( $menu_links['subscriptions'] ); // Remove Subscriptions
   // }

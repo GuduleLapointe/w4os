@@ -101,14 +101,14 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
 		if (! $user ) return;
 		$uuid = w4os_profile_sync($user); // refresh opensim data for this user
 		$password=stripcslashes($new_pass);
-		$salt = md5(gen_uuid());
+		$salt = md5(w4os_gen_uuid());
 		$hash = md5(md5($password) . ":" . $salt);
 		$w4osdb->update (
 			'auth',
 			array (
 				'passwordHash'   => $hash,
 				'passwordSalt'   => $salt,
-				// 'webLoginKey' => NULL_KEY,
+				// 'webLoginKey' => W4OS_NULL_KEY,
 			),
 			array (
 				'UUID' => $uuid,
@@ -143,22 +143,22 @@ add_action('woocommerce_save_account_details', 'w4os_woocommerce_save_account_de
  * I don't remember when this is fired
  * @param  integer $user_id
  */
-function my_profile_update( $user_id, $old_user_data ) {
+function w4os_own_profile_update( $user_id, $old_user_data ) {
 	if($_REQUEST['pass1'] == $_REQUEST['pass2'])
 	w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
 }
-add_action( 'profile_update', 'my_profile_update', 10, 2 );
+add_action( 'profile_update', 'w4os_own_profile_update', 10, 2 );
 
 /**
  * Catch password change made by admin and save it to OpenSimulator
  * @param  integer $user_id
  */
-function other_user_profile_update($user_id) {
+function w4os_other_profile_update($user_id) {
 	if ( current_user_can('edit_user',$user_id) ) {
 		w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
 	}
 }
-add_action( 'edit_user_profile_update', 'other_user_profile_update', 10, 1);
+add_action( 'edit_user_profile_update', 'w4os_other_profile_update', 10, 1);
 
 add_action( 'user_register',
 function() {
@@ -168,7 +168,7 @@ function() {
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
     if( $uuid ) {
       $password=stripcslashes($_REQUEST['password']);
-      $salt = md5(gen_uuid());
+      $salt = md5(w4os_gen_uuid());
       $hash = md5(md5($password) . ":" . $salt);
       update_user_meta( $user->ID, 'w4os_tmp_salt', $salt );
       update_user_meta( $user->ID, 'w4os_tmp_hash', $hash );
@@ -196,7 +196,7 @@ function w4os_verify_user() {
               array (
                 'passwordHash'   => $hash,
                 'passwordSalt'   => $salt,
-                // 'webLoginKey' => NULL_KEY,
+                // 'webLoginKey' => W4OS_NULL_KEY,
               ),
               array (
                 'UUID' => $uuid,
@@ -209,9 +209,9 @@ function w4os_verify_user() {
   }
 }
 
-function debug_log($string) {
-  file_put_contents ( "../tmp/w4os_debug.log", $string . "\n", FILE_APPEND );
-}
+// function w4os_debug_log($string) {
+//   file_put_contents ( "../tmp/w4os_debug.log", $string . "\n", FILE_APPEND );
+// }
 
 function w4os_update_avatar( $user, $params ) {
   global $w4osdb;
@@ -228,7 +228,7 @@ function w4os_update_avatar( $user, $params ) {
     $firstname = trim($params['w4os_firstname']);
     $lastname = trim($params['w4os_lastname']);
     $model = trim($params['w4os_model']);
-    if (empty($model)) $model = DEFAULT_AVATAR;
+    if (empty($model)) $model = W4OS_DEFAULT_AVATAR;
 
     // Check required fields
     $required=array('w4os_firstname', 'w4os_lastname', 'w4os_password_1');
@@ -241,11 +241,11 @@ function w4os_update_avatar( $user, $params ) {
     $password=stripcslashes($params['w4os_password_1']);
     // if ( ! w4os_is_strong ($password)) return false; // We now only rely on WP password requirements
 
-    if (in_array(strtolower($firstname), array_map('strtolower', DEFAULT_RESTRICTED_NAMES))) {
+    if (in_array(strtolower($firstname), array_map('strtolower', W4OS_DEFAULT_RESTRICTED_NAMES))) {
       w4os_notice(sprintf( __( 'The name %s is not allowed', 'w4os' ), "$firstname"), 'fail');
       return false;
     }
-    if (in_array(strtolower($lastname), array_map('strtolower', DEFAULT_RESTRICTED_NAMES))) {
+    if (in_array(strtolower($lastname), array_map('strtolower', W4OS_DEFAULT_RESTRICTED_NAMES))) {
       w4os_notice(sprintf( __( 'The name %s is not allowed', 'w4os' ), "$lastname"), 'fail');
       return false;
     }
@@ -263,24 +263,24 @@ function w4os_update_avatar( $user, $params ) {
     }
     // Hash password
 
-    $newavatar_uuid = gen_uuid();
+    $newavatar_uuid = w4os_gen_uuid();
     $check_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE PrincipalID = '$newavatar_uuid'");
     if ( $check_uuid ) {
       w4os_notice(__( 'This should never happen! Generated a random UUID that already existed. Sorry. Try again.', 'w4os' ), 'fail');
       return false;
     }
 
-    $salt = md5(gen_uuid());
+    $salt = md5(w4os_gen_uuid());
     $hash = md5(md5($password) . ":" . $salt);
     $user_email = get_userdata($user->ID)->data->user_email;
     $created = mktime();
-    $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM regions WHERE regionName = '" . DEFAULT_HOME . "'");
+    $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM regions WHERE regionName = '" . W4OS_DEFAULT_HOME . "'");
     if(empty($HomeRegionID)) $HomeRegionID = '00000000-0000-0000-0000-000000000000';
 
     $result = $w4osdb->insert (
       'UserAccounts', array (
         'PrincipalID' => $newavatar_uuid,
-        'ScopeID' => NULL_KEY,
+        'ScopeID' => W4OS_NULL_KEY,
         'FirstName'   => $firstname,
         'LastName'   => $lastname,
         'Email' => $user_email,
@@ -294,7 +294,7 @@ function w4os_update_avatar( $user, $params ) {
         'UUID' => $newavatar_uuid,
         'passwordHash'   => $hash,
         'passwordSalt'   => $salt,
-        'webLoginKey' => NULL_KEY,
+        'webLoginKey' => W4OS_NULL_KEY,
       )
     );
     if ( !$result ) w4os_notice(__("Error while setting password", 'w4os'), 'fail');
@@ -314,7 +314,7 @@ function w4os_update_avatar( $user, $params ) {
     $model_lastname=trim(strstr($model, " "));
     $model_uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$model_firstname' AND LastName = '$model_lastname'");
 
-    $inventory_uuid = gen_uuid();
+    $inventory_uuid = w4os_gen_uuid();
     if ($result) $result = $w4osdb->insert (
       'inventoryfolders', array (
         'folderName' => 'My Inventory',
@@ -322,39 +322,39 @@ function w4os_update_avatar( $user, $params ) {
         'version' => 1,
         'folderID' => $inventory_uuid,
         'agentID' => $newavatar_uuid,
-        'parentFolderID' => NULL_KEY,
+        'parentFolderID' => W4OS_NULL_KEY,
       )
     );
     if ( !$result ) w4os_notice(__("Error while creating user inventory", 'w4os'), 'fail');
 
-    $bodyparts_uuid = gen_uuid();
-    $bodyparts_model_uuid = gen_uuid();
-    $currentoutfit_uuid = gen_uuid();
-    // $myoutfits_uuid = gen_uuid();
-    // $myoutfits_model_uuid = gen_uuid();
+    $bodyparts_uuid = w4os_gen_uuid();
+    $bodyparts_model_uuid = w4os_gen_uuid();
+    $currentoutfit_uuid = w4os_gen_uuid();
+    // $myoutfits_uuid = w4os_gen_uuid();
+    // $myoutfits_model_uuid = w4os_gen_uuid();
     if ( $result ) {
       $folders = array(
-        array('Textures', 0, 1, gen_uuid(), $inventory_uuid ),
-        array('Sounds', 1, 1, gen_uuid(), $inventory_uuid ),
-        array('Calling Cards', 2, 2, gen_uuid(), $inventory_uuid ),
-        array('Landmarks', 3, 1, gen_uuid(), $inventory_uuid ),
-        array('Photo Album', 15, 1, gen_uuid(), $inventory_uuid ),
-        array('Clothing', 5, 3, gen_uuid(), $inventory_uuid ),
-        array('Objects', 6, 1, gen_uuid(), $inventory_uuid ),
-        array('Notecards', 7, 1, gen_uuid(), $inventory_uuid ),
-        array('Scripts', 10, 1, gen_uuid(), $inventory_uuid ),
+        array('Textures', 0, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Sounds', 1, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Calling Cards', 2, 2, w4os_gen_uuid(), $inventory_uuid ),
+        array('Landmarks', 3, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Photo Album', 15, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Clothing', 5, 3, w4os_gen_uuid(), $inventory_uuid ),
+        array('Objects', 6, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Notecards', 7, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Scripts', 10, 1, w4os_gen_uuid(), $inventory_uuid ),
         array('Body Parts', 13, 5, $bodyparts_uuid, $inventory_uuid ),
-        array('Trash', 14, 1, gen_uuid(), $inventory_uuid ),
-        array('Animations', 20, 1, gen_uuid(), $inventory_uuid ),
-        array('Gestures', 21, 1, gen_uuid(), $inventory_uuid ),
-        array('Lost And Found', 16, 1, gen_uuid(), $inventory_uuid ),
+        array('Trash', 14, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Animations', 20, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Gestures', 21, 1, w4os_gen_uuid(), $inventory_uuid ),
+        array('Lost And Found', 16, 1, w4os_gen_uuid(), $inventory_uuid ),
         array("$model_firstname $model_lastname outfit", -1, 1, $bodyparts_model_uuid, $bodyparts_uuid ),
         array('Current Outfit', 46, 1, $currentoutfit_uuid, $inventory_uuid ),
         // array('My Outfits', 48, 1, $myoutfits_uuid, $inventory_uuid ),
         // array("$model_firstname $model_lastname", 47, 1, $myoutfits_model_uuid, $myoutfits_uuid ),
-        // array('Friends', 2, 2, gen_uuid(), $inventory_uuid ),
-        // array('Favorites', 23, gen_uuid(), $inventory_uuid ),
-        // array('All', 2, 1, gen_uuid(), $inventory_uuid ),
+        // array('Friends', 2, 2, w4os_gen_uuid(), $inventory_uuid ),
+        // array('Favorites', 23, w4os_gen_uuid(), $inventory_uuid ),
+        // array('All', 2, 1, w4os_gen_uuid(), $inventory_uuid ),
       );
       foreach($folders as $folder) {
         $name = $folder[0];
@@ -386,7 +386,7 @@ function w4os_update_avatar( $user, $params ) {
     //           'folderName' => $row->folderName,
     //           'type' => $row->type,
     //           'version' => $row->version,
-    //           'folderID' => gen_uuid(),
+    //           'folderID' => w4os_gen_uuid(),
     //           'agentID' => $newavatar_uuid,
     //           'parentFolderID' => $inventory_uuid,
     //         )
@@ -420,7 +420,7 @@ function w4os_update_avatar( $user, $params ) {
             $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
             if(!$destitem) {
               $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
-              $destinventoryid = gen_uuid();
+              $destinventoryid = w4os_gen_uuid();
               $newitem['inventoryID'] = $destinventoryid;
               $newitems[] = $newitem;
               $Value = "$destinventoryid:$asset";
@@ -432,7 +432,7 @@ function w4os_update_avatar( $user, $params ) {
               $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
               if(!$destitem) {
                 $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
-                $destinventoryid = gen_uuid();
+                $destinventoryid = w4os_gen_uuid();
                 $newitem['inventoryID'] = $destinventoryid;
                 // $Value = $destinventoryid;
                 $newitems[] = $newitem;
@@ -443,7 +443,7 @@ function w4os_update_avatar( $user, $params ) {
           }
           if(!empty($newitems)) {
             foreach($newitems as $newitem) {
-              // $destinventoryid = gen_uuid();
+              // $destinventoryid = w4os_gen_uuid();
               // w4os_notice("Creating inventory item '$Name' for $firstname");
               $newitem['parentFolderID'] = $bodyparts_model_uuid;
               $newitem['avatarID'] = $newavatar_uuid;
@@ -456,7 +456,7 @@ function w4os_update_avatar( $user, $params ) {
               $outfit_link=$newitem;
               $outfit_link['assetType']=24;
               $outfit_link['assetID']=$newitem['inventoryID'];
-              $outfit_link['inventoryID'] = gen_uuid();
+              $outfit_link['inventoryID'] = w4os_gen_uuid();
               $outfit_link['parentFolderID'] = $currentoutfit_uuid;
               $result = $w4osdb->insert ('inventoryitems', $outfit_link);
               if( !$result ) w4os_notice(__("Error while adding inventory outfit link", 'w4os'), 'fail');
@@ -605,12 +605,12 @@ function w4os_profile_wc_edit( $user ) {
           $model_display_name = preg_replace('/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $model_display_name);
           $model_display_name = preg_replace('/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $model_display_name);
 
-          // if($model->profileImage != NULL_KEY)
+          // if($model->profileImage != W4OS_NULL_KEY)
           // $model_img =  "<img src='/assets/asset.php?id=" . $model->profileImage ."'>";
-          if(!empty(get_option('w4os_asset_server_uri', ASSET_SERVER_URI))) $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', ASSET_SERVER_URI) . $model->profileImage ."'>";
+          if(!empty(get_option('w4os_asset_server_uri', W4OS_DEFAULT_ASSET_SERVER_URI))) $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', W4OS_DEFAULT_ASSET_SERVER_URI) . $model->profileImage ."'>";
           if(empty($model_img)) $modelclass="no_picture";
           else $modelclass = "with_picture";
-          if($model_name == DEFAULT_AVATAR) $checked = " checked"; else $checked="";
+          if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 
           $content .= "
           <label class='$modelclass'>

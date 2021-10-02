@@ -15,7 +15,7 @@ function w4os_register_settings() {
 	add_option( 'w4os_db_pass', 'localhost');
 	register_setting( 'w4os_options_group', 'w4os_db_pass', 'w4os_callback' );
 
-	add_option( 'w4os_asset_server_uri', ASSET_SERVER_URI);
+	add_option( 'w4os_asset_server_uri', W4OS_DEFAULT_ASSET_SERVER_URI);
 	register_setting( 'w4os_options_group', 'w4os_asset_server_uri', 'w4os_callback' );
 
 	add_option( 'w4os_model_firstname', 'Default');
@@ -90,13 +90,13 @@ function w4os_settings_link( $links ) {
 add_filter( 'plugin_action_links_w4os/w4os.php', 'w4os_settings_link' );
 
 
-function register_avatar_column($columns) {
+function w4os_register_avatar_column($columns) {
     $columns['avatar'] = 'Avatar';
     return $columns;
 }
-add_action('manage_users_columns', 'register_avatar_column');
+add_action('manage_users_columns', 'w4os_register_avatar_column');
 
-function register_avatar_column_view($value, $column_name, $user_id) {
+function w4os_register_avatar_column_view($value, $column_name, $user_id) {
     // $user_info = get_userdata( $user_id );
     if($column_name == 'avatar') {
 			if(!empty(get_the_author_meta( 'w4os_uuid', $user_id ))) {
@@ -107,10 +107,10 @@ function register_avatar_column_view($value, $column_name, $user_id) {
     return $value;
 
 }
-add_action('manage_users_custom_column', 'register_avatar_column_view', 10, 3);
+add_action('manage_users_custom_column', 'w4os_register_avatar_column_view', 10, 3);
 
-function avatar_sortable_columns( $columns ) {
+function w4os_avatar_sortable_columns( $columns ) {
 	$columns['avatar'] = 'avatar';
   return $columns;
 }
-add_filter( 'manage_edit-avatar_sortable_columns', 'avatar_sortable_columns');
+add_filter( 'manage_edit-w4os_avatar_sortable_columns', 'w4os_avatar_sortable_columns');
