@@ -559,11 +559,11 @@ function w4os_profile_wc_edit( $user ) {
 
       <p class='woocommerce-form-row woocommerce-form-row--first form-row form-row-first'>
     		<label for='w4os_firstname'>" . __("Avatar first name", "w4os") . "&nbsp;<span class='required'>*</span></label>
-    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_firstname' id='w4os_firstname' autocomplete='given-name' value='$firstname' required>
+    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_firstname' id='w4os_firstname' autocomplete='given-name' value='" . esc_attr($firstname) . "' required>
     	</p>
     	<p class='woocommerce-form-row woocommerce-form-row--last form-row form-row-last'>
     		<label for='w4os_lastname'>" . __("Avatar last name", "w4os") . "&nbsp;<span class='required'>*</span></label>
-    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='$lastname' required>
+    		<input type='text' class='woocommerce-Input woocommerce-Input--text input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='" . esc_attr($lastname) . "' required>
     	</p>
       <div class='clear'></div>
       ";

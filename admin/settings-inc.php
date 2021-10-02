@@ -6,11 +6,11 @@
 		<table class=form-table>
 			<tr valign="top">
 				<th scope="row"><label for="w4os_grid_name"><?php _e("Grid name", "w4os");?></label></th>
-				<td><input type="text" class=regular-text id="w4os_grid_name" name="w4os_grid_name" value="<?php echo get_option('w4os_grid_name'); ?>" /></td>
+				<td><input type="text" class=regular-text id="w4os_grid_name" name="w4os_grid_name" value="<?php echo esc_attr(get_option('w4os_grid_name')); ?>" /></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label for="w4os_login_uri"><?php _e("Login URI", "w4os");?></label></th>
-				<td><input type="text" class=regular-text id="w4os_login_uri" name="w4os_login_uri" value="<?php echo get_option('w4os_login_uri'); ?>" placeholder='example.org:8002'/></td>
+				<td><input type="text" class=regular-text id="w4os_login_uri" name="w4os_login_uri" value="<?php echo esc_attr(get_option('w4os_login_uri')); ?>" placeholder='example.org:8002'/></td>
 			</tr>
 			<tr><th colspan=2>
 				<h2><?php _e("Robust server database", "w4os");?></h2>
@@ -22,19 +22,19 @@
 			<?php } ?>
 			<tr valign="top">
 				<th scope="row"><label for="w4os_db_host"><?php _e("Hostname");?></label></th>
-				<td><input type="text" class=regular-text id="w4os_db_host" name="w4os_db_host" value="<?php echo get_option('w4os_db_host'); ?>" /></td>
+				<td><input type="text" class=regular-text id="w4os_db_host" name="w4os_db_host" value="<?php echo esc_attr(get_option('w4os_db_host')); ?>" /></td>
 			</tr>
 			<tr valign="top">
 			  <th scope="row"><label for="w4os_db_database"><?php _e("Database name", 'w4os');?></label></th>
-			  <td><input type="text" class=regular-text id="w4os_db_database" name="w4os_db_database" value="<?php echo get_option('w4os_db_database'); ?>" /></td>
+			  <td><input type="text" class=regular-text id="w4os_db_database" name="w4os_db_database" value="<?php echo esc_attr(get_option('w4os_db_database')); ?>" /></td>
 			</tr>
 			<tr valign="top">
 			  <th scope="row"><label for="w4os_db_user"><?php _e("Username");?></label></th>
-			  <td><input type="text" class=regular-text id="w4os_db_user" name="w4os_db_user" value="<?php echo get_option('w4os_db_user'); ?>" /></td>
+			  <td><input type="text" class=regular-text id="w4os_db_user" name="w4os_db_user" value="<?php echo esc_attr(get_option('w4os_db_user')); ?>" /></td>
 			</tr>
 			<tr valign="top">
 			  <th scope="row"><label for="w4os_db_pass"><?php _e("Password");?></label></th>
-			  <td><input type="password" class=regular-text id="w4os_db_pass" name="w4os_db_pass" value="<?php echo get_option('w4os_db_pass'); ?>" /></td>
+			  <td><input type="password" class=regular-text id="w4os_db_pass" name="w4os_db_pass" value="<?php echo esc_attr(get_option('w4os_db_pass')); ?>" /></td>
 			</tr>
 
 			<tr><th colspan=2>
@@ -53,12 +53,12 @@
 			</tr>
 			<tr valign="top">
 				<td scope="row" align=right><label for="w4os_model_firstname"><?php _e("First name =", "w4os");?></label></td>
-				<td><input type="text" class=regular-text id="w4os_model_firstname" name="w4os_model_firstname" value="<?php echo get_option('w4os_model_firstname'); ?>" />
+				<td><input type="text" class=regular-text id="w4os_model_firstname" name="w4os_model_firstname" value="<?php echo esc_attr(get_option('w4os_model_firstname')); ?>" />
 			</td>
 			</tr>
 			<tr valign="top">
 				<td scope="row" align=right><label for="w4os_model_lastname"><?php _e("OR Last name =", "w4os");?></label></td>
-				<td><input type="text" class=regular-text id="w4os_model_lastname" name="w4os_model_lastname" value="<?php echo get_option('w4os_model_lastname'); ?>" /></td>
+				<td><input type="text" class=regular-text id="w4os_model_lastname" name="w4os_model_lastname" value="<?php echo esc_attr(get_option('w4os_model_lastname')); ?>" /></td>
 			</tr>
 			<tr><th colspan=2>
 				<h2><?php _e("Misc", 'w4os');?></h2>
@@ -72,7 +72,7 @@
 						"<a href='https://github.com/GuduleLapointe/w4os/blob/master/INSTALLATION.md#dependencies' target=_blank>INSTALLATION.md</a>",
 						);
 					?></p>
-					<input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo get_option('w4os_asset_server_uri'); ?>" />
+					<input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo esc_attr(get_option('w4os_asset_server_uri')); ?>" />
 				</td>
 			</tr>
 			<tr valign="top">
