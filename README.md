@@ -5,7 +5,7 @@
 * Requires at least: 5.0
 * Requires PHP: 5.6
 * Tested up to: 5.8.1
-* Requires PHP: master
+* Stable tag: master
 * License: AGPLv3
 * License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -120,7 +120,8 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 
 ## Changelog
 
-### 2.0.6
+### 2.0.7
+* fix other WP plugins directory requirements
 * renamed plugin as W4OS - OpenSimulator Web Interface
 
 ### 2.0.5
@@ -136,7 +137,6 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 * fix fatal error if both new official version and old devel version are activated
 
 ### 2.0.1
-* changed plugin name (and slug) to match WordPress standards (w4os was too short)
 * use plugin dir to detect slug instead of hardcoded value
 
 ### 2.0
