@@ -215,6 +215,7 @@ function w4os_verify_user() {
 
 function w4os_update_avatar( $user, $params ) {
   global $w4osdb;
+  $errors = false;
   switch ($params['action'] ) {
     case "w4os_create_avatar":
     // w4os_notice(print_r($_REQUEST, true), "code");
@@ -511,7 +512,7 @@ function w4os_profile_wc_edit( $user ) {
 
   global $w4osdb;
 
-  if ( $_REQUEST['w4os_update_avatar'] ) {
+  if ( isset($_REQUEST['w4os_update_avatar'] ) ) {
     $uuid = w4os_update_avatar( $user, array(
       'action' => sanitize_text_field($_REQUEST['action']),
   		'w4os_firstname' => sanitize_text_field($_REQUEST['w4os_firstname']),
@@ -555,8 +556,8 @@ function w4os_profile_wc_edit( $user ) {
   } else {
     $action = 'w4os_create_avatar';
 
-    $firstname = esc_attr(preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_firstname]) ? $_REQUEST[w4os_firstname] : get_user_meta( $user->ID, 'first_name', true )));
-    $lastname = esc_attr(preg_replace("/[^[:alnum:]]/", "", ($_REQUEST[w4os_lastname]) ? $_REQUEST[w4os_lastname] : get_user_meta( $user->ID, 'last_name', true )));
+    $firstname = esc_attr(preg_replace("/[^[:alnum:]]/", "", ($_REQUEST['w4os_firstname']) ? $_REQUEST['w4os_firstname'] : get_user_meta( $user->ID, 'first_name', true )));
+    $lastname = esc_attr(preg_replace("/[^[:alnum:]]/", "", ($_REQUEST['w4os_lastname']) ? $_REQUEST['w4os_lastname'] : get_user_meta( $user->ID, 'last_name', true )));
 
     $content .= "<p class=description>" . __('Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed.', 'w4os') . "</p>";
 
