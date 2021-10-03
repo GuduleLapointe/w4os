@@ -28,8 +28,8 @@ function w4os_shortcodes_init()
 		empty($content) ? : $content="<div>$content</div>";
 		$content="<h4>$title</h4>$content";
 		$info=array(
-			__("Grid name", 'w4os') => get_option('w4os_grid_name'),
-			__("Login URI", 'w4os') => get_option('w4os_login_uri'),
+			__("Grid name", 'w4os') => esc_attr(get_option('w4os_grid_name')),
+			__("Login URI", 'w4os') => esc_attr(get_option('w4os_login_uri')),
 		);
 		if(!empty($info)) {
 			$content .= w4os_array2table($info, 'gridinfo');
