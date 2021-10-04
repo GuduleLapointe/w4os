@@ -7,14 +7,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-27T20:01:36-04:00\n"
-"PO-Revision-Date: 2021-09-28 11:18-0400\n"
+"POT-Creation-Date: 2021-10-04T18:43:07-04:00\n"
+"PO-Revision-Date: 2021-10-04 18:44-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 
 # wpml-name: 89e15c20b6fff50f9caa1f171381251d
 #. Plugin Name of the plugin
-msgid "OpenSimulator Web Interface"
+#, fuzzy
+msgid "W4OS - OpenSimulator Web Interface"
 msgstr "OpenSimulator Web Interface"
 
 # wpml-name: dca56d6af7010d3d34aadf3fd1666bf7
@@ -55,98 +56,94 @@ msgstr "Grid status"
 msgid "Recent users"
 msgstr "Recente gebruikers"
 
-#: admin/settings-inc.php:5
-msgid "Translation test"
-msgstr "Vertaal test"
-
 # wpml-name: 46eb01f349dc6c317e78cd1830545358
-#: admin/settings-inc.php:9
+#: admin/settings-inc.php:8
 #: includes/shortcodes.php:31
 msgid "Grid name"
 msgstr "Grid naam"
 
 # wpml-name: 751cfef8ad45902372601aeac58bdad7
-#: admin/settings-inc.php:13
+#: admin/settings-inc.php:12
 #: includes/shortcodes.php:32
 msgid "Login URI"
 msgstr "Inloggen URI"
 
 # wpml-name: 193fe27dd7fcd662652841a7b7e6c912
-#: admin/settings-inc.php:17
+#: admin/settings-inc.php:16
 msgid "Robust server database"
 msgstr "Robust server database"
 
-#: admin/settings-inc.php:21
+#: admin/settings-inc.php:20
 msgid "Required tables are missing, check your connection settings or your database"
 msgstr "Vereiste tabellen ontbreken, controleer uw verbindingsinstellingen of uw database"
 
-#: admin/settings-inc.php:25
+#: admin/settings-inc.php:24
 msgid "Hostname"
 msgstr "Hostnaam"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/settings-inc.php:29
+#: admin/settings-inc.php:28
 msgid "Database name"
 msgstr "Database naam"
 
-#: admin/settings-inc.php:33
+#: admin/settings-inc.php:32
 msgid "Username"
 msgstr "Gebruikersnaam"
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/settings-inc.php:37
+#: admin/settings-inc.php:36
 msgid "Password"
 msgstr "Wachtwoord"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/settings-inc.php:42
+#: admin/settings-inc.php:41
 msgid "Avatar creation"
 msgstr "Avatar creatie"
 
-#: admin/settings-inc.php:46
-#: admin/settings-inc.php:82
+#: admin/settings-inc.php:45
+#: admin/settings-inc.php:81
 msgid "Models"
 msgstr "Modellen"
 
-#: admin/settings-inc.php:49
+#: admin/settings-inc.php:48
 msgid "Grid accounts matching first name or last name set below will appear as avatar models, with their profile picture if set, on the avatar registration form."
 msgstr "Grid-accounts die overeenkomen met de hieronder ingestelde voornaam of achternaam, verschijnen als avatar-modellen, met hun profielfoto, indien ingesteld, op het avatar-registratieformulier."
 
-#: admin/settings-inc.php:51
+#: admin/settings-inc.php:50
 msgid "If both left empty, no model will be displayed and avatars will be created with default OpenSimulator appearance (most probably Ugly Ruth)."
 msgstr "Als beide leeg blijven, wordt er geen model weergegeven en worden avatars gemaakt met het standaard OpenSimulator-uiterlijk (waarschijnlijk Ugly Ruth)."
 
 # wpml-name: b2d0fb30e09bf39693f6183c33455748
-#: admin/settings-inc.php:56
+#: admin/settings-inc.php:55
 msgid "First name ="
 msgstr "Voornaam ="
 
 # wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
-#: admin/settings-inc.php:61
+#: admin/settings-inc.php:60
 msgid "OR Last name ="
 msgstr "OF Achternaam ="
 
-#: admin/settings-inc.php:65
+#: admin/settings-inc.php:64
 msgid "Misc"
 msgstr "Diversen"
 
-#: admin/settings-inc.php:68
+#: admin/settings-inc.php:67
 msgid "Web asset server"
 msgstr "Web asset-server"
 
-#: admin/settings-inc.php:72
+#: admin/settings-inc.php:71
 msgid "A web asset server is needed to display images from the simulator assets (model avatars, profile pictures...). See %s for instructions to install one."
 msgstr "Er is een webassetserver nodig om afbeeldingen van de simulatorassets (modelavatars, profielfoto's...) weer te geven. Zie %s voor instructies om er een te installeren."
 
-#: admin/settings-inc.php:80
+#: admin/settings-inc.php:79
 msgid "Exclude from stats"
 msgstr "Uitsluiten van statistieken"
 
-#: admin/settings-inc.php:83
+#: admin/settings-inc.php:82
 msgid "Accounts without mail address"
 msgstr "Accounts zonder e-mailadres"
 
-#: admin/settings-inc.php:85
+#: admin/settings-inc.php:84
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr "Accounts zonder e-mailadres zijn meestal testaccounts die vanaf de console zijn gemaakt. Schakel het vinkje alleen uit als je echte avatars hebt zonder e-mailadres."
 
@@ -208,7 +205,7 @@ msgstr "Avatar UUID"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: includes/profile.php:58
-#: includes/profile.php:529
+#: includes/profile.php:536
 msgid "Avatar name"
 msgstr "Avatar naam"
 
@@ -218,139 +215,139 @@ msgid "Password must contain at least %s characters, including uppercase, lowerc
 msgstr "Het wachtwoord moet ten minste %s tekens bevatten, inclusief hoofdletters, kleine letters en een cijfer"
 
 # wpml-name: 0d3e39fb622d9e6d7b389757aa651fff
-#: includes/profile.php:223
+#: includes/profile.php:224
 msgid "This user already has an avatar."
 msgstr "Deze gebruiker heeft al een avatar."
 
 # wpml-name: b2d0fb30e09bf39693f6183c33455748
-#: includes/profile.php:235
+#: includes/profile.php:236
 msgid "First name required"
 msgstr "Voornaam vereist"
 
 # wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
-#: includes/profile.php:236
+#: includes/profile.php:237
 msgid "Last name required"
 msgstr "Achternaam vereist"
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: includes/profile.php:237
+#: includes/profile.php:238
 msgid "Password required"
 msgstr "Wachtwoord vereist"
 
-#: includes/profile.php:238
+#: includes/profile.php:239
 msgid "The password does not match."
 msgstr "Het wachtwoord komt niet overeen."
 
 # wpml-name: 4eb86d524f30b9885871ed68c24b0f29
-#: includes/profile.php:245
-#: includes/profile.php:249
+#: includes/profile.php:246
+#: includes/profile.php:250
 msgid "The name %s is not allowed"
 msgstr "Naam% s is niet toegestaan"
 
-#: includes/profile.php:254
+#: includes/profile.php:255
 msgid "Names can only contain alphanumeric characters"
 msgstr "Namen mogen alleen alfanumerieke tekens bevatten"
 
-#: includes/profile.php:261
+#: includes/profile.php:262
 msgid "There is already a grid user named %s"
 msgstr "Er is al een netgebruiker met de naam %s"
 
-#: includes/profile.php:269
+#: includes/profile.php:270
 msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
 msgstr "Dit mag nooit gebeuren! Een willekeurige UUID gegenereerd die al bestond. Sorry. Probeer het opnieuw."
 
-#: includes/profile.php:291
+#: includes/profile.php:292
 msgid "Error while creating user"
 msgstr "Fout bij gebruiker aanmaken"
 
-#: includes/profile.php:300
+#: includes/profile.php:301
 msgid "Error while setting password"
 msgstr "Fout bij het instellen van het wachtwoord"
 
-#: includes/profile.php:311
+#: includes/profile.php:312
 msgid "Error while setting home region"
 msgstr "Fout bij instellen thuisregio"
 
-#: includes/profile.php:328
+#: includes/profile.php:329
 msgid "Error while creating user inventory"
 msgstr "Fout bij het maken van gebruikersinventaris"
 
-#: includes/profile.php:451
+#: includes/profile.php:452
 msgid "Error while adding inventory item"
 msgstr "Fout bij het toevoegen van voorraaditem"
 
-#: includes/profile.php:462
+#: includes/profile.php:463
 msgid "Error while adding inventory outfit link"
 msgstr "Fout bij het toevoegen van inventaris-outfit-link"
 
-#: includes/profile.php:474
+#: includes/profile.php:475
 msgid "Error while adding avatar"
 msgstr "Fout bij het toevoegen van avatar"
 
 # wpml-name: 02cb97a68e5137af44e882dbe2180485
-#: includes/profile.php:485
+#: includes/profile.php:486
 msgid "Avatar %s created successfully."
 msgstr "De avatar %s is succesvol aangemaakt."
 
 # wpml-name: 9e186e1c05cc43a7c8e119a8ad12e201
-#: includes/profile.php:495
+#: includes/profile.php:496
 msgid "Action %s not implemented"
 msgstr "Actie %s is niet geïmplementeerd"
 
-#: includes/profile.php:504
+#: includes/profile.php:505
 msgid "%sLog in%s to choose an avatar."
 msgstr "%sLog in%s om een avatar te kiezen."
 
 # wpml-name: bc2068f5bf9d75b50d1f046f1e57c23c
-#: includes/profile.php:518
+#: includes/profile.php:525
 msgid "You have no grid account yet. Fill the form below to create your avatar."
 msgstr "U heeft nog geen roosteraccount. Vul het onderstaande formulier in om uw avatar te maken."
 
 # wpml-name: 877a81d559efa8e5dac0cccac9f80a09
-#: includes/profile.php:526
+#: includes/profile.php:533
 msgid "leave blank to leave unchanged"
 msgstr "laat leeg om geen wijzigingen aan te brengen"
 
 # wpml-name: 5a54d9ad87f7c4c1c70c8f05b9515d5a
-#: includes/profile.php:534
+#: includes/profile.php:541
 msgid "UUID"
 msgstr "UUID"
 
 # wpml-name: 1a87f41bc2db648685564cf6fa5b2903
-#: includes/profile.php:555
+#: includes/profile.php:562
 msgid "Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed."
 msgstr "Kies hieronder uw avatar-naam. Dit is hoe mensen je in de wereld zullen zien. Zodra de avatar is gemaakt, kan deze niet meer worden gewijzigd."
 
 # wpml-name: bfc045552fb736eb0e776baee784de42
-#: includes/profile.php:561
+#: includes/profile.php:568
 msgid "Avatar first name"
 msgstr "Avatar voornaam"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: includes/profile.php:565
+#: includes/profile.php:572
 msgid "Avatar last name"
 msgstr "Avatar achternaam"
 
-#: includes/profile.php:577
+#: includes/profile.php:584
 msgid "Your in-world Avatar password is the same as your password on this website"
 msgstr "Uw in-world Avatar-wachtwoord is hetzelfde als uw wachtwoord op deze website"
 
 # wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
-#: includes/profile.php:579
+#: includes/profile.php:586
 msgid "Confirm your password"
 msgstr "Bevestig uw wachtwoord"
 
 # wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#: includes/profile.php:594
+#: includes/profile.php:601
 msgid "Your avatar"
 msgstr "Jouw avatar"
 
 # wpml-name: 90efd059f58183a99038e138b8fe17f0
-#: includes/profile.php:595
+#: includes/profile.php:602
 msgid "You can change and customize it in-world, as often as you want."
 msgstr "Je kunt het wijzigen en aanpassen in de wereld, zo vaak als je wilt."
 
-#: includes/profile.php:632
+#: includes/profile.php:639
 msgid "Save"
 msgstr "Opslaan"
 
@@ -418,6 +415,9 @@ msgstr "Stabiele updates worden nu geleverd vanaf een plug-inserver in plaats va
 #: updates.php:34
 msgid "Download"
 msgstr "Downloaden"
+
+#~ msgid "Translation test"
+#~ msgstr "Vertaal test"
 
 #~ msgid "W4OS"
 #~ msgstr "W4OS"

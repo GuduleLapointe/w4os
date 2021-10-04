@@ -5,7 +5,7 @@
 * Requires at least: 5.0
 * Requires PHP: 5.6
 * Tested up to: 5.8.1
-* Stable tag: master
+* Stable tag: 2.0.8
 * License: AGPLv3
 * License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -119,6 +119,9 @@ question, but you might wonder.
 This plugin is intended for grids. For standalone simulators, see [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/).
 
 ## Changelog
+
+### 2.0.8
+* sanitize avatar First and Last Name
 
 ### 2.0.7
 * fix other WP plugins directory requirements
