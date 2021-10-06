@@ -1,7 +1,7 @@
 === W4OS - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://paypal.me/magicoli
-Tags: opensimulator, second life, web interface
+Tags: OpenSimulator, Second Life, metaverse, avatar, web interface
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 5.8.1
