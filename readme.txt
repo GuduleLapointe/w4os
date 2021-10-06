@@ -99,6 +99,11 @@ question, but you might wonder.
 
 This plugin is intended for grids. For standalone simulators, see [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/).
 
+== Screenshots ==
+
+1. Grid info and grid status examples
+2. Avatar registration form in WooCommerce My Account dashboard.
+
 == Changelog ==
 
 = 2.0.8 =
