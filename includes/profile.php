@@ -662,6 +662,7 @@ function w4os_profile_shortcodes_init()
 	function w4os_profile_shortcode($atts = [], $content = null)
 	{
     $content .= w4os_profile_wc_edit(wp_get_current_user());
+    return "<div class='w4os-shortcode w4os-shortcode-profile'>" . $content . "</div>";
 		return $content;
 	}
   add_shortcode('w4os_profile', 'w4os_profile_shortcode');

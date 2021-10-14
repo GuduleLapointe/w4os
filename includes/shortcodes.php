@@ -36,7 +36,7 @@ function w4os_shortcodes_init()
 		} else {
 			$content .= __("OpenSimulator not configured", 'w4os');
 		}
-		return $content;
+		return "<div class='w4os-shortcode w4os-shortcode-gridinfo'>$content</div>";
 	}
 	add_shortcode('gridinfo', 'w4os_gridinfo_shortcode');
 
@@ -118,13 +118,13 @@ function w4os_shortcodes_init()
 		$result=w4os_array2table($status, 'gridstatus');
 
 		if(empty($result)) $result=__("No result", 'w4os') ;
-		return $content . $result;
+		return "<div class='w4os-shortcode w4os-shortcode-gridstatus'>$content$result</div>";
 	}
 	add_shortcode('gridstatus', 'w4os_gridstatus_shortcode');
 
 	function w4os_newusers_shortcode($atts = [], $content = null)
 	{
-		return w4os_newusers();
+		return "<div class='w4os-shortcode w4os-shortcode-newusers'>" . w4os_newusers() . "</div>";
 	}
 	add_shortcode('w4os_newusers_shortcode', 'w4os_newusers');
 }
