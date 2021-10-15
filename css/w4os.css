@@ -25,6 +25,7 @@ td.gridvar {
 .page div.notice {
   background: #f0f0f0;
   border: 1px solid #ccc;
+
   border-left-color: #666;
   border-left-width: 4px;
   box-shadow: 0 1px 1px rgba(0,0,0,.04);
@@ -144,4 +145,8 @@ img.model-picture {
 .avatar.not-connected {
   text-align: center;
   font-weight: bold;
+}
+
+.w4os-login label {
+  display: block;
 }

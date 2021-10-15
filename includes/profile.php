@@ -502,7 +502,9 @@ function w4os_update_avatar( $user, $params ) {
 function w4os_profile_wc_edit( $user ) {
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
-    return "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
+    // $content =  "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
+    $content = "<div class=w4os-login>" . wp_login_form([ 'echo' => false ]) . "</div>";
+    return $content;
   }
 
   ####
@@ -533,14 +535,16 @@ function w4os_profile_wc_edit( $user ) {
     $leaveblank= " (" . __('leave blank to leave unchanged', "w4os") . ")";
     $content.= "
     <p class='woocommerce-form-row woocommerce-form-row--first form-row form-row-first'>
-      <label for='w4os_firstname'>" . __("Avatar name", "w4os") . "&nbsp;</label>
+      <label for='w4os_firstname'>" . __("Avatar:", "w4os") . "&nbsp;</label>
       " . esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID )
         . " " . get_the_author_meta( 'w4os_lastname', $user->ID )) . "
-    </p>
-    <p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-    		<label for='w4os_uuid'>" . __("UUID", "w4os") . "</label>
-    		" . esc_attr($uuid) . "
-  	</p>";
+    </p>";
+    // Don't show uuid, that's gross
+    // $content .= "<p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
+    // 		<label for='w4os_uuid'>" . __("UUID", "w4os") . "</label>
+    // 		" . esc_attr($uuid) . "
+  	// </p>";
+
     ### Current password disabled, password change not yet implemented
     ###
     // $content .="
