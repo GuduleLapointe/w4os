@@ -103,6 +103,7 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 
 1. Grid info and grid status examples
 2. Avatar registration form in WooCommerce My Account dashboard.
+3. Settings page
 
 == Changelog ==
 
