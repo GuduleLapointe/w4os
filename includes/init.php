@@ -39,19 +39,13 @@ function w4os_load_textdomain() {
 	// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );
 
 	global $locale;
-
 	if ( is_textdomain_loaded( W4OS_TXDOM ) ) {
 		unload_textdomain( W4OS_TXDOM );
 	}
 	$mofile = sprintf( '%s-%s.mo', W4OS_TXDOM, $locale );
-	//check the installation language path first.
-	$domain_path = path_join( WP_LANG_DIR, 'plugins' );
-	$loaded = load_textdomain( W4OS_TXDOM, path_join( $domain_path, $mofile ) );
 
-	if ( ! $loaded ) { //else, check the plugin language folder.
-		$domain_path = path_join( WP_PLUGIN_DIR, W4OS_SLUG."/languages" );
-		$loaded = load_textdomain( W4OS_TXDOM, path_join( $domain_path, $mofile ) );
-	}
+  $domain_path = path_join( WP_PLUGIN_DIR, W4OS_SLUG."/languages" );
+  $loaded = load_textdomain( W4OS_TXDOM, path_join( $domain_path, $mofile ) );
 }
 add_action( 'init', 'w4os_load_textdomain' );
 
