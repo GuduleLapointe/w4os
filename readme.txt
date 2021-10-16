@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 5.8.1
-Stable tag: 2.0.8
+Stable tag: 2.1
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -106,6 +106,15 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 3. Settings page
 
 == Changelog ==
+
+= 2.1 =
+* added login form to gridprofile shortcode when not connected instead of login message
+* added w4os-shortcode classes
+* added screenshots
+* fix fatal error when trying to display  WooCommerce Avatar tab form in My Account
+* fix localisation not loading
+* shorter "Avatar" label in gridprofile shortcode
+* removed uuid from gridprofile shortcode
 
 = 2.0.8 =
 * sanitize avatar First and Last Name

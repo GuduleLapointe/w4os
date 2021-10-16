@@ -1,11 +1,11 @@
 # W4OS - OpenSimulator Web Interface
 * Contributors: gudulelapointe,magicoli69
 * Donate link: https://paypal.me/magicoli
-* Tags: opensimulator, second life, web interface
+* Tags: OpenSimulator, Second Life, metaverse, avatar, web interface
 * Requires at least: 5.0
 * Requires PHP: 5.6
 * Tested up to: 5.8.1
-* Stable tag: 2.0.8
+* Stable tag: 2.1
 * License: AGPLv3
 * License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -13,7 +13,7 @@ WordPress interface for OpenSimulator (w4os)
 
 ## Description
 
-Ready to use WordPress interface for [OpenSimulator grids](http://opensimulator.org/). Provide user registration, default avatar model choice and basic grid info.
+Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/) grids. Provide user registration, default avatar model choice and basic grid info.
 
 See Features and Roadmap sections for current and upcoming functionalties.
 
@@ -27,9 +27,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - Avatar tab in account dashboard on WooCommerce websites
 - Choose avatar look from default models
 - Avatar and website passwords are synchronized
-- **Reserved names**: avatar whose first name or last name is "Default",
-  "Test", "Admin" or the pattern used for appearance models are disallowed for
-  public (such avatars must be created by admins from Robust console)
+- **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
 - **OpenSimulator settings page**:
   - grid name, login uri and database connection settings
   - naming scheme of default models
@@ -39,52 +37,42 @@ See Features and Roadmap sections for current and upcoming functionalties.
 
 Robust server must be installed before setting up W4OS.
 
-- To allow users to choose an avatar on registration, you must enable user
-  profiles in Robust.ini (see [UserProfilesService], [ServiceList] and
-  [UserProfiles] sections)
+- To allow users to choose an avatar on registration, you must enable user profiles in Robust.ini (see [UserProfilesService], [ServiceList] and [UserProfiles] sections)
 - Install a web assets server (see Dependencies in INSTALLATION.md)
 
-1. Download [the latest stable
-   release](https://magiiic.com/updates/?action=download&slug=w4os), unzip it in
-   your wp-content/plugins and activate it.
+1. Download [the latest stable release](https://magiiic.com/updates/?action=download&slug=w4os), unzip it in your wp-content/plugins and activate it.
 2. Visit OpenSim settings (admin menu > "Opensim" > "Settings")
   - Enter your grid name and grid URI (like example.org:8002 without http://)
-  - Enter your robust database connection details and submit. If you get a
-    database connection error, it might come from a case-sensitivity issue (see
-    https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
-  - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar
-    widget
-  - create a profile page for registered users and include `[gridprofile]`
-    shortcode. This will display the an avatar creation form for users without
-    in-world avatar. For accounts already having an avatar, it will display
-    avatar details.
+  - Enter your robust database connection details and submit. If you get a database connection error, it might come from a case-sensitivity issue, see (https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674).
+  - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar widget
+  - create a profile page for registered users and include `[gridprofile]` shortcode. This will display the an avatar creation form for users without in-world avatar. For accounts already having an avatar, it will display avatar details.
 3. To create default avatars:
-  - from ROBUST console (defaults creation is not allowed from the website),
-    create users for your models. Name them according to W4OS settings: one part
-    of the name is "Default", the other part is the name displayed on the form
-    (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't
-    mention e-mail address to avoid counting them as regular accounts in stats.
-  - log in-world with each of these model accounts and give them the desire
-    appearance. Take a snapshot and use it as profile picture. It will be used
-    for the web site avatar choosing form.
+  - from ROBUST console (defaults creation is not allowed from the website), create users for your models. Name them according to W4OS settings: one part of the name is "Default", the other part is the name displayed on the form (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't mention e-mail address to avoid counting them as regular accounts in stats.
+  - log in-world with each of these model accounts and give them the desire appearance. Take a snapshot and use it as profile picture. It will be used for the web site avatar choosing form.
 
 See INSTALLATION.md for more details.
 
 ## Roadmap
 
-See https://github.com/GuduleLapointe/w4os/projects/1 for up-to-date status.
+See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
 ### Short term (version 1.0, WordPress repository release)
 
 - Login page (with grid FirstName, LastName and password).
   Optional redirect of standard login page
 - Auth with avatar credential (as fallback to wp auth).
-  Create new WordPress user if auth by avatar
-- Option to use WordPress name as avatar name (in this case, lock WordPress
-  name changes once an avatar is set)
-- Use avatar profile pic
-- Check if avatar password is properly updated after a password reset request
-- sidebar grid info and grid status widgets
+  Create new WordPress user if auth by avatar.
+- Option to use WordPress name as avatar name (in this case, lock WordPress name changes once an avatar is set).
+- Use avatar profile pic.
+- Check if avatar password is properly updated after a password reset request.
+- Sidebar grid info and grid status widgets.# W4OS - OpenSimulator Web Interface
+* Contributors: gudulelapointe,magicoli69
+* Donate link: https://paypal.me/magicoli
+* Tags: opensimulator, second life, web interface
+* Tags: OpenSimulator, Second Life, metaverse, avatar, web interface
+* Requires at least: 5.0
+* Requires PHP: 5.6
+* Tested up to: 5.8.1
 
 ### Middle term
 
@@ -118,7 +106,22 @@ question, but you might wonder.
 
 This plugin is intended for grids. For standalone simulators, see [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/).
 
+## Screenshots
+
+1. Grid info and grid status examples
+2. Avatar registration form in WooCommerce My Account dashboard.
+3. Settings page
+
 ## Changelog
+
+### 2.1
+* added login form to gridprofile shortcode when not connected instead of login message
+* added w4os-shortcode classes
+* added screenshots
+* fix fatal error when trying to display  WooCommerce Avatar tab form in My Account
+* fix localisation not loading
+* shorter "Avatar" label in gridprofile shortcode
+* removed uuid from gridprofile shortcode
 
 ### 2.0.8
 * sanitize avatar First and Last Name
