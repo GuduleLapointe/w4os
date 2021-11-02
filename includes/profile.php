@@ -18,10 +18,31 @@ add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
  */
 function w4os_profile_sync($user) {
   global $w4osdb;
-  $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
+
+  // $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
+  $avatars=$w4osdb->get_results("SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText
+    FROM UserAccounts, userprofile
+    WHERE PrincipalID = userUUID
+    AND Email = '$user->user_email'
+    ");
+  if(count($avatars) != 1) return W4OS_NULL_KEY;
+  $avatar = array_shift($avatars);
+  $uuid = $avatar->PrincipalID;
+
+  // if($models) {
+  //   $content.= "<div class='clear'></div>";
+  //   $content.= "<div class=form-row>";
+  //   $content .= "<label>" . __('Your avatar', 'w4os') . "</label>";
+  //   $content .= "<p class=description>" . __('You can change and customize it in-world, as often as you want.', 'w4os') . "</p>";
+  //   $content .= "
+  //   <p class='field-model woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>";
+  //   foreach($models as $model) {
+  //     $model_name = $model->FirstName . " " . $model->LastName;
+
   update_user_meta( $user->ID, 'w4os_uuid', $uuid );
-  update_user_meta( $user->ID, 'w4os_firstname', $w4osdb->get_var("SELECT FirstName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
-  update_user_meta( $user->ID, 'w4os_lastname', $w4osdb->get_var("SELECT LastName FROM UserAccounts WHERE PrincipalID = '$uuid'") );
+  update_user_meta( $user->ID, 'w4os_firstname', $avatar->FirstName );
+  update_user_meta( $user->ID, 'w4os_lastname', $avatar->LastName );
+  update_user_meta( $user->ID, 'w4os_profileimage', $avatar->profileImage );
   return $uuid;
 }
 
@@ -499,6 +520,17 @@ function w4os_update_avatar( $user, $params ) {
   // show_message ( "Updating user" );
 }
 
+function w4os_profile_picture( $user, $echo = false ) {
+    $image_uuid = get_the_author_meta( 'w4os_profileimage', $user->ID );
+    if(empty($image_uuid)) $image_uuid = W4OS_NULL_KEY;
+    $html = sprintf('<img class=profile-img src="%1$s" alt="%2$s" title="%2$s">',
+      W4OS_WEB_ASSETS_SERVER_URI . $image_uuid,
+      esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID )),
+    );
+    if($echo) echo $html;
+    else return $html;
+}
+
 function w4os_profile_wc_edit( $user ) {
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
@@ -527,37 +559,31 @@ function w4os_profile_wc_edit( $user ) {
     if(! $uuid) echo "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
   }
 
-  $content="
-  <form class='woocommerce-EditAccountForm edit-account wrap' action='' method='post'>";
-
   if ($uuid) {
     $action = 'w4os_update_avatar';
     $leaveblank= " (" . __('leave blank to leave unchanged', "w4os") . ")";
-    $content.= "
-    <p class='woocommerce-form-row woocommerce-form-row--first form-row form-row-first'>
-      <label for='w4os_firstname'>" . __("Avatar:", "w4os") . "&nbsp;</label>
-      " . esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID )
-        . " " . get_the_author_meta( 'w4os_lastname', $user->ID )) . "
-    </p>";
-    // Don't show uuid, that's gross
-    // $content .= "<p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-    // 		<label for='w4os_uuid'>" . __("UUID", "w4os") . "</label>
-    // 		" . esc_attr($uuid) . "
-  	// </p>";
+    $content.= sprintf(
+      '<div class=profile><div class=profile-pic>%1$s</div><div class=profile-details>%2$s</div></div>',
+      w4os_profile_picture($user),
+      esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID )),
+    );
+    return $content;
+  }
+        ### Current password disabled, password change not yet implemented
+        ###
+        // $content .="
+        // <fieldset>
+      	// 	<legend>Changement de mot de passe</legend>
+        //
+      	// 	<p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
+      	// 		<label for='w4os_password_current'>" . __('Current password', "w4os") . "$leaveblank)</label>
+      	// 		<span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_current' id='w4os_password_current' autocomplete='off'><span class='show-password-input'></span></span>
+      	// 	</p>";
+      	###
+      	### End current password part
 
-    ### Current password disabled, password change not yet implemented
-    ###
-    // $content .="
-    // <fieldset>
-  	// 	<legend>Changement de mot de passe</legend>
-    //
-  	// 	<p class='woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide'>
-  	// 		<label for='w4os_password_current'>" . __('Current password', "w4os") . "$leaveblank)</label>
-  	// 		<span class='password-input'><input type='password' class='woocommerce-Input woocommerce-Input--password input-text' name='w4os_password_current' id='w4os_password_current' autocomplete='off'><span class='show-password-input'></span></span>
-  	// 	</p>";
-  	###
-  	### End current password part
-  } else {
+    $content="
+    <form class='woocommerce-EditAccountForm edit-account wrap' action='' method='post'>";
     $action = 'w4os_create_avatar';
 
     $firstname = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_firstname'])) ? $_REQUEST['w4os_firstname'] : get_user_meta( $user->ID, 'first_name', true )));
@@ -635,14 +661,13 @@ function w4os_profile_wc_edit( $user ) {
         $content.= "</div>";
       }
 
-      if ($uuid) $content.="    	</fieldset>";
+      // if ($uuid) $content.="    	</fieldset>";
 
       $content .= "
       <p>
       <input type='hidden' name='action' value='$action'>
       <button type='submit' class='woocommerce-Button button' name='w4os_update_avatar' value='$action'>" . __("Save") . "</button>
       </p>";
-  }
   $content .= "  </form>";
   return $content;
 }

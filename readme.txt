@@ -63,13 +63,16 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 = Short term (v2.2) =
 
 - [x] Include web asset server
-- Sidebar grid info and grid status widgets.
-- Public avatar profile
+- [x] Add avatar picture to gridprofile output
 - Use avatar profile pic as WP avatar
+- Public avatar profile
+- Sidebar grid info and grid status widgets.
 - Login page (with grid FirstName, LastName and password).
   Optional redirect of standard login page
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
+- Option to show avatar name instead of real name in user lists
+- Option to show avatar picture in user lists
 - Option to link WordPress and avatar name (then lock both for changes once an avatar is set).
 
 = Middle term =
