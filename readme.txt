@@ -33,6 +33,10 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - naming scheme of default models
   - exclude models from grid stats
 
+= Paid version =
+
+The free version from WordPress plugins directory and the (paid version)[https://magiiic.com/wordpress/plugins/w4os/] are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
+
 == Installation ==
 
 Robust server must be installed before setting up W4OS.
@@ -56,27 +60,26 @@ See INSTALLATION.md for more details.
 
 See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
-= Short term (version 1.0, WordPress repository release) =
+= Short term (v2.2) =
 
+- Sidebar grid info and grid status widgets.
+- Include web asset server
+- Public avatar profile
+- Use avatar profile pic as WP avatar
 - Login page (with grid FirstName, LastName and password).
   Optional redirect of standard login page
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
-- Option to use WordPress name as avatar name (in this case, lock WordPress name changes once an avatar is set).
-- Use avatar profile pic.
-- Check if avatar password is properly updated after a password reset request.
-- Sidebar grid info and grid status widgets.
+- Option to link WordPress and avatar name (then lock both for changes once an avatar is set).
 
 = Middle term =
 
-- Public avatar profile
 - Admin Start / Stop regions
 - Admin Create region
 - Admin Use sim/grid configuration file to fetch settings if on the same host
 - get grid info from http://login.uri:8002/get_grid_info
 - Helpers (assets, search, currency, map...)
 - Use cache for grid info
-- Integrate web asset server
 
 = Long term =
 
