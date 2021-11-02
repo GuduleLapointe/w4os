@@ -15,6 +15,8 @@ function w4os_register_settings() {
 	add_option( 'w4os_db_pass', 'localhost');
 	register_setting( 'w4os_options_group', 'w4os_db_pass', 'w4os_callback' );
 
+	add_option( 'w4os_provide_asset_server', W4OS_DEFAULT_PROVIDE_ASSET_SERVER);
+	register_setting( 'w4os_options_group', 'w4os_provide_asset_server', 'w4os_callback' );
 	add_option( 'w4os_asset_server_uri', W4OS_DEFAULT_ASSET_SERVER_URI);
 	register_setting( 'w4os_options_group', 'w4os_asset_server_uri', 'w4os_callback' );
 

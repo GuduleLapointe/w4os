@@ -63,16 +63,32 @@
 			<tr><th colspan=2>
 				<h2><?php _e("Misc", 'w4os');?></h2>
 			</th></tr>
+
 			<tr valign="top">
-				<th scope="row"><label for="w4os_asset_server_uri"><?php _e("Web asset server", "w4os");?></label></th>
+				<th scope="row"><label><?php _e("Web asset server", "w4os");?></label></th>
 				<td>
-					<p class=description><?php
-					printf(
-						__("A web asset server is needed to display images from the simulator assets (model avatars, profile pictures...). See %s for instructions to install one.", 'w4os'),
-						"<a href='https://github.com/GuduleLapointe/w4os/blob/master/INSTALLATION.md#dependencies' target=_blank>INSTALLATION.md</a>",
-						);
-					?></p>
-					<input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo esc_attr(get_option('w4os_asset_server_uri')); ?>" />
+					<input type="checkbox" class=regular-text id="w4os_provide_asset_server" name="w4os_provide_asset_server" value="1" <?php if (get_option('w4os_provide_asset_server')==1) echo "checked"; ?>/>
+					<label for="w4os_provide_asset_server">
+						<?php _e('Provide web assets service', 'w4os') ?>
+					</label>
+					<?php
+					if(get_option('w4os_provide_asset_server') == 1 ) {
+						echo "<p>" . W4OS_WEB_ASSETS_SERVER_URI . "</p>";
+					} else {
+						echo "<p class=description>";
+						printf(
+							__("A web asset server is needed to display images from the simulator assets (model avatars, profile pictures...). Enable W4OS web assets service or see %s for instructions to install one.", 'w4os'),
+							"<a href='https://github.com/GuduleLapointe/w4os/blob/master/INSTALLATION.md#dependencies' target=_blank>INSTALLATION.md</a>",
+							);
+							echo "</p>";
+						?>
+				</td>
+			</tr>
+			<tr valign="top">
+				<td valign="top" scope="row" align=right><label for="w4os_asset_server_uri"><?php _e("Web asset server URI", "w4os");?></label></td>
+				<td>
+					<input type="text" class=regular-text id="w4os_asset_server_uri" name="w4os_asset_server_uri" value="<?php echo esc_attr(get_option('w4os_asset_server_uri')); ?>" placeholder='https://example.com/assets/asset.php?id='/>
+				<?php } ?>
 				</td>
 			</tr>
 			<tr valign="top">

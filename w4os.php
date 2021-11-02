@@ -38,6 +38,9 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
 } else if ( ! defined( 'W4OS_SLUG' ) ) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
+	if(get_option('w4os_provide_asset_server') == 1 ) {
+		require_once plugin_dir_path( __FILE__ ) . 'includes/assets.php';
+	}
 	require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
 	if(W4OS_DB_CONNECTED) {

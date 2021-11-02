@@ -35,6 +35,12 @@ if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain'
 // /* translators: %s is replaced by the name of the plugin, untranslated */
 // if ( ! defined( 'W4OS_REGISTER_TEXT' ) ) define('W4OS_REGISTER_TEXT', sprintf(__('Get a license key on %s website', W4OS_TXDOM), W4OS_STORE_LINK) );
 
+define('W4OS_WEB_ASSETS_SERVER_URI',
+  (get_option('w4os_provide_asset_server') ==  1)
+  ? get_home_url(NULL, "/assets/")
+  : esc_attr(get_option('w4os_asset_server_uri'))
+);
+
 function w4os_load_textdomain() {
 	// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );
 

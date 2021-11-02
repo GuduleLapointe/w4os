@@ -62,8 +62,8 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
 = Short term (v2.2) =
 
+- [x] Include web asset server
 - Sidebar grid info and grid status widgets.
-- Include web asset server
 - Public avatar profile
 - Use avatar profile pic as WP avatar
 - Login page (with grid FirstName, LastName and password).

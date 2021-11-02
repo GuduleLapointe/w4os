@@ -618,7 +618,7 @@ function w4os_profile_wc_edit( $user ) {
 
           // if($model->profileImage != W4OS_NULL_KEY)
           // $model_img =  "<img src='/assets/asset.php?id=" . $model->profileImage ."'>";
-          if(!empty(get_option('w4os_asset_server_uri', W4OS_DEFAULT_ASSET_SERVER_URI))) $model_img =  "<img class='model-picture' src='" . get_option('w4os_asset_server_uri', W4OS_DEFAULT_ASSET_SERVER_URI) . $model->profileImage ."'>";
+          if(!empty(W4OS_WEB_ASSETS_SERVER_URI)) $model_img =  "<img class='model-picture' src='" . W4OS_WEB_ASSETS_SERVER_URI . $model->profileImage ."'>";
           if(empty($model_img)) $modelclass="no_picture";
           else $modelclass = "with_picture";
           if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
