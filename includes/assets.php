@@ -1,11 +1,6 @@
 <?php if(!defined('W4OS_SLUG')) die();
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-if(empty(get_option('w4os_assets_slug'))) {
-  update_option('w4os_assets_slug', 'assets');
-}
-define('W4OS_ASSETS_SERVER', 'http://' . esc_attr(get_option('w4os_login_uri')) . '/' . esc_attr(get_option('w4os_assets_slug'), 'assets') . '/'); // (OpenSim.ini: asset_server_url . "/assets/")
-
 add_action( 'init',  function() {
   add_rewrite_rule( esc_attr(get_option('w4os_assets_slug'), 'assets') . '/([a-fA-F0-9-]+)(\.[a-zA-Z0-9]+)?[/]?$', 'index.php?asset_uuid=$matches[1]&asset_format=$matches[2]', 'top' );
 } );
