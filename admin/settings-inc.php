@@ -92,6 +92,14 @@
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><?php _e("Permalinks", "w4os");?></label></th>
+				<td>
+					<p class=description>
+						<?php echo sprintf(__('Set w4os slugs on %spermalink options page%s.', 'w4os'), '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>'); ?>
+					</p>
+				</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row"><label><?php _e("Exclude from stats", "w4os");?></label></th>
 				<td>
 					<input type="checkbox" class=regular-text id="w4os_exclude_models" name="w4os_exclude_models" value="1" <?php if (get_option('w4os_exclude_models')==1) echo "checked"; ?>/><label for="w4os_exclude_models"><?php _e('Models', 'w4os') ?></label>
