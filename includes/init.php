@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'WPINC' ) ) die;
 
 define('W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000');
 // define('W4OS_ZERO_VECTOR', '<0,0,0>');
@@ -101,59 +101,24 @@ function w4os_check_db_tables() {
 }
 if (!defined('W4OS_DB_CONNECTED')) define('W4OS_DB_CONNECTED', w4os_check_db_tables());
 
-function w4os_array2table($array, $class="") {
-	if(empty($array)) return;
-	$result="";
-	while (list($key, $value) = each($array)) {
-		$result.="<tr><td class=gridvar>" . __($key, 'w4os') . "</td><td class=gridvalue>$value</td></tr>";
-	}
-	if(!empty($result)) {
-		$result="<table class='$class'>$result</table>";
-	}
-	return $result;
-}
-
-function w4os_notice ($message, $status="") {
-  echo "<div class='notice notice-$status'><p>$message</p></div>";
-}
-
-function w4os_gen_uuid() {
- $uuid = array(
-  'time_low'  => 0,
-  'time_mid'  => 0,
-  'time_hi'  => 0,
-  'clock_seq_hi' => 0,
-  'clock_seq_low' => 0,
-  'node'   => array()
- );
-
- $uuid['time_low'] = mt_rand(0, 0xffff) + (mt_rand(0, 0xffff) << 16);
- $uuid['time_mid'] = mt_rand(0, 0xffff);
- $uuid['time_hi'] = (4 << 12) | (mt_rand(0, 0x1000));
- $uuid['clock_seq_hi'] = (1 << 7) | (mt_rand(0, 128));
- $uuid['clock_seq_low'] = mt_rand(0, 255);
-
- for ($i = 0; $i < 6; $i++) {
-  $uuid['node'][$i] = mt_rand(0, 255);
- }
-
- $uuid = sprintf('%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x',
-  $uuid['time_low'],
-  $uuid['time_mid'],
-  $uuid['time_hi'],
-  $uuid['clock_seq_hi'],
-  $uuid['clock_seq_low'],
-  $uuid['node'][0],
-  $uuid['node'][1],
-  $uuid['node'][2],
-  $uuid['node'][3],
-  $uuid['node'][4],
-  $uuid['node'][5]
- );
-
- return $uuid;
-}
-
 add_action( 'wp_enqueue_scripts', function() {
   wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
 } );
+
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/shortcodes.php';
+require_once __DIR__ . '/woocommerce-fix.php';
+if(get_option('w4os_provide_asset_server') == 1 ) require_once __DIR__ . '/assets.php';
+
+if(W4OS_DB_CONNECTED) {
+  // if($pagenow == "profile.php" || $pagenow == "user-edit.php")
+  require_once __DIR__ . '/profile.php';
+}
+require_once __DIR__ . '/updates.php';
+
+if(get_option('w4os_rewrite_rules') || get_option('w4os_rewrite_version') != W4OS_VERSION) {
+  wp_cache_flush();
+  add_action('init', 'flush_rewrite_rules');
+	update_option('w4os_rewrite_rules', false);
+  update_option('w4os_rewrite_version', W4OS_VERSION);
+}

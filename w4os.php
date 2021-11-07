@@ -28,7 +28,14 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+
+/**
+ * Plugin conflict checker. As the plugin slug changed when published on the
+ * WordPress Directory, we want to make sure only one version of the plugin is
+ * activated.
+ */
 $plugin_dir_check = basename(dirname(__FILE__));
+// First web check if official plugin release is active, even if not yet loaded, as it has priority
 if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-opensimulator-web-interface/w4os.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	add_action( 'admin_notices', function() {
 		echo sprintf (
@@ -37,6 +44,7 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 		);
 	} );
 	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
+// Then we check for any other plugin conflict, first loaded is kept
 } else if ( defined( 'W4OS_SLUG' ) ) {
 	add_action( 'admin_notices', function() {
 		echo sprintf (
@@ -45,26 +53,13 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 		);
 	} );
 	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
+// Finally, actually load if no conflict
 } else {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
-	if(get_option('w4os_provide_asset_server') == 1 ) {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/assets.php';
-	}
-	require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
-	require_once plugin_dir_path( __FILE__ ) . 'includes/woocommerce-fix.php';
-	if(W4OS_DB_CONNECTED) {
-		// if($pagenow == "profile.php" || $pagenow == "user-edit.php")
-		require_once plugin_dir_path( __FILE__ ) . 'includes/profile.php';
-	}
-
-	if(is_admin()) {
-		require_once (plugin_dir_path(__FILE__) . 'admin/settings.php');
-		if($pagenow == "index.php")
-		require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
-	}
-
-	include_once plugin_dir_path( __FILE__ ) . 'includes/updates.php';
-
 	if(file_exists(plugin_dir_path( __FILE__ ) . 'lib/package-updater.php'))
 	include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
+
+	if(is_admin()) {
+		require_once (plugin_dir_path(__FILE__) . 'admin/admin-init.php');
+	}
 }
