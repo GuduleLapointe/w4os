@@ -84,28 +84,6 @@ function w4os_profile_display( $user ) {
   return $content;
 }
 
-/**
- * Check if password is strong enough
- * Deprecated since the avatar password is the same as WP password, so we rely
- * on WP mechanisms.
- * @param  string  $password
- * @return boolean
- */
-function w4os_is_strong ($password) {
-  $min_length = 8;
-  // Given password
-  $uppercase = preg_match('@[A-Z]@', $password);
-  $lowercase = preg_match('@[a-z]@', $password);
-  $number    = preg_match('@[0-9]@', $password);
-  // $specialChars = preg_match('@[^\w]@', $password);
-
-  if(!$uppercase || !$lowercase || !$number || strlen($password) < $min_length) {
-    w4os_notice(sprintf( __( 'Password must contain at least %s characters, including uppercase, lowercase and number', 'w4os' ), $min_length), 'fail');
-    return false;
-  } else {
-    return true;
-  }
-}
 
 /**
  * Update avatar password in OpenSimulator
