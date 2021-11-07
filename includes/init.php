@@ -8,6 +8,7 @@ define('W4OS_DEFAULT_AVATAR', "Default Ruth");
 define('W4OS_DEFAULT_HOME', "Welcome");
 define('W4OS_DEFAULT_RESTRICTED_NAMES', array("Default", "Test", "Admin", str_replace(' ', '', get_option('w4os_grid_name'))));
 define('W4OS_DEFAULT_ASSET_SERVER_URI', '/assets/asset.php?id=');
+define('W4OS_DEFAULT_PROVIDE_ASSET_SERVER', true);
 
 if ( ! defined( 'W4OS_SLUG' ) ) define('W4OS_SLUG', basename(dirname(dirname(__FILE__))) );
 if ( ! defined( 'W4OS_PLUGIN' ) ) define('W4OS_PLUGIN', W4OS_SLUG . "/w4os.php" );
