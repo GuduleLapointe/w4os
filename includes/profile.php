@@ -6,6 +6,63 @@
  * @author Olivier van Helden <olivier@van-helden.net>
  */
 
+class W4OS_Avatar extends WP_User {
+
+  public function __construct($id = 0, $name='', $site_id='' )
+  {
+    /**
+     * First get WP_User object
+     * @var [type]
+     */
+    if ( $id instanceof WP_User ) {
+      $this->init( $id->data, $site_id );
+      return;
+    } elseif ( is_object( $id ) ) {
+      $this->init( $id, $site_id );
+      return;
+    }
+
+    if ( ! empty( $id ) && ! is_numeric( $id ) ) {
+      $name = $id;
+      $id   = 0;
+    }
+
+    if ( $id ) {
+      $data = self::get_data_by( 'id', $id );
+    } else {
+      $data = self::get_data_by( 'login', $name );
+    }
+
+    if ( $data ) {
+      $this->init( $data, $site_id );
+    } else {
+      $this->data = new stdClass;
+    }
+
+    /**
+     * Add W4OS avatar properties
+     * @var string
+     */
+    // $this->avatarName = "Avatar of " . $this->user_email;
+    $this->UUID = esc_attr(get_the_author_meta( 'w4os_uuid', $id ));
+    $this->FirstName = esc_attr(get_the_author_meta( 'w4os_firstname', $id ));
+    $this->LastName = esc_attr(get_the_author_meta( 'w4os_lastname', $id ));
+    $this->AvatarName = $this->FirstName . " " . $this->LastName;
+    $this->AvatarHGName = strtolower($this->FirstName) . "." . strtolower($this->LastName) . "@" . esc_attr(get_option('w4os_login_uri'));
+    $this->ProfilePictureUUID = get_the_author_meta( 'w4os_profileimage', $id );
+    if(empty($this->ProfilePictureUUID)) $this->ProfilePictureUUID = W4OS_NULL_KEY;
+  }
+
+  public function profile_picture( $echo = false ) {
+      $html = sprintf('<img class=profile-img src="%1$s" alt="%2$s\'s profile picture" title="%2$s">',
+        W4OS_WEB_ASSETS_SERVER_URI . $this->ProfilePictureUUID,
+        $this->AvatarName,
+      );
+      if($echo) echo $html;
+      else return $html;
+  }
+}
+
 add_action( 'show_user_profile', 'w4os_profile_fields' );
 add_action( 'edit_user_profile', 'w4os_profile_fields' );
 add_action( 'personal_options_update', 'w4os_profile_fields_save' );
@@ -26,8 +83,8 @@ function w4os_profile_sync($user) {
     AND Email = '$user->user_email'
     ");
   if(count($avatars) != 1) return W4OS_NULL_KEY;
-  $avatar = array_shift($avatars);
-  $uuid = $avatar->PrincipalID;
+  $avatar_row = array_shift($avatars);
+  $uuid = $avatar_row->PrincipalID;
 
   // if($models) {
   //   $content.= "<div class='clear'></div>";
@@ -40,9 +97,9 @@ function w4os_profile_sync($user) {
   //     $model_name = $model->FirstName . " " . $model->LastName;
 
   update_user_meta( $user->ID, 'w4os_uuid', $uuid );
-  update_user_meta( $user->ID, 'w4os_firstname', $avatar->FirstName );
-  update_user_meta( $user->ID, 'w4os_lastname', $avatar->LastName );
-  update_user_meta( $user->ID, 'w4os_profileimage', $avatar->profileImage );
+  update_user_meta( $user->ID, 'w4os_firstname', $avatar_row->FirstName );
+  update_user_meta( $user->ID, 'w4os_lastname', $avatar_row->LastName );
+  update_user_meta( $user->ID, 'w4os_profileimage', $avatar_row->profileImage );
   return $uuid;
 }
 
@@ -475,17 +532,6 @@ function w4os_update_avatar( $user, $params ) {
   // show_message ( "Updating user" );
 }
 
-function w4os_profile_picture( $user, $echo = false ) {
-    $image_uuid = get_the_author_meta( 'w4os_profileimage', $user->ID );
-    if(empty($image_uuid)) $image_uuid = W4OS_NULL_KEY;
-    $html = sprintf('<img class=profile-img src="%1$s" alt="%2$s" title="%2$s">',
-      W4OS_WEB_ASSETS_SERVER_URI . $image_uuid,
-      esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID )),
-    );
-    if($echo) echo $html;
-    else return $html;
-}
-
 function w4os_profile_display( $user ) {
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
@@ -494,12 +540,13 @@ function w4os_profile_display( $user ) {
     return $content;
   }
 
+  global $w4osdb;
+  $avatar = new W4OS_Avatar($user->ID);
+
   ####
   ## TODO: Check if user is current user
   ## Otherwise, do not allow edit, and display profile only if public
   ####
-
-  global $w4osdb;
 
   if ( isset($_REQUEST['w4os_update_avatar'] ) ) {
     $uuid = w4os_update_avatar( $user, array(
@@ -509,18 +556,18 @@ function w4os_profile_display( $user ) {
   		'w4os_model' => sanitize_text_field($_REQUEST['w4os_model']),
   		'w4os_password_1' => $_REQUEST['w4os_password_1'],
     ));
-  } else {
-    $uuid = w4os_profile_sync($user); // refresh opensim data for this user
-    if(! $uuid) echo "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
+    $avatar = new W4OS_Avatar($user->ID);
+  // } else {
+  //   if(! $avatar->UUID) echo "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
   }
 
-  if ($uuid) {
+  if ($avatar->UUID) {
     $action = 'w4os_update_avatar';
     $leaveblank= " (" . __('leave blank to leave unchanged', "w4os") . ")";
     $content.= sprintf(
       '<div class=profile><div class=profile-pic>%1$s</div><div class=profile-details>%2$s</div></div>',
-      w4os_profile_picture($user),
-      esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID )),
+      $avatar->profile_picture(),
+      $avatar->AvatarName,
     );
     return $content;
   }
@@ -536,6 +583,8 @@ function w4os_profile_display( $user ) {
       	// 	</p>";
       	###
       	### End current password part
+
+    echo "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
 
     $content="
     <form class='woocommerce-EditAccountForm edit-account wrap' action='' method='post'>";
