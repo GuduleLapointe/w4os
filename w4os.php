@@ -63,7 +63,7 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 		require_once (plugin_dir_path(__FILE__) . 'admin/dashboard.php');
 	}
 
-	include_once plugin_dir_path( __FILE__ ) . 'updates.php';
+	include_once plugin_dir_path( __FILE__ ) . 'includes/updates.php';
 
 	if(file_exists(plugin_dir_path( __FILE__ ) . 'lib/package-updater.php'))
 	include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
