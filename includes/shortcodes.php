@@ -143,7 +143,7 @@ function w4os_newusers() {
 		$user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $username->user_email));
 		$uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
 		if($uuid) {
-			$recentusers .= '<li><span class=profilepic>' .get_avatar($username->user_email, 32) . "</span>"
+			$recentusers .= '<li><span class=profile-pic>' .get_avatar($username->user_email, 32) . "</span>"
 			. " <span class=avatar-name>" . get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID ) . "</span>"
 			. " <span class=nicename> ($username->user_nicename)</span>"
 			. " <span class=email>$username->user_email</span>"

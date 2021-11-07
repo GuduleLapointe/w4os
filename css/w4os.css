@@ -117,12 +117,15 @@ img.model-picture {
 
 }
 
-.recent-users li {
-  clear: both;
+.recent-users li,
+.profile {
+  clear:both;
+  overflow: hidden;
 }
-.recent-users .profilepic {
+.profile-pic {
   display: inline-block;
-  padding-right: 0.5em;
+  padding-right: 1em;
+  max-width: 25%;
   float: left;
 }
 .recent-users .avatar-name {

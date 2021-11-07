@@ -103,6 +103,7 @@ if (!defined('W4OS_DB_CONNECTED')) define('W4OS_DB_CONNECTED', w4os_check_db_tab
 
 add_action( 'wp_enqueue_scripts', function() {
   wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
+  // wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os.css', array(), W4OS_VERSION . time() );
 } );
 
 require_once __DIR__ . '/functions.php';
