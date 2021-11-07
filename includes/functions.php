@@ -52,3 +52,16 @@ function w4os_gen_uuid() {
 
  return $uuid;
 }
+
+function w4os_admin_notice($notice, $class='info', $dismissible=true ) {
+  if(empty($notice)) return;
+  // $class="success";
+  if($dismissible) $is_dismissible = 'is-dismissible';
+  add_action( 'admin_notices', function() use ($notice, $class, $is_dismissible) {
+    ?>
+    <div class="notice notice-<?=$class?> <?=$is_dismissible?>">
+        <p><strong><?php echo W4OS_PLUGIN_NAME; ?></strong>: <?php _e( $notice, 'band-tools' ); ?></p>
+    </div>
+    <?php
+  } );
+}
