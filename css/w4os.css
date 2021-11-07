@@ -56,52 +56,44 @@ td.gridvar {
 }
 
 .field-model {
-  margin: 0 -5px;
-  padding: 0;
-}
-
-.field-model {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 15px;
-  padding: 5px;
 }
 .woocommerce form .form-row label.with-picture,
 .woocommerce-page form .form-row label.with-picture
 .field-model label.with-picture {
-  /* display: inline-block; */
+  display: block;
   box-sizing: border-box;
   /* width: calc(100% / 3 - 15px); */
   /* margin: 5px 5px; */
   /* text-align: center; */
   position: relative;
 }
-.field-model .model-name {
-  display: inline-block;
-}
+
 .field-model .with-picture .model-name {
-  position: absolute;
-  bottom: 0.5em;
-  right: 1em;
-  text-align: right;
+  display: block;
 }
+
 img.model-picture {
   max-width: 100%;
   opacity: 0.5;
 }
 
+.field-model .no-picture [type=radio] {
+  width: auto;
+}
 .field-model .with-picture [type=radio] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 /* IMAGE STYLES */
+.field-model [type=radio] + span,
 .field-model [type=radio] + span + img {
   cursor: pointer;
 }
-
 .field-model [type=radio]  + span + img.model-picture:hover {
   /* outline: 2px solid #f00; */
   opacity: 0.75;
