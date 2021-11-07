@@ -46,7 +46,7 @@ define('PIC_CACHE_DIR', get_temp_dir() );
  * @return raws datas of image configured in inc/config.php
  * @author Anthony Le Mansec <a.lm@free.fr>
  */
-function asset_get_zero($format) {
+function w4os_asset_get_zero($format) {
 	$image=IMAGE_ID_ZERO . ".png";
 	if(!is_file($image)) $image=IMAGE_ID_ZERO.".".$format;
 	if(!is_file($image)) die();
@@ -66,11 +66,11 @@ function asset_get_zero($format) {
  * @return image raw datas, in given format.
  * TODO : allow custom image width (resizing) with suitable caching directory
  */
-function asset_get($asset_uuid, $format='jpeg') {
+function w4os_asset_get($asset_uuid, $format='jpeg') {
 
 	/* Zero UUID : returns default pic */
 	if ( empty($asset_uuid) || $asset_uuid == W4OS_NULL_KEY ) {
-		return (asset_get_zero($format));
+		return (w4os_asset_get_zero($format));
 	}
 
 	if (w4os_cache_check($asset_uuid.".".$format, PIC_CACHE_DIR)) {
@@ -91,7 +91,7 @@ function asset_get($asset_uuid, $format='jpeg') {
 		$asset_url = W4OS_ASSETS_SERVER . $asset_uuid;
 		$h = @fopen($asset_url, "rb");
 		if (!$h) {
-			return (asset_get_zero($format));
+			return (w4os_asset_get_zero($format));
 		}
 		stream_set_timeout($h, W4OS_ASSETS_SERVER_TIMEOUT);
 		$file_content = stream_get_contents($h);
@@ -99,7 +99,7 @@ function asset_get($asset_uuid, $format='jpeg') {
 		try {
 			$xml = new SimpleXMLElement($file_content);
 		} catch (Exception $e) {
-			return (asset_get_zero($format));
+			return (w4os_asset_get_zero($format));
 		}
 		$data = base64_decode($xml->Data);
 		w4os_cache_write($asset_uuid, $data, JP2_CACHE_DIR);
@@ -179,7 +179,7 @@ function w4os_cache_write($asset_uuid, $content, $cachedir=JP2_CACHE_DIR) {
 
 $format = strtolower(preg_replace('|^\.|', '', (!empty($query_format)) ? $query_format : IMAGE_DEFAULT_FORMAT));
 $asset_uuid = preg_replace('|/.*|', '', $query_asset);
-$asset_raw = asset_get($asset_uuid, $format);
+$asset_raw = w4os_asset_get($asset_uuid, $format);
 
 // TODO : set an array of mime types according to 'format' arg
 
