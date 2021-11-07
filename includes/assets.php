@@ -11,7 +11,7 @@ add_action('admin_init', function() {
     $newslug = sanitize_title($_REQUEST['w4os_assets_slug']);
     if(esc_attr(get_option('w4os_assets_slug')) != $newslug) {
       update_option('w4os_assets_slug', $newslug);
-      flush_rewrite_rules(false);
+      update_option('w4os_rewrite_rules', true);
     }
   }
 });
