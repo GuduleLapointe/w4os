@@ -31,12 +31,21 @@ if ( ! defined( 'WPINC' ) ) {
 $plugin_dir_check = basename(dirname(__FILE__));
 if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-opensimulator-web-interface/w4os.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	add_action( 'admin_notices', function() {
-		echo "<div class='notice notice-error'>";
-		echo "<p><strong>W4OS:</strong> You already have installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong>, from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.</p>";
-		echo "</div>";
+		echo sprintf (
+			"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
+			__("You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.", 'w4os'),
+		);
 	} );
 	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
-} else if ( ! defined( 'W4OS_SLUG' ) ) {
+} else if ( defined( 'W4OS_SLUG' ) ) {
+	add_action( 'admin_notices', function() {
+		echo sprintf (
+			"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
+			__("Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.", 'w4os'),
+		);
+	} );
+	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
+} else {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
 	if(get_option('w4os_provide_asset_server') == 1 ) {
 		require_once plugin_dir_path( __FILE__ ) . 'includes/assets.php';
