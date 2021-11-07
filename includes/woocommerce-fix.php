@@ -111,7 +111,7 @@ add_action( 'init', 'w4os_add_endpoint' );
 function w4os_my_account_endpoint_content() {
   require_once plugin_dir_path( __FILE__ ) . 'profile.php';
   $user = wp_get_current_user();
-  echo w4os_profile_wc_edit( $user );
+  echo w4os_profile_display( $user );
 }
 add_action( 'woocommerce_account_avatar_endpoint', 'w4os_my_account_endpoint_content' );
 

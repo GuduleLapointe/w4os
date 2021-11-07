@@ -57,33 +57,10 @@ function w4os_profile_fields( $user ) {
   echo "    <h3>" . __("OpenSimulator", "w4os") ."</h3>";
   echo "<div class=avatar_profile>";
   // if(!$uuid) {
-    echo w4os_profile_wc_edit($user);
+    echo w4os_profile_display($user);
     // echo "<p>" . __("No avatar", 'w4os') . "</p>";
   echo "</div>";
 }
-
-/**
- * Avatar edit fields for WP user profile page (deprecated?)
- * @param  [type] $user [description]
- * @return [type]       [description]
- */
-function w4os_profile_display( $user ) {
-  global $w4osdb;
-  $content.="<h3>" . __("OpenSimulator profile", 'w4os') . "</h3>";
-  $content.='<table class="form-table">'
-  . '<tr>'
-  . '<th>' . __("Avatar UUID", 'w4os') . '</th>'
-  . '<td>' . esc_attr(get_the_author_meta( 'w4os_uuid', $user->ID )) . '</td>'
-  . '</tr>'
-  . '<tr>'
-  . '<th>' . __("Avatar name", 'w4os') . '</th>'
-  . '<td>' . esc_attr(get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID )) . '</td>'
-  . '</tr>'
-  . '</table>';
-
-  return $content;
-}
-
 
 /**
  * Update avatar password in OpenSimulator
@@ -509,7 +486,7 @@ function w4os_profile_picture( $user, $echo = false ) {
     else return $html;
 }
 
-function w4os_profile_wc_edit( $user ) {
+function w4os_profile_display( $user ) {
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
     // $content =  "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
@@ -668,7 +645,7 @@ function w4os_profile_shortcodes_init()
 
 	function w4os_profile_shortcode($atts = [], $content = null)
 	{
-    $content .= w4os_profile_wc_edit(wp_get_current_user());
+    $content .= w4os_profile_display(wp_get_current_user());
     return "<div class='w4os-shortcode w4os-shortcode-profile'>" . $content . "</div>";
 		return $content;
 	}
