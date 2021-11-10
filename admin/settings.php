@@ -8,11 +8,11 @@ function w4os_register_settings() {
 
 	add_option( 'w4os_db_host', 'localhost');
 	register_setting( 'w4os_options_group', 'w4os_db_host', 'w4os_callback' );
-	add_option( 'w4os_db_database', 'w4os');
+	add_option( 'w4os_db_database', 'opensim');
 	register_setting( 'w4os_options_group', 'w4os_db_database', 'w4os_callback' );
-	add_option( 'w4os_db_user', 'localhost');
+	add_option( 'w4os_db_user', 'opensim');
 	register_setting( 'w4os_options_group', 'w4os_db_user', 'w4os_callback' );
-	add_option( 'w4os_db_pass', 'localhost');
+	add_option( 'w4os_db_pass' , 'password');
 	register_setting( 'w4os_options_group', 'w4os_db_pass', 'w4os_callback' );
 
 	add_option( 'w4os_provide_asset_server', W4OS_DEFAULT_PROVIDE_ASSET_SERVER);
