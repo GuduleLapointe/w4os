@@ -42,4 +42,8 @@ webpack.config.js
 wp-cli.local.yml
 yarn.lock
 README.md
+admin/updater.php
 .distignore.wp
+lib/plugin-update-checker
+lib/wp-package-updater
+lib/package-updater.php
