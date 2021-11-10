@@ -3,7 +3,7 @@
 function w4os_array2table($array, $class="") {
 	if(empty($array)) return;
 	$result="";
-	while (list($key, $value) = each($array)) {
+	foreach($array as $key => $value) {
 		$result.="<tr><td class=gridvar>" . __($key, 'w4os') . "</td><td class=gridvalue>$value</td></tr>";
 	}
 	if(!empty($result)) {
