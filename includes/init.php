@@ -42,11 +42,13 @@ if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain'
 
 if(empty(get_option('w4os_assets_slug'))) update_option('w4os_assets_slug', 'assets');
 define('W4OS_ASSETS_SERVER', 'http://' . esc_attr(get_option('w4os_login_uri')) . '/' . esc_attr(get_option('w4os_assets_slug'), 'assets') . '/'); // (OpenSim.ini: asset_server_url . "/assets/")
+
 define('W4OS_WEB_ASSETS_SERVER_URI',
   (get_option('w4os_provide_asset_server') ==  1)
   ? get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/')
   : esc_attr(get_option('w4os_asset_server_uri'))
 );
+if(get_option('w4os_provide_asset_server') ==  1)	update_option('w4os_internal_asset_server_uri', W4OS_WEB_ASSETS_SERVER_URI);
 
 function w4os_load_textdomain() {
 	// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );

@@ -34,13 +34,18 @@ function w4os_settings_field($args) {
 	else return;
 	// echo "<pre>" . print_r($args, true) . "</pre>";
 	// return;
+
+	$parameters = array();
+	if(isset($args['readonly'])) $parameters[] .= 'readonly';
+	if(isset($args['onchange'])) $parameters[] = $args['onchange'];
+
 	switch ($args['type']) {
 		case 'string':
-		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' />";
+		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
 		break;
 
 		case 'password':
-		echo "<input type='password' class='regular-text' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) ."' />";
+		echo "<input type='password' class='regular-text' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
 		break;
 
 		case 'boolean':
@@ -50,7 +55,8 @@ function w4os_settings_field($args) {
 			if($args['type']=='checkbox') $option_id = $field_id ."_" . $option_key;
 			else $option_id = $field_id;
 			$option = "<input type='checkbox' id='$option_id' name='$option_id' value='1'";
-			if (get_option($option_id)==1) $option.=" checked ";
+			if (get_option($option_id)==1) $parameters[] = "checked";
+			$option .= ' ' . join(' ', $parameters) . ' ';
 			$option .= "/>";
 			if($args['type']=='checkbox') $option .= " <label for='$option_id'>$option_name</label>";
 			$options[] = $option;
@@ -135,18 +141,22 @@ function w4os_register_settings() {
 				'w4os_options_misc' => array(
 					'name' => __('Misc', 'w4os'),
 					'fields' => array(
-						'w4os_provide_asset_server' => array(
-							'type' => 'boolean',
+						'w4os_provide' => array(
+							'type' => 'checkbox',
 							'label' => __('Web asset server', 'w4os'),
 							'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
+							'values' => array(
+								'asset_server' => __('Provide web assets service', 'w4os'),
+							),
+							'onchange' => 'onchange="valueChanged(this)"',
 						),
 						'w4os_internal_asset_server_uri' => array(
 							'label' => '',
-							'default' => W4OS_WEB_ASSETS_SERVER_URI,
+							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
 							'readonly' => true,
 						),
 						'w4os_asset_server_uri' => array(
-							'label' => '',
+							'label' => __('External assets server URI', 'w4os'),
 							'default' => W4OS_DEFAULT_ASSET_SERVER_URI,
 						),
 						'w4os_assets_permalink' => array(
@@ -225,14 +235,14 @@ function w4os_options_page()
 			submit_button();
 			 ?>
 		</form>
+		<script type="text/javascript">
+		function valueChanged(w4os_provide_asset_server) {
+			document.getElementById("w4os_internal_asset_server_uri").parentNode.parentNode.style.display = w4os_provide_asset_server.checked ? "table-row" : "none";
+			document.getElementById("w4os_asset_server_uri").parentNode.parentNode.style.display = w4os_provide_asset_server.checked ? "none" : "table-row";
+		}
+		valueChanged(w4os_provide_asset_server);
+		</script>
 	</div>
-	<script type="text/javascript">
-	function valueChanged(w4os_provide_asset_server) {
-		document.getElementById("w4os_internal_asset_server_uri").style.display = w4os_provide_asset_server.checked ? "block" : "none";
-		document.getElementById("w4os_asset_server_uri").style.display = w4os_provide_asset_server.checked ? "none" : "table-row";
-	}
-	valueChanged(w4os_provide_asset_server);
-	</script>
 <?php
 }
 
