@@ -43,3 +43,4 @@ wp-cli.local.yml
 yarn.lock
 README.md
 .distignore.wp
+.version
