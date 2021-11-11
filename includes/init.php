@@ -93,8 +93,9 @@ if(get_option('w4os_db_user') && get_option('w4os_db_pass') && get_option('w4os_
 function w4os_check_db_tables() {
 	if(defined('W4OS_DB_CONNECTED')) return true;
 	global $w4osdb;
+  if(empty($w4osdb)) return false; // Might happen when using wp-cli
 
-  if(!$w4osdb->check_connection(false)) {
+  if(! empty($w4osdb) &! $w4osdb->check_connection(false)) {
     w4os_admin_notice(sprintf(
       __("Could not connect to the database server, please verify your credentials on %s.", 'w4os'),
       sprintf(
