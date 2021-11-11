@@ -190,4 +190,4 @@ Maybe, but we didn't check yet. If you give it a try, please send us your feedba
 * changed update server library to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
 
 ### Previous
-* For full change history see (GitHub repository)[https://github.com/GuduleLapointe/w4os/commits/master]
+* For full change history see [GitHub repository](https://github.com/GuduleLapointe/w4os/commits/master)
