@@ -29,9 +29,9 @@ $plugin_data = get_file_data(WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, array(
 if ( ! defined( 'W4OS_PLUGIN_NAME' ) ) define('W4OS_PLUGIN_NAME', $plugin_data['Name'] );
 // if ( ! defined( 'W4OS_SHORTNAME' ) ) define('W4OS_SHORTNAME', preg_replace('/ - .*/', '', W4OS_PLUGIN_NAME ) );
 // if ( ! defined( 'W4OS_PLUGIN_URI' ) ) define('W4OS_PLUGIN_URI', $plugin_data['PluginURI'] );
-if(file_exists(plugin_dir_path( __DIR__ ) . '.version')) $version = trim(file_get_contents(plugin_dir_path( __DIR__ ) . '.version'));
-if(empty($version)) $version = $plugin_data['Version'];
-if ( ! defined( 'W4OS_VERSION' ) ) define('W4OS_VERSION', $version );
+if(file_exists(plugin_dir_path( __DIR__ ) . '.git/refs/heads/master')) $hash = trim(file_get_contents(plugin_dir_path( __DIR__ ) . '.git/refs/heads/master'));
+if(!empty($hash)) $plugin_data['Version'] .= '-dev #' . substr($hash, 0, 8);
+if ( ! defined( 'W4OS_VERSION' ) ) define('W4OS_VERSION', $plugin_data['Version'] );
 // if ( ! defined( 'W4OS_AUTHOR_NAME' ) ) define('W4OS_AUTHOR_NAME', $plugin_data['Author'] );
 if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain']) ? $plugin_data['TextDomain'] : W4OS_SLUG );
 // if ( ! defined( 'W4OS_DATA_SLUG' ) ) define('W4OS_DATA_SLUG', sanitize_title(W4OS_PLUGIN_NAME) );
