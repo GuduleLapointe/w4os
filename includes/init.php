@@ -1,4 +1,5 @@
 <?php if ( ! defined( 'WPINC' ) ) die;
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 define('W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000');
 // define('W4OS_ZERO_VECTOR', '<0,0,0>');
@@ -58,17 +59,62 @@ function w4os_load_textdomain() {
 }
 add_action( 'init', 'w4os_load_textdomain' );
 
-$w4osdb = new WPDB(
-	get_option('w4os_db_user'),
-	get_option('w4os_db_pass'),
-	get_option('w4os_db_database'),
-	get_option('w4os_db_host')
-);
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/shortcodes.php';
+require_once __DIR__ . '/woocommerce-fix.php';
+if(get_option('w4os_provide_asset_server') == 1 ) require_once __DIR__ . '/assets.php';
+// Rapporte les erreurs d'exécution de script
+
+
+if(get_option('w4os_db_user') && get_option('w4os_db_pass') && get_option('w4os_db_database') && get_option('w4os_db_host')) {
+  $w4osdb = new WPDB(
+    get_option('w4os_db_user'),
+    get_option('w4os_db_pass'),
+    get_option('w4os_db_database'),
+    get_option('w4os_db_host')
+  );
+} else {
+  w4os_admin_notice(sprintf(
+    __("ROBUST database is not configured. To finish configuration, go to %s.", 'w4os'),
+    sprintf(
+      "<a href='%s'>%s</a>",
+      get_admin_url('', 'admin.php?page=w4os_settings'),
+      __("OpenSimulator settings page", 'w4os'),
+      )
+    )
+  );
+}
 
 function w4os_check_db_tables() {
 	if(defined('W4OS_DB_CONNECTED')) return true;
-
 	global $w4osdb;
+
+  if(!$w4osdb->check_connection(false)) {
+    w4os_admin_notice(sprintf(
+      __("Could not connect to the database server, please verify your credentials on %s.", 'w4os'),
+      sprintf(
+        "<a href='%s'>%s</a>",
+        get_admin_url('', 'admin.php?page=w4os_settings'),
+        __("OpenSimulator settings page", 'w4os'),
+        )
+      ),
+      'error',
+    );
+    return false;
+  }
+  if(!$w4osdb->get_var("SHOW DATABASES LIKE '" . get_option('w4os_db_database') . "'")) {
+    w4os_admin_notice(sprintf(
+      __("Could not connect to the ROBUST database, please verify database name and/or credentials on %s.", 'w4os'),
+      sprintf(
+        "<a href='%s'>%s</a>",
+        get_admin_url('', 'admin.php?page=w4os_settings'),
+        __("OpenSimulator settings page", 'w4os'),
+        )
+      ),
+      'error',
+    );
+    return false;
+  }
 
 	if(!is_object($w4osdb)) return false;
 	$required_tables = array(
@@ -87,6 +133,7 @@ function w4os_check_db_tables() {
 		// 'tokens',
 		'UserAccounts',
 	);
+  $missing_tables=array();
 	foreach($required_tables as $table_name) {
 		unset($actual_name);
 		$lower_name = strtolower($table_name);
@@ -96,8 +143,22 @@ function w4os_check_db_tables() {
 			if (!defined($table_name)) define($table_name, $actual_name);
 			continue;
 		}
-		return false;
+    $missing_tables[] = $table_name;
 	}
+  if(count($missing_tables) > 0) {
+    w4os_admin_notice(sprintf(
+      __("Missing tables: %s. The ROBUST database is connected, but it does not seem to be valid. Check your settings on %s.", 'w4os'),
+      ' <strong><em>' . join(', ', $missing_tables) . '</em></strong>',
+      sprintf(
+        "<a href='%s'>%s</a>",
+        get_admin_url('', 'admin.php?page=w4os_settings'),
+        __("OpenSimulator settings page", 'w4os'),
+        )
+      ),
+      'error',
+    );
+    return false;
+  }
 	return true;
 }
 if (!defined('W4OS_DB_CONNECTED')) define('W4OS_DB_CONNECTED', w4os_check_db_tables());
@@ -106,11 +167,6 @@ add_action( 'wp_enqueue_scripts', function() {
   wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
   // wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os.css', array(), W4OS_VERSION . time() );
 } );
-
-require_once __DIR__ . '/functions.php';
-require_once __DIR__ . '/shortcodes.php';
-require_once __DIR__ . '/woocommerce-fix.php';
-if(get_option('w4os_provide_asset_server') == 1 ) require_once __DIR__ . '/assets.php';
 
 if(W4OS_DB_CONNECTED) {
   // if($pagenow == "profile.php" || $pagenow == "user-edit.php")
