@@ -143,104 +143,51 @@ Maybe, but we didn't check yet. If you give it a try, please send us your feedba
 * More comprehensive database connection error reporting
 * show internal or external asset server uri according to provide web assets service value
 
+### Unreleased
+* new internal web assets server
+* added internal update process
+* added assets permalink settings
+* added profile image to gridprofile output
+* added comprehensive database connection error reporting
+* fix #21 Fatal error Call to undefined function each()
+* show git commit alongside version if installed from git
+* show internal or external asset server uri according to provide web assets service value
+
 ### 2.1
 * added login form to gridprofile shortcode when not connected instead of login message
 * added w4os-shortcode classes
 * added screenshots
 * fix fatal error when trying to display  WooCommerce Avatar tab form in My Account
 * fix localisation not loading
-* shorter "Avatar" label in gridprofile shortcode
-* removed uuid from gridprofile shortcode
+* shorter "Avatar" label, removed uuid in gridprofile shortcode
 
 ### 2.0.8
-* sanitize avatar First and Last Name
-
-### 2.0.7
-* fix other WP plugins directory requirements
+* Now distributed via WordPress plugins directory
+* Official git repository changed to GitHub
 * renamed plugin as W4OS - OpenSimulator Web Interface
-
-### 2.0.5
+* fix other WP plugins directory requirements
 * fix localizations not loading
-
-### 2.0.4
 * fix regression, automatic updates restored. Users with version 2.0 to 2.0.3 will need to reinstall the plugin from source. Sorry.
-
-### 2.0.3
-* fix fatal error in last update, restored update libraries for dev version
-
-### 2.0.2
-* fix fatal error if both new official version and old devel version are activated
-
-### 2.0.1
 * use plugin dir to detect slug instead of hardcoded value
-
-### 2.0
-* updated to meet WordPress plugins directory requirements (remove self-update and related instructions, git installation instructions, updated names, readme, urls)
 * renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility
-* gridprofile shows avatar name instead of separate avatar first and last name when avatar exists
-* replaced gitlab urls by github
-* added web asset server instructions in settings page
 
 ### 1.2.12
-* fix: only show profile form for current user
-* better css loading
-* load textdomain first in init
-
-### 1.2.11
-* fix error when home region is not set
+* fix #2 Database check fails if mysql is case insensitive
+* fix #4  Database connection error triggered if userprofile table is absent
+* fix #10 invalid JSON response when adding [w4os_profile] shortcode element
 * fix wrong letter cases in auth table name
+* fix only show profile form for current user
+* better css loading
+* only check once if w4os db is connected
 * added login page link to message displayed when trying to see profile while not connected
 * more detailed error messages for avatar creation
 
-### 1.2.10
-* fix #10 invalid JSON response when adding [w4os_profile] shortcode element
-* don't render w4os_profile shortcode in json response
-* don't render w4os_profile shortcode in edit pages
-* only check once if w4os db is connected
-* avoid undefined constant warning
-
-### 1.2.9
-* tested up to 5.8.1
-
-### 1.2.8
-* added avatar models creation instructions
-
-### 1.2.7
-* added web assets server in README, updated INSTALLATION
-
-### 1.2.6
-* added more installation instructions to readme
-
-### 1.2.5
-* fix #4  Database connection error triggered if userprofile table is absent
-
-### 1.2.4
-* added a hint in grid URI settings field example.org:8002
-
-### 1.2.3
-* updated assets (icons and banners)
-
-### 1.2.2
-* fix some remaining case-sensitive mysql requests issue #2
-
-### 1.2.1
-* fix issue #2 Database check fails if mysql is case insensitive
-
 ### 1.1.4
 * added changelog, banners and icons to view details
-* fix bug in d6fe07c62bb6be189a820c416bc8402f7f5de56a
 * fix "Yes" and "No" translations
 * fix typo in banners and icons urls, can't believe I didn't see this before...
 * fixed conflict with other extensions settings pages
-* fixed w4os_updater var name
-* fixed view details not shown
-* update authors
-* use transparent icons
 * changed update server library to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
 
-### 1.0
-* use plugin repository for stable releases updates, GitHub Updater no longer
-  required
-
 ### Previous
-* See full history in changelog.txt
+* For full change history see (GitHub repository)[https://github.com/GuduleLapointe/w4os/commits/master]
