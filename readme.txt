@@ -94,16 +94,36 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
 == Frequently Asked Questions ==
 
-= Current status =
+= How to create avatar models =
 
-Code is a mess. Don't blame me. I want to do it the right way but I'm learning
-as I progress in the project. I'll try to put things on the right places while
-getting more familiar with it. Feel free to give advices. Yeah, it's not a
-question, but you might wonder.
+Avatar models are displayed on new avatar registration and allow new users to start with another appearance than Ruth.
+
+* Check (or change) their naming convention in Admin > OpenSimulator > Settings > Avatar models
+* From robust console, create a user named accordingly (for example, "Female Default", Default John", ...).
+    ```
+    R.O.B.U.S.T.# create user Default John
+    Password: ************************
+    Email []: (leave empty)
+    User ID (enter for random) []:  (leave empty)
+    Model name []: (leave empty)
+    15:27:58 - [USER ACCOUNT SERVICE]: Account Default John xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx created successfully
+    ```
+  - A password is needed as you need connect in-world to configure it.
+    Choose a strong password, any hack could affect all new users.
+  - One of the parts of the name has to match your W4OS Avatar models settings
+  - The other part will be displayed in the form, so make it relevant
+  - You can leave "Email" and "User ID" blank
+  - Leave "Model Name" blank, you are creating a model, not using an existing model to create a user
+* Connect in-world as this avatar and change outfit. Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items.
+* Make a snapshot and attach it to this account profile
+
+The model avatar will now appear in new avatar registration form, with its profile picture.
+
+These accounts will be excluded in the grid statistics.
 
 = Can I use this plugin for my standalone simulator? =
 
-This plugin is intended for grids. For standalone simulators, see [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/).
+Maybe, but we didn't check yet. If you give it a try, please send us your feedback. Otherwise, you can try [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/), which is dedicated to standalone simulators.
 
 == Screenshots ==
 
@@ -112,6 +132,16 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 3. Settings page
 
 == Changelog ==
+
+= Unreleased =
+* new internal web assets server
+* added internal update process
+* added assets permalink settings
+* added profile image to gridprofile output
+* fix #21 Fatal error Call to undefined function each()
+* use version provided by .version if present
+* More comprehensive database connection error reporting
+* show internal or external asset server uri according to provide web assets service value
 
 = 2.1 =
 * added login form to gridprofile shortcode when not connected instead of login message

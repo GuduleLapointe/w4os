@@ -33,6 +33,10 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - naming scheme of default models
   - exclude models from grid stats
 
+### Paid version
+
+The free version from WordPress plugins directory and the (paid version)[https://magiiic.com/wordpress/plugins/w4os/] are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
+
 ## Installation
 
 Robust server must be installed before setting up W4OS.
@@ -56,34 +60,29 @@ See INSTALLATION.md for more details.
 
 See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
-### Short term (version 1.0, WordPress repository release)
+### Short term (v2.2)
 
+- [x] Include web asset server
+- [x] Add avatar picture to gridprofile output
+- Use avatar profile pic as WP avatar
+- Public avatar profile
+- Sidebar grid info and grid status widgets.
 - Login page (with grid FirstName, LastName and password).
   Optional redirect of standard login page
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
-- Option to use WordPress name as avatar name (in this case, lock WordPress name changes once an avatar is set).
-- Use avatar profile pic.
-- Check if avatar password is properly updated after a password reset request.
-- Sidebar grid info and grid status widgets.# W4OS - OpenSimulator Web Interface
-* Contributors: gudulelapointe,magicoli69
-* Donate link: https://paypal.me/magicoli
-* Tags: opensimulator, second life, web interface
-* Tags: OpenSimulator, Second Life, metaverse, avatar, web interface
-* Requires at least: 5.0
-* Requires PHP: 5.6
-* Tested up to: 5.8.1
+- Option to show avatar name instead of real name in user lists
+- Option to show avatar picture in user lists
+- Option to link WordPress and avatar name (then lock both for changes once an avatar is set).
 
 ### Middle term
 
-- Public avatar profile
 - Admin Start / Stop regions
 - Admin Create region
 - Admin Use sim/grid configuration file to fetch settings if on the same host
 - get grid info from http://login.uri:8002/get_grid_info
 - Helpers (assets, search, currency, map...)
 - Use cache for grid info
-- Integrate web asset server
 
 ### Long term
 
@@ -95,16 +94,36 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
 ## Frequently Asked Questions
 
-### Current status
+### How to create avatar models
 
-Code is a mess. Don't blame me. I want to do it the right way but I'm learning
-as I progress in the project. I'll try to put things on the right places while
-getting more familiar with it. Feel free to give advices. Yeah, it's not a
-question, but you might wonder.
+Avatar models are displayed on new avatar registration and allow new users to start with another appearance than Ruth.
+
+* Check (or change) their naming convention in Admin > OpenSimulator > Settings > Avatar models
+* From robust console, create a user named accordingly (for example, "Female Default", Default John", ...).
+    ```
+    R.O.B.U.S.T.# create user Default John
+    Password: ************************
+    Email []: (leave empty)
+    User ID (enter for random) []:  (leave empty)
+    Model name []: (leave empty)
+    15:27:58 - [USER ACCOUNT SERVICE]: Account Default John xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx created successfully
+    ```
+  - A password is needed as you need connect in-world to configure it.
+    Choose a strong password, any hack could affect all new users.
+  - One of the parts of the name has to match your W4OS Avatar models settings
+  - The other part will be displayed in the form, so make it relevant
+  - You can leave "Email" and "User ID" blank
+  - Leave "Model Name" blank, you are creating a model, not using an existing model to create a user
+* Connect in-world as this avatar and change outfit. Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items.
+* Make a snapshot and attach it to this account profile
+
+The model avatar will now appear in new avatar registration form, with its profile picture.
+
+These accounts will be excluded in the grid statistics.
 
 ### Can I use this plugin for my standalone simulator?
 
-This plugin is intended for grids. For standalone simulators, see [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/).
+Maybe, but we didn't check yet. If you give it a try, please send us your feedback. Otherwise, you can try [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/), which is dedicated to standalone simulators.
 
 ## Screenshots
 
@@ -113,6 +132,16 @@ This plugin is intended for grids. For standalone simulators, see [OpenSimulator
 3. Settings page
 
 ## Changelog
+
+### Unreleased
+* new internal web assets server
+* added internal update process
+* added assets permalink settings
+* added profile image to gridprofile output
+* fix #21 Fatal error Call to undefined function each()
+* use version provided by .version if present
+* More comprehensive database connection error reporting
+* show internal or external asset server uri according to provide web assets service value
 
 ### 2.1
 * added login form to gridprofile shortcode when not connected instead of login message
