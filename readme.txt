@@ -41,8 +41,7 @@ The free version from WordPress plugins directory and the (paid version)[https:/
 
 Robust server must be installed before setting up W4OS.
 
-- To allow users to choose an avatar on registration, you must enable user profiles in Robust.ini (see [UserProfilesService], [ServiceList] and [UserProfiles] sections)
-- Install a web assets server (see Dependencies in INSTALLATION.md)
+To allow users to choose an avatar on registration, you must enable user profiles in Robust.ini (see [UserProfilesService], [ServiceList] and [UserProfiles] sections)
 
 1. Download [the latest stable release](https://magiiic.com/updates/?action=download&slug=w4os), unzip it in your wp-content/plugins and activate it.
 2. Visit OpenSim settings (admin menu > "Opensim" > "Settings")
@@ -50,6 +49,7 @@ Robust server must be installed before setting up W4OS.
   - Enter your robust database connection details and submit. If you get a database connection error, it might come from a case-sensitivity issue, see (https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674).
   - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar widget
   - create a profile page for registered users and include `[gridprofile]` shortcode. This will display the an avatar creation form for users without in-world avatar. For accounts already having an avatar, it will display avatar details.
+  - if you upgraded from a version older than 2.2 (#eb4769081), check "Provide web assets service" to activate new internal web assets server
 3. To create default avatars:
   - from ROBUST console (defaults creation is not allowed from the website), create users for your models. Name them according to W4OS settings: one part of the name is "Default", the other part is the name displayed on the form (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't mention e-mail address to avoid counting them as regular accounts in stats.
   - log in-world with each of these model accounts and give them the desire appearance. Take a snapshot and use it as profile picture. It will be used for the web site avatar choosing form.
