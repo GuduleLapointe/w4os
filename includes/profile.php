@@ -54,12 +54,15 @@ class W4OS_Avatar extends WP_User {
   }
 
   public function profile_picture( $echo = false ) {
-      $html = sprintf('<img class=profile-img src="%1$s" alt="%2$s\'s profile picture" title="%2$s">',
-        W4OS_WEB_ASSETS_SERVER_URI . $this->ProfilePictureUUID,
-        $this->AvatarName,
-      );
-      if($echo) echo $html;
-      else return $html;
+    $html = w4os_get_avatar( $this->ID, 256 );
+
+    // $html = sprintf(
+    //   '<img class=profile-img src="%1$s" alt="%2$s\'s profile picture" title="%2$s">',
+    //   W4OS_WEB_ASSETS_SERVER_URI . $this->ProfilePictureUUID,
+    //   $this->AvatarName,
+    // );
+    if($echo) echo $html;
+    else return $html;
   }
 }
 
@@ -537,7 +540,7 @@ function w4os_avatar_creation_form ($user) {
 
   global $w4osdb;
 
-  $content = "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
+  $content .= "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
 
   $content .= "<form class='edit-account wrap' action='' method='post'>";
   $action = 'w4os_create_avatar';
@@ -675,3 +678,34 @@ function w4os_profile_shortcodes_init()
 	add_shortcode('gridprofile', 'w4os_profile_shortcode');
 }
 add_action('init', 'w4os_profile_shortcodes_init');
+
+function w4os_get_avatar( $user_id, $size = 96, $default = '', $alt = '', $args = NULL ) {
+  $w4os_profileimage = get_the_author_meta( 'w4os_profileimage', $user_id );
+  if ( empty($w4os_profileimage) ) return false;
+  if ( $w4os_profileimage === W4OS_NULL_KEY ) return false;
+
+  return sprintf(
+    '<img src="%1$s" class="avatar avatar-%3$d photo" alt="%2$s" loading="lazy" width="%3$d" height="%3$d">',
+    W4OS_WEB_ASSETS_SERVER_URI . $w4os_profileimage,
+    'avatar profile picture',
+    $size
+  );
+}
+
+add_filter( 'get_avatar', 'w4os_get_avatar_filter', 10, 5 );
+function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt ) {
+  //If is email, try and find user ID
+  if( ! is_numeric( $user_id ) && is_email( $user_id ) ){
+    $user  =  get_user_by( 'email', $user_id );
+    if( $user ){
+      $user_id = $user->ID;
+    }
+  }
+  if( ! is_numeric( $user_id ) ){
+    return $avatar;
+  }
+
+  $avatar_opensim = w4os_get_avatar( $user_id, $size, $default, $alt );
+  if( $avatar_opensim ) return $avatar_opensim;
+  return $avatar;
+}
