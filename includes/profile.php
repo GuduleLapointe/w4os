@@ -56,11 +56,6 @@ class W4OS_Avatar extends WP_User {
   public function profile_picture( $echo = false ) {
     $html = w4os_get_avatar( $this->ID, 256 );
 
-    // $html = sprintf(
-    //   '<img class=profile-img src="%1$s" alt="%2$s\'s profile picture" title="%2$s">',
-    //   W4OS_WEB_ASSETS_SERVER_URI . $this->ProfilePictureUUID,
-    //   $this->AvatarName,
-    // );
     if($echo) echo $html;
     else return $html;
   }
