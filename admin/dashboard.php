@@ -33,5 +33,5 @@ function w4os_dashboard_widget_gridinfo_handler() {
 	print(w4os_gridinfo_shortcode(array("title"=>"")));
 }
 function w4os_dashboard_widget_newusers_handler() {
-	print(w4os_newusers());
+	print(w4os_newusers_html());
 }
