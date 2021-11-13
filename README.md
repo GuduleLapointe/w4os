@@ -64,9 +64,9 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
 - [x] Include web asset server
 - [x] Add avatar picture to gridprofile output
+- [x] Sidebar grid info and grid status widgets.
 - Use avatar profile pic as WP avatar
 - Public avatar profile
-- Sidebar grid info and grid status widgets.
 - Login page (with grid FirstName, LastName and password).
   Optional redirect of standard login page
 - Auth with avatar credential (as fallback to wp auth).
