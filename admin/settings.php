@@ -38,6 +38,7 @@ function w4os_settings_field($args) {
 	$parameters = array();
 	if(isset($args['readonly'])) $parameters[] .= 'readonly';
 	if(isset($args['onchange'])) $parameters[] = $args['onchange'];
+	if(isset($args['placeholder'])) $parameters[] = "placeholder='" . $args['placeholder'] . "'";
 
 	switch ($args['type']) {
 		case 'string':
@@ -88,6 +89,7 @@ function w4os_register_settings() {
 						'w4os_grid_name' => array(
 							'label' => __('Grid name', 'w4os'),
 							'description' => __('Use the same name as in your grid .ini file', 'w4os'),
+							'placeholder' => 'MyGrid',
 							// 'type' => 'string',
 							// 'sanitize_callback' => 'w4os_settings_field',
 							// 'default' => 'Hippo',
@@ -95,7 +97,7 @@ function w4os_register_settings() {
 						),
 						'w4os_login_uri' => array(
 							'label' => 'Login URI',
-							'default' => 'localhost:8002',
+							'placeholder' => 'example.org:8002',
 						),
 					),
 				),
