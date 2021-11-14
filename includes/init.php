@@ -78,14 +78,14 @@ if(get_option('w4os_db_user') && get_option('w4os_db_pass') && get_option('w4os_
     get_option('w4os_db_host')
   );
 } else {
-  w4os_admin_notice(sprintf(
-    __("ROBUST database is not configured. To finish configuration, go to %s.", 'w4os'),
-    sprintf(
-      "<a href='%s'>%s</a>",
-      get_admin_url('', 'admin.php?page=w4os_settings'),
-      __("OpenSimulator settings page", 'w4os'),
-      )
-    )
+  echo "<br>w4os_db_user: " . get_option('w4os_db_user');
+  echo "<br>w4os_db_pass: " .  get_option('w4os_db_pass');
+  echo "<br>w4os_db_database: " .  get_option('w4os_db_database');
+  echo "<br>w4os_db_host: " .  get_option('w4os_db_host');
+
+  // echo "<p>i got no options"; die;
+  w4os_admin_notice(
+    w4os_give_settings_url( __('ROBUST database is not configured. To finish configuration, go to ', 'w4os') )
   );
 }
 
@@ -95,27 +95,15 @@ function w4os_check_db_tables() {
   if(empty($w4osdb)) return false; // Might happen when using wp-cli
 
   if(! empty($w4osdb) &! $w4osdb->check_connection(false)) {
-    w4os_admin_notice(sprintf(
-      __("Could not connect to the database server, please verify your credentials on %s.", 'w4os'),
-      sprintf(
-        "<a href='%s'>%s</a>",
-        get_admin_url('', 'admin.php?page=w4os_settings'),
-        __("OpenSimulator settings page", 'w4os'),
-        )
-      ),
+    w4os_admin_notice(
+      w4os_give_settings_url( __('Could not connect to the database server, please verify your credentials on ', 'w4os') ),
       'error',
     );
     return false;
   }
   if(!$w4osdb->get_var("SHOW DATABASES LIKE '" . get_option('w4os_db_database') . "'")) {
-    w4os_admin_notice(sprintf(
-      __("Could not connect to the ROBUST database, please verify database name and/or credentials on %s.", 'w4os'),
-      sprintf(
-        "<a href='%s'>%s</a>",
-        get_admin_url('', 'admin.php?page=w4os_settings'),
-        __("OpenSimulator settings page", 'w4os'),
-        )
-      ),
+    w4os_admin_notice(
+      w4os_give_settings_url( __('Could not connect to the ROBUST database, please verify database name and/or credentials on ', 'w4os') ),
       'error',
     );
     return false;
@@ -151,14 +139,12 @@ function w4os_check_db_tables() {
     $missing_tables[] = $table_name;
 	}
   if(count($missing_tables) > 0) {
-    w4os_admin_notice(sprintf(
-      __("Missing tables: %s. The ROBUST database is connected, but it does not seem to be valid. Check your settings on %s.", 'w4os'),
-      ' <strong><em>' . join(', ', $missing_tables) . '</em></strong>',
-      sprintf(
-        "<a href='%s'>%s</a>",
-        get_admin_url('', 'admin.php?page=w4os_settings'),
-        __("OpenSimulator settings page", 'w4os'),
-        )
+    w4os_admin_notice(
+      w4os_give_settings_url(
+        sprintf(
+          __("Missing tables: %s. The ROBUST database is connected, but it does not seem valid. ", 'w4os'),
+          ' <strong><em>' . join(', ', $missing_tables) . '</em></strong>',
+        ),
       ),
       'error',
     );

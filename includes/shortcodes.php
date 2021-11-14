@@ -65,8 +65,20 @@ function w4os_shortcodes_init()
 }
 add_action('init', 'w4os_shortcodes_init');
 
-function w4os_newusers_html() {
-	if (! W4OS_DB_CONNECTED) return;
+function w4os_give_settings_url($message = '') {
+	return sprintf(
+		"<p>%s<a href='%s'>%s</a></p>",
+		$message,
+		get_admin_url('', 'admin.php?page=w4os_settings'),
+		__("OpenSimulator settings page", 'w4os'),
+	);
+}
+
+function w4os_newusers_html($atts = [], $args = []) {
+	if(! W4OS_DB_CONNECTED) {
+		if($args['args']['error-messages']) echo w4os_give_settings_url( __('Configure W4OS database ', 'w4os') );
+		return;
+	};
 	if (! current_user_can( 'list_users' ) ) return;
 	global $wpdb;
 	$recentusers = '<ul class="recent-users">';
@@ -95,6 +107,11 @@ function w4os_newusers_html() {
 
 function w4os_gridinfo_html($atts = [], $args=[])
 {
+	if ( ( empty(get_option('w4os_login_uri')) || empty(get_option('w4os_grid_name')) ) && $args['args']['error-messages'] ) {
+		echo w4os_give_settings_url( __('Configure W4OS: ', 'w4os') );
+		return;
+	}
+
 	extract( $args );
 
 	isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info", 'w4os');
@@ -113,7 +130,11 @@ function w4os_gridinfo_html($atts = [], $args=[])
 
 function w4os_gridstatus_html($atts = [], $args = [])
 {
-	if(! W4OS_DB_CONNECTED) return;
+	if(! W4OS_DB_CONNECTED) {
+		if($args['args']['error-messages'])
+		echo w4os_give_settings_url( __('Configure W4OS database: ', 'w4os') );
+		return;
+	};
 
 	global $w4osdb;
 	global $wp_locale;

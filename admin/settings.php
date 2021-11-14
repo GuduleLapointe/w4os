@@ -22,12 +22,6 @@ function w4os_register_setting($option_page, $option_slug, $args = array() ) {
 	);
 }
 
-function w4os_settings_section_callback($arg) {
-	// echo '<p>id: ' . $arg['id'] . '</p>';             // id: eg_setting_section
-	// echo '<p>title: ' . $arg['title'] . '</p>';       // title: Example settings section in reading
-	// echo '<p>callback: ' . $arg['callback'] . '</p>'; // callback: eg_setting_section_callback_function
-}
-
 function w4os_settings_field($args) {
 	if($args['option_slug']) $field_id = $args['option_slug'];
 	else if($args['label_for']) $field_id = $args['label_for'];
@@ -85,6 +79,15 @@ function w4os_settings_callback_gridinfo() {
 		__('Robust server must be running. Values entered here will be checked against your Robust server and updated if needed.', 'w4os'),
 	);
 }
+
+function w4os_settings_callback_models($arg) {
+	echo "<p>" . __('Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture.', 'w4os') . "</p>";
+}
+
+function w4os_settings_callback_webassets($arg) {
+	echo "<p class=help>" . __('A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin.', 'w4os') . "</p>";
+}
+
 function w4os_register_settings() {
 	$grid_info = w4os_update_grid_info();
 	// $check_login_uri = 'http://' . (!empty(get_option('w4os_login_uri'))) ? esc_attr(get_option('w4os_login_uri')) : 'http://localhost:8002';
@@ -119,30 +122,23 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_db_host' => array(
 							'label' => __('Hostname', 'w4os'),
-							'default' => 'localhost',
 						),
 						'w4os_db_database' => array(
 							'label' => __('Database name', 'w4os'),
-							'default' => 'opensim',
 						),
 						'w4os_db_user' => array(
 							'label' => __('Username', 'w4os'),
-							'default' => 'opensim',
 						),
 						'w4os_db_pass' => array(
 							'label' => __('Password', 'w4os'),
-							'default' => '',
 							'type' => 'password',
 						),
 					),
 				),
 				'w4os_options_avatarcreation' => array(
 					'name' => __('Avatar models', 'w4os'),
+					'section_callback' => 'w4os_settings_callback_models',
 					'fields' => array(
-						'w4os_model_info' => array(
-							'type' => 'description',
-							'description' => __('Grid accounts matching first name or last name set below will appear as avatar models, with their profile picture if set, on the avatar registration form.', 'w4os'),
-						),
 						'w4os_model_firstname' => array(
 							'label' => __('First Name = ', 'w4os'),
 							'default' => 'Default'
@@ -153,8 +149,9 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_misc' => array(
-					'name' => __('Misc', 'w4os'),
+				'w4os_options_webassets' => array(
+					'name' => __('Web assets server', 'w4os'),
+					'section_callback' => 'w4os_settings_callback_webassets',
 					'fields' => array(
 						'w4os_provide' => array(
 							'type' => 'checkbox',
@@ -174,6 +171,11 @@ function w4os_register_settings() {
 							'label' => __('External assets server URI', 'w4os'),
 							'default' => W4OS_DEFAULT_ASSET_SERVER_URI,
 						),
+					),
+				),
+				'w4os_options_misc' => array(
+					'name' => __('Misc', 'w4os'),
+					'fields' => array(
 						'w4os_assets_permalink' => array(
 							'type' => 'description',
 							'label' => __('Permalinks', 'w4os'),
