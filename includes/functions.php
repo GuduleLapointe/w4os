@@ -96,3 +96,12 @@ function w4os_update_grid_info() {
 	if ( ! empty($grid_info['login']) ) update_option('w4os_login_uri', preg_replace('+/*$+', '', preg_replace('+https*://+', '', $grid_info['login'])));
 	if ( ! empty($grid_info['gridname']) ) update_option('w4os_grid_name', $grid_info['gridname']);
 }
+
+function w4os_give_settings_url($message = '') {
+	return sprintf(
+		"<p>%s<a href='%s'>%s</a></p>",
+		$message,
+		get_admin_url('', 'admin.php?page=w4os_settings'),
+		__("OpenSimulator settings page", 'w4os'),
+	);
+}

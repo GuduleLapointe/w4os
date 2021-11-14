@@ -65,15 +65,6 @@ function w4os_shortcodes_init()
 }
 add_action('init', 'w4os_shortcodes_init');
 
-function w4os_give_settings_url($message = '') {
-	return sprintf(
-		"<p>%s<a href='%s'>%s</a></p>",
-		$message,
-		get_admin_url('', 'admin.php?page=w4os_settings'),
-		__("OpenSimulator settings page", 'w4os'),
-	);
-}
-
 function w4os_newusers_html($atts = [], $args = []) {
 	if(! W4OS_DB_CONNECTED) {
 		if($args['args']['error-messages']) echo w4os_give_settings_url( __('Configure W4OS database ', 'w4os') );

@@ -63,99 +63,17 @@ function w4os_load_textdomain() {
 add_action( 'init', 'w4os_load_textdomain' );
 
 require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/w4osdb.php';
 require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/widgets.php';
 require_once __DIR__ . '/profile.php';
-
 require_once dirname(__DIR__) . '/blocks/w4os-gridinfo-block.php';
-require_once __DIR__ . '/woocommerce-fix.php';
-if(get_option('w4os_provide_asset_server') == 1 ) require_once __DIR__ . '/assets.php';
-// Rapporte les erreurs d'exécution de script
-
-
-if(get_option('w4os_db_user') && get_option('w4os_db_pass') && get_option('w4os_db_database') && get_option('w4os_db_host')) {
-  $w4osdb = new WPDB(
-    get_option('w4os_db_user'),
-    get_option('w4os_db_pass'),
-    get_option('w4os_db_database'),
-    get_option('w4os_db_host')
-  );
-} else {
-  echo "<br>w4os_db_user: " . get_option('w4os_db_user');
-  echo "<br>w4os_db_pass: " .  get_option('w4os_db_pass');
-  echo "<br>w4os_db_database: " .  get_option('w4os_db_database');
-  echo "<br>w4os_db_host: " .  get_option('w4os_db_host');
-
-  // echo "<p>i got no options"; die;
-  w4os_admin_notice(
-    w4os_give_settings_url( __('ROBUST database is not configured. To finish configuration, go to ', 'w4os') )
-  );
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+  require_once __DIR__ . '/woocommerce.php';
 }
-
-function w4os_check_db_tables() {
-	if(defined('W4OS_DB_CONNECTED')) return true;
-	global $w4osdb;
-  if(empty($w4osdb)) return false; // Might happen when using wp-cli
-
-  if(! empty($w4osdb) &! $w4osdb->check_connection(false)) {
-    w4os_admin_notice(
-      w4os_give_settings_url( __('Could not connect to the database server, please verify your credentials on ', 'w4os') ),
-      'error',
-    );
-    return false;
-  }
-  if(!$w4osdb->get_var("SHOW DATABASES LIKE '" . get_option('w4os_db_database') . "'")) {
-    w4os_admin_notice(
-      w4os_give_settings_url( __('Could not connect to the ROBUST database, please verify database name and/or credentials on ', 'w4os') ),
-      'error',
-    );
-    return false;
-  }
-
-	if(!is_object($w4osdb)) return false;
-	$required_tables = array(
-		// 'AgentPrefs',
-		// 'assets',
-		// 'auth',
-		'Avatars',
-		// 'Friends',
-		'GridUser',
-		'inventoryfolders',
-		'inventoryitems',
-		// 'migrations',
-		// 'MuteList',
-		'Presence',
-		'regions',
-		// 'tokens',
-		'UserAccounts',
-	);
-  $missing_tables=array();
-	foreach($required_tables as $table_name) {
-		unset($actual_name);
-		$lower_name = strtolower($table_name);
-		if($w4osdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) $actual_name = $table_name;
-		else if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) $actual_name = $lower_name;
-		if(isset($actual_name)) {
-			if (!defined($table_name)) define($table_name, $actual_name);
-			continue;
-		}
-    $missing_tables[] = $table_name;
-	}
-  if(count($missing_tables) > 0) {
-    w4os_admin_notice(
-      w4os_give_settings_url(
-        sprintf(
-          __("Missing tables: %s. The ROBUST database is connected, but it does not seem valid. ", 'w4os'),
-          ' <strong><em>' . join(', ', $missing_tables) . '</em></strong>',
-        ),
-      ),
-      'error',
-    );
-    return false;
-  }
-	return true;
+if(get_option('w4os_provide_asset_server') == 1 ) {
+  require_once __DIR__ . '/assets.php';
 }
-if (!defined('W4OS_DB_CONNECTED')) define('W4OS_DB_CONNECTED', w4os_check_db_tables());
 
 add_action( 'wp_enqueue_scripts', function() {
   wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
@@ -163,7 +81,6 @@ add_action( 'wp_enqueue_scripts', function() {
 } );
 
 require_once __DIR__ . '/updates.php';
-
 /**
  * Rewrite rules after any version update or if explicitely requested
  */
