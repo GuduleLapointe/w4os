@@ -74,14 +74,13 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
   Create new WordPress user if auth by avatar.
 - Option to show avatar name instead of real name in user lists
 
-= Middle term =
+= Medium term =
 
+- [x] get grid info from http://login.uri:8002/get_grid_info
 - Admin Start / Stop regions
 - Admin Create region
 - Admin Use sim/grid configuration file to fetch settings if on the same host
-- get grid info from http://login.uri:8002/get_grid_info
-- Helpers (assets, search, currency, map...)
-- Use cache for grid info
+- Helpers (assets [x], search, currency, map...)
 
 = Long term =
 
@@ -92,6 +91,9 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - WooCommerce Subscriptions integration for user-owned Regions or other pay-for services
 
 == Frequently Asked Questions ==
+
+= Do I need to run the website on the same server? =
+No, if your web server has access to your OpenSimulator database.
 
 = How to create avatar models =
 

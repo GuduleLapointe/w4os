@@ -36,12 +36,12 @@ phpcs.xml.dist export-ignore
 phpunit.xml export-ignore
 phpunit.xml.dist export-ignore
 README.md export-ignore
+CHANGELOG.md export-ignore
 sources export-ignore
 tests export-ignore
 Thumbs.db export-ignore
 webpack.config.js export-ignore
 wp-cli.local.yml export-ignore
 yarn.lock export-ignore
-README.md export-ignore
 .distignore.wp export-ignore
 .version export-ignore
