@@ -7,6 +7,7 @@
 add_action( 'wp_dashboard_setup', 'w4os_dashboard_add_widgets' );
 function w4os_dashboard_add_widgets() {
   if ( current_user_can('manage_options') ) $args['error-messages'] = true;
+
   wp_add_dashboard_widget(
     'w4os_dashboard_widget_gridinfo',
     "OpenSimulator: " . __( 'Grid info', 'w4os' ),

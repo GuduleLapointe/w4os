@@ -1,0 +1,57 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.shortcodes > table {
+  max-width: 60em;
+  border-spacing: 20px;
+  border-collapse: separate;
+  margin: -20px;
+}
+ .shortcodes > table > * {
+   vertical-align: top;
+   text-align: left;
+ }
+
+.shortcodes > table > tbody > tr > th {
+  font-weight: normal;
+}
+
+.shortcodes > table > tbody > tr > td {
+  font-weight: normal;
+  padding: 10px;
+  background: white !important;
+}
+.shortcodes > table > tbody > tr  :first-child {
+  margin-top: 0;
+}
+
+@media screen and (min-width: 480px) {
+  .shortcodes > table > tbody > tr > th {
+    max-width: 50%;
+  }
+
+  .shortcodes > table > tbody > tr > td {
+    min-width: 50%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .shortcodes > table,
+  .shortcodes > table > tbody,
+  .shortcodes > table > * > tr,
+  .shortcodes > table > * > * > th,
+  .shortcodes > table > * > * > td
+   {
+     display: block;
+     max-width: 100%;
+     /* padding: 10px; */
+   }
+   .shortcodes > table
+    {
+      margin: 0;
+    }
+    .shortcodes > table > tbody > tr > th {
+      margin-top: 25px;
+    }
+}
