@@ -154,7 +154,7 @@ function w4os_register_settings() {
 					),
 				),
 				'w4os_options_webassets' => array(
-					'name' => __('Web assets server', 'w4os'),
+					'name' => __('Web assets', 'w4os'),
 					'section_callback' => 'w4os_settings_callback_webassets',
 					'fields' => array(
 						'w4os_provide' => array(
@@ -180,11 +180,6 @@ function w4os_register_settings() {
 				'w4os_options_misc' => array(
 					'name' => __('Misc', 'w4os'),
 					'fields' => array(
-						'w4os_assets_permalink' => array(
-							'type' => 'description',
-							'label' => __('Permalinks', 'w4os'),
-							'description' => sprintf(__('Set w4os slugs on %spermalink options page%s.', 'w4os'), '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>'),
-						),
 						'w4os_exclude' => array(
 							'type' => 'checkbox',
 							'label' => __('Exclude from stats', 'w4os'),
@@ -193,6 +188,11 @@ function w4os_register_settings() {
 								'nomail' => __('Accounts without mail address', 'w4os'),
 							),
 							'description' => __('Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os'),
+						),
+						'w4os_assets_permalink' => array(
+							'type' => 'description',
+							'label' => __('Permalinks', 'w4os'),
+							'description' => sprintf(__('Set w4os slugs on %spermalink options page%s.', 'w4os'), '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>'),
 						),
 					),
 				),
