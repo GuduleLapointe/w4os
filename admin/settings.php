@@ -78,26 +78,39 @@ function w4os_settings_field($args) {
 	// echo "<input type=text value='$one'/><pre>" . print_r($args, true) . "</pre>";
 }
 
+function w4os_settings_callback_gridinfo() {
+	echo sprintf(
+		'<p>%1$s %2$s</p>',
+		__('Values must match Robust.HG.ini (or Robust.ini) config file.', 'w4os'),
+		__('Robust server must be running. Values entered here will be checked against your Robust server and updated if needed.', 'w4os'),
+	);
+}
 function w4os_register_settings() {
+	$grid_info = w4os_update_grid_info();
+	// $check_login_uri = 'http://' . (!empty(get_option('w4os_login_uri'))) ? esc_attr(get_option('w4os_login_uri')) : 'http://localhost:8002';
+	// $default_loginuri = $grid_info['login'];
+	// $default_gridname = $grid_info['gridname'];
 
 	$settings_pages = array(
 		'w4os_settings' => array(
 			'sections' => array(
 				'w4os_options_gridinfo' => array(
 					'name' => __('Grid info', 'w4os'),
+					'section_callback' => 'w4os_settings_callback_gridinfo',
 					'fields' => array(
-						'w4os_grid_name' => array(
-							'label' => __('Grid name', 'w4os'),
-							'description' => __('Use the same name as in your grid .ini file', 'w4os'),
-							'placeholder' => 'MyGrid',
+						'w4os_login_uri' => array(
+							'label' => 'Login URI',
+							'placeholder' => 'example.org:8002',
+							'default' => $default_loginuri,
 							// 'type' => 'string',
 							// 'sanitize_callback' => 'w4os_settings_field',
 							// 'default' => 'Hippo',
 							// 'placeholder' => 'Grid Name',
 						),
-						'w4os_login_uri' => array(
-							'label' => 'Login URI',
-							'placeholder' => 'example.org:8002',
+						'w4os_grid_name' => array(
+							'label' => __('Grid name', 'w4os'),
+							'placeholder' => 'MyGrid',
+							'default' => $default_gridname,
 						),
 					),
 				),
@@ -185,7 +198,7 @@ function w4os_register_settings() {
 		add_settings_section( $page_slug, '', '', $page_slug );
 
 		foreach($page['sections'] as $section_slug => $section) {
-			add_settings_section( $section_slug, $section['name'], 'w4os_settings_section_callback', $page_slug );
+			add_settings_section( $section_slug, $section['name'], $section['section_callback'], $page_slug );
 			foreach($section['fields'] as $field_slug => $field) {
 				$field['section'] = $section_slug;
 				w4os_register_setting( $page_slug, $field_slug, $field );
@@ -237,15 +250,9 @@ function w4os_options_page()
 			submit_button();
 			 ?>
 		</form>
-		<script type="text/javascript">
-		function valueChanged(w4os_provide_asset_server) {
-			document.getElementById("w4os_internal_asset_server_uri").parentNode.parentNode.style.display = w4os_provide_asset_server.checked ? "table-row" : "none";
-			document.getElementById("w4os_asset_server_uri").parentNode.parentNode.style.display = w4os_provide_asset_server.checked ? "none" : "table-row";
-		}
-		valueChanged(w4os_provide_asset_server);
-		</script>
 	</div>
 <?php
+	wp_enqueue_script( 'w4os-admin-settings-form-js', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
 }
 
 function w4os_status_page()

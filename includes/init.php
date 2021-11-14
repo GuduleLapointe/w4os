@@ -1,5 +1,4 @@
 <?php if ( ! defined( 'WPINC' ) ) die;
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 define('W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000');
 // define('W4OS_ZERO_VECTOR', '<0,0,0>');

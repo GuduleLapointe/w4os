@@ -28,6 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 /**
  * Plugin conflict checker. As the plugin slug changed when published on the

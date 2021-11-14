@@ -65,3 +65,34 @@ function w4os_admin_notice($notice, $class='info', $dismissible=true ) {
     <?php
   } );
 }
+
+function w4os_fast_xml($url) {
+	// Exit silently if required php modules are missing
+	if ( ! function_exists('curl_init') ) return NULL;
+	if ( ! function_exists('simplexml_load_string') ) return NULL;
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	$html = curl_exec($ch);
+	curl_close($ch);
+	$xml = simplexml_load_string($html);
+	return $xml;
+}
+
+function w4os_update_grid_info() {
+	if(defined('W4OS_GRID_INFO_CHECKED')) return;
+	define('W4OS_GRID_INFO_CHECKED', true);
+	$local_uri = 'http://localhost:8002';
+	$check_login_uri = ( get_option('w4os_login_uri') ) ? 'http://' . get_option('w4os_login_uri') : $local_uri ;
+	$check_login_uri = preg_replace('+http://http+', 'http', $check_login_uri);
+	// $xml = simplexml_load_file($check_login_uri . '/get_grid_info');
+	$xml = w4os_fast_xml($check_login_uri . '/get_grid_info');
+
+	if(!$xml) return false;
+	if($check_login_uri == $local_uri) w4os_admin_notice(__('A local Robust server has been found. Please check Login URI and Grid name configuration.', 'w4os'), 'success');
+
+	$grid_info = (array) $xml;
+	if ( ! empty($grid_info['login']) ) update_option('w4os_login_uri', preg_replace('+/*$+', '', preg_replace('+https*://+', '', $grid_info['login'])));
+	if ( ! empty($grid_info['gridname']) ) update_option('w4os_grid_name', $grid_info['gridname']);
+}
