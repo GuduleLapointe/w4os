@@ -36,7 +36,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 
 ### Paid version
 
-The free version from WordPress plugins directory and the (paid version)[https://magiiic.com/wordpress/plugins/w4os/] are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
+The free version from WordPress plugins directory and the [paid version](https://magiiic.com/wordpress/plugins/w4os/) are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
 
 ## Installation
 
