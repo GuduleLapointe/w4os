@@ -65,6 +65,7 @@ add_action( 'init', 'w4os_load_textdomain' );
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/widgets.php';
+require_once dirname(__DIR__) . '/blocks/w4os-gridinfo-block.php';
 require_once __DIR__ . '/woocommerce-fix.php';
 if(get_option('w4os_provide_asset_server') == 1 ) require_once __DIR__ . '/assets.php';
 // Rapporte les erreurs d'exécution de script
