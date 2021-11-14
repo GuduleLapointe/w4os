@@ -111,7 +111,6 @@ img.model-picture {
 }
 .form-wrap p, p.description, p.help, span.description {
   display: block;
-  font-size: 70%;
   line-height: 1.2em;
     font-style: italic;
     margin-top: 4px;
@@ -145,10 +144,17 @@ img.model-picture {
   margin-right: 20px;
 }
 
+.edit-account label {
+  display: inline-block;
+    width: calc( (100% - 20px) / 2);
+  min-width: 15em;
+  max-width: 100%;
+}
+
 .avatar.not-created,
 .avatar.not-connected {
-  text-align: center;
-  font-weight: bold;
+  /* text-align: center; */
+  /* font-weight: bold; */
 }
 
 .w4os-login label {

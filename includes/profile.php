@@ -535,7 +535,7 @@ function w4os_avatar_creation_form ($user) {
 
   global $w4osdb;
 
-  $content .= "<p class='avatar not-created'>" . __("You have no grid account yet. Fill the form below to create your avatar.", 'w4os') . "</p>";
+  $content .= "<p class='avatar not-created'>" . __("You have no grid account yet.", 'w4os') . "</p>";
 
   $content .= "<form class='edit-account wrap' action='' method='post'>";
   $action = 'w4os_create_avatar';
@@ -543,7 +543,7 @@ function w4os_avatar_creation_form ($user) {
   $firstname = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_firstname'])) ? $_REQUEST['w4os_firstname'] : get_user_meta( $user->ID, 'first_name', true )));
   $lastname  = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_lastname']))  ? $_REQUEST['w4os_lastname']  : get_user_meta( $user->ID, 'last_name', true )));
 
-  $content .= "<p class=description>" . __('Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, it cannot be changed.', 'w4os') . "</p>";
+  $content .= "<p>" . __('Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, the name cannot be changed.', 'w4os') . "</p>";
 
   $content .= "
   <div class='clear'></div>
