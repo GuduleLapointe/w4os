@@ -66,15 +66,13 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Include web asset server
 - [x] Add avatar picture to gridprofile output
 - [x] Sidebar grid info and grid status widgets.
-- Use avatar profile pic as WP avatar
+- [x] Use avatar profile pic as WP avatar
+- [x] Show avatar picture in user lists
+- [x] Login page / Widget
 - Public avatar profile
-- Login page (with grid FirstName, LastName and password).
-  Optional redirect of standard login page
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
 - Option to show avatar name instead of real name in user lists
-- Option to show avatar picture in user lists
-- Option to link WordPress and avatar name (then lock both for changes once an avatar is set).
 
 = Middle term =
 
@@ -135,15 +133,17 @@ Maybe, but we didn't check yet. If you give it a try, please send us your feedba
 == Changelog ==
 
 = Unreleased =
-* new internal web assets server
-* new 'Grid info' and 'Grid status' sidebar widgets
 * new basic blocks support
+* new grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
+* new 'Grid info' and 'Grid status' sidebar widgets
+* new internal web assets server
 * added internal update process
 * added assets permalink settings
 * added profile image to gridprofile output
-* added comprehensive database connection error reporting
 * fix #21 Fatal error Call to undefined function each()
-* show git commit alongside version if installed from git
+* replace wp avatar picture with in-world profile picture if set
+* use version provided by .version if present
+* More comprehensive database connection error reporting
 * show internal or external asset server uri according to provide web assets service value
 
 = 2.1 =

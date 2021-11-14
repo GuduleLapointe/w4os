@@ -35,12 +35,12 @@ phpcs.xml.dist
 phpunit.xml
 phpunit.xml.dist
 README.md
+CHANGELOG.md
 sources
 tests
 Thumbs.db
 webpack.config.js
 wp-cli.local.yml
 yarn.lock
-README.md
 .distignore.wp
 .version

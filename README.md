@@ -28,6 +28,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 - Choose avatar look from default models
 - Avatar and website passwords are synchronized
 - **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
+- **Web assets server**: the needed bridge to display in-world images on a website
 - **OpenSimulator settings page**:
   - grid name, login uri and database connection settings
   - naming scheme of default models
@@ -65,15 +66,13 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Include web asset server
 - [x] Add avatar picture to gridprofile output
 - [x] Sidebar grid info and grid status widgets.
-- Use avatar profile pic as WP avatar
+- [x] Use avatar profile pic as WP avatar
+- [x] Show avatar picture in user lists
+- [x] Login page / Widget
 - Public avatar profile
-- Login page (with grid FirstName, LastName and password).
-  Optional redirect of standard login page
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
 - Option to show avatar name instead of real name in user lists
-- Option to show avatar picture in user lists
-- Option to link WordPress and avatar name (then lock both for changes once an avatar is set).
 
 ### Middle term
 
@@ -130,66 +129,3 @@ Maybe, but we didn't check yet. If you give it a try, please send us your feedba
 1. Grid info and grid status examples
 2. Avatar registration form in WooCommerce My Account dashboard.
 3. Settings page
-
-## Changelog
-
-### Unreleased
-* new internal web assets server
-* new 'Grid info' and 'Grid status' sidebar widgets
-* new basic blocks support
-* added internal update process
-* added assets permalink settings
-* added profile image to gridprofile output
-* fix #21 Fatal error Call to undefined function each()
-* use version provided by .version if present
-* More comprehensive database connection error reporting
-* show internal or external asset server uri according to provide web assets service value
-
-### Unreleased
-* new internal web assets server
-* added internal update process
-* added assets permalink settings
-* added profile image to gridprofile output
-* added comprehensive database connection error reporting
-* fix #21 Fatal error Call to undefined function each()
-* show git commit alongside version if installed from git
-* show internal or external asset server uri according to provide web assets service value
-
-### 2.1
-* added login form to gridprofile shortcode when not connected instead of login message
-* added w4os-shortcode classes
-* added screenshots
-* fix fatal error when trying to display  WooCommerce Avatar tab form in My Account
-* fix localisation not loading
-* shorter "Avatar" label, removed uuid in gridprofile shortcode
-
-### 2.0.8
-* Now distributed via WordPress plugins directory
-* Official git repository changed to GitHub
-* renamed plugin as W4OS - OpenSimulator Web Interface
-* fix other WP plugins directory requirements
-* fix localizations not loading
-* fix regression, automatic updates restored. Users with version 2.0 to 2.0.3 will need to reinstall the plugin from source. Sorry.
-* use plugin dir to detect slug instead of hardcoded value
-* renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility
-
-### 1.2.12
-* fix #2 Database check fails if mysql is case insensitive
-* fix #4  Database connection error triggered if userprofile table is absent
-* fix #10 invalid JSON response when adding [w4os_profile] shortcode element
-* fix wrong letter cases in auth table name
-* fix only show profile form for current user
-* better css loading
-* only check once if w4os db is connected
-* added login page link to message displayed when trying to see profile while not connected
-* more detailed error messages for avatar creation
-
-### 1.1.4
-* added changelog, banners and icons to view details
-* fix "Yes" and "No" translations
-* fix typo in banners and icons urls, can't believe I didn't see this before...
-* fixed conflict with other extensions settings pages
-* changed update server library to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
-
-### Previous
-* For full change history see [GitHub repository](https://github.com/GuduleLapointe/w4os/commits/master)
