@@ -40,7 +40,7 @@ if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain'
 // if ( ! defined( 'W4OS_REGISTER_TEXT' ) ) define('W4OS_REGISTER_TEXT', sprintf(__('Get a license key on %s website', W4OS_TXDOM), W4OS_STORE_LINK) );
 
 if(empty(get_option('w4os_assets_slug'))) update_option('w4os_assets_slug', 'assets');
-define('W4OS_ASSETS_SERVER', 'http://' . esc_attr(get_option('w4os_login_uri')) . '/' . esc_attr(get_option('w4os_assets_slug'), 'assets') . '/'); // (OpenSim.ini: asset_server_url . "/assets/")
+define('W4OS_ASSETS_SERVER', 'http://' . esc_attr(get_option('w4os_login_uri')) . '/assets/'); // (OpenSim.ini: asset_server_url . "/assets/")
 
 define('W4OS_WEB_ASSETS_SERVER_URI',
   (get_option('w4os_provide_asset_server') ==  1)
