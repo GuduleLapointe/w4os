@@ -65,6 +65,8 @@ add_action( 'init', 'w4os_load_textdomain' );
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/widgets.php';
+require_once __DIR__ . '/profile.php';
+
 require_once dirname(__DIR__) . '/blocks/w4os-gridinfo-block.php';
 require_once __DIR__ . '/woocommerce-fix.php';
 if(get_option('w4os_provide_asset_server') == 1 ) require_once __DIR__ . '/assets.php';
@@ -160,10 +162,6 @@ add_action( 'wp_enqueue_scripts', function() {
   // wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os.css', array(), W4OS_VERSION . time() );
 } );
 
-if(W4OS_DB_CONNECTED) {
-  // if($pagenow == "profile.php" || $pagenow == "user-edit.php")
-  require_once __DIR__ . '/profile.php';
-}
 require_once __DIR__ . '/updates.php';
 
 /**
