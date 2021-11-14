@@ -12,16 +12,17 @@
  *
  * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
-function w4os_gridinfo_block_block_init() {
+
+function w4os_block_init($slug, $title) {
 	// Skip block registration if Gutenberg is not enabled/merged.
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
 	}
 	$dir = dirname( __FILE__ );
 
-	$index_js = 'w4os-gridinfo-block/index.js';
+	$index_js = "w4os-$slug-block/index.js";
 	wp_register_script(
-		'w4os-gridinfo-block-block-editor',
+		"w4os-$slug-block-editor",
 		plugins_url( $index_js, __FILE__ ),
 		[
 			'wp-blocks',
@@ -31,35 +32,71 @@ function w4os_gridinfo_block_block_init() {
 		filemtime( "{$dir}/{$index_js}" )
 	);
 
-	$editor_css = 'w4os-gridinfo-block/editor.css';
+	$editor_css = "w4os-$slug-block/editor.css";
 	wp_register_style(
-		'w4os-gridinfo-block-block-editor',
+		"w4os-$slug-block-editor",
 		plugins_url( $editor_css, __FILE__ ),
 		[],
 		filemtime( "{$dir}/{$editor_css}" )
 	);
 
-	$style_css = 'w4os-gridinfo-block/style.css';
+	$style_css = "w4os-$slug-block/style.css";
 	wp_register_style(
-		'w4os-gridinfo-block-block',
+		"w4os-$slug-block",
 		plugins_url( $style_css, __FILE__ ),
 		[],
 		filemtime( "{$dir}/{$style_css}" )
 	);
 
-	register_block_type( 'w4os/w4os-gridinfo-block', [
-    // 'render_callback' => 'w4os_gridinfo_block_render',
-		'editor_script' => 'w4os-gridinfo-block-block-editor',
-		'editor_style'  => 'w4os-gridinfo-block-block-editor',
-		'style'         => 'w4os-gridinfo-block-block',
+	register_block_type( "w4os/w4os-$slug-block", [
+    'render_callback' => "w4os_${slug}_block_render",
+		'editor_script' => "w4os-$slug-block-editor",
+		'editor_style'  => "w4os-$slug-block-editor",
+		'style'         => "w4os-$slug-block",
 	] );
 }
 
-add_action( 'init', 'w4os_gridinfo_block_block_init' );
-
+add_action( 'init', 'w4os_gridinfo_block_init' );
+function w4os_gridinfo_block_init() {
+	w4os_block_init('gridinfo', 'Grid info');
+}
 function w4os_gridinfo_block_render($args=[], $dumb="", $block_object=[]) {
+	$args = (array) $block_object;
+	$args['before_title'] = '<h4>';
+	$args['after_title'] = '</h4>';
+
 	return sprintf(
 		'<div>%s</div>',
-		w4os_gridinfo_html($atts, $block_object )
+		w4os_gridinfo_html($atts, $args )
+	);
+}
+
+add_action( 'init', 'w4os_gridstatus_block_init' );
+function w4os_gridstatus_block_init() {
+	w4os_block_init('gridstatus', 'Grid status');
+}
+function w4os_gridstatus_block_render($args=[], $dumb="", $block_object=[]) {
+	$args = (array) $block_object;
+	$args['before_title'] = '<h4>';
+	$args['after_title'] = '</h4>';
+
+	return sprintf(
+		'<div>%s</div>',
+		w4os_gridstatus_html($atts, $args )
+	);
+}
+
+add_action( 'init', 'w4os_gridprofile_block_init' );
+function w4os_gridprofile_block_init() {
+	w4os_block_init('gridprofile', 'Grid profile');
+}
+function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
+	$args = (array) $block_object;
+	$args['before_title'] = '<h4>';
+	$args['after_title'] = '</h4>';
+	$args['title'] = __('Grid profile', 'w4os');
+	return sprintf(
+		'<div>%s</div>',
+		w4os_gridprofile_html($atts, $args )
 	);
 }

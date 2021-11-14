@@ -611,7 +611,11 @@ function w4os_avatar_creation_form ($user) {
   return $content;
 }
 
-function w4os_profile_display( $user ) {
+function w4os_gridprofile_html($atts=[], $args=[] ) {
+  return w4os_profile_display(wp_get_current_user(), $args);
+}
+
+function w4os_profile_display( $user, $args=[] ) {
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
     // $content =  "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
@@ -620,6 +624,7 @@ function w4os_profile_display( $user ) {
   }
 
   global $w4osdb;
+  extract($args);
   $avatar = new W4OS_Avatar($user->ID);
 
   if ( isset($_REQUEST['w4os_update_avatar'] ) ) {
@@ -641,10 +646,14 @@ function w4os_profile_display( $user ) {
       $avatar->profile_picture(),
       $avatar->AvatarName,
     );
-    return $content;
+    // return $content;
   } else {
-    return w4os_avatar_creation_form ($user);
+    $content= w4os_avatar_creation_form ($user);
   }
+  if(!empty($content)) {
+    $content = $before_title . $title . $after_title . $content;
+  }
+  return $content;
 }
 
 function w4os_profile_fields_save( $user_id ) {

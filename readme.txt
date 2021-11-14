@@ -137,6 +137,7 @@ Maybe, but we didn't check yet. If you give it a try, please send us your feedba
 = Unreleased =
 * new internal web assets server
 * new 'Grid info' and 'Grid status' sidebar widgets
+* new basic blocks support
 * added internal update process
 * added assets permalink settings
 * added profile image to gridprofile output

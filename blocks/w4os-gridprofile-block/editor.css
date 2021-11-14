@@ -4,10 +4,10 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-w4os-gridinfo-block {
+.wp-block-w4os-gridprofile-block {
 	/* border: 1px dotted #f00; */
   background: pink;
 }
-.components-placeholder.components-placeholder.wp-block-w4os-gridinfo-block {
+.components-placeholder.components-placeholder.wp-block-w4os-gridprofile-block {
   min-height: 0;
 }
