@@ -85,18 +85,3 @@ function w4os_gridstatus_block_render($args=[], $dumb="", $block_object=[]) {
 		w4os_gridstatus_html($atts, $args )
 	);
 }
-
-add_action( 'init', 'w4os_gridprofile_block_init' );
-function w4os_gridprofile_block_init() {
-	w4os_block_init('gridprofile', 'Grid profile');
-}
-function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
-	$args = (array) $block_object;
-	$args['before_title'] = '<h4>';
-	$args['after_title'] = '</h4>';
-	$args['title'] = __('Grid profile', 'w4os');
-	return sprintf(
-		'<div>%s</div>',
-		w4os_gridprofile_html($atts, $args )
-	);
-}

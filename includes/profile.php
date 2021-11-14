@@ -72,6 +72,7 @@ add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
  * @return object       [description]
  */
 function w4os_profile_sync($user) {
+  if(!W4OS_DB_CONNECTED) return;
   global $w4osdb;
 
   // $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
@@ -106,6 +107,7 @@ function w4os_profile_sync($user) {
  * @param  [type] $user
  */
 function w4os_profile_fields( $user ) {
+  if(!W4OS_DB_CONNECTED) return;
   if($user->ID != wp_get_current_user()->ID) return;
   global $w4osdb;
   $uuid = w4os_profile_sync($user);
@@ -159,15 +161,6 @@ function w4os_save_account_details ( $args ) {
 }
 add_action('save_account_details', 'w4os_save_account_details', 10, 1);
 
-/**
- * Catch password change from WooCommerceand save it to OpenSimulator
- * @param  integer $user_id
- */
-function w4os_woocommerce_save_account_details ( $user_id ) {
-	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
-	w4os_set_avatar_password( $user_id, $_REQUEST['password_1'] );
-}
-add_action('woocommerce_save_account_details', 'w4os_woocommerce_save_account_details', 10, 1);
 
 /**
  * Catch password change and save it to OpenSimulator
@@ -208,37 +201,6 @@ function() {
 }
 , 10, 1);
 
-add_action('woocommerce_before_customer_login_form', 'w4os_verify_user', 5);
-function w4os_verify_user() {
-  if(!is_user_logged_in()) {
-    if(isset($_GET['action']) && $_GET['action'] == 'verify_account') {
-      $verify = 'false';
-      if(isset($_GET['user_login']) && isset($_GET['key'])) {
-        global $wpdb;
-        $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_login = %s and user_activation_key = %s", $_GET['user_login'], $_GET['key']));
-        $uuid = w4os_profile_sync($user); // refresh opensim data for this user
-        if($uuid) {
-          $salt = get_user_meta( $user->ID, 'w4os_tmp_salt', true );
-          $hash = get_user_meta( $user->ID, 'w4os_tmp_hash', true );
-          if( $salt && $hash ) {
-            global $w4osdb;
-            $w4osdb->update (
-              'auth',
-              array (
-                'passwordHash'   => $hash,
-                'passwordSalt'   => $salt,
-                // 'webLoginKey' => W4OS_NULL_KEY,
-              ),
-              array (
-                'UUID' => $uuid,
-              )
-            );
-          }
-        }
-      }
-    }
-  }
-}
 
 // function w4os_debug_log($string) {
 //   file_put_contents ( "../tmp/w4os_debug.log", $string . "\n", FILE_APPEND );
@@ -246,6 +208,7 @@ function w4os_verify_user() {
 
 function w4os_update_avatar( $user, $params ) {
   global $w4osdb;
+  if(!W4OS_DB_CONNECTED) return;
   $errors = false;
   switch ($params['action'] ) {
     case "w4os_create_avatar":
@@ -531,6 +494,7 @@ function w4os_update_avatar( $user, $params ) {
 }
 
 function w4os_avatar_creation_form ($user) {
+  if(!W4OS_DB_CONNECTED) return;
   if($user != wp_get_current_user()) return;
 
   global $w4osdb;
@@ -612,10 +576,12 @@ function w4os_avatar_creation_form ($user) {
 }
 
 function w4os_gridprofile_html($atts=[], $args=[] ) {
+  if(!W4OS_DB_CONNECTED) return;
   return w4os_profile_display(wp_get_current_user(), $args);
 }
 
 function w4os_profile_display( $user, $args=[] ) {
+  if(!W4OS_DB_CONNECTED) return;
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
     // $content =  "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
@@ -667,7 +633,7 @@ function w4os_profile_fields_save( $user_id ) {
 
 function w4os_profile_shortcodes_init()
 {
-  if(! W4OS_DB_CONNECTED) return;
+  if(!W4OS_DB_CONNECTED) return;
   global $pagenow;
   if ( in_array( $pagenow, array( 'post.php', 'post-new.php', 'admin-ajax.php', '' ) ) || get_post_type() == 'post' ) return;
   if ( wp_is_json_request()) return;
@@ -684,6 +650,7 @@ function w4os_profile_shortcodes_init()
 add_action('init', 'w4os_profile_shortcodes_init');
 
 function w4os_get_avatar( $user_id, $size = 96, $default = '', $alt = '', $args = NULL ) {
+  if(!W4OS_DB_CONNECTED) return;
   $w4os_profileimage = get_the_author_meta( 'w4os_profileimage', $user_id );
   if ( empty($w4os_profileimage) ) return false;
   if ( $w4os_profileimage === W4OS_NULL_KEY ) return false;
@@ -696,6 +663,7 @@ function w4os_get_avatar( $user_id, $size = 96, $default = '', $alt = '', $args 
   );
 }
 
+if(W4OS_DB_CONNECTED)
 add_filter( 'get_avatar', 'w4os_get_avatar_filter', 10, 5 );
 function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt ) {
   //If is email, try and find user ID
@@ -712,4 +680,21 @@ function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt ) {
   $avatar_opensim = w4os_get_avatar( $user_id, $size, $default, $alt );
   if( $avatar_opensim ) return $avatar_opensim;
   return $avatar;
+}
+
+if(W4OS_DB_CONNECTED)
+add_action( 'init', 'w4os_gridprofile_block_init' );
+function w4os_gridprofile_block_init() {
+	w4os_block_init('gridprofile', 'Grid profile');
+}
+function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
+  if(!W4OS_DB_CONNECTED) return;
+	$args = (array) $block_object;
+	$args['before_title'] = '<h4>';
+	$args['after_title'] = '</h4>';
+	$args['title'] = __('Grid profile', 'w4os');
+	return sprintf(
+		'<div>%s</div>',
+		w4os_gridprofile_html($atts, $args )
+	);
 }

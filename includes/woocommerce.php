@@ -135,3 +135,45 @@ add_filter("woocommerce_get_query_vars", function ($vars) {
  *  To replace rough, dirty and not working "flush_rewrite_rules()" method.
  *  To implement in install section as soon as possible. Doesn't work anyway.
  */
+
+/**
+ * Catch password change from WooCommerceand save it to OpenSimulator
+ * @param  integer $user_id
+ */
+add_action('woocommSerce_save_account_details', 'w4os_woocommerce_save_account_details', 10, 1);
+function w4os_woocommerce_save_account_details ( $user_id ) {
+	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
+	w4os_set_avatar_password( $user_id, $_REQUEST['password_1'] );
+}
+
+add_action('woocommerce_before_customer_login_form', 'w4os_verify_user', 5);
+function w4os_verify_user() {
+  if(!is_user_logged_in()) {
+    if(isset($_GET['action']) && $_GET['action'] == 'verify_account') {
+      $verify = 'false';
+      if(isset($_GET['user_login']) && isset($_GET['key'])) {
+        global $wpdb;
+        $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_login = %s and user_activation_key = %s", $_GET['user_login'], $_GET['key']));
+        $uuid = w4os_profile_sync($user); // refresh opensim data for this user
+        if($uuid) {
+          $salt = get_user_meta( $user->ID, 'w4os_tmp_salt', true );
+          $hash = get_user_meta( $user->ID, 'w4os_tmp_hash', true );
+          if( $salt && $hash ) {
+            global $w4osdb;
+            $w4osdb->update (
+              'auth',
+              array (
+                'passwordHash'   => $hash,
+                'passwordSalt'   => $salt,
+                // 'webLoginKey' => W4OS_NULL_KEY,
+              ),
+              array (
+                'UUID' => $uuid,
+              )
+            );
+          }
+        }
+      }
+    }
+  }
+}
