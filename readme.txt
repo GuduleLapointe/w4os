@@ -28,6 +28,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 - Choose avatar look from default models
 - Avatar and website passwords are synchronized
 - **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
+- **Web assets server**: the needed bridge to display in-world images on a website
 - **OpenSimulator settings page**:
   - grid name, login uri and database connection settings
   - naming scheme of default models
