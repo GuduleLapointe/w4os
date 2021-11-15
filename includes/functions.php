@@ -124,9 +124,10 @@ function w4os_get_asset_url($uuid = W4OS_NULL_KEY, $format=W4OS_ASSETS_DEFAULT_F
   if(get_option('w4os_provide_asset_server')) {
     $upload_dir = esc_attr(wp_upload_dir()['baseurl'] ) . '/w4os/' . W4OS_ASSETS_CACHE_IMG_FOLDER;
     return "$upload_dir/$uuid.$format";
-  } else {
+  } else if(!empty(W4OS_WEB_ASSETS_SERVER_URI)) {
     return W4OS_WEB_ASSETS_SERVER_URI . "$uuid";
   }
+	return false;
 }
 
 // echo w4os_get_asset_url();

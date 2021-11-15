@@ -549,7 +549,7 @@ function w4os_avatar_creation_form ($user) {
       $model_display_name = preg_replace('/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $model_display_name);
       $model_display_name = preg_replace('/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $model_display_name);
 
-      if(!empty(W4OS_WEB_ASSETS_SERVER_URI)) $model_img =  "<img class='model-picture' src='" . W4OS_WEB_ASSETS_SERVER_URI . $model->profileImage ."'>";
+      if(!empty(W4OS_WEB_ASSETS_SERVER_URI) &! empty($model->profileImage)) $model_img =  "<img class='model-picture' src='" . w4os_get_asset_url($model->profileImage) ."'>";
       if(empty($model_img)) $modelclass="no-picture";
       else $modelclass = "with-picture";
       if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
@@ -651,13 +651,13 @@ add_action('init', 'w4os_profile_shortcodes_init');
 
 function w4os_get_avatar( $user_id, $size = 96, $default = '', $alt = '', $args = NULL ) {
   if(!W4OS_DB_CONNECTED) return;
-  $w4os_profileimage = get_the_author_meta( 'w4os_profileimage', $user_id );
-  if ( empty($w4os_profileimage) ) return false;
-  if ( $w4os_profileimage === W4OS_NULL_KEY ) return false;
+  $image_uuid = get_the_author_meta( 'w4os_profileimage', $user_id );
+  if ( empty($image_uuid) ) return false;
+  if ( $image_uuid === W4OS_NULL_KEY ) return false;
 
   return sprintf(
     '<img src="%1$s" class="avatar avatar-%3$d photo" alt="%2$s" loading="lazy" width="%3$d" height="%3$d">',
-    W4OS_WEB_ASSETS_SERVER_URI . $w4os_profileimage,
+    w4os_get_asset_url($image_uuid),
     'avatar profile picture',
     $size
   );
