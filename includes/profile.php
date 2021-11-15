@@ -155,11 +155,15 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
  * @param  [type] $args [description]
  */
 function w4os_save_account_details ( $args ) {
+  $avatar = new W4OS_Avatar($user_id);
+  $uuid = w4os_profile_sync($avatar); // refresh opensim data for this user
+
 	// not verified
 	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
 	w4os_set_avatar_password( $user_id, $_REQUEST['password_1'] );
 }
 add_action('save_account_details', 'w4os_save_account_details', 10, 1);
+// add_action('profile_update', 'w4os_save_account_details', 10, 1);
 
 
 /**
