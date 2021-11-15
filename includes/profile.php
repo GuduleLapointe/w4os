@@ -687,6 +687,7 @@ add_action( 'init', 'w4os_gridprofile_block_init' );
 function w4os_gridprofile_block_init() {
 	w4os_block_init('gridprofile', 'Grid profile');
 }
+
 function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
   if(!W4OS_DB_CONNECTED) return;
 	$args = (array) $block_object;

@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'WPINC' ) ) die;
 
-if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 1 );
+if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 2 );
 
 if(get_option('w4os_upated') < W4OS_UPDATES ) {
   w4os_updates();
@@ -56,5 +56,22 @@ function w4os_update_1() {
   // $results=array();
   update_option('w4os_rewrite_rules', true);
   // if(!empty($results)) return join("<br/>", $results);
+  return true;
+}
+
+function w4os_update_2() {
+  function w4os_update_custom_roles() {
+    $role = 'grid_user';
+    $role_name = __('Grid user', 'w4os');
+    add_role( $role, $role_name, get_role( 'subscriber' )->capabilities );
+    w4os_admin_notice(
+      __(
+        sprintf('Added %s role', '<strong>' . $role_name . '</strong>' ),
+        'w4os',
+      ),
+      'success',
+    );
+  }
+  add_action( 'init', 'w4os_update_custom_roles' );
   return true;
 }
