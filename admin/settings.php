@@ -177,9 +177,14 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_misc' => array(
-					'name' => __('Misc', 'w4os'),
+				'w4os_options_users' => array(
+					'name' => __('Grid users', 'w4os'),
 					'fields' => array(
+						'w4os_userlist_replace_name' => array(
+							'type' => 'boolean',
+							'label' => __('Replace user name', 'w4os'),
+							'description' => __('Show avatar name instead of user name in users list.', 'w4os'),
+						),
 						'w4os_exclude' => array(
 							'type' => 'checkbox',
 							'label' => __('Exclude from stats', 'w4os'),
@@ -189,6 +194,11 @@ function w4os_register_settings() {
 							),
 							'description' => __('Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os'),
 						),
+					),
+				),
+				'w4os_options_misc' => array(
+					'name' => __('Misc', 'w4os'),
+					'fields' => array(
 						'w4os_assets_permalink' => array(
 							'type' => 'description',
 							'label' => __('Permalinks', 'w4os'),
