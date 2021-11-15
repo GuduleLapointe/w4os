@@ -3,6 +3,7 @@
 * new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
 * new 'Grid info' and 'Grid status' sidebar widgets
 * new internal web assets server
+* added option to replace name by avatar name in users list
 * added internal update process
 * added assets permalink settings
 * added profile image to gridprofile output
