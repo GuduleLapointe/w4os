@@ -1,6 +1,6 @@
 function valueChanged(checkboxfield) {
   document.getElementById("w4os_internal_asset_server_uri").parentNode.parentNode.style.display = checkboxfield.checked ? "table-row" : "none";
-  document.getElementById("w4os_asset_server_uri").parentNode.parentNode.style.display = checkboxfield.checked ? "none" : "table-row";
+  document.getElementById("w4os_external_asset_server_uri").parentNode.parentNode.style.display = checkboxfield.checked ? "none" : "table-row";
 }
 // force check on load
 valueChanged(w4os_provide_asset_server);

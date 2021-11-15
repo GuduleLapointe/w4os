@@ -19,25 +19,8 @@ if(!$query_asset) $query_asset = $wp_query->query_vars['asset_uuid'];
 if(!$query_format) $query_format = $wp_query->query_vars['asset_format'];
 if( ! $query_asset) die();
 
-define('W4OS_ASSETS_SERVER_TIMEOUT', 8); // timeout in seconds, to wait while requesting an asset (default to 8)
-define('W4OS_ASSETS_DO_RESIZE', false); // shall we resize picture to width=W4OS_ASSETS_RESIZE_FIXED_WIDTH ?
-define('W4OS_ASSETS_RESIZE_FIXED_WIDTH', 256); // width in pixels
-
-/* Will show following image if no asset was requested (malformed query) : */
-// define('W4OS_ASSETS_ID_NOTFOUND', 'cb2052ae-d161-43e9-b11b-c834217823cd');
-define('W4OS_ASSETS_ID_NOTFOUND', '201ce950-aa38-46d8-a8f1-4396e9d6be00');
-
-/* will show following picture for Zero UUID (not found / malformed assets) : */
-define('IMAGE_ID_ZERO', dirname(dirname(__FILE__)) . '/images/assets-no-img'); // no extension here
-
-define('IMAGE_DEFAULT_FORMAT', 'jpg');
-
-/* Re-use locally cached pictures (jp2k & converted) for 1 day before re-requesting it : */
-define('CACHE_MAX_AGE', 86400); // 1 day
-
-/* where to store cached pictures ? (user running your webserver needs write-permissions there : */
-define('JP2_CACHE_DIR', get_temp_dir() );
-define('PIC_CACHE_DIR', w4os_upload_dir('assets/images') . '/' );
+define('W4OS_ASSETS_CACHE_JP2', get_temp_dir() );
+define('W4OS_ASSETS_CACHE_IMG_PATH', w4os_upload_dir(W4OS_ASSETS_CACHE_IMG_FOLDER) . '/' );
 
 /**
  * @brief Returns a default picture upon errors.
@@ -47,8 +30,8 @@ define('PIC_CACHE_DIR', w4os_upload_dir('assets/images') . '/' );
  * @author Anthony Le Mansec <a.lm@free.fr>
  */
 function w4os_asset_get_zero($format) {
-	$image=IMAGE_ID_ZERO . ".png";
-	if(!is_file($image)) $image=IMAGE_ID_ZERO.".".$format;
+	$image=W4OS_NULL_KEY_IMG . ".png";
+	if(!is_file($image)) $image=W4OS_NULL_KEY_IMG.".".$format;
 	if(!is_file($image)) die();
 
 	$h = fopen($image, "rb");
@@ -66,17 +49,17 @@ function w4os_asset_get_zero($format) {
  * @return image raw datas, in given format.
  * TODO : allow custom image width (resizing) with suitable caching directory
  */
-function w4os_asset_get($asset_uuid, $format=IMAGE_DEFAULT_FORMAT) {
+function w4os_asset_get($asset_uuid, $format=W4OS_ASSETS_DEFAULT_FORMAT) {
 
 	/* Zero UUID : returns default pic */
 	if ( empty($asset_uuid) || $asset_uuid == W4OS_NULL_KEY ) {
 		return (w4os_asset_get_zero($format));
 	}
 
-	if (w4os_cache_check($asset_uuid.".".$format, PIC_CACHE_DIR)) {
-		$h = fopen(PIC_CACHE_DIR.$asset_uuid.".".$format, "rb");
+	if (w4os_cache_check($asset_uuid.".".$format, W4OS_ASSETS_CACHE_IMG_PATH)) {
+		$h = fopen(W4OS_ASSETS_CACHE_IMG_PATH.$asset_uuid.".".$format, "rb");
 		if ($h) {
-			$data = fread($h, filesize(PIC_CACHE_DIR.$asset_uuid.".".$format));
+			$data = fread($h, filesize(W4OS_ASSETS_CACHE_IMG_PATH.$asset_uuid.".".$format));
 			fclose ($h);
 			return ($data);
 		}
@@ -86,9 +69,9 @@ function w4os_asset_get($asset_uuid, $format=IMAGE_DEFAULT_FORMAT) {
 	 * Get jp2 asset either from local cache or
 	 * remote asset server :
 	 */
-	$is_cached = w4os_cache_check($asset_uuid, JP2_CACHE_DIR);
+	$is_cached = w4os_cache_check($asset_uuid, W4OS_ASSETS_CACHE_JP2);
 	if (!$is_cached) {
-		$asset_url = W4OS_ASSETS_SERVER . $asset_uuid;
+		$asset_url = W4OS_GRID_ASSETS_SERVER . $asset_uuid;
 
 		$h = @fopen($asset_url, "rb");
 		if (!$h) {
@@ -115,10 +98,10 @@ function w4os_asset_get($asset_uuid, $format=IMAGE_DEFAULT_FORMAT) {
 		// }
 
 		$data = base64_decode($xml->Data);
-		w4os_cache_write($asset_uuid, $data, JP2_CACHE_DIR);
+		w4os_cache_write($asset_uuid, $data, W4OS_ASSETS_CACHE_JP2);
 	} else {
-		$h = fopen(JP2_CACHE_DIR.$asset_uuid, "rb");
-		$data = fread($h, filesize(JP2_CACHE_DIR.$asset_uuid));
+		$h = fopen(W4OS_ASSETS_CACHE_JP2.$asset_uuid, "rb");
+		$data = fread($h, filesize(W4OS_ASSETS_CACHE_JP2.$asset_uuid));
 		fclose($h);
 	}
 
@@ -143,7 +126,7 @@ function w4os_asset_get($asset_uuid, $format=IMAGE_DEFAULT_FORMAT) {
 		exit ;
 	}
 
-	w4os_cache_write($asset_uuid.".".$format, $dump, PIC_CACHE_DIR);
+	w4os_cache_write($asset_uuid.".".$format, $dump, W4OS_ASSETS_CACHE_IMG_PATH);
 	return ($dump);
 }
 
@@ -156,9 +139,9 @@ function w4os_asset_get($asset_uuid, $format=IMAGE_DEFAULT_FORMAT) {
  *
  * @author Anthony Le Mansec <a.lm@free.fr>
  */
-function w4os_cache_check($asset_uuid, $cachedir=JP2_CACHE_DIR) {
+function w4os_cache_check($asset_uuid, $cachedir=W4OS_ASSETS_CACHE_JP2) {
 	$cache_file = $cachedir.$asset_uuid;
-	$file_max_age = time() - CACHE_MAX_AGE;
+	$file_max_age = time() - W4OS_ASSETS_CACHE_TTL;
 	if (!file_exists($cache_file))
 		return (false);
 	if (filemtime($cache_file) < $file_max_age) {
@@ -179,7 +162,7 @@ function w4os_cache_check($asset_uuid, $cachedir=JP2_CACHE_DIR) {
  * @param cachedir local directory where to store image (as defined in inc/config.php)
  * @return false on error, true otherwise.
  */
-function w4os_cache_write($asset_uuid, $content, $cachedir=JP2_CACHE_DIR) {
+function w4os_cache_write($asset_uuid, $content, $cachedir=W4OS_ASSETS_CACHE_JP2) {
 	$cache_file = $cachedir.$asset_uuid;
 	$h = fopen($cache_file, "wb+");
 	if (!$h)
@@ -190,7 +173,7 @@ function w4os_cache_write($asset_uuid, $content, $cachedir=JP2_CACHE_DIR) {
 	return (true);
 }
 
-$format = strtolower(preg_replace('|^\.|', '', (!empty($query_format)) ? $query_format : IMAGE_DEFAULT_FORMAT));
+$format = strtolower(preg_replace('|^\.|', '', (!empty($query_format)) ? $query_format : W4OS_ASSETS_DEFAULT_FORMAT));
 $asset_uuid = preg_replace('|/.*|', '', $query_asset);
 $asset_raw = w4os_asset_get($asset_uuid, $format);
 

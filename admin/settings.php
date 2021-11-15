@@ -171,7 +171,7 @@ function w4os_register_settings() {
 							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
 							'readonly' => true,
 						),
-						'w4os_asset_server_uri' => array(
+						'w4os_external_asset_server_uri' => array(
 							'label' => __('External assets server URI', 'w4os'),
 							'default' => W4OS_DEFAULT_ASSET_SERVER_URI,
 						),
