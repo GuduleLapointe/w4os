@@ -47,7 +47,7 @@ class W4OS_Avatar extends WP_User {
     $this->UUID = esc_attr(get_the_author_meta( 'w4os_uuid', $id ));
     $this->FirstName = esc_attr(get_the_author_meta( 'w4os_firstname', $id ));
     $this->LastName = esc_attr(get_the_author_meta( 'w4os_lastname', $id ));
-    $this->AvatarName = $this->FirstName . " " . $this->LastName;
+    $this->AvatarName = esc_attr(get_the_author_meta( 'w4os_avatarname', $id ));
     $this->AvatarHGName = strtolower($this->FirstName) . "." . strtolower($this->LastName) . "@" . esc_attr(get_option('w4os_login_uri'));
     $this->ProfilePictureUUID = get_the_author_meta( 'w4os_profileimage', $id );
     if(empty($this->ProfilePictureUUID)) $this->ProfilePictureUUID = W4OS_NULL_KEY;
@@ -98,6 +98,7 @@ function w4os_profile_sync($user) {
   update_user_meta( $user->ID, 'w4os_uuid', $uuid );
   update_user_meta( $user->ID, 'w4os_firstname', $avatar_row->FirstName );
   update_user_meta( $user->ID, 'w4os_lastname', $avatar_row->LastName );
+  update_user_meta( $user->ID, 'w4os_avatarname', trim($avatar_row->FirstName . ' ' . $avatar_row->LastName) );
   update_user_meta( $user->ID, 'w4os_profileimage', $avatar_row->profileImage );
   return $uuid;
 }

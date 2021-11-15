@@ -246,13 +246,13 @@ function w4os_register_user_columns($columns) {
 	$column_name = __('Avatar Name', 'w4os');
 	if( get_option('w4os_userlist_replace_name') && array_key_exists( 'name', $columns ) ) {
 		$keys = array_keys( $columns );
-		$keys[ array_search( 'name', $keys ) ] = 'avatar';
+		$keys[ array_search( 'name', $keys ) ] = 'w4os_avatarname';
 		$columns = array_combine( $keys, $columns );
-		$columns['avatar'] = $column_name;
+		$columns['w4os_avatarname'] = $column_name;
 	} else {
 		$new_columns[array_key_first($columns)] = array_shift($columns);
 		$new_columns[array_key_first($columns)] = array_shift($columns);
-		$new_columns['avatar'] = $column_name;
+		$new_columns['w4os_avatarname'] = $column_name;
 		$columns = array_merge($new_columns, $columns);
 	}
 	return $columns;
@@ -260,16 +260,25 @@ function w4os_register_user_columns($columns) {
 add_action('manage_users_columns', 'w4os_register_user_columns');
 
 function w4os_users_sortable_columns( $columns ) {
-	$columns['avatar'] = 'avatar';
+	$columns['w4os_avatarname'] = 'w4os_avatarname';
 	return $columns;
 }
 add_filter( 'manage_users_sortable_columns', 'w4os_users_sortable_columns');
 
+function w4os_avatar_column_orderby($userquery){
+	if('w4os_avatarname'==$userquery->query_vars['orderby']) {//check if church is the column being sorted
+		global $wpdb;
+		$userquery->query_from .= " LEFT OUTER JOIN $wpdb->usermeta AS alias ON ($wpdb->users.ID = alias.user_id) ";//note use of alias
+		$userquery->query_where .= " AND alias.meta_key = 'w4os_avatarname' ";//which meta are we sorting with?
+		$userquery->query_orderby = " ORDER BY alias.meta_value ".($userquery->query_vars["order"] == "ASC" ? "asc " : "desc ");//set sort order
+	}
+}
+add_action('pre_user_query', 'w4os_avatar_column_orderby');
+
 function w4os_register_user_columns_views($value, $column_name, $user_id) {
-	if($column_name == 'avatar') {
+	if($column_name == 'w4os_avatarname') {
 		// if(empty(get_the_author_meta( 'w4os_uuid', $user_id ))) return "-";
-		return get_the_author_meta( 'w4os_firstname', $user_id ) . " "
-		. get_the_author_meta( 'w4os_lastname', $user_id );
+		return get_the_author_meta( 'w4os_avatarname', $user_id );
 	}
 	return $value;
 }
