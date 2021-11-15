@@ -1,12 +1,14 @@
 ### Unreleased
 * new basic blocks support
-* new grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
+* new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
 * new 'Grid info' and 'Grid status' sidebar widgets
 * new internal web assets server
 * added internal update process
 * added assets permalink settings
 * added profile image to gridprofile output
+* fix slow assets, store cached images in upload folder to serve them directly by the web server
 * fix #21 Fatal error Call to undefined function each()
+* assets optimized (write converted images inside upload/ folder to let them serve directly by the web server)
 * replace wp avatar picture with in-world profile picture if set
 * use version provided by .version if present
 * More comprehensive database connection error reporting
