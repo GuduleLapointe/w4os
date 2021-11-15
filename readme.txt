@@ -131,6 +131,7 @@ Maybe, but we didn't check yet. If you give it a try, please send us your feedba
 1. Grid info and grid status examples
 2. Avatar registration form in WooCommerce My Account dashboard.
 3. Settings page
+4. Web assets server settings
 
 == Changelog ==
 
