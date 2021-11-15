@@ -58,7 +58,7 @@ function w4os_settings_field($args) {
 			if($args['type']=='checkbox') $option .= " <label for='$option_id'>$option_name</label>";
 			$options[] = $option;
 		}
-		echo join("<br>", $options);
+		if(is_array($options)) echo join("<br>", $options);
 		break;
 
 
