@@ -216,59 +216,6 @@ function w4os_register_settings() {
 }
 add_action( 'admin_init', 'w4os_register_settings' );
 
-function w4os_register_options_pages() {
-	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_options_page');
-	add_menu_page(
-		'OpenSimulator', // page title
-		'OpenSimulator', // menu title
-		'manage_options', // capability
-		'w4os', // slug
-		'w4os_status_page', // callable function
-		// plugin_dir_path(__FILE__) . 'options.php', // slug
-		// null,	// callable function
-		plugin_dir_url(__FILE__) . 'images/w4os-logo-24x14.png', // icon url
-		2 // position
-	);
-	add_submenu_page('w4os', __('OpenSimulator Status', "w4os"), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
-	add_submenu_page(
-		'w4os', // parent
-		__('OpenSimulator Settings', "w4os"), // page title
-		__('Settings'), // menu title
-		'manage_options', // capability
-		'w4os_settings', // menu slug
-		'w4os_options_page' // function
-	);
-}
-add_action('admin_menu', 'w4os_register_options_pages');
-
-function w4os_options_page()
-{
-	if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-	}
-?>
-	<div class="wrap">
-		<h1>OpenSimulator</h1>	<?php screen_icon(); ?>
-		<form method="post" action="options.php" autocomplete="off">
-			<?php
-			settings_fields( 'w4os_settings' );
-			do_settings_sections( 'w4os_settings' );
-			submit_button();
-			 ?>
-		</form>
-	</div>
-<?php
-	wp_enqueue_script( 'w4os-admin-settings-form-js', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
-}
-
-function w4os_status_page()
-{
-	if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-	}
-	require(plugin_dir_path(__FILE__) . 'status-inc.php');
-}
-
 function w4os_settings_link( $links ) {
 	$url = esc_url( add_query_arg(
 		'page',
@@ -285,28 +232,35 @@ function w4os_settings_link( $links ) {
 }
 add_filter( 'plugin_action_links_w4os/w4os.php', 'w4os_settings_link' );
 
-
-function w4os_register_avatar_column($columns) {
-    $columns['avatar'] = 'Avatar';
-    return $columns;
+function w4os_register_user_columns($columns) {
+	$column_name = __('Avatar Name', 'w4os');
+	if( get_option('w4os_userlist_replace_name') && array_key_exists( 'name', $columns ) ) {
+		$keys = array_keys( $columns );
+		$keys[ array_search( 'name', $keys ) ] = 'avatar';
+		$columns = array_combine( $keys, $columns );
+		$columns['avatar'] = $column_name;
+	} else {
+		$new_columns[array_key_first($columns)] = array_shift($columns);
+		$new_columns[array_key_first($columns)] = array_shift($columns);
+		$new_columns['avatar'] = $column_name;
+		$columns = array_merge($new_columns, $columns);
+	}
+	return $columns;
 }
-add_action('manage_users_columns', 'w4os_register_avatar_column');
+add_action('manage_users_columns', 'w4os_register_user_columns');
 
-function w4os_register_avatar_column_view($value, $column_name, $user_id) {
-    // $user_info = get_userdata( $user_id );
-    if($column_name == 'avatar') {
-			if(!empty(get_the_author_meta( 'w4os_uuid', $user_id ))) {
-				return get_the_author_meta( 'w4os_firstname', $user_id ) . " "
-				. get_the_author_meta( 'w4os_lastname', $user_id );
-			}
-		}
-    return $value;
-
-}
-add_action('manage_users_custom_column', 'w4os_register_avatar_column_view', 10, 3);
-
-function w4os_avatar_sortable_columns( $columns ) {
+function w4os_users_sortable_columns( $columns ) {
 	$columns['avatar'] = 'avatar';
-  return $columns;
+	return $columns;
 }
-add_filter( 'manage_edit-w4os_avatar_sortable_columns', 'w4os_avatar_sortable_columns');
+add_filter( 'manage_users_sortable_columns', 'w4os_users_sortable_columns');
+
+function w4os_register_user_columns_views($value, $column_name, $user_id) {
+	if($column_name == 'avatar') {
+		// if(empty(get_the_author_meta( 'w4os_uuid', $user_id ))) return "-";
+		return get_the_author_meta( 'w4os_firstname', $user_id ) . " "
+		. get_the_author_meta( 'w4os_lastname', $user_id );
+	}
+	return $value;
+}
+add_action('manage_users_custom_column', 'w4os_register_user_columns_views', 10, 3);
