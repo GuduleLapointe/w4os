@@ -15,8 +15,8 @@
  * along with WebAssets for OpenSimulator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$query_asset = $wp_query->query_vars['asset_uuid'];
-$query_format = $wp_query->query_vars['asset_format'];
+if(!$query_asset) $query_asset = $wp_query->query_vars['asset_uuid'];
+if(!$query_format) $query_format = $wp_query->query_vars['asset_format'];
 if( ! $query_asset) die();
 
 define('W4OS_ASSETS_SERVER_TIMEOUT', 8); // timeout in seconds, to wait while requesting an asset (default to 8)
@@ -30,14 +30,14 @@ define('W4OS_ASSETS_ID_NOTFOUND', '201ce950-aa38-46d8-a8f1-4396e9d6be00');
 /* will show following picture for Zero UUID (not found / malformed assets) : */
 define('IMAGE_ID_ZERO', dirname(dirname(__FILE__)) . '/images/assets-no-img'); // no extension here
 
-define('IMAGE_DEFAULT_FORMAT', 'JPEG');
+define('IMAGE_DEFAULT_FORMAT', 'jpg');
 
 /* Re-use locally cached pictures (jp2k & converted) for 1 day before re-requesting it : */
 define('CACHE_MAX_AGE', 86400); // 1 day
 
 /* where to store cached pictures ? (user running your webserver needs write-permissions there : */
 define('JP2_CACHE_DIR', get_temp_dir() );
-define('PIC_CACHE_DIR', get_temp_dir() );
+define('PIC_CACHE_DIR', w4os_upload_dir('assets/images') . '/' );
 
 /**
  * @brief Returns a default picture upon errors.
@@ -62,11 +62,11 @@ function w4os_asset_get_zero($format) {
  * @brief Returns raw image, in requested format. Also locally caches converted image.
  *
  * @param asset_id (string) Asset identifier, eg: "cb2052ae-d161-43e9-b11b-c834217823cd"
- * @param format (string) Format as accepted by ImageMagick ("JPEG"|"GIF"|"PNG"|...)
+ * @param format (string) Format as accepted by ImageMagick ("jpg"|"GIF"|"PNG"|...)
  * @return image raw datas, in given format.
  * TODO : allow custom image width (resizing) with suitable caching directory
  */
-function w4os_asset_get($asset_uuid, $format='jpeg') {
+function w4os_asset_get($asset_uuid, $format=IMAGE_DEFAULT_FORMAT) {
 
 	/* Zero UUID : returns default pic */
 	if ( empty($asset_uuid) || $asset_uuid == W4OS_NULL_KEY ) {
@@ -89,6 +89,7 @@ function w4os_asset_get($asset_uuid, $format='jpeg') {
 	$is_cached = w4os_cache_check($asset_uuid, JP2_CACHE_DIR);
 	if (!$is_cached) {
 		$asset_url = W4OS_ASSETS_SERVER . $asset_uuid;
+
 		$h = @fopen($asset_url, "rb");
 		if (!$h) {
 			return (w4os_asset_get_zero($format));
@@ -101,6 +102,18 @@ function w4os_asset_get($asset_uuid, $format='jpeg') {
 		} catch (Exception $e) {
 			return (w4os_asset_get_zero($format));
 		}
+
+		// $ch = curl_init();
+		// curl_setopt($ch, CURLOPT_URL, $asset_url);
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		// $html = curl_exec($ch);
+		// curl_close($ch);
+		// try {
+		// 	$xml = simplexml_load_string($html);
+		// } catch (Exception $e) {
+		// 	return (w4os_asset_get_zero($format));
+		// }
+
 		$data = base64_decode($xml->Data);
 		w4os_cache_write($asset_uuid, $data, JP2_CACHE_DIR);
 	} else {
@@ -138,7 +151,7 @@ function w4os_asset_get($asset_uuid, $format='jpeg') {
  * @brief Checks whether given asset is locally cached in given cache directory.
  *
  * @param asset_id (string) Assetid to check
- * @param cachedir jpeg2k / converted caching directory constant, as set in inc/config.php.
+ * @param cachedir jpg2k / converted caching directory constant, as set in inc/config.php.
  * @return true if picture is cached in given directory, false otherwise.
  *
  * @author Anthony Le Mansec <a.lm@free.fr>

@@ -105,3 +105,16 @@ function w4os_give_settings_url($message = '') {
 		__("OpenSimulator settings page", 'w4os'),
 	);
 }
+
+function w4os_upload_dir($subfolder='') {
+	$upload = wp_upload_dir();
+	$upload_dir = $upload['basedir'];
+	$dirs[] = $upload_dir;
+	$dirs[] = 'w4os';
+	$dirs = array_merge($dirs, array_map('sanitize_file_name',explode('/',preg_replace(':/*$:','',$subfolder))));
+	$upload_dir=implode('/', $dirs);
+	if (! is_dir($upload_dir)) {
+		mkdir( $upload_dir, 0755, true );
+	}
+	return $upload_dir;
+}
