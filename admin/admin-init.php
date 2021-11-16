@@ -130,6 +130,65 @@ function w4os_avatar_column_orderby($userquery){
 add_action('pre_user_query', 'w4os_avatar_column_orderby');
 
 
+function w4os_users_filter_avatars($position)
+{
+  $options = array(
+    'with_avatar' => __('With Avatar', 'w4os'),
+    'without_avatar' => __('Without Avatar', 'w4os'),
+  );
+  foreach($options as $value => $label) {
+    $options_html .= sprintf(
+      '<option value=%1$s %3$s>%2$s</option>',
+      $value,
+      $label,
+      ( $_GET['filter_avatar_'. $position ] == $value ) ? 'selected' : '',
+    );
+  }
+
+  $select = sprintf('
+    <select name="filter_avatar_%1$s" style="float:none;margin-left:10px;">
+      <option value="">%2$s</option>
+      %3$s
+    </select>',
+    $position,
+    __( 'Filter users...' ),
+    $options_html
+  );
+
+  // output <select> and submit button
+  echo $select;
+  submit_button(__( 'Filter' ), null, $position, false);
+}
+add_filter('pre_get_users', 'w4os_users_filter_avatars_section');
+
+function w4os_users_filter_avatars_section($query)
+{
+  global $pagenow;
+  if (is_admin() && 'users.php' == $pagenow) {
+    if( $_GET['filter_avatar_top'] ) $value = $_GET['filter_avatar_top'];
+    else $value = $_GET['filter_avatar_bottom'] ? $_GET['filter_avatar_bottom'] : null;
+
+    if ( !empty($value) )
+    {
+      switch($value) {
+        case 'with_avatar' :
+        $compare = 'EXISTS';
+        case 'without_avatar':
+        $compare = 'NOT EXISTS';
+
+        $meta_query = array(array(
+          'key' => 'w4os_uuid',
+          'compare' => $compare,
+        ));
+        break;
+      }
+      if(isset($meta_query)) $query->set('meta_query', $meta_query);
+    }
+  }
+}
+add_action('restrict_manage_users', 'w4os_users_filter_avatars');
+
+
 /**
  * Now we can launch the actual admin sections
  */
