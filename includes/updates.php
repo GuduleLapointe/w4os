@@ -82,8 +82,7 @@ function w4os_update_2() {
 
 function w4os_update_3() {
   if(function_exists('w4os_profile_sync_all')) {
-    $updated = w4os_profile_sync_all();
-    w4os_admin_notice(sprintf(__('%s local users updated with avatar data', 'w4os'), $updated), 'success');
+    add_action('admin_init', 'w4os_profile_sync_all');
   } else {
     w4os_admin_notice(__('Profiles service is not configured on your Robust server. It is required for full functionalities.', 'w4os' ),'error' );
   }

@@ -120,7 +120,8 @@ function w4os_profile_sync_all() {
     $uuid = w4os_profile_sync($user);
     $updated[$UserAccount->Email] = $user->ID . ' ' . $uuid;
   }
-  return count($updated);
+  w4os_admin_notice(sprintf(__('%s local users updated with avatar data', 'w4os'), count($updated)), 'success');
+  return;
 }
 
 /**
