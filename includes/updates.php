@@ -8,6 +8,7 @@ if(get_option('w4os_upated') < W4OS_UPDATES ) {
 
 function w4os_updates($args = array()) {
   $u = get_option('w4os_upated') + 1;
+
   $messages = array();
   if($args['message']) $messages[] = $args['message'];
   while ($u <= W4OS_UPDATES) {
@@ -86,5 +87,5 @@ function w4os_update_3() {
   } else {
     w4os_admin_notice(__('Profiles service is not configured on your Robust server. It is required for full functionalities.', 'w4os' ),'error' );
   }
+  return true;
 }
-add_action('init', 'w4os_update_3');
