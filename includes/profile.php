@@ -80,6 +80,7 @@ function w4os_profile_sync($user) {
     FROM UserAccounts, userprofile
     WHERE PrincipalID = userUUID
     AND Email = '$user->user_email'
+    AND active = 1
     ");
   if(count($avatars) != 1) return W4OS_NULL_KEY;
   $avatar_row = array_shift($avatars);
@@ -103,12 +104,32 @@ function w4os_profile_sync($user) {
   return $uuid;
 }
 
+
+function w4os_profile_sync_all() {
+  global $wpdb;
+  global $w4osdb;
+
+  $updated = array();
+  $UserAccounts=$w4osdb->get_results("SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText, Email
+    FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
+    WHERE active = 1
+    ");
+  foreach($UserAccounts as $UserAccount) {
+    $user = get_user_by( 'email', $UserAccount->Email );
+    if(!$user) continue;
+    $uuid = w4os_profile_sync($user);
+    $updated[$UserAccount->Email] = $user->ID . ' ' . $uuid;
+  }
+  return count($updated);
+}
+
 /**
  * Avatar fields for WP user profile page
  * @param  [type] $user
  */
 function w4os_profile_fields( $user ) {
   if(!W4OS_DB_CONNECTED) return;
+  // echo "checkpoint"; die();
   if($user->ID != wp_get_current_user()->ID) return;
   global $w4osdb;
   $uuid = w4os_profile_sync($user);

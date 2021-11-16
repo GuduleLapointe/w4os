@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'WPINC' ) ) die;
 
-if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 2 );
+if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 3 );
 
 if(get_option('w4os_upated') < W4OS_UPDATES ) {
   w4os_updates();
@@ -49,7 +49,7 @@ function w4os_updates($args = array()) {
 }
 
 /*
- * Rewrite rules to make assets/ permalink functional
+ * Rewrite rules for first implementation of assets/ permalink
  */
 function w4os_update_1() {
   global $wpdb;
@@ -59,6 +59,10 @@ function w4os_update_1() {
   return true;
 }
 
+/**
+ * Add grid_user role
+ * @return [type] update success
+ */
 function w4os_update_2() {
   function w4os_update_custom_roles() {
     $role = 'grid_user';
@@ -75,3 +79,13 @@ function w4os_update_2() {
   add_action( 'init', 'w4os_update_custom_roles' );
   return true;
 }
+
+function w4os_update_3() {
+  if(function_exists('w4os_profile_sync_all')) {
+    $updated = w4os_profile_sync_all();
+    w4os_admin_notice(sprintf(__('%s local users updated with avatar data', 'w4os'), $updated), 'success');
+  } else {
+    w4os_admin_notice(__('Profiles service is not configured on your Robust server. It is required for full functionalities.', 'w4os' ),'error' );
+  }
+}
+add_action('init', 'w4os_update_3');
