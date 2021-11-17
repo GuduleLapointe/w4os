@@ -183,31 +183,31 @@ msgstr ""
 msgid "Avatar Name"
 msgstr ""
 
-#: admin/status-inc.php:7
+#: admin/status-page.php:7
 msgid "Available shortcodes"
 msgstr ""
 
-#: admin/status-inc.php:12
+#: admin/status-page.php:12
 msgid "General information (grid name and login uri)"
 msgstr ""
 
-#: admin/status-inc.php:18
+#: admin/status-page.php:18
 msgid "Online users, regions, etc."
 msgstr ""
 
-#: admin/status-inc.php:24
+#: admin/status-page.php:24
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
 msgstr ""
 
-#: admin/status-inc.php:25
+#: admin/status-page.php:25
 msgid "(formerly %s)"
 msgstr ""
 
-#: admin/status-inc.php:38
+#: admin/status-page.php:38
 msgid "Missing PHP modules"
 msgstr ""
 
-#: admin/status-inc.php:40
+#: admin/status-page.php:40
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr ""
 

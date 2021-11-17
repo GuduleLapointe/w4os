@@ -39,7 +39,7 @@ function w4os_status_page()
 	if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 	}
-	require(plugin_dir_path(__FILE__) . 'status.php');
+	require(plugin_dir_path(__FILE__) . 'status-page.php');
 }
 
 function w4os_settings_page()

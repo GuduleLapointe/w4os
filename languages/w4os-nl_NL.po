@@ -166,25 +166,25 @@ msgid "Settings"
 msgstr "Instellingen"
 
 # wpml-name: 6bdda8124d6ca549428567dfc1c0532d
-#: admin/status-inc.php:11
+#: admin/status-page.php:11
 msgid "Available shortcodes"
 msgstr "Beschikbare shortcodes"
 
 # wpml-name: 119154a6f7028c6f8ebe3e470e626296
-#: admin/status-inc.php:17
+#: admin/status-page.php:17
 msgid "General information (grid name and login uri)"
 msgstr "Algemene informatie (gridnaam en login-uri)"
 
 # wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
-#: admin/status-inc.php:23
+#: admin/status-page.php:23
 msgid "Online users, regions, etc."
 msgstr "Online gebruikers, regio's, enz."
 
-#: admin/status-inc.php:29
+#: admin/status-page.php:29
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
 msgstr "Grid-profiel als de gebruiker is verbonden en heeft een avatar, anders avatarregistratieformulier"
 
-#: admin/status-inc.php:30
+#: admin/status-page.php:30
 msgid "(formerly %s)"
 msgstr "(voorheen %s)"
 

@@ -1,95 +1,5 @@
 <?php
 
-function w4os_register_setting($option_page, $option_slug, $args = array() ) {
-	if(empty($args['type'])) $args['type'] = 'string';
-	register_setting( $option_page, $option_slug, $args );
-	if($args['type']=='checkbox') {
-		foreach($args['values'] as $option_key => $option_value) {
-			register_setting( $option_page, $option_slug . '_' .$option_key , $args );
-		}
-	}
-	// if(!isset($args['label'])) $args['label'] = $option_slug;
-	if(empty($args['sanitize_callback'])) $args['sanitize_callback'] = 'w4os_settings_field';
-	// add_settings_field( $option_slug, $args['label'], $args['sanitize_callback'], 'w4os_settings', $option_page, $args);
-	$args['option_slug']=$option_slug;
-	add_settings_field(
-		$option_slug,                   // Field ID
-		$args['label'],  // Title
-		$args['sanitize_callback'],            // Callback to display the field
-		$option_page,                // Page
-		$args['section'],
-		$args,                      // Section
-	);
-}
-
-function w4os_settings_field($args) {
-	if($args['option_slug']) $field_id = $args['option_slug'];
-	else if($args['label_for']) $field_id = $args['label_for'];
-	else return;
-	// echo "<pre>" . print_r($args, true) . "</pre>";
-	// return;
-
-	$parameters = array();
-	if(isset($args['readonly'])) $parameters[] .= 'readonly';
-	if(isset($args['onchange'])) $parameters[] = $args['onchange'];
-	if(isset($args['placeholder'])) $parameters[] = "placeholder='" . esc_attr($args['placeholder']) . "'";
-	if(isset($args['autocomplete'])) $parameters[] = "autocomplete='" . $args['autocomplete'] . "'";
-	if(isset($args['onfocus'])) $parameters[] = "onfocus='" . esc_attr($args['onfocus']) . "'";
-
-	switch ($args['type']) {
-		case 'string':
-		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
-		break;
-
-		case 'password':
-		echo "<input type='password' class='regular-text' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
-		break;
-
-		case 'boolean':
-		$args['values'][$field_id] = 1;
-		case 'checkbox':
-		foreach($args['values'] as $option_key => $option_name) {
-			if($args['type']=='checkbox') $option_id = $field_id ."_" . $option_key;
-			else $option_id = $field_id;
-			$option = "<input type='checkbox' id='$option_id' name='$option_id' value='1'";
-			if (get_option($option_id)==1) $parameters[] = "checked";
-			$option .= ' ' . join(' ', $parameters) . ' ';
-			$option .= "/>";
-			if($args['type']=='checkbox') $option .= " <label for='$option_id'>$option_name</label>";
-			$options[] = $option;
-		}
-		if(is_array($options)) echo join("<br>", $options);
-		break;
-
-
-		case 'description':
-		break;
-
-		default:
-		echo "type ${args['type']} not recognized";
-	}
-	if(!empty($args['description'])) {
-		echo "<p class=description>${args['description']}</p>";
-	}
-	// echo "<input type=text value='$one'/><pre>" . print_r($args, true) . "</pre>";
-}
-
-function w4os_settings_callback_gridinfo() {
-	echo sprintf(
-		'<p>%1$s %2$s</p>',
-		__('Values must match Robust.HG.ini (or Robust.ini) config file.', 'w4os'),
-		__('Robust server must be running. Values entered here will be checked against your Robust server and updated if needed.', 'w4os'),
-	);
-}
-
-function w4os_settings_callback_models($arg) {
-	echo "<p>" . __('Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture.', 'w4os') . "</p>";
-}
-
-function w4os_settings_callback_webassets($arg) {
-	echo "<p class=help>" . __('A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin.', 'w4os') . "</p>";
-}
-
 function w4os_register_settings() {
 	$grid_info = w4os_update_grid_info();
 	// $check_login_uri = 'http://' . (!empty(get_option('w4os_login_uri'))) ? esc_attr(get_option('w4os_login_uri')) : 'http://localhost:8002';
@@ -225,6 +135,96 @@ function w4os_register_settings() {
 	return;
 }
 add_action( 'admin_init', 'w4os_register_settings' );
+
+function w4os_register_setting($option_page, $option_slug, $args = array() ) {
+	if(empty($args['type'])) $args['type'] = 'string';
+	register_setting( $option_page, $option_slug, $args );
+	if($args['type']=='checkbox') {
+		foreach($args['values'] as $option_key => $option_value) {
+			register_setting( $option_page, $option_slug . '_' .$option_key , $args );
+		}
+	}
+	// if(!isset($args['label'])) $args['label'] = $option_slug;
+	if(empty($args['sanitize_callback'])) $args['sanitize_callback'] = 'w4os_settings_field';
+	// add_settings_field( $option_slug, $args['label'], $args['sanitize_callback'], 'w4os_settings', $option_page, $args);
+	$args['option_slug']=$option_slug;
+	add_settings_field(
+		$option_slug,                   // Field ID
+		$args['label'],  // Title
+		$args['sanitize_callback'],            // Callback to display the field
+		$option_page,                // Page
+		$args['section'],
+		$args,                      // Section
+	);
+}
+
+function w4os_settings_field($args) {
+	if($args['option_slug']) $field_id = $args['option_slug'];
+	else if($args['label_for']) $field_id = $args['label_for'];
+	else return;
+	// echo "<pre>" . print_r($args, true) . "</pre>";
+	// return;
+
+	$parameters = array();
+	if(isset($args['readonly'])) $parameters[] .= 'readonly';
+	if(isset($args['onchange'])) $parameters[] = $args['onchange'];
+	if(isset($args['placeholder'])) $parameters[] = "placeholder='" . esc_attr($args['placeholder']) . "'";
+	if(isset($args['autocomplete'])) $parameters[] = "autocomplete='" . $args['autocomplete'] . "'";
+	if(isset($args['onfocus'])) $parameters[] = "onfocus='" . esc_attr($args['onfocus']) . "'";
+
+	switch ($args['type']) {
+		case 'string':
+		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
+		break;
+
+		case 'password':
+		echo "<input type='password' class='regular-text' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
+		break;
+
+		case 'boolean':
+		$args['values'][$field_id] = 1;
+		case 'checkbox':
+		foreach($args['values'] as $option_key => $option_name) {
+			if($args['type']=='checkbox') $option_id = $field_id ."_" . $option_key;
+			else $option_id = $field_id;
+			$option = "<input type='checkbox' id='$option_id' name='$option_id' value='1'";
+			if (get_option($option_id)==1) $parameters[] = "checked";
+			$option .= ' ' . join(' ', $parameters) . ' ';
+			$option .= "/>";
+			if($args['type']=='checkbox') $option .= " <label for='$option_id'>$option_name</label>";
+			$options[] = $option;
+		}
+		if(is_array($options)) echo join("<br>", $options);
+		break;
+
+
+		case 'description':
+		break;
+
+		default:
+		echo "type ${args['type']} not recognized";
+	}
+	if(!empty($args['description'])) {
+		echo "<p class=description>${args['description']}</p>";
+	}
+	// echo "<input type=text value='$one'/><pre>" . print_r($args, true) . "</pre>";
+}
+
+function w4os_settings_callback_gridinfo() {
+	echo sprintf(
+		'<p>%1$s %2$s</p>',
+		__('Values must match Robust.HG.ini (or Robust.ini) config file.', 'w4os'),
+		__('Robust server must be running. Values entered here will be checked against your Robust server and updated if needed.', 'w4os'),
+	);
+}
+
+function w4os_settings_callback_models($arg) {
+	echo "<p>" . __('Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture.', 'w4os') . "</p>";
+}
+
+function w4os_settings_callback_webassets($arg) {
+	echo "<p class=help>" . __('A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin.', 'w4os') . "</p>";
+}
 
 function w4os_settings_link( $links ) {
 	$url = esc_url( add_query_arg(

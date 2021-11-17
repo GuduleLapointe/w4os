@@ -202,33 +202,33 @@ msgid "Avatar Name"
 msgstr "Nom de l'avatar"
 
 # wpml-name: 6bdda8124d6ca549428567dfc1c0532d
-#: admin/status-inc.php:7
+#: admin/status-page.php:7
 msgid "Available shortcodes"
 msgstr "Code courts (shortcodes) disponibles"
 
 # wpml-name: 119154a6f7028c6f8ebe3e470e626296
-#: admin/status-inc.php:12
+#: admin/status-page.php:12
 msgid "General information (grid name and login uri)"
 msgstr "Informations générales (nom de la grille et URI de connexion)"
 
 # wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
-#: admin/status-inc.php:18
+#: admin/status-page.php:18
 msgid "Online users, regions, etc."
 msgstr "Utilisateurs en ligne, régions, etc."
 
-#: admin/status-inc.php:24
+#: admin/status-page.php:24
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
 msgstr "Profil sur la grille si l'utilisateur est connecté et possède un avatar, sinon formulaire de création de l'avatar"
 
-#: admin/status-inc.php:25
+#: admin/status-page.php:25
 msgid "(formerly %s)"
 msgstr "(anciennement %s)"
 
-#: admin/status-inc.php:38
+#: admin/status-page.php:38
 msgid "Missing PHP modules"
 msgstr "Modules PHP manquants"
 
-#: admin/status-inc.php:40
+#: admin/status-page.php:40
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr "Ces modules n'ont pas été trouvés: %s. Installez-les pour tirer le maximum de ce plugin."
 
