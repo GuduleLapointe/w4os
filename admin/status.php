@@ -1,1 +1,1 @@
-<?php if(!is_admin()) die();
+<?php if ( ! defined( 'W4OS_ADMIN' ) ) die;

@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
 
 function w4os_register_settings() {
 	$grid_info = w4os_update_grid_info();

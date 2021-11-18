@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
 
 /**
  * The admin-specific functionality of the plugin.

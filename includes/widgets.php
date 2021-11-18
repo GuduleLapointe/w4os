@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) die;
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 /**
  * Adds W4OS_GridInfo_Widget widget.

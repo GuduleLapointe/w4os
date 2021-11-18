@@ -1,4 +1,4 @@
-<?php if(!defined('W4OS_SLUG')) die();
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 define('W4OS_ASSETS_SERVER_TIMEOUT', 8); // timeout in seconds, to wait while requesting an asset (default to 8)
 define('W4OS_ASSETS_DO_RESIZE', false); // shall we resize picture to width=W4OS_ASSETS_RESIZE_FIXED_WIDTH ?

@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) die;
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 3 );
 

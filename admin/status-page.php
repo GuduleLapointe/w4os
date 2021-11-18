@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
 /*
  * Wrong result, use w4os_grid_status_text() instead
  */

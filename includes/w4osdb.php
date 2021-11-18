@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 if(get_option('w4os_db_user') && get_option('w4os_db_pass') && get_option('w4os_db_database') && get_option('w4os_db_host')) {
   $w4osdb = new WPDB(

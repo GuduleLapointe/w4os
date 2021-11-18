@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) die;
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 function w4os_array2table($array, $class="") {
 	if(empty($array)) return;

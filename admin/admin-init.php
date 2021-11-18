@@ -1,8 +1,9 @@
-<?php if ( ! defined( 'WPINC' ) ) die;
+<?php if(!is_admin()) die();
+define('W4OS_ADMIN', true);
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+// ini_set('display_errors', '1');
+// ini_set('display_startup_errors', '1');
+// error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 function w4os_enqueue_admin_script( $hook ) {
     wp_enqueue_style( 'w4os-admin', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), W4OS_VERSION );

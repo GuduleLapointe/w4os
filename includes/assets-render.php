@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 /*
  *  This file is part of WebAssets for OpenSimulator.
  *

@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 /**
  * Shortcodes
  *
