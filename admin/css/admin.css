@@ -3,55 +3,76 @@
  * included in this file.
  */
 
-.shortcodes > table {
-  max-width: 60em;
-  border-spacing: 20px;
-  border-collapse: separate;
-  margin: -20px;
+.w4os-table {
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
 }
- .shortcodes > table > * {
-   vertical-align: top;
-   text-align: left;
- }
-
-.shortcodes > table > tbody > tr > th {
-  font-weight: normal;
-}
-
-.shortcodes > table > tbody > tr > td {
-  font-weight: normal;
-  padding: 10px;
-  background: white !important;
-}
-.shortcodes > table > tbody > tr  :first-child {
+.w4os-table :first-child {
   margin-top: 0;
 }
 
-@media screen and (min-width: 480px) {
-  .shortcodes > table > tbody > tr > th {
-    max-width: 50%;
-  }
-
-  .shortcodes > table > tbody > tr > td {
-    min-width: 50%;
-  }
+.w4os-table > * > * > th, .w4os-table > * > * > td {
+    padding: 10px;
+    vertical-align: top;
 }
+.w4os-table > thead > tr > th {
+    text-align: center;
+    padding: 10px;
+}
+.w4os-table > tbody > tr > th {
+    padding-left: 0;
+    width: 200px;
+}
+
+.w4os-table > tbody > tr > th p {
+  font-weight: normal;
+}
+
+.w4os-table.shortcodes {
+  max-width: 60em;
+  border-spacing: 10px;
+  border-collapse: separate;
+  margin: -10px;
+}
+
+.w4os-table.shortcodes > tbody > tr > td {
+  background: white;
+}
+
+table.gridinfo td,
+table.gridstatus td,
+.w4os-shortcode td {
+    vertical-align: bottom;
+}
+table.gridinfo td:first-child,
+table.gridstatus td:first-child,
+.w4os-shortcode td:first-child {
+    padding-right: 10px;
+    min-width: 12em;
+}
+
 @media screen and (max-width: 480px) {
-  .shortcodes > table,
-  .shortcodes > table > tbody,
-  .shortcodes > table > * > tr,
-  .shortcodes > table > * > * > th,
-  .shortcodes > table > * > * > td
+  .w4os-table.shortcodes,
+  .w4os-table.shortcodes > tbody,
+  .w4os-table.shortcodes > * > tr,
+  .w4os-table.shortcodes > * > * > th,
+  .w4os-table.shortcodes > * > * > td
    {
      display: block;
      max-width: 100%;
      /* padding: 10px; */
    }
-   .shortcodes > table
+   .w4os-table.shortcodes
     {
       margin: 0;
     }
-    .shortcodes > table > tbody > tr > th {
-      margin-top: 25px;
+    .w4os-table.shortcodes > tbody > tr > th {
+      margin: 20px 0 0;
+      width: calc(100% - 10px);
+    }
+    .w4os-table.shortcodes > tbody > tr > th p {
+        margin-bottom: 0;
     }
 }
+*/
