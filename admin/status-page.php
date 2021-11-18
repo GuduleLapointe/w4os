@@ -116,12 +116,19 @@ $count_grid_accounts = count($GridAccounts);
 						}
 						if($count_tech > 0) {
 							echo '<p>' . sprintf(_n(
-								"%d grid account (other than models) has no email address, which is fine as long as it is needed only for maintenance or service tasks.",
-								"%s grid accounts (other than models) have no email address, which is fine as long as they are needed only for maintenance or service tasks.",
+								"%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks.",
+								"%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.",
 								$count_tech,
-								'w4os') . __('All real accounts should have an email address for W4OS to function properly.', 'w4os'), $count_tech) . '</p>';
+								'w4os') . ' ' . __('Real accounts need an email address for W4OS to function properly.', 'w4os'), $count_tech) . '</p>';
 						}
-						echo sprintf('<a href="%s">%s</a>', '#', __('Sync WordPress and Grid users now', 'w4os'));
+						// echo sprintf('<form action="%s"><button type=submit>%s</button>', '#', __('Sync WordPress and Grid users now', 'w4os'));
+						echo '<form method="post" action="options.php" autocomplete="off">';
+						settings_fields( 'w4os_status' );
+						echo '<input type="hidden" input-hidden" id="w4os_sync_users" name="w4os_sync_users" value="1">';
+						// do_settings_sections( 'w4os_status' );
+
+						submit_button(__('Sync WordPress and Grid users now', 'w4os'));
+						echo '</form>';
 						?>
 				</td>
 			</tr>

@@ -7,6 +7,18 @@ function w4os_register_settings() {
 	// $default_gridname = $grid_info['gridname'];
 
 	$settings_pages = array(
+		'w4os_status' => array(
+			'sections' => array(
+				'default' => array(
+					'fields' => array(
+						'w4os_sync_users' => array(
+							'type' => 'hidden',
+							'value' => 1,
+						),
+					),
+				),
+			),
+		),
 		'w4os_settings' => array(
 			'sections' => array(
 				'w4os_options_gridinfo' => array(
@@ -197,6 +209,9 @@ function w4os_settings_field($args) {
 		if(is_array($options)) echo join("<br>", $options);
 		break;
 
+		case 'hidden':
+		echo "<input type='hidden' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
+		break;
 
 		case 'description':
 		break;
