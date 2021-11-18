@@ -2,51 +2,92 @@
 /*
  * Wrong result, use w4os_grid_status_text() instead
  */
-$GridAccounts=$w4osdb->get_results("SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText, Email
-	FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID	WHERE active = 1");
-$count_users = count_users();
-$count = array (
-	'wp_total' => $count_users['total_users'],
-	// 'wp_only' => '1',
-	// 'grid_total' => count($GridAccounts),
-	// 'grid_only' => '2',
-	// 'synced' => '3',
-)
+$result = $w4osdb->get_results("SELECT Email as email, PrincipalID FROM UserAccounts
+	WHERE active = 1
+	AND Email is not NULL AND Email != ''
+	AND FirstName != '" . get_option('w4os_model_firstname') . "'
+	AND LastName != '" . get_option('w4os_model_lastname') . "'
+	");
+foreach (	$result as $row ) {
+	$GridAccounts[$row->email] = (array)$row;
+	$MergedAccounts[$row->email] = (array)$row;
+}
+
+$result = $wpdb->get_results("SELECT user_email as email, ID as user_id, m.meta_value AS w4os_uuid
+	FROM $wpdb->users as u, $wpdb->usermeta as m
+	WHERE u.ID = m.user_id AND m.meta_key = 'w4os_uuid' AND m.meta_value != '' AND m.meta_value != '" . W4OS_NULL_KEY . "'");
+
+foreach (	$result as $row ) {
+	$WPGridAccounts[$row->email] = (array)$row;
+	$MergedAccounts[$row->email] = (!empty($MergedAccounts[$row->email])) ? $MergedAccounts[$row->email] = array_merge($MergedAccounts[$row->email], (array)$row) : (array)$row;
+}
+
+$count_wp_only = NULL;
+$count_grid_only = NULL;
+foreach ($MergedAccounts as $key => $account) {
+	if(w4os_empty($account['PrincipalID'])) $account['PrincipalID'] = NULL;
+	if(w4os_empty($account['w4os_uuid'])) $account['w4os_uuid'] = NULL;
+	if($account['PrincipalID'] && $account['w4os_uuid'] && $account['PrincipalID'] == $account['w4os_uuid'])
+	$count_sync += 1;
+	else if($account['PrincipalID']) $count_grid_only += 1;
+	else $count_wp_only += 1;
+}
+// $MergedAccounts = array_merge($WPGridAccounts, $GridAccounts);
+// echo "<pre>" . print_r($MergedAccounts, true) . "</pre>";
+
+$count_wp_users = count_users()['total_users'];
+$count_wp_linked = count($WPGridAccounts);
+$count_grid_accounts = count($GridAccounts);
+
 ?><div class="w4os-status-page wrap">
 	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
 	<div class=sync>
-		<h2>
-			<?php _e("Users", 'w4os') ?>
-		</h2>
+
 		<table class="w4os-table user-sync">
 			<thead>
-				<!-- <tr>
-					<th></th>
-					<th>Total</th>
-					<th>WP only</th>
-					<th>Sync'ed</th>
-					<th>Grid only</th>
-				</tr> -->
+				<tr>
+					<th><h2>
+						<?php _e("Users", 'w4os') ?>
+					</h2></th>
+					<th><?php _e('Total', 'w4os');?></th>
+					<th><?php if($count_wp_only > 0) _e('WP only', 'w4os');?></th>
+					<th><?php _e('Sync', 'w4os');?></th>
+					<th><?php if($count_grid_only > 0) _e('Grid only', 'w4os');?></th>
+				</tr>
 			</thead>
 			<tr>
-				<th><?php _e("WordPress accounts", 'w4os') ?></th>
-				<td><?php echo $count['wp_total']; ?></td>
-				<td class=error><?php echo $count['wp_only']; ?></td>
-				<td class=success rowspan=2><?php echo $count['synced']; ?></td>
+				<th><?php _e("Grid accounts", 'w4os') ?></th>
+				<td><?php echo $count_grid_accounts; ?></td>
+				<td></td>
+				<td class=success rowspan=2><?php echo $count_sync; ?></td>
+				<td class=error><?php echo $count_grid_only; ?></td>
 			</tr>
 			<tr>
-				<th><?php _e("Grid accounts", 'w4os') ?></th>
-				<td><?php echo $count['grid_total']; ?></td>
-				<td></td>
-				<td class=error><?php echo $count['grid_only']; ?></td>
+				<th><?php _e("Linked WordPress accounts", 'w4os') ?></th>
+				<td><?php echo $count_wp_linked; ?></td>
+				<td class=error><?php echo $count_wp_only; ?></td>
 			</tr>
-			<?php
-			if($count['wp_only'] + $count['grid_only'] > 0 ) {
-				echo sprintf('<caption><a href="%s">%s</a></caption>', '#', __('Sync WordPress and Grid users now', 'w4os'));
-			}
-			?>
 		</table>
+			<?php	if($count_wp_only + $count_grid_only > 0 ) { ?>
+		<table class="w4os-table .notes">
+			<tr class=notes>
+				<th></th>
+				<td>
+						<?php
+						if($count_grid_only  > 0 ) {
+							echo '<p>' . sprintf(__('%d grid accounts have no corresponding WP account. Syncing will create a WP account.', 'w4os'), $count_grid_only) . '</p>';
+						}
+						if($count_wp_only  > 0 ) {
+							echo '<p>' . sprintf(__('%d WordPress accounts are linked to an unexisting avatar (wrong UUID). Syncing account will keep the WP account but remove the avatar link.', 'w4os'), $count_wp_only) . '</p>';
+						}
+						echo sprintf('<a href="%s">%s</a>', '#', __('Sync WordPress and Grid users now', 'w4os'));
+						?>
+				</td>
+			</tr>
+		</table>
+			<?php	} ?>
+
 	</div>
 
 	<div class=shortcodes>
