@@ -29,8 +29,31 @@
   font-weight: normal;
 }
 
+.w4os-table.user-sync {
+  border-spacing: 10px;
+  border-collapse: separate;
+  margin: -10px -10px 0;
+}
+.w4os-table.user-sync caption {
+    caption-side: bottom;
+    padding: 10px;
+}
+.w4os-table.user-sync td:not(:empty) {
+  background: white;
+  min-width: 4em;
+    text-align: center;
+    vertical-align: middle;
+}
+.w4os-table.user-sync td.error {
+    color: red;
+}
+.w4os-table.user-sync td.success {
+    color: green;
+}
+
+
 .w4os-table.shortcodes {
-  max-width: 60em;
+  /* max-width: 60em; */
   border-spacing: 10px;
   border-collapse: separate;
   margin: -10px;

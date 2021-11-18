@@ -1,10 +1,10 @@
 <?php if ( ! defined( 'WPINC' ) ) die;
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 function w4os_enqueue_admin_script( $hook ) {
-    // if ( 'edit.php' != $hook ) {
-    //     return;
-    // }
-    //
     wp_enqueue_style( 'w4os-admin', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), W4OS_VERSION );
 }
 add_action( 'admin_enqueue_scripts', 'w4os_enqueue_admin_script' );
@@ -39,6 +39,8 @@ function w4os_status_page()
 	if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 	}
+  global $wpdb, $w4osdb;
+
 	require(plugin_dir_path(__FILE__) . 'status-page.php');
 }
 
@@ -187,4 +189,5 @@ add_action('restrict_manage_users', 'w4os_users_filter_avatars');
  * Now we can launch the actual admin sections
  */
 require_once __DIR__ . '/settings.php';
+require_once __DIR__ . '/status.php';
 if($pagenow == "index.php") require_once __DIR__ .'/dashboard.php';
