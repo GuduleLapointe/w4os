@@ -32,8 +32,19 @@ foreach ($MergedAccounts as $key => $account) {
 	else if($account['PrincipalID']) $count_grid_only += 1;
 	else $count_wp_only += 1;
 }
-// $MergedAccounts = array_merge($WPGridAccounts, $GridAccounts);
-// echo "<pre>" . print_r($MergedAccounts, true) . "</pre>";
+
+$count_models = $w4osdb->get_var("SELECT count(*) FROM UserAccounts
+	WHERE FirstName = '" . get_option('w4os_model_firstname') . "'
+	OR LastName = '" . get_option('w4os_model_lastname') . "'
+	");
+
+$count_tech = $w4osdb->get_var("SELECT count(*) FROM UserAccounts
+	WHERE (Email IS NULL OR Email = '')
+	AND FirstName != '" . get_option('w4os_model_firstname') . "'
+	AND LastName != '" . get_option('w4os_model_lastname') . "'
+	-- AND FirstName != 'GRID'
+	-- AND LastName != 'SERVICE'
+	");
 
 $count_wp_users = count_users()['total_users'];
 $count_wp_linked = count($WPGridAccounts);
@@ -68,6 +79,20 @@ $count_grid_accounts = count($GridAccounts);
 				<td><?php echo $count_wp_linked; ?></td>
 				<td class=error><?php echo $count_wp_only; ?></td>
 			</tr>
+			<tr>
+				<th><?php _e("Avatar models", 'w4os') ?></th>
+				<td><?php
+					echo $count_models;
+				?></td>
+			</tr>
+			<?php if($count_tech > 0) { ?>
+			<tr>
+				<th><?php _e("Other service accounts", 'w4os') ?></th>
+				<td><?php
+					echo $count_tech;
+				?></td>
+			</tr>
+			<?php } ?>
 		</table>
 			<?php	if($count_wp_only + $count_grid_only > 0 ) { ?>
 		<table class="w4os-table .notes">
@@ -76,10 +101,25 @@ $count_grid_accounts = count($GridAccounts);
 				<td>
 						<?php
 						if($count_grid_only  > 0 ) {
-							echo '<p>' . sprintf(__('%d grid accounts have no corresponding WP account. Syncing will create a WP account.', 'w4os'), $count_grid_only) . '</p>';
+							echo '<p>' . sprintf(_n(
+								'%d grid account has no linked WP account. Syncing will create a new WP account.',
+								'%d grid accounts have no linked WP account. Syncing will create new WP accounts.',
+								$count_grid_only,
+								'w4os'), $count_grid_only) . '</p>';
 						}
 						if($count_wp_only  > 0 ) {
-							echo '<p>' . sprintf(__('%d WordPress accounts are linked to an unexisting avatar (wrong UUID). Syncing account will keep the WP account but remove the avatar link.', 'w4os'), $count_wp_only) . '</p>';
+							echo '<p>' . sprintf(_n(
+								'%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the avatar link.',
+								'%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove their avatar link.',
+								$count_wp_only,
+								'w4os'), $count_wp_only) . '</p>';
+						}
+						if($count_tech > 0) {
+							echo '<p>' . sprintf(_n(
+								"%d grid account (other than models) has no email address, which is fine as long as it is needed only for maintenance or service tasks.",
+								"%s grid accounts (other than models) have no email address, which is fine as long as they are needed only for maintenance or service tasks.",
+								$count_tech,
+								'w4os') . __('All real accounts should have an email address for W4OS to function properly.', 'w4os'), $count_tech) . '</p>';
 						}
 						echo sprintf('<a href="%s">%s</a>', '#', __('Sync WordPress and Grid users now', 'w4os'));
 						?>
