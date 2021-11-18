@@ -190,3 +190,10 @@ function w4os_grid_status_text() {
 	}
 	return $status;
 }
+
+function w4os_empty($var) {
+	if (!$var) return true;
+	if (empty($var)) return true;
+	if ($var == W4OS_NULL_KEY) return true;
+	return false;
+}
