@@ -1,7 +1,5 @@
 <?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
-/*
- * Wrong result, use w4os_grid_status_text() instead
- */
+
 $result = $w4osdb->get_results("SELECT Email as email, PrincipalID FROM UserAccounts
 	WHERE active = 1
 	AND Email is not NULL AND Email != ''
@@ -119,7 +117,7 @@ $count_grid_accounts = count($GridAccounts);
 								"%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks.",
 								"%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.",
 								$count_tech,
-								'w4os') . ' ' . __('Real accounts need an email address for W4OS to function properly.', 'w4os'), $count_tech) . '</p>';
+								'w4os') . ' ' . __('Real accounts need a unique email address for W4OS to function properly.', 'w4os'), $count_tech) . '</p>';
 						}
 						// echo sprintf('<form action="%s"><button type=submit>%s</button>', '#', __('Sync WordPress and Grid users now', 'w4os'));
 						echo '<form method="post" action="options.php" autocomplete="off">';
