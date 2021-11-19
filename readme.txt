@@ -51,9 +51,9 @@ To allow users to choose an avatar on registration, you must enable user profile
   - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar widget
   - create a profile page for registered users and include `[gridprofile]` shortcode. This will display the an avatar creation form for users without in-world avatar. For accounts already having an avatar, it will display avatar details.
   - if you upgraded from a version older than 2.2 (#eb4769081), check "Provide web assets service" to activate new internal web assets server
-3. To create default avatars:
+3. Create default avatars (see INSTALLATION.md for details)
   - from ROBUST console (defaults creation is not allowed from the website), create users for your models. Name them according to W4OS settings: one part of the name is "Default", the other part is the name displayed on the form (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't mention e-mail address to avoid counting them as regular accounts in stats.
-  - log in-world with each of these model accounts and give them the desire appearance. Take a snapshot and use it as profile picture. It will be used for the web site avatar choosing form.
+  - log in-world with each of these model accounts and give them the desired appearance. Take a snapshot and use it as profile picture. It will be used for the web site avatar choosing form.
 
 See INSTALLATION.md for more details.
 
@@ -69,10 +69,11 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Use avatar profile pic as WP avatar
 - [x] Show avatar picture in user lists
 - [x] Login page / Widget
+- [x] Option to show avatar name instead of real name in user lists
 - Public avatar profile
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
-- Option to show avatar name instead of real name in user lists
+- Manual / cron sync of Grid and WP users
 
 = Medium term =
 
@@ -130,7 +131,13 @@ Maybe, but we didn't check yet. If you give it a try, please send us your feedba
 
 This is an OpenSimulator design limitation. Regions rely on cached data to display avatar information, and once fetched, these are never updated. As a result, if an avatar's name (or grid URI btw) is changed, the change will not be reflected on regions already visited by this avatar (which will still show the old name), but new visited region will display the new one. This could be somewhat handled for a small standalone grid, but never in hypergrid context. There is no process to force a foreign grid to update its cache, and probably never will.
 
-== Screenshots ==
+== Screenshots ==	AND LastName != 'SERVICE'
+	");
+
+
+?><div class="w4os-status-page wrap">
+	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
 
 1. Grid info and grid status examples
 2. Avatar registration form in WooCommerce My Account dashboard.
@@ -143,26 +150,8 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 * new basic blocks support
 * new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
 * new 'Grid info' and 'Grid status' sidebar widgets
-* new 'Grid info' and 'Grid status' sidebar widgets
-* new 'Grid info' and 'Grid status' sidebar widgets
 * new internal web assets server
 * added option to replace name by avatar name in users list
-* added internal update process
-* added assets permalink settings
-* added profile image to gridprofile output
-* fix slow assets, store cached images in upload folder to serve them directly by the web server
-* fix #21 Fatal error Call to undefined function each()
-* assets optimized (write converted images inside upload/ folder to let them serve directly by the web server)
-* replace wp avatar picture with in-world profile picture if set
-* use version provided by .version if present
-* More comprehensive database connection error reporting
-* show internal or external asset server uri according to provide web assets service value
-
-= Unreleased =
-* new basic blocks support
-* new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
-* new 'Grid info' and 'Grid status' sidebar widgets
-* new internal web assets server
 * added internal update process
 * added assets permalink settings
 * added profile image to gridprofile output

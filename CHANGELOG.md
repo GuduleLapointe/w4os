@@ -1,3 +1,5 @@
+## Changelog
+
 ### Unreleased
 * new basic blocks support
 * new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.

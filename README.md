@@ -51,9 +51,9 @@ To allow users to choose an avatar on registration, you must enable user profile
   - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar widget
   - create a profile page for registered users and include `[gridprofile]` shortcode. This will display the an avatar creation form for users without in-world avatar. For accounts already having an avatar, it will display avatar details.
   - if you upgraded from a version older than 2.2 (#eb4769081), check "Provide web assets service" to activate new internal web assets server
-3. To create default avatars:
+3. Create default avatars (see INSTALLATION.md for details)
   - from ROBUST console (defaults creation is not allowed from the website), create users for your models. Name them according to W4OS settings: one part of the name is "Default", the other part is the name displayed on the form (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't mention e-mail address to avoid counting them as regular accounts in stats.
-  - log in-world with each of these model accounts and give them the desire appearance. Take a snapshot and use it as profile picture. It will be used for the web site avatar choosing form.
+  - log in-world with each of these model accounts and give them the desired appearance. Take a snapshot and use it as profile picture. It will be used for the web site avatar choosing form.
 
 See INSTALLATION.md for more details.
 
@@ -69,10 +69,11 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Use avatar profile pic as WP avatar
 - [x] Show avatar picture in user lists
 - [x] Login page / Widget
+- [x] Option to show avatar name instead of real name in user lists
 - Public avatar profile
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
-- Option to show avatar name instead of real name in user lists
+- Manual / cron sync of Grid and WP users
 
 ### Medium term
 

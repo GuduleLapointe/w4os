@@ -56,7 +56,6 @@ $count_tech = $w4osdb->get_var("SELECT count(*) FROM UserAccounts
 	AND LastName != 'SERVICE'
 	");
 
-
 ?><div class="w4os-status-page wrap">
 	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
