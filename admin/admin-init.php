@@ -190,5 +190,5 @@ add_action('restrict_manage_users', 'w4os_users_filter_avatars');
  * Now we can launch the actual admin sections
  */
 require_once __DIR__ . '/settings.php';
-require_once __DIR__ . '/status.php';
+require_once __DIR__ . '/users.php';
 if($pagenow == "index.php") require_once __DIR__ .'/dashboard.php';
