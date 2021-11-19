@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-11-19T01:49:37-04:00\n"
-"PO-Revision-Date: 2021-11-19 01:59-0400\n"
+"POT-Creation-Date: 2021-11-19T17:39:10-04:00\n"
+"PO-Revision-Date: 2021-11-19 17:42-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -132,7 +132,7 @@ msgstr "Mot de passe"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: admin/settings.php:65
-#: admin/status-page.php:89
+#: admin/status-page.php:35
 msgid "Avatar models"
 msgstr "Modèles d'avatar"
 
@@ -219,97 +219,115 @@ msgstr "Les comptes avec un prénom ou un nom identique à ceux spécifiés ci-d
 msgid "A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin."
 msgstr "Un serveur web de ressources (web assets server) est nécessaire pour afficher les images du monde virtuel sur le site web (par exempe les images de profil). Vous pouvez utiliser un serveur web de ressources externe si vous en avez déjà un, ou utiliser celui qui est intégré dans l'extension w4os."
 
-#: admin/status-page.php:68
+#: admin/status-page.php:11
 msgid "Users"
 msgstr "Utilisateurs"
 
 # wpml-name: 6834699b2d08455d0475c76d54356191
-#: admin/status-page.php:70
+#: admin/status-page.php:16
 msgid "Total"
 msgstr "Total"
 
-#: admin/status-page.php:71
+#: admin/status-page.php:17
 msgid "WP only"
 msgstr "WP seulement"
 
-#: admin/status-page.php:72
+#: admin/status-page.php:18
 msgid "Sync"
 msgstr "Sync"
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/status-page.php:73
+#: admin/status-page.php:19
 msgid "Grid only"
 msgstr "Grille seulement"
 
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab
-#: admin/status-page.php:77
+#: admin/status-page.php:23
 msgid "Grid accounts"
 msgstr "Comptes de grille"
 
-#: admin/status-page.php:84
+#: admin/status-page.php:30
 msgid "Linked WordPress accounts"
 msgstr "Comptes WordPress liés"
 
-#: admin/status-page.php:96
+#: admin/status-page.php:42
 msgid "Other service accounts"
 msgstr "Autres comptes de service"
 
-#: admin/status-page.php:110
+#: admin/status-page.php:56
 msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
 msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
 msgstr[0] "%d compte de grille n'est lié à aucun compte WordPress. La synchronisation créera un nouveau compte WP."
 msgstr[1] "%d comptes de grille ne sont liés à aucun compte WordPress. La synchronisation créera des nouveaux comptes WP."
 
-#: admin/status-page.php:117
-msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the avatar link."
-msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove their avatar link."
-msgstr[0] "%d compte WordPress est lié à un avatar inexistant (mauvais UUID). La synchronisation conservera le compte WP mais supprimera le lien à l'avatar."
-msgstr[1] "%d comptes WordPress sont liés à des avatars inexistants (mauvais UUID). La synchronisation conservera les comptes WP mais supprimera les liens à l'avatar."
+#: admin/status-page.php:64
+msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference."
+msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference."
+msgstr[0] "%d compte WordPress est lié à un avatar inexistant (mauvais UUID). La synchronisation conservera le compte WP mais supprimera la référence obsolète."
+msgstr[1] "%d comptes WordPress sont liés à des avatars inexistants (mauvais UUID). La synchronisation conservera les comptes WP mais supprimera les références obsolètes."
 
-#: admin/status-page.php:124
+#: admin/status-page.php:72
 msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
 msgid_plural "%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
 msgstr[0] "%s compte de grille (en dehors des modèles) n'a pas d'adresse e-mail, ce qui est correct tant qu'il est utilisé uniquement pour la maintenance ou des tâches techniques."
 msgstr[1] "%s comptes de grille (en dehors des modèles) n'ont pas d'adresse e-mail, ce qui est correct tant qu'ils sont utilisés uniquement pour la maintenance ou des tâches techniques."
 
-#: admin/status-page.php:128
+#: admin/status-page.php:77
 msgid "Real accounts need a unique email address for W4OS to function properly."
 msgstr "Les comptes réels nécessitent une adresse e-mail unique pour que W4OS fonctionne correctement."
 
-#: admin/status-page.php:136
+#: admin/status-page.php:85
 msgid "Sync WordPress and Grid users now"
 msgstr "Synchroniser les utilisateurs de la grille et de WordPress maintenant"
 
 # wpml-name: 6bdda8124d6ca549428567dfc1c0532d
-#: admin/status-page.php:148
+#: admin/status-page.php:96
 msgid "Available shortcodes"
 msgstr "Code courts (shortcodes) disponibles"
 
 # wpml-name: 119154a6f7028c6f8ebe3e470e626296
-#: admin/status-page.php:153
+#: admin/status-page.php:101
 msgid "General information (grid name and login uri)"
 msgstr "Informations générales (nom de la grille et URI de connexion)"
 
 # wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
-#: admin/status-page.php:159
+#: admin/status-page.php:107
 msgid "Online users, regions, etc."
 msgstr "Utilisateurs en ligne, régions, etc."
 
-#: admin/status-page.php:165
+#: admin/status-page.php:113
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
 msgstr "Profil sur la grille si l'utilisateur est connecté et possède un avatar, sinon formulaire de création de l'avatar"
 
-#: admin/status-page.php:166
+#: admin/status-page.php:114
 msgid "(formerly %s)"
 msgstr "(anciennement %s)"
 
-#: admin/status-page.php:179
+#: admin/status-page.php:128
 msgid "Missing PHP modules"
 msgstr "Modules PHP manquants"
 
-#: admin/status-page.php:181
+#: admin/status-page.php:130
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr "Ces modules n'ont pas été trouvés: %s. Installez-les pour tirer le maximum de ce plugin."
+
+#: admin/users.php:88
+msgid "%d new WordPress account created"
+msgid_plural "%d new WordPress accounts created"
+msgstr[0] "%d nouveau compte WordPress créé"
+msgstr[1] "%d nouveaux comptes WordPress créés"
+
+#: admin/users.php:94
+msgid "%d reference updated"
+msgid_plural "%d references updated"
+msgstr[0] "%d référence mise à jour"
+msgstr[1] "%d références mises à jour"
+
+#: admin/users.php:100
+msgid "%d broken reference removed"
+msgid_plural "%d broken references removed"
+msgstr[0] "%d référence obsolète supprimée"
+msgstr[1] "%d références obsolètes supprimées"
 
 #: includes/assets.php:38
 msgid "W4OS Assets base"
