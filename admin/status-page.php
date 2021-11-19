@@ -84,6 +84,7 @@ $count = w4os_count_users();
 
 							submit_button(__('Sync WordPress and Grid users now', 'w4os'));
 							echo '</form>';
+							echo '<p class=description>' . __('Synchronization is required after installing the plugin and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually, especially if users have been added or deleted directly from the grid administration console.', 'w4os') . '<p>';
 							?>
 						</td>
 					</tr>
