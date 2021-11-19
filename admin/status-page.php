@@ -1,34 +1,46 @@
 <?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
 
-$result = $w4osdb->get_results("SELECT Email as email, PrincipalID FROM UserAccounts
-	WHERE active = 1
-	AND Email is not NULL AND Email != ''
-	AND FirstName != '" . get_option('w4os_model_firstname') . "'
-	AND LastName != '" . get_option('w4os_model_lastname') . "'
-	");
-foreach (	$result as $row ) {
-	$GridAccounts[$row->email] = (array)$row;
-	$MergedAccounts[$row->email] = (array)$row;
+function w4os_get_users_ids_and_uuids() {
+		global $wpdb, $w4osdb;
+
+		$result = $w4osdb->get_results("SELECT Email as email, PrincipalID FROM UserAccounts
+			WHERE active = 1
+			AND Email is not NULL AND Email != ''
+			AND FirstName != '" . get_option('w4os_model_firstname') . "'
+			AND LastName != '" . get_option('w4os_model_lastname') . "'
+			");
+		foreach (	$result as $row ) {
+			$GridAccounts[$row->email] = (array)$row;
+			$MergedAccounts[$row->email] = (array)$row;
+		}
+
+		$result = $wpdb->get_results("SELECT user_email as email, ID as user_id, m.meta_value AS w4os_uuid
+			FROM $wpdb->users as u, $wpdb->usermeta as m
+			WHERE u.ID = m.user_id AND m.meta_key = 'w4os_uuid' AND m.meta_value != '' AND m.meta_value != '" . W4OS_NULL_KEY . "'");
+
+		foreach (	$result as $row ) {
+			$WPGridAccounts[$row->email] = (array)$row;
+			$MergedAccounts[$row->email] = (!empty($MergedAccounts[$row->email])) ? $MergedAccounts[$row->email] = array_merge($MergedAccounts[$row->email], (array)$row) : (array)$row;
+		}
+			return $MergedAccounts;
 }
 
-$result = $wpdb->get_results("SELECT user_email as email, ID as user_id, m.meta_value AS w4os_uuid
-	FROM $wpdb->users as u, $wpdb->usermeta as m
-	WHERE u.ID = m.user_id AND m.meta_key = 'w4os_uuid' AND m.meta_value != '' AND m.meta_value != '" . W4OS_NULL_KEY . "'");
+$MergedAccounts = w4os_get_users_ids_and_uuids();
 
-foreach (	$result as $row ) {
-	$WPGridAccounts[$row->email] = (array)$row;
-	$MergedAccounts[$row->email] = (!empty($MergedAccounts[$row->email])) ? $MergedAccounts[$row->email] = array_merge($MergedAccounts[$row->email], (array)$row) : (array)$row;
-}
-
+$count_wp_users = count_users()['total_users'];
+$count_grid_accounts = 0;
+$count_wp_linked = 0;
 $count_wp_only = NULL;
 $count_grid_only = NULL;
 foreach ($MergedAccounts as $key => $account) {
 	if(w4os_empty($account['PrincipalID'])) $account['PrincipalID'] = NULL;
+	else $count_grid_accounts++;
 	if(w4os_empty($account['w4os_uuid'])) $account['w4os_uuid'] = NULL;
+	else $count_wp_linked++;
 	if($account['PrincipalID'] && $account['w4os_uuid'] && $account['PrincipalID'] == $account['w4os_uuid'])
-	$count_sync += 1;
+	$count_sync++;
 	else if($account['PrincipalID']) $count_grid_only += 1;
-	else $count_wp_only += 1;
+	else $count_wp_only++;
 }
 
 $count_models = $w4osdb->get_var("SELECT count(*) FROM UserAccounts
@@ -40,13 +52,10 @@ $count_tech = $w4osdb->get_var("SELECT count(*) FROM UserAccounts
 	WHERE (Email IS NULL OR Email = '')
 	AND FirstName != '" . get_option('w4os_model_firstname') . "'
 	AND LastName != '" . get_option('w4os_model_lastname') . "'
-	-- AND FirstName != 'GRID'
-	-- AND LastName != 'SERVICE'
+	AND FirstName != 'GRID'
+	AND LastName != 'SERVICE'
 	");
 
-$count_wp_users = count_users()['total_users'];
-$count_wp_linked = count($WPGridAccounts);
-$count_grid_accounts = count($GridAccounts);
 
 ?><div class="w4os-status-page wrap">
 	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
