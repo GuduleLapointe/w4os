@@ -81,6 +81,9 @@ function w4os_update_2() {
   return true;
 }
 
+/*
+ * Sync all existing profiles
+ */
 function w4os_update_3() {
   if(function_exists('w4os_profile_sync_all')) {
     add_action('admin_init', 'w4os_profile_sync_all');

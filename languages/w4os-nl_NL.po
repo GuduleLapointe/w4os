@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-11-19T01:59:54-04:00\n"
-"PO-Revision-Date: 2021-11-19 02:00-0400\n"
+"POT-Creation-Date: 2021-11-19T18:10:00-04:00\n"
+"PO-Revision-Date: 2021-11-19 18:10-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -136,7 +136,7 @@ msgstr "Wachtwoord"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: admin/settings.php:65
-#: admin/status-page.php:89
+#: admin/status-page.php:35
 #, fuzzy
 msgid "Avatar models"
 msgstr "Avatar naam"
@@ -232,101 +232,123 @@ msgstr "Grid-accounts die overeenkomen met de hieronder ingestelde voornaam of a
 msgid "A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin."
 msgstr ""
 
-#: admin/status-page.php:68
+#: admin/status-page.php:11
 #, fuzzy
 msgid "Users"
 msgstr "Gebruikersnaam"
 
 # wpml-name: 6834699b2d08455d0475c76d54356191
-#: admin/status-page.php:70
+#: admin/status-page.php:16
 #, fuzzy
 msgid "Total"
 msgstr "Totale oppervlakte"
 
-#: admin/status-page.php:71
+#: admin/status-page.php:17
 msgid "WP only"
 msgstr ""
 
-#: admin/status-page.php:72
+#: admin/status-page.php:18
 msgid "Sync"
 msgstr ""
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/status-page.php:73
+#: admin/status-page.php:19
 #, fuzzy
 msgid "Grid only"
 msgstr "Grid online"
 
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab
-#: admin/status-page.php:77
+#: admin/status-page.php:23
 #, fuzzy
 msgid "Grid accounts"
 msgstr "Grid status"
 
-#: admin/status-page.php:84
+#: admin/status-page.php:30
 msgid "Linked WordPress accounts"
 msgstr ""
 
-#: admin/status-page.php:96
+#: admin/status-page.php:42
 msgid "Other service accounts"
 msgstr ""
 
-#: admin/status-page.php:110
+#: admin/status-page.php:56
 msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
 msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/status-page.php:117
-msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the avatar link."
-msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove their avatar link."
+#: admin/status-page.php:64
+msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference."
+msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/status-page.php:124
+#: admin/status-page.php:72
 msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
 msgid_plural "%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/status-page.php:128
+#: admin/status-page.php:77
 msgid "Real accounts need a unique email address for W4OS to function properly."
 msgstr ""
 
-#: admin/status-page.php:136
-msgid "Sync WordPress and Grid users now"
+#: admin/status-page.php:85
+msgid "Synchronize users now"
+msgstr ""
+
+#: admin/status-page.php:87
+msgid "Synchronization is required after installing the plugin and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually, especially if users have been added or deleted directly from the grid administration console."
 msgstr ""
 
 # wpml-name: 6bdda8124d6ca549428567dfc1c0532d
-#: admin/status-page.php:148
+#: admin/status-page.php:97
 msgid "Available shortcodes"
 msgstr "Beschikbare shortcodes"
 
 # wpml-name: 119154a6f7028c6f8ebe3e470e626296
-#: admin/status-page.php:153
+#: admin/status-page.php:102
 msgid "General information (grid name and login uri)"
 msgstr "Algemene informatie (gridnaam en login-uri)"
 
 # wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
-#: admin/status-page.php:159
+#: admin/status-page.php:108
 msgid "Online users, regions, etc."
 msgstr "Online gebruikers, regio's, enz."
 
-#: admin/status-page.php:165
+#: admin/status-page.php:114
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
 msgstr "Grid-profiel als de gebruiker is verbonden en heeft een avatar, anders avatarregistratieformulier"
 
-#: admin/status-page.php:166
+#: admin/status-page.php:115
 msgid "(formerly %s)"
 msgstr "(voorheen %s)"
 
-#: admin/status-page.php:179
+#: admin/status-page.php:129
 msgid "Missing PHP modules"
 msgstr ""
 
-#: admin/status-page.php:181
+#: admin/status-page.php:131
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr ""
+
+#: admin/users.php:88
+msgid "%d new WordPress account created"
+msgid_plural "%d new WordPress accounts created"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/users.php:94
+msgid "%d reference updated"
+msgid_plural "%d references updated"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/users.php:100
+msgid "%d broken reference removed"
+msgid_plural "%d broken references removed"
+msgstr[0] ""
+msgstr[1] ""
 
 #: includes/assets.php:38
 msgid "W4OS Assets base"
