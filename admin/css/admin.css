@@ -69,6 +69,18 @@
     background: white;
 }
 
+.w4os-status-page.wrap > .content {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.w4os-status-page.wrap > .content > div {
+    flex-basis: 480px;
+    flex-grow: 1;
+}
+
 table.gridinfo td,
 table.gridstatus td,
 .w4os-shortcode td {
