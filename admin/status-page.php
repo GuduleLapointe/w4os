@@ -63,7 +63,7 @@ $count = w4os_count_users();
 							if($count['wp_only']  > 0 ) {
 								echo '<p>' . sprintf(_n(
 									'%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference.',
-									'%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken references.',
+									'%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference.',
 									$count['wp_only'],
 									'w4os'
 								), $count['wp_only']) . '</p>';
