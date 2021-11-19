@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-11-19T17:39:10-04:00\n"
-"PO-Revision-Date: 2021-11-19 17:42-0400\n"
+"POT-Creation-Date: 2021-11-19T18:10:00-04:00\n"
+"PO-Revision-Date: 2021-11-19 18:10-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -277,37 +277,41 @@ msgid "Real accounts need a unique email address for W4OS to function properly."
 msgstr "Les comptes réels nécessitent une adresse e-mail unique pour que W4OS fonctionne correctement."
 
 #: admin/status-page.php:85
-msgid "Sync WordPress and Grid users now"
-msgstr "Synchroniser les utilisateurs de la grille et de WordPress maintenant"
+msgid "Synchronize users now"
+msgstr "Synchroniser les utilisateurs maintenant"
+
+#: admin/status-page.php:87
+msgid "Synchronization is required after installing the plugin and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually, especially if users have been added or deleted directly from the grid administration console."
+msgstr "La synchronisation est nécessaire après l'installation de l'extension et est gérée automatiquement ensuite, mais dans certaines circonstances il peut être nécessaire de l'initier manuellement, notamment si des utilisateurs ont été ajoutés ou supprimés directement depuis la console d'administration de la grille."
 
 # wpml-name: 6bdda8124d6ca549428567dfc1c0532d
-#: admin/status-page.php:96
+#: admin/status-page.php:97
 msgid "Available shortcodes"
 msgstr "Code courts (shortcodes) disponibles"
 
 # wpml-name: 119154a6f7028c6f8ebe3e470e626296
-#: admin/status-page.php:101
+#: admin/status-page.php:102
 msgid "General information (grid name and login uri)"
 msgstr "Informations générales (nom de la grille et URI de connexion)"
 
 # wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
-#: admin/status-page.php:107
+#: admin/status-page.php:108
 msgid "Online users, regions, etc."
 msgstr "Utilisateurs en ligne, régions, etc."
 
-#: admin/status-page.php:113
+#: admin/status-page.php:114
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
 msgstr "Profil sur la grille si l'utilisateur est connecté et possède un avatar, sinon formulaire de création de l'avatar"
 
-#: admin/status-page.php:114
+#: admin/status-page.php:115
 msgid "(formerly %s)"
 msgstr "(anciennement %s)"
 
-#: admin/status-page.php:128
+#: admin/status-page.php:129
 msgid "Missing PHP modules"
 msgstr "Modules PHP manquants"
 
-#: admin/status-page.php:130
+#: admin/status-page.php:131
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr "Ces modules n'ont pas été trouvés: %s. Installez-les pour tirer le maximum de ce plugin."
 
