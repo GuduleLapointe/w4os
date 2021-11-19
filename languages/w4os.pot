@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-11-15T15:10:46-04:00\n"
+"POT-Creation-Date: 2021-11-19T01:59:54-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -33,25 +33,45 @@ msgstr ""
 msgid "https://speculoos.world"
 msgstr ""
 
-#: admin/admin-init.php:25
+#: admin/admin-init.php:26
 msgid "OpenSimulator Status"
 msgstr ""
 
-#: admin/admin-init.php:25
+#: admin/admin-init.php:26
 msgid "Status"
 msgstr ""
 
-#: admin/admin-init.php:28
+#: admin/admin-init.php:29
 msgid "OpenSimulator Settings"
 msgstr ""
 
-#: admin/admin-init.php:29
-#: admin/settings.php:238
+#: admin/admin-init.php:30
+#: admin/settings.php:253
 msgid "Settings"
 msgstr ""
 
+#: admin/admin-init.php:74
+msgid "Avatar Name"
+msgstr ""
+
+#: admin/admin-init.php:133
+msgid "With Avatar"
+msgstr ""
+
+#: admin/admin-init.php:134
+msgid "Without Avatar"
+msgstr ""
+
+#: admin/admin-init.php:151
+msgid "Filter users..."
+msgstr ""
+
+#: admin/admin-init.php:157
+msgid "Filter"
+msgstr ""
+
 #: admin/dashboard.php:13
-#: admin/settings.php:103
+#: admin/settings.php:25
 #: includes/shortcodes.php:108
 #: includes/widgets.php:47
 #: blocks/w4os-gridinfo-block/index.js:70
@@ -70,144 +90,199 @@ msgstr ""
 msgid "Recent users"
 msgstr ""
 
-#: admin/settings.php:80
-msgid "Values must match Robust.HG.ini (or Robust.ini) config file."
-msgstr ""
-
-#: admin/settings.php:81
-msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
-msgstr ""
-
-#: admin/settings.php:86
-msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
-msgstr ""
-
-#: admin/settings.php:90
-msgid "A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin."
-msgstr ""
-
-#: admin/settings.php:116
+#: admin/settings.php:38
 #: includes/shortcodes.php:111
 msgid "Grid name"
 msgstr ""
 
-#: admin/settings.php:123
+#: admin/settings.php:45
 msgid "Robust server database"
 msgstr ""
 
-#: admin/settings.php:126
+#: admin/settings.php:48
 msgid "Hostname"
 msgstr ""
 
-#: admin/settings.php:129
+#: admin/settings.php:51
 msgid "Database name"
 msgstr ""
 
-#: admin/settings.php:132
+#: admin/settings.php:54
 msgid "Username"
 msgstr ""
 
-#: admin/settings.php:136
+#: admin/settings.php:58
 msgid "Password"
 msgstr ""
 
-#: admin/settings.php:143
+#: admin/settings.php:65
+#: admin/status-page.php:89
 msgid "Avatar models"
 msgstr ""
 
-#: admin/settings.php:147
+#: admin/settings.php:69
 msgid "First Name = "
 msgstr ""
 
-#: admin/settings.php:151
+#: admin/settings.php:73
 msgid "OR Last Name = "
 msgstr ""
 
-#: admin/settings.php:157
+#: admin/settings.php:79
 msgid "Web assets"
 msgstr ""
 
-#: admin/settings.php:162
+#: admin/settings.php:84
 msgid "Web asset server"
 msgstr ""
 
-#: admin/settings.php:165
+#: admin/settings.php:87
 msgid "Provide web assets service"
 msgstr ""
 
-#: admin/settings.php:175
+#: admin/settings.php:97
 msgid "External assets server URI"
 msgstr ""
 
-#: admin/settings.php:181
+#: admin/settings.php:103
 msgid "Grid users"
 msgstr ""
 
-#: admin/settings.php:185
+#: admin/settings.php:107
 msgid "Replace user name"
 msgstr ""
 
-#: admin/settings.php:186
+#: admin/settings.php:108
 msgid "Show avatar name instead of user name in users list."
 msgstr ""
 
-#: admin/settings.php:190
+#: admin/settings.php:112
 msgid "Exclude from stats"
 msgstr ""
 
-#: admin/settings.php:192
+#: admin/settings.php:114
 msgid "Models"
 msgstr ""
 
-#: admin/settings.php:193
+#: admin/settings.php:115
 msgid "Accounts without mail address"
 msgstr ""
 
-#: admin/settings.php:195
+#: admin/settings.php:117
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr ""
 
-#: admin/settings.php:200
+#: admin/settings.php:122
 msgid "Misc"
 msgstr ""
 
-#: admin/settings.php:204
+#: admin/settings.php:126
 msgid "Permalinks"
 msgstr ""
 
-#: admin/settings.php:205
+#: admin/settings.php:127
 msgid "Set w4os slugs on %spermalink options page%s."
 msgstr ""
 
-#: admin/settings.php:246
-msgid "Avatar Name"
+#: admin/settings.php:231
+msgid "Values must match Robust.HG.ini (or Robust.ini) config file."
 msgstr ""
 
-#: admin/status-page.php:7
+#: admin/settings.php:232
+msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
+msgstr ""
+
+#: admin/settings.php:237
+msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
+msgstr ""
+
+#: admin/settings.php:241
+msgid "A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin."
+msgstr ""
+
+#: admin/status-page.php:68
+msgid "Users"
+msgstr ""
+
+#: admin/status-page.php:70
+msgid "Total"
+msgstr ""
+
+#: admin/status-page.php:71
+msgid "WP only"
+msgstr ""
+
+#: admin/status-page.php:72
+msgid "Sync"
+msgstr ""
+
+#: admin/status-page.php:73
+msgid "Grid only"
+msgstr ""
+
+#: admin/status-page.php:77
+msgid "Grid accounts"
+msgstr ""
+
+#: admin/status-page.php:84
+msgid "Linked WordPress accounts"
+msgstr ""
+
+#: admin/status-page.php:96
+msgid "Other service accounts"
+msgstr ""
+
+#: admin/status-page.php:110
+msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
+msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/status-page.php:117
+msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the avatar link."
+msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove their avatar link."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/status-page.php:124
+msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
+msgid_plural "%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/status-page.php:128
+msgid "Real accounts need a unique email address for W4OS to function properly."
+msgstr ""
+
+#: admin/status-page.php:136
+msgid "Sync WordPress and Grid users now"
+msgstr ""
+
+#: admin/status-page.php:148
 msgid "Available shortcodes"
 msgstr ""
 
-#: admin/status-page.php:12
+#: admin/status-page.php:153
 msgid "General information (grid name and login uri)"
 msgstr ""
 
-#: admin/status-page.php:18
+#: admin/status-page.php:159
 msgid "Online users, regions, etc."
 msgstr ""
 
-#: admin/status-page.php:24
+#: admin/status-page.php:165
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
 msgstr ""
 
-#: admin/status-page.php:25
+#: admin/status-page.php:166
 msgid "(formerly %s)"
 msgstr ""
 
-#: admin/status-page.php:38
+#: admin/status-page.php:179
 msgid "Missing PHP modules"
 msgstr ""
 
-#: admin/status-page.php:40
+#: admin/status-page.php:181
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr ""
 
@@ -223,124 +298,168 @@ msgstr ""
 msgid "OpenSimulator settings page"
 msgstr ""
 
-#: includes/profile.php:114
+#: includes/functions.php:148
+msgid "Yes"
+msgstr ""
+
+#: includes/functions.php:150
+msgid "No"
+msgstr ""
+
+#: includes/functions.php:162
+msgid "Grid online"
+msgstr ""
+
+#: includes/functions.php:163
+msgid "Members"
+msgstr ""
+
+#: includes/functions.php:165
+msgid "Active members (30 days)"
+msgstr ""
+
+#: includes/functions.php:167
+msgid "Members in world"
+msgstr ""
+
+#: includes/functions.php:173
+msgid "Active users (30 days)"
+msgstr ""
+
+#: includes/functions.php:175
+msgid "Total users in world"
+msgstr ""
+
+#: includes/functions.php:182
+msgid "Regions"
+msgstr ""
+
+#: includes/functions.php:186
+msgid "Total area"
+msgstr ""
+
+#: includes/profile.php:123
+msgid "%s local users updated with avatar data"
+msgstr ""
+
+#: includes/profile.php:137
 msgid "OpenSimulator"
 msgstr ""
 
-#: includes/profile.php:222
+#: includes/profile.php:245
 msgid "This user already has an avatar."
 msgstr ""
 
-#: includes/profile.php:234
+#: includes/profile.php:257
 msgid "First name required"
 msgstr ""
 
-#: includes/profile.php:235
+#: includes/profile.php:258
 msgid "Last name required"
 msgstr ""
 
-#: includes/profile.php:236
+#: includes/profile.php:259
 msgid "Password required"
 msgstr ""
 
-#: includes/profile.php:237
+#: includes/profile.php:260
 msgid "The password does not match."
 msgstr ""
 
-#: includes/profile.php:244
-#: includes/profile.php:248
+#: includes/profile.php:267
+#: includes/profile.php:271
 msgid "The name %s is not allowed"
 msgstr ""
 
-#: includes/profile.php:253
+#: includes/profile.php:276
 msgid "Names can only contain alphanumeric characters"
 msgstr ""
 
-#: includes/profile.php:260
+#: includes/profile.php:283
 msgid "There is already a grid user named %s"
 msgstr ""
 
-#: includes/profile.php:268
+#: includes/profile.php:291
 msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
 msgstr ""
 
-#: includes/profile.php:290
+#: includes/profile.php:313
 msgid "Error while creating user"
 msgstr ""
 
-#: includes/profile.php:299
+#: includes/profile.php:322
 msgid "Error while setting password"
 msgstr ""
 
-#: includes/profile.php:310
+#: includes/profile.php:333
 msgid "Error while setting home region"
 msgstr ""
 
-#: includes/profile.php:327
+#: includes/profile.php:350
 msgid "Error while creating user inventory"
 msgstr ""
 
-#: includes/profile.php:450
+#: includes/profile.php:473
 msgid "Error while adding inventory item"
 msgstr ""
 
-#: includes/profile.php:461
+#: includes/profile.php:484
 msgid "Error while adding inventory outfit link"
 msgstr ""
 
-#: includes/profile.php:473
+#: includes/profile.php:496
 msgid "Error while adding avatar"
 msgstr ""
 
-#: includes/profile.php:484
+#: includes/profile.php:507
 msgid "Avatar %s created successfully."
 msgstr ""
 
-#: includes/profile.php:494
+#: includes/profile.php:517
 msgid "Action %s not implemented"
 msgstr ""
 
-#: includes/profile.php:506
+#: includes/profile.php:529
 msgid "You have no grid account yet."
 msgstr ""
 
-#: includes/profile.php:514
+#: includes/profile.php:537
 msgid "Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, the name cannot be changed."
 msgstr ""
 
-#: includes/profile.php:519
+#: includes/profile.php:542
 msgid "Avatar first name"
 msgstr ""
 
-#: includes/profile.php:523
+#: includes/profile.php:546
 msgid "Avatar last name"
 msgstr ""
 
-#: includes/profile.php:527
+#: includes/profile.php:550
 msgid "Your in-world Avatar password is the same as your password on this website"
 msgstr ""
 
-#: includes/profile.php:529
+#: includes/profile.php:552
 msgid "Confirm your password"
 msgstr ""
 
-#: includes/profile.php:543
+#: includes/profile.php:566
 msgid "Your avatar"
 msgstr ""
 
-#: includes/profile.php:544
+#: includes/profile.php:567
 msgid "You can change and customize it in-world, as often as you want."
 msgstr ""
 
-#: includes/profile.php:575
+#: includes/profile.php:598
 msgid "Save"
 msgstr ""
 
-#: includes/profile.php:613
+#: includes/profile.php:636
 msgid "leave blank to leave unchanged"
 msgstr ""
 
-#: includes/profile.php:700
+#: includes/profile.php:723
 #: blocks/w4os-gridprofile-block/index.js:70
 msgid "Grid profile"
 msgstr ""
@@ -365,70 +484,34 @@ msgstr ""
 msgid "Configure W4OS database: "
 msgstr ""
 
-#: includes/shortcodes.php:152
-msgid "Yes"
-msgstr ""
-
-#: includes/shortcodes.php:154
-msgid "No"
-msgstr ""
-
-#: includes/shortcodes.php:165
-msgid "Grid online"
-msgstr ""
-
-#: includes/shortcodes.php:166
-msgid "Members"
-msgstr ""
-
-#: includes/shortcodes.php:168
-msgid "Active members (30 days)"
-msgstr ""
-
-#: includes/shortcodes.php:170
-msgid "Members in world"
-msgstr ""
-
-#: includes/shortcodes.php:176
-msgid "Active users (30 days)"
-msgstr ""
-
-#: includes/shortcodes.php:178
-msgid "Total users in world"
-msgstr ""
-
-#: includes/shortcodes.php:185
-msgid "Regions"
-msgstr ""
-
-#: includes/shortcodes.php:189
-msgid "Total area"
-msgstr ""
-
-#: includes/shortcodes.php:197
+#: includes/shortcodes.php:142
 msgid "No result"
 msgstr ""
 
-#: includes/updates.php:24
+#: includes/updates.php:25
 msgid "Update %s applied"
 msgstr ""
 
-#: includes/updates.php:34
+#: includes/updates.php:35
 msgid "Update %s applied sucessfully"
 msgid_plural "Updates %s applied sucessfully"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/updates.php:40
+#: includes/updates.php:41
 msgid "Error processing update %s"
 msgstr ""
 
-#: includes/updates.php:45
+#: includes/updates.php:46
 msgid "W4OS updated"
 msgstr ""
 
-#: includes/updates.php:65
+#: includes/updates.php:70
 msgid "Grid user"
+msgstr ""
+
+#: includes/updates.php:88
+msgid "Profiles service is not configured on your Robust server. It is required for full functionalities."
 msgstr ""
 
 #: includes/w4osdb.php:12
