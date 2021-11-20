@@ -28,6 +28,7 @@ function w4os_get_users_ids_and_uuids() {
 				$accounts[$row->email] =  array_merge( $accounts[$row->email], (array)$row );
 			}
 		}
+		// echo w4os_array2table($accounts, 'accounts', 2);
 
 		return $accounts;
 }
@@ -44,15 +45,33 @@ function w4os_count_users() {
   $count['grid_only'] = NULL;
 	$count['sync'] = 0;
   foreach ($accounts as $key => $account) {
-    if(!isset($account['PrincipalID']) || w4os_empty($account['PrincipalID'])) $account['PrincipalID'] = NULL;
-    else $count['grid_accounts']++;
-    if(isset($account['w4os_uuid']) && w4os_empty($account['w4os_uuid'])) $account['w4os_uuid'] = NULL;
-		if(!w4os_empty($account['PrincipalID']) &! w4os_empty($account['w4os_uuid']) ) {
-			$count['wp_linked']++;
-			if($account['PrincipalID'] == $account['w4os_uuid']) $count['sync']++;
-			else $count['wp_only']++;
+		if( ! isset($account['w4os_uuid']) ) $account['w4os_uuid'] = NULL;
+		if( ! isset($account['PrincipalID']) ) $account['PrincipalID'] = NULL;
+
+		if( ! w4os_empty($account['PrincipalID']) ) {
+			$count['grid_accounts']++;
+			if($account['PrincipalID'] == $account['w4os_uuid']) {
+				$count['sync']++;
+			} else {
+				$count['grid_only'] += 1;
+			}
+		} else {
+			if(!w4os_empty($account['w4os_uuid'])) $count['wp_linked']++;
+			$account['PrincipalID'] = NULL;
+			if(isset($account['w4os_uuid']) &! w4os_empty($account['w4os_uuid'])) {
+				$count['wp_only']++;
+			}
 		}
-    else if($account['PrincipalID']) $count['grid_only'] += 1;
+    // if(!isset($account['PrincipalID']) || w4os_empty($account['PrincipalID'])) $account['PrincipalID'] = NULL;
+    // else $count['grid_accounts']++;
+    // if(isset($account['w4os_uuid']) && w4os_empty($account['w4os_uuid'])) $account['w4os_uuid'] = NULL;
+		//
+		// if(!w4os_empty($account['PrincipalID']) &! w4os_empty($account['w4os_uuid']) ) {
+		// 	$count['wp_linked']++;
+		// 	if($account['PrincipalID'] == $account['w4os_uuid']) $count['sync']++;
+		// 	else $count['wp_only']++;
+		// }
+    // else if($account['PrincipalID']) $count['grid_only'] += 1;
   }
 
   $count['models'] = $w4osdb->get_var("SELECT count(*) FROM UserAccounts
@@ -87,7 +106,7 @@ function w4os_sync_users() {
 			} else if ( isset($account['user_id']) &! empty($account['user_id']) ) {
 				// wrong reference, but an avatar exists for this WP user, replace reference
 				$result = update_user_meta( $account['user_id'], 'w4os_uuid', $account['PrincipalID'] );
-				if($result) $users_updated[] = sprintf('%s %s (%s)', $account['FirstName'], $account['LastName'], $account['email']);
+				if($result) $users_updated[] = sprintf('<a href=%s>%s %s</a>', get_edit_user_link($newid), $account['FirstName'], $account['LastName']);
 				else $errors[] = '<p class=error>' .  sprintf(__('Error while updating %s %s (%s) %s', 'w4os'), $account['FirstName'], $account['LastName'], $account['email'], $result) . '</p>';
 			} else {
 				// No user with this email, create one
@@ -111,12 +130,19 @@ function w4os_sync_users() {
 						// update_user_meta( $user->ID, 'w4os_profileimage', $account['profileImage'] );
 						// $user = get_user_by('ID', $newid);
 						// w4os_profile_sync($user);
-						$users_created[] = sprintf('%s %s (%s)', $account['FirstName'], $account['LastName'], $account['email']);
+						$users_created[] = sprintf('<a href=%s>%s %s</a>', get_edit_user_link($newid), $account['FirstName'], $account['LastName']);
 
 					} else $errors[] = '<p class=error>' .  sprintf(__('Error while updating newly created user %s for %s %s (%s) %s', 'w4os'), $newid, $account['FirstName'], $account['LastName'], $account['email'], $result) . '</p>';
 					// $messages[] = "new user $user->ID created";
 				}
 			}
+		} else if(isset($account['w4os_uuid']) &! w4os_empty($account['w4os_uuid'])) {
+			delete_user_meta( $account['user_id'], 'w4os_uuid' );
+			delete_user_meta( $account['user_id'], 'w4os_firstname' );
+			delete_user_meta( $account['user_id'], 'w4os_lastname' );
+			delete_user_meta( $account['user_id'], 'w4os_avatarname' );
+			delete_user_meta( $account['user_id'], 'w4os_profileimage' );
+			$users_dereferenced[] = sprintf('<a href=%s>%s</a>', get_edit_user_link($account['user_id']), $account['user_id']);
 		}
 	}
 			// 	if($user) {
