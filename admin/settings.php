@@ -102,6 +102,17 @@ function w4os_register_settings() {
 				'w4os_options_users' => array(
 					'name' => __('Grid users', 'w4os'),
 					'fields' => array(
+						'w4os_profile_page' => array(
+							'type' => 'radio',
+							'label' => __('Profile page', 'w4os'),
+							'values' => array(
+								'provide' => __('Provide profile page', 'w4os'),
+								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
+								'default' =>  __('Default', 'w4os'),
+							),
+							'default' => 'provide',
+							'description' => __('', 'w4os'),
+						),
 						'w4os_userlist_replace_name' => array(
 							'type' => 'boolean',
 							'label' => __('Replace user name', 'w4os'),
@@ -150,11 +161,22 @@ add_action( 'admin_init', 'w4os_register_settings' );
 
 function w4os_register_setting($option_page, $option_slug, $args = array() ) {
 	if(empty($args['type'])) $args['type'] = 'string';
-	register_setting( $option_page, $option_slug, $args );
-	if($args['type']=='checkbox') {
+	switch($args['type']) {
+		case 'checkbox':
 		foreach($args['values'] as $option_key => $option_value) {
 			register_setting( $option_page, $option_slug . '_' .$option_key , $args );
 		}
+		break;
+
+		case 'radio':
+		$register_args = [ 'label' => $args['label'], 'type' => 'string'];
+		register_setting( $option_page, $option_slug, $register_args );
+		break;
+
+		default:
+		// w4os_admin_notice("register_setting( $option_page, $option_slug, <pre>" . print_r($args, true) . "</pre> );");
+		// if(!in_array($args['type'], [ 'string', 'boolean', 'integer', 'number', 'array', 'object'] ) ) $args['type'] = 'string';
+		register_setting( $option_page, $option_slug, $args );
 	}
 	// if(!isset($args['label'])) $args['label'] = $option_slug;
 	if(empty($args['sanitize_callback'])) $args['sanitize_callback'] = 'w4os_settings_field';
@@ -191,6 +213,20 @@ function w4os_settings_field($args) {
 
 		case 'password':
 		echo "<input type='password' class='regular-text' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
+		break;
+
+		case 'radio':
+		foreach($args['values'] as $option_key => $option_name) {
+			$option_id = $field_id ."_" . $option_key;
+			$option = "<input type='radio' id='$option_id' name='$field_id' value='$option_key'";
+			// if (get_option($option_key)==$option_key) $parameters[] = "checked";
+			$parameters['checked'] = checked(get_option($field_id), $option_key, false);
+			$option .= ' ' . join(' ', $parameters) . ' ';
+			$option .= "/>";
+			$option .= " <label for='$option_id'>$option_name</label>";
+			$options[] = $option;
+		}
+		if(is_array($options)) echo join("<br>", $options);
 		break;
 
 		case 'boolean':
