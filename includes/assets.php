@@ -5,7 +5,6 @@ define('W4OS_ASSETS_DO_RESIZE', false); // shall we resize picture to width=W4OS
 define('W4OS_ASSETS_RESIZE_FIXED_WIDTH', 256); // width in pixels
 // define('W4OS_NOTFOUND_IMG', '201ce950-aa38-46d8-a8f1-4396e9d6be00');
 define('W4OS_NULL_KEY_IMG', dirname(dirname(__FILE__)) . '/images/assets-no-img'); // no extension here
-define('W4OS_ASSETS_DEFAULT_FORMAT', 'jpg');
 define('W4OS_ASSETS_CACHE_TTL', 86400); // 1 day
 define('W4OS_ASSETS_CACHE_IMG_FOLDER', 'assets/images');
 
