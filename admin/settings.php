@@ -200,7 +200,7 @@ function w4os_settings_field($args) {
 			if($args['type']=='checkbox') $option_id = $field_id ."_" . $option_key;
 			else $option_id = $field_id;
 			$option = "<input type='checkbox' id='$option_id' name='$option_id' value='1'";
-			if (get_option($option_id)==1) $parameters[] = "checked";
+			$parameters['checked'] = checked(get_option($option_id), true, false);
 			$option .= ' ' . join(' ', $parameters) . ' ';
 			$option .= "/>";
 			if($args['type']=='checkbox') $option .= " <label for='$option_id'>$option_name</label>";
