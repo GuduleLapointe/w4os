@@ -1,5 +1,6 @@
 <?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
 
+if(get_option('w4os_sync_users')) $sync_result = w4os_sync_users();
 $count = w4os_count_users();
 
 ?><div class="w4os-status-page wrap">
@@ -46,7 +47,7 @@ $count = w4os_count_users();
 					</tr>
 				<?php } ?>
 			</table>
-			<?php	if($count['wp_only'] + $count['grid_only'] > 0 ) { ?>
+			<?php	if($count['wp_only'] + $count['grid_only'] > 0 |! empty($sync_result)) { ?>
 				<table class="w4os-table .notes">
 					<tr class=notes>
 						<th></th>
@@ -84,6 +85,8 @@ $count = w4os_count_users();
 
 							submit_button(__('Synchronize users now', 'w4os'));
 							echo '</form>';
+							if($sync_result)
+							echo '<p class=info>' . $sync_result . '<p>';
 							echo '<p class=description>' . __('Synchronization is required after installing the plugin and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually, especially if users have been added or deleted directly from the grid administration console.', 'w4os') . '<p>';
 							?>
 						</td>

@@ -82,7 +82,8 @@ function w4os_profile_sync($user) {
     AND Email = '$user->user_email'
     AND active = 1
     ");
-  if(count($avatars) != 1) return W4OS_NULL_KEY;
+  if(empty($avatars)) return false;
+  // if(count($avatars) != 1) return W4OS_NULL_KEY;
   $avatar_row = array_shift($avatars);
   $uuid = $avatar_row->PrincipalID;
 
@@ -211,9 +212,8 @@ function w4os_other_profile_update($user_id) {
 }
 add_action( 'edit_user_profile_update', 'w4os_other_profile_update', 10, 1);
 
-add_action( 'user_register',
-function() {
-  if ( $_REQUEST['email'] ) {
+function w4os_user_register( $user_id = 0 ) {
+  if ( isset($_REQUEST['email']) &! empty($_REQUEST['email']) ) {
     global $wpdb;
     $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $_REQUEST['email']));
     $uuid = w4os_profile_sync($user); // refresh opensim data for this user
@@ -224,9 +224,12 @@ function() {
       update_user_meta( $user->ID, 'w4os_tmp_salt', $salt );
       update_user_meta( $user->ID, 'w4os_tmp_hash', $hash );
     }
+  } else {
+    $user = get_user_by('ID', $user_id);
+    $uuid = w4os_profile_sync($user); // refresh opensim data for this user
   }
 }
-, 10, 1);
+add_action( 'user_register', 'w4os_user_register', 10, 1);
 
 
 // function w4os_debug_log($string) {

@@ -1,15 +1,40 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
-function w4os_array2table($array, $class="") {
+function w4os_array2table($array, $class="", $level = 1 ) {
 	if(empty($array)) return;
-	$result="";
-	foreach($array as $key => $value) {
-		$result.="<tr><td class=gridvar>" . __($key, 'w4os') . "</td><td class=gridvalue>$value</td></tr>";
+	if($level == 1) {
+		$result="";
+		foreach($array as $key => $value) {
+			$result.="<tr><td class=gridvar>" . __($key, 'w4os') . "</td><td class=gridvalue>$value</td></tr>";
+		}
+		if(!empty($result)) {
+			$result="<table class='$class'>$result</table>";
+		}
+		return $result;
 	}
-	if(!empty($result)) {
-		$result="<table class='$class'>$result</table>";
+	if($level == 2) {
+		$html = "<table class=$class>";
+		$array_head = $array;
+		$array_head = array_shift($array_head);
+		if(is_array($array_head)) {
+			$html.='<tr><th></th>';
+			foreach($array_head as $column => $value) {
+				$html.="<th>$column</th>";
+			}
+			$html.='</tr>';
+		}
+		foreach($array as $key => $row) {
+			if(is_array($row)) {
+				$html.="<tr><th>$key</th>";
+				foreach($row as $column => $value) {
+					$html.="<td class=col-$column>$value</td>";
+				}
+				$html.='</tr>';
+			}
+		}
+		$html .= '</table>';
+		return $html;
 	}
-	return $result;
 }
 
 function w4os_notice ($message, $status="") {
