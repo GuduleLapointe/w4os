@@ -156,6 +156,7 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 == Changelog ==
 
 = Unreleased =
+* new grid and wordpress users sync
 * new basic blocks support
 * new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
 * new 'Grid info' and 'Grid status' sidebar widgets

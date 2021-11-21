@@ -28,36 +28,7 @@
 
 ### Dependencies
 
-#### Web Asset Server
+* **Web Asset Server**: the project requires a web asset server to convert simulator assets (profile pictures, model avatars...) and display them on the website. W4OS provides a web assets service, or you can specify an external web assets service URL instead.
 
-The project relies on an an external web asset server to display images from
-simulator assets (profile pictures, model avatars...). In an undefined future
-this will be handled by the plugin. In the meantime, Anthony Le Mansec's
-opensimWebAssets is very efficient and easy to install:
+* **PHP Modules**: while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
 
-  - download from github https://github.com/TechplexEngineer/opensimWebAssets
-  - copy "src" folder inside your website and name it "assets". It can coexist
-    with your WordPress installation, WordPress will ignore it.
-  - edit assets/inc/config.php to suit your needs (essentially, change the value
-    of ASSET_SERVER to http://your.login.uri:8002/assets/)
-  - in WordPress OpenSimulator settings, change web asset server to
-    http://your.website/assets/asset.php?id=
-
-### Shortcodes
-
-- `[gridinfo]` display grid name and login URI
-- `[gridstatus]` display users and regions stats
-- `[gridprofile]` display users and regions stats
-
-Both accept a title parameter to overwrite the defaults "Grid info"
-and "Grid status". If set to "" the title is not displayed.
-
-Example:
-[gridinfo title="Who's there"]
-[gridstatus title=""]
-
-* `[gridprofile]` show in-world profile if user has an avatar, or avatar
-  creation form otherwise. It can be inserted on any page
-
-* Websites using WooCommerce don't need to set a specific profile page, as it is
-  integrated within the WooCommerce account dashboard.
