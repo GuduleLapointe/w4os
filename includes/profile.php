@@ -694,8 +694,8 @@ function w4os_get_avatar( $user_id, $size = 96, $default = '', $alt = '', $args 
 }
 
 if(W4OS_DB_CONNECTED)
-add_filter( 'get_avatar', 'w4os_get_avatar_filter', 10, 5 );
-function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt ) {
+add_filter( 'get_avatar', 'w4os_get_avatar_filter', 10, 6 );
+function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt, $args=array() ) {
   //If is email, try and find user ID
   if( ! is_numeric( $user_id ) && is_email( $user_id ) ){
     $user  =  get_user_by( 'email', $user_id );
@@ -706,6 +706,7 @@ function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt ) {
   if( ! is_numeric( $user_id ) ){
     return $avatar;
   }
+  if($args['force_default']) return $avatar;
 
   $avatar_opensim = w4os_get_avatar( $user_id, $size, $default, $alt );
   if( $avatar_opensim ) return $avatar_opensim;
