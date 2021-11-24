@@ -124,6 +124,7 @@ function w4os_register_settings() {
 							'values' => array(
 								'models' =>  __('Models', 'w4os'),
 								'nomail' => __('Accounts without mail address', 'w4os'),
+								'hypergrid' => __('Hypergrid visitors', 'w4os'),
 							),
 							'description' => __('Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os'),
 						),
