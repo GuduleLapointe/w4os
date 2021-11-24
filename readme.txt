@@ -1,7 +1,7 @@
 === W4OS - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://paypal.me/magicoli
-Tags: OpenSimulator, Second Life, metaverse, avatar, web interface
+Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 5.8.1
@@ -13,7 +13,7 @@ WordPress interface for OpenSimulator (w4os)
 
 == Description ==
 
-Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/) grids. Provide user registration, default avatar model choice and basic grid info.
+Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provide user registration, default avatar model choice, login info and statistics for grids or standalone simulators.
 
 See Features and Roadmap sections for current and upcoming functionalties.
 
@@ -46,6 +46,8 @@ The free version from WordPress plugins directory and the [paid version](https:/
   [UserProfiles] sections)
 - You should have a working assets server (see Dependencies section below)
 
+= WordPress configuration =
+
 1. Download and activate the latest stable release
 2. Visit OpenSim settings (admin menu > "Opensim" > "Settings")
   - Enter your grid name and grid URI (like example.org:8002 without http://)
@@ -56,15 +58,33 @@ The free version from WordPress plugins directory and the [paid version](https:/
   - create a profile page for registered users, including `[gridprofile]` shortcode.
     This will display the an avatar creation form for users without in-world avatar.
     For accounts already having an avatar, it will display avatar details.
-3. To create default avatars:
-  - from ROBUST console (defaults creation is not allowed from the website),
-    create users for your models. Name them according to W4OS settings: one part
-    of the name is "Default", the other part is the name displayed on the form
-    (for example, "Default Casual", "Default Rachel", "Default Tom"). Don't
-    mention e-mail address to avoid counting them as regular accounts in stats.
-  - log in-world with each of these model accounts and give them the desire
-    appearance. Take a snapshot and use it as profile picture. It will be used
-    for the web site avatar choosing form.
+
+= Create avatar models =
+
+Avatar models are displayed on new avatar registration and allow new users to start with another appearance than Ruth.
+
+* Check (or change) their naming convention in Admin > OpenSimulator > Settings > Avatar models
+* From robust console, create a user named accordingly (for example, "Female Default", Default John", ...).
+    ```
+    R.O.B.U.S.T. # create user Default John
+    Password: ************************
+    Email []: (leave empty)
+    User ID (enter for random) []:  (leave empty)
+    Model name []: (leave empty)
+    15:27:58 - [USER ACCOUNT SERVICE]: Account Default John xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx created successfully
+    ```
+  - A password is needed as you need connect in-world to configure it.
+    Choose a strong password, any hack could affect all new users.
+  - FirstName or LastName has to match your W4OS Avatar models settings
+  - The rest of the name will be displayed in the form, so make it relevant
+  - You can leave "Email" and "User ID" blank
+  - Leave "Model Name" blank, you are creating a model, not using an existing model to create a user
+* Connect in-world as this avatar and change outfit. Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items.
+* Make a snapshot and attach it to this account profile
+
+The model will now appear in new avatar registration form, with its profile picture.
+
+These accounts will be excluded from grid statistics.
 
 = Dependencies =
 
@@ -109,40 +129,14 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 == Frequently Asked Questions ==
 
 = Do I need to run the website on the same server? =
+
 No, if your web server has access to your OpenSimulator database.
-
-= How to create avatar models =
-
-Avatar models are displayed on new avatar registration and allow new users to start with another appearance than Ruth.
-
-* Check (or change) their naming convention in Admin > OpenSimulator > Settings > Avatar models
-* From robust console, create a user named accordingly (for example, "Female Default", Default John", ...).
-    ```
-    R.O.B.U.S.T.# create user Default John
-    Password: ************************
-    Email []: (leave empty)
-    User ID (enter for random) []:  (leave empty)
-    Model name []: (leave empty)
-    15:27:58 - [USER ACCOUNT SERVICE]: Account Default John xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx created successfully
-    ```
-  - A password is needed as you need connect in-world to configure it.
-    Choose a strong password, any hack could affect all new users.
-  - One of the parts of the name has to match your W4OS Avatar models settings
-  - The other part will be displayed in the form, so make it relevant
-  - You can leave "Email" and "User ID" blank
-  - Leave "Model Name" blank, you are creating a model, not using an existing model to create a user
-* Connect in-world as this avatar and change outfit. Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items.
-* Make a snapshot and attach it to this account profile
-
-The model avatar will now appear in new avatar registration form, with its profile picture.
-
-These accounts will be excluded in the grid statistics.
 
 = Can I use this plugin for my standalone simulator? =
 
-Maybe, but we didn't check yet. If you give it a try, please send us your feedback. Otherwise, you can try [OpenSimulator Bridge](https://fr.wordpress.org/plugins/opensimulator-bridge/), which is dedicated to standalone simulators.
+Yes, it works too. Use OpenSim database credentials when requested for Robust credentials.
 
-= Whi can't I change my avatar name? =
+= Why can't I change my avatar name? =
 
 This is an OpenSimulator design limitation. Regions rely on cached data to display avatar information, and once fetched, these are never updated. As a result, if an avatar's name (or grid URI btw) is changed, the change will not be reflected on regions already visited by this avatar (which will still show the old name), but new visited region will display the new one. This could be somewhat handled for a small standalone grid, but never in hypergrid context. There is no process to force a foreign grid to update its cache, and probably never will.
 
