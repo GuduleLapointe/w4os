@@ -105,10 +105,10 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Show avatar picture in user lists
 - [x] Login page / Widget
 - [x] Option to show avatar name instead of real name in user lists
+- [-] Manual / cron sync of Grid and WP users
 - Public avatar profile
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
-- Manual / cron sync of Grid and WP users
 
 = Medium term =
 
