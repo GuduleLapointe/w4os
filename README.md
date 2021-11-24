@@ -51,7 +51,8 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Show avatar picture in user lists
 - [x] Login page / Widget
 - [x] Option to show avatar name instead of real name in user lists
-- Manual [x] / cron sync of Grid and WP users
+- [x] Manual Grid and WP users sync
+- Cron Grid and WP users sync
 - Public avatar profile
 - Auth with avatar credential (as fallback to wp auth).
   Create new WordPress user if auth by avatar.
@@ -59,10 +60,11 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 ### Medium term
 
 - [x] get grid info from http://login.uri:8002/get_grid_info
+- [x] Web Assets server
 - Admin Start / Stop regions
 - Admin Create region
 - Admin Use sim/grid configuration file to fetch settings if on the same host
-- Helpers (assets [x], search, currency, map...)
+- Helpers (search, currency, map...)
 
 ### Long term
 
