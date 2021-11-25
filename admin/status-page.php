@@ -3,6 +3,9 @@
 if(get_option('w4os_sync_users')) $sync_result = w4os_sync_users();
 $count = w4os_count_users();
 
+// Note for future me, count broken assets
+// SELECT inventoryname, inventoryID, assetID, a.id FROM inventoryitems LEFT JOIN assets AS a ON id = assetID WHERE a.id IS NULL;
+
 ?><div class="w4os-status-page wrap">
 	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
