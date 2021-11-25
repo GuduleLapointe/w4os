@@ -1,7 +1,9 @@
-<?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 function w4os_get_users_ids_and_uuids() {
 		global $wpdb, $w4osdb;
+		if(!isset($wpdb)) return false;
+		if(!isset($w4osdb)) return false;
 
 		$GridAccounts = $w4osdb->get_results("SELECT Email as email, PrincipalID, FirstName, LastName FROM UserAccounts
 			WHERE active = 1
@@ -35,6 +37,8 @@ function w4os_get_users_ids_and_uuids() {
 
 function w4os_count_users() {
   global $wpdb, $w4osdb;
+	if(!isset($wpdb)) return false;
+	if(!isset($w4osdb)) return false;
 
   $accounts = w4os_get_users_ids_and_uuids();
 
@@ -62,16 +66,6 @@ function w4os_count_users() {
 				$count['wp_only']++;
 			}
 		}
-    // if(!isset($account['PrincipalID']) || w4os_empty($account['PrincipalID'])) $account['PrincipalID'] = NULL;
-    // else $count['grid_accounts']++;
-    // if(isset($account['w4os_uuid']) && w4os_empty($account['w4os_uuid'])) $account['w4os_uuid'] = NULL;
-		//
-		// if(!w4os_empty($account['PrincipalID']) &! w4os_empty($account['w4os_uuid']) ) {
-		// 	$count['wp_linked']++;
-		// 	if($account['PrincipalID'] == $account['w4os_uuid']) $count['sync']++;
-		// 	else $count['wp_only']++;
-		// }
-    // else if($account['PrincipalID']) $count['grid_only'] += 1;
   }
 
   $count['models'] = $w4osdb->get_var("SELECT count(*) FROM UserAccounts
@@ -91,6 +85,10 @@ function w4os_count_users() {
 
 
 function w4os_sync_users() {
+	global $wpdb, $w4osdb;
+	if(!isset($wpdb)) return false;
+	if(!isset($w4osdb)) return false;
+
   $accounts = w4os_get_users_ids_and_uuids();
 	$messages=array();
 	$users_created=[];

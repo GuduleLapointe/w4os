@@ -5,7 +5,7 @@ function w4os_add_cron_intervals( $schedules ) {
 	if(!isset($schedules['hourly'])) {
 		$schedules['hourly'] = array(
 			'interval' => 3600,
-      'display'  => esc_html__( 'Hourly', 'w4os' ),
+      'display'  => esc_html__( 'hourly', 'w4os' ),
 		);
 	}
 	return $schedules;

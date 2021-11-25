@@ -1,6 +1,5 @@
 <?php if ( ! defined( 'W4OS_ADMIN' ) ) die;
 
-if(get_option('w4os_sync_users')) $sync_result = w4os_sync_users();
 $count = w4os_count_users();
 
 // Note for future me, count broken assets
