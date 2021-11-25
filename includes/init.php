@@ -75,6 +75,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 if(get_option('w4os_provide_asset_server') == 1 ) {
   require_once __DIR__ . '/assets.php';
 }
+require_once __DIR__ . '/cron.php';
 
 add_action( 'wp_enqueue_scripts', function() {
   wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
