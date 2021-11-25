@@ -124,6 +124,7 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 
 - Admin create users
 - Admin create models (from current appearance)
+- Deactivate (recommended) or delete (experimental) grid user when deleting wp account
 - Choice between Robust console or database connection
 - User's own regions control (create, start, stop, backup)
 - WooCommerce Subscriptions integration for user-owned Regions or other pay-for services
