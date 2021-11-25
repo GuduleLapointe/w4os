@@ -145,44 +145,7 @@ function w4os_sync_users() {
 			$users_dereferenced[] = sprintf('<a href=%s>%s</a>', get_edit_user_link($account['user_id']), $account['user_id']);
 		}
 	}
-			// 	if($user) {
-			// 		$result = w4os_profile_sync($user, $account['PrincipalID']);
-			// 		if($result != $account['PrincipalID']) {
-			// 			$error_message = __("User created but could not link it.", 'w4os');
-			// 		}
-			// 	} else {
-			// 		$error_message = __("User was created but could not be retrieved. Weird. Should not happen.", 'w4os');
-			// 	}
-			// if( isset($account['user_id']) && is_numeric($account['user_id']) && $account['user_id'] > 0 ) {
-	// 		$email = $account['email'];
-			// $user = get_user_by('email', $email);
-			// if($user) {
-	// 			// If there is a user with this email
-	// 			$account['user_id'] = $user->ID;
-	// 			$result = w4os_profile_sync($user, $account['PrincipalID']);
- 	// 			if($result != $account['PrincipalID']) {
-	// 				$error_message = __("Error while trying to link WP user with same email address.", 'w4os');
-	// 		} else {
-	// 				update_user_meta( $account['user_id'], 'w4os_uuid', $account['PrincipalID'] );
-	// 				$users_created[] = sprintf('%s %s (%s)', $account['FirstName'], $account['LastName'], $account['email']);
-	// 			} else {
-	// 				else $error_message = 'grid side ' . $account['PrincipalID'] . ' wp side ' . $account['w4os_uuid'];
-	// 			}
-	// 		}
-	// 		if(isset($error_message)) {
-	// 			$errors[] = sprintf(__('Error while syncing avatar %s (%s): %s', 'w4os'), $account['FirstName'] . " " . $account['LastName'], $account['email'], $error_message);
-	// 		} else {
-	// 			$users_created[] = sprintf('%s %s (%s)', $account['FirstName'], $account['LastName'], $account['email']);
-	// 		}
-  //   } else {
-	// 		delete_user_meta( $account['user_id'], 'w4os_uuid' );
-	// 	  delete_user_meta( $account['user_id'], 'w4os_firstname' );
-	// 	  delete_user_meta( $account['user_id'], 'w4os_lastname' );
-	// 	  delete_user_meta( $account['user_id'], 'w4os_avatarname' );
-	// 	  delete_user_meta( $account['user_id'], 'w4os_profileimage' );
-	//
-  //     // no such avatar, delete reference
-  //     $users_dereferenced[] = $account['user_id'];
+
 	if(!empty($users_updated)) $messages[] = sprintf(_n(
 		'%d reference updated',
 		'%d references updated',
