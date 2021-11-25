@@ -1,15 +1,15 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
-// add_filter( 'cron_schedules', 'w4os_add_cron_interval' );
-// function w4os_add_cron_interval( $schedules ) {
-// 	if(!isset($schedules['five_seconds'])) {
-// 		$schedules['five_seconds'] = array(
-// 			'interval' => 5,
-// 			'display'  => esc_html__( 'Every Five Seconds' ), 'w4os'
-// 		);
-// 	}
-// 	return $schedules;
-// }
+add_filter( 'cron_schedules', 'w4os_add_cron_intervals' );
+function w4os_add_cron_intervals( $schedules ) {
+	if(!isset($schedules['hourly'])) {
+		$schedules['hourly'] = array(
+			'interval' => 3600,
+      'display'  => esc_html__( 'Hourly', 'w4os' ),
+		);
+	}
+	return $schedules;
+}
 
 register_activation_hook( WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, 'w4os_activate' );
 function w4os_activate($args = array()) {
