@@ -78,16 +78,17 @@ $count = w4os_count_users();
 									) . ' ' . __('Real accounts need a unique email address for W4OS to function properly.', 'w4os'
 								), $count['tech']) . '</p>';
 							}
-							echo '<form method="post" action="options.php" autocomplete="off">';
-							settings_fields( 'w4os_status' );
-							echo '<input type="hidden" input-hidden" id="w4os_sync_users" name="w4os_sync_users" value="1">';
-							// do_settings_sections( 'w4os_status' );
+							if($count['grid_only'] + $count['wp_only'] > 0) {
+								echo '<form method="post" action="options.php" autocomplete="off">';
+								settings_fields( 'w4os_status' );
+								echo '<input type="hidden" input-hidden" id="w4os_sync_users" name="w4os_sync_users" value="1">';
 
-							submit_button(__('Synchronize users now', 'w4os'));
-							echo '</form>';
+								submit_button(__('Synchronize users now', 'w4os'));
+								echo '</form>';
+								echo '<p class=description>' . __('Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console.', 'w4os') . '<p>';
+							}
 							if($sync_result)
 							echo '<p class=info>' . $sync_result . '<p>';
-							echo '<p class=description>' . __('Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console.', 'w4os') . '<p>';
 							?>
 						</td>
 					</tr>
