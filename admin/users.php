@@ -46,6 +46,7 @@ function w4os_count_users() {
 	$count['sync'] = 0;
   foreach ($accounts as $key => $account) {
 		if( ! isset($account['w4os_uuid']) ) $account['w4os_uuid'] = NULL;
+		if(!w4os_empty($account['w4os_uuid'])) $count['wp_linked']++;
 		if( ! isset($account['PrincipalID']) ) $account['PrincipalID'] = NULL;
 
 		if( ! w4os_empty($account['PrincipalID']) ) {
@@ -56,7 +57,6 @@ function w4os_count_users() {
 				$count['grid_only'] += 1;
 			}
 		} else {
-			if(!w4os_empty($account['w4os_uuid'])) $count['wp_linked']++;
 			$account['PrincipalID'] = NULL;
 			if(isset($account['w4os_uuid']) &! w4os_empty($account['w4os_uuid'])) {
 				$count['wp_only']++;
