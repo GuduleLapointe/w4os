@@ -42,13 +42,13 @@ if(preg_match('!' . W4OS_PROFILE_PATTERN .'!', $url)) {
       return true;
     } );
 
-    add_filter( 'the_title', 'suppress_if_blurb', 10, 2 );
-    function suppress_if_blurb( $title, $id = null ) {
-      if ( is_singular() && in_the_loop() && is_main_query() ) {
-        return "profile page";
-      }
-      return $title;
-    }
+    // add_filter( 'the_title', 'suppress_if_blurb', 10, 2 );
+    // function suppress_if_blurb( $title, $id = null ) {
+    //   if ( is_singular() && in_the_loop() && is_main_query() ) {
+    //     return "profile page";
+    //   }
+    //   return $title;
+    // }
     add_filter('document_title_parts', function ( $title ) use ($avatar_row) {
       // $title is an array of title parts, including one called `title`
       $title['title'] = sprintf(__("%s's profile", 'w4os'),
