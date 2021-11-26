@@ -773,6 +773,7 @@ if(get_option('w4os_profile_page')=='provide') {
 }
 
 function w4os_get_profile_url($user_or_id) {
+  if(get_option(w4os_profile_page) != 'provide') return;
   if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
   else $user = $user_or_id;
   if(!is_object($user)) return;
