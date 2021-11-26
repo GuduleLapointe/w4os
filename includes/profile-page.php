@@ -2,8 +2,7 @@
 
 global $wpdb, $w4osdb;
 
-// define('W4OS_PROFILE_PATTERN', '^/' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '/([a-zA-Z][a-zA-Z9]*)[ \.+-]([a-zA-Z][a-zA-Z9]*)(/.*)?$');
-define('W4OS_PROFILE_PATTERN', '^/' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '/([a-zA-Z][a-zA-Z9]*)[ \.+-]([a-zA-Z][a-zA-Z9]*)/?$');
+define('W4OS_PROFILE_PATTERN', '^/' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '/([a-zA-Z][a-zA-Z9]*)[ \.+-]([a-zA-Z][a-zA-Z9]*)(/.*)?$');
 update_option('w4os_rewrite_rules', true);
 
 // add_action( 'init',  function() {
