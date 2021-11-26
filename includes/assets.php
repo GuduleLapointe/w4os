@@ -34,7 +34,8 @@ function w4os_redirect_if_asset() {
 w4os_redirect_if_asset();
 
 add_action('admin_init', function() {
-  add_settings_field('w4os_assets_slug', __('W4OS Assets base', 'w4os'), 'w4os_assets_slug_output', 'permalink', 'optional');
+  add_settings_section('w4os_permalinks', 'W4OS', 'w4os_permalinks_output', 'permalink');
+  add_settings_field('w4os_assets_slug', __('Assets base', 'w4os'), 'w4os_assets_slug_output', 'permalink', 'w4os_permalinks');
   if (isset($_POST['permalink_structure'])) {
     $newslug = sanitize_title($_REQUEST['w4os_assets_slug']);
     if(esc_attr(get_option('w4os_assets_slug')) != $newslug) {
