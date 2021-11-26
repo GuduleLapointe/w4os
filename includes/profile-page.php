@@ -56,9 +56,9 @@ if(preg_match('!' . W4OS_PROFILE_PATTERN .'!', $url)) {
       );
       return $title;
     });
+    get_header();
 
     add_action( 'template_include', function($template) use ( $avatar_row, $current_user_email ) {
-      get_header();
       $plugindir = dirname( __DIR__ );
       $template_slug=str_replace('.php', '', basename($template));
       $post_type_slug=get_post_type();
