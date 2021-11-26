@@ -6,12 +6,13 @@ global $wpdb, $w4osdb;
 define('W4OS_PROFILE_PATTERN', '^/' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '/([a-zA-Z][a-zA-Z9]*)[ \.+-]([a-zA-Z][a-zA-Z9]*)/?$');
 update_option('w4os_rewrite_rules', true);
 
-add_action( 'init',  function() {
+// add_action( 'init',  function() {
   // rewrite rule for /profile/firstname.lastname
   // add_rewrite_tag('%avatarslug%', '([a-zA-Z][a-zA-Z9]*[\.-][a-zA-Z][a-zA-Z9]*)', 'avatarslug=');
   add_rewrite_rule( W4OS_PROFILE_PATTERN,
   'index.php?pagename=profile&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]', 'top' );
-} );
+// } );
+// flush_rewrite_rules();
 
 // add_filter( 'query_vars', 'w4os_profile_query_vars');
 // function w4os_profile_query_vars( $query_vars ) {
