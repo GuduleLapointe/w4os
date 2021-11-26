@@ -48,6 +48,7 @@ class W4OS_Avatar extends WP_User {
     $this->FirstName = esc_attr(get_the_author_meta( 'w4os_firstname', $id ));
     $this->LastName = esc_attr(get_the_author_meta( 'w4os_lastname', $id ));
     $this->AvatarName = esc_attr(get_the_author_meta( 'w4os_avatarname', $id ));
+    $this->AvatarSlug = strtolower($this->FirstName) . "." . strtolower($this->LastName);
     $this->AvatarHGName = strtolower($this->FirstName) . "." . strtolower($this->LastName) . "@" . esc_attr(get_option('w4os_login_uri'));
     $this->ProfilePictureUUID = get_the_author_meta( 'w4os_profileimage', $id );
     if(empty($this->ProfilePictureUUID)) $this->ProfilePictureUUID = W4OS_NULL_KEY;
@@ -764,6 +765,13 @@ function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
 		w4os_gridprofile_html($atts, $args )
 	);
 }
+
+if(get_option('w4os_profile_page')=='provide') {
+  add_action('init',  function() {
+    require_once(__DIR__ . '/profile-page.php');
+  });
+}
+
 function w4os_get_profile_url($user_or_id) {
   if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
   else $user = $user_or_id;

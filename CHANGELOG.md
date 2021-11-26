@@ -1,6 +1,7 @@
 ## Changelog
 
 ### Unreleased
+* new profile page
 * new grid and wordpress users sync
 * new basic blocks support
 * new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
