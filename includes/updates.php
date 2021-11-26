@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
-if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 3 );
+if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 4 );
 
 if(get_option('w4os_upated') < W4OS_UPDATES ) {
   w4os_updates();
@@ -32,6 +32,7 @@ function w4os_updates($args = array()) {
     $u++;
   }
   if($success) {
+    if(empty($messages))
     $messages[] = sprintf( _n('Update %s applied sucessfully', 'Updates %s applied sucessfully', count($success), 'band-tools'), join(', ', $success) );
     $class='success';
     $return=true;
@@ -91,4 +92,21 @@ function w4os_update_3() {
     w4os_admin_notice(__('Profiles service is not configured on your Robust server. It is required for full functionalities.', 'w4os' ),'error' );
   }
   return true;
+}
+
+/*
+ * Set default values for profile (provide and slug=profile)
+ * Force user sync and rules rewrite
+ */
+function w4os_update_4() {
+  global $wpdb;
+  if(empty(get_option('w4os_profile_page'))) {
+    update_option('w4os_profile_page', 'provide');
+  }
+  if(empty(get_option('w4os_profile_slug'))) {
+    update_option('w4os_profile_slug', 'profile');
+  }
+  update_option('w4os_sync_users', true);
+  update_option('w4os_rewrite_rules', true);
+  return __('Grid and WordPress users synchronized.', 'w4os');
 }
