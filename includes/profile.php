@@ -66,26 +66,60 @@ add_action( 'edit_user_profile', 'w4os_profile_fields' );
 add_action( 'personal_options_update', 'w4os_profile_fields_save' );
 add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
 
-/**
- * Sync avatar info from OpenSimulator
- * @param  object $user [description]
- * @return object       [description]
- */
-function w4os_profile_sync($user) {
+function w4os_profile_dereference($user_or_id) {
   if(!W4OS_DB_CONNECTED) return;
   global $w4osdb;
 
-  // $uuid = $w4osdb->get_var("SELECT PrincipalID FROM UserAccounts WHERE Email = '$user->user_email'");
+  if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
+  else $user = $user_or_id;
+  if(!is_object($user)) return;
+
+  delete_user_meta( $user->ID, 'w4os_uuid' );
+  delete_user_meta( $user->ID, 'w4os_firstname' );
+  delete_user_meta( $user->ID, 'w4os_lastname' );
+  delete_user_meta( $user->ID, 'w4os_avatarname' );
+  delete_user_meta( $user->ID, 'w4os_profileimage' );
+  $roles = (array)$user->roles;
+  if(count($roles)==1) $user->add_role(get_option('default_role'));
+  $user->remove_role('grid_user');
+}
+
+/**
+ * Sync avatar info from OpenSimulator
+ * @param  object $user_or_id   user object or user id
+ * @param  key    $uuid         if set, create link with avatar and update info
+ *                              if not set, update avatar info if link exists
+ * @return object       [description]
+ */
+function w4os_profile_sync($user_or_id, $uuid = NULL) {
+  if(!W4OS_DB_CONNECTED) return;
+  global $w4osdb;
+
+
+  if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
+  else $user = $user_or_id;
+  if(!is_object($user)) return;
+
+
+  if(w4os_empty($uuid)) {
+    $condition = "Email = '$user->user_email'";
+  } else {
+    $condition = "PrincipalID = '$uuid'";
+  }
   $avatars=$w4osdb->get_results("SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText
-    FROM UserAccounts, userprofile
-    WHERE PrincipalID = userUUID
-    AND Email = '$user->user_email'
-    AND active = 1
-    ");
+    FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
+    WHERE active = 1 AND $condition"
+  );
   if(empty($avatars)) return false;
-  // if(count($avatars) != 1) return W4OS_NULL_KEY;
   $avatar_row = array_shift($avatars);
-  $uuid = $avatar_row->PrincipalID;
+  if(w4os_empty($uuid)) $uuid = $avatar_row->PrincipalID;
+
+  if(w4os_empty($uuid)) {
+    w4os_profile_dereference($user);
+    return false;
+  }
+
+  $user->add_role('grid_user');
 
   // if($models) {
   //   $content.= "<div class='clear'></div>";
