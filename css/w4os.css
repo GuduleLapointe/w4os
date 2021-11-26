@@ -117,21 +117,6 @@ img.model-picture {
 
 }
 
-.recent-users li,
-.profile {
-  clear:both;
-  overflow: hidden;
-}
-.profile-pic {
-  display: inline-block;
-  padding-right: 1em;
-  max-width: 25%;
-  float: left;
-}
-.recent-users .avatar-name {
-  font-weight: bold;
-}
-
 .profile-php .avatar_profile,
 .profile-php .avatar_profile p {
   font-size: 14px;

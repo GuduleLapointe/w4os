@@ -87,6 +87,17 @@ function w4os_register_user_columns($columns) {
 }
 add_action('manage_users_columns', 'w4os_register_user_columns');
 
+function w4os_user_actions_profile_view($actions, $user) {
+  if(!w4os_empty(get_the_author_meta('w4os_uuid', $user->ID)))
+	$actions['view'] = sprintf('
+    <a class=view href="%s">%s</a>',
+    w4os_get_profile_url($user),
+    __( 'View profile', 'w4OS' ) . "</a>"
+  );
+	return $actions;
+}
+add_filter('user_row_actions', 'w4os_user_actions_profile_view', 10, 2);
+
 /**
  * Avatar name column display
  * @param  [type] $value

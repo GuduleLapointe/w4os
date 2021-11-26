@@ -74,18 +74,32 @@ function w4os_newusers_html($atts = [], $args = []) {
 	global $wpdb;
 	$recentusers = '<ul class="recent-users">';
 	$usernames = $wpdb->get_results("SELECT user_nicename, user_url, user_email
-		FROM $wpdb->users as u, $wpdb->usermeta as m
-		WHERE u.ID = m.user_id AND m.meta_key = 'w4os_uuid' AND m.meta_value != ''
+		FROM $wpdb->users as u LEFT JOIN $wpdb->usermeta as m ON u.ID = m.user_id
+		WHERE m.meta_key = 'w4os_uuid' AND m.meta_value != ''
 		ORDER BY ID DESC LIMIT 5");
 	foreach ($usernames as $username) {
 		$user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $username->user_email));
 		$uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
 		if($uuid) {
-			$recentusers .= '<li><span class=profile-pic>' .get_avatar($username->user_email, 32) . "</span>"
-			. " <span class=avatar-name>" . get_the_author_meta( 'w4os_firstname', $user->ID ) . " " . get_the_author_meta( 'w4os_lastname', $user->ID ) . "</span>"
-			. " <span class=nicename> ($username->user_nicename)</span>"
-			. " <span class=email>$username->user_email</span>"
-			 ."</li>";
+			$recentusers .= sprintf('<li>
+			<span class="profile-pic"><a href="%1$s">%2$s</a></span>
+			<span class=info>
+				<span class=avatar-name><a href=%1$s>%3$s</a></span>
+				<span class=email><em>(%4$s)</em></span>
+				<span class=row-actions>
+					<span class=edit><a href="%5$s">%6$s</a></span>
+					<span class=view><a href="%1$s">%7$s</a></span>
+				</span>
+			</span>
+			</li>',
+			w4os_get_profile_url($user),
+			get_avatar($username->user_email, 32),
+			get_the_author_meta( 'w4os_avatarname', $user->ID ),
+			$username->user_email,
+			get_edit_user_link($user->ID),
+			__('Edit user', 'w4os'),
+			__('View profile', 'w4os'),
+		);
 		} else if (!$username->user_url) {
 			$recentusers .= '<li>' .get_avatar($username->user_email, 32) . "&nbsp;" . $username->user_nicename."</a></li>";
 		} else {

@@ -764,3 +764,11 @@ function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
 		w4os_gridprofile_html($atts, $args )
 	);
 }
+function w4os_get_profile_url($user_or_id) {
+  if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
+  else $user = $user_or_id;
+  if(!is_object($user)) return;
+
+  $slug = sanitize_title(get_the_author_meta( 'w4os_firstname', $user->ID )) . '.' . sanitize_title(get_the_author_meta( 'w4os_lastname', $user->ID ));
+  if(!empty($slug)) return get_home_url(NULL, get_option('w4os_profile_slug') . '/' . $slug);
+}
