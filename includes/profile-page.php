@@ -68,12 +68,9 @@ add_action( 'template_include', function( $template ) {
       }, 10, 2 );
 
       // Doesn't work. Might be launched too late, when header is already set
-      add_filter('document_title_parts', function ( $title = array() ) use($avatar_name) {
-        // $title is an array of title parts, including one called `title`
-        $title['title'] = sprintf(__("%s's profile", 'w4os'), $avatar_name);
-        return $title;
-      });
-      // get_header();
+      add_filter('pre_get_document_title', function() use($avatar_name) {
+        return sprintf(__("%s's profile - %s", 'w4os'), $avatar_name, get_option('w4os_grid_name'));
+      }, 20);
 
       return $template;
     }
