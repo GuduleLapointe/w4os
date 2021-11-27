@@ -70,6 +70,7 @@ add_action( 'init', 'w4os_load_textdomain' );
 
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/w4osdb.php';
+require_once __DIR__ . '/gridauth.php';
 require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/widgets.php';
 require_once __DIR__ . '/users.php';
