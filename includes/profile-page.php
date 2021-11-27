@@ -111,18 +111,23 @@ add_action( 'template_include', function( $template ) {
         return $page_title;
       }
       return $title;
-    }, 10, 2 );
+    }, 20, 2 );
 
     if(!isset($head_title)) $head_title = $page_title;
-    // Doesn't work. Might be launched too late, when header is already set
-    // add_filter('pre_get_document_title', function() use($head_title) {
-    //   return $head_title;
-    // }, 20);
-    add_filter('document_title_parts', function($title) use($head_title) {
-      $title['title'] = $head_title;
-      // $title['site'] = get_option('w4os_grid_name');
-      return $title;
-    }, 20);
+
+    if(wp_get_theme()->Name == 'Divi' || wp_get_theme()->parent()->Name == 'Divi') {
+      // document_title_parts doesn't work with some themes, workaround...
+      add_filter('pre_get_document_title', function() use($head_title) {
+        return $head_title . ' – ' . get_bloginfo('name') ;
+      }, 20);
+    } else {
+      // Document_title_parts is preferred as it keeps website SEO preferences
+      add_filter('document_title_parts', function($title) use($head_title) {
+        $title['title'] = $head_title;
+        // $title['site'] = get_option('w4os_grid_name');
+        return $title;
+      }, 20);
+    }
   }
 
   return $template;
