@@ -60,6 +60,62 @@ class W4OS_Avatar extends WP_User {
     if($echo) echo $html;
     else return $html;
   }
+
+  public function profile_page( $echo = false ) {
+    global $wpdb, $w4osdb;
+
+    $can_list_users = (current_user_can( 'list_users' ) ) ? 'true' : 'false';
+    $current_user_email = wp_get_current_user()->user_email;
+    // Should not fetch this again, it should be saved in _construct, TO CHECK
+    $this->UUID = esc_attr(get_the_author_meta( 'w4os_uuid', $this->ID ));
+
+    $avatar_query = "SELECT *
+      FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
+      WHERE active = 1 AND Email != ''
+      AND ( profileAllowPublish = 1 OR $can_list_users OR Email = '$current_user_email')
+      AND PrincipalID = '$this->UUID';";
+
+    $avatar_row=$w4osdb->get_row($avatar_query);
+
+    if(is_object($avatar_row)) {
+      $keys = array('FirstName' =>NULL, 'LastName' =>NULL, 'profileImage' =>NULL, 'profileAboutText'=>NULL );
+      // $keys = array_combine($keys, $keys);
+      // $avatar_array=(array)$avatar_row;
+      if(!w4os_empty($avatar_row->profileImage)) $avatar_row->profileImageHtml = '<img src=' . w4os_get_asset_url($avatar_row->profileImage) . '>';
+
+      $profile=array_filter(array(
+        // 'Avatar Name' => $avatar_row->FirstName . " " . $avatar_row->LastName,
+        __('Profile picture', 'w4os') => $avatar_row->profileImageHtml,
+        __('Born', 'w4os') => sprintf('%s (%s days)',
+        wp_date(get_option( 'date_format' ), $avatar_row->Created),
+        floor((current_time('timestamp') - $avatar_row->Created) / 24 / 3600 )),
+        __('About', 'w4os') => $avatar_row->profileAboutText,
+        __('Languages', 'w4os') => $avatar_row->profileLanguages,
+        __('Skills', 'w4os') => $avatar_row->profileSkillsText,
+      ));
+
+      if($avatar_row->profileAllowPublish != 1) {
+        if($avatar_row->Email == $current_user_email) {
+          $content.= sprintf(
+            '<p class=notice>%s</p>',
+            __('This is a preview, your profile is actually private.', 'w4os'),
+          );
+        } else {
+          $content.= sprintf(
+            '<p class=notice>%s</p>',
+            __('This profile is private but you are admin, so you can look. Be fair.', 'w4os'),
+          );
+        }
+      }
+      // $content .= w4os_array2table((array)$avatar_row);
+      $content .= w4os_array2table($profile);
+
+    } else {
+      return false;
+    }
+    if($echo) echo $content;
+    else return $content;
+  }
 }
 
 add_action( 'show_user_profile', 'w4os_profile_fields' );
@@ -766,12 +822,6 @@ function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
 	);
 }
 
-if(get_option('w4os_profile_page')=='provide') {
-  add_action('init',  function() {
-    require_once(__DIR__ . '/profile-page.php');
-  });
-}
-
 function w4os_get_profile_url($user_or_id) {
   if(get_option(w4os_profile_page) != 'provide') return;
   if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
@@ -780,4 +830,8 @@ function w4os_get_profile_url($user_or_id) {
 
   $slug = sanitize_title(get_the_author_meta( 'w4os_firstname', $user->ID )) . '.' . sanitize_title(get_the_author_meta( 'w4os_lastname', $user->ID ));
   if(!empty($slug)) return get_home_url(NULL, get_option('w4os_profile_slug') . '/' . $slug);
+}
+
+if(get_option('w4os_profile_page')=='provide') {
+  require_once(__DIR__ . '/profile-page.php');
 }
