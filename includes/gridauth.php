@@ -39,7 +39,9 @@ function w4os_gridauth ( $user, $username, $password ) {
       if(is_wp_error($user)) {
         // WP user doesn't exist, create one
       } else {
-        // user exists, just update password
+        // user exists, just sync update password
+        w4os_profile_sync($user);
+        reset_password($user, $password);
         return $user;
       }
     }
