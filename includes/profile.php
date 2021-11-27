@@ -61,7 +61,7 @@ class W4OS_Avatar extends WP_User {
     else return $html;
   }
 
-  public function profile_page( $echo = false ) {
+  public function profile_page( $echo = false, $args=array() ) {
     global $wpdb, $w4osdb;
 
     $can_list_users = (current_user_can( 'list_users' ) ) ? 'true' : 'false';
@@ -108,7 +108,7 @@ class W4OS_Avatar extends WP_User {
         }
       }
       // $content .= w4os_array2table((array)$avatar_row);
-      $content .= w4os_array2table($profile);
+      $content .= w4os_array2table($profile, 'avatar-profile-table' );
 
     } else {
       return false;

@@ -17,9 +17,12 @@ table.gridinfo td,
 table.gridstatus td {
   width: 50%;
 }
-td.gridvar {
+th.gridvar,
+td.gridvar,
+td.gridval {
   padding-right: 20px;
-  font-size: 80%;
+  /* font-size: 80%; */
+  vertical-align: top;
 }
 
 .page div.notice {
@@ -144,4 +147,9 @@ img.model-picture {
 
 .w4os-login label {
   display: block;
+}
+
+.avatar-profile-table th,
+.avatar-profile-table td {
+    vertical-align: top;
 }
