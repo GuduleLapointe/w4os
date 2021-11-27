@@ -77,7 +77,7 @@ function w4os_newusers_html($atts = [], $args = []) {
 		FROM $wpdb->users as u LEFT JOIN $wpdb->usermeta as m ON u.ID = m.user_id
 		WHERE m.meta_key = 'w4os_uuid' AND m.meta_value != ''
 		ORDER BY ID DESC LIMIT 5");
-	if(get_option(w4os_profile_page) == 'provide') $profile_action = '<span class=view><a href="%1$s">%7$s</a></span>';
+	if(get_option('w4os_profile_page') == 'provide') $profile_action = '<span class=view><a href="%1$s">%7$s</a></span>';
 
 	foreach ($usernames as $username) {
 		$user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $username->user_email));

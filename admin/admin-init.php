@@ -88,7 +88,7 @@ function w4os_register_user_columns($columns) {
 add_action('manage_users_columns', 'w4os_register_user_columns');
 
 function w4os_user_actions_profile_view($actions, $user) {
-  if(get_option(w4os_profile_page) != 'provide') return $actions;
+  if(get_option('w4os_profile_page') != 'provide') return $actions;
   if(w4os_empty(get_the_author_meta('w4os_uuid', $user->ID))) return $actions;
 
 	$actions['view'] = sprintf('
