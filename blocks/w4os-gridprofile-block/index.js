@@ -24,7 +24,7 @@
 		 * This is the display title for your block, which can be translated with `i18n` functions.
 		 * The block inserter will show this name.
 		 */
-		title: __( 'Grid profile block', 'w4os' ),
+		title: __( 'Grid profile', 'w4os' ),
 
 		/**
 		 * Blocks are grouped into categories to help users browse and discover them.
@@ -52,7 +52,7 @@
 			return el(
 				'p',
 				{ className: 'components-placeholder ' + props.className },
-				__( 'Grid profile block', 'w4os' )
+				__( 'Grid profile', 'w4os' )
 			);
 		},
 

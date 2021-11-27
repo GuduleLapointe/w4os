@@ -1,10 +1,13 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 define('W4OS_PROFILE_PATTERN', '^' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '/([a-zA-Z][a-zA-Z9]*)[ \.+-]([a-zA-Z][a-zA-Z9]*)(/.*)?$');
+define('W4OS_PROFILE_SELF_PATTERN', '^' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '/?$');
 
 add_action( 'init',  function() {
   add_rewrite_rule( W4OS_PROFILE_PATTERN,
   'index.php?pagename=' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '&post_tyoe=user&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]', 'top' );
+  add_rewrite_rule( W4OS_PROFILE_SELF_PATTERN,
+  'index.php?pagename=' . esc_attr(get_option('w4os_profile_slug', 'profile')) . '&post_tyoe=user&profile_args=$matches[1]', 'top' );
 } );
 update_option('w4os_rewrite_rules', true);
 flush_rewrite_rules();
@@ -42,9 +45,30 @@ function w4os_get_avatar_by_name($firstname = '', $lastname = '') {
 }
 
 add_action( 'template_include', function( $template ) {
+  global $wp_query;
+  if($wp_query->queried_object->post_name != get_option('w4os_profile_slug')) return $template;
+  // echo "post_name " . $wp_query->queried_object->post_name;
+
   $query_firstname = get_query_var( 'profile_firstname' );
   $query_lastname = get_query_var( 'profile_lastname' );
-  if ( $query_firstname != '' && $query_lastname != '' ) {
+  if ( empty($query_firstname) || empty($query_lastname) ) {
+    if(is_user_logged_in()) {
+      $user = wp_get_current_user();
+      $avatar = new W4OS_Avatar($user);
+      $page_title = __('My Avatar', 'w4os');
+      $page_content = $avatar->profile_page();
+      if(empty($page_content)) {
+        $page_content = '<div>' . w4os_avatar_creation_form($user) . '</div>';
+      }
+    } else {
+      $page_title = __('Log in', 'w4os');
+      $page_content = '<div>' . __('Log in to create your avatar, view your profile or set your options.', 'w4os') . '</div>';
+      $page_content .= w4os_profile_display(get_current_user());
+      // wp_redirect( wp_login_url() ); exit;
+    }
+  } else {
+
+  // if ( $query_firstname != '' && $query_lastname != '' ) {
     $user = w4os_get_avatar_by_name($query_firstname, $query_lastname );
     if(! $user || empty($user)) return get_404_template();
     $avatar = new W4OS_Avatar($user);
@@ -54,28 +78,53 @@ add_action( 'template_include', function( $template ) {
 
     if($avatar_profile) {
       $avatar_name = esc_attr(get_the_author_meta( 'w4os_firstname', $avatar->ID) . ' ' . get_the_author_meta( 'w4os_lastname', $avatar->ID));
+      $page_content = $avatar_profile;
+      $page_title = $avatar_name;
+      $head_title = sprintf(__("%s's profile", 'w4os'), $avatar_name);
 
+    } else {
+      header("Status: 404 Not Found");
 
-      add_filter( 'the_content', function($content) use($avatar_profile) {
-        return $avatar_profile;
-      } );
-
-      add_filter( 'the_title', function($title, $id = NULL) use ($avatar_name) {
-        if ( is_singular() && in_the_loop() && is_main_query() ) {
-          return $avatar_name;
-        }
-        return $title;
-      }, 10, 2 );
-
-      // Doesn't work. Might be launched too late, when header is already set
-      add_filter('pre_get_document_title', function() use($avatar_name) {
-        return sprintf(__("%s's profile - %s", 'w4os'), $avatar_name, get_option('w4os_grid_name'));
-      }, 20);
-
-      return $template;
+      function redirect_404() {
+          global $options, $wp_query;
+          if ($wp_query->is_404) {
+              $page_title = "Unknown avatar";
+              // $redirect_404_url = esc_url(get_permalink(get_page_by_title($page_title)));
+              // wp_redirect( $redirect_404_url );
+              // exit();
+          }
+      }
+      add_action( 'template_redirect', 'redirect_404');
+      return get_404_template();
     }
-    return get_404_template();
   }
+
+  if(isset($page_content)) {
+    add_filter( 'the_content', function($content) use($page_content) {
+      return $page_content;
+    });
+  }
+
+  if(isset($page_title)) {
+    add_filter( 'the_title', function($title, $id = NULL) use ($page_title) {
+      if ( is_singular() && in_the_loop() && is_main_query() ) {
+        return $page_title;
+      }
+      return $title;
+    }, 10, 2 );
+
+    if(!isset($head_title)) $head_title = $page_title;
+    // Doesn't work. Might be launched too late, when header is already set
+    // add_filter('pre_get_document_title', function() use($head_title) {
+    //   return $head_title;
+    // }, 20);
+    add_filter('document_title_parts', function($title) use($head_title) {
+      $title['title'] = $head_title;
+      // $title['site'] = get_option('w4os_grid_name');
+      return $title;
+    }, 20);
+  }
+
   return $template;
 } );
 

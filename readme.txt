@@ -109,7 +109,7 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Manual Grid and WP users sync
 - [x] Cron Grid and WP users sync
 - [x] Public avatar profile
-- Auth with avatar credential if no matching wp account and create matching account.
+- Auth with avatar credentials (if no matching wp account, create one)
 
 = Medium term =
 

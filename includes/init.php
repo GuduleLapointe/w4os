@@ -1,5 +1,9 @@
 <?php if ( ! defined( 'WPINC' ) ) die;
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 define('W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000');
 // define('W4OS_ZERO_VECTOR', '<0,0,0>');
 // define('W4OS_W4OS_DEFAULT_AVATAR_HEIGHT', '1.7');
