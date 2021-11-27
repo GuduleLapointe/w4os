@@ -83,6 +83,29 @@ function w4os_count_users() {
   return $count;
 }
 
+function w4os_create_login($firstname = '', $lastname = '', $email = '') {
+	// makes more sense to try name part of the mail first, as it's a login the user is used to.
+	if(! empty($email)) {
+		$explode=explode('@', $email);
+		$user_login = $explode[0];
+		if(! get_user_by('user_login', $user_login)) return $user_login;
+	}
+
+	// If already taken, use name instead
+  $user_login = sanitize_title($firstname) . '.' . sanitize_title($lastname);
+  if(! get_user_by('user_login', $user_login)) return $user_login;
+
+	// If name taken, try adding numbers
+	// We must stop somewhere, 100 users with same name is quite unlikely
+  $base = $user_login;
+  $i = 1;
+  while($i < 100) {
+    $user_login = "$base-$i";
+    if(! get_user_by('user_login', $user_login)) return $user_login;
+    $i++;
+  }
+  return false;
+}
 
 function w4os_sync_users() {
 	global $wpdb, $w4osdb;
@@ -113,7 +136,7 @@ function w4os_sync_users() {
 			} else {
 				// No user with this email, create one
 				$newid = wp_insert_user(array(
-					'user_login' => strtolower($account['FirstName'] . "." . $account['LastName']),
+					'user_login' => w4os_create_login($account['FirstName'], $account['LastName'], $account['email']),
 					// 'user_pass' => wp_generate_password(),
 					'user_email' => $account['email'],
 					'first_name' => $account['FirstName'],

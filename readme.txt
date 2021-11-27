@@ -109,12 +109,16 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Manual Grid and WP users sync
 - [x] Cron Grid and WP users sync
 - [x] Public avatar profile
-- Auth with avatar credentials (if no matching wp account, create one)
+- [x] Auth with avatar credentials (if no matching wp account, create one)
 
 = Medium term =
 
 - [x] get grid info from http://login.uri:8002/get_grid_info
 - [x] Web Assets server
+- Improve avatar profile
+  - Switch to allow public profile
+  - Better basic layout
+  - Web edit profile
 - Admin Start / Stop regions
 - Admin Create region
 - Admin Use sim/grid configuration file to fetch settings if on the same host
@@ -153,6 +157,7 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 == Changelog ==
 
 = Unreleased =
+* new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
 * new profile page
 * new grid and wordpress users sync
 * new basic blocks support

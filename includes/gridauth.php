@@ -36,13 +36,26 @@ function w4os_gridauth ( $user, $username, $password ) {
 
     if(!empty($avatar_row)) {
       $user = get_user_by('email', $avatar_row->Email);
-      if(is_wp_error($user)) {
+      if(!$user || $user==NULL || is_wp_error($user)) {
         // WP user doesn't exist, create one
+        $user_login = w4os_create_login($avatar_row->FirstName, $avatar_row->LastName, $avatar_row->Email);
+        $newid = wp_insert_user(array(
+          'user_login' => $user_login,
+          // 'user_pass' => $password,
+          'user_email' => $avatar_row->Email,
+          'first_name' => $avatar_row->FirstName,
+          'last_name' => $avatar_row->LastName,
+          'role' => 'grid_user',
+          'display_name' => trim($avatar_row->FirstName . ' ' . $avatar_row->LastName),
+        ));
+        $user = get_user_by('ID', $newid);
+        reset_password($user, $password);
+        if (is_wp_error( $user )) return $user;
+        w4os_profile_sync($newid, $avatar_row->PrincipalID);
       } else {
         // user exists, just sync update password
         w4os_profile_sync($user);
         reset_password($user, $password);
-        return $user;
       }
     }
     // $user = get_user_by('ID', 1);

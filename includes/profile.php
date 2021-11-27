@@ -84,7 +84,9 @@ class W4OS_Avatar extends WP_User {
       if(!w4os_empty($avatar_row->profileImage)) $avatar_row->profileImageHtml = '<img src=' . w4os_get_asset_url($avatar_row->profileImage) . '>';
 
       $profile=array_filter(array(
-        // 'Avatar Name' => $avatar_row->FirstName . " " . $avatar_row->LastName,
+        __('Avatar Name', 'w4os') => $avatar_row->FirstName . " " . $avatar_row->LastName,
+        // __('HG Name', 'w4os') => $avatar_row->HGName, // To implement
+        // __('Avatar Display Name', 'w4os') => $avatar_row->DisplayName, // To implement
         __('Profile picture', 'w4os') => $avatar_row->profileImageHtml,
         __('Born', 'w4os') => sprintf('%s (%s days)',
         wp_date(get_option( 'date_format' ), $avatar_row->Created),
