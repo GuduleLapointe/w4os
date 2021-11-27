@@ -15,9 +15,10 @@
     database connection error, it might come from a case-sensitivity issue (see
     https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
   - insert `[gridinfo]` and `[gridstatus]` shortcodes in a page or in a sidebar widget
-  - create a profile page for registered users, including `[gridprofile]` shortcode.
-    This will display the an avatar creation form for users without in-world avatar.
-    For accounts already having an avatar, it will display avatar details.
+3. Set permalinks and profile page
+  - Visit Settings > Permalinks, confirm W4OS slugs (profile and assets) and save.
+  - Create a page with the same slug as Profile permalink.
+    (This will be handled in a more convenient way in the future)
 
 ### Create avatar models
 
