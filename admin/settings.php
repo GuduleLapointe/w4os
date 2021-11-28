@@ -93,7 +93,7 @@ function w4os_register_settings() {
 							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
 							'readonly' => true,
 							'description' => sprintf(
-								__('You can change the asserts slug in %spermalinks settings%s.', 'w4os'),
+								__('You can change the asset slug in %spermalinks settings%s.', 'w4os'),
 								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
 							),
 						),
@@ -149,16 +149,16 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_misc' => array(
-					'name' => __('Misc', 'w4os'),
-					'fields' => array(
-						'w4os_assets_permalink' => array(
-							'type' => 'description',
-							'label' => __('Permalinks', 'w4os'),
-							'description' => sprintf(__('Set w4os slugs on %spermalink options page%s.', 'w4os'), '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>'),
-						),
-					),
-				),
+				// 'w4os_options_misc' => array(
+				// 	'name' => __('Misc', 'w4os'),
+				// 	'fields' => array(
+				// 		'w4os_assets_permalink' => array(
+				// 			'type' => 'description',
+				// 			'label' => __('Permalinks', 'w4os'),
+				// 			'description' => sprintf(__('Set w4os slugs on %spermalink options page%s.', 'w4os'), '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>'),
+				// 		),
+				// 	),
+				// ),
 			),
 		),
 	);
