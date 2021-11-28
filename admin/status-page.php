@@ -146,6 +146,7 @@ $count = w4os_count_users();
 		</h2>
 		<p><?php _e("The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file.", 'w4os'); ?></p>
 		<?php
+
 		$grid_info = W4OS_GRID_INFO;
 		$grid_info['profile'] = W4OS_LOGIN_PAGE;
 
@@ -155,8 +156,8 @@ $count = w4os_count_users();
 		$required['profile'] .= ' ' . __('This page is set as default login page.', 'w4os');
 
 		if(!empty($required)) {
-			echo "<h4>" .__("Required by W4OS", 'w4os') . '</h4>';
-			echo '<p>' . __('These page are required for W4OS to function normally. You can adjust your setttings in this ', 'w4os');
+			echo "<h3>" .__("Required by W4OS", 'w4os') . '</h3>';
+			echo '<p>' . __('These page are required for W4OS to function normally. You can adjust them in W4OS OpenSimulator setttings.', 'w4os');
 
 			foreach($required as $key => $description) {
 				if (empty($grid_info[$key]) ) continue;
@@ -165,22 +166,24 @@ $count = w4os_count_users();
 			}
 		}
 
-		echo "<h4>" .__("From your OpenSimulator .ini file", 'w4os') . '</h4>';
-		echo "<p>" .__("These page are set by the simulator config. You can disable them or change their URL in your simulator .ini file.", 'w4os') . '</h4>';
+		echo "<h3>" .__("Requested by OpenSimulator config", 'w4os') . '</h3>';
+		echo "<p>" . sprintf(__("The following values are received from the simulator. Any change must be made in %s section
+of your .ini file.", 'w4os'), '[GridInfoService]') . '</h3>';
 
 		$required = array(
-			'welcome' => __("Viewer splash page. This is the page displayed on the viewer before the user logs in. It's a short, one screen page displaying only relevant info (grid status, important update, message of the day). It is required, or at least highly recommended.", 'w4os'),
-			'about' => __('Detailed info page, via a link displayed on the viewer login page. Optional.', 'w4os'),
-			'help' => __('Link to a help page. Optional.', 'w4os'),
-			'password' => __('Link to lost password page. Optional.', 'w4os'),
-			'register' => __('Link to the user registration. Optional.', 'w4os'),
-			'economy' => __('This is the base URL for several standard simulator services expected by the viewer, like search, currencies... They are not accessed directly by the user. It requires the installation of separate software and can be hosted on the same or a different web server. Optional.', 'w4os'),
+			'welcome' => __("; Viewer splash page. This is the page displayed on the viewer before the user logs in. It's a short, one screen page displaying only relevant info (grid status, important update, message of the day). It is required, or at least highly recommended.", 'w4os'),
+			'password' => sprintf(__('; Optional. Link to lost password page. It should be %s.', 'w4os'), '<code>' . wp_lostpassword_url() . '</code>'),
+			'register' => sprintf(__('; Optional. Link to the user registration. It should be %s.', 'w4os'), '<code>' . wp_registration_url() . '</code>'),
+			'economy' => __('; Optional. This is the base URL for several standard simulator services expected by the viewer, like search, currencies... They are not accessed directly by the user. It requires the installation of separate software and can be hosted on the same or a different web server.', 'w4os'),
+			'about' => __('; Optional. Detailed info page, via a link displayed on the viewer login page.', 'w4os'),
+			'help' => __('; Optional. Link to a help page.', 'w4os'),
 		);
-
+		echo "<p>[GridInfoService]</p>";
 		foreach($required as $key => $description) {
-			if (empty($grid_info[$key]) ) continue;
-			echo sprintf('<dt><strong><a href="%1$s" target=_blank>%1$s</a></strong></dt><dd class=description>%2$s</dd>',
-			$grid_info[$key], $description );
+			if (empty($grid_info[$key]) ) $url = "''";
+			else $url = sprintf('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
+			echo sprintf('<dt>%1$s = <strong>%2$s</strong></dt><dd class=description>%3$s</dd>',
+			$key, $url, $description );
 		}
 		?>
 	</div>
