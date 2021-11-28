@@ -1,8 +1,8 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+// ini_set('display_errors', '1');
+// ini_set('display_startup_errors', '1');
+// error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 add_filter( 'authenticate', 'w4os_gridauth',  20, 3 );
 function w4os_gridauth ( $user, $username, $password ) {
