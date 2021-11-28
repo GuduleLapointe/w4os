@@ -1,6 +1,6 @@
 ## Changelog
 
-### Unreleased
+### 2.2
 * new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
 * new profile page
 * new grid and wordpress users sync
