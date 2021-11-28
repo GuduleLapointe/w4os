@@ -1,5 +1,10 @@
 ## Changelog
 
+### Unreleased
+
+### 2.2.1
+* fixed user login broken if w4os_login_page is set to profile and OpenSim database is not connected
+
 ### 2.2
 * new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
 * new profile page

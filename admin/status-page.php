@@ -9,7 +9,7 @@ $count = w4os_count_users();
 	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
 
-	<div class=content>
+	<?php if(W4OS_DB_CONNECTED) { ?>
 		<div class=sync>
 			<h2><?php _e("Users", 'w4os') ?></h2>
 			<table class="w4os-table user-sync">
@@ -54,49 +54,51 @@ $count = w4os_count_users();
 					<tr class=notes>
 						<th></th>
 						<td>
-							<?php
-							if($count['grid_only']  > 0 ) {
-								echo '<p>' . sprintf(_n(
-									'%d grid account has no linked WP account. Syncing will create a new WP account.',
-									'%d grid accounts have no linked WP account. Syncing will create new WP accounts.',
-									$count['grid_only'],
-									'w4os'
-								), $count['grid_only']) . '</p>';
-							}
-							if($count['wp_only']  > 0 ) {
-								echo '<p>' . sprintf(_n(
-									'%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference.',
-									'%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference.',
-									$count['wp_only'],
-									'w4os'
-								), $count['wp_only']) . '</p>';
-							}
-							if($count['tech'] > 0) {
-								echo '<p>' . sprintf(_n(
-									"%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks.",
-									"%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.",
-									$count['tech'],
-									'w4os'
-									) . ' ' . __('Real accounts need a unique email address for W4OS to function properly.', 'w4os'
-								), $count['tech']) . '</p>';
-							}
-							if($count['grid_only'] + $count['wp_only'] > 0) {
-								echo '<form method="post" action="options.php" autocomplete="off">';
-								settings_fields( 'w4os_status' );
-								echo '<input type="hidden" input-hidden" id="w4os_sync_users" name="w4os_sync_users" value="1">';
+						<?php
+						if($count['grid_only']  > 0 ) {
+							echo '<p>' . sprintf(_n(
+								'%d grid account has no linked WP account. Syncing will create a new WP account.',
+								'%d grid accounts have no linked WP account. Syncing will create new WP accounts.',
+								$count['grid_only'],
+								'w4os'
+							), $count['grid_only']) . '</p>';
+						}
+						if($count['wp_only']  > 0 ) {
+							echo '<p>' . sprintf(_n(
+								'%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference.',
+								'%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference.',
+								$count['wp_only'],
+								'w4os'
+							), $count['wp_only']) . '</p>';
+						}
+						if($count['tech'] > 0) {
+							echo '<p>' . sprintf(_n(
+								"%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks.",
+								"%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.",
+								$count['tech'],
+								'w4os'
+								) . ' ' . __('Real accounts need a unique email address for W4OS to function properly.', 'w4os'
+							), $count['tech']) . '</p>';
+						}
+						if($count['grid_only'] + $count['wp_only'] > 0) {
+							echo '<form method="post" action="options.php" autocomplete="off">';
+							settings_fields( 'w4os_status' );
+							echo '<input type="hidden" input-hidden" id="w4os_sync_users" name="w4os_sync_users" value="1">';
 
-								submit_button(__('Synchronize users now', 'w4os'));
-								echo '</form>';
-								echo '<p class=description>' . __('Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console.', 'w4os') . '<p>';
-							}
-							if($sync_result)
-							echo '<p class=info>' . $sync_result . '<p>';
+							submit_button(__('Synchronize users now', 'w4os'));
+							echo '</form>';
+							echo '<p class=description>' . __('Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console.', 'w4os') . '<p>';
+						}
+						if($sync_result)
+						echo '<p class=info>' . $sync_result . '<p>';
 							?>
 						</td>
 					</tr>
 				</table>
 			<?php	} ?>
 		</div>
+	<?php } ?>
+	<div class=content>
 		<div class=shortcodes>
 			<h2>
 				<?php _e("Available shortcodes", 'w4os') ?>
@@ -124,7 +126,7 @@ $count = w4os_count_users();
 				</td></tr>
 			</table>
 		</div>
-
+	</div>
 	<?php
 	  if ( ! function_exists('curl_init') ) $php_missing_modules[]='curl';
 	  if ( ! function_exists('simplexml_load_string') ) $php_missing_modules[]='xml';
@@ -139,7 +141,6 @@ $count = w4os_count_users();
 			);
 		}
 	?>
-	</div>
 	<div class="pages">
 		<h2>
 			<?php _e("System pages", 'w4os') ?>

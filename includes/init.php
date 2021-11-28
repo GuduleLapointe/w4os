@@ -70,32 +70,33 @@ function w4os_load_textdomain() {
 }
 add_action( 'init', 'w4os_load_textdomain' );
 
-
 require_once __DIR__ . '/functions.php';
 define('W4OS_GRID_INFO', w4os_get_grid_info());
 
 require_once __DIR__ . '/w4osdb.php';
-require_once __DIR__ . '/gridauth.php';
 require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/widgets.php';
 require_once __DIR__ . '/users.php';
-require_once __DIR__ . '/profile.php';
-require_once dirname(__DIR__) . '/blocks/w4os-gridinfo-block.php';
+if(W4OS_DB_CONNECTED) {
+  require_once __DIR__ . '/gridauth.php';
+  require_once __DIR__ . '/profile.php';
+  require_once __DIR__ . '/cron.php';
+  require_once dirname(__DIR__) . '/blocks/w4os-gridinfo-block.php';
+  if(get_option('w4os_sync_users')) add_action('init', 'w4os_sync_users');
+  require_once __DIR__ . '/updates.php';
+}
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
   require_once __DIR__ . '/woocommerce.php';
 }
 if(get_option('w4os_provide_asset_server') == 1 ) {
   require_once __DIR__ . '/assets.php';
 }
-require_once __DIR__ . '/cron.php';
 
 add_action( 'wp_enqueue_scripts', function() {
   wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
   // wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os.css', array(), W4OS_VERSION . time() );
 } );
 
-if(get_option('w4os_sync_users')) add_action('init', 'w4os_sync_users');
-require_once __DIR__ . '/updates.php';
 /**
  * Rewrite rules after any version update or if explicitely requested
  */

@@ -1,16 +1,17 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 function w4os_get_users_ids_and_uuids() {
-		global $wpdb, $w4osdb;
-		if(!isset($wpdb)) return false;
-		if(!isset($w4osdb)) return false;
+	if(! W4OS_DB_CONNECTED) return;
+	global $wpdb, $w4osdb;
+	if(!isset($wpdb)) return false;
+	if(!isset($w4osdb)) return false;
 
-		$GridAccounts = $w4osdb->get_results("SELECT Email as email, PrincipalID, FirstName, LastName FROM UserAccounts
-			WHERE active = 1
-			AND Email is not NULL AND Email != ''
-			AND FirstName != '" . get_option('w4os_model_firstname') . "'
-			AND LastName != '" . get_option('w4os_model_lastname') . "'
-			", OBJECT_K);
+	$GridAccounts = $w4osdb->get_results("SELECT Email as email, PrincipalID, FirstName, LastName FROM UserAccounts
+		WHERE active = 1
+		AND Email is not NULL AND Email != ''
+		AND FirstName != '" . get_option('w4os_model_firstname') . "'
+		AND LastName != '" . get_option('w4os_model_lastname') . "'
+		", OBJECT_K);
 		foreach (	$GridAccounts as $key => $row ) {
 			if(empty($row->email)) continue;
 			// $GridAccounts[$row->email] = (array)$row;
@@ -21,21 +22,22 @@ function w4os_get_users_ids_and_uuids() {
 			FROM $wpdb->users LEFT JOIN $wpdb->usermeta
 			ON ID = user_id AND meta_key = 'w4os_uuid' AND meta_value != '' AND meta_value != '" . W4OS_NULL_KEY . "'", OBJECT_K);
 
-		foreach (	$WPGridAccounts as $key => $row ) {
-			if(empty($row->email)) continue;
-			// $WPGridAccounts[$row->email] = (array)$row;
-			if (empty($accounts[$row->email])) {
-				$accounts[$row->email] = (array)$row;
-			} else {
-				$accounts[$row->email] =  array_merge( $accounts[$row->email], (array)$row );
+			foreach (	$WPGridAccounts as $key => $row ) {
+				if(empty($row->email)) continue;
+				// $WPGridAccounts[$row->email] = (array)$row;
+				if (empty($accounts[$row->email])) {
+					$accounts[$row->email] = (array)$row;
+				} else {
+					$accounts[$row->email] =  array_merge( $accounts[$row->email], (array)$row );
+				}
 			}
-		}
-		// echo w4os_array2table($accounts, 'accounts', 2);
+			// echo w4os_array2table($accounts, 'accounts', 2);
 
-		return $accounts;
+			return $accounts;
 }
 
 function w4os_count_users() {
+	if(! W4OS_DB_CONNECTED) return;
   global $wpdb, $w4osdb;
 	if(!isset($wpdb)) return false;
 	if(!isset($w4osdb)) return false;
@@ -108,6 +110,7 @@ function w4os_create_login($firstname = '', $lastname = '', $email = '') {
 }
 
 function w4os_sync_users() {
+	if(! W4OS_DB_CONNECTED) return;
 	global $wpdb, $w4osdb;
 	if(!isset($wpdb)) return false;
 	if(!isset($w4osdb)) return false;
