@@ -92,6 +92,10 @@ function w4os_register_settings() {
 							'label' => '',
 							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
 							'readonly' => true,
+							'description' => sprintf(
+								__('You can change the asserts slug in %spermalinks settings%s.', 'w4os'),
+								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
+							),
 						),
 						'w4os_external_asset_server_uri' => array(
 							'label' => __('External assets server URI', 'w4os'),
@@ -106,12 +110,27 @@ function w4os_register_settings() {
 							'type' => 'radio',
 							'label' => __('Profile page', 'w4os'),
 							'values' => array(
-								'provide' => __('Provide profile page', 'w4os'),
+								'provide' => __('Provide web profile page for avatars', 'w4os'),
 								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
-								'default' =>  __('Default', 'w4os'),
+								'default' =>  __('Defaults', 'w4os'),
 							),
 							'default' => 'provide',
-							'description' => __('', 'w4os'),
+							'description' => sprintf(
+								__('The page %s must exist, as defined in %spermalinks settings%s.', 'w4os'),
+								'<code>' . get_home_url(NULL, get_option('w4os_profile_slug', 'profile')) . '</code>',
+								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
+							),
+						),
+						'w4os_login_page' => array(
+						  'type' => 'radio',
+						  'label' => __('Login page', 'w4os'),
+						  'values' => array(
+						    'profile' => __('Use profile page as login page', 'w4os'),
+						    // 'custom' => __('Custom page (with shortcode)', 'w4os'),
+						    'default' =>  __('Default', 'w4os'),
+						  ),
+						  'default' => 'profile',
+						  'description' => __('', 'w4os'),
 						),
 						'w4os_userlist_replace_name' => array(
 							'type' => 'boolean',

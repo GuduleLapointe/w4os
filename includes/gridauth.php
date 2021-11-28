@@ -30,7 +30,7 @@ function w4os_gridauth ( $user, $username, $password ) {
     ;";
     $avatar_row=$w4osdb->get_row($avatar_query);
     if(is_wp_error($avatar_row)) {
-      return $avatar_row;
+      return $user;
     }
     // echo "avatar_row <pre>" . print_r($avatar_row, true) . '</pre>';
 
@@ -66,18 +66,6 @@ function w4os_gridauth ( $user, $username, $password ) {
   return $user;
 }
 
-function w4os_redirect_after_logout() {
-  $current_user   = wp_get_current_user();
-  $role_name      = $current_user->roles[0];
-
-  // if ( 'subscriber' === $role_name ) {
-    $redirect_url = site_url('profile');
-    wp_safe_redirect( $redirect_url );
-    exit;
-  // }
-}
-add_action( 'wp_logout', 'w4os_redirect_after_logout' );
-
 function w4os_is_email(string $address): bool {
   $hits = \preg_match('/^([^@]+)@([^@]+)$/', $address, $matches);
 
@@ -99,5 +87,56 @@ function w4os_is_email(string $address): bool {
     return \checkdnsrr($domain, 'A') || \checkdnsrr($domain, 'AAAA');
   } else {
     return true;
+  }
+}
+
+add_filter( 'login_redirect', 'w4os_redirect_after_login', 10, 3 );
+function w4os_redirect_after_login( $redirect_to, $request, $user ){
+  $redirect_url = W4OS_LOGIN_PAGE;
+  return $redirect_url;
+}
+
+if(get_option('w4os_login_page') == 'profile') {
+  /* Main redirection of the default login page */
+  add_action('init','w4os_redirect_login_page');
+  function w4os_redirect_login_page() {
+    $login_page  = W4OS_LOGIN_PAGE;
+    $page_viewed = basename($_SERVER['REQUEST_URI']);
+
+    if($page_viewed == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET') {
+      wp_redirect($login_page);
+      exit;
+    }
+  }
+
+  /* Where to go if a login failed */
+  add_action('wp_login_failed', 'w4os_login_failed');
+  function w4os_login_failed() {
+    $login_page  = W4OS_LOGIN_PAGE;
+    wp_redirect($login_page . '?login=failed');
+    exit;
+  }
+
+  /* Where to go if any of the fields were empty */
+  add_filter('authenticate', 'w4os_verify_user_pass', 1, 3);
+  function w4os_verify_user_pass($user, $username, $password) {
+    $login_page  = W4OS_LOGIN_PAGE;
+    if($username == "" || $password == "") {
+      wp_redirect($login_page . "?login=empty");
+      exit;
+    }
+  }
+
+  /* What to do on logout */
+  add_action( 'wp_logout', 'w4os_redirect_after_logout' );
+  function w4os_redirect_after_logout() {
+    $current_user   = wp_get_current_user();
+    $role_name      = $current_user->roles[0];
+
+    // if ( 'subscriber' === $role_name ) {
+    $redirect_url = W4OS_LOGIN_PAGE;
+    wp_safe_redirect( $redirect_url );
+    exit;
+    // }
   }
 }
