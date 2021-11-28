@@ -1,8 +1,8 @@
 <?php if ( ! defined( 'WPINC' ) ) die;
 
-// ini_set('display_errors', '1');
-// ini_set('display_startup_errors', '1');
-// error_reporting(E_ERROR | E_WARNING | E_PARSE);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 define('W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000');
 // define('W4OS_ZERO_VECTOR', '<0,0,0>');
@@ -72,6 +72,8 @@ add_action( 'init', 'w4os_load_textdomain' );
 
 
 require_once __DIR__ . '/functions.php';
+define('W4OS_GRID_INFO', w4os_get_grid_info());
+
 require_once __DIR__ . '/w4osdb.php';
 require_once __DIR__ . '/gridauth.php';
 require_once __DIR__ . '/shortcodes.php';

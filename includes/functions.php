@@ -105,8 +105,14 @@ function w4os_fast_xml($url) {
 	return $xml;
 }
 
+function w4os_get_grid_info() {
+	$grid_info = get_option('w4os_grid_info');
+	if(!empty($grid_info)) return json_decode($grid_info, true);
+	return w4os_update_grid_info();
+}
+
 function w4os_update_grid_info() {
-	if(defined('W4OS_GRID_INFO_CHECKED')) return;
+	if(defined('W4OS_GRID_INFO_CHECKED')) return get_option('w4os_grid_info');
 	define('W4OS_GRID_INFO_CHECKED', true);
 	$local_uri = 'http://localhost:8002';
 	$check_login_uri = ( get_option('w4os_login_uri') ) ? 'http://' . get_option('w4os_login_uri') : $local_uri ;
@@ -120,6 +126,8 @@ function w4os_update_grid_info() {
 	$grid_info = (array) $xml;
 	if ( ! empty($grid_info['login']) ) update_option('w4os_login_uri', preg_replace('+/*$+', '', preg_replace('+https*://+', '', $grid_info['login'])));
 	if ( ! empty($grid_info['gridname']) ) update_option('w4os_grid_name', $grid_info['gridname']);
+	update_option('w4os_grid_info', json_encode($grid_info));
+	return $grid_info;
 }
 
 function w4os_give_settings_url($message = '') {
