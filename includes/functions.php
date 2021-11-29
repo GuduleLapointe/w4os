@@ -226,3 +226,38 @@ function w4os_empty($var) {
 	if ($var == W4OS_NULL_KEY) return true;
 	return false;
 }
+
+function w4os_get_url_status($url, $icon = false) {
+	if(empty($url)) {
+		$status_code = '';
+		// if($icon) return '<span class="w4os-url-status dashicons dashicons-no"></span>';
+		// else return;
+	} else {
+		$transient_key = sanitize_title('w4os_url_status_' . $url);
+		$status_code = get_transient( $transient_key );
+		if( $status_code == false ) {
+			$headers = @get_headers($url, true);
+			$status_code = preg_replace('/.* ([0-9]+) .*/', '$1', $headers['0']);
+			if(!$status_code) $status_code = 0;
+			set_transient( $transient_key, $status_code, 3600 );
+		}
+	}
+		if($icon) {
+			switch (substr($status_code, 0, 1)) {
+				case "": $status_icon='no'; break;
+				case "2":
+				case "3": $status_icon='yes'; break;
+				case "4":
+				if($status_code == 418) {
+					$status_icon='coffee';
+					break;
+				}
+
+				default: $status_icon='warning';
+			}
+			return sprintf('<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%2$s"></span>', $status_code, $status_icon);
+		} else {
+			return $status_code;
+		}
+
+}

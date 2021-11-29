@@ -151,17 +151,37 @@ $count = w4os_count_users();
 		$grid_info = W4OS_GRID_INFO;
 		$grid_info['profile'] = W4OS_LOGIN_PAGE;
 
-		if(get_option('w4os_profile_page')=='provide')
-		$required['profile'] = __('Profile page. This is the page used to dynamically generate avatar profile pages.', 'w4os');
-		if(get_option('w4os_login_page')=='profile')
-		$required['profile'] .= ' ' . __('This page is set as default login page.', 'w4os');
+		$required_by_w4os = array(
+			'profile' => __('Profile page. This is the page used to dynamically generate avatar profile pages.', 'w4os'),
+			'search' => __('; Optional. The URL needed by viewers for search services. Internal service, not accessed directly by the user.', 'w4os'),
+			'message' => __('; Optional. The URL needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os'),
+		);
 
-		if(!empty($required)) {
+		$required_by_opensim = array(
+			'welcome' => __("; Viewer splash page. This is the page displayed on the viewer before the user logs in. It's a short, one screen page displaying only relevant info (grid status, important update, message of the day). It is required, or at least highly recommended.", 'w4os'),
+			'register' => sprintf(__('; Optional. Link to the user registration. It should be %s.', 'w4os'), '<code>' . wp_registration_url() . '</code>'),
+			'password' => sprintf(__('; Optional. Link to lost password page. It should be %s.', 'w4os'), '<code>' . wp_lostpassword_url() . '</code>'),
+			'search' => $required_by_w4os['search'],
+			'message' => $required_by_w4os['message'],
+			'economy' => __('; Optional. The base URL for several standard simulator services expected by the viewer, like search, currencies... They are not accessed directly by the user. It requires the installation of separate software and can be hosted on the same or a different web server.', 'w4os'),
+			'about' => __('; Optional. Detailed info page, via a link displayed on the viewer login page.', 'w4os'),
+			'help' => __('; Optional. Link to a help page.', 'w4os'),
+		);
+
+		if(get_option('w4os_login_page')=='profile')
+		$required_by_w4os['profile'] .= ' ' . __('This page is set as default login page.', 'w4os');
+
+		if(get_option('w4os_provide_search')) unset($required_by_opensim['search']);
+		else unset($required_by_w4os['search']);
+		if(get_option('w4os_provide_message')) unset($required_by_opensim['message']);
+		else unset($required_by_w4os['message']);
+
+		if(!empty($required_by_w4os)) {
 			echo "<h3>" .__("Required by W4OS", 'w4os') . '</h3>';
 			echo '<p>' . __('These page are required for W4OS to function normally. You can adjust them in W4OS OpenSimulator setttings.', 'w4os');
 
-			foreach($required as $key => $description) {
-				if (empty($grid_info[$key]) ) continue;
+			foreach($required_by_w4os as $key => $description) {
+				// if (empty($grid_info[$key]) ) continue;
 				echo sprintf('<dt><strong><a href="%1$s" target=_blank>%1$s</a></strong></dt><dd class=description>%2$s</dd>',
 				$grid_info[$key], $description );
 			}
@@ -171,20 +191,14 @@ $count = w4os_count_users();
 		echo "<p>" . sprintf(__("The following values are received from the simulator. Any change must be made in %s section
 of your .ini file.", 'w4os'), '[GridInfoService]') . '</h3>';
 
-		$required = array(
-			'welcome' => __("; Viewer splash page. This is the page displayed on the viewer before the user logs in. It's a short, one screen page displaying only relevant info (grid status, important update, message of the day). It is required, or at least highly recommended.", 'w4os'),
-			'password' => sprintf(__('; Optional. Link to lost password page. It should be %s.', 'w4os'), '<code>' . wp_lostpassword_url() . '</code>'),
-			'register' => sprintf(__('; Optional. Link to the user registration. It should be %s.', 'w4os'), '<code>' . wp_registration_url() . '</code>'),
-			'economy' => __('; Optional. This is the base URL for several standard simulator services expected by the viewer, like search, currencies... They are not accessed directly by the user. It requires the installation of separate software and can be hosted on the same or a different web server.', 'w4os'),
-			'about' => __('; Optional. Detailed info page, via a link displayed on the viewer login page.', 'w4os'),
-			'help' => __('; Optional. Link to a help page.', 'w4os'),
-		);
 		echo "<p>[GridInfoService]</p>";
-		foreach($required as $key => $description) {
-			if (empty($grid_info[$key]) ) $url = "''";
-			else $url = sprintf('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
-			echo sprintf('<dt>%1$s = <strong>%2$s</strong></dt><dd class=description>%3$s</dd>',
-			$key, $url, $description );
+		foreach($required_by_opensim as $key => $description) {
+			$url = $grid_info[$key];
+			// if (empty($grid_info[$key]) ) $url = "''";
+			// else $url = sprintf('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
+			$status = w4os_get_url_status($url, true);
+			echo sprintf('<dt>%1$s = <strong>%2$s</strong> %4$s</dt><dd class=description>%3$s</dd>',
+			$key, $url, $description, $status );
 		}
 		?>
 	</div>
