@@ -1,0 +1,136 @@
+diff -ruNw --no-dereference ../initial-setup/flotsam_XmlRpcGroup/phpxmlrpclib/xmlrpcs.inc ./flotsam_XmlRpcGroup/phpxmlrpclib/xmlrpcs.inc
+--- ../initial-setup/flotsam_XmlRpcGroup/phpxmlrpclib/xmlrpcs.inc	2021-11-28 21:07:32.679969832 -0400
++++ ./flotsam_XmlRpcGroup/phpxmlrpclib/xmlrpcs.inc	2021-11-28 21:00:02.483191496 -0400
+@@ -57,6 +57,10 @@
+ 		), 'struct')
+ 	);
+ 
++
++	$request_xml = file_get_contents("php://input");
++	$GLOBALS['request_xml'] = $request_xml;
++
+ 	/* Functions that implement system.XXX methods of xmlrpc servers */
+ 	$_xmlrpcs_getCapabilities_sig=array(array($GLOBALS['xmlrpcStruct']));
+ 	$_xmlrpcs_getCapabilities_doc='This method lists all the capabilites that the XML-RPC server has: the (more or less standard) extensions to the xmlrpc spec that it adheres to';
+@@ -564,7 +568,6 @@
+ 		{
+ 			if ($data === null)
+ 			{
+-				// workaround for a known bug in php ver. 5.2.2 that broke $HTTP_RAW_POST_DATA
+ 				$ver = phpversion();
+ 				if ($ver[0] >= 5)
+ 				{
+@@ -572,7 +575,7 @@
+ 				}
+ 				else
+ 				{
+-					$data = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
++					$data = isset($GLOBALS['request_xml']) ? $GLOBALS['request_xml'] : '';
+ 				}
+ 			}
+ 			$raw_data = $data;
+@@ -893,7 +896,7 @@
+ 			// 2005/05/07 commented and moved into caller function code
+ 			//if($data=='')
+ 			//{
+-			//	$data=$GLOBALS['HTTP_RAW_POST_DATA'];
++			//	$data=$GLOBALS['request_xml'];
+ 			//}
+ 
+ 			// G. Giunta 2005/02/13: we do NOT expect to receive html entities
+@@ -1191,7 +1194,7 @@
+ 		*/
+ 		function echoInput()
+ 		{
+-			$r = new xmlrpcresp(new xmlrpcval( "'Aha said I: '" . $GLOBALS['HTTP_RAW_POST_DATA'], 'string'));
++			$r = new xmlrpcresp(new xmlrpcval( "'Aha said I: '" . $GLOBALS['request_xml'], 'string'));
+ 			print $r->serialize();
+ 		}
+ 	}
+diff -ruNw --no-dereference ../initial-setup/flotsam_XmlRpcGroup/xmlgroups.php ./flotsam_XmlRpcGroup/xmlgroups.php
+--- ../initial-setup/flotsam_XmlRpcGroup/xmlgroups.php	2021-11-28 21:07:32.678969823 -0400
++++ ./flotsam_XmlRpcGroup/xmlgroups.php	2021-11-28 20:59:59.490167042 -0400
+@@ -9,7 +9,7 @@
+ //$debugXMLRPC = 1;
+ //$debugXMLRPCFile = 'xmlgroup.log';
+ 
+-//$request_xml = $HTTP_RAW_POST_DATA;
++// $request_xml = file_get_contents("php://input");
+ //error_log('xmlgroups.php: '.$request_xml);	// see /var/log/php/... or /var/log/httpd/error_log
+ 
+ 
+@@ -19,4 +19,3 @@
+ else {
+ 	include(ENV_HELPER_PATH.'/xmlrpc.php');
+ }
+-
+diff -ruNw --no-dereference ../initial-setup/opensim.helper/currency.php ./opensim.helper/currency.php
+--- ../initial-setup/opensim.helper/currency.php	2021-11-28 21:07:32.674969789 -0400
++++ ./opensim.helper/currency.php	2021-11-28 21:00:05.490216074 -0400
+@@ -326,9 +326,8 @@
+ # Process the request
+ #
+ 
+-$request_xml = $HTTP_RAW_POST_DATA;
++$request_xml = file_get_contents("php://input");
+ //error_log("currency.php: ".$request_xml);
+ 
+ xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
+ xmlrpc_server_destroy($xmlrpc_server);
+-
+diff -ruNw --no-dereference ../initial-setup/opensim.helper/helpers.php ./opensim.helper/helpers.php
+--- ../initial-setup/opensim.helper/helpers.php	2021-11-28 21:07:32.674969789 -0400
++++ ./opensim.helper/helpers.php	2021-11-28 21:00:14.594290557 -0400
+@@ -33,7 +33,7 @@
+ # 
+ #
+ 
+-#$request_xml = $HTTP_RAW_POST_DATA;
++#$request_xml = file_get_contents("php://input");
+ #error_log("helper.php: ".$request_xml);
+ 
+ ####################################################################
+diff -ruNw --no-dereference ../initial-setup/opensim.helper/landtool.php ./opensim.helper/landtool.php
+--- ../initial-setup/opensim.helper/landtool.php	2021-11-28 21:07:32.674969789 -0400
++++ ./opensim.helper/landtool.php	2021-11-28 21:00:11.583265912 -0400
+@@ -167,7 +167,7 @@
+ # Process XMLRPC request
+ #
+ 
+-$request_xml = $HTTP_RAW_POST_DATA;
++$request_xml = file_get_contents("php://input");
+ //error_log("landtool.php: ".$request_xml);
+ 
+ xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
+diff -ruNw --no-dereference ../initial-setup/opensim.helper/offline.php ./opensim.helper/offline.php
+--- ../initial-setup/opensim.helper/offline.php	2021-11-28 21:07:32.674969789 -0400
++++ ./opensim.helper/offline.php	2021-11-28 21:00:08.562241196 -0400
+@@ -2,8 +2,7 @@
+ 
+ require_once('../include/env_interface.php');
+ 
+-
+-$request_xml = $HTTP_RAW_POST_DATA;
++$request_xml = file_get_contents("php://input");
+ error_log("offline.php: ".$request_xml);
+ 
+ 
+@@ -21,7 +20,8 @@
+ 
+ 
+ if ($method == "/SaveMessage/") {
+-	$msg = $HTTP_RAW_POST_DATA;
++	error_log("/SaveMessage/" . $request_xml, 0);
++	$msg = $request_xml;
+ 	$start = strpos($msg, "?>");
+ 
+ 	if ($start != -1) {
+@@ -51,7 +51,7 @@
+ 
+ 
+ if ($method == "/RetrieveMessages/") {
+-	$parms = $HTTP_RAW_POST_DATA;
++	$parms = $request_xml;
+ 	//$parts = split("[<>]", $parms);
+ 	$parts = preg_split("/[<>]/", $parms);
+ 	$agent_id = $parts[6];

@@ -98,4 +98,8 @@ then
   cat $TMP.config.compiled > config/config.php
 fi
 
+if yesno "Patch generated files to fix fix obsolete \$HTTP_RAW_POST_DATA (removed from PHP since 7.0.0) ?"
+then
+  patch -s -p0 < fix-http_raw_post_data.patch
+fi
 #cat $TMP.config
