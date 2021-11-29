@@ -1,7 +1,7 @@
 <?php
-# 
+#
 #  Copyright (c)Melanie Thielker and Teravus Ovares (http://opensimulator.org/)
-# 
+#
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted provided that the following conditions are met:
 #	  * Redistributions of source code must retain the above copyright
@@ -12,7 +12,7 @@
 #	  * Neither the name of the OpenSim Project nor the
 #		names of its contributors may be used to endorse or promote products
 #		derived FROM this software without specific prior written permission.
-# 
+#
 #  THIS SOFTWARE IS PROVIDED BY THE DEVELOPERS ``AS IS'' AND ANY
 #  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 #  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -23,7 +23,7 @@
 #  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-# 
+#
 
 ########################################################################
 # This file enables buying currency in the client.
@@ -54,10 +54,10 @@
 #
 # Modified by Olivier van Helden for modular optional currencies, including Gloebit
 #
-# To add a currency module, 
+# To add a currency module,
 #    add "if()" section in  load_money_module to load the preferences
 #       config file must be saved in as
-#       ../flexible.helpers/yourcurrency.config.php.example to avoid 
+#       ../flexible.helpers/yourcurrency.config.php.example to avoid
 #       overwriting it during updates
 #    add "case ..." sections in get_currency_quote() and buy_currency()
 #       to do specific function
@@ -89,13 +89,13 @@ function load_money_module($request_xml)
     $code = $headers[0];
 
     if($code != "HTTP/1.0 200 OK") return;
-    
+
     include_once('../config/gloebit.config.php');
     return;
   }
 /*
   if(file_exists('../config/yourcurrency.config.php')) {
-    
+
     include_once('../config/yourcurrency.config.php');
     // always return, we can configure only one money module
     return;
@@ -119,7 +119,7 @@ xmlrpc_server_register_method($xmlrpc_server, "getCurrencyQuote", "get_currency_
 function get_currency_quote($method_name, $params, $app_data)
 {
   global $conversion_table;
-  
+
 	$req	   = $params[0];
 	$agentid   = $req['agentId'];
 	$sessionid = $req['secureSessionId'];
@@ -162,8 +162,8 @@ function get_currency_quote($method_name, $params, $app_data)
        	$realamount=$amount;
     }
 		$currency = array('estimatedCost'=> $cost, 'currencyBuy'=> $realamount);
-		$response_xml = xmlrpc_encode(array('success'	=> True, 
-											'currency'	=> $currency, 
+		$response_xml = xmlrpc_encode(array('success'	=> True,
+											'currency'	=> $currency,
 											'confirm'	=> $confirmvalue));
 	}
 	else {
@@ -231,7 +231,7 @@ function buy_currency($method_name, $params, $app_data)
 	   	 							'errorMessage'=> "We need to bring you to Gloebit website do finish the transaction",
 										'errorURI'	  => "".$url.""));
       break;
-      
+
 /*
       case "YourCurrency":
         // some code
@@ -242,12 +242,12 @@ function buy_currency($method_name, $params, $app_data)
     	$ret  = false;
     	$cost = convert_to_real($amount);
     	$transactionPermit = process_transaction($agentid, $cost, $ipAddress);
-    
+
     	if ($transactionPermit) {
     		$res = add_money($agentid, $amount, $sessionid);
     		if ($res["success"]) $ret = true;
     	}
-    
+
     	if ($ret) {
     		$response_xml = xmlrpc_encode(array('success' => True));
     	}
@@ -257,7 +257,7 @@ function buy_currency($method_name, $params, $app_data)
     	 										'errorURI'	  => "".SYSURL.""));
     	  }
 	}
-	
+
 	header("Content-type: text/xml");
 	echo $response_xml;
 
@@ -330,7 +330,7 @@ function region_move_money($method_name, $params, $app_data)
 		if ($ret) {
 			$balance = get_balance($agentid, $sessionid);
 			if ($balance >= $cash) {
-				move_money($agentid, $destid, $cash, $transactiontype, $flags, $description, 
+				move_money($agentid, $destid, $cash, $transactiontype, $flags, $description,
 										$aggregatePermInventory, $aggregatePermNextOwner, $ipAddress);
 				$sbalance = get_balance($agentid, $sessionid);
 				$dbalance = get_balance($destid);
@@ -383,7 +383,7 @@ function claimUser_func($method_name, $params, $app_data)
 	$sessionid = $req['secureSessionId'];
 	$regionid  = $req['regionId'];
 	$secret	   = $req['secret'];
-	
+
 	$ret = opensim_check_region_secret($regionid, $secret);
 
 	if ($ret) {
@@ -419,7 +419,7 @@ function claimUser_func($method_name, $params, $app_data)
 
 	header("Content-type: text/xml");
 	echo $response_xml;
-	
+
 	return "";
 }
 
@@ -430,11 +430,10 @@ function claimUser_func($method_name, $params, $app_data)
 # Process the request
 #
 
-$request_xml = $HTTP_RAW_POST_DATA;
+$request_xml = file_get_contents("php://input");
 //error_log("currency.php: ".$request_xml);
 
 load_money_module($request_xml);
 
 xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
 xmlrpc_server_destroy($xmlrpc_server);
-

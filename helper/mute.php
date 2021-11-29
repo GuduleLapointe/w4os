@@ -1,13 +1,14 @@
 <?php
 //
-// Mute_List 
+// Mute_List
 //										by Fumi.Iseki (NSL)
 //
 
 require_once('../include/env_interface.php');
 
+$request_xml = file_get_contents("php://input");
 
-//$request_xml = $HTTP_RAW_POST_DATA;
+//$request_xml = $request_xml;
 //error_log("mute.php: ".$request_xml);
 
 
@@ -27,7 +28,7 @@ $DbLink = new DB(MUTE_DB_HOST, MUTE_DB_NAME, MUTE_DB_USER, MUTE_DB_PASS);
 $method = $_SERVER["PATH_INFO"];
 
 if ($method == "/UpdateList/") {
-	$parms = $HTTP_RAW_POST_DATA;
+	$parms = $request_xml;
 	$start = strpos($parms, "?>");
 
 	if ($start != -1) {
@@ -59,7 +60,7 @@ if ($method == "/UpdateList/") {
 
 
 if ($method == "/DeleteList/") {
-	$parms = $HTTP_RAW_POST_DATA;
+	$parms = $request_xml;
 	$start = strpos($parms, "?>");
 
 	if ($start != -1) {
@@ -90,7 +91,7 @@ if ($method == "/DeleteList/") {
 
 
 if ($method == "/RequestList/") {
-	$parms = $HTTP_RAW_POST_DATA;
+	$parms = $request_xml;
 	//$parts = split("[<>]", $parms);
 	$parts = preg_split("/[<>]/", $parms);
 	$agent_id = $parts[6];
