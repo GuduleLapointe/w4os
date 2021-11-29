@@ -9,6 +9,7 @@ $count = w4os_count_users();
 	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
 
+	<div class=content>
 	<?php if(W4OS_DB_CONNECTED) { ?>
 		<div class=sync>
 			<h2><?php _e("Users", 'w4os') ?></h2>
@@ -98,7 +99,6 @@ $count = w4os_count_users();
 			<?php	} ?>
 		</div>
 	<?php } ?>
-	<div class=content>
 		<div class=shortcodes>
 			<h2>
 				<?php _e("Available shortcodes", 'w4os') ?>
@@ -126,7 +126,6 @@ $count = w4os_count_users();
 				</td></tr>
 			</table>
 		</div>
-	</div>
 	<?php
 	  if ( ! function_exists('curl_init') ) $php_missing_modules[]='curl';
 	  if ( ! function_exists('simplexml_load_string') ) $php_missing_modules[]='xml';
@@ -151,55 +150,93 @@ $count = w4os_count_users();
 		$grid_info = W4OS_GRID_INFO;
 		$grid_info['profile'] = W4OS_LOGIN_PAGE;
 
-		$required_by_w4os = array(
-			'profile' => __('Profile page. This is the page used to dynamically generate avatar profile pages.', 'w4os'),
-			'search' => __('; Optional. The URL needed by viewers for search services. Internal service, not accessed directly by the user.', 'w4os'),
-			'message' => __('; Optional. The URL needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os'),
+		$required = array(
+			'profile' => array(
+				'name' => __('Profile page', 'w4os'),
+				'description' => __('The page used to dynamically generate avatar profile pages.', 'w4os'),
+			),
+			'search' => array(
+				'name' => __('Search', 'w4os'),
+				'description' => __('Search services for the viewer. Internal service, not accessed directly by the user.', 'w4os'),
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'search = %s'),
+				'third_party_url' => (get_option('w4os_provide_search')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+				// 'os_config' => array('Robust.ini', '[LoginService]', 'SearchURL = %s'),
+			),
+			'message' => array(
+				'name' => __('Offline messages', 'w4os'),
+				'description' => __('Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os'),
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'message = %s'),
+				'third_party_url' => (get_option('w4os_provide_offline')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+			),
+			'welcome' => array(
+				'name' => __('Welcome', 'w4os'),
+				'description' => __("The splash page displayed by the viewer before the user logs in. A short, no-scroll page, with only essential info. It is required, or at least highly recommended.", 'w4os'),
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'welcome = %s'),
+			),
+			'register' => array(
+				'name' => __('Registration page', 'w4os'),
+				'description' => __('Link to the user registration.', 'w4os'),
+				'recommended' => wp_registration_url(),
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'register = %s'),
+			),
+			'password' => array(
+				'name' => __('Password revovery', 'w4os'),
+				'description' => __('Link to lost password page.', 'w4os'),
+				'recommended' =>  wp_lostpassword_url(),
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'password = %s'),
+			),
+			'economy' => array(
+				'name' => __('Economy', 'w4os'),
+				'description' => __('Currencies and some other services queried by the viewer. They are not accessed directly by the user.', 'w4os'),
+				'external' => true,
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'economy = %s'),
+				'third_party_url' => (get_option('w4os_provide_currency')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+			),
+			'about' => array(
+				'name' => __('About', 'w4os'),
+				'description' => __('Detailed info page on your website, via a link displayed on the viewer login page.', 'w4os'),
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'about = %s'),
+			),
+			'help' => array(
+				'name' => __('Help', 'w4os'),
+				'description' => __('Link to a help page on your website.', 'w4os'),
+				'os_config' => array('Robust.ini', '[GridInfoService]', 'help = %s'),
+			),
 		);
 
-		$required_by_opensim = array(
-			'welcome' => __("; Viewer splash page. This is the page displayed on the viewer before the user logs in. It's a short, one screen page displaying only relevant info (grid status, important update, message of the day). It is required, or at least highly recommended.", 'w4os'),
-			'register' => sprintf(__('; Optional. Link to the user registration. It should be %s.', 'w4os'), '<code>' . wp_registration_url() . '</code>'),
-			'password' => sprintf(__('; Optional. Link to lost password page. It should be %s.', 'w4os'), '<code>' . wp_lostpassword_url() . '</code>'),
-			'search' => $required_by_w4os['search'],
-			'message' => $required_by_w4os['message'],
-			'economy' => __('; Optional. The base URL for several standard simulator services expected by the viewer, like search, currencies... They are not accessed directly by the user. It requires the installation of separate software and can be hosted on the same or a different web server.', 'w4os'),
-			'about' => __('; Optional. Detailed info page, via a link displayed on the viewer login page.', 'w4os'),
-			'help' => __('; Optional. Link to a help page.', 'w4os'),
-		);
-
-		if(get_option('w4os_login_page')=='profile')
-		$required_by_w4os['profile'] .= ' ' . __('This page is set as default login page.', 'w4os');
-
-		if(get_option('w4os_provide_search')) unset($required_by_opensim['search']);
-		else unset($required_by_w4os['search']);
-		if(get_option('w4os_provide_message')) unset($required_by_opensim['message']);
-		else unset($required_by_w4os['message']);
-
-		if(!empty($required_by_w4os)) {
-			echo "<h3>" .__("Required by W4OS", 'w4os') . '</h3>';
-			echo '<p>' . __('These page are required for W4OS to function normally. You can adjust them in W4OS OpenSimulator setttings.', 'w4os');
-
-			foreach($required_by_w4os as $key => $description) {
-				// if (empty($grid_info[$key]) ) continue;
-				echo sprintf('<dt><strong><a href="%1$s" target=_blank>%1$s</a></strong></dt><dd class=description>%2$s</dd>',
-				$grid_info[$key], $description );
-			}
-		}
-
-		echo "<h3>" .__("Requested by OpenSimulator config", 'w4os') . '</h3>';
-		echo "<p>" . sprintf(__("The following values are received from the simulator. Any change must be made in %s section
-of your .ini file.", 'w4os'), '[GridInfoService]') . '</h3>';
-
-		echo "<p>[GridInfoService]</p>";
-		foreach($required_by_opensim as $key => $description) {
+		echo '<table class="w4os-table requested-pages">';
+		foreach($required as $key => $data) {
 			$url = $grid_info[$key];
 			// if (empty($grid_info[$key]) ) $url = "''";
 			// else $url = sprintf('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
-			$status = w4os_get_url_status($url, true);
-			echo sprintf('<dt>%1$s = <strong>%2$s</strong> %4$s</dt><dd class=description>%3$s</dd>',
-			$key, $url, $description, $status );
+		 	$success = w4os_get_url_status($url, 'boolean');
+			$status_icon = w4os_get_url_status($url, 'icon');
+			echo sprintf(
+				'<tr>
+				<th>%1$s</th>
+				<td>%2$s</td>
+				<td>%3$s%4$s%5$s%6$s%7$s</td>
+				<td></td>
+				</tr>
+				',
+				$data['name'],
+				$status_icon,
+				(!empty($url)) ? sprintf('<p class=url><a href="%1$s">%1$s</a></p>', $url) : '',
+				(!empty($data['description'])) ? '<p class=description>' . $data['description'] . '</p>' : '',
+				($data['recommended'] && $url != $data['recommended']) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> ' . sprintf(__('Should be %s', 'w4os'), $data['recommended']) . '</p>' : '',
+				(!empty($data['os_config']) && ( ( $data['recommended'] && $url != $data['recommended'] ) || $success === false ) ) ? sprintf('<p class=ini>%1$s<pre class=inifile>%2$s<br>%3$s</pre></p>',
+				sprintf('Configuration in %s:', $data['os_config'][0]),
+				$data['os_config'][1],
+				sprintf($data['os_config'][2], ($data['recommended']) ? $data['recommended'] : $url),
+				) : '',
+				(!empty($data['third_party_url']) && $success == false)  ? '<p class=third_party>' .
+				sprintf(__('This service requires a separate web application.<br>Try <a href="%1$s" target=_blank>%1$s</a>.', '<w4os>'),
+				$data['third_party_url'],
+				) . '</p>' : '',
+			);
 		}
+		echo '</table>';
 		?>
+		</div>
 	</div>
 </div>

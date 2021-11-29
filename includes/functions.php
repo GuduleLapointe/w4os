@@ -227,11 +227,9 @@ function w4os_empty($var) {
 	return false;
 }
 
-function w4os_get_url_status($url, $icon = false) {
+function w4os_get_url_status($url, $output = NULL) {
 	if(empty($url)) {
 		$status_code = '';
-		// if($icon) return '<span class="w4os-url-status dashicons dashicons-no"></span>';
-		// else return;
 	} else {
 		$transient_key = sanitize_title('w4os_url_status_' . $url);
 		$status_code = get_transient( $transient_key );
@@ -242,22 +240,33 @@ function w4os_get_url_status($url, $icon = false) {
 			set_transient( $transient_key, $status_code, 3600 );
 		}
 	}
-		if($icon) {
-			switch (substr($status_code, 0, 1)) {
-				case "": $status_icon='no'; break;
-				case "2":
-				case "3": $status_icon='yes'; break;
-				case "4":
-				if($status_code == 418) {
-					$status_icon='coffee';
-					break;
-				}
+	switch (substr($status_code, 0, 1)) {
+		case "":
+		$status_icon='no';
+		break;
 
-				default: $status_icon='warning';
-			}
-			return sprintf('<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%2$s"></span>', $status_code, $status_icon);
-		} else {
-			return $status_code;
+		case "2":
+		case "3":
+		$status_icon='yes';
+		$success=true;
+		break;
+
+		case "4":
+		if($status_code == 418) {
+			$status_icon='coffee';
+			$success=false;
+			break;
 		}
 
+		default:
+		$status_icon='warning';
+		$success=false;
+	}
+	if($output == 'icon') {
+		return sprintf('<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%2$s"></span>', $status_code, $status_icon);
+	} else if($output == 'boolean') {
+		return $success;
+	} else {
+		return $status_code;
+	}
 }
