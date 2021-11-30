@@ -1,0 +1,20 @@
+{
+    "name": "speculoos/w4os",
+    "description": "W4OS - OpenSimulator Web Interface",
+    "type": "wordpress-plugin",
+    "require": {
+        "woocommerce/action-scheduler": "^3.4"
+    },
+    "autoload": {
+      "files": [
+        "vendor/woocommerce/action-scheduler/action-scheduler.php"
+      ]
+    },
+    "license": "AGPLV3",
+    "authors": [
+        {
+            "name": "Gudule Lapointe",
+            "email": "gudule@speculoos.world"
+        }
+    ]
+}
