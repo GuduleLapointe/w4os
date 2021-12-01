@@ -44,6 +44,29 @@ function w4os_get_avatar_by_name($firstname = '', $lastname = '') {
 	return false;
 }
 
+add_action( 'login_form_middle', function() {
+  $links[] = sprintf(
+    '<a href="%1$s" alt="%2$s">%2$s</a>',
+    esc_url( wp_lostpassword_url(), 'w4os' ),
+    esc_attr__( 'Lost Password', 'textdomain', 'w4os' ),
+  );
+  if(get_option('users_can_register') || get_option('avatars_can_register') ) $links[] = sprintf(
+    '<a href="%1$s" alt="%2$s">%2$s</a>',
+    esc_url( wp_registration_url(), 'w4os' ),
+    esc_attr__( 'Register', 'textdomain', 'w4os' ),
+  );
+  if(is_array($links)) return '<p id=nav>' . join(' | ', $links) . '</p>';
+});
+
+function w4os_login_form($args = array()) {
+  $login  = (isset($_GET['login']) ) ? $_GET['login'] : 0;
+  if(!isset($args['echo'])) $args['echo'] = false;
+  if(!isset($args['form_id'])) $args['form_id'] = 'w4os-loginform';
+
+
+
+  return $errors_output . '<div class=w4os-login>' . wp_login_form($args) . '</div>';
+}
 add_action( 'template_include', function( $template ) {
   global $wp_query;
   if($wp_query->queried_object->post_name != get_option('w4os_profile_slug')) return $template;
@@ -63,8 +86,8 @@ add_action( 'template_include', function( $template ) {
     } else {
       $page_title = __('Log in', 'w4os');
       $page_content = '<div>' . __('Log in to create your avatar, view your profile or set your options.', 'w4os') . '</div>';
-      $page_content .= w4os_profile_display(get_current_user());
-      // wp_redirect( wp_login_url() ); exit;
+      // $page_content .= '<pre>GET ' . print_r($_GET, true) . '</pre>';
+      $page_content .= w4os_login_form();
     }
   } else {
 
