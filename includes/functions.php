@@ -80,8 +80,8 @@ function w4os_gen_uuid() {
 
 function w4os_admin_notice($notice, $class='info', $dismissible=true ) {
   if(empty($notice)) return;
-  // $class="success";
   if($dismissible) $is_dismissible = 'is-dismissible';
+	if(is_admin() && wp_get_current_user()) {
   add_action( 'admin_notices', function() use ($notice, $class, $is_dismissible) {
     ?>
     <div class="notice notice-<?=$class?> <?=$is_dismissible?>">
@@ -89,7 +89,33 @@ function w4os_admin_notice($notice, $class='info', $dismissible=true ) {
     </div>
     <?php
   } );
+	} else {
+		w4os_transient_admin_notice($notice, $class, $dismissible, __FUNCTION__);
+	}
 }
+
+function w4os_transient_admin_notice( $notice, $class='info', $dismissible=true, $key = NULL ) {
+	$transient_key = sanitize_title(W4OS_PLUGIN_NAME . '_w4os_transient_admin_notices');
+
+	$queue = get_transient( $transient_key );
+
+	if(!is_array($queue)) $queue = array($queue);
+	$queue[] = array('notice' => $notice, 'class' => $class, 'dismissible' => $dissmissible);
+	set_transient( $transient_key, $queue );
+}
+
+function w4os_get_transient_admin_notices() {
+	if(!is_admin()) return;
+	$transient_key = sanitize_title(W4OS_PLUGIN_NAME . '_w4os_transient_admin_notices');
+	$queue = get_transient( $transient_key );
+	if(!is_array($queue)) $queue = array($queue);
+	foreach($queue as $key => $notice) {
+		if(!is_array($notice)) continue;
+		w4os_admin_notice($notice['notice'], $notice['class'], $notice['dismissible'] );
+	}
+	delete_transient( $transient_key );
+}
+add_action('admin_head', 'w4os_get_transient_admin_notices');
 
 function w4os_fast_xml($url) {
 	// Exit silently if required php modules are missing
@@ -270,3 +296,7 @@ function w4os_get_url_status($url, $output = NULL) {
 		return $status_code;
 	}
 }
+// 			as_enqueue_async_action( 'one_time_action_asap', $urls );
+// 		}
+// 	} );
+// }
