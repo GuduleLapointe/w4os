@@ -139,4 +139,17 @@ if(get_option('w4os_login_page') == 'profile') {
     exit;
     // }
   }
+
+  add_action( 'login_form_lostpassword', 'w4os_redirect_lostpassword' );
+  function w4os_redirect_lostpassword() {
+    if ( 'GET' == $_SERVER['REQUEST_METHOD'] ) {
+      if ( is_user_logged_in() ) {
+        $this->redirect_logged_in_user();
+        exit;
+      }
+
+      wp_redirect(W4OS_LOGIN_PAGE . "?action=lostpassword");
+      exit;
+    }
+  }
 }

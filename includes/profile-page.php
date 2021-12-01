@@ -59,14 +59,65 @@ add_action( 'login_form_bottom', function() {
 });
 
 function w4os_login_form($args = array()) {
-  $login  = (isset($_GET['login']) ) ? $_GET['login'] : 0;
   if(!isset($args['echo'])) $args['echo'] = false;
   if(!isset($args['form_id'])) $args['form_id'] = 'w4os-loginform';
 
+  $login  = (isset($_GET['login']) ) ? $_GET['login'] : 0;
+  $action  = (isset($_GET['action']) ) ? $_GET['action'] : '';
 
+  switch($action) {
+    case 'lostpassword':
+    $login_form = 'lost password form';
+    $login_form = sprintf(
+      '<div id="password-lost-form" class="widecolumn">
+        <p>%1$s</p>
+        <form id="lostpasswordform" action="%2$s" method="post">
+          <p class="form-row">
+            <label for="user_login">%3$s
+            </label>
+            <input type="text" name="user_login" id="user_login">
+          </p>
+          <p id=nav>%5$s<p>
+          <p class="lostpassword-submit">
+            <input type="submit" name="submit" class="lostpassword-button"
+            value="%4$s"/>
+          </p>
+        </form>
+      </div>',
+      __("Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.", 'w4os'),
+      wp_lostpassword_url(),
+      __('Email', 'w4os'),
+      __('Reset Password', 'w4os'),
+      sprintf('<a href="%1$s">%2$s</a>', W4OS_LOGIN_PAGE, __('Log in', 'w4Os')),
+    );
+    break;
 
-  return $errors_output . '<div class=w4os-login>' . wp_login_form($args) . '</div>';
+    default:
+    $login_form = '<div>' . __('Log in to create your avatar, view your profile or set your options.', 'w4os') . '</div>';
+    $login_form .= wp_login_form($args);
+  }
+  return '<div class="login w4os-login ">' . $login_form .'</div>';
 }
+
+add_filter( 'login_errors', function( $error ) {
+    global $errors;
+    $err_codes = $errors->get_error_codes();
+
+    // Invalid username.
+    // Default: '<strong>ERROR</strong>: Invalid username. <a href="%s">Lost your password</a>?'
+    if ( @in_array( 'invalid_username', $err_codes ) ) {
+        $error = '<strong>ERROR</strong>: Invalid username.';
+    }
+
+    // Incorrect password.
+    // Default: '<strong>ERROR</strong>: The password you entered for the username <strong>%1$s</strong> is incorrect. <a href="%2$s">Lost your password</a>?'
+    if ( @in_array( 'incorrect_password', $err_codes ) ) {
+        $error = '<strong>ERROR</strong>: The password you entered is incorrect.';
+    }
+
+    return $error;
+} );
+
 add_action( 'template_include', function( $template ) {
   global $wp_query;
   if($wp_query->queried_object->post_name != get_option('w4os_profile_slug')) return $template;
@@ -74,6 +125,7 @@ add_action( 'template_include', function( $template ) {
 
   $query_firstname = get_query_var( 'profile_firstname' );
   $query_lastname = get_query_var( 'profile_lastname' );
+
   if ( empty($query_firstname) || empty($query_lastname) ) {
     if(is_user_logged_in()) {
       $user = wp_get_current_user();
@@ -85,7 +137,6 @@ add_action( 'template_include', function( $template ) {
       }
     } else {
       $page_title = __('Log in', 'w4os');
-      $page_content = '<div>' . __('Log in to create your avatar, view your profile or set your options.', 'w4os') . '</div>';
       // $page_content .= '<pre>GET ' . print_r($_GET, true) . '</pre>';
       $page_content .= w4os_login_form();
     }
@@ -121,6 +172,10 @@ add_action( 'template_include', function( $template ) {
       return get_404_template();
     }
   }
+
+  // if(isset($page_actions)) {
+  //   $page_content .= '<div class=login-actions>' . join(' - ', $page_actions) . '</div>';
+  // }
 
   if(isset($page_content)) {
     add_filter( 'the_content', function($content) use($page_content) {

@@ -145,8 +145,16 @@ img.model-picture {
   /* font-weight: bold; */
 }
 
-.w4os-login label {
+.w4os-login p {
+  margin: 1em 0;
+}
+.w4os-login p label {
   display: block;
+  margin-bottom: 0.25em;
+}
+.w4os-login #nav {
+    font-size: 90%;
+    font-weight: 300;
 }
 
 .avatar-profile-table th,
