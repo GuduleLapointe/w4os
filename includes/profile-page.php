@@ -77,11 +77,11 @@ function w4os_login_form($args = array()) {
             </label>
             <input type="text" name="user_login" id="user_login">
           </p>
-          <p id=nav>%5$s<p>
           <p class="lostpassword-submit">
             <input type="submit" name="submit" class="lostpassword-button"
             value="%4$s"/>
           </p>
+          <p id=nav>%5$s<p>
         </form>
       </div>',
       __("Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.", 'w4os'),
