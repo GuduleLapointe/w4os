@@ -44,7 +44,7 @@ function w4os_get_avatar_by_name($firstname = '', $lastname = '') {
 	return false;
 }
 
-add_action( 'login_form_middle', function() {
+add_action( 'login_form_bottom', function() {
   $links[] = sprintf(
     '<a href="%1$s" alt="%2$s">%2$s</a>',
     esc_url( wp_lostpassword_url(), 'w4os' ),
