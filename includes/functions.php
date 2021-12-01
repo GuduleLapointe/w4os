@@ -260,6 +260,7 @@ function w4os_get_url_status($url, $output = NULL) {
 		$transient_key = sanitize_title('w4os_url_status_' . $url);
 		$status_code = get_transient( $transient_key );
 		if( $status_code == false ) {
+			w4os_admin_notice(basename(__FILE__) . ' <code>' . __FUNCTION__ . ' ("' . $url . '")</code>');
 			$headers = @get_headers($url, true);
 			$status_code = preg_replace('/.* ([0-9]+) .*/', '$1', $headers['0']);
 			if(!$status_code) $status_code = 0;
@@ -296,7 +297,22 @@ function w4os_get_url_status($url, $output = NULL) {
 		return $status_code;
 	}
 }
-// 			as_enqueue_async_action( 'one_time_action_asap', $urls );
-// 		}
-// 	} );
-// }
+
+function w4os_get_urls_statuses($urls = array()) {
+	update_option('w4os_get_url_status_checked', date());
+	$notice = 'debug ' . __FILE__ . ' ' . __FUNCTION__ . ' ' . $url;
+	foreach($urls as $url) {
+		if(esc_url_raw($url) == $url) {
+			w4os_get_url_status($url);
+			break;
+		}
+	}
+}
+
+function register_w4os_get_urls_statuses_async_cron()
+{
+	if ( false === as_next_scheduled_action( 'w4os_get_urls_statuses' ) ) {
+		as_schedule_cron_action(time(), '*/5 * * * *', 'w4os_get_urls_statuses');
+	}
+}
+add_action('init','register_w4os_get_urls_statuses_async_cron');

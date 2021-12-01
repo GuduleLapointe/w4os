@@ -191,3 +191,11 @@ function w4os_sync_users() {
 	// $messages[] = w4os_array2table($accounts, 'accounts', 2);
 	if(!empty($messages)) return '<div class=messages><p>' . join('</p><p>', $messages) . '</div>';
 }
+
+function register_w4os_sync_users_async_cron()
+{
+	if ( false === as_next_scheduled_action( 'w4os_sync_users' ) ) {
+		as_schedule_cron_action(time(), '0 * * * *', 'w4os_sync_users');
+	}
+}
+add_action('init','register_w4os_sync_users_async_cron');
