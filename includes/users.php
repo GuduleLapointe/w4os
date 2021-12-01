@@ -85,7 +85,7 @@ function w4os_count_users() {
   return $count;
 }
 
-function w4os_create_login($firstname = '', $lastname = '', $email = '') {
+function w4os_create_user_login($firstname = '', $lastname = '', $email = '') {
 	// makes more sense to try name part of the mail first, as it's a login the user is used to.
 	if(! empty($email)) {
 		$explode=explode('@', $email);
@@ -139,7 +139,7 @@ function w4os_sync_users() {
 			} else {
 				// No user with this email, create one
 				$newid = wp_insert_user(array(
-					'user_login' => w4os_create_login($account['FirstName'], $account['LastName'], $account['email']),
+					'user_login' => w4os_create_user_login($account['FirstName'], $account['LastName'], $account['email']),
 					// 'user_pass' => wp_generate_password(),
 					'user_email' => $account['email'],
 					'first_name' => $account['FirstName'],

@@ -38,7 +38,7 @@ function w4os_gridauth ( $user, $username, $password ) {
       $user = get_user_by('email', $avatar_row->Email);
       if(!$user || $user==NULL || is_wp_error($user)) {
         // WP user doesn't exist, create one
-        $user_login = w4os_create_login($avatar_row->FirstName, $avatar_row->LastName, $avatar_row->Email);
+        $user_login = w4os_create_user_login($avatar_row->FirstName, $avatar_row->LastName, $avatar_row->Email);
         $newid = wp_insert_user(array(
           'user_login' => $user_login,
           // 'user_pass' => $password,
