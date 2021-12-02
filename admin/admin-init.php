@@ -203,3 +203,24 @@ add_action('restrict_manage_users', 'w4os_users_filter_avatars');
  */
 require_once __DIR__ . '/settings.php';
 if($pagenow == "index.php") require_once __DIR__ .'/dashboard.php';
+
+/**
+ * Add post state to special pages in pages list
+ * @var [type]
+ */
+add_filter('display_post_states', 'w4os_custom_post_states',10,2);
+function w4os_custom_post_states( $states, $post ) {
+  // echo "post<pre>"; print_r($post); echo "</pre>die"; die;
+  switch( $post->post_name ) {
+    case get_option('w4os_profile_slug'):
+    $states[] = __('OpenSimulator Profile', 'w4os');
+    break;
+
+    // case 'splash': // not handled yet
+    // $states[] = __('OpenSimulator Splash', 'w4os');
+    // break;
+
+    default;
+  }
+  return $states;
+}
