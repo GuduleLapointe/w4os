@@ -16,6 +16,11 @@ function w4os_register_settings() {
 							'value' => 1,
 							'name' => 'Synchronize users now',
 						),
+						'w4os_check_urls_now' => array(
+							'type' => 'hidden',
+							'value' => 1,
+							'name' => 'Check urls now',
+						),
 					),
 				),
 			),

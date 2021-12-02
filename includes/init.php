@@ -72,12 +72,15 @@ add_action( 'init', 'w4os_load_textdomain' );
 
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
+
 define('W4OS_GRID_INFO', w4os_get_grid_info());
+if (get_option('w4os_check_urls_now')) w4os_get_urls_statuses(W4OS_GRID_INFO, true);
 
 require_once __DIR__ . '/w4osdb.php';
 require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/widgets.php';
 require_once __DIR__ . '/users.php';
+
 if(W4OS_DB_CONNECTED) {
   require_once __DIR__ . '/gridauth.php';
   require_once __DIR__ . '/profile.php';

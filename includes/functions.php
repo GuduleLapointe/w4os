@@ -133,7 +133,13 @@ function w4os_fast_xml($url) {
 
 function w4os_get_grid_info() {
 	$grid_info = get_option('w4os_grid_info');
-	if(!empty($grid_info)) return json_decode($grid_info, true);
+
+	if(get_option('w4os_check_urls_now'))
+	return w4os_update_grid_info();
+
+	if(!empty($grid_info))
+	return json_decode($grid_info, true);
+
 	return w4os_update_grid_info();
 }
 
@@ -152,6 +158,9 @@ function w4os_update_grid_info() {
 	$grid_info = (array) $xml;
 	if ( ! empty($grid_info['login']) ) update_option('w4os_login_uri', preg_replace('+/*$+', '', preg_replace('+https*://+', '', $grid_info['login'])));
 	if ( ! empty($grid_info['gridname']) ) update_option('w4os_grid_name', $grid_info['gridname']);
+
+	if(isset($urls) && is_array($urls)) w4os_get_urls_statuses($urls, get_option('w4os_check_urls_now'));
+
 	update_option('w4os_grid_info', json_encode($grid_info));
 	return $grid_info;
 }
@@ -254,18 +263,20 @@ function w4os_empty($var) {
 	return false;
 }
 
-function w4os_get_url_status($url, $output = NULL) {
+function w4os_get_url_status($url, $output = NULL, $force = false) {
+	if (get_option('w4os_check_urls_now')) $force = true;
 	if(empty($url)) {
 		$status_code = '';
 	} else {
 		$transient_key = sanitize_title('w4os_url_status_' . $url);
-		$status_code = get_transient( $transient_key );
+		$status_code = ($force) ? false : get_transient( $transient_key );
 		if( $status_code == false ) {
-			w4os_admin_notice(basename(__FILE__) . ' <code>' . __FUNCTION__ . ' ("' . $url . '")</code>');
 			$headers = @get_headers($url, true);
 			$status_code = preg_replace('/.* ([0-9]+) .*/', '$1', $headers['0']);
 			if(!$status_code) $status_code = 0;
 			set_transient( $transient_key, $status_code, 3600 );
+			update_option('w4os_get_url_status_checked', time());
+			update_option('w4os_check_urls_now', false);
 		}
 	}
 	switch (substr($status_code, 0, 1)) {
@@ -299,12 +310,10 @@ function w4os_get_url_status($url, $output = NULL) {
 	}
 }
 
-function w4os_get_urls_statuses($urls = array()) {
-	update_option('w4os_get_url_status_checked', date());
-	$notice = 'debug ' . __FILE__ . ' ' . __FUNCTION__ . ' ' . $url;
-	foreach($urls as $url) {
+function w4os_get_urls_statuses($urls = array(), $force = false) {
+	if(is_array($urls)) foreach($urls as $url) {
 		if(esc_url_raw($url) == $url) {
-			w4os_get_url_status($url);
+			w4os_get_url_status($url, NULL, $force);
 			break;
 		}
 	}

@@ -205,6 +205,17 @@ $count = w4os_count_users();
 		);
 
 		echo '<table class="w4os-table requested-pages">';
+		echo '<tr><th valign=top>';
+		echo '<form method="post" action="options.php" autocomplete="off">';
+		settings_fields( 'w4os_status' );
+		echo '<input type="hidden" input-hidden" id="w4os_check_urls_now" name="w4os_check_urls_now" value="1">';
+
+		submit_button(__('Check system pages now', 'w4os'));
+		echo '</form>';
+		echo '</th><td colspan=2>';
+		echo '<p class=description>' . sprintf(__('Last checked %s ago.'), human_time_diff(get_option('w4os_get_url_status_checked') )) . '</p>';
+		echo '<p class=description>' . __('System pages are checked regularly in a background task. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
+		echo '</td></tr>';
 		foreach($required as $key => $data) {
 			$url = (!empty($grid_info[$key])) ? $grid_info[$key] : '';
 			// if (empty($grid_info[$key]) ) $url = "''";

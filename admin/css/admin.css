@@ -81,6 +81,11 @@
     flex-grow: 1;
 }
 
+.requested-pages p.submit {
+    margin-top: 0;
+    /* padding-top: 0; */
+}
+
 table.gridinfo td,
 table.gridstatus td,
 .w4os-shortcode td {
