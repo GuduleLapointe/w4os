@@ -211,16 +211,23 @@ if($pagenow == "index.php") require_once __DIR__ .'/dashboard.php';
 add_filter('display_post_states', 'w4os_custom_post_states',10,2);
 function w4os_custom_post_states( $states, $post ) {
   // echo "post<pre>"; print_r($post); echo "</pre>die"; die;
-  switch( $post->post_name ) {
-    case get_option('w4os_profile_slug'):
-    $states[] = __('OpenSimulator Profile', 'w4os');
-    break;
+  //
+  if ( get_option('w4os_profile_slug') == $post->post_name)
+  $states[] = __('OpenSimulator Profile', 'w4os');
+  if (!empty(W4OS_GRID_INFO['welcome'])  && $post->ID === url_to_postid(W4OS_GRID_INFO['welcome']))
+  $states[] = __('OpenSimulator Splash', 'w4os');
+  if (!empty(W4OS_GRID_INFO['search'])   && $post->ID === url_to_postid(W4OS_GRID_INFO['search']))
+  $states[] = __('OpenSimulator Search', 'w4os');
+  if (!empty(W4OS_GRID_INFO['economy'])  && $post->ID === url_to_postid(W4OS_GRID_INFO['economy']))
+  $states[] = __('OpenSimulator Economy', 'w4os');
+  if (!empty(W4OS_GRID_INFO['about'])    && $post->ID === url_to_postid(W4OS_GRID_INFO['about']))
+  $states[] = __('OpenSimulator About', 'w4os');
+  if (!empty(W4OS_GRID_INFO['register']) && $post->ID === url_to_postid(W4OS_GRID_INFO['register']))
+  $states[] = __('OpenSimulator Register', 'w4os');
+  if (!empty(W4OS_GRID_INFO['password']) && $post->ID === url_to_postid(W4OS_GRID_INFO['password']))
+  $states[] = __('OpenSimulator Password', 'w4os');
+  if (!empty(W4OS_GRID_INFO['message'])  && $post->ID === url_to_postid(W4OS_GRID_INFO['message']))
+  $states[] = __('OpenSimulator Offline Messages', 'w4os');
 
-    // case 'splash': // not handled yet
-    // $states[] = __('OpenSimulator Splash', 'w4os');
-    // break;
-
-    default;
-  }
   return $states;
 }
