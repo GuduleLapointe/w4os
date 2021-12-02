@@ -96,33 +96,17 @@ function w4os_redirect_after_login( $redirect_to, $request, $user ){
   return $redirect_url;
 }
 
+/**
+ * https://code.tutsplus.com/series/build-a-custom-wordpress-user-flow--cms-816
+ */
 if(get_option('w4os_login_page') == 'profile') {
   /* Main redirection of the default login page */
   add_action('init','w4os_redirect_login_page');
   function w4os_redirect_login_page() {
-    $login_page  = W4OS_LOGIN_PAGE;
     $page_viewed = basename($_SERVER['REQUEST_URI']);
 
     if($page_viewed == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET') {
-      wp_redirect($login_page);
-      exit;
-    }
-  }
-
-  /* Where to go if a login failed */
-  add_action('wp_login_failed', 'w4os_login_failed');
-  function w4os_login_failed() {
-    $login_page  = W4OS_LOGIN_PAGE;
-    wp_redirect($login_page . '?login=failed');
-    exit;
-  }
-
-  /* Where to go if any of the fields were empty */
-  add_filter('authenticate', 'w4os_verify_user_pass', 1, 3);
-  function w4os_verify_user_pass($user, $username, $password) {
-    $login_page  = W4OS_LOGIN_PAGE;
-    if($username == "" || $password == "") {
-      wp_redirect($login_page . "?login=empty");
+      wp_redirect(W4OS_LOGIN_PAGE);
       exit;
     }
   }
@@ -130,26 +114,48 @@ if(get_option('w4os_login_page') == 'profile') {
   /* What to do on logout */
   add_action( 'wp_logout', 'w4os_redirect_after_logout' );
   function w4os_redirect_after_logout() {
-    $current_user   = wp_get_current_user();
-    $role_name      = $current_user->roles[0];
-
+    // $current_user   = wp_get_current_user();
+    // $role_name      = $current_user->roles[0];
     // if ( 'subscriber' === $role_name ) {
-    $redirect_url = W4OS_LOGIN_PAGE;
-    wp_safe_redirect( $redirect_url );
+    wp_safe_redirect( W4OS_LOGIN_PAGE );
     exit;
     // }
   }
 
-  add_action( 'login_form_lostpassword', 'w4os_redirect_lostpassword' );
-  function w4os_redirect_lostpassword() {
-    if ( 'GET' == $_SERVER['REQUEST_METHOD'] ) {
-      if ( is_user_logged_in() ) {
-        $this->redirect_logged_in_user();
-        exit;
-      }
+  // add_action( 'login_form_register', 'w4os_redirect_register' );
+  // function w4os_redirect_register() {
+  //   if ( 'GET' == $_SERVER['REQUEST_METHOD'] ) {
+  //     if ( is_user_logged_in() ) $this->redirect_logged_in_user();
+  //     else wp_redirect(W4OS_LOGIN_PAGE . "?action=register");
+  //     exit;
+  //   }
+  // }
 
-      wp_redirect(W4OS_LOGIN_PAGE . "?action=lostpassword");
-      exit;
-    }
-  }
+//
+//   /* Where to go if a login failed */
+//   add_action('wp_login_failed', 'w4os_login_failed');
+//   function w4os_login_failed() {
+//     wp_redirect(W4OS_LOGIN_PAGE . '?login=failed');
+//     exit;
+//   }
+//
+//   /* Where to go if any of the fields were empty */
+//   add_filter('authenticate', 'w4os_verify_user_pass', 1, 3);
+//   function w4os_verify_user_pass($user, $username, $password) {
+//     if($username == "" || $password == "") {
+//       wp_redirect(W4OS_LOGIN_PAGE . "?login=empty");
+//       exit;
+//     }
+//   }
+//
+//
+//
+//   // add_action( 'login_form_lostpassword', 'w4os_redirect_lostpassword' );
+//   // function w4os_redirect_lostpassword() {
+//   //   if ( 'GET' == $_SERVER['REQUEST_METHOD'] ) {
+//   //     if ( is_user_logged_in() ) $this->redirect_logged_in_user();
+//   //     else wp_redirect(W4OS_LOGIN_PAGE . "?action=lostpassword");
+//   //     exit;
+//   //   }
+//   // }
 }
