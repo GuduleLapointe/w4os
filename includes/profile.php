@@ -64,6 +64,7 @@ class W4OS_Avatar extends WP_User {
   public function profile_page( $echo = false, $args=array() ) {
     global $wpdb, $w4osdb;
 
+    $content = '';
     $can_list_users = (current_user_can( 'list_users' ) ) ? 'true' : 'false';
     $current_user_email = wp_get_current_user()->user_email;
     // Should not fetch this again, it should be saved in _construct, TO CHECK
@@ -622,7 +623,7 @@ function w4os_avatar_creation_form ($user) {
 
   global $w4osdb;
 
-  $content .= "<p class='avatar not-created'>" . __("You have no grid account yet.", 'w4os') . "</p>";
+  $content = "<p class='avatar not-created'>" . __("You have no grid account yet.", 'w4os') . "</p>";
 
   $content .= "<form class='edit-account wrap' action='' method='post'>";
   $action = 'w4os_create_avatar';
@@ -705,6 +706,12 @@ function w4os_gridprofile_html($atts=[], $args=[] ) {
 
 function w4os_profile_display( $user, $args=[] ) {
   if(!W4OS_DB_CONNECTED) return;
+  extract($args);
+  if(!isset($content)) $content='';
+  if(!isset($before_title)) $before_title='';
+  if(!isset($after_title)) $after_title='';
+
+  return "<pre>" . print_r($args, true); die;
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
     // $content =  "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";

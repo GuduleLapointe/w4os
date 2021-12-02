@@ -3,8 +3,8 @@
 function w4os_register_settings() {
 	$grid_info = w4os_update_grid_info();
 	// $check_login_uri = 'http://' . (!empty(get_option('w4os_login_uri'))) ? esc_attr(get_option('w4os_login_uri')) : 'http://localhost:8002';
-	// $default_loginuri = $grid_info['login'];
-	// $default_gridname = $grid_info['gridname'];
+	$default_loginuri = (isset($grid_info['login'])) ? $grid_info['login'] : '';
+	$default_gridname = (isset($grid_info['gridname'])) ? $grid_info['gridname'] : '';
 
 	$settings_pages = array(
 		'w4os_status' => array(
@@ -14,6 +14,7 @@ function w4os_register_settings() {
 						'w4os_sync_users' => array(
 							'type' => 'hidden',
 							'value' => 1,
+							'name' => 'Synchronize users now',
 						),
 					),
 				),
@@ -167,7 +168,7 @@ function w4os_register_settings() {
 		add_settings_section( $page_slug, '', '', $page_slug );
 
 		foreach($page['sections'] as $section_slug => $section) {
-			add_settings_section( $section_slug, $section['name'], $section['section_callback'], $page_slug );
+			add_settings_section( $section_slug, (isset($section['name'])) ? $section['name'] : $section_slug, (isset($section['section_callback'])) ? $section['section_callback'] : '', $page_slug );
 			foreach($section['fields'] as $field_slug => $field) {
 				$field['section'] = $section_slug;
 				w4os_register_setting( $page_slug, $field_slug, $field );
@@ -204,7 +205,7 @@ function w4os_register_setting($option_page, $option_slug, $args = array() ) {
 	$args['option_slug']=$option_slug;
 	add_settings_field(
 		$option_slug,                   // Field ID
-		$args['label'],  // Title
+		(isset($args['label'])) ? $args['label'] : $option_slug,  // Title
 		$args['sanitize_callback'],            // Callback to display the field
 		$option_page,                // Page
 		$args['section'],

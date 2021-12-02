@@ -153,7 +153,7 @@ $count = w4os_count_users();
 		$required = array(
 			'profile' => array(
 				'name' => __('Profile page', 'w4os'),
-				'description' => __('The page used to dynamically generate avatar profile pages.', 'w4os'),
+				'description' => __('The base URL for avatar web profiles.', 'w4os'),
 			),
 			'search' => array(
 				'name' => __('Search', 'w4os'),
@@ -206,7 +206,7 @@ $count = w4os_count_users();
 
 		echo '<table class="w4os-table requested-pages">';
 		foreach($required as $key => $data) {
-			$url = $grid_info[$key];
+			$url = (!empty($grid_info[$key])) ? $grid_info[$key] : '';
 			// if (empty($grid_info[$key]) ) $url = "''";
 			// else $url = sprintf('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
 		 	$success = w4os_get_url_status($url, 'boolean');
@@ -223,8 +223,8 @@ $count = w4os_count_users();
 				$status_icon,
 				(!empty($url)) ? sprintf('<p class=url><a href="%1$s">%1$s</a></p>', $url) : '',
 				(!empty($data['description'])) ? '<p class=description>' . $data['description'] . '</p>' : '',
-				($data['recommended'] && $url != $data['recommended']) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> ' . sprintf(__('Should be %s', 'w4os'), $data['recommended']) . '</p>' : '',
-				(!empty($data['os_config']) && ( ( $data['recommended'] && $url != $data['recommended'] ) || $success === false ) ) ? sprintf('<p class=ini>%1$s<pre class=inifile>%2$s<br>%3$s</pre></p>',
+				(!empty($data['recommended']) && $url != $data['recommended']) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> ' . sprintf(__('Should be %s', 'w4os'), $data['recommended']) . '</p>' : '',
+				(!empty($data['os_config']) && ( ( (!empty($data['recommended'])) && $url != $data['recommended'] ) || $success === false ) ) ? sprintf('<p class=ini>%1$s<pre class=inifile>%2$s<br>%3$s</pre></p>',
 				sprintf('Configuration in %s:', $data['os_config'][0]),
 				$data['os_config'][1],
 				sprintf($data['os_config'][2], ($data['recommended']) ? $data['recommended'] : $url),

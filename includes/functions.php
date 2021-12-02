@@ -208,6 +208,7 @@ function w4os_grid_status_text() {
 			} else {
 				$gridonline = __("No", 'w4os' );
 			}
+			$filter="";
 			if(get_option('w4os_exclude_models')) {
 				$filter .= "u.FirstName != '" . get_option('w4os_model_firstname') . "'
 				AND u.LastName != '" . get_option('w4os_model_lastname') . "'";
@@ -292,7 +293,7 @@ function w4os_get_url_status($url, $output = NULL) {
 	if($output == 'icon') {
 		return sprintf('<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%2$s"></span>', $status_code, $status_icon);
 	} else if($output == 'boolean') {
-		return $success;
+		return (!empty($success)) ? $success : NULL;
 	} else {
 		return $status_code;
 	}
