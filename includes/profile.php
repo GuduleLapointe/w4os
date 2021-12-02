@@ -710,8 +710,8 @@ function w4os_profile_display( $user, $args=[] ) {
   if(!isset($content)) $content='';
   if(!isset($before_title)) $before_title='';
   if(!isset($after_title)) $after_title='';
+  if(!isset($title)) $title='';
 
-  return "<pre>" . print_r($args, true); die;
   if($user->ID == 0) {
     $wp_login_url=wp_login_url();
     // $content =  "<p class='avatar not-connected'>" . sprintf(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
