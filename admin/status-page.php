@@ -150,20 +150,33 @@ $count = w4os_count_users();
 		$grid_info = W4OS_GRID_INFO;
 		$grid_info['profile'] = W4OS_LOGIN_PAGE;
 
-		$required = W4OS_PAGES;
+		$grid_running = w4os_grid_running();
+		if(!w4os_grid_running()) {
+			$other_attributes['disabled'] = true;
+			echo '<p class="notice warning">' . sprintf(
+				__('Grid not running, start Robust server or %scheck w4os settings%s.', 'w4os'),
+				'<a href="' . get_admin_url('', 'admin.php?page=w4os_settings') . '">',
+				'</a>',
+			);
+		}
 
+		$required = W4OS_PAGES;
 		echo '<table class="w4os-table requested-pages">';
 		echo '<tr><th valign=top>';
 		echo '<form method="post" action="options.php" autocomplete="off">';
 		settings_fields( 'w4os_status' );
 		echo '<input type="hidden" input-hidden" id="w4os_check_urls_now" name="w4os_check_urls_now" value="1">';
 
-		submit_button(__('Check system pages now', 'w4os'));
+		submit_button(__('Check system pages now', 'w4os'), 'small', 'submit', false, $other_attributes);
 		echo '</form>';
-		echo '</th><td colspan=2>';
+		echo '</th><td>';
+		echo w4os_status_icon($grid_running);
+		echo '</td><td>';
 		echo '<p class=description>' . sprintf(__('Last checked %s ago.', 'w4os'), human_time_diff(get_option('w4os_get_url_status_checked') )) . '</p>';
 		echo '<p class=description>' . __('System pages are checked regularly in a background task. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
 		echo '</td></tr>';
+
+		if($grid_running)
 		foreach($required as $key => $data) {
 			$url = (!empty($grid_info[$key])) ? $grid_info[$key] : '';
 			// if (empty($grid_info[$key]) ) $url = "''";

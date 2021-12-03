@@ -131,11 +131,11 @@ function w4os_fast_xml($url) {
 	return $xml;
 }
 
-function w4os_get_grid_info() {
+function w4os_get_grid_info($rechecknow = false) {
 	$grid_info = get_option('w4os_grid_info');
 
-	if(get_option('w4os_check_urls_now'))
-	return w4os_update_grid_info();
+	if($rechecknow || get_option('w4os_check_urls_now'))
+	return w4os_update_grid_info(true);
 
 	if(!empty($grid_info))
 	return json_decode($grid_info, true);
@@ -143,8 +143,8 @@ function w4os_get_grid_info() {
 	return w4os_update_grid_info();
 }
 
-function w4os_update_grid_info() {
-	if(defined('W4OS_GRID_INFO_CHECKED')) return get_option('w4os_grid_info');
+function w4os_update_grid_info($rechecknow = false) {
+	if(defined('W4OS_GRID_INFO_CHECKED') &! $rechecknow) return get_option('w4os_grid_info');
 	define('W4OS_GRID_INFO_CHECKED', true);
 	$local_uri = 'http://localhost:8002';
 	$check_login_uri = ( get_option('w4os_login_uri') ) ? 'http://' . get_option('w4os_login_uri') : $local_uri ;
@@ -333,3 +333,22 @@ function register_w4os_get_urls_statuses_async_cron()
 	}
 }
 add_action('init','register_w4os_get_urls_statuses_async_cron');
+
+function w4os_grid_login_uri() {
+	if(defined('W4OS_GRID_LOGIN_URI')) return W4OS_GRID_LOGIN_URI;
+	return 'http://' . esc_attr(get_option('w4os_login_uri'));
+}
+
+function w4os_grid_running() {
+	$url = w4os_grid_login_uri() . '/get_grid_info';
+	$headers = @get_headers($url, true);
+	$status_code = preg_replace('/.* ([0-9]+) .*/', '$1', $headers['0']);
+	return ($status_code == 200);
+}
+
+function w4os_status_icon($bool = NULL) {
+	if($bool == true) $status_icon = 'yes';
+	else if ($bool == false) $status_icon = 'warning';
+	else $status_icon = 'no';
+	return sprintf('<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%1$s"></span>', $status_icon);
+}
