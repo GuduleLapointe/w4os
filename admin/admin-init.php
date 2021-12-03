@@ -27,6 +27,27 @@ define('W4OS_PAGES', array(
     'name' => __('Splash', 'w4os'),
     'description' => __("The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended.", 'w4os'),
     'os_config' => array('Robust.ini', '[GridInfoService]', 'welcome = %s'),
+    'content' => '<!-- wp:columns {"verticalAlignment":null,"align":"full","className":"is-style-default"} -->
+<div class="wp-block-columns alignfull is-style-default"><!-- wp:column {"verticalAlignment":"bottom","width":"25%"} -->
+<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:25%"><!-- wp:site-logo {"align":"center"} /-->
+
+<!-- wp:w4os/w4os-gridinfo-block -->
+<div class="wp-block-w4os-w4os-gridinfo-block">Grid info</div>
+<!-- /wp:w4os/w4os-gridinfo-block -->
+
+<!-- wp:w4os/w4os-gridstatus-block -->
+<div class="wp-block-w4os-w4os-gridstatus-block">Grid status</div>
+<!-- /wp:w4os/w4os-gridstatus-block --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"top","width":"50%"} -->
+<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:50%"></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"top","width":"25%"} -->
+<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:25%"><!-- wp:latest-posts {"postsToShow":2,"displayPostContent":true,"excerptLength":20,"displayPostDate":true,"className":"is-style-twentytwentyone-latest-posts-borders"} /--></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->',
   ),
   'register' => array(
     'name' => __('Registration page', 'w4os'),
@@ -315,7 +336,7 @@ function w4os_process_actions($args = array()) {
         'post_status' => 'publish',
         'ping_status' => 'closed',
         'ping_status' => false,
-        'post_content' => $data['description'],
+        'post_content' => (!empty($data['content'])) ? $data['content'] : $data['description'],
         'guid' => $guid,
       ));
       if(!is_wp_error($page_id)) {
