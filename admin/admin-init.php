@@ -5,6 +5,60 @@ define('W4OS_ADMIN', true);
 // ini_set('display_startup_errors', '1');
 // error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
+define('W4OS_PAGES', array(
+  'profile' => array(
+    'name' => __('Avatar profile', 'w4os'),
+    'description' => __('The base URL for avatar web profiles.', 'w4os'),
+  ),
+  'search' => array(
+    'name' => __('Search', 'w4os'),
+    'description' => __('Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities.', 'w4os'),
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'search = %s'),
+    'third_party_url' => (get_option('w4os_provide_search')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+    // 'os_config' => array('Robust.ini', '[LoginService]', 'SearchURL = %s'),
+  ),
+  'message' => array(
+    'name' => __('Offline messages', 'w4os'),
+    'description' => __('Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os'),
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'message = %s'),
+    'third_party_url' => (get_option('w4os_provide_offline')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+  ),
+  'welcome' => array(
+    'name' => __('Splash', 'w4os'),
+    'description' => __("The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended.", 'w4os'),
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'welcome = %s'),
+  ),
+  'register' => array(
+    'name' => __('Registration page', 'w4os'),
+    'description' => __('Link to the user registration.', 'w4os'),
+    'recommended' => wp_registration_url(),
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'register = %s'),
+  ),
+  'password' => array(
+    'name' => __('Password revovery', 'w4os'),
+    'description' => __('Link to lost password page.', 'w4os'),
+    'recommended' =>  wp_lostpassword_url(),
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'password = %s'),
+  ),
+  'economy' => array(
+    'name' => __('Economy', 'w4os'),
+    'description' => __('Currencies and some other services queried by the viewer. They are not accessed directly by the user.', 'w4os'),
+    'external' => true,
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'economy = %s'),
+    'third_party_url' => (get_option('w4os_provide_currency')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+  ),
+  'about' => array(
+    'name' => __('About this grid', 'w4os'),
+    'description' => __('Detailed info page on your website, via a link displayed on the viewer login page.', 'w4os'),
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'about = %s'),
+  ),
+  'help' => array(
+    'name' => __('Help', 'w4os'),
+    'description' => __('Link to a help page on your website.', 'w4os'),
+    'os_config' => array('Robust.ini', '[GridInfoService]', 'help = %s'),
+  ),
+));
+
 function w4os_enqueue_admin_script( $hook ) {
     wp_enqueue_style( 'w4os-admin', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), W4OS_VERSION );
 }
@@ -231,3 +285,51 @@ function w4os_custom_post_states( $states, $post ) {
 
   return $states;
 }
+
+function w4os_process_actions($args = array()) {
+  if(empty($_REQUEST['action'])) return;
+
+  // w4os_transient_admin_notice(__FUNCTION__ . '<pre>' . print_r($_REQUEST, true) . '</pre>');
+  if($_REQUEST['action'] == 'create_page' && isset(W4OS_PAGES[$_REQUEST['helper']])) {
+    $slug = $_REQUEST['slug'];
+    $helper = $_REQUEST['helper'];
+    $guid = $_REQUEST['guid'];
+
+    if (!check_admin_referer( $_REQUEST['action'] . '_'. $_REQUEST['helper'])) {
+      w4os_transient_admin_notice(__('The followed link has expired, please try again', 'w4os'));
+      wp_redirect(admin_url( "admin.php?page=".$_GET["page"] ));
+      exit;
+    }
+
+    $page = get_page_by_path($slug);
+    if(!is_wp_error($page) &! empty($page)) {
+      w4os_transient_admin_notice(sprintf(__('Page %s already exists.', 'w4os'), W4OS_PAGES[$helper]['name']), 'error');
+    } else {
+      $data = W4OS_PAGES[$_REQUEST['helper']];
+      $guid = $_REQUEST['guid'];
+      // (empty($_REQUEST['guid'])) ? site_url() . "/$slug" : $_REQUEST['guid'];
+      $page_id = wp_insert_post(array(
+        'post_name' => $slug,
+        'post_title' => $data['name'],
+        'post_type' => 'page',
+        'post_status' => 'publish',
+        'ping_status' => 'closed',
+        'ping_status' => false,
+        'post_content' => $data['description'],
+        'guid' => $guid,
+      ));
+      if(!is_wp_error($page_id)) {
+        w4os_get_url_status($guid, true, true);
+        w4os_transient_admin_notice(
+          sprintf(__('New page %s created.', 'w4os'), '<a href=' . get_permalink($page_id) . '>' . $data['name'] . '</a>'),
+          'success',
+        );
+      } else {
+        w4os_transient_admin_notice(sprintf(__('Error while creating page %s.', 'w4os'), W4OS_PAGES[$helper]['name']), 'error');
+      }
+    }
+    wp_redirect(admin_url( "admin.php?page=".$_GET["page"] ));
+    exit;
+  }
+}
+add_action('admin_init', 'w4os_process_actions');

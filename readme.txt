@@ -157,6 +157,11 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 == Changelog ==
 
 = Unreleased =
+* new check grid info url validity (cron and manual)
+* new create buttons for missing pages on status dashboard
+* added states in admin pages list for known urls (from grid_info)
+* added lost password and register links on login page
+* fix missing error messages on login page
 
 = 2.2.1 =
 * fixed user login broken if w4os_login_page is set to profile and OpenSim database is not connected

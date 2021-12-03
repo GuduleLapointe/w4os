@@ -150,59 +150,7 @@ $count = w4os_count_users();
 		$grid_info = W4OS_GRID_INFO;
 		$grid_info['profile'] = W4OS_LOGIN_PAGE;
 
-		$required = array(
-			'profile' => array(
-				'name' => __('Profile page', 'w4os'),
-				'description' => __('The base URL for avatar web profiles.', 'w4os'),
-			),
-			'search' => array(
-				'name' => __('Search', 'w4os'),
-				'description' => __('Search services for the viewer. Internal service, not accessed directly by the user.', 'w4os'),
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'search = %s'),
-				'third_party_url' => (get_option('w4os_provide_search')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
-				// 'os_config' => array('Robust.ini', '[LoginService]', 'SearchURL = %s'),
-			),
-			'message' => array(
-				'name' => __('Offline messages', 'w4os'),
-				'description' => __('Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os'),
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'message = %s'),
-				'third_party_url' => (get_option('w4os_provide_offline')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
-			),
-			'welcome' => array(
-				'name' => __('Welcome', 'w4os'),
-				'description' => __("The splash page displayed by the viewer before the user logs in. A short, no-scroll page, with only essential info. It is required, or at least highly recommended.", 'w4os'),
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'welcome = %s'),
-			),
-			'register' => array(
-				'name' => __('Registration page', 'w4os'),
-				'description' => __('Link to the user registration.', 'w4os'),
-				'recommended' => wp_registration_url(),
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'register = %s'),
-			),
-			'password' => array(
-				'name' => __('Password revovery', 'w4os'),
-				'description' => __('Link to lost password page.', 'w4os'),
-				'recommended' =>  wp_lostpassword_url(),
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'password = %s'),
-			),
-			'economy' => array(
-				'name' => __('Economy', 'w4os'),
-				'description' => __('Currencies and some other services queried by the viewer. They are not accessed directly by the user.', 'w4os'),
-				'external' => true,
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'economy = %s'),
-				'third_party_url' => (get_option('w4os_provide_currency')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
-			),
-			'about' => array(
-				'name' => __('About', 'w4os'),
-				'description' => __('Detailed info page on your website, via a link displayed on the viewer login page.', 'w4os'),
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'about = %s'),
-			),
-			'help' => array(
-				'name' => __('Help', 'w4os'),
-				'description' => __('Link to a help page on your website.', 'w4os'),
-				'os_config' => array('Robust.ini', '[GridInfoService]', 'help = %s'),
-			),
-		);
+		$required = W4OS_PAGES;
 
 		echo '<table class="w4os-table requested-pages">';
 		echo '<tr><th valign=top>';
@@ -240,10 +188,20 @@ $count = w4os_count_users();
 				$data['os_config'][1],
 				sprintf($data['os_config'][2], ($data['recommended']) ? $data['recommended'] : $url),
 				) : '',
-				(!empty($data['third_party_url']) && $success == false)  ? '<p class=third_party>' .
+				( $success == false && (!empty($data['third_party_url']))
+				? '<p class=third_party>' .
 				sprintf(__('This service requires a separate web application.<br>Try <a href="%1$s" target=_blank>%1$s</a>.', '<w4os>'),
 				$data['third_party_url'],
-				) . '</p>' : '',
+				) . '</p>'
+				: ( ( $success == false && (!empty($url)) )
+					? '<a class=button href="' . admin_url(sprintf('admin.php?%s', wp_nonce_url(http_build_query(array('page'=>'w4os', 'action' => 'create_page', 'helper' => $key, 'guid' => $url, 'slug' => basename(strtok($url, '?')) )), 'create_page_'.$key))) . '">'
+						. sprintf(
+							'Create %s page',
+							$data['name'],
+						) . '</a>'
+					: ''
+					)
+				),
 			);
 		}
 		echo '</table>';
