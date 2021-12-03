@@ -156,6 +156,7 @@ function w4os_update_grid_info() {
 	if($check_login_uri == $local_uri) w4os_admin_notice(__('A local Robust server has been found. Please check Login URI and Grid name configuration.', 'w4os'), 'success');
 
 	$grid_info = (array) $xml;
+	if ( get_option('w4os_profile_page' ) == 'provide' && empty($grid_info['profile'])) $grid_info['profile'] = W4OS_PROFILE_URL;
 	if ( ! empty($grid_info['login']) ) update_option('w4os_login_uri', preg_replace('+/*$+', '', preg_replace('+https*://+', '', $grid_info['login'])));
 	if ( ! empty($grid_info['gridname']) ) update_option('w4os_grid_name', $grid_info['gridname']);
 
@@ -264,7 +265,6 @@ function w4os_empty($var) {
 }
 
 function w4os_get_url_status($url, $output = NULL, $force = false) {
-	if (get_option('w4os_check_urls_now')) $force = true;
 	if(empty($url)) {
 		$status_code = '';
 	} else {
@@ -311,10 +311,9 @@ function w4os_get_url_status($url, $output = NULL, $force = false) {
 }
 
 function w4os_get_urls_statuses($urls = array(), $force = false) {
-	if(is_array($urls)) foreach($urls as $url) {
+	if(is_array($urls)) foreach($urls as $key => $url) {
 		if(esc_url_raw($url) == $url) {
 			w4os_get_url_status($url, NULL, $force);
-			break;
 		}
 	}
 }

@@ -46,6 +46,9 @@ if ( ! defined( 'W4OS_TXDOM' ) ) define('W4OS_TXDOM', ($plugin_data['TextDomain'
 if(empty(get_option('w4os_assets_slug'))) update_option('w4os_assets_slug', 'assets');
 define('W4OS_GRID_ASSETS_SERVER', 'http://' . esc_attr(get_option('w4os_login_uri')) . '/assets/'); // (OpenSim.ini: asset_server_url . "/assets/")
 
+if(get_option('w4os_profile_page')=='provide')
+define('W4OS_PROFILE_URL', get_home_url(NULL, get_option('w4os_profile_slug')));
+
 define('W4OS_LOGIN_PAGE', get_home_url(NULL, get_option('w4os_profile_slug')));
 
 define('W4OS_WEB_ASSETS_SERVER_URI',
@@ -54,7 +57,7 @@ define('W4OS_WEB_ASSETS_SERVER_URI',
   : esc_attr(get_option('w4os_external_asset_server_uri'))
 );
 if(get_option('w4os_provide_asset_server') ==  1)	update_option('w4os_internal_asset_server_uri', W4OS_WEB_ASSETS_SERVER_URI);
-if(!get_option('w4os_login_page'))	update_option('w4os_login_page', 'profile');
+if(!get_option('w4os_login_page')) update_option('w4os_login_page', 'profile');
 
 function w4os_load_textdomain() {
 	// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );
@@ -73,8 +76,8 @@ add_action( 'init', 'w4os_load_textdomain' );
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
 
+if (get_option('w4os_check_urls_now')) w4os_get_urls_statuses(w4os_get_grid_info(), true);
 define('W4OS_GRID_INFO', w4os_get_grid_info());
-if (get_option('w4os_check_urls_now')) w4os_get_urls_statuses(W4OS_GRID_INFO, true);
 
 require_once __DIR__ . '/w4osdb.php';
 require_once __DIR__ . '/shortcodes.php';
