@@ -142,7 +142,7 @@ $count = w4os_count_users();
 	?>
 	<div class="pages">
 		<h2>
-			<?php _e("System pages", 'w4os') ?>
+			<?php _e("OpenSimulator pages", 'w4os') ?>
 		</h2>
 		<p><?php _e("The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file.", 'w4os'); ?></p>
 		<?php
@@ -154,7 +154,7 @@ $count = w4os_count_users();
 		if(!w4os_grid_running()) {
 			$other_attributes['disabled'] = true;
 			echo '<p class="notice warning">' . sprintf(
-				__('Grid not running, start Robust server or %scheck w4os settings%s.', 'w4os'),
+				__('Grid not running, start Robust server or %scheck OpenSimulator settings%s.', 'w4os'),
 				'<a href="' . get_admin_url('', 'admin.php?page=w4os_settings') . '">',
 				'</a>',
 			);
@@ -167,13 +167,13 @@ $count = w4os_count_users();
 		settings_fields( 'w4os_status' );
 		echo '<input type="hidden" input-hidden" id="w4os_check_urls_now" name="w4os_check_urls_now" value="1">';
 
-		submit_button(__('Check system pages now', 'w4os'), 'small', 'submit', false, $other_attributes);
+		submit_button(__('Check pages now', 'w4os'), 'small', 'submit', false, $other_attributes);
 		echo '</form>';
 		echo '</th><td>';
 		echo w4os_status_icon($grid_running);
 		echo '</td><td>';
 		echo '<p class=description>' . sprintf(__('Last checked %s ago.', 'w4os'), human_time_diff(get_option('w4os_get_url_status_checked') )) . '</p>';
-		echo '<p class=description>' . __('System pages are checked regularly in a background task. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
+		echo '<p class=description>' . __('OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
 		echo '</td></tr>';
 
 		if($grid_running)

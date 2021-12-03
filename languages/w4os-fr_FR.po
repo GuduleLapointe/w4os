@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-03T09:15:25-04:00\n"
-"PO-Revision-Date: 2021-12-03 09:15-0400\n"
+"POT-Creation-Date: 2021-12-03T10:46:35-04:00\n"
+"PO-Revision-Date: 2021-12-03 10:46-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -38,183 +38,183 @@ msgstr "Speculoos World"
 msgid "https://speculoos.world"
 msgstr "https://speculoos.world/fr"
 
-# wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/admin-init.php:10
-msgid "Avatar profile"
-msgstr "Profil d'avatar"
-
-#: admin/admin-init.php:11
-msgid "The base URL for avatar web profiles."
-msgstr "La base d'URL pour les profils d'avatars."
-
-#: admin/admin-init.php:14
-msgid "Search"
-msgstr "Recherche"
-
-#: admin/admin-init.php:15
-msgid "Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities."
-msgstr "Service de recherche utilisé par le visualiseur. La recherche peut être activée au niveau du simulateur ou gérée avec un service externe pour des fonctionnalités supplémentaires."
-
-#: admin/admin-init.php:21
-msgid "Offline messages"
-msgstr "Messages hors-ligne"
-
-#: admin/admin-init.php:22
-msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
-msgstr "Requis par les visualiseurs pour conserver les messages envoyés lorsque l'utilisateur est hors-ligne, et les lui délivrer lorsqu'il revient en ligne. Service interne, non accessible par l'utilisateur."
-
-#: admin/admin-init.php:27
-msgid "Splash"
-msgstr "Splash"
-
-#: admin/admin-init.php:28
-msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
-msgstr "La page de bienvenue affichée dans le visualiseur avec le formulaire de connexion. Une page courte, sans défilement, avec seulement le contenu essentiel. Requise, ou tout au moins hautement recommandée."
-
-#: admin/admin-init.php:53
-msgid "Registration page"
-msgstr "Page d'enregistrement"
-
-#: admin/admin-init.php:54
-msgid "Link to the user registration."
-msgstr "Lien vers l'inscription."
-
-# wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/admin-init.php:59
-msgid "Password revovery"
-msgstr "Récupération du mot de passe"
-
-#: admin/admin-init.php:60
-msgid "Link to lost password page."
-msgstr "Lien vers la page de récupération de mot de passe."
-
-#: admin/admin-init.php:65
-msgid "Economy"
-msgstr "Économie"
-
-#: admin/admin-init.php:66
-msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
-msgstr "Devises et quelques autres services interrogés par le visualiseur. Ils ne sont pas accessibles par l'utilisateur."
-
-#: admin/admin-init.php:72
-msgid "About this grid"
-msgstr "À propos de cette grille"
-
-#: admin/admin-init.php:73
-msgid "Detailed info page on your website, via a link displayed on the viewer login page."
-msgstr "Page d'informations détaillées, sur votre site web, via un lien affiché sur la page de connexion du visualiseur."
-
-#: admin/admin-init.php:77
-msgid "Help"
-msgstr "Aide"
-
-#: admin/admin-init.php:78
-msgid "Link to a help page on your website."
-msgstr "Lien vers une page d'aide sur votre site web."
-
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:101
+#: admin/admin-init.php:26
 msgid "OpenSimulator Status"
 msgstr "Statut OpenSimulator"
 
-#: admin/admin-init.php:101
+#: admin/admin-init.php:26
 msgid "Status"
 msgstr "Statut"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:104
+#: admin/admin-init.php:29
 msgid "OpenSimulator Settings"
 msgstr "Réglages OpenSimulator"
 
-#: admin/admin-init.php:105
+#: admin/admin-init.php:30
 #: admin/settings.php:315
 msgid "Settings"
 msgstr "Réglages"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/admin-init.php:149
+#: admin/admin-init.php:74
 #: includes/profile.php:88
 msgid "Avatar Name"
 msgstr "Nom de l'avatar"
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/admin-init.php:172
+#: admin/admin-init.php:97
 #: includes/shortcodes.php:104
 msgid "View profile"
 msgstr "Voir le profil"
 
-#: admin/admin-init.php:221
+#: admin/admin-init.php:146
 msgid "With Avatar"
 msgstr "Avec avatar"
 
 # wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#: admin/admin-init.php:222
+#: admin/admin-init.php:147
 msgid "Without Avatar"
 msgstr "Sans avatar"
 
-#: admin/admin-init.php:239
+#: admin/admin-init.php:164
 msgid "Filter users..."
 msgstr "Filtrer les utilisateurs..."
 
-#: admin/admin-init.php:245
+#: admin/admin-init.php:170
 msgid "Filter"
 msgstr "Filtre"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:291
+#: admin/admin-init.php:216
 msgid "OpenSimulator Profile"
 msgstr "OpenSimulator - Profil"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:293
+#: admin/admin-init.php:218
 msgid "OpenSimulator Splash"
 msgstr "OpenSimulator - Splash"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:295
+#: admin/admin-init.php:220
 msgid "OpenSimulator Search"
 msgstr "OpenSimulator - Recherche"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:297
+#: admin/admin-init.php:222
 msgid "OpenSimulator Economy"
 msgstr "OpenSimulator - Économie"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:299
+#: admin/admin-init.php:224
 msgid "OpenSimulator About"
 msgstr "OpenSimulator - À propos"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:301
+#: admin/admin-init.php:226
 msgid "OpenSimulator Register"
 msgstr "OpenSimulator - Inscription"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:303
+#: admin/admin-init.php:228
 msgid "OpenSimulator Password"
 msgstr "OpenSimulator - Mot de passe"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:305
+#: admin/admin-init.php:230
 msgid "OpenSimulator Offline Messages"
 msgstr "OpenSimulator - Messages hors-ligne"
 
-#: admin/admin-init.php:320
+#: admin/admin-init.php:245
 msgid "The followed link has expired, please try again"
 msgstr "Le lien suivi a expiré, merci de réessayer"
 
-#: admin/admin-init.php:327
+#: admin/admin-init.php:252
 msgid "Page %s already exists."
 msgstr "La page %s existe déjà."
 
-#: admin/admin-init.php:345
+#: admin/admin-init.php:270
 msgid "New page %s created."
 msgstr "Nouvelle page %s créée."
 
-#: admin/admin-init.php:349
+#: admin/admin-init.php:274
 msgid "Error while creating page %s."
 msgstr "Erreur lors de la création de la page %s."
+
+# wpml-name: 69675902f4d4a3da44638540557562af
+#: admin/admin-init.php:286
+msgid "Avatar profile"
+msgstr "Profil d'avatar"
+
+#: admin/admin-init.php:287
+msgid "The base URL for avatar web profiles."
+msgstr "La base d'URL pour les profils d'avatars."
+
+#: admin/admin-init.php:290
+msgid "Search"
+msgstr "Recherche"
+
+#: admin/admin-init.php:291
+msgid "Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities."
+msgstr "Service de recherche utilisé par le visualiseur. La recherche peut être activée au niveau du simulateur ou gérée avec un service externe pour des fonctionnalités supplémentaires."
+
+#: admin/admin-init.php:297
+msgid "Offline messages"
+msgstr "Messages hors-ligne"
+
+#: admin/admin-init.php:298
+msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
+msgstr "Requis par les visualiseurs pour conserver les messages envoyés lorsque l'utilisateur est hors-ligne, et les lui délivrer lorsqu'il revient en ligne. Service interne, non accessible par l'utilisateur."
+
+#: admin/admin-init.php:303
+msgid "Splash"
+msgstr "Splash"
+
+#: admin/admin-init.php:304
+msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
+msgstr "La page de bienvenue affichée dans le visualiseur avec le formulaire de connexion. Une page courte, sans défilement, avec seulement le contenu essentiel. Requise, ou tout au moins hautement recommandée."
+
+#: admin/admin-init.php:329
+msgid "Registration page"
+msgstr "Page d'enregistrement"
+
+#: admin/admin-init.php:330
+msgid "Link to the user registration."
+msgstr "Lien vers l'inscription."
+
+# wpml-name: 8ffca1456a2308a5556a750be1ecbac0
+#: admin/admin-init.php:335
+msgid "Password revovery"
+msgstr "Récupération du mot de passe"
+
+#: admin/admin-init.php:336
+msgid "Link to lost password page."
+msgstr "Lien vers la page de récupération de mot de passe."
+
+#: admin/admin-init.php:341
+msgid "Economy"
+msgstr "Économie"
+
+#: admin/admin-init.php:342
+msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
+msgstr "Devises et quelques autres services interrogés par le visualiseur. Ils ne sont pas accessibles par l'utilisateur."
+
+#: admin/admin-init.php:348
+msgid "About this grid"
+msgstr "À propos de cette grille"
+
+#: admin/admin-init.php:349
+msgid "Detailed info page on your website, via a link displayed on the viewer login page."
+msgstr "Page d'informations détaillées, sur votre site web, via un lien affiché sur la page de connexion du visualiseur."
+
+#: admin/admin-init.php:353
+msgid "Help"
+msgstr "Aide"
+
+#: admin/admin-init.php:354
+msgid "Link to a help page on your website."
+msgstr "Lien vers une page d'aide sur votre site web."
 
 # wpml-name: 6b8467e13ae11c479efa8843f1b95826
 #: admin/dashboard.php:13
@@ -481,31 +481,37 @@ msgstr "Modules PHP manquants"
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr "Ces modules n'ont pas été trouvés: %s. Installez-les pour tirer le maximum de ce plugin."
 
+# wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: admin/status-page.php:145
-msgid "System pages"
-msgstr "Pages système"
+msgid "OpenSimulator pages"
+msgstr "Pages OpenSimulator"
 
 #: admin/status-page.php:147
 msgid "The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file."
 msgstr "Les pages suivantes sont nécessaires pour OpenSimulator et/ou l'extension W4OS. Assurez-vous qu'elles existent ou ajustez le fichier .ini de votre simulateur."
 
-#: admin/status-page.php:161
-msgid "Check system pages now"
+#: admin/status-page.php:157
+#, fuzzy
+msgid "Grid not running, start Robust server or %scheck OpenSimulator settings%s."
+msgstr "La grille n'est pas en ligne, démarrez le serveur Robust ou %svérifiez les réglages OpenSimulator%s."
+
+#: admin/status-page.php:170
+msgid "Check pages now"
 msgstr "Vérifier les pages maintenant"
 
-#: admin/status-page.php:164
+#: admin/status-page.php:175
 msgid "Last checked %s ago."
 msgstr "Dernière vérification il y a %s."
 
-#: admin/status-page.php:165
-msgid "System pages are checked regularly in a background task. Synchronize now only if you made changes and want an immediate status."
-msgstr "Les pages système sont vérifiées régulièrement en tâche de fond. Synchronisez maintenant si vous avez effectué des modifications et souhaitez un statut immédiat."
+#: admin/status-page.php:176
+msgid "OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status."
+msgstr "Les pages OpenSimulator sont vérifiées régulièrement en tâche de fond. Synchronisez maintenant uniquement si vous avez effectué des modifications et souhaitez une véricitat immédiat."
 
-#: admin/status-page.php:185
+#: admin/status-page.php:198
 msgid "Should be %s"
 msgstr "Cela devrait être %s"
 
-#: admin/status-page.php:193
+#: admin/status-page.php:206
 msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
 msgstr "Ce service requiert une application web distincte.<br>Essayez <a href=\"%1$s\" target=_blank>%1$s</a>."
 
@@ -910,3 +916,6 @@ msgstr "Vous avez déjà installé la version officielle de <strong>W4OS - Inter
 #: w4os.php:53
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
 msgstr "Une autre version de <strong>W4OS - Interface Web pour OpenSimulator</strong> est installée et active. Le doublon a été désactivé."
+
+#~ msgid "System pages"
+#~ msgstr "Pages système"
