@@ -161,7 +161,7 @@ $count = w4os_count_users();
 		submit_button(__('Check system pages now', 'w4os'));
 		echo '</form>';
 		echo '</th><td colspan=2>';
-		echo '<p class=description>' . sprintf(__('Last checked %s ago.'), human_time_diff(get_option('w4os_get_url_status_checked') )) . '</p>';
+		echo '<p class=description>' . sprintf(__('Last checked %s ago.', 'w4os'), human_time_diff(get_option('w4os_get_url_status_checked') )) . '</p>';
 		echo '<p class=description>' . __('System pages are checked regularly in a background task. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
 		echo '</td></tr>';
 		foreach($required as $key => $data) {
