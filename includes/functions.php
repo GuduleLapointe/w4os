@@ -311,6 +311,14 @@ function w4os_get_url_status($url, $output = NULL, $force = false) {
 }
 
 function w4os_get_urls_statuses($urls = array(), $force = false) {
+	if($force) {
+		// Avoid concurrent checks
+		if ( get_transient( 'w4os_get_urls_statuses_lock' ) ) $force = false;
+		set_transient( 'w4os_get_urls_statuses_lock', true, 3600 );
+	}
+	$transient_key = sanitize_title('w4os_url_status_' . $url);
+	$status_code = ($force) ? false : get_transient( $transient_key );
+
 	if(is_array($urls)) foreach($urls as $key => $url) {
 		if(esc_url_raw($url) == $url) {
 			w4os_get_url_status($url, NULL, $force);
