@@ -159,3 +159,22 @@ img.model-picture {
 .avatar-profile-table td {
     vertical-align: top;
 }
+
+body.w4os-welcome #page {
+    padding: 2%;
+    font-size: 14px;
+}
+
+body.w4os-welcome #main,
+body.w4os-welcome .site-main,
+body.w4os-welcome .entry-content {
+    margin: 0;
+    padding: 0;
+}
+body.w4os-welcome .site-header,
+body.w4os-welcome .entry-header,
+body.w4os-welcome aside,
+body.w4os-welcome .widget-area,
+body.w4os-welcome footer {
+    display: none;
+}

@@ -113,3 +113,14 @@ if(get_option('w4os_rewrite_rules') || get_option('w4os_rewrite_version') != W4O
 	update_option('w4os_rewrite_rules', false);
   update_option('w4os_rewrite_version', W4OS_VERSION);
 }
+
+
+add_filter( 'body_class','mes_classes_body' );
+function mes_classes_body( $classes ) {
+  $post=get_post();
+  $helper = array_search($post->guid, W4OS_GRID_INFO);
+  if(!empty($helper)) {
+    $classes[] = 'w4os-' . $helper;
+  }
+  return $classes;
+}
