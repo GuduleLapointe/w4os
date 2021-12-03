@@ -81,31 +81,45 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_webassets' => array(
-					'name' => __('Web assets', 'w4os'),
-					'section_callback' => 'w4os_settings_callback_webassets',
+				'w4os_options_helpers' => array(
+					'name' => __('Helpers', 'w4os'),
+					// 'section_callback' => 'w4os_settings_callback_webassets',
 					'fields' => array(
 						'w4os_provide' => array(
 							'type' => 'checkbox',
-							'label' => __('Web asset server', 'w4os'),
+							'label' => __('Provide services', 'w4os'),
 							'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
 							'values' => array(
-								'asset_server' => __('Provide web assets service', 'w4os'),
+								'asset_server' => __('Web assets server', 'w4os'),
+								'offline_messages' => __('Offline messages', 'w4os'),
 							),
 							'onchange' => 'onchange="valueChanged(this)"',
 						),
+						// 'w4os_provide' => array(
+						// 	'type' => 'checkbox',
+						// 	'label' => __('Web asset server', 'w4os'),
+						// 	'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
+						// 	'values' => array(
+						// 		'asset_server' => __('Provide web assets service', 'w4os'),
+						// 	),
+						// 	'onchange' => 'onchange="valueChanged(this)"',
+						// ),
 						'w4os_internal_asset_server_uri' => array(
-							'label' => '',
+							'label' => __('Web asset server', 'w4os'),
 							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
 							'readonly' => true,
-							'description' => sprintf(
-								__('You can change the asset slug in %spermalinks settings%s.', 'w4os'),
+							'description' => __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os')
+							. sprintf(
+								'<br>' . __('You can change the asset slug in %spermalinks settings%s.', 'w4os'),
 								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
 							),
 						),
 						'w4os_external_asset_server_uri' => array(
 							'label' => __('External assets server URI', 'w4os'),
 							'default' => W4OS_DEFAULT_ASSET_SERVER_URI,
+							'description' => __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os')
+							. '<br>' . __('If W4OS web assets service is disabled, you need a third-party web application.', 'w4os'),
+								// '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
 						),
 					),
 				),
@@ -299,9 +313,9 @@ function w4os_settings_callback_models($arg) {
 	echo "<p>" . __('Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture.', 'w4os') . "</p>";
 }
 
-function w4os_settings_callback_webassets($arg) {
-	echo "<p class=help>" . __('A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin.', 'w4os') . "</p>";
-}
+// function w4os_settings_callback_webassets($arg) {
+// 	echo "<p class=help>" . __('A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin.', 'w4os') . "</p>";
+// }
 
 function w4os_settings_link( $links ) {
 	$url = esc_url( add_query_arg(
