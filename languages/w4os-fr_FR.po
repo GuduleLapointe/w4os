@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-02T23:45:44-04:00\n"
-"PO-Revision-Date: 2021-12-02 23:59-0400\n"
+"POT-Creation-Date: 2021-12-03T01:38:59-04:00\n"
+"PO-Revision-Date: 2021-12-03 01:39-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -71,148 +71,148 @@ msgstr "Splash"
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr "La page de bienvenue affichée dans le visualiseur avec le formulaire de connexion. Une page courte, sans défilement, avec seulement le contenu essentiel. Requise, ou tout au moins hautement recommandée."
 
-#: admin/admin-init.php:32
+#: admin/admin-init.php:53
 msgid "Registration page"
 msgstr "Page d'enregistrement"
 
-#: admin/admin-init.php:33
+#: admin/admin-init.php:54
 msgid "Link to the user registration."
 msgstr "Lien vers l'inscription."
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/admin-init.php:38
+#: admin/admin-init.php:59
 msgid "Password revovery"
 msgstr "Récupération du mot de passe"
 
-#: admin/admin-init.php:39
+#: admin/admin-init.php:60
 msgid "Link to lost password page."
 msgstr "Lien vers la page de récupération de mot de passe."
 
-#: admin/admin-init.php:44
+#: admin/admin-init.php:65
 msgid "Economy"
 msgstr "Économie"
 
-#: admin/admin-init.php:45
+#: admin/admin-init.php:66
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr "Devises et quelques autres services interrogés par le visualiseur. Ils ne sont pas accessibles par l'utilisateur."
 
-#: admin/admin-init.php:51
+#: admin/admin-init.php:72
 msgid "About this grid"
 msgstr "À propos de cette grille"
 
-#: admin/admin-init.php:52
+#: admin/admin-init.php:73
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr "Page d'informations détaillées, sur votre site web, via un lien affiché sur la page de connexion du visualiseur."
 
-#: admin/admin-init.php:56
+#: admin/admin-init.php:77
 msgid "Help"
 msgstr "Aide"
 
-#: admin/admin-init.php:57
+#: admin/admin-init.php:78
 msgid "Link to a help page on your website."
 msgstr "Lien vers une page d'aide sur votre site web."
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:80
+#: admin/admin-init.php:101
 msgid "OpenSimulator Status"
 msgstr "Statut OpenSimulator"
 
-#: admin/admin-init.php:80
+#: admin/admin-init.php:101
 msgid "Status"
 msgstr "Statut"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:83
+#: admin/admin-init.php:104
 msgid "OpenSimulator Settings"
 msgstr "Réglages OpenSimulator"
 
-#: admin/admin-init.php:84
+#: admin/admin-init.php:105
 #: admin/settings.php:315
 msgid "Settings"
 msgstr "Réglages"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/admin-init.php:128
+#: admin/admin-init.php:149
 #: includes/profile.php:88
 msgid "Avatar Name"
 msgstr "Nom de l'avatar"
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/admin-init.php:151
+#: admin/admin-init.php:172
 #: includes/shortcodes.php:104
 msgid "View profile"
 msgstr "Voir le profil"
 
-#: admin/admin-init.php:200
+#: admin/admin-init.php:221
 msgid "With Avatar"
 msgstr "Avec avatar"
 
 # wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#: admin/admin-init.php:201
+#: admin/admin-init.php:222
 msgid "Without Avatar"
 msgstr "Sans avatar"
 
-#: admin/admin-init.php:218
+#: admin/admin-init.php:239
 msgid "Filter users..."
 msgstr "Filtrer les utilisateurs..."
 
-#: admin/admin-init.php:224
+#: admin/admin-init.php:245
 msgid "Filter"
 msgstr "Filtre"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:270
+#: admin/admin-init.php:291
 msgid "OpenSimulator Profile"
 msgstr "OpenSimulator - Profil"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:272
+#: admin/admin-init.php:293
 msgid "OpenSimulator Splash"
 msgstr "OpenSimulator - Splash"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:274
+#: admin/admin-init.php:295
 msgid "OpenSimulator Search"
 msgstr "OpenSimulator - Recherche"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:276
+#: admin/admin-init.php:297
 msgid "OpenSimulator Economy"
 msgstr "OpenSimulator - Économie"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:278
+#: admin/admin-init.php:299
 msgid "OpenSimulator About"
 msgstr "OpenSimulator - À propos"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:280
+#: admin/admin-init.php:301
 msgid "OpenSimulator Register"
 msgstr "OpenSimulator - Inscription"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:282
+#: admin/admin-init.php:303
 msgid "OpenSimulator Password"
 msgstr "OpenSimulator - Mot de passe"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:284
+#: admin/admin-init.php:305
 msgid "OpenSimulator Offline Messages"
 msgstr "OpenSimulator - Messages hors-ligne"
 
-#: admin/admin-init.php:299
+#: admin/admin-init.php:320
 msgid "The followed link has expired, please try again"
 msgstr "Le lien suivi a expiré, merci de réessayer"
 
-#: admin/admin-init.php:306
+#: admin/admin-init.php:327
 msgid "Page %s already exists."
 msgstr "La page %s existe déjà."
 
-#: admin/admin-init.php:324
+#: admin/admin-init.php:345
 msgid "New page %s created."
 msgstr "Nouvelle page %s créée."
 
-#: admin/admin-init.php:328
+#: admin/admin-init.php:349
 msgid "Error while creating page %s."
 msgstr "Erreur lors de la création de la page %s."
 
@@ -910,92 +910,3 @@ msgstr "Vous avez déjà installé la version officielle de <strong>W4OS - Inter
 #: w4os.php:53
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
 msgstr "Une autre version de <strong>W4OS - Interface Web pour OpenSimulator</strong> est installée et active. Le doublon a été désactivé."
-
-#~ msgid ""
-"\n"
-"page. This is the page used to dynamically generate avatar \"\n"
-"pages.\""
-#~ msgstr ""
-"\n"
-"de profil. C'est la page utilisée pour générer dynamiquement les \"\n"
-"de profil des avatars.\""
-
-#~ msgid "This page is set as default login page."
-#~ msgstr "Cette page est réglée comme page de connexion par défaut."
-
-#~ msgid "Required by W4OS"
-#~ msgstr "Requis par W4OS"
-
-#~ msgid ""
-"\n"
-"page are required for W4OS to function normally. You can adjust \"\n"
-"in W4OS OpenSimulator setttings.\""
-#~ msgstr ""
-"\n"
-"pages sont requises pour un fonctionnement normal de W4OS. Vous \"\n"
-"les ajuster dans les préférences OpenSimulator de W4OS.\""
-
-# wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#~ msgid "Requested by OpenSimulator config"
-#~ msgstr "Demandés par la configuration d'OpenSimulator"
-
-#~ msgid ""
-"\n"
-"following values are received from the simulator. Any change must be \"\n"
-"in %s section\n"
-"\"\n"
-"your .ini file.\""
-#~ msgstr ""
-"\n"
-"valeurs ci-dessous ont été transmises par le simulateur. Les \"\n"
-"éventuels doivent être effectués dans la section %s de votre \"\n"
-".ini.\""
-
-#~ msgid ""
-"\n"
-"Optional. This is the base URL for several standard simulator services \"\n"
-"by the viewer, like search, currencies... They are not accessed \"\n"
-"by the user. It requires the installation of separate software \"\n"
-"can be hosted on the same or a different web server.\""
-#~ msgstr ""
-"\n"
-"Optionel. Ceci est l'URL de base de plusieurs services standard \"\n"
-"par le viewer, comme la recherche, les finances... Ils ne sont \"\n"
-"consultés directement par l'utilisateur. Ils nécessitent \"\n"
-"de programmes séparés et peuvent être hébergés sur le même \"\n"
-"ou sur un serveur différent.\""
-
-#~ msgid "; Optional. Link to a help page."
-#~ msgstr "; Optionel. Lien vers la page d'aide."
-
-#~ msgid "hourly"
-#~ msgstr "toutes les heures"
-
-#~ msgid "Misc"
-#~ msgstr "Divers"
-
-#~ msgid "Permalinks"
-#~ msgstr "Permaliens"
-
-# wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#~ msgid "Avatar creation"
-#~ msgstr "Création d'avatar"
-
-#~ msgid "Avatar UUID"
-#~ msgstr "UUID de l'avatar"
-
-#~ msgid "Download"
-#~ msgstr "Télécharger"
-
-#~ msgid "%sLog in%s to choose an avatar."
-#~ msgstr "%sConnectez-vous%s pour choisir un avatar."
-
-# wpml-name: 5a54d9ad87f7c4c1c70c8f05b9515d5a
-#~ msgid "UUID"
-#~ msgstr "UUID"
-
-#~ msgid "Translation test"
-#~ msgstr "Test de traduction"
-
-#~ msgid "W4OS"
-#~ msgstr "W4OS"

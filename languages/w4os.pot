@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-02T23:45:44-04:00\n"
+"POT-Creation-Date: 2021-12-03T01:38:59-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -65,134 +65,134 @@ msgstr ""
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr ""
 
-#: admin/admin-init.php:32
+#: admin/admin-init.php:53
 msgid "Registration page"
 msgstr ""
 
-#: admin/admin-init.php:33
+#: admin/admin-init.php:54
 msgid "Link to the user registration."
 msgstr ""
 
-#: admin/admin-init.php:38
+#: admin/admin-init.php:59
 msgid "Password revovery"
 msgstr ""
 
-#: admin/admin-init.php:39
+#: admin/admin-init.php:60
 msgid "Link to lost password page."
 msgstr ""
 
-#: admin/admin-init.php:44
+#: admin/admin-init.php:65
 msgid "Economy"
 msgstr ""
 
-#: admin/admin-init.php:45
+#: admin/admin-init.php:66
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:51
+#: admin/admin-init.php:72
 msgid "About this grid"
 msgstr ""
 
-#: admin/admin-init.php:52
+#: admin/admin-init.php:73
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr ""
 
-#: admin/admin-init.php:56
+#: admin/admin-init.php:77
 msgid "Help"
 msgstr ""
 
-#: admin/admin-init.php:57
+#: admin/admin-init.php:78
 msgid "Link to a help page on your website."
 msgstr ""
 
-#: admin/admin-init.php:80
+#: admin/admin-init.php:101
 msgid "OpenSimulator Status"
 msgstr ""
 
-#: admin/admin-init.php:80
+#: admin/admin-init.php:101
 msgid "Status"
 msgstr ""
 
-#: admin/admin-init.php:83
+#: admin/admin-init.php:104
 msgid "OpenSimulator Settings"
 msgstr ""
 
-#: admin/admin-init.php:84
+#: admin/admin-init.php:105
 #: admin/settings.php:315
 msgid "Settings"
 msgstr ""
 
-#: admin/admin-init.php:128
+#: admin/admin-init.php:149
 #: includes/profile.php:88
 msgid "Avatar Name"
 msgstr ""
 
-#: admin/admin-init.php:151
+#: admin/admin-init.php:172
 #: includes/shortcodes.php:104
 msgid "View profile"
 msgstr ""
 
-#: admin/admin-init.php:200
+#: admin/admin-init.php:221
 msgid "With Avatar"
 msgstr ""
 
-#: admin/admin-init.php:201
+#: admin/admin-init.php:222
 msgid "Without Avatar"
 msgstr ""
 
-#: admin/admin-init.php:218
+#: admin/admin-init.php:239
 msgid "Filter users..."
 msgstr ""
 
-#: admin/admin-init.php:224
+#: admin/admin-init.php:245
 msgid "Filter"
 msgstr ""
 
-#: admin/admin-init.php:270
+#: admin/admin-init.php:291
 msgid "OpenSimulator Profile"
 msgstr ""
 
-#: admin/admin-init.php:272
+#: admin/admin-init.php:293
 msgid "OpenSimulator Splash"
 msgstr ""
 
-#: admin/admin-init.php:274
+#: admin/admin-init.php:295
 msgid "OpenSimulator Search"
 msgstr ""
 
-#: admin/admin-init.php:276
+#: admin/admin-init.php:297
 msgid "OpenSimulator Economy"
 msgstr ""
 
-#: admin/admin-init.php:278
+#: admin/admin-init.php:299
 msgid "OpenSimulator About"
 msgstr ""
 
-#: admin/admin-init.php:280
+#: admin/admin-init.php:301
 msgid "OpenSimulator Register"
 msgstr ""
 
-#: admin/admin-init.php:282
+#: admin/admin-init.php:303
 msgid "OpenSimulator Password"
 msgstr ""
 
-#: admin/admin-init.php:284
+#: admin/admin-init.php:305
 msgid "OpenSimulator Offline Messages"
 msgstr ""
 
-#: admin/admin-init.php:299
+#: admin/admin-init.php:320
 msgid "The followed link has expired, please try again"
 msgstr ""
 
-#: admin/admin-init.php:306
+#: admin/admin-init.php:327
 msgid "Page %s already exists."
 msgstr ""
 
-#: admin/admin-init.php:324
+#: admin/admin-init.php:345
 msgid "New page %s created."
 msgstr ""
 
-#: admin/admin-init.php:328
+#: admin/admin-init.php:349
 msgid "Error while creating page %s."
 msgstr ""
 

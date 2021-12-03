@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-02T23:45:44-04:00\n"
-"PO-Revision-Date: 2021-12-02 23:59-0400\n"
+"POT-Creation-Date: 2021-12-03T01:38:59-04:00\n"
+"PO-Revision-Date: 2021-12-03 01:39-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -73,160 +73,160 @@ msgstr ""
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr ""
 
-#: admin/admin-init.php:32
+#: admin/admin-init.php:53
 msgid "Registration page"
 msgstr ""
 
-#: admin/admin-init.php:33
+#: admin/admin-init.php:54
 msgid "Link to the user registration."
 msgstr ""
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/admin-init.php:38
+#: admin/admin-init.php:59
 #, fuzzy
 msgid "Password revovery"
 msgstr "Wachtwoord vereist"
 
-#: admin/admin-init.php:39
+#: admin/admin-init.php:60
 msgid "Link to lost password page."
 msgstr ""
 
-#: admin/admin-init.php:44
+#: admin/admin-init.php:65
 msgid "Economy"
 msgstr ""
 
-#: admin/admin-init.php:45
+#: admin/admin-init.php:66
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:51
+#: admin/admin-init.php:72
 msgid "About this grid"
 msgstr ""
 
-#: admin/admin-init.php:52
+#: admin/admin-init.php:73
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr ""
 
-#: admin/admin-init.php:56
+#: admin/admin-init.php:77
 msgid "Help"
 msgstr ""
 
-#: admin/admin-init.php:57
+#: admin/admin-init.php:78
 msgid "Link to a help page on your website."
 msgstr ""
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:80
+#: admin/admin-init.php:101
 msgid "OpenSimulator Status"
 msgstr "OpenSimulator-status"
 
-#: admin/admin-init.php:80
+#: admin/admin-init.php:101
 msgid "Status"
 msgstr "Status"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:83
+#: admin/admin-init.php:104
 msgid "OpenSimulator Settings"
 msgstr "OpenSimulator-instellingen"
 
-#: admin/admin-init.php:84
+#: admin/admin-init.php:105
 #: admin/settings.php:315
 msgid "Settings"
 msgstr "Instellingen"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/admin-init.php:128
+#: admin/admin-init.php:149
 #: includes/profile.php:88
 msgid "Avatar Name"
 msgstr "Avatar naam"
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/admin-init.php:151
+#: admin/admin-init.php:172
 #: includes/shortcodes.php:104
 #, fuzzy
 msgid "View profile"
 msgstr "Grid online"
 
-#: admin/admin-init.php:200
+#: admin/admin-init.php:221
 #, fuzzy
 msgid "With Avatar"
 msgstr "Avatar UUID"
 
 # wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#: admin/admin-init.php:201
+#: admin/admin-init.php:222
 #, fuzzy
 msgid "Without Avatar"
 msgstr "Jouw avatar"
 
-#: admin/admin-init.php:218
+#: admin/admin-init.php:239
 msgid "Filter users..."
 msgstr ""
 
-#: admin/admin-init.php:224
+#: admin/admin-init.php:245
 msgid "Filter"
 msgstr ""
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:270
+#: admin/admin-init.php:291
 #, fuzzy
 msgid "OpenSimulator Profile"
 msgstr "OpenSimulator profiel"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:272
+#: admin/admin-init.php:293
 #, fuzzy
 msgid "OpenSimulator Splash"
 msgstr "OpenSimulator-status"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:274
+#: admin/admin-init.php:295
 #, fuzzy
 msgid "OpenSimulator Search"
 msgstr "OpenSimulator-status"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:276
+#: admin/admin-init.php:297
 #, fuzzy
 msgid "OpenSimulator Economy"
 msgstr "OpenSimulator"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:278
+#: admin/admin-init.php:299
 #, fuzzy
 msgid "OpenSimulator About"
 msgstr "OpenSimulator"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:280
+#: admin/admin-init.php:301
 #, fuzzy
 msgid "OpenSimulator Register"
 msgstr "OpenSimulator-instellingen"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:282
+#: admin/admin-init.php:303
 #, fuzzy
 msgid "OpenSimulator Password"
 msgstr "OpenSimulator-status"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:284
+#: admin/admin-init.php:305
 #, fuzzy
 msgid "OpenSimulator Offline Messages"
 msgstr "OpenSimulator-instellingen"
 
-#: admin/admin-init.php:299
+#: admin/admin-init.php:320
 msgid "The followed link has expired, please try again"
 msgstr ""
 
-#: admin/admin-init.php:306
+#: admin/admin-init.php:327
 msgid "Page %s already exists."
 msgstr ""
 
-#: admin/admin-init.php:324
+#: admin/admin-init.php:345
 msgid "New page %s created."
 msgstr ""
 
-#: admin/admin-init.php:328
+#: admin/admin-init.php:349
 #, fuzzy
 msgid "Error while creating page %s."
 msgstr "Fout bij gebruiker aanmaken"
