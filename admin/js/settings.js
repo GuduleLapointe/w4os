@@ -1,9 +1,13 @@
-function valueChanged(checkboxfield) {
+function valueChanged() {
+  // show internal or external assets server uri according to provide checkbox
   document.getElementById("w4os_internal_asset_server_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_asset_server').checked ? "table-row" : "none";
   document.getElementById("w4os_external_asset_server_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_asset_server').checked ? "none" : "table-row";
+
+  // show internal offline helper uri according to provide checkbox
+  document.getElementById("w4os_offline_helper_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_offline_messages').checked ? "table-row" : "none";
 }
 // force check on load
-valueChanged(w4os_provide_asset_server);
+valueChanged();
 
 // /*
 //  * Try to autofill grid info when login uri is updated.

@@ -95,15 +95,6 @@ function w4os_register_settings() {
 							),
 							'onchange' => 'onchange="valueChanged(this)"',
 						),
-						// 'w4os_provide' => array(
-						// 	'type' => 'checkbox',
-						// 	'label' => __('Web asset server', 'w4os'),
-						// 	'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
-						// 	'values' => array(
-						// 		'asset_server' => __('Provide web assets service', 'w4os'),
-						// 	),
-						// 	'onchange' => 'onchange="valueChanged(this)"',
-						// ),
 						'w4os_internal_asset_server_uri' => array(
 							'label' => __('Web asset server', 'w4os'),
 							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
@@ -119,7 +110,26 @@ function w4os_register_settings() {
 							'default' => W4OS_DEFAULT_ASSET_SERVER_URI,
 							'description' => __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os')
 							. '<br>' . __('If W4OS web assets service is disabled, you need a third-party web application.', 'w4os'),
-								// '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
+						),
+						'w4os_offline_helper_uri' => array(
+						  'label' => __('Offline helper URI', 'w4os'),
+						  'default' => (!empty(W4OS_GRID_INFO['message'])) ? W4OS_GRID_INFO['message'] : get_home_url(NULL, '/helpers/offline/'),
+						  'readonly' => true,
+						  'description' => (empty(W4OS_GRID_INFO['message'])) ? (
+								__('Set the URL in Robust and OpenSimulator configurations.', 'w4os')
+								. w4os_format_ini(array(
+									'Robust.HG.ini' => array(
+										'[GridInfoService]' => array(
+											'message' => get_option('w4os_offline_helper_uri', get_home_url(NULL, '/helpers/offline/')),
+										),
+									),
+									'OpenSim.ini' => array(
+										'[Messaging]' => array(
+											'OfflineMessageURL' => get_option('w4os_offline_helper_uri', get_home_url(NULL, '/helpers/offline/')),
+										),
+									),
+								))
+							): NULL,
 						),
 					),
 				),
