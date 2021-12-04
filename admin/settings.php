@@ -304,7 +304,7 @@ function w4os_settings_field($args) {
 function w4os_settings_callback_gridinfo() {
 	echo sprintf(
 		'<p>%1$s %2$s</p>',
-		__('Values must match Robust.HG.ini (or Robust.ini) config file.', 'w4os'),
+		__('Values must match Robust.HG.ini (or Robust.HG.ini) config file.', 'w4os'),
 		__('Robust server must be running. Values entered here will be checked against your Robust server and updated if needed.', 'w4os'),
 	);
 }

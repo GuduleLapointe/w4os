@@ -42,7 +42,7 @@ The free version from WordPress plugins directory and the [paid version](https:/
 
 - Robust server must be installed before setting up W4OS.
 - To allow users to choose an avatar on registration, you must enable user
-  profiles in Robust.ini (update [UserProfilesService], [ServiceList] and
+  profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and
   [UserProfiles] sections)
 - You should have a working assets server (see Dependencies section below)
 
