@@ -352,3 +352,21 @@ function w4os_status_icon($bool = NULL) {
 	else $status_icon = 'no';
 	return sprintf('<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%1$s"></span>', $status_icon);
 }
+
+function w4os_format_ini($array) {
+	if(empty($array)) return;
+	$content = '<div class=iniconfig>';
+	foreach($array as $inifile => $sections) {
+		$content .= '<p class="inifile dashicons-before dashicons-media-text">';
+		$content .= sprintf(__('%s', 'w4os'), $inifile);
+		$content .= '<pre>';
+		foreach($sections as $section => $params) {
+			$content.= "$section<br>";
+			foreach($params as $param => $value) {
+				$content .= "  $param = $value";
+			}
+		}
+		$content .= '</pre></p>';
+	}
+	return $content;
+}

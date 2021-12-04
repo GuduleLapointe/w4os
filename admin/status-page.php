@@ -196,11 +196,9 @@ $count = w4os_count_users();
 				(!empty($url)) ? sprintf('<p class=url><a href="%1$s">%1$s</a></p>', $url) : '',
 				(!empty($data['description'])) ? '<p class=description>' . $data['description'] . '</p>' : '',
 				(!empty($data['recommended']) && $url != $data['recommended']) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> ' . sprintf(__('Should be %s', 'w4os'), $data['recommended']) . '</p>' : '',
-				(!empty($data['os_config']) && ( ( (!empty($data['recommended'])) && $url != $data['recommended'] ) || $success === false ) ) ? sprintf('<p class=ini>%1$s<pre class=inifile>%2$s<br>%3$s</pre></p>',
-				sprintf('Configuration in %s:', $data['os_config'][0]),
-				$data['os_config'][1],
-				sprintf($data['os_config'][2], ($data['recommended']) ? $data['recommended'] : $url),
-				) : '',
+				(!empty($data['os_config']) && ( ( (!empty($data['recommended'])) && $url != $data['recommended'] ) || $success === false ) )
+				? sprintf(w4os_format_ini($data['os_config']),(!empty($data['recommended'])) ? $data['recommended'] : $url)
+			 	: '',
 				( $success == false && (!empty($data['third_party_url']))
 				? '<p class=third_party>' .
 				sprintf(__('This service requires a separate web application.<br>Try <a href="%1$s" target=_blank>%1$s</a>.', '<w4os>'),
