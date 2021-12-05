@@ -348,7 +348,7 @@ function w4os_update_avatar( $user, $params ) {
           'useruuid' => $uuid,
           'profileAllowPublish' => $profileAllowPublish,
           // 'profileMaturePublish' => $profileMaturePublish,
-          // 'profileURL' => w4os_get_profile_url($user),
+          'profileURL' => ($profileAllowPublish) ? w4os_get_profile_url($user) : '',
         ),
       );
       $w4osdb->query($w4osdb->prepare($query));
