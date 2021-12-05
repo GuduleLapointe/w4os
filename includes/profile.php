@@ -337,6 +337,21 @@ function w4os_update_avatar( $user, $params ) {
     $uuid = w4os_create_avatar($user, $params);
     break;
   }
+
+  if($uuid) {
+    $user->add_role('grid_user');
+    if(isset($params['opensim_profileAllowPublish'])) {
+      $profileAllowPublish = ($params['opensim_profileAllowPublish']) ? 1 : 0;
+      $w4osdb->replace(
+        'userprofile',
+        array(
+          'useruuid' => $uuid,
+          'profileAllowPublish' => $profileAllowPublish,
+        ),
+      );
+      $w4osdb->query($w4osdb->prepare($query));
+    }
+  }
   return $uuid;
 }
 
@@ -848,6 +863,39 @@ if(get_option('w4os_profile_page')=='provide') {
   require_once(__DIR__ . '/profile-page.php');
 }
 
+add_action( 'edit_user_profile', 'w4os_keeproles_profile_loading', 10, 1 );
+add_action( 'show_user_profile', 'w4os_keeproles_profile_loading', 10, 1 );
+function w4os_keeproles_profile_loading( $user ) {
+  $trans = get_transient( 'saved_user_roles' );
+  if ( empty( $trans ) ) return; // No data to act on, return.
+  $uid = $user->ID;
+  if ( empty( $trans[ $uid ] ) ) return;
+  $roles = $trans[ $uid ];
+
+  if ( in_array( 'grid_user', $roles ) ) $user->add_role( 'grid_user' );
+
+  $trans = get_transient( 'saved_user_roles' );
+  unset( $trans[ $uid ] );
+
+  if ( empty( $trans ) ) {
+    delete_transient( 'saved_user_roles' );
+  } else {
+    set_transient( 'saved_user_roles', $trans );
+  }
+}
+add_action( 'user_profile_update_errors', 'w4os_keeproles_profile_updating', 10, 3 );
+function w4os_keeproles_profile_updating( &$errors, $update, &$user ) {
+  if ( !$update ) return;
+  if ( $errors->has_errors() ) return;
+  $uid		 = $user->ID;
+  $user_temp	 = new WP_User( $uid );
+  $trans = get_transient( 'saved_user_roles' );
+  if ( empty( $trans ) ) $trans = array();
+  $trans[ $uid ] = $user_temp->roles;
+  set_transient( 'saved_user_roles', $trans);
+}
+
+
 add_action( 'show_user_profile', 'w4os_user_profile_fields' );
 add_action( 'edit_user_profile', 'w4os_user_profile_fields' );
 function w4os_user_profile_fields($user) {
@@ -855,6 +903,7 @@ function w4os_user_profile_fields($user) {
   if($pagenow != 'user-edit.php' && $pagenow != 'profile.php') return;
 
   if(!$user) return;
+
   $has_avatar = ! w4os_empty(esc_attr(get_the_author_meta( 'w4os_uuid', $user->ID )));
   $avatar = new W4OS_Avatar($user);
   $profile_settings = array(
@@ -893,7 +942,8 @@ function w4os_user_profile_fields($user) {
               'label' => __('Public profile', 'w4os'),
             'value' => (get_the_author_meta( 'opensim_profileAllowPublish', $user->ID ) === true),
               'default' => true,
-              'description' => __('Make avatar profile available in search and on the website', 'w4os'),
+              'description' => __('Make avatar profile public (available in search and on the website).', 'w4os')
+              . sprintf('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_get_profile_url($user) ),
             )
           ),
         ),
