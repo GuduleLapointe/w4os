@@ -235,6 +235,16 @@ function w4os_custom_post_states( $states, $post ) {
 function w4os_process_actions($args = array()) {
   if(empty($_REQUEST['action'])) return;
 
+  if($_REQUEST['action'] == 'w4os_check_urls_now') {
+  	if (check_admin_referer('w4os_check_urls_now')) {
+  		w4os_get_urls_statuses(w4os_get_grid_info(), true);
+    } else {
+      w4os_transient_admin_notice(__('The followed link has expired, please try again', 'w4os'));
+  	}
+  	wp_redirect(admin_url( "admin.php?page=".$_GET["page"] ));
+  	exit;
+  }
+
   // w4os_transient_admin_notice(__FUNCTION__ . '<pre>' . print_r($_REQUEST, true) . '</pre>');
   if($_REQUEST['action'] == 'create_page' && isset(W4OS_PAGES[$_REQUEST['helper']])) {
     $slug = $_REQUEST['slug'];

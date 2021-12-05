@@ -268,15 +268,14 @@ function w4os_get_url_status($url, $output = NULL, $force = false) {
 	if(empty($url)) {
 		$status_code = '';
 	} else {
-		$transient_key = sanitize_title('w4os_url_status_' . $url);
-		$status_code = ($force) ? false : get_transient( $transient_key );
-		if( $status_code == false ) {
+		$url_transient_key = sanitize_title('w4os_url_status_' . $url);
+		$status_code = ($force) ? false : get_transient( $url_transient_key );
+		if( ! $status_code ) {
 			$headers = @get_headers($url, true);
 			$status_code = preg_replace('/.* ([0-9]+) .*/', '$1', $headers['0']);
 			if(!$status_code) $status_code = 0;
-			set_transient( $transient_key, $status_code, 3600 );
-			update_option('w4os_get_url_status_checked', time());
-			update_option('w4os_check_urls_now', false);
+			set_transient( $url_transient_key, $status_code, 3600 );
+			set_transient('w4os_get_url_status_checked', time());
 		}
 	}
 	switch (substr($status_code, 0, 1)) {
@@ -311,24 +310,25 @@ function w4os_get_url_status($url, $output = NULL, $force = false) {
 }
 
 function w4os_get_urls_statuses($urls = array(), $force = false) {
+	set_transient('w4os_get_url_status_checked', time());
+	// Avoid concurrent checks
+	if ( get_transient( 'w4os_get_urls_statuses_lock' ) ) return;
 	if($force) {
-		// Avoid concurrent checks
-		if ( get_transient( 'w4os_get_urls_statuses_lock' ) ) $force = false;
 		set_transient( 'w4os_get_urls_statuses_lock', true, 3600 );
+		set_transient('w4os_get_url_status_checked', time());
 	}
-	$transient_key = sanitize_title('w4os_url_status_' . $url);
-	$status_code = ($force) ? false : get_transient( $transient_key );
 
 	if(is_array($urls)) foreach($urls as $key => $url) {
 		if(esc_url_raw($url) == $url) {
 			w4os_get_url_status($url, NULL, $force);
 		}
 	}
+	if($force) delete_transient( 'w4os_get_urls_statuses_lock' );
 }
 
 function register_w4os_get_urls_statuses_async_cron()
 {
-	if ( false === as_next_scheduled_action( 'w4os_get_urls_statuses' ) ) {
+	if ( false === as_next_scheduled_action( 'w4os_get_urls_statuses' ) &! get_transient( 'w4os_get_urls_statuses_lock') ) {
 		as_schedule_cron_action(time(), '*/5 * * * *', 'w4os_get_urls_statuses');
 	}
 }

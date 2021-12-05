@@ -75,7 +75,6 @@ if(empty(get_option('w4os_assets_slug'))) update_option('w4os_assets_slug', 'ass
 define('W4OS_GRID_ASSETS_SERVER', W4OS_GRID_LOGIN_URI . '/assets/');
 if(get_option('w4os_profile_page')=='provide')
 define('W4OS_PROFILE_URL', get_home_url(NULL, get_option('w4os_profile_slug')));
-if (get_option('w4os_check_urls_now')) w4os_get_urls_statuses(w4os_get_grid_info(), true);
 define('W4OS_GRID_INFO', w4os_get_grid_info());
 
 require_once __DIR__ . '/w4osdb.php';

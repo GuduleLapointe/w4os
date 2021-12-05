@@ -163,16 +163,21 @@ $count = w4os_count_users();
 		$required = W4OS_PAGES;
 		echo '<table class="w4os-table requested-pages">';
 		echo '<tr><th valign=top>';
-		echo '<form method="post" action="options.php" autocomplete="off">';
-		settings_fields( 'w4os_status' );
-		echo '<input type="hidden" input-hidden" id="w4os_check_urls_now" name="w4os_check_urls_now" value="1">';
-
-		submit_button(__('Check pages now', 'w4os'), 'small', 'submit', false, $other_attributes);
-		echo '</form>';
+		echo sprintf(
+			'<a class=button href="%s">%s</a>',
+			admin_url('admin.php?' . wp_nonce_url(
+				http_build_query(array(
+					'page'=>'w4os',
+					'action' => 'w4os_check_urls_now',
+				)),
+				'w4os_check_urls_now',
+			)),
+			__('Check pages now', 'w4os'),
+		);
 		echo '</th><td>';
 		echo w4os_status_icon($grid_running);
 		echo '</td><td>';
-		echo '<p class=description>' . sprintf(__('Last checked %s ago.', 'w4os'), human_time_diff(get_option('w4os_get_url_status_checked') )) . '</p>';
+		echo '<p class=description>' . sprintf(__('Last checked %s ago.', 'w4os'), human_time_diff(get_transient('w4os_get_url_status_checked') )) . '</p>';
 		echo '<p class=description>' . __('OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
 		echo '</td></tr>';
 
