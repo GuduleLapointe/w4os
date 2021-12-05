@@ -7,6 +7,20 @@ function w4os_register_settings() {
 	$default_gridname = (isset($grid_info['gridname'])) ? $grid_info['gridname'] : '';
 
 	$settings_pages = array(
+		'profile' => array(
+			'sections' => array(
+				'opensimulator' => array(
+					'fields' => array(
+						'opensimulator_profileAllowPublish' => array(
+							'type' => 'boolean',
+							'label' => __('Public profile', 'w4os'),
+							'default' => true,
+							'description' => __('Make the avatar profile available in search and on the website', 'w4os'),
+						)
+					),
+				),
+			),
+		),
 		'w4os_status' => array(
 			'sections' => array(
 				'default' => array(
@@ -16,11 +30,11 @@ function w4os_register_settings() {
 							'value' => 1,
 							'name' => 'Synchronize users now',
 						),
-						'w4os_check_urls_now' => array(
-							'type' => 'hidden',
-							'value' => 1,
-							'name' => 'Check urls now',
-						),
+						// 'w4os_check_urls_now' => array(
+						// 	'type' => 'hidden',
+						// 	'value' => 1,
+						// 	'name' => 'Check urls now',
+						// ),
 					),
 				),
 			),
@@ -242,7 +256,7 @@ function w4os_register_setting($option_page, $option_slug, $args = array() ) {
 	);
 }
 
-function w4os_settings_field($args) {
+function w4os_settings_field($args, $user = false) {
 	if($args['option_slug']) $field_id = $args['option_slug'];
 	else if($args['label_for']) $field_id = $args['label_for'];
 	else return;
@@ -250,15 +264,18 @@ function w4os_settings_field($args) {
 	// return;
 
 	$parameters = array();
-	if(isset($args['readonly'])) $parameters[] .= 'readonly';
+	if(isset($args['readonly']) && $args['readonly']) $parameters[] .= 'readonly';
+	if(isset($args['disabled']) && $args['disabled']) $parameters[] .= 'disabled';
 	if(isset($args['onchange'])) $parameters[] = $args['onchange'];
 	if(isset($args['placeholder'])) $parameters[] = "placeholder='" . esc_attr($args['placeholder']) . "'";
 	if(isset($args['autocomplete'])) $parameters[] = "autocomplete='" . $args['autocomplete'] . "'";
 	if(isset($args['onfocus'])) $parameters[] = "onfocus='" . esc_attr($args['onfocus']) . "'";
+	if($user) $value = get_user_meta( $user->ID, $field_id, true );
+	else $value = esc_attr(get_option($field_id));
 
 	switch ($args['type']) {
 		case 'string':
-		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . esc_attr(get_option($field_id)) . "' " . join(' ', $parameters) . " />";
+		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . $value . "' " . join(' ', $parameters) . " />";
 		break;
 
 		case 'password':
@@ -280,16 +297,25 @@ function w4os_settings_field($args) {
 		break;
 
 		case 'boolean':
-		$args['values'][$field_id] = 1;
+		$args['values'][$field_id] = true;
 		case 'checkbox':
 		foreach($args['values'] as $option_key => $option_name) {
 			if($args['type']=='checkbox') $option_id = $field_id ."_" . $option_key;
-			else $option_id = $field_id;
+			else {
+				$option_id = $field_id;
+				$option_name = $args['description'];
+				unset($args['description']);
+			}
+			if($user) $value = get_user_meta( $user->ID, $option_id, true );
+			else $value = esc_attr(get_option($option_id));
+
 			$option = "<input type='checkbox' id='$option_id' name='$option_id' value='1'";
-			$parameters['checked'] = checked(get_option($option_id), true, false);
+			$parameters['checked'] = checked($value, true, false);
 			$option .= ' ' . join(' ', $parameters) . ' ';
 			$option .= "/>";
-			if($args['type']=='checkbox') $option .= " <label for='$option_id'>$option_name</label>";
+			// if($args['type']=='checkbox')
+			$option .= " <label for='$option_id'>$option_name</label>";
+			// else if($args['type']=='boolean') $option .= " <label for='$option_id'>$option_name</label>";
 			$options[] = $option;
 		}
 		if(is_array($options)) echo join("<br>", $options);
@@ -300,6 +326,10 @@ function w4os_settings_field($args) {
 		break;
 
 		case 'description':
+		break;
+
+		case 'os_asset':
+		echo (!empty($value)) ? w4os_render_asset($value) : $args['placeholder'];
 		break;
 
 		default:

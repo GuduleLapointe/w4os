@@ -121,11 +121,6 @@ class W4OS_Avatar extends WP_User {
   }
 }
 
-add_action( 'show_user_profile', 'w4os_profile_fields' );
-add_action( 'edit_user_profile', 'w4os_profile_fields' );
-add_action( 'personal_options_update', 'w4os_profile_fields_save' );
-add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
-
 function w4os_profile_dereference($user_or_id) {
   if(!W4OS_DB_CONNECTED) return;
   global $w4osdb;
@@ -752,14 +747,6 @@ function w4os_profile_display( $user, $args=[] ) {
   return $content;
 }
 
-function w4os_profile_fields_save( $user_id ) {
-    if ( !current_user_can( 'edit_user', $user_id ) ) {
-        return false;
-    }
-    // update_user_meta( $user_id, 'w4os_uuid', $_POST['w4os_uuid'] );
-    // update_user_meta( $user_id, 'w4os_firstname', $_POST['w4os_firstname'] );
-    // update_user_meta( $user_id, 'w4os_lastname', $_POST['w4os_lastname'] );
-}
 
 function w4os_profile_shortcodes_init()
 {
@@ -779,12 +766,25 @@ function w4os_profile_shortcodes_init()
 }
 add_action('init', 'w4os_profile_shortcodes_init');
 
+function w4os_render_asset($image_uuid, $size = 256, $default = '', $alt = '', $args = NULL ) {
+  if(w4os_empty($image_uuid)) return;
+  return sprintf(
+    '<img src="%1$s" class="asset asset-%3$d %4$s" alt="%2$s" loading="lazy" width="%3$d" height="%3$d">',
+    w4os_get_asset_url($image_uuid),
+    (empty($alt)) ? 'OpenSimulator asset' : $alt,
+    $size,
+    $args['class'],
+  );
+}
+
 function w4os_get_avatar( $user_id, $size = 96, $default = '', $alt = '', $args = NULL ) {
   if(!W4OS_DB_CONNECTED) return;
   $image_uuid = get_the_author_meta( 'w4os_profileimage', $user_id );
   if ( empty($image_uuid) ) return false;
   if ( $image_uuid === W4OS_NULL_KEY ) return false;
-
+  $args['class'] = "avatar avatar-$size photo";
+  if(empty($alt)) $alt = 'avatar profile picture';
+  return w4os_render_asset($image_uuid, $size, $default, $alt, $args);
   return sprintf(
     '<img src="%1$s" class="avatar avatar-%3$d photo" alt="%2$s" loading="lazy" width="%3$d" height="%3$d">',
     w4os_get_asset_url($image_uuid),
@@ -843,4 +843,98 @@ function w4os_get_profile_url($user_or_id) {
 
 if(get_option('w4os_profile_page')=='provide') {
   require_once(__DIR__ . '/profile-page.php');
+}
+
+add_action( 'show_user_profile', 'w4os_user_profile_fields' );
+add_action( 'edit_user_profile', 'w4os_user_profile_fields' );
+function w4os_user_profile_fields($user) {
+  global $pagenow;
+  if($pagenow != 'user-edit.php' && $pagenow != 'profile.php') return;
+
+  if(!$user) return;
+  $has_avatar = ! w4os_empty(esc_attr(get_the_author_meta( 'w4os_uuid', $user->ID )));
+  $avatar = new W4OS_Avatar($user);
+  $profile_settings = array(
+    // 'profile.php' => array(
+      'sections' => array(
+        'opensimulator' => array(
+          'label' => __('OpenSimulator', 'w4os'),
+          'fields' => array(
+            'w4os_uuid' => array(
+              'type' => 'string',
+              'label' => 'UUID',
+              'value' => esc_attr(get_the_author_meta( 'w4os_uuid', $user->ID )),
+              'disabled' => true,
+            ),
+            'w4os_firstname' => array(
+              'type' => 'string',
+              'label' => 'Avatar First Name',
+              'value' => esc_attr(get_the_author_meta( 'w4os_firstname', $user->ID )),
+              'readonly' => $has_avatar,
+            ),
+            'w4os_lastname' => array(
+              'type' => 'string',
+              'label' => 'Avatar Last Name',
+              'value' => esc_attr(get_the_author_meta( 'w4os_lastname', $user->ID )),
+              'readonly' => $has_avatar,
+            ),
+            'w4os_profileimage' => array(
+              'type' => 'os_asset',
+              'label' => 'Profile Picture',
+              'value' => esc_attr(get_the_author_meta( 'w4os_profileimage', $user->ID )),
+              'placeholder' => ($has_avatar) ? __('Must be set in the viewer.', 'w4os') : '',
+              'readonly' => true,
+            ),
+            'opensimulator_profileAllowPublish' => array(
+              'type' => 'boolean',
+              'label' => __('Public profile', 'w4os'),
+            'value' => (get_the_author_meta( 'opensimulator_profileAllowPublish', $user->ID ) === true),
+              'default' => true,
+              'description' => __('Make avatar profile available in search and on the website', 'w4os'),
+            )
+          ),
+        ),
+      // ),
+    ),
+  );
+  $settings_pages = array('profile.php' => $profile_settings);
+
+  foreach($settings_pages as $page_slug => $page) {
+    foreach($page['sections'] as $section_slug => $section) {
+      echo '<h3>' . $section['label'] . '</h3>';
+      echo '<table class="form-table">';
+      foreach($section['fields'] as $field_slug => $field) {
+        echo '<tr><th>' . $field['label'] . '</th><td>';
+        $args = array_merge([ 'option_slug' => $field_slug ], $field);
+        w4os_settings_field($args, $user);
+        echo '</td></tr>';
+        // echo '<pre>' . print_r($args, true) . '</pre>';
+        //   add_settings_section( $section_slug, (isset($section['name'])) ? $section['name'] : $section_slug, (isset($section['section_callback'])) ? $section['section_callback'] : '', $page_slug );
+        //     $field['section'] = $section_slug;
+      }
+      echo '</table>';
+    }
+  }
+}
+
+// add_action( 'personal_options_update', 'w4os_profile_fields_save' );
+add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
+function w4os_profile_fields_save( $user_id ) {
+  if ( $user_id != wp_get_current_user()->ID &! current_user_can( 'edit_user', $user_id ) ) {
+    return;
+  }
+  $user = get_user_by('ID', $user_id);
+  if(!$user) return;
+
+  $args = array(
+    'w4os_firstname' => esc_attr($_POST['w4os_firstname']),
+    'w4os_lastname' => esc_attr($_POST['w4os_lastname']),
+    'opensimulator_profileAllowPublish' => (esc_attr($_POST['opensimulator_profileAllowPublish']) == true),
+  );
+
+  update_user_meta( $user_id, 'w4os_firstname', $args['w4os_firstname']);
+  update_user_meta( $user_id, 'w4os_lastname', $args['w4os_lastname']);
+  update_user_meta( $user_id, 'opensimulator_profileAllowPublish', $args['opensimulator_profileAllowPublish']);
+  // if(!empty($_POST['w4os_firstname']) &! empty($_POST['w4os_lastname']))
+  // w4os_update_avatar( $user, $args );
 }
