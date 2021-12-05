@@ -347,6 +347,8 @@ function w4os_update_avatar( $user, $params ) {
         array(
           'useruuid' => $uuid,
           'profileAllowPublish' => $profileAllowPublish,
+          // 'profileMaturePublish' => $profileMaturePublish,
+          // 'profileURL' => w4os_get_profile_url($user),
         ),
       );
       $w4osdb->query($w4osdb->prepare($query));
@@ -943,7 +945,7 @@ function w4os_user_profile_fields($user) {
             'value' => (get_the_author_meta( 'opensim_profileAllowPublish', $user->ID ) === true),
               'default' => true,
               'description' => __('Make avatar profile public (available in search and on the website).', 'w4os')
-              . sprintf('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_get_profile_url($user) ),
+              . (($has_avatar) ? sprintf('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_get_profile_url($user) ) : ''),
             )
           ),
         ),
