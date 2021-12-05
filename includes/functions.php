@@ -37,8 +37,21 @@ function w4os_array2table($array, $class="", $level = 1 ) {
 	}
 }
 
-function w4os_notice ($message, $status="") {
-  echo "<div class='notice notice-$status'><p>$message</p></div>";
+function w4os_notice ($message, $class="", $id = '', $context = '') {
+	global $w4Os_notices;
+	if(empty(trim('$message')) || $message == ' ') return;
+	if(!empty($id)) $w4Os_notices[$id] = $notice;
+	if(is_admin()) {
+		w4os_transient_admin_notice($message, $class);
+	} else {
+		echo sprintf(
+			'<div class="notice notice-%2$s"><p>%1$s</p></div>',
+			$message,
+			$class,
+			$id,
+			// '<strong>' . ((empty($context)) ? W4OS_PLUGIN_NAME : $context) . '</strong>: ',
+		);
+	}
 }
 
 function w4os_gen_uuid() {

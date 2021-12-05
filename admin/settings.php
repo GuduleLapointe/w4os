@@ -11,7 +11,7 @@ function w4os_register_settings() {
 			'sections' => array(
 				'opensimulator' => array(
 					'fields' => array(
-						'opensimulator_profileAllowPublish' => array(
+						'opensim_profileAllowPublish' => array(
 							'type' => 'boolean',
 							'label' => __('Public profile', 'w4os'),
 							'default' => true,
