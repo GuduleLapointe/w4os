@@ -10,7 +10,35 @@ $count = w4os_count_users();
 	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
 
 	<div class=content>
+		<div class=shortcodes>
+			<h2>
+				<?php _e("Available shortcodes", 'w4os') ?>
+			</h2>
+			<table class="w4os-table shortcodes">
+				<tr><th>
+					<code>[gridinfo]</code>
+					<p><?php _e("General information (grid name and login uri)", 'w4os') ?></p>
+				</th><td>
+					<?php echo w4os_gridinfo_shortcode(); ?>
+				</td></tr>
+				<tr><th>
+					<code>[gridstatus]</code>
+					<p><?php _e("Online users, regions, etc.", 'w4os') ?></p>
+				</th><td>
+					<?php echo w4os_gridstatus_shortcode(); ?>
+				</td></tr>
+				<tr><th>
+					<code>[gridprofile]</code>
+					<p><?php _e("Grid profile if user is connected and has an avatar, avatar registration form otherwise", 'w4os') ?>
+						<?php echo sprintf(__("(formerly %s)", 'w4os'), "<code>[w4os_profile]</code>"); ?>
+					</p>
+				</th><td>
+					<?php echo do_shortcode('[gridprofile]'); ?>
+				</td></tr>
+			</table>
+		</div>
 	<?php if(W4OS_DB_CONNECTED) { ?>
+		<div class=column>
 		<div class=sync>
 			<h2><?php _e("Users", 'w4os') ?></h2>
 			<table class="w4os-table user-sync">
@@ -99,33 +127,6 @@ $count = w4os_count_users();
 			<?php	} ?>
 		</div>
 	<?php } ?>
-		<div class=shortcodes>
-			<h2>
-				<?php _e("Available shortcodes", 'w4os') ?>
-			</h2>
-			<table class="w4os-table shortcodes">
-				<tr><th>
-					<code>[gridinfo]</code>
-					<p><?php _e("General information (grid name and login uri)", 'w4os') ?></p>
-				</th><td>
-					<?php echo w4os_gridinfo_shortcode(); ?>
-				</td></tr>
-				<tr><th>
-					<code>[gridstatus]</code>
-					<p><?php _e("Online users, regions, etc.", 'w4os') ?></p>
-				</th><td>
-					<?php echo w4os_gridstatus_shortcode(); ?>
-				</td></tr>
-				<tr><th>
-					<code>[gridprofile]</code>
-					<p><?php _e("Grid profile if user is connected and has an avatar, avatar registration form otherwise", 'w4os') ?>
-						<?php echo sprintf(__("(formerly %s)", 'w4os'), "<code>[w4os_profile]</code>"); ?>
-					</p>
-				</th><td>
-					<?php echo do_shortcode('[gridprofile]'); ?>
-				</td></tr>
-			</table>
-		</div>
 	<?php
 	  if ( ! function_exists('curl_init') ) $php_missing_modules[]='curl';
 	  if ( ! function_exists('simplexml_load_string') ) $php_missing_modules[]='xml';
@@ -162,7 +163,9 @@ $count = w4os_count_users();
 
 		$required = W4OS_PAGES;
 		echo '<table class="w4os-table requested-pages">';
-		echo '<tr><th valign=top>';
+		echo '<tr>';
+		echo '<td>'. w4os_status_icon($grid_running) . '</td>';
+		echo '<td>';
 		echo sprintf(
 			'<a class=button href="%s">%s</a>',
 			admin_url('admin.php?' . wp_nonce_url(
@@ -174,9 +177,8 @@ $count = w4os_count_users();
 			)),
 			__('Check pages now', 'w4os'),
 		);
-		echo '</th><td>';
-		echo w4os_status_icon($grid_running);
-		echo '</td><td>';
+		echo '</td>';
+		echo '<td>';
 		echo '<p class=description>' . sprintf(__('Last checked %s ago.', 'w4os'), human_time_diff(get_transient('w4os_get_url_status_checked') )) . '</p>';
 		echo '<p class=description>' . __('OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
 		echo '</td></tr>';
@@ -190,9 +192,8 @@ $count = w4os_count_users();
 			$status_icon = w4os_get_url_status($url, 'icon');
 			echo sprintf(
 				'<tr>
-				<th>%1$s</th>
 				<td>%2$s</td>
-				<td>%3$s%4$s%5$s%7$s</td>
+				<td><h3>%1$s</h3>%3$s%4$s%5$s%7$s</td>
 				<td>%6$s</td>
 				</tr>
 				',
@@ -223,5 +224,6 @@ $count = w4os_count_users();
 		echo '</table>';
 		?>
 		</div>
+	</div>
 	</div>
 </div>

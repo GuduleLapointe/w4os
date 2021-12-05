@@ -76,9 +76,27 @@
     flex-direction: row;
 }
 
+.iniconfig {
+  background: lightgrey;
+    padding: 10px 10px 1px;
+}
+
+
 .w4os-status-page.wrap > .content > div {
+    flex-basis: 960px;
+    flex-grow: 2;
+}
+
+.w4os-status-page.wrap > .content > div.shortcodes {
     flex-basis: 480px;
-    flex-grow: 1;
+    flex-grow: 2;
+}
+
+.w4os-table.requested-pages td {
+    vertical-align: top;
+}
+.w4os-table.requested-pages td:not(:first-child) {
+    width: 50%;
 }
 
 .requested-pages p.submit {
