@@ -363,9 +363,11 @@ function w4os_format_ini($array) {
 		foreach($sections as $section => $params) {
 			$content.= "$section<br>";
 			foreach($params as $param => $value) {
-				$content .= "  $param = $value";
+				if(is_numeric($param)) $content .= "  $value<br>";
+				else $content .= "  $param = $value<br>";
 			}
 		}
+		$content = preg_replace('/<br>$/', '', $content);
 		$content .= '</pre></p>';
 	}
 	return $content;

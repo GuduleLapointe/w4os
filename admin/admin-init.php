@@ -299,20 +299,24 @@ add_action('init', function() {
     'search' => array(
       'name' => __('Search', 'w4os'),
       'description' => __('Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities.', 'w4os'),
-      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'search' => '%s' ]]],
       'third_party_url' => (get_option('w4os_provide_search')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
-      // 'os_config' => array('Robust.HG.ini', '[LoginService]', 'SearchURL = %s'),
+      'os_config' => [
+        'Robust.HG.ini' => [
+          '[LoginService]' => [ 'SearchURL = %1$s' ],
+          '[GridInfoService]' => [ 'search = %1$s' ],
+        ],
+      ],
     ),
     'message' => array(
       'name' => __('Offline messages', 'w4os'),
       'description' => __('Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os'),
-      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'message' => '%s' ]], 'OpenSim.ini' => [ '[Messaging]' => [ 'OfflineMessageURL' => '%s' ]]],
+      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'message = %1$s' ]], 'OpenSim.ini' => [ '[Messaging]' => [ 'OfflineMessageURL = %1$s' ]]],
       'third_party_url' => (get_option('w4os_provide_offline')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
     ),
     'welcome' => array(
       'name' => __('Splash', 'w4os'),
       'description' => __("The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended.", 'w4os'),
-      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'welcome' => '%s' ]]],
+      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'welcome = %s' ]]],
       'content' => '<!-- wp:columns {"verticalAlignment":null,"align":"full","className":"is-style-default"} -->
       <div class="wp-block-columns alignfull is-style-default"><!-- wp:column {"verticalAlignment":"bottom","width":"25%"} -->
       <div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:25%"><!-- wp:site-logo {"align":"center"} /-->
@@ -339,30 +343,30 @@ add_action('init', function() {
       'name' => __('Registration page', 'w4os'),
       'description' => __('Link to the user registration.', 'w4os'),
       'recommended' => wp_registration_url(),
-      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'register' => '%s' ]]],
+      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'register = %s' ]]],
     ),
     'password' => array(
-    'name' => __('Password revovery', 'w4os'),
-    'description' => __('Link to lost password page.', 'w4os'),
-    'recommended' =>  wp_lostpassword_url(),
-    'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'password' => '%s' ]]],
+      'name' => __('Password revovery', 'w4os'),
+      'description' => __('Link to lost password page.', 'w4os'),
+      'recommended' =>  wp_lostpassword_url(),
+      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'password = %s' ]]],
     ),
     'economy' => array(
-    'name' => __('Economy', 'w4os'),
-    'description' => __('Currencies and some other services queried by the viewer. They are not accessed directly by the user.', 'w4os'),
-    'external' => true,
-    'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'economy' => '%s' ]]],
-    'third_party_url' => (get_option('w4os_provide_currency')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+      'name' => __('Economy', 'w4os'),
+      'description' => __('Currencies and some other services queried by the viewer. They are not accessed directly by the user.', 'w4os'),
+      'external' => true,
+      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'economy = %s' ]]],
+      'third_party_url' => (get_option('w4os_provide_currency')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
     ),
     'about' => array(
-    'name' => __('About this grid', 'w4os'),
-    'description' => __('Detailed info page on your website, via a link displayed on the viewer login page.', 'w4os'),
-    'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'about' => '%s' ]]],
+      'name' => __('About this grid', 'w4os'),
+      'description' => __('Detailed info page on your website, via a link displayed on the viewer login page.', 'w4os'),
+      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'about = %s' ]]],
     ),
     'help' => array(
-    'name' => __('Help', 'w4os'),
-    'description' => __('Link to a help page on your website.', 'w4os'),
-    'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'help' => '%s' ]]],
+      'name' => __('Help', 'w4os'),
+      'description' => __('Link to a help page on your website.', 'w4os'),
+      'os_config' => [ 'Robust.HG.ini' => [ '[GridInfoService]' => [ 'help = %s' ]]],
     ),
-    ));
+  ));
 });

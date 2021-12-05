@@ -192,8 +192,8 @@ $count = w4os_count_users();
 				'<tr>
 				<th>%1$s</th>
 				<td>%2$s</td>
-				<td>%3$s%4$s%5$s%6$s%7$s</td>
-				<td></td>
+				<td>%3$s%4$s%5$s%7$s</td>
+				<td>%6$s</td>
 				</tr>
 				',
 				$data['name'],
@@ -201,7 +201,7 @@ $count = w4os_count_users();
 				(!empty($url)) ? sprintf('<p class=url><a href="%1$s">%1$s</a></p>', $url) : '',
 				(!empty($data['description'])) ? '<p class=description>' . $data['description'] . '</p>' : '',
 				(!empty($data['recommended']) && $url != $data['recommended']) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> ' . sprintf(__('Should be %s', 'w4os'), $data['recommended']) . '</p>' : '',
-				(!empty($data['os_config']) && ( ( (!empty($data['recommended'])) && $url != $data['recommended'] ) || $success === false ) )
+				(!empty($data['os_config']))
 				? sprintf(w4os_format_ini($data['os_config']),(!empty($data['recommended'])) ? $data['recommended'] : $url)
 			 	: '',
 				( $success == false && (!empty($data['third_party_url']))
