@@ -208,6 +208,10 @@ add_action( 'template_include', function( $template ) {
     }
   }
 
+  $user_agent = $_SERVER['HTTP_USER_AGENT'];
+  if(strpos( $user_agent, ' - SecondLife/') !== false) {
+    return plugin_dir_path(__DIR__) . "templates/page-profile-viewer.php"; die();
+  }
   return $template;
 } );
 

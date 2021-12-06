@@ -336,18 +336,16 @@ function w4os_update_avatar( $user, $params ) {
     $user->add_role('grid_user');
     /* In-world profiles are always public, so are web profiles */
     // if(isset($params['opensim_profileAllow_web'])) {
-    //   $current = $w4osdb->get_row( $w4osdb->prepare( "SELECT * FROM userprofile WHERE useruuid = '%s'", $uuid ) , ARRAY_A);
-    //   $profileAllow_web = ($params['opensim_profileAllow_web']) ? 1 : 0;
-    //   $new = array_merge($current, array(
-    //     'useruuid' => $uuid,
-    //
-    //     /* profileAllow and profileMature might be handled in the future */
-    //
-    //     // 'profileAllowPublish' => $profileAllowPublish,
-    //     // 'profileMaturePublish' => $profileMaturePublish,
-    //     'profileURL' => ($profileAllow_web) ? w4os_get_profile_url($user) : '',
-    //   ));
-    //   $w4osdb->replace( 'userprofile', $new );
+      $current = $w4osdb->get_row( $w4osdb->prepare( "SELECT * FROM userprofile WHERE useruuid = '%s'", $uuid ) , ARRAY_A);
+      // $profileAllow_web = ($params['opensim_profileAllow_web']) ? 1 : 0;
+      $new = array_merge($current, array(
+        'useruuid' => $uuid,
+        /* profileAllow and profileMature might be handled in the future */
+        // 'profileAllowPublish' => $profileAllowPublish,
+        // 'profileMaturePublish' => $profileMaturePublish,
+        'profileURL' => w4os_get_profile_url($user),
+      ));
+      $w4osdb->replace( 'userprofile', $new );
     // }
   }
   return $uuid;

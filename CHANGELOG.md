@@ -7,6 +7,7 @@
 * added states in admin pages list for known urls (from grid_info)
 * added lost password and register links on login page
 * fix missing error messages on login page
+* lighter template for profiles when loaded from the viewer
 * allow admin to create avatars for exissting users
 
 ### 2.2.1

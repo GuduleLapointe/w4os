@@ -22,11 +22,12 @@ See Features and Roadmap sections for current and upcoming functionalties.
 - **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
 - **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
 - **Avatar creation**:
-  - Opensimulator section in standard wp profile page
+  - Opensimulator section in standard wp account page
   - `[gridprofile]` shortcode can be inserted in any custom page
   - Avatar tab in account dashboard on WooCommerce websites
 - Choose avatar look from default models
 - Avatar and website passwords are synchronized
+- **Web profiles**: excerpt of the avatar's profile
 - **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
 - **Web assets server**: the needed bridge to display in-world images on a website
 - **OpenSimulator settings page**:
@@ -61,7 +62,8 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] get grid info from http://login.uri:8002/get_grid_info
 - [x] Web Assets server
 - Improve avatar profile
-  - Switch to allow public profile
+  - Switch to allow web profile
+  - Switch set in-world prefs for public profiles
   - Better basic layout
   - Web edit profile
 - Admin Start / Stop regions
