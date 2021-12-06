@@ -113,7 +113,7 @@ function w4os_transient_admin_notice( $notice, $class='info', $dismissible=true,
 	$queue = get_transient( $transient_key );
 
 	if(!is_array($queue)) $queue = array($queue);
-	$queue[] = array('notice' => $notice, 'class' => $class, 'dismissible' => $dissmissible);
+	$queue[] = array('notice' => $notice, 'class' => $class, 'dismissible' => $dismissible);
 	set_transient( $transient_key, $queue );
 }
 
