@@ -340,7 +340,6 @@ function w4os_update_avatar( $user, $params ) {
         // 'profileMaturePublish' => $profileMaturePublish,
         'profileURL' => ($profileAllowPublish) ? w4os_get_profile_url($user) : '',
       ));
-      . 'new <pre>' . print_r($new, true) . '</pre>' );
       $w4osdb->replace( 'userprofile', $new );
     }
   }
