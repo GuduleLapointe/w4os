@@ -158,18 +158,15 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
-= Unreleased =
+= 2.2.2 =
+* new admin can create avatars for existing users
 * new check grid info url validity (cron and manual)
-* new create buttons for missing pages on status dashboard
-* added user preference to make avatar profile public
 * added states in admin pages list for known urls (from grid_info)
 * added lost password and register links on login page
-* fix missing error messages on login page
+* added buttons to create missing pages on status dashboard
 * lighter template for profiles when loaded from the viewer
-* allow admin to create avatars for exissting users
-
-= 2.2.1 =
-* fixed user login broken if w4os_login_page is set to profile and OpenSim database is not connected
+* fix missing error messages on login page
+* fix user login broken if w4os_login_page is set to profile and OpenSim database is not connected
 
 = 2.2 =
 * new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
