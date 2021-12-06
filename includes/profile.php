@@ -160,11 +160,12 @@ function w4os_profile_sync($user_or_id, $uuid = NULL) {
     $condition = "PrincipalID = '$uuid'";
   }
 
-  $avatars=$w4osdb->get_results("SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText
-    FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
+  $avatars=$w4osdb->get_results("SELECT * FROM UserAccounts
+    LEFT JOIN userprofile ON PrincipalID = userUUID
     WHERE active = 1 AND $condition"
   );
   if(empty($avatars)) return false;
+
   $avatar_row = array_shift($avatars);
   if(w4os_empty($uuid)) $uuid = $avatar_row->PrincipalID;
 
@@ -332,16 +333,15 @@ function w4os_update_avatar( $user, $params ) {
     $user->add_role('grid_user');
     if(isset($params['opensim_profileAllowPublish'])) {
       $profileAllowPublish = ($params['opensim_profileAllowPublish']) ? 1 : 0;
-      $w4osdb->replace(
-        'userprofile',
-        array(
-          'useruuid' => $uuid,
-          'profileAllowPublish' => $profileAllowPublish,
-          // 'profileMaturePublish' => $profileMaturePublish,
-          'profileURL' => ($profileAllowPublish) ? w4os_get_profile_url($user) : '',
-        ),
-      );
-      $w4osdb->query($w4osdb->prepare($query));
+      $current = $w4osdb->get_row( $w4osdb->prepare( "SELECT * FROM userprofile WHERE useruuid = '%s'", $uuid ) , ARRAY_A);
+      $new = array_merge($current, array(
+        'useruuid' => $uuid,
+        'profileAllowPublish' => $profileAllowPublish,
+        // 'profileMaturePublish' => $profileMaturePublish,
+        'profileURL' => ($profileAllowPublish) ? w4os_get_profile_url($user) : '',
+      ));
+      . 'new <pre>' . print_r($new, true) . '</pre>' );
+      $w4osdb->replace( 'userprofile', $new );
     }
   }
   return $uuid;
