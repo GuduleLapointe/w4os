@@ -7,20 +7,6 @@ function w4os_register_settings() {
 	$default_gridname = (isset($grid_info['gridname'])) ? $grid_info['gridname'] : '';
 
 	$settings_pages = array(
-		'profile' => array(
-			'sections' => array(
-				'opensimulator' => array(
-					'fields' => array(
-						'opensim_profileAllow_web' => array(
-							'type' => 'boolean',
-							'label' => __('Public profile', 'w4os'),
-							'default' => true,
-							'description' => __('Make the avatar profile available in search and on the website', 'w4os'),
-						)
-					),
-				),
-			),
-		),
 		'w4os_status' => array(
 			'sections' => array(
 				'default' => array(

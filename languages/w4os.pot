@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-04T19:32:21-04:00\n"
+"POT-Creation-Date: 2021-12-06T00:07:39-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -46,12 +46,12 @@ msgid "OpenSimulator Settings"
 msgstr ""
 
 #: admin/admin-init.php:30
-#: admin/settings.php:339
+#: admin/settings.php:362
 msgid "Settings"
 msgstr ""
 
 #: admin/admin-init.php:74
-#: includes/profile.php:88
+#: includes/profile.php:89
 msgid "Avatar Name"
 msgstr ""
 
@@ -108,92 +108,93 @@ msgstr ""
 msgid "OpenSimulator Offline Messages"
 msgstr ""
 
-#: admin/admin-init.php:245
+#: admin/admin-init.php:242
+#: admin/admin-init.php:255
 msgid "The followed link has expired, please try again"
 msgstr ""
 
-#: admin/admin-init.php:252
+#: admin/admin-init.php:262
 msgid "Page %s already exists."
 msgstr ""
 
-#: admin/admin-init.php:270
+#: admin/admin-init.php:280
 msgid "New page %s created."
 msgstr ""
 
-#: admin/admin-init.php:274
+#: admin/admin-init.php:284
 msgid "Error while creating page %s."
 msgstr ""
 
-#: admin/admin-init.php:286
+#: admin/admin-init.php:296
 msgid "Avatar profile"
 msgstr ""
 
-#: admin/admin-init.php:287
+#: admin/admin-init.php:297
 msgid "The base URL for avatar web profiles."
 msgstr ""
 
-#: admin/admin-init.php:290
+#: admin/admin-init.php:300
 msgid "Search"
 msgstr ""
 
-#: admin/admin-init.php:291
+#: admin/admin-init.php:301
 msgid "Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities."
 msgstr ""
 
-#: admin/admin-init.php:297
+#: admin/admin-init.php:311
 #: admin/settings.php:94
 msgid "Offline messages"
 msgstr ""
 
-#: admin/admin-init.php:298
+#: admin/admin-init.php:312
 msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:303
+#: admin/admin-init.php:317
 msgid "Splash"
 msgstr ""
 
-#: admin/admin-init.php:304
+#: admin/admin-init.php:318
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr ""
 
-#: admin/admin-init.php:329
+#: admin/admin-init.php:343
 msgid "Registration page"
 msgstr ""
 
-#: admin/admin-init.php:330
+#: admin/admin-init.php:344
 msgid "Link to the user registration."
 msgstr ""
 
-#: admin/admin-init.php:335
+#: admin/admin-init.php:349
 msgid "Password revovery"
 msgstr ""
 
-#: admin/admin-init.php:336
+#: admin/admin-init.php:350
 msgid "Link to lost password page."
 msgstr ""
 
-#: admin/admin-init.php:341
+#: admin/admin-init.php:355
 msgid "Economy"
 msgstr ""
 
-#: admin/admin-init.php:342
+#: admin/admin-init.php:356
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:348
+#: admin/admin-init.php:362
 msgid "About this grid"
 msgstr ""
 
-#: admin/admin-init.php:349
+#: admin/admin-init.php:363
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr ""
 
-#: admin/admin-init.php:353
+#: admin/admin-init.php:367
 msgid "Help"
 msgstr ""
 
-#: admin/admin-init.php:354
+#: admin/admin-init.php:368
 msgid "Link to a help page on your website."
 msgstr ""
 
@@ -247,7 +248,7 @@ msgid "Password"
 msgstr ""
 
 #: admin/settings.php:71
-#: admin/status-page.php:39
+#: admin/status-page.php:67
 msgid "Avatar models"
 msgstr ""
 
@@ -360,137 +361,137 @@ msgstr ""
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr ""
 
-#: admin/settings.php:317
+#: admin/settings.php:340
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 
-#: admin/settings.php:318
+#: admin/settings.php:341
 msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
 msgstr ""
 
-#: admin/settings.php:323
+#: admin/settings.php:346
 msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
 msgstr ""
 
 #: admin/status-page.php:15
-msgid "Users"
+msgid "Available shortcodes"
 msgstr ""
 
 #: admin/status-page.php:20
+msgid "General information (grid name and login uri)"
+msgstr ""
+
+#: admin/status-page.php:26
+msgid "Online users, regions, etc."
+msgstr ""
+
+#: admin/status-page.php:32
+msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
+msgstr ""
+
+#: admin/status-page.php:33
+msgid "(formerly %s)"
+msgstr ""
+
+#: admin/status-page.php:43
+msgid "Users"
+msgstr ""
+
+#: admin/status-page.php:48
 msgid "Total"
 msgstr ""
 
-#: admin/status-page.php:21
+#: admin/status-page.php:49
 msgid "WP only"
 msgstr ""
 
-#: admin/status-page.php:22
+#: admin/status-page.php:50
 msgid "Sync"
 msgstr ""
 
-#: admin/status-page.php:23
+#: admin/status-page.php:51
 msgid "Grid only"
 msgstr ""
 
-#: admin/status-page.php:27
+#: admin/status-page.php:55
 msgid "Grid accounts"
 msgstr ""
 
-#: admin/status-page.php:34
+#: admin/status-page.php:62
 msgid "Linked WordPress accounts"
 msgstr ""
 
-#: admin/status-page.php:46
+#: admin/status-page.php:74
 msgid "Other service accounts"
 msgstr ""
 
-#: admin/status-page.php:60
+#: admin/status-page.php:88
 msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
 msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/status-page.php:68
+#: admin/status-page.php:96
 msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference."
 msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/status-page.php:76
+#: admin/status-page.php:104
 msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
 msgid_plural "%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/status-page.php:81
+#: admin/status-page.php:109
 msgid "Real accounts need a unique email address for W4OS to function properly."
 msgstr ""
 
-#: admin/status-page.php:89
+#: admin/status-page.php:117
 msgid "Synchronize users now"
 msgstr ""
 
-#: admin/status-page.php:91
+#: admin/status-page.php:119
 msgid "Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console."
 msgstr ""
 
-#: admin/status-page.php:104
-msgid "Available shortcodes"
-msgstr ""
-
-#: admin/status-page.php:109
-msgid "General information (grid name and login uri)"
-msgstr ""
-
-#: admin/status-page.php:115
-msgid "Online users, regions, etc."
-msgstr ""
-
-#: admin/status-page.php:121
-msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
-msgstr ""
-
-#: admin/status-page.php:122
-msgid "(formerly %s)"
-msgstr ""
-
-#: admin/status-page.php:135
+#: admin/status-page.php:136
 msgid "Missing PHP modules"
 msgstr ""
 
-#: admin/status-page.php:137
+#: admin/status-page.php:138
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
 msgstr ""
 
-#: admin/status-page.php:145
+#: admin/status-page.php:146
 msgid "OpenSimulator pages"
 msgstr ""
 
-#: admin/status-page.php:147
+#: admin/status-page.php:148
 msgid "The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file."
 msgstr ""
 
-#: admin/status-page.php:157
+#: admin/status-page.php:158
 msgid "Grid not running, start Robust server or %scheck OpenSimulator settings%s."
 msgstr ""
 
-#: admin/status-page.php:170
+#: admin/status-page.php:178
 msgid "Check pages now"
 msgstr ""
 
-#: admin/status-page.php:175
+#: admin/status-page.php:182
 msgid "Last checked %s ago."
 msgstr ""
 
-#: admin/status-page.php:176
+#: admin/status-page.php:183
 msgid "OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status."
 msgstr ""
 
-#: admin/status-page.php:198
+#: admin/status-page.php:204
 msgid "Should be %s"
 msgstr ""
 
-#: admin/status-page.php:204
+#: admin/status-page.php:210
 msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
 msgstr ""
 
@@ -498,55 +499,55 @@ msgstr ""
 msgid "Assets base"
 msgstr ""
 
-#: includes/functions.php:156
+#: includes/functions.php:169
 msgid "A local Robust server has been found. Please check Login URI and Grid name configuration."
 msgstr ""
 
-#: includes/functions.php:174
+#: includes/functions.php:187
 msgid "OpenSimulator settings page"
 msgstr ""
 
-#: includes/functions.php:217
+#: includes/functions.php:230
 msgid "Yes"
 msgstr ""
 
-#: includes/functions.php:219
+#: includes/functions.php:232
 msgid "No"
 msgstr ""
 
-#: includes/functions.php:232
+#: includes/functions.php:245
 msgid "Grid online"
 msgstr ""
 
-#: includes/functions.php:233
+#: includes/functions.php:246
 msgid "Members"
 msgstr ""
 
-#: includes/functions.php:235
+#: includes/functions.php:248
 msgid "Active members (30 days)"
 msgstr ""
 
-#: includes/functions.php:238
+#: includes/functions.php:251
 msgid "Members in world"
 msgstr ""
 
-#: includes/functions.php:245
+#: includes/functions.php:258
 msgid "Active users (30 days)"
 msgstr ""
 
-#: includes/functions.php:247
+#: includes/functions.php:260
 msgid "Total users in world"
 msgstr ""
 
-#: includes/functions.php:251
+#: includes/functions.php:264
 msgid "Regions"
 msgstr ""
 
-#: includes/functions.php:253
+#: includes/functions.php:266
 msgid "Total area"
 msgstr ""
 
-#: includes/functions.php:365
+#: includes/functions.php:374
 msgid "%s"
 msgstr ""
 
@@ -587,164 +588,173 @@ msgstr ""
 msgid "%s's profile"
 msgstr ""
 
-#: includes/profile-page.php:217
+#: includes/profile-page.php:221
 msgid "Profile base"
 msgstr ""
 
-#: includes/profile.php:91
+#: includes/profile.php:92
 msgid "Profile picture"
 msgstr ""
 
-#: includes/profile.php:92
+#: includes/profile.php:93
 msgid "Born"
 msgstr ""
 
-#: includes/profile.php:95
+#: includes/profile.php:96
 msgid "About"
 msgstr ""
 
-#: includes/profile.php:96
+#: includes/profile.php:97
 msgid "Languages"
 msgstr ""
 
-#: includes/profile.php:97
+#: includes/profile.php:98
 msgid "Skills"
 msgstr ""
 
-#: includes/profile.php:104
-msgid "This is a preview, your profile is actually private."
-msgstr ""
-
-#: includes/profile.php:109
-msgid "This profile is private but you are admin, so you can look. Be fair."
-msgstr ""
-
-#: includes/profile.php:218
+#: includes/profile.php:206
 msgid "%s local users updated with avatar data"
 msgstr ""
 
-#: includes/profile.php:232
+#: includes/profile.php:220
+#: includes/profile.php:906
 msgid "OpenSimulator"
 msgstr ""
 
-#: includes/profile.php:342
+#: includes/profile.php:361
 msgid "This user already has an avatar."
 msgstr ""
 
-#: includes/profile.php:354
+#: includes/profile.php:372
 msgid "First name required"
 msgstr ""
 
-#: includes/profile.php:355
+#: includes/profile.php:373
 msgid "Last name required"
 msgstr ""
 
-#: includes/profile.php:356
+#: includes/profile.php:375
 msgid "Password required"
 msgstr ""
 
-#: includes/profile.php:357
+#: includes/profile.php:376
 msgid "The password does not match."
 msgstr ""
 
-#: includes/profile.php:364
-#: includes/profile.php:368
+#: includes/profile.php:385
+#: includes/profile.php:389
 msgid "The name %s is not allowed"
 msgstr ""
 
-#: includes/profile.php:373
+#: includes/profile.php:393
 msgid "Names can only contain alphanumeric characters"
 msgstr ""
 
-#: includes/profile.php:380
+#: includes/profile.php:399
 msgid "There is already a grid user named %s"
 msgstr ""
 
-#: includes/profile.php:388
+#: includes/profile.php:405
 msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
 msgstr ""
 
-#: includes/profile.php:410
+#: includes/profile.php:427
 msgid "Error while creating user"
 msgstr ""
 
-#: includes/profile.php:419
+#: includes/profile.php:436
 msgid "Error while setting password"
 msgstr ""
 
-#: includes/profile.php:430
+#: includes/profile.php:447
 msgid "Error while setting home region"
 msgstr ""
 
-#: includes/profile.php:447
+#: includes/profile.php:464
 msgid "Error while creating user inventory"
 msgstr ""
 
-#: includes/profile.php:570
+#: includes/profile.php:586
 msgid "Error while adding inventory item"
 msgstr ""
 
-#: includes/profile.php:581
+#: includes/profile.php:597
 msgid "Error while adding inventory outfit link"
 msgstr ""
 
-#: includes/profile.php:593
+#: includes/profile.php:609
 msgid "Error while adding avatar"
 msgstr ""
 
-#: includes/profile.php:604
+#: includes/profile.php:620
 msgid "Avatar %s created successfully."
 msgstr ""
 
-#: includes/profile.php:614
-msgid "Action %s not implemented"
-msgstr ""
-
-#: includes/profile.php:626
+#: includes/profile.php:632
 msgid "You have no grid account yet."
 msgstr ""
 
-#: includes/profile.php:634
+#: includes/profile.php:640
 msgid "Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, the name cannot be changed."
 msgstr ""
 
-#: includes/profile.php:639
+#: includes/profile.php:645
 msgid "Avatar first name"
 msgstr ""
 
-#: includes/profile.php:643
+#: includes/profile.php:649
 msgid "Avatar last name"
 msgstr ""
 
-#: includes/profile.php:647
+#: includes/profile.php:653
 msgid "Your in-world Avatar password is the same as your password on this website"
 msgstr ""
 
-#: includes/profile.php:649
+#: includes/profile.php:655
 msgid "Confirm your password"
 msgstr ""
 
-#: includes/profile.php:663
+#: includes/profile.php:669
 msgid "Your avatar"
 msgstr ""
 
-#: includes/profile.php:664
+#: includes/profile.php:670
 msgid "You can change and customize it in-world, as often as you want."
 msgstr ""
 
-#: includes/profile.php:695
+#: includes/profile.php:701
 msgid "Save"
 msgstr ""
 
-#: includes/profile.php:739
+#: includes/profile.php:745
 msgid "leave blank to leave unchanged"
 msgstr ""
 
-#: includes/profile.php:827
+#: includes/profile.php:838
 #: blocks/w4os-gridprofile-block/index.js:27
 #: blocks/w4os-gridprofile-block/index.js:55
 #: blocks/w4os-gridprofile-block/index.js:70
 msgid "Grid profile"
+msgstr ""
+
+#: includes/profile.php:916
+msgid "Avatar First Name"
+msgstr ""
+
+#: includes/profile.php:922
+msgid "Avatar Last Name"
+msgstr ""
+
+#: includes/profile.php:928
+msgid "Profile Picture"
+msgstr ""
+
+#: includes/profile.php:930
+msgid "Must be set in the viewer."
+msgstr ""
+
+#: includes/profile.php:935
+msgid "Web Profile URL"
 msgstr ""
 
 #: includes/shortcodes.php:70

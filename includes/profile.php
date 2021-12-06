@@ -913,19 +913,19 @@ function w4os_user_profile_fields($user) {
             ),
             'w4os_firstname' => array(
               'type' => 'string',
-              'label' => 'Avatar First Name',
+              'label' => __('Avatar First Name', 'w4os'),
               'value' => esc_attr(get_the_author_meta( 'w4os_firstname', $user->ID )),
               'readonly' => $has_avatar,
             ),
             'w4os_lastname' => array(
               'type' => 'string',
-              'label' => 'Avatar Last Name',
+              'label' => __('Avatar Last Name', 'w4os'),
               'value' => esc_attr(get_the_author_meta( 'w4os_lastname', $user->ID )),
               'readonly' => $has_avatar,
             ),
             'w4os_profileimage' => array(
               'type' => 'os_asset',
-              'label' => 'Profile Picture',
+              'label' => __('Profile Picture', 'w4os'),
               'value' => esc_attr(get_the_author_meta( 'w4os_profileimage', $user->ID )),
               'placeholder' => ($has_avatar) ? __('Must be set in the viewer.', 'w4os') : '',
               'readonly' => true,
