@@ -101,7 +101,7 @@ function w4os_login_form($args = array()) {
 
 add_filter( 'login_errors', function( $error ) {
     global $errors;
-    $err_codes = $errors->get_error_codes();
+    if($errors) $err_codes = $errors->get_error_codes();
 
     // Invalid username.
     // Default: '<strong>ERROR</strong>: Invalid username. <a href="%s">Lost your password</a>?'
