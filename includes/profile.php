@@ -884,8 +884,8 @@ function w4os_keeproles_profile_updating( &$errors, $update, &$user ) {
 }
 
 
-add_action( 'show_user_profile', 'w4os_user_profile_fields' );
-add_action( 'edit_user_profile', 'w4os_user_profile_fields' );
+add_action( 'show_user_profile', 'w4os_user_profile_fields', 5 );
+add_action( 'edit_user_profile', 'w4os_user_profile_fields', 5 );
 function w4os_user_profile_fields($user) {
   global $pagenow;
   if($pagenow != 'user-edit.php' && $pagenow != 'profile.php') return;
