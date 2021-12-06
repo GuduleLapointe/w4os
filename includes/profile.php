@@ -73,8 +73,9 @@ class W4OS_Avatar extends WP_User {
     $avatar_query = "SELECT *
       FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
       WHERE active = 1 AND Email != ''
-      AND ( profileAllowPublish = 1 OR $can_list_users OR Email = '$current_user_email')
       AND PrincipalID = '$this->UUID';";
+      /* In-world profiles are always public, so are web profiles */
+      // AND ( profileAllowPublish = 1 OR $can_list_users OR Email = '$current_user_email')
 
     $avatar_row=$w4osdb->get_row($avatar_query);
 
@@ -97,19 +98,21 @@ class W4OS_Avatar extends WP_User {
         __('Skills', 'w4os') => $avatar_row->profileSkillsText,
       ));
 
-      if($avatar_row->profileAllowPublish != 1) {
-        if($avatar_row->Email == $current_user_email) {
-          $content.= sprintf(
-            '<p class=notice>%s</p>',
-            __('This is a preview, your profile is actually private.', 'w4os'),
-          );
-        } else {
-          $content.= sprintf(
-            '<p class=notice>%s</p>',
-            __('This profile is private but you are admin, so you can look. Be fair.', 'w4os'),
-          );
-        }
-      }
+      /* In-world profiles are always public, so are web profiles */
+      // if($avatar_row->profileAllowPublish != 1) {
+      //   if($avatar_row->Email == $current_user_email) {
+      //     $content.= sprintf(
+      //       '<p class=notice>%s</p>',
+      //       __('This is a preview, your profile is actually private.', 'w4os'),
+      //     );
+      //   } else {
+      //     $content.= sprintf(
+      //       '<p class=notice>%s</p>',
+      //       __('This profile is private but you are admin, so you can look. Be fair.', 'w4os'),
+      //     );
+      //   }
+      // }
+
       // $content .= w4os_array2table((array)$avatar_row);
       $content .= w4os_array2table($profile, 'avatar-profile-table' );
 
@@ -331,17 +334,21 @@ function w4os_update_avatar( $user, $params ) {
 
   if($uuid) {
     $user->add_role('grid_user');
-    if(isset($params['opensim_profileAllowPublish'])) {
-      $profileAllowPublish = ($params['opensim_profileAllowPublish']) ? 1 : 0;
-      $current = $w4osdb->get_row( $w4osdb->prepare( "SELECT * FROM userprofile WHERE useruuid = '%s'", $uuid ) , ARRAY_A);
-      $new = array_merge($current, array(
-        'useruuid' => $uuid,
-        'profileAllowPublish' => $profileAllowPublish,
-        // 'profileMaturePublish' => $profileMaturePublish,
-        'profileURL' => ($profileAllowPublish) ? w4os_get_profile_url($user) : '',
-      ));
-      $w4osdb->replace( 'userprofile', $new );
-    }
+    /* In-world profiles are always public, so are web profiles */
+    // if(isset($params['opensim_profileAllow_web'])) {
+    //   $current = $w4osdb->get_row( $w4osdb->prepare( "SELECT * FROM userprofile WHERE useruuid = '%s'", $uuid ) , ARRAY_A);
+    //   $profileAllow_web = ($params['opensim_profileAllow_web']) ? 1 : 0;
+    //   $new = array_merge($current, array(
+    //     'useruuid' => $uuid,
+    //
+    //     /* profileAllow and profileMature might be handled in the future */
+    //
+    //     // 'profileAllowPublish' => $profileAllowPublish,
+    //     // 'profileMaturePublish' => $profileMaturePublish,
+    //     'profileURL' => ($profileAllow_web) ? w4os_get_profile_url($user) : '',
+    //   ));
+    //   $w4osdb->replace( 'userprofile', $new );
+    // }
   }
   return $uuid;
 }
@@ -925,14 +932,21 @@ function w4os_user_profile_fields($user) {
               'placeholder' => ($has_avatar) ? __('Must be set in the viewer.', 'w4os') : '',
               'readonly' => true,
             ),
-            'opensim_profileAllowPublish' => array(
-              'type' => 'boolean',
-              'label' => __('Public profile', 'w4os'),
-            'value' => (get_the_author_meta( 'opensim_profileAllowPublish', $user->ID ) === true),
-              'default' => true,
-              'description' => __('Make avatar profile public (available in search and on the website).', 'w4os')
-              . (($has_avatar) ? sprintf('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_get_profile_url($user) ) : ''),
-            )
+            'w4os_web_profile_url' => array(
+              'type' => 'url',
+              'label' => __('Web Profile URL', 'w4os'),
+              'value' => w4os_get_profile_url($user),
+              'readonly' => true,
+            ),
+            /* In-world profiles are always public, so are web profiles */
+            // 'opensim_profileAllow_web' => array(
+            //   'type' => 'boolean',
+            //   'label' => __('Public profile', 'w4os'),
+            // 'value' => (get_the_author_meta( 'opensim_profileAllow_web', $user->ID ) === true),
+            //   'default' => true,
+            //   'description' => __('Make avatar profile public (available in search and on the website).', 'w4os')
+            //   . (($has_avatar) ? sprintf('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_get_profile_url($user) ) : ''),
+            // )
           ),
         ),
       // ),
@@ -971,12 +985,12 @@ function w4os_profile_fields_save( $user_id ) {
     'action' => 'update_avatar',
     'w4os_firstname' => esc_attr($_POST['w4os_firstname']),
     'w4os_lastname' => esc_attr($_POST['w4os_lastname']),
-    'opensim_profileAllowPublish' => (esc_attr($_POST['opensim_profileAllowPublish']) == true),
+    'opensim_profileAllow_web' => (esc_attr($_POST['opensim_profileAllow_web']) == true),
   );
 
   update_user_meta( $user_id, 'w4os_firstname', $args['w4os_firstname']);
   update_user_meta( $user_id, 'w4os_lastname', $args['w4os_lastname']);
-  update_user_meta( $user_id, 'opensim_profileAllowPublish', $args['opensim_profileAllowPublish']);
+  update_user_meta( $user_id, 'opensim_profileAllow_web', $args['opensim_profileAllow_web']);
   // if(!empty($_POST['w4os_firstname']) &! empty($_POST['w4os_lastname']))
   w4os_update_avatar( $user, $args );
 }

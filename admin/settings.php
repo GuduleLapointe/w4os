@@ -11,7 +11,7 @@ function w4os_register_settings() {
 			'sections' => array(
 				'opensimulator' => array(
 					'fields' => array(
-						'opensim_profileAllowPublish' => array(
+						'opensim_profileAllow_web' => array(
 							'type' => 'boolean',
 							'label' => __('Public profile', 'w4os'),
 							'default' => true,
@@ -270,10 +270,17 @@ function w4os_settings_field($args, $user = false) {
 	if(isset($args['placeholder'])) $parameters[] = "placeholder='" . esc_attr($args['placeholder']) . "'";
 	if(isset($args['autocomplete'])) $parameters[] = "autocomplete='" . $args['autocomplete'] . "'";
 	if(isset($args['onfocus'])) $parameters[] = "onfocus='" . esc_attr($args['onfocus']) . "'";
-	if($user) $value = get_user_meta( $user->ID, $field_id, true );
+	if(isset($args['value'])) $value = $args['value'];
+	else if($user) $value = get_user_meta( $user->ID, $field_id, true );
 	else $value = esc_attr(get_option($field_id));
 
 	switch ($args['type']) {
+		case 'url':
+		if($args['readonly']) {
+			if(!empty($value)) echo sprintf('<a href="%1$s">%1$s</a>', $value);
+			break;
+		}
+
 		case 'string':
 		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . $value . "' " . join(' ', $parameters) . " />";
 		break;
