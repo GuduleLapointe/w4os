@@ -1,6 +1,7 @@
 ## Changelog
 
-### Unreleased
+### 2.2.3
+* fixed a couple of fatal errors, added imagick to the recommended php extensions
 
 ### 2.2.2
 * new admin can create avatars for existing users
