@@ -130,6 +130,7 @@ $count = w4os_count_users();
 	<?php
 	  if ( ! function_exists('curl_init') ) $php_missing_modules[]='curl';
 	  if ( ! function_exists('simplexml_load_string') ) $php_missing_modules[]='xml';
+		if (!extension_loaded('imagick')) $php_missing_modules[]='imagick';
 		if(!empty($php_missing_modules)) {
 			echo sprintf(
 				'<div class="missing-modules warning"><h2>%s</h2>%s</div>',
