@@ -94,7 +94,7 @@ function w4os_gen_uuid() {
 function w4os_admin_notice($notice, $class='info', $dismissible=true ) {
   if(empty($notice)) return;
   if($dismissible) $is_dismissible = 'is-dismissible';
-	if(is_admin() && wp_get_current_user()) {
+	if(is_admin()) {
   add_action( 'admin_notices', function() use ($notice, $class, $is_dismissible) {
     ?>
     <div class="notice notice-<?=$class?> <?=$is_dismissible?>">

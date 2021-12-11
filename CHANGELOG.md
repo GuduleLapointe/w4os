@@ -1,5 +1,7 @@
 ## Changelog
 
+### Unreleased
+
 ### 2.2.2
 * new admin can create avatars for existing users
 * new check grid info url validity (cron and manual)

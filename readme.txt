@@ -134,6 +134,9 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - Choice between Robust console or database connection
 - User's own regions control (create, start, stop, backup)
 - WooCommerce Subscriptions integration for user-owned Regions or other pay-for services
+- 2do HYPEvents project integration <https://2do.pm>
+- Gudz Teleport Board project integration (based on user picks)
+- separate OpenSimulator libraries and WordPress specific code, to allow easy integration in other CMS
 
 == Frequently Asked Questions ==
 
@@ -157,6 +160,8 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased =
 
 = 2.2.2 =
 * new admin can create avatars for existing users
