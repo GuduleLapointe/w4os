@@ -338,6 +338,7 @@ function w4os_update_avatar( $user, $params ) {
     // if(isset($params['opensim_profileAllow_web'])) {
       $current = $w4osdb->get_row( $w4osdb->prepare( "SELECT * FROM userprofile WHERE useruuid = '%s'", $uuid ) , ARRAY_A);
       // $profileAllow_web = ($params['opensim_profileAllow_web']) ? 1 : 0;
+      if(!$current) $current = array();
       $new = array_merge($current, array(
         'useruuid' => $uuid,
         /* profileAllow and profileMature might be handled in the future */
@@ -409,7 +410,7 @@ function w4os_create_avatar( $user, $params ) {
   $salt = md5(w4os_gen_uuid());
   $hash = md5(md5($password) . ":" . $salt);
   $user_email = get_userdata($user->ID)->data->user_email;
-  $created = mktime();
+  $created = time();
   $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM regions WHERE regionName = '" . W4OS_DEFAULT_HOME . "'");
   if(empty($HomeRegionID)) $HomeRegionID = '00000000-0000-0000-0000-000000000000';
 
