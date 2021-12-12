@@ -6,6 +6,9 @@ function w4os_register_settings() {
 	$default_loginuri = (isset($grid_info['login'])) ? $grid_info['login'] : '';
 	$default_gridname = (isset($grid_info['gridname'])) ? $grid_info['gridname'] : '';
 
+	if(!get_option('w4os_model_firstname')) update_option('w4os_model_firstname', 'Default');
+	if(!get_option('w4os_model_lastname')) update_option('w4os_model_lastname', 'Default');
+
 	$settings_pages = array(
 		'w4os_status' => array(
 			'sections' => array(
