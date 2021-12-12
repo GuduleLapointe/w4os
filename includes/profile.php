@@ -533,7 +533,7 @@ function w4os_create_avatar( $user, $params ) {
   // }
 
   if ( $result ) {
-    $model_exist = $w4osdb->get_results("SELECT Name, Value FROM Avatars WHERE PrincipalID = '$model_uuid'");
+    $model = $w4osdb->get_results("SELECT Name, Value FROM Avatars WHERE PrincipalID = '$model_uuid'");
     // w4os_notice(print_r($result, true), 'code');
     // foreach($result as $row) {
     //   w4os_notice(print_r($row, true), 'code');
@@ -541,8 +541,8 @@ function w4os_create_avatar( $user, $params ) {
     // }
 
     // foreach($avatars_prefs as $var => $val) {
-    if($model_exist) {
-      foreach($result as $row) {
+    if($model) {
+      foreach($model as $row) {
         unset($newitem);
         unset($newitems);
         unset($newvalues);
