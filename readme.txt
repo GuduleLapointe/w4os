@@ -1,6 +1,6 @@
 === W4OS - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
-Donate link: https://paypal.me/magicoli
+Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.0
 Requires PHP: 5.6

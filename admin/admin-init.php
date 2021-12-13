@@ -20,7 +20,7 @@ function w4os_register_options_pages() {
 		'w4os_status_page', // callable function
 		// plugin_dir_path(__FILE__) . 'options.php', // slug
 		// null,	// callable function
-		plugin_dir_url(__FILE__) . 'images/w4os-logo-24x14.png', // icon url
+		plugin_dir_url(__FILE__) . 'images/opensimulator-logo-24x14.png', // icon url
 		2 // position
 	);
 	add_submenu_page('w4os', __('OpenSimulator Status', "w4os"), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');

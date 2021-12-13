@@ -5,7 +5,7 @@
  * Version:           2.2.3
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
- * Plugin URI:        https://github.com/GuduleLapointe/w4os/
+ * Plugin URI:        https://w4os.org/
  * License:           AGPLv3
  * License URI:       https://www.gnu.org/licenses/agpl-3.0.txt
  * Text Domain:       w4os
