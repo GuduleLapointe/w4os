@@ -161,6 +161,9 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
+= 2.2.4 =
+* fix #37 inventory items not transferred to new avatar
+
 = 2.2.3 =
 * fixed a couple of fatal errors, added imagick to the recommended php extensions
 

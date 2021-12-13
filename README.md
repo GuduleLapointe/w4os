@@ -1,10 +1,10 @@
-# W4OS - OpenSimulator Web Interface
+# w4os - OpenSimulator Web Interface
 * Contributors: gudulelapointe,magicoli69
-* Donate link: https://paypal.me/magicoli
+* Donate link: https://w4os.org/donate/
 * Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 * Requires at least: 5.0
 * Requires PHP: 5.6
-* Tested up to: 5.8.1
+* Tested up to: 5.8.2
 * Stable tag: 2.1
 * License: AGPLv3
 * License URI: https://www.gnu.org/licenses/agpl-3.0.txt
