@@ -135,7 +135,6 @@ add_action( 'template_include', function( $template ) {
       'w4os_model' => sanitize_text_field($_REQUEST['w4os_model']),
       'w4os_password_1' => $_REQUEST['w4os_password_1'],
     ));
-    $avatar = new W4OS_Avatar($user->ID);
   }
 
   $query_firstname = get_query_var( 'profile_firstname' );
@@ -143,7 +142,12 @@ add_action( 'template_include', function( $template ) {
 
   if ( empty($query_firstname) || empty($query_lastname) ) {
     if(is_user_logged_in()) {
-      $page_title = __('Create My Avatar', 'w4os');
+      $uuid = w4os_profile_sync(wp_get_current_user());
+      if($uuid) {
+        $page_title = __('My Profile', 'w4os');
+      } else {
+        $page_title = __('Create My Avatar', 'w4os');
+      }
     } else {
       $page_title = __('Log in', 'w4os');
     }
