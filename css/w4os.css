@@ -43,6 +43,7 @@ td.gridval {
   border-left-color: #090;
 }
 
+.page div.notice-error,
 .page div.notice-fail {
   background: #fff0f0;
   border-color: #f99;

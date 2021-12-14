@@ -22,7 +22,7 @@ if ( empty($query_firstname) || empty($query_lastname) ) {
     // $page_content .= '<pre>GET ' . print_r($_GET, true) . '</pre>';
     $page_content .= w4os_login_form();
   }
-  echo $page_content; die();
+  // echo $page_content; die();
 
 } else {
   // display request for a given user
@@ -55,11 +55,7 @@ if ( empty($query_firstname) || empty($query_lastname) ) {
 // if(isset($page_actions)) {
 //   $page_content .= '<div class=login-actions>' . join(' - ', $page_actions) . '</div>';
 // }
+$page_content = wp_cache_get('w4os_notices') . $page_content;
+wp_cache_delete('w4os_notices');
 
-if(isset($page_content)) {
-  // add_filter( 'the_content', function($content) use($page_content) {
-    echo $page_content;
-  // });
-} else {
-  echo "no page content";
-}
+echo $page_content;

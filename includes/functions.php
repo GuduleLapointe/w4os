@@ -44,13 +44,12 @@ function w4os_notice ($message, $class="", $id = '', $context = '') {
 	if(is_admin()) {
 		w4os_transient_admin_notice($message, $class);
 	} else {
-		echo sprintf(
+		wp_cache_set('w4os_notices', wp_cache_get('w4os_notices') . sprintf(
 			'<div class="notice notice-%2$s"><p>%1$s</p></div>',
 			$message,
 			$class,
 			$id,
-			// '<strong>' . ((empty($context)) ? W4OS_PLUGIN_NAME : $context) . '</strong>: ',
-		);
+		));
 	}
 }
 

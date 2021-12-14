@@ -107,13 +107,16 @@ add_filter( 'login_errors', function( $error ) {
     // Default: '<strong>ERROR</strong>: Invalid username. <a href="%s">Lost your password</a>?'
     if ( @in_array( 'invalid_username', $err_codes ) ) {
         $error = '<strong>ERROR</strong>: Invalid username.';
+        $class='fail';
     }
-
     // Incorrect password.
     // Default: '<strong>ERROR</strong>: The password you entered for the username <strong>%1$s</strong> is incorrect. <a href="%2$s">Lost your password</a>?'
     if ( @in_array( 'incorrect_password', $err_codes ) ) {
         $error = '<strong>ERROR</strong>: The password you entered is incorrect.';
+        $class='fail';
     }
+    if($error) w4os_notice($error, $class);
+    else w4os_notice(join(', ', $err_codes));
 
     return $error;
 } );

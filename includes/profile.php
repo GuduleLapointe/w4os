@@ -356,6 +356,7 @@ function w4os_update_avatar( $user, $params ) {
 function w4os_create_avatar( $user, $params ) {
   if(!W4OS_DB_CONNECTED) return;
   global $w4osdb;
+
   $errors = false;
   // w4os_notice(print_r($_REQUEST, true), "code");
   $uuid = w4os_profile_sync($user); // refresh opensim data for this user
@@ -614,7 +615,7 @@ function w4os_create_avatar( $user, $params ) {
   }
 
   if( ! $result ) {
-    // w4os_notice(__("Errors occurred while creating the user", 'w4os'), 'fail');
+    w4os_notice(__("Errors occurred while creating the user", 'w4os'), 'fail');
     // w4os_notice($sql, 'code');
     return false;
   }

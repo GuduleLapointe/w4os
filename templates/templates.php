@@ -28,6 +28,8 @@ function w4os_the_content ( $content ) {
     $custom_content = ob_get_clean();
     $content = "<div class='" . W4OS_SLUG . " content $template_slug $post_type_slug'>$custom_content</div>";
   }
+  $content = wp_cache_get('w4os_notices') . $content;
+  wp_cache_delete('w4os_notices');
   return $content;
 }
 
