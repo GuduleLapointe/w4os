@@ -77,6 +77,7 @@ if(get_option('w4os_profile_page')=='provide')
 define('W4OS_PROFILE_URL', get_home_url(NULL, get_option('w4os_profile_slug')));
 define('W4OS_GRID_INFO', w4os_get_grid_info());
 
+require_once dirname( __DIR__ ) . '/templates/templates.php';
 require_once __DIR__ . '/w4osdb.php';
 require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/widgets.php';

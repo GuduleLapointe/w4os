@@ -128,62 +128,34 @@ add_action( 'template_include', function( $template ) {
 
   if ( empty($query_firstname) || empty($query_lastname) ) {
     if(is_user_logged_in()) {
-      $user = wp_get_current_user();
-      $avatar = new W4OS_Avatar($user);
-      $page_title = __('My Avatar', 'w4os');
-      $page_content = $avatar->profile_page();
-      if(empty($page_content)) {
-        $page_content = '<div>' . w4os_avatar_creation_form($user) . '</div>';
-      }
+      $page_title = __('Create My Avatar', 'w4os');
     } else {
       $page_title = __('Log in', 'w4os');
-      // $page_content .= '<pre>GET ' . print_r($_GET, true) . '</pre>';
-      $page_content .= w4os_login_form();
     }
   } else {
 
   // if ( $query_firstname != '' && $query_lastname != '' ) {
     $user = w4os_get_avatar_by_name($query_firstname, $query_lastname );
-    if(! $user || empty($user)) return get_404_template();
-    $avatar = new W4OS_Avatar($user);
-
-    if($avatar) $avatar_profile = $avatar->profile_page();
-    // if(!$avatar_profile) return get_404_template();
-
+    if($user &! empty($user)) {
+      $avatar = new W4OS_Avatar($user);
+      $avatar_profile = $avatar->profile_page();
+    }
     if($avatar_profile) {
       $avatar_name = esc_attr(get_the_author_meta( 'w4os_firstname', $avatar->ID) . ' ' . get_the_author_meta( 'w4os_lastname', $avatar->ID));
-      $page_content = $avatar_profile;
       $page_title = $avatar_name;
       $head_title = sprintf(__("%s's profile", 'w4os'), $avatar_name);
-
     } else {
-      header("Status: 404 Not Found");
-
-      function redirect_404() {
-          global $options, $wp_query;
-          if ($wp_query->is_404) {
-              $page_title = "Unknown avatar";
-              // $redirect_404_url = esc_url(get_permalink(get_page_by_title($page_title)));
-              // wp_redirect( $redirect_404_url );
-              // exit();
-          }
-      }
-      add_action( 'template_redirect', 'redirect_404');
-      return get_404_template();
+      $not_found = true;
+      $page_title = __('Avatar not found', 'w4os');
     }
   }
 
-  // if(isset($page_actions)) {
-  //   $page_content .= '<div class=login-actions>' . join(' - ', $page_actions) . '</div>';
-  // }
-
-  if(isset($page_content)) {
-    add_filter( 'the_content', function($content) use($page_content) {
-      return $page_content;
-    });
-  }
-
   if(isset($page_title)) {
+    // Doesn't seem to have any effect here
+    // add_action( 'wp_title', function () use($page_title) {
+    //   return $page_title;
+    // }, 20 );
+
     add_filter( 'the_title', function($title, $id = NULL) use ($page_title) {
       if ( is_singular() && in_the_loop() && is_main_query() ) {
         return $page_title;
@@ -206,6 +178,14 @@ add_action( 'template_include', function( $template ) {
         return $title;
       }, 20);
     }
+  }
+
+  if($not_found) {
+    // header("Status: 404 Not Found");
+    $wp_query->set_404();
+    status_header( 404 );
+    get_template_part( 404 );
+    exit();
   }
 
   $user_agent = $_SERVER['HTTP_USER_AGENT'];
