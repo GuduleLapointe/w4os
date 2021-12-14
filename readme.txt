@@ -161,11 +161,15 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
-= 2.2.4 =
-* fix #37 inventory items not transferred to new avatar
+= Unreleased =
 
-= 2.2.3 =
-* fixed a couple of fatal errors, added imagick to the recommended php extensions
+= 2.2.3.2 =
+* fix avatar not created, or not created at first attempt
+* fix inventory items not transferred to new avatars
+* fix errors not displayed on avatar creation page
+* fix avatar model not shown if default account never connected
+* fix a couple of fatal errors, added imagick to the recommended php extensions
+* show image placeholder if profile picture not set
 
 = 2.2.2 =
 * new admin can create avatars for existing users
