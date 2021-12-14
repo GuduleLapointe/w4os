@@ -2,7 +2,7 @@
 
 ### Unreleased
 
-### 2.2.3.2
+### 2.2.4
 * fix avatar not created, or not created at first attempt
 * fix inventory items not transferred to new avatars
 * fix errors not displayed on avatar creation page
