@@ -332,8 +332,9 @@ function w4os_update_avatar( $user, $params ) {
     break;
   }
 
-  if($uuid) {
-    $user->add_role('grid_user');
+  if($uuid && ! w4os_empty($uuid)) {
+    $avatar = new W4OS_Avatar($user->ID);
+    $avatar->add_role('grid_user');
     /* In-world profiles are always public, so are web profiles */
     // if(isset($params['opensim_profileAllow_web'])) {
       $current = $w4osdb->get_row( $w4osdb->prepare( "SELECT * FROM userprofile WHERE useruuid = '%s'", $uuid ) , ARRAY_A);
@@ -409,18 +410,18 @@ function w4os_create_avatar( $user, $params ) {
 
   $salt = md5(w4os_gen_uuid());
   $hash = md5(md5($password) . ":" . $salt);
-  $user_email = get_userdata($user->ID)->data->user_email;
+  $user_info = get_userdata($user->ID);
+  // $user_email = get_userdata($user->ID)->user_email;
   $created = time();
   $HomeRegionID = $w4osdb->get_var("SELECT UUID FROM regions WHERE regionName = '" . W4OS_DEFAULT_HOME . "'");
   if(empty($HomeRegionID)) $HomeRegionID = '00000000-0000-0000-0000-000000000000';
-
   $result = $w4osdb->insert (
     'UserAccounts', array (
       'PrincipalID' => $newavatar_uuid,
       'ScopeID' => W4OS_NULL_KEY,
       'FirstName'   => $firstname,
       'LastName'   => $lastname,
-      'Email' => $user_email,
+      'Email' => $user_info->user_email,
       'ServiceURLs' => 'HomeURI= InventoryServerURI= AssetServerURI=',
       'Created' => $created,
     )
@@ -698,6 +699,7 @@ function w4os_avatar_creation_form ($user) {
 
   $content .= "
   <p>
+    <input type='hidden' name='user_id' value='$user->ID'>
     <input type='hidden' name='action' value='$action'>
     <button type='submit' class='woocommerce-Button button' name='w4os_update_avatar' value='$action'>" . __("Save") . "</button>
   </p>";
@@ -729,17 +731,6 @@ function w4os_profile_display( $user, $args=[] ) {
   global $w4osdb;
   extract($args);
   $avatar = new W4OS_Avatar($user->ID);
-
-  if ( isset($_REQUEST['w4os_update_avatar'] ) ) {
-    $uuid = w4os_update_avatar( $user, array(
-      'action' => sanitize_text_field($_REQUEST['action']),
-  		'w4os_firstname' => sanitize_text_field($_REQUEST['w4os_firstname']),
-  		'w4os_lastname' => sanitize_text_field($_REQUEST['w4os_lastname']),
-  		'w4os_model' => sanitize_text_field($_REQUEST['w4os_model']),
-  		'w4os_password_1' => $_REQUEST['w4os_password_1'],
-    ));
-    $avatar = new W4OS_Avatar($user->ID);
-  }
 
   if ($avatar->UUID) {
     $action = 'w4os_update_avatar';
@@ -962,9 +953,6 @@ function w4os_user_profile_fields($user) {
         $args = array_merge([ 'option_slug' => $field_slug ], $field);
         w4os_settings_field($args, $user);
         echo '</td></tr>';
-        // echo '<pre>' . print_r($args, true) . '</pre>';
-        //   add_settings_section( $section_slug, (isset($section['name'])) ? $section['name'] : $section_slug, (isset($section['section_callback'])) ? $section['section_callback'] : '', $page_slug );
-        //     $field['section'] = $section_slug;
       }
       echo '</table>';
     }

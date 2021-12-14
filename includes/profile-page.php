@@ -123,6 +123,18 @@ add_action( 'template_include', function( $template ) {
   if($wp_query->queried_object->post_name != get_option('w4os_profile_slug')) return $template;
   // echo "post_name " . $wp_query->queried_object->post_name;
 
+  if ( isset($_REQUEST['w4os_update_avatar'] ) ) {
+    $user=get_user_by('ID', $_REQUEST['user_id']);
+    $uuid = w4os_update_avatar( $user, array(
+      'action' => sanitize_text_field($_REQUEST['action']),
+      'w4os_firstname' => sanitize_text_field($_REQUEST['w4os_firstname']),
+      'w4os_lastname' => sanitize_text_field($_REQUEST['w4os_lastname']),
+      'w4os_model' => sanitize_text_field($_REQUEST['w4os_model']),
+      'w4os_password_1' => $_REQUEST['w4os_password_1'],
+    ));
+    $avatar = new W4OS_Avatar($user->ID);
+  }
+
   $query_firstname = get_query_var( 'profile_firstname' );
   $query_lastname = get_query_var( 'profile_lastname' );
 
