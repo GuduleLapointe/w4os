@@ -632,7 +632,9 @@ function w4os_avatar_creation_form ($user) {
 
   global $w4osdb;
 
-  $content = "<p class='avatar not-created'>" . __("You have no grid account yet.", 'w4os') . "</p>";
+  $content .= "<p class='description'>"
+  . __("You need to create an avatar to explore our virtual world.", 'w4os')
+  . ' ' . __('Choose a name below. This is how people will see you in-world. Once set, the avatar name cannot be changed.', 'w4os') . "</p>";
 
   $content .= "<form class='edit-account wrap' action='' method='post'>";
   $action = 'w4os_create_avatar';
@@ -640,7 +642,6 @@ function w4os_avatar_creation_form ($user) {
   $firstname = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_firstname'])) ? $_REQUEST['w4os_firstname'] : get_user_meta( $user->ID, 'first_name', true )));
   $lastname  = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_lastname']))  ? $_REQUEST['w4os_lastname']  : get_user_meta( $user->ID, 'last_name', true )));
 
-  $content .= "<p>" . __('Choose your avatar name below. This is how people will see you in-world. Once the avatar is created, the name cannot be changed.', 'w4os') . "</p>";
 
   $content .= "
   <div class='clear'></div>
@@ -653,25 +654,27 @@ function w4os_avatar_creation_form ($user) {
     <input type='text' class='input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='" . esc_attr($lastname) . "' required>
   </p>
   <div class='clear'></div>
-  <p class=description>" . __('Your in-world Avatar password is the same as your password on this website', 'w4os') . "</p>
   <p class='form-row form-row-wide'>
     <label for='w4os_password_1'>" . __('Confirm your password', 'w4os') . "</label>
     <span class='password-input'><input type='password' class='input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
-  </p>";
+    <p class=description>" . __('Your in-world Avatar password is the same as your password on this website.', 'w4os') . "</p>
+  </p>
+  ";
 
   $models=$w4osdb->get_results("SELECT FirstName, LastName, profileImage, profileAboutText
-    FROM UserAccounts, userprofile
-    WHERE PrincipalID = userUUID
+    FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
+    WHERE active = true
     AND (FirstName = '" . get_option('w4os_model_firstname') . "'
     OR LastName = '" . get_option('w4os_model_lastname') . "')
     ORDER BY FirstName, LastName"
   );
   if($models) {
     $content.= "<div class='clear'></div>
-    <div class=form-row>
-      <label>" . __('Your avatar', 'w4os') . "</label>
-      <p class=description>" . __('You can change and customize it in-world, as often as you want.', 'w4os') . "</p>
+    <p class=form-row>
+      <label>" . __('Your initial appearance', 'w4os') . "</label>
+      <p class=description>" . __('You will change it as often as you want in the virtual world.', 'w4os') . "</p>
       <p class='field-model'>";
+
     foreach($models as $model) {
       $model_name = $model->FirstName . " " . $model->LastName;
       $model_display_name = $model_name;
@@ -682,7 +685,8 @@ function w4os_avatar_creation_form ($user) {
       $model_display_name = preg_replace('/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $model_display_name);
       $model_display_name = preg_replace('/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $model_display_name);
 
-      if(!empty(W4OS_WEB_ASSETS_SERVER_URI) &! empty($model->profileImage)) $model_img =  "<img class='model-picture' src='" . w4os_get_asset_url($model->profileImage) ."'>";
+      $model_imgid = (w4os_empty($model->profileImage)) ? W4OS_NOTFOUND_PROFILEPIC : $model->profileImage;
+      $model_img =  "<img class='model-picture' src='" . w4os_get_asset_url($model_imgid) ."'>";
       if(empty($model_img)) $modelclass="no-picture";
       else $modelclass = "with-picture";
       if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";

@@ -14,6 +14,8 @@ define('W4OS_DEFAULT_RESTRICTED_NAMES', array("Default", "Test", "Admin", str_re
 define('W4OS_DEFAULT_ASSET_SERVER_URI', '/assets/asset.php?id=');
 define('W4OS_DEFAULT_PROVIDE_ASSET_SERVER', true);
 define('W4OS_ASSETS_DEFAULT_FORMAT', 'jpg');
+define('W4OS_NOTFOUND_IMG', '201ce950-aa38-46d8-a8f1-4396e9d6be00');
+define('W4OS_NOTFOUND_PROFILEPIC', '201ce950-aa38-46d8-a8f1-4396e9d6be00');
 
 if ( ! defined( 'W4OS_SLUG' ) ) define('W4OS_SLUG', basename(dirname(dirname(__FILE__))) );
 if ( ! defined( 'W4OS_PLUGIN' ) ) define('W4OS_PLUGIN', W4OS_SLUG . "/w4os.php" );
