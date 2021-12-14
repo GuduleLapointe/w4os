@@ -44,7 +44,7 @@ if ( empty($query_firstname) || empty($query_lastname) ) {
 
   if($avatar_profile) {
     $avatar_name = esc_attr(get_the_author_meta( 'w4os_firstname', $avatar->ID) . ' ' . get_the_author_meta( 'w4os_lastname', $avatar->ID));
-    $page_content = "$avatar_name's profile: " . $avatar_profile;
+    $page_content = $avatar_profile;
     $page_title = $avatar_name;
     $head_title = sprintf(__("%s's profile", 'w4os'), $avatar_name);
   } else {
@@ -63,6 +63,3 @@ if(isset($page_content)) {
 } else {
   echo "no page content";
 }
-
-?>
-<p>End profile page</p>
