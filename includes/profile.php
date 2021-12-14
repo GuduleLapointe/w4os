@@ -642,7 +642,6 @@ function w4os_avatar_creation_form ($user) {
   $firstname = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_firstname'])) ? $_REQUEST['w4os_firstname'] : get_user_meta( $user->ID, 'first_name', true )));
   $lastname  = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_lastname']))  ? $_REQUEST['w4os_lastname']  : get_user_meta( $user->ID, 'last_name', true )));
 
-
   $content .= "
   <div class='clear'></div>
   <p class='form-row form-row-first'>
@@ -672,10 +671,14 @@ function w4os_avatar_creation_form ($user) {
     $content.= "<div class='clear'></div>
     <p class=form-row>
       <label>" . __('Your initial appearance', 'w4os') . "</label>
-      <p class=description>" . __('You will change it as often as you want in the virtual world.', 'w4os') . "</p>
+      <p class=description>" . __('You can change it as often as you want in the virtual world.', 'w4os') . "</p>
       <p class='field-model'>";
-
+    $random_model = rand(1, count($models));
+    $m = 0;
     foreach($models as $model) {
+      $m++;
+      // if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
+      $checked = ($m == $random_model) ? 'checked' : '';
       $model_name = $model->FirstName . " " . $model->LastName;
       $model_display_name = $model_name;
       if(get_option('w4os_model_firstname') != "")
@@ -689,11 +692,10 @@ function w4os_avatar_creation_form ($user) {
       $model_img =  "<img class='model-picture' src='" . w4os_get_asset_url($model_imgid) ."'>";
       if(empty($model_img)) $modelclass="no-picture";
       else $modelclass = "with-picture";
-      if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 
       $content .= "
       <label class='model $modelclass'>
-      <input type='radio' name='w4os_model' value='$model_name'$checked>
+      <input type='radio' name='w4os_model' value='$model_name' $checked>
       <span class=model-name>$model_display_name</span>
       $model_img
       </label>";
