@@ -155,7 +155,7 @@ add_action( 'template_include', function( $template ) {
 
   // if ( $query_firstname != '' && $query_lastname != '' ) {
     $user = w4os_get_avatar_by_name($query_firstname, $query_lastname );
-    if($user &! empty($user)) {
+    if($user) {
       $avatar = new W4OS_Avatar($user);
       $avatar_profile = $avatar->profile_page();
     }
