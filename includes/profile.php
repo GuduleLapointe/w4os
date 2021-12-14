@@ -632,9 +632,9 @@ function w4os_avatar_creation_form ($user) {
 
   global $w4osdb;
 
-  $content .= "<p class='description'>"
-  . __("You need to create an avatar to explore our virtual world.", 'w4os')
-  . ' ' . __('Choose a name below. This is how people will see you in-world. Once set, the avatar name cannot be changed.', 'w4os') . "</p>";
+  $content = "<p class='description'>"
+  . __("You need an avatar to explore our virtual world.", 'w4os')
+  . ' ' . __('Choose a name below. This is how people will see you in-world. Once set, your avatar name cannot be changed.', 'w4os') . "</p>";
 
   $content .= "<form class='edit-account wrap' action='' method='post'>";
   $action = 'w4os_create_avatar';
