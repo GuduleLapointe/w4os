@@ -62,7 +62,7 @@ class W4OS_Avatar extends WP_User {
   }
 
   public function profile_page( $echo = false, $args=array() ) {
-    if(!W4OS_DB_CONNECTED) return __('Grid not connected', 'w4os');
+    if(!W4OS_DB_CONNECTED) return __('Profiles are not available at the moment.', 'w4os');
 
     global $wpdb, $w4osdb;
 
