@@ -105,6 +105,9 @@ class W4OS_Avatar extends WP_User {
         __('Customize avatars', 'w4os'),
       );
 
+      if(!w4os_empty($avatar_row->profilePartner)) {
+        $partner=$w4osdb->get_row("SELECT FirstName, LastName FROM UserAccounts WHERE PrincipalID = '$avatar_row->profilePartner';");
+      }
 
       $profile=array_filter(array(
         __('Avatar Name', 'w4os') => $avatar_row->FirstName . " " . $avatar_row->LastName,
@@ -115,10 +118,10 @@ class W4OS_Avatar extends WP_User {
         __('Born', 'w4os') => sprintf('%s (%s days)',
         wp_date(get_option( 'date_format' ), $avatar_row->Created),
         floor((current_time('timestamp') - $avatar_row->Created) / 24 / 3600 )),
-        // __('Partner', 'w4os') => $avatar_row->profilePartner,
-        __('Languages', 'w4os') => $avatar_row->profileLanguages,
+        __('Partner', 'w4os') => trim($partner->FirstName . ' ' . $partner->LastName),
         __('Wants to', 'w4os') => join(', ', w4os_demask($avatar_row->profileWantToMask, $wants, $avatar_row->profileWantToText)),
         __('Skills', 'w4os') => join(', ', w4os_demask($avatar_row->profileSkillsMask, $skills, $avatar_row->profileSkillsText)),
+        __('Languages', 'w4os') => $avatar_row->profileLanguages,
         __('Real Life', 'w4os') => $avatar_row->profileFirstImageHtml . ' ' . wpautop($avatar_row->profileFirstText),
       ));
 
