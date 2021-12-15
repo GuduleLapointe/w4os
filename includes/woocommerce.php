@@ -61,7 +61,7 @@ function w4os_remove_my_account_links( $menu_links ){
 
   return $menu_links;
 }
-add_filter ( 'woocommerce_account_menu_items', 'w4os_remove_my_account_links' );
+// add_filter ( 'woocommerce_account_menu_items', 'w4os_remove_my_account_links' );
 
 
 /**
@@ -75,7 +75,7 @@ function w4os_rename_downloads( $menu_links ){
   // $menu_links['orders'] = "- $pagenow -";
   return $menu_links;
 }
-add_filter ( 'woocommerce_account_menu_items', 'w4os_rename_downloads' );
+// add_filter ( 'woocommerce_account_menu_items', 'w4os_rename_downloads' );
 
 
 /**
@@ -91,7 +91,7 @@ function w4os_log_history_link( $menu_links ){
 
 	return $menu_links;
 }
-add_filter ( 'woocommerce_account_menu_items', 'w4os_log_history_link', 40 );
+// add_filter ( 'woocommerce_account_menu_items', 'w4os_log_history_link', 40 );
 
 /**
  * Add Avatar link to woocommerce
