@@ -115,9 +115,9 @@ class W4OS_Avatar extends WP_User {
         // __('Avatar Display Name', 'w4os') => $avatar_row->DisplayName, // To implement
         __('About', 'w4os') => $avatar_row->profileImageHtml . wpautop($avatar_row->profileAboutText),
         // __('Profile picture', 'w4os') => $avatar_row->profileImageHtml,
-        __('Born', 'w4os') => sprintf('%s (%s days)',
+        __('Born', 'w4os') => sprintf('%s (%s days old)',
         wp_date(get_option( 'date_format' ), $avatar_row->Created),
-        floor((current_time('timestamp') - $avatar_row->Created) / 24 / 3600 )),
+        ceil((current_time('timestamp') - $avatar_row->Created) / 24 / 3600 )),
         __('Partner', 'w4os') => trim($partner->FirstName . ' ' . $partner->LastName),
         __('Wants to', 'w4os') => join(', ', w4os_demask($avatar_row->profileWantToMask, $wants, $avatar_row->profileWantToText)),
         __('Skills', 'w4os') => join(', ', w4os_demask($avatar_row->profileSkillsMask, $skills, $avatar_row->profileSkillsText)),
