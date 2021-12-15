@@ -182,3 +182,42 @@ body.w4os-welcome .widget-area,
 body.w4os-welcome footer {
     display: none;
 }
+
+@media screen and (max-width: 480px) {
+    .avatar-profile-table,
+    .avatar-profile-table th,
+    .avatar-profile-table tr,
+    .avatar-profile-table td,
+    .w4os-table.shortcodes,
+    .w4os-table.shortcodes > tbody,
+    .w4os-table.shortcodes > * > tr,
+    .w4os-table.shortcodes > * > * > th,
+    .w4os-table.shortcodes > * > * > td {
+        display: block;
+        max-width: 100%;
+        /* padding: 10px; */
+    }
+    .w4os-table.shortcodes {
+        margin: 0;
+    }
+    .w4os-table.shortcodes > tbody > tr > th {
+        margin: 20px 0 0;
+        width: calc(100% - 10px);
+    }
+    .w4os-table.shortcodes > tbody > tr > th p {
+        margin-bottom: 0;
+    }
+
+    .avatar-profile-table,
+    .avatar-profile-table th,
+    .avatar-profile-table td {
+      border: none;
+      padding: 0;
+    }
+    .avatar-profile-table th,
+    .avatar-profile-table .gridvar {
+      font-weight: bold;
+      margin-top: 0.5em;
+    }
+
+}
