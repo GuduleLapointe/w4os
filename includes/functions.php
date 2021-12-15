@@ -384,3 +384,13 @@ function w4os_format_ini($array) {
 	}
 	return $content;
 }
+
+function w4os_demask($mask, $values, $additionalvalue) {
+	$array = array();
+	foreach ($values as $key => $value) {
+		$bit = pow(2, $key);
+		if ($mask & $bit) $array[$key] = $value;
+	}
+	$array[] = $additionalvalue;
+	return array_filter($array);
+}

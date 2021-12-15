@@ -83,19 +83,43 @@ class W4OS_Avatar extends WP_User {
       $keys = array('FirstName' =>NULL, 'LastName' =>NULL, 'profileImage' =>NULL, 'profileAboutText'=>NULL );
       // $keys = array_combine($keys, $keys);
       // $avatar_array=(array)$avatar_row;
-      if(!w4os_empty($avatar_row->profileImage)) $avatar_row->profileImageHtml = '<img src=' . w4os_get_asset_url($avatar_row->profileImage) . '>';
+      if(!w4os_empty($avatar_row->profileImage)) $avatar_row->profileImageHtml = '<div class=profileImage><img src=' . w4os_get_asset_url($avatar_row->profileImage) . '></div>';
+      if(!w4os_empty($avatar_row->profileFirstImage)) $avatar_row->profileFirstImageHtml = '<div class=profileFirstImage><img src=' . w4os_get_asset_url($avatar_row->profileFirstImage) . '></div>';
+
+      $wants = array(
+        __('Build', 'w4os'),
+        __('Explore', 'w4os'),
+        __('Meet', 'w4os'),
+        __('Group', 'w4os'),
+        __('Buy', 'w4os'),
+        __('Sell', 'w4os'),
+        __('Get hired', 'w4os'),
+        __('Hire', 'w4os'),
+      );
+      $skills = array(
+        __('Graphism', 'w4os'),
+        __('Architecture', 'w4os'),
+        __('Events planning', 'w4os'),
+        __('Modeling', 'w4os'),
+        __('Coding', 'w4os'),
+        __('Customize avatars', 'w4os'),
+      );
+
 
       $profile=array_filter(array(
         __('Avatar Name', 'w4os') => $avatar_row->FirstName . " " . $avatar_row->LastName,
         // __('HG Name', 'w4os') => $avatar_row->HGName, // To implement
         // __('Avatar Display Name', 'w4os') => $avatar_row->DisplayName, // To implement
-        __('Profile picture', 'w4os') => $avatar_row->profileImageHtml,
+        __('About', 'w4os') => $avatar_row->profileImageHtml . wpautop($avatar_row->profileAboutText),
+        // __('Profile picture', 'w4os') => $avatar_row->profileImageHtml,
         __('Born', 'w4os') => sprintf('%s (%s days)',
         wp_date(get_option( 'date_format' ), $avatar_row->Created),
         floor((current_time('timestamp') - $avatar_row->Created) / 24 / 3600 )),
-        __('About', 'w4os') => wpautop($avatar_row->profileAboutText),
+        // __('Partner', 'w4os') => $avatar_row->profilePartner,
         __('Languages', 'w4os') => $avatar_row->profileLanguages,
-        __('Skills', 'w4os') => $avatar_row->profileSkillsText,
+        __('Wants to', 'w4os') => join(', ', w4os_demask($avatar_row->profileWantToMask, $wants, $avatar_row->profileWantToText)),
+        __('Skills', 'w4os') => join(', ', w4os_demask($avatar_row->profileSkillsMask, $skills, $avatar_row->profileSkillsText)),
+        __('Real Life', 'w4os') => $avatar_row->profileFirstImageHtml . ' ' . wpautop($avatar_row->profileFirstText),
       ));
 
       /* In-world profiles are always public, so are web profiles */
