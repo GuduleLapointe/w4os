@@ -110,9 +110,10 @@ function w4os_transient_admin_notice( $notice, $class='info', $dismissible=true,
 	$transient_key = sanitize_title(W4OS_PLUGIN_NAME . '_w4os_transient_admin_notices');
 
 	$queue = get_transient( $transient_key );
-
 	if(!is_array($queue)) $queue = array($queue);
-	$queue[] = array('notice' => $notice, 'class' => $class, 'dismissible' => $dismissible);
+
+	$hash = hash('md5', $notice);
+	$queue[$hash] = array('notice' => $notice, 'class' => $class, 'dismissible' => $dismissible);
 	set_transient( $transient_key, $queue );
 }
 
