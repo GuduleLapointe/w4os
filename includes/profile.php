@@ -124,7 +124,7 @@ class W4OS_Avatar extends WP_User {
         __('Wants to', 'w4os') => join(', ', w4os_demask($avatar_row->profileWantToMask, $wants, $avatar_row->profileWantToText)),
         __('Skills', 'w4os') => join(', ', w4os_demask($avatar_row->profileSkillsMask, $skills, $avatar_row->profileSkillsText)),
         __('Languages', 'w4os') => $avatar_row->profileLanguages,
-        __('Real Life', 'w4os') => $avatar_row->profileFirstImageHtml . ' ' . wpautop($avatar_row->profileFirstText),
+        __('Real Life', 'w4os') => trim($avatar_row->profileFirstImageHtml . ' ' . wpautop($avatar_row->profileFirstText)),
       ));
 
       /* In-world profiles are always public, so are web profiles */
@@ -674,8 +674,20 @@ function w4os_avatar_creation_form ($user) {
   $content .= "<form class='edit-account wrap' action='' method='post'>";
   $action = 'w4os_create_avatar';
 
-  $firstname = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_firstname'])) ? $_REQUEST['w4os_firstname'] : get_user_meta( $user->ID, 'first_name', true )));
-  $lastname  = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", (isset($_REQUEST['w4os_lastname']))  ? $_REQUEST['w4os_lastname']  : get_user_meta( $user->ID, 'last_name', true )));
+  if(isset($_REQUEST['w4os_firstname']) && isset($_REQUEST['w4os_lastname'])) {
+    $firstname = $_REQUEST['w4os_firstname'];
+    $lastname = $_REQUEST['w4os_lastname'];
+  } else if (!empty(get_user_meta( $user->ID, 'first_name', true )) &! !empty(get_user_meta( $user->ID, 'last_name', true )) ) {
+    $firstname = get_user_meta( $user->ID, 'first_name', true );
+    $lastname = get_user_meta( $user->ID, 'last_name', true );
+  } else {
+    $namearray = preg_split('/[ \._-]/', $user->user_login);
+    $firstname = ucfirst($namearray[0]);
+    $lastname = ucfirst($namearray[1]);
+  }
+
+  $firstname = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", $firstname ));
+  $lastname  = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", $lastname ));
 
   $content .= "
   <div class='clear'></div>

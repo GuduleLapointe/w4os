@@ -6,6 +6,7 @@
 - responsive profile display for smartphones
 - fix duplicate admin notices
 - fix squished profile picture
+- try to guess new avatar name from user_login if first name and last name not provided
 
 ## 2.2.5
 
