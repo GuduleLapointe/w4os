@@ -93,16 +93,16 @@ class W4OS_Avatar extends WP_User {
         __('Group', 'w4os'),
         __('Buy', 'w4os'),
         __('Sell', 'w4os'),
-        __('Get hired', 'w4os'),
+        __('Be Hired', 'w4os'),
         __('Hire', 'w4os'),
       );
       $skills = array(
-        __('Graphism', 'w4os'),
+        __('Textures', 'w4os'),
         __('Architecture', 'w4os'),
-        __('Events planning', 'w4os'),
+        __('Event Planning', 'w4os'),
         __('Modeling', 'w4os'),
-        __('Coding', 'w4os'),
-        __('Customize avatars', 'w4os'),
+        __('Scripting', 'w4os'),
+        __('Custom Characters', 'w4os'),
       );
 
       if(!w4os_empty($avatar_row->profilePartner)) {
