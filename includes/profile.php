@@ -86,7 +86,7 @@ class W4OS_Avatar extends WP_User {
       // $keys = array_combine($keys, $keys);
       // $avatar_array=(array)$avatar_row;
       if(!w4os_empty($avatar_row->profileImage)) $avatar_row->profileImageHtml = '<div class=profileImage><img src=' . w4os_get_asset_url($avatar_row->profileImage) . '></div>';
-      if(!w4os_empty($avatar_row->profileFirstImage)) $avatar_row->profileFirstImageHtml = '<div class=profileFirstImage><img src=' . w4os_get_asset_url($avatar_row->profileFirstImage) . '></div>';
+      if(!w4os_empty($avatar_row->profileFirstImage)) $avatar_row->profileFirstImageHtml = '<div class="profileImage profileFirstImage"><img src=' . w4os_get_asset_url($avatar_row->profileFirstImage) . '></div>';
 
       $wants = array(
         __('Build', 'w4os'),
