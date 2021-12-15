@@ -93,7 +93,7 @@ class W4OS_Avatar extends WP_User {
         __('Born', 'w4os') => sprintf('%s (%s days)',
         wp_date(get_option( 'date_format' ), $avatar_row->Created),
         floor((current_time('timestamp') - $avatar_row->Created) / 24 / 3600 )),
-        __('About', 'w4os') => $avatar_row->profileAboutText,
+        __('About', 'w4os') => wpautop($avatar_row->profileAboutText),
         __('Languages', 'w4os') => $avatar_row->profileLanguages,
         __('Skills', 'w4os') => $avatar_row->profileSkillsText,
       ));
