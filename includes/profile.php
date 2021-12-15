@@ -62,6 +62,8 @@ class W4OS_Avatar extends WP_User {
   }
 
   public function profile_page( $echo = false, $args=array() ) {
+    if(!W4OS_DB_CONNECTED) return __('Grid not connected', 'w4os');
+
     global $wpdb, $w4osdb;
 
     $content = '';
@@ -216,6 +218,7 @@ function w4os_profile_sync($user_or_id, $uuid = NULL) {
 
 
 function w4os_profile_sync_all() {
+  if(!W4OS_DB_CONNECTED) return;
   global $wpdb;
   global $w4osdb;
 
@@ -259,6 +262,7 @@ function w4os_profile_fields( $user ) {
  * @param string  $new_pass new password
  */
 function w4os_set_avatar_password( $user_id, $new_pass ) {
+  if(!W4OS_DB_CONNECTED) return;
 	global $w4osdb;
 
 	if( $user_id && $new_pass && current_user_can('edit_user',$user_id ) ) {
@@ -288,6 +292,7 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
  * @param  [type] $args [description]
  */
 function w4os_save_account_details ( $args ) {
+  if(!W4OS_DB_CONNECTED) return;
   $avatar = new W4OS_Avatar($user_id);
   $uuid = w4os_profile_sync($avatar); // refresh opensim data for this user
 
@@ -305,6 +310,7 @@ add_action('save_account_details', 'w4os_save_account_details', 10, 1);
  * @param  integer $user_id
  */
 function w4os_own_profile_update( $user_id, $old_user_data ) {
+  if(!W4OS_DB_CONNECTED) return;
 	if($_REQUEST['pass1'] == $_REQUEST['pass2'])
 	w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
 }
@@ -315,6 +321,7 @@ add_action( 'profile_update', 'w4os_own_profile_update', 10, 2 );
  * @param  integer $user_id
  */
 function w4os_other_profile_update($user_id) {
+  if(!W4OS_DB_CONNECTED) return;
 	if ( current_user_can('edit_user',$user_id) ) {
 		w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
 	}
@@ -322,6 +329,7 @@ function w4os_other_profile_update($user_id) {
 add_action( 'edit_user_profile_update', 'w4os_other_profile_update', 10, 1);
 
 function w4os_user_register( $user_id = 0 ) {
+  if(!W4OS_DB_CONNECTED) return;
   if ( isset($_REQUEST['email']) &! empty($_REQUEST['email']) ) {
     global $wpdb;
     $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_email = %s", $_REQUEST['email']));

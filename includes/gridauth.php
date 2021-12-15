@@ -4,9 +4,12 @@
 // ini_set('display_startup_errors', '1');
 // error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
+if(W4OS_DB_CONNECTED)
 add_filter( 'authenticate', 'w4os_gridauth',  20, 3 );
 function w4os_gridauth ( $user, $username, $password ) {
+  if(!W4OS_DB_CONNECTED) return $user;
   global $w4osdb;
+
   if(!is_object($user)) return false;
   // echo "user was " . $user-ID . '<br>';
   if(is_array($user->errors) && ( $user->errors['invalid_username'] || $user->errors['incorrect_password'] ) ) {
