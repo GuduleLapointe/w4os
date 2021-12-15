@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- added Partner, Wants, Skills and RL to web profile
+- responsive profile display for smartphones
+- fix duplicate admin notices
+- fix squished profile picture
+
 ## 2.2.5
 
 - added Partner to web profile

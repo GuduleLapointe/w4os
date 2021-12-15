@@ -111,6 +111,7 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Cron Grid and WP users sync
 - [x] Public avatar profile
 - [x] Auth with avatar credentials (if no matching wp account, create one)
+- Everything set, need some test feedback before release
 
 = Medium term =
 
@@ -161,9 +162,13 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
+= Unreleased =
+* responsive profile display for smartphones
+* fix duplicate admin notices
+* fix squished profile picture
+
 = 2.2.5 =
-* added Partner to web profile
-* added Wants, Skills and RL to web profile
+* added Partner, Wants, Skills and RL to web profile
 * removed Avatar section from WooCommerce account page until fixed
 
 = 2.2.4 =

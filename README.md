@@ -56,6 +56,7 @@ See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
 - [x] Cron Grid and WP users sync
 - [x] Public avatar profile
 - [x] Auth with avatar credentials (if no matching wp account, create one)
+- Everything set, need some test feedback before release
 
 ### Medium term
 
