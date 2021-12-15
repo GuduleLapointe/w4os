@@ -161,6 +161,10 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
+= 2.2.5 =
+* added Partner to web profile
+* added Wants, Skills and RL to web profile
+
 = 2.2.4 =
 * fix avatar not created, or not created at first attempt
 * fix inventory items not transferred to new avatars

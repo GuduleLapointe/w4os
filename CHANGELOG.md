@@ -1,14 +1,19 @@
 ## Changelog
 
-### Unreleased
+### 2.2.5
+* added Partner to web profile
+* added Wants, Skills and RL to web profile
 
 ### 2.2.4
 * fix avatar not created, or not created at first attempt
 * fix inventory items not transferred to new avatars
 * fix errors not displayed on avatar creation page
 * fix avatar model not shown if default account never connected
-* fix a couple of fatal errors, added imagick to the recommended php extensions
 * show image placeholder if profile picture not set
+
+### 2.2.3.1
+* fix a couple of fatal errors
+* added imagick to the recommended php extensions
 
 ### 2.2.2
 * new admin can create avatars for existing users
