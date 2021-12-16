@@ -396,8 +396,12 @@ function w4os_demask($mask, $values, $additionalvalue) {
 	return array_filter($array);
 }
 
-function w4os_hop($url = '') {
+function w4os_hop($url = NULL, $string = NULL) {
 	if(empty($url)) return;
-	if(get_option('w4os_login_uri')) $url = get_option('w4os_login_uri');
-	return sprintf('<a class=hop href="hop://%1$s">%1$s</a>', esc_attr($url));
+	if(get_option($url)) $url = get_option('w4os_login_uri');
+	$url=preg_replace('#.*://#', '', $url);
+	if(empty($string)) $string = $url;
+	$class="hop";
+	if(preg_match(':/app/agent/:', $url)) $class .= " profile";
+	return sprintf('<a class="%3$s" href="hop://%1$s">%2$s</a>', esc_attr($url), $string, $class);
 }

@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-- added Partner, Wants, Skills and RL to web profile
+- added in-world profile url to web profile page
+- added hop:// link to login uri
 - responsive profile display for smartphones
 - fix duplicate admin notices
 - fix squished profile picture
@@ -10,8 +11,7 @@
 
 ## 2.2.5
 
-- added Partner to web profile
-- added Wants, Skills and RL to web profile
+- added Partner, Wants, Skills and RL to web profile
 - removed Avatar section from WooCommerce account page until fixed
 
 ## 2.2.4

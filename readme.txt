@@ -163,6 +163,8 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 == Changelog ==
 
 = Unreleased =
+* added in-world profile url to web profile page
+* added hop:// link to login uri
 * responsive profile display for smartphones
 * fix duplicate admin notices
 * fix squished profile picture

@@ -111,8 +111,11 @@ class W4OS_Avatar extends WP_User {
         $partner=$w4osdb->get_row("SELECT FirstName, LastName FROM UserAccounts WHERE PrincipalID = '$avatar_row->profilePartner';");
       }
 
+      $this->AvatarName = trim($avatar_row->FirstName . " " . $avatar_row->LastName);
+
       $profile=array_filter(array(
-        __('Avatar Name', 'w4os') => $avatar_row->FirstName . " " . $avatar_row->LastName,
+        __('Avatar Name', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
+        // __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
         // __('HG Name', 'w4os') => $avatar_row->HGName, // To implement
         // __('Avatar Display Name', 'w4os') => $avatar_row->DisplayName, // To implement
         __('About', 'w4os') => $avatar_row->profileImageHtml . wpautop($avatar_row->profileAboutText),
@@ -885,6 +888,16 @@ function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
 		'<div>%s</div>',
 		w4os_gridprofile_html($atts, $args )
 	);
+}
+
+function w4os_grid_profile_url($user_or_id) {
+  if(get_option('w4os_profile_page') != 'provide') return;
+  if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
+  else $user = $user_or_id;
+  if(!is_object($user)) return;
+  if(!$user->UUID) return;
+
+  return sprintf('hop://%s/app/agent/%s/about', W4OS_GRID_LOGIN_URI, $user->UUID);
 }
 
 function w4os_web_profile_url($user_or_id) {
