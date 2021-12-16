@@ -162,14 +162,14 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
-= Unreleased =
-* added in-world profile url to web profile page
+= 2.2.6 =
+* added Born and Last Seen columns to users list
 * added hop:// link to login uri
-* added Born (avatar age) column to users list
+* added in-world profile link to profile page
 * responsive profile display for smartphones
 * fix duplicate admin notices
 * fix squished profile picture
-* try to guess new avatar name from user_login if first name and last name not provided
+* guess new avatar name from user_login if first name and last name not provided
 
 = 2.2.5 =
 * added Partner, Wants, Skills and RL to web profile
