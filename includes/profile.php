@@ -749,7 +749,6 @@ function w4os_avatar_creation_form ($user) {
     }
   }
   $content.= "</p>";
-  $content.= "</div>";
 
   $content .= "
   <p>
