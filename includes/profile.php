@@ -47,7 +47,8 @@ class W4OS_Avatar extends WP_User {
     $this->UUID = esc_attr(get_the_author_meta( 'w4os_uuid', $id ));
     $this->FirstName = esc_attr(get_the_author_meta( 'w4os_firstname', $id ));
     $this->LastName = esc_attr(get_the_author_meta( 'w4os_lastname', $id ));
-    $this->AvatarName = esc_attr(get_the_author_meta( 'w4os_avatarname', $id ));
+    $this->AvatarName = trim("$this->FirstName $this->LastName");
+    // $this->Created = esc_attr(get_the_author_meta( 'w4os_created', $id ));
     $this->AvatarSlug = strtolower($this->FirstName) . "." . strtolower($this->LastName);
     $this->AvatarHGName = strtolower($this->FirstName) . "." . strtolower($this->LastName) . "@" . esc_attr(get_option('w4os_login_uri'));
     $this->ProfilePictureUUID = get_the_author_meta( 'w4os_profileimage', $id );
@@ -120,9 +121,7 @@ class W4OS_Avatar extends WP_User {
         // __('Avatar Display Name', 'w4os') => $avatar_row->DisplayName, // To implement
         __('About', 'w4os') => $avatar_row->profileImageHtml . wpautop($avatar_row->profileAboutText),
         // __('Profile picture', 'w4os') => $avatar_row->profileImageHtml,
-        __('Born', 'w4os') => sprintf('%s (%s days old)',
-        wp_date(get_option( 'date_format' ), $avatar_row->Created),
-        ceil((current_time('timestamp') - $avatar_row->Created) / 24 / 3600 )),
+        __('Born', 'w4os') => w4os_age($avatar_row->Created),
         __('Partner', 'w4os') => trim($partner->FirstName . ' ' . $partner->LastName),
         __('Wants to', 'w4os') => join(', ', w4os_demask($avatar_row->profileWantToMask, $wants, $avatar_row->profileWantToText)),
         __('Skills', 'w4os') => join(', ', w4os_demask($avatar_row->profileSkillsMask, $skills, $avatar_row->profileSkillsText)),
@@ -215,6 +214,7 @@ function w4os_profile_sync($user_or_id, $uuid = NULL) {
   update_user_meta( $user->ID, 'w4os_firstname', $avatar_row->FirstName );
   update_user_meta( $user->ID, 'w4os_lastname', $avatar_row->LastName );
   update_user_meta( $user->ID, 'w4os_avatarname', trim($avatar_row->FirstName . ' ' . $avatar_row->LastName) );
+  update_user_meta( $user->ID, 'w4os_created', $avatar_row->Created);
   update_user_meta( $user->ID, 'w4os_profileimage', $avatar_row->profileImage );
   return $uuid;
 }

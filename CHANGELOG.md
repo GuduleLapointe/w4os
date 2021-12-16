@@ -4,6 +4,7 @@
 
 - added in-world profile url to web profile page
 - added hop:// link to login uri
+- added Born (avatar age) column to users list
 - responsive profile display for smartphones
 - fix duplicate admin notices
 - fix squished profile picture

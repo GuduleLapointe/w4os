@@ -405,3 +405,10 @@ function w4os_hop($url = NULL, $string = NULL) {
 	if(preg_match(':/app/agent/:', $url)) $class .= " profile";
 	return sprintf('<a class="%3$s" href="hop://%1$s">%2$s</a>', esc_attr($url), $string, $class);
 }
+
+function w4os_age($time) {
+	if(empty($time)) return;
+	return sprintf('%s (%s days old)',
+	wp_date(get_option( 'date_format' ), $time),
+	ceil((current_time('timestamp') - $time) / 24 / 3600 ));
+}
