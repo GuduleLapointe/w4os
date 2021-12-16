@@ -380,7 +380,7 @@ function w4os_update_avatar( $user, $params ) {
         /* profileAllow and profileMature might be handled in the future */
         // 'profileAllowPublish' => $profileAllowPublish,
         // 'profileMaturePublish' => $profileMaturePublish,
-        'profileURL' => w4os_get_profile_url($user),
+        'profileURL' => w4os_web_profile_url($user),
       ));
       $w4osdb->replace( 'userprofile', $new );
     // }
@@ -887,7 +887,7 @@ function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
 	);
 }
 
-function w4os_get_profile_url($user_or_id) {
+function w4os_web_profile_url($user_or_id) {
   if(get_option('w4os_profile_page') != 'provide') return;
   if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
   else $user = $user_or_id;
@@ -978,7 +978,7 @@ function w4os_user_profile_fields($user) {
             'w4os_web_profile_url' => array(
               'type' => 'url',
               'label' => __('Web Profile URL', 'w4os'),
-              'value' => w4os_get_profile_url($user),
+              'value' => w4os_web_profile_url($user),
               'readonly' => true,
             ),
             /* In-world profiles are always public, so are web profiles */
@@ -988,7 +988,7 @@ function w4os_user_profile_fields($user) {
             // 'value' => (get_the_author_meta( 'opensim_profileAllow_web', $user->ID ) === true),
             //   'default' => true,
             //   'description' => __('Make avatar profile public (available in search and on the website).', 'w4os')
-            //   . (($has_avatar) ? sprintf('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_get_profile_url($user) ) : ''),
+            //   . (($has_avatar) ? sprintf('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_web_profile_url($user) ) : ''),
             // )
           ),
         ),

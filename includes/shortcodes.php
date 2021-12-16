@@ -95,7 +95,7 @@ function w4os_newusers_html($atts = [], $args = []) {
 				</span>
 			</span>
 			</li>',
-			w4os_get_profile_url($user),
+			w4os_web_profile_url($user),
 			get_avatar($username->user_email, 32),
 			get_the_author_meta( 'w4os_avatarname', $user->ID ),
 			$username->user_email,

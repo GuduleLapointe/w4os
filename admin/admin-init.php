@@ -93,7 +93,7 @@ function w4os_user_actions_profile_view($actions, $user) {
 
 	$actions['view'] = sprintf('
     <a class=view href="%s">%s</a>',
-    w4os_get_profile_url($user),
+    w4os_web_profile_url($user),
     __( 'View profile', 'w4OS' ) . "</a>"
   );
 	return $actions;
