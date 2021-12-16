@@ -196,6 +196,7 @@ function w4os_profile_sync($user_or_id, $uuid = NULL) {
 
   $avatars=$w4osdb->get_results("SELECT * FROM UserAccounts
     LEFT JOIN userprofile ON PrincipalID = userUUID
+    LEFT JOIN GridUser ON PrincipalID = UserID
     WHERE active = 1 AND $condition"
   );
   if(empty($avatars)) return false;
@@ -215,6 +216,7 @@ function w4os_profile_sync($user_or_id, $uuid = NULL) {
   update_user_meta( $user->ID, 'w4os_lastname', $avatar_row->LastName );
   update_user_meta( $user->ID, 'w4os_avatarname', trim($avatar_row->FirstName . ' ' . $avatar_row->LastName) );
   update_user_meta( $user->ID, 'w4os_created', $avatar_row->Created);
+  update_user_meta( $user->ID, 'w4os_lastseen', $avatar_row->Login);
   update_user_meta( $user->ID, 'w4os_profileimage', $avatar_row->profileImage );
   return $uuid;
 }

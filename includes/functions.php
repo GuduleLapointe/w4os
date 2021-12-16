@@ -408,7 +408,11 @@ function w4os_hop($url = NULL, $string = NULL) {
 
 function w4os_age($time) {
 	if(empty($time)) return;
-	return sprintf('%s (%s days old)',
+	$age = number_format((current_time('timestamp') - $time) / 24 / 3600 );
+	if ($age == 0) $ageshown = __('Joined today');
+	else $ageshown = sprintf(__('%s days old', 'w4os'), $age);
+	return sprintf('%s (%s)',
 	wp_date(get_option( 'date_format' ), $time),
-	ceil((current_time('timestamp') - $time) / 24 / 3600 ));
+	$ageshown,
+	);
 }

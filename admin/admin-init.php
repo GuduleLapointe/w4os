@@ -79,11 +79,13 @@ function w4os_register_user_columns($columns) {
     $columns = array_combine( $keys, $columns );
 		$columns['w4os_avatarname'] = $column_name;
     $columns['w4os_created'] = __('Born', 'w4os');
+    $columns['w4os_lastseen'] = __('Last Seen', 'w4os');
 	} else {
 		$insert_columns[array_key_first($columns)] = array_shift($columns);
 		$insert_columns[array_key_first($columns)] = array_shift($columns);
 		$insert_columns['w4os_avatarname'] = $column_name;
     $insert_columns['w4os_created'] = __('Born', 'w4os');
+    $insert_columns['w4os_lastseen'] = __('Last Seen', 'w4os');
 	}
   $columns = array_merge($insert_columns, $columns);
 
@@ -112,24 +114,27 @@ add_filter('user_row_actions', 'w4os_user_actions_profile_view', 10, 2);
  * @return [type]              updated $value
  */
 function w4os_register_user_columns_views($value, $column_name, $user_id) {
-	if($column_name == 'w4os_avatarname') {
-		// if(empty(get_the_author_meta( 'w4os_uuid', $user_id ))) return "-";
-		return get_the_author_meta( 'w4os_avatarname', $user_id );
-	}
-  if($column_name == 'w4os_created') {
-		// if(empty(get_the_author_meta( 'w4os_uuid', $user_id ))) return "-";
-		return w4os_age(get_the_author_meta( 'w4os_created', $user_id ));
-	}
+  switch ($column_name) {
+    case 'w4os_avatarname': return get_the_author_meta( 'w4os_avatarname', $user_id );
+    case 'w4os_created': return w4os_age(get_the_author_meta( 'w4os_created', $user_id ));
+    case 'w4os_lastseen': return w4os_date('', get_the_author_meta( 'w4os_lastseen', $user_id ) );
+  }
 	return $value;
 }
 add_action('manage_users_custom_column', 'w4os_register_user_columns_views', 10, 3);
 
+function w4os_date( $format, $timestamp = null, $timezone = null ) {
+  if(empty($timestamp)) return;
+  if(empty($format)) $format = get_option( 'date_format');
+  return wp_date($format, $timestamp, $timezone );
+}
 /**
  * Make avatar name column sortable
  */
 function w4os_users_sortable_columns( $columns ) {
   $columns['w4os_avatarname'] = 'w4os_avatarname';
   $columns['w4os_created'] = 'w4os_avatarname';
+  $columns['w4os_lastseen'] = 'w4os_lastseen';
 	return $columns;
 }
 add_filter( 'manage_users_sortable_columns', 'w4os_users_sortable_columns');
