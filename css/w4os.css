@@ -2,6 +2,19 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+/* a[target="_blank"]:after {
+  font-family: 'Font Awesome 5 Pro';
+  content: " \f08e";
+} */
+
+a[href*="hop://"]:after {
+  font-family: 'Font Awesome 5 Pro';
+  content: "\e022";
+  display: inline-block;
+  margin-left: 0.2em;
+}
+
 #dashboard-widgets table.gridinfo,
 #dashboard-widgets table.gridstatus {
   width: 100%;
