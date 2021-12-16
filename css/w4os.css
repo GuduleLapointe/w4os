@@ -8,11 +8,16 @@
   content: " \f08e";
 } */
 
+a[href*="hop://"] {
+  white-space: nowrap;
+}
 a[href*="hop://"]:after {
-  font-family: 'Font Awesome 5 Pro';
-  content: "\e022";
-  display: inline-block;
-  margin-left: 0.2em;
+  content: "";
+  display:inline-block;
+  content: url('../images/portal-enter-regular.svg');
+  width: 1em;
+  height: 1em;
+  margin-left: 0.15em;
 }
 
 #dashboard-widgets table.gridinfo,

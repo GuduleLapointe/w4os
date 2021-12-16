@@ -101,8 +101,9 @@ if(get_option('w4os_provide_asset_server') == 1 ) {
 
 add_action( 'wp_enqueue_scripts', function() {
   wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os-min.css', array(), W4OS_VERSION );
+  // wp_enqueue_style( 'w4os-main', plugin_dir_url( dirname(__FILE__) ) . 'css/w4os.css', array(), W4OS_VERSION . '-' . time()); // for debug only
   // wp_enqueue_style( 'dashicons' );
-  wp_enqueue_script( 'w4os-fa', 'https://kit.fontawesome.com/d075e8828a.js', array(), W4OS_VERSION, true );
+  // wp_enqueue_script( 'w4os-fa', 'https://kit.fontawesome.com/d075e8828a.js', array(), W4OS_VERSION, true );
 } );
 
 add_filter( 'script_loader_tag', 'w4os_add_crossorigin', 10, 2 );
