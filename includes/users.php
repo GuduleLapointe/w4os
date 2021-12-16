@@ -140,7 +140,7 @@ function w4os_sync_users() {
 				// No user with this email, create one
 				$newid = wp_insert_user(array(
 					'user_login' => w4os_create_user_login($account['FirstName'], $account['LastName'], $account['email']),
-					// 'user_pass' => wp_generate_password(),
+					'user_pass' => wp_generate_password(),
 					'user_email' => $account['email'],
 					'first_name' => $account['FirstName'],
 					'last_name' => $account['LastName'],
