@@ -126,7 +126,7 @@ function w4os_gridinfo_html($atts = [], $args=[])
 	$content = $before_title . $title . $after_title;
 	$info=array(
 		__("Grid name", 'w4os') => esc_attr(get_option('w4os_grid_name')),
-		__("Login URI", 'w4os') => esc_attr(get_option('w4os_login_uri')),
+		__("Login URI", 'w4os') => sprintf('<a href="hop://%1$s">%1$s</a>', esc_attr(get_option('w4os_login_uri'))),
 	);
 	if(!empty($info)) {
 		$content .= w4os_array2table($info, 'gridinfo');
