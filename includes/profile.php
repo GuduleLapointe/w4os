@@ -685,8 +685,8 @@ function w4os_avatar_creation_form ($user) {
     $lastname = get_user_meta( $user->ID, 'last_name', true );
   } else {
     $namearray = preg_split('/[ \._-]/', $user->user_login);
-    $firstname = ucfirst($namearray[0]);
-    $lastname = ucfirst($namearray[1]);
+    $firstname = (isset($namearray[0])) ? ucfirst($namearray[0]) : '';
+    $lastname = (isset($namearray[1])) ? ucfirst($namearray[1]) : '';
   }
 
   $firstname = sanitize_text_field(preg_replace("/[^[:alnum:]]/", "", $firstname ));

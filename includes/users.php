@@ -120,7 +120,7 @@ function w4os_sync_users() {
 	$users_created=[];
 	$users_updated=[];
 	foreach ($accounts as $key => $account) {
-		$user = get_user_by('ID', $account['user_id']);
+		$user = @get_user_by('ID', $account['user_id']);
     // First cleanup NULL_KEY and other empty UUIDs
     if(!isset($account['PrincipalID']) || w4os_empty($account['PrincipalID'])) $account['PrincipalID'] = NULL;
     if(!isset($account['w4os_uuid']) || w4os_empty($account['w4os_uuid'])) $account['w4os_uuid'] = NULL;
