@@ -82,11 +82,11 @@ define('W4OS_GRID_INFO', w4os_get_grid_info());
 require_once dirname( __DIR__ ) . '/templates/templates.php';
 require_once __DIR__ . '/w4osdb.php';
 require_once __DIR__ . '/shortcodes.php';
-require_once __DIR__ . '/widgets.php';
+// require_once __DIR__ . '/widgets.php';
 require_once __DIR__ . '/users.php';
 require_once __DIR__ . '/gridauth.php';
 require_once __DIR__ . '/profile.php';
-require_once dirname(__DIR__) . '/blocks/w4os-gridinfo-block.php';
+require_once dirname(__DIR__) . '/blocks/blocks.php';
 
 if(W4OS_DB_CONNECTED) {
   if(get_option('w4os_sync_users')) add_action('init', 'w4os_sync_users');
