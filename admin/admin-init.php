@@ -52,7 +52,7 @@ function w4os_settings_page()
 	}
 ?>
 	<div class="wrap">
-		<h1>OpenSimulator</h1>	<?php screen_icon(); ?>
+		<h1>OpenSimulator</h1>
 		<form method="post" action="options.php" autocomplete="off">
 			<?php
 			settings_fields( 'w4os_settings' );
