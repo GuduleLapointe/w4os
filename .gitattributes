@@ -45,3 +45,4 @@ wp-cli.local.yml export-ignore
 yarn.lock export-ignore
 .distignore.wp export-ignore
 .version export-ignore
+README.md export-ignore

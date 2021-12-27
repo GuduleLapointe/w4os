@@ -162,6 +162,10 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
+= 2.2.7 =
+* added config instructions for new grid users (fix #42)
+* Display a link to profile page instead of form in profile shortcode (fix #40)
+
 = 2.2.6 =
 * added Born and Last Seen columns to users list
 * added hop:// link to login uri
