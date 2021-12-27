@@ -800,7 +800,8 @@ function w4os_profile_display( $user, $args=[] ) {
     );
     // return $content;
   } else {
-    $content= w4os_avatar_creation_form ($user);
+    $content .= sprintf( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __("Create an avatar", 'w4os') );
+    // $content= w4os_avatar_creation_form ($user);
   }
   if(!empty($content)) {
     $content = $before_title . $title . $after_title . $content;
