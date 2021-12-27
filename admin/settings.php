@@ -8,6 +8,7 @@ function w4os_register_settings() {
 
 	if(!get_option('w4os_model_firstname')) update_option('w4os_model_firstname', 'Default');
 	if(!get_option('w4os_model_lastname')) update_option('w4os_model_lastname', 'Default');
+	if(!w4os_option_exists('w4os_configuration_instructions')) update_option('w4os_configuration_instructions', true);
 
 	$settings_pages = array(
 		'w4os_status' => array(
@@ -154,6 +155,27 @@ function w4os_register_settings() {
 								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
 							),
 						),
+						'w4os_profile_page' => array(
+							'type' => 'radio',
+							'label' => __('Profile page', 'w4os'),
+							'values' => array(
+								'provide' => __('Provide web profile page for avatars', 'w4os'),
+								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
+								'default' =>  __('Defaults', 'w4os'),
+							),
+							'default' => 'provide',
+							'description' => sprintf(
+								__('The page %s must exist, as defined in %spermalinks settings%s.', 'w4os'),
+								'<code>' . get_home_url(NULL, get_option('w4os_profile_slug', 'profile')) . '</code>',
+								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
+							),
+						),
+						'w4os_configuration_instructions' => array(
+							'type' => 'boolean',
+							'label' => '', // __('Configuration instructions', 'w4os'),
+							'description' => __('Show configuration instructions to new users.', 'w4os'),
+						),
+
 						'w4os_login_page' => array(
 						  'type' => 'radio',
 						  'label' => __('Login page', 'w4os'),

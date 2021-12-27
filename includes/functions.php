@@ -416,3 +416,12 @@ function w4os_age($time) {
 	$ageshown,
 	);
 }
+
+function w4os_option_exists($option_name) {
+    global $wpdb;
+    $row = $wpdb->get_row($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option_name));
+    if (is_object($row)) {
+        return true;
+    }
+    return false;
+}

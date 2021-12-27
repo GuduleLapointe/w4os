@@ -16,6 +16,9 @@ if ( empty($query_firstname) || empty($query_lastname) ) {
       $avatar_profile = '<div>' . w4os_avatar_creation_form($user) . '</div>';
     }
     $page_content .= $avatar_profile;
+    if(get_option('w4os_configuration_instructions') && get_the_author_meta( 'w4os_lastseen', $user->ID ) == 0 ) {
+      include("content-configuration.php");
+    }
   } else {
     // User not logged in, show login form
     $page_title = __('Log in', 'w4os');
@@ -44,7 +47,7 @@ if ( empty($query_firstname) || empty($query_lastname) ) {
 
   if($avatar_profile) {
     $avatar_name = esc_attr(get_the_author_meta( 'w4os_firstname', $avatar->ID) . ' ' . get_the_author_meta( 'w4os_lastname', $avatar->ID));
-    $page_content = $avatar_profile;
+    $page_content .= $avatar_profile;
     $page_title = $avatar_name;
     $head_title = sprintf(__("%s's profile", 'w4os'), $avatar_name);
   } else {
