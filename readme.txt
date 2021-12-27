@@ -163,8 +163,9 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 == Changelog ==
 
 = 2.2.7 =
-* added config instructions for new grid users (fix #42)
-* Display a link to profile page instead of form in profile shortcode (fix #40)
+* added config instructions for new grid users
+* show a link to profile page instead of the form in profile shortcode
+* removed W4OS Grid Info and W4OS Grid Status widgets (already available as blocks)
 
 = 2.2.6 =
 * added Born and Last Seen columns to users list
