@@ -45,3 +45,4 @@ yarn.lock
 .distignore.wp
 .version
 README.md
+tmp/

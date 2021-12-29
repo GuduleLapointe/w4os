@@ -680,8 +680,8 @@ function w4os_avatar_creation_form ($user) {
   $action = 'w4os_create_avatar';
 
   if(isset($_REQUEST['w4os_firstname']) && isset($_REQUEST['w4os_lastname'])) {
-    $firstname = $_REQUEST['w4os_firstname'];
-    $lastname = $_REQUEST['w4os_lastname'];
+    $firstname = sanitize_text_field($_REQUEST['w4os_firstname']);
+    $lastname = sanitize_text_field($_REQUEST['w4os_lastname']);
   } else if (!empty(get_user_meta( $user->ID, 'first_name', true )) &! !empty(get_user_meta( $user->ID, 'last_name', true )) ) {
     $firstname = get_user_meta( $user->ID, 'first_name', true );
     $lastname = get_user_meta( $user->ID, 'last_name', true );

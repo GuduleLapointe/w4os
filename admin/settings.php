@@ -288,12 +288,12 @@ function w4os_settings_field($args, $user = false) {
 	switch ($args['type']) {
 		case 'url':
 		if($args['readonly']) {
-			if(!empty($value)) echo sprintf('<a href="%1$s">%1$s</a>', $value);
+			if(!empty($value)) echo sprintf('<a href="%1$s">%1$s</a>', esc_html($value));
 			break;
 		}
 
 		case 'string':
-		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . $value . "' " . join(' ', $parameters) . " />";
+		echo "<input type='text' class='regular-text input-${args['type']}' id='$field_id' name='$field_id' value='" . esc_attr($value) . "' " . join(' ', $parameters) . " />";
 		break;
 
 		case 'password':

@@ -162,10 +162,10 @@ function w4os_users_filter_avatars($position)
   );
   foreach($options as $value => $label) {
     $options_html .= sprintf(
-      '<option value=%1$s %3$s>%2$s</option>',
-      $value,
-      $label,
-      ( $_GET['filter_avatar_'. $position ] == $value ) ? 'selected' : '',
+      '<option value="%1$s" %3$s>%2$s</option>',
+      esc_attr($value),
+      esc_attr($label),
+      esc_html(( $_GET['filter_avatar_'. $position ] == $value ) ? 'selected' : ''),
     );
   }
 
@@ -174,7 +174,7 @@ function w4os_users_filter_avatars($position)
       <option value="">%2$s</option>
       %3$s
     </select>',
-    $position,
+    esc_attr($position),
     __( 'Filter users...' ),
     $options_html
   );
@@ -261,11 +261,12 @@ function w4os_process_actions($args = array()) {
 
   // w4os_transient_admin_notice(__FUNCTION__ . '<pre>' . print_r($_REQUEST, true) . '</pre>');
   if($_REQUEST['action'] == 'create_page' && isset(W4OS_PAGES[$_REQUEST['helper']])) {
-    $slug = $_REQUEST['slug'];
-    $helper = $_REQUEST['helper'];
-    $guid = $_REQUEST['guid'];
+    $action = sanitize_title($_REQUEST['action']);
+    $slug = sanitize_title($_REQUEST['slug']);
+    $helper = sanitize_title($_REQUEST['helper']);
+    $guid = sanitize_title($_REQUEST['guid']);
 
-    if (!check_admin_referer( $_REQUEST['action'] . '_'. $_REQUEST['helper'])) {
+    if (!check_admin_referer( $action . '_'. $helper)) {
       w4os_transient_admin_notice(__('The followed link has expired, please try again', 'w4os'));
       wp_redirect(admin_url( "admin.php?page=".$_GET["page"] ));
       exit;
@@ -275,8 +276,7 @@ function w4os_process_actions($args = array()) {
     if(!is_wp_error($page) &! empty($page)) {
       w4os_transient_admin_notice(sprintf(__('Page %s already exists.', 'w4os'), W4OS_PAGES[$helper]['name']), 'error');
     } else {
-      $data = W4OS_PAGES[$_REQUEST['helper']];
-      $guid = $_REQUEST['guid'];
+      $data = W4OS_PAGES[$helper];
       // (empty($_REQUEST['guid'])) ? site_url() . "/$slug" : $_REQUEST['guid'];
       $page_id = wp_insert_post(array(
         'post_name' => $slug,
