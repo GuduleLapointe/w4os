@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.8
+## 2.2.9
 
 - new web assets server
 - new profile page
