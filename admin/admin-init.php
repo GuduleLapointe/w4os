@@ -310,9 +310,20 @@ add_action('init', function() {
       'name' => __('Avatar profile', 'w4os'),
       'description' => __('The base URL for avatar web profiles.', 'w4os'),
     ),
+    'SearchURL' => array(
+      'name' => __('Search Service', 'w4os'),
+      'description' => __('Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll.', 'w4os'),
+      'third_party_url' => (get_option('w4os_provide_search')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+      'os_config' => [
+        'OpenSim.ini' => [
+          '[Search]' => [ 'SearchURL = %1$s' ],
+          // '[GridInfoService]' => [ 'search = %1$s' ],
+        ],
+      ],
+    ),
     'search' => array(
-      'name' => __('Search', 'w4os'),
-      'description' => __('Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities.', 'w4os'),
+      'name' => __('Web Search', 'w4os'),
+      'description' => __('Web tab of viewer search windows. Relevant if you have a search page providing content from the grid.', 'w4os'),
       'third_party_url' => (get_option('w4os_provide_search')) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
       'os_config' => [
         'Robust.HG.ini' => [
