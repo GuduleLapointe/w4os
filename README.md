@@ -5,7 +5,7 @@
 * Requires at least: 5.3.0
 * Requires PHP: 5.6
 * Tested up to: 5.8.2
-* Stable tag: 2.1
+* Stable tag: 2.2.8
 * License: AGPLv3
 * License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -13,7 +13,7 @@ WordPress interface for OpenSimulator (w4os)
 
 ## Description
 
-Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provide user registration, default avatar model choice, login info and statistics for grids or standalone simulators.
+Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provide user registration, default avatar model choice, login info, statistics and a web assets server for grids or standalone simulators.
 
 See Features and Roadmap sections for current and upcoming functionalties.
 
@@ -34,6 +34,11 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - grid name, login uri and database connection settings
   - naming scheme of default models
   - exclude models from grid stats
+- Web asset server
+- Login page / Widget
+- Manual and cron Grid/WP users sync
+- Public avatar profile
+- Auth with avatar credentials (if no matching wp account, create one)
 
 ### Paid version
 
@@ -41,22 +46,7 @@ The free version from WordPress plugins directory and the [paid version](https:/
 
 ## Roadmap
 
-See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
-
-### Short term (v2.2)
-
-- [x] Include web asset server
-- [x] Add avatar picture to gridprofile output
-- [x] Sidebar grid info and grid status widgets.
-- [x] Use avatar profile pic as WP avatar
-- [x] Show avatar picture in user lists
-- [x] Login page / Widget
-- [x] Option to show avatar name instead of real name in user lists
-- [x] Manual Grid and WP users sync
-- [x] Cron Grid and WP users sync
-- [x] Public avatar profile
-- [x] Auth with avatar credentials (if no matching wp account, create one)
-- Everything set, need some test feedback before release
+See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
 
 ### Medium term
 

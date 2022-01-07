@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 5.6
 Tested up to: 5.8.2
-Stable tag: 2.1
+Stable tag: 2.2.8
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -13,7 +13,7 @@ WordPress interface for OpenSimulator (w4os)
 
 == Description ==
 
-Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provide user registration, default avatar model choice, login info and statistics for grids or standalone simulators.
+Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provide user registration, default avatar model choice, login info, statistics and a web assets server for grids or standalone simulators.
 
 See Features and Roadmap sections for current and upcoming functionalties.
 
@@ -34,6 +34,11 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - grid name, login uri and database connection settings
   - naming scheme of default models
   - exclude models from grid stats
+- Web asset server
+- Login page / Widget
+- Manual and cron Grid/WP users sync
+- Public avatar profile
+- Auth with avatar credentials (if no matching wp account, create one)
 
 = Paid version =
 
@@ -92,26 +97,11 @@ These accounts will be excluded from grid statistics.
 
 * **Web Asset Server**: the project requires a web asset server to convert simulator assets (profile pictures, model avatars...) and display them on the website. W4OS provides a web assets service, or you can specify an external web assets service URL instead.
 
-* **PHP Modules**: while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
+* **PHP Modules**: w4os requires php imagemagick module. Also, while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
 
 == Roadmap ==
 
-See (https://github.com/GuduleLapointe/w4os/projects/1) for up-to-date status.
-
-= Short term (v2.2) =
-
-- [x] Include web asset server
-- [x] Add avatar picture to gridprofile output
-- [x] Sidebar grid info and grid status widgets.
-- [x] Use avatar profile pic as WP avatar
-- [x] Show avatar picture in user lists
-- [x] Login page / Widget
-- [x] Option to show avatar name instead of real name in user lists
-- [x] Manual Grid and WP users sync
-- [x] Cron Grid and WP users sync
-- [x] Public avatar profile
-- [x] Auth with avatar credentials (if no matching wp account, create one)
-- Everything set, need some test feedback before release
+See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
 
 = Medium term =
 
@@ -162,64 +152,51 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
-= 2.2.7 =
-* added config instructions for new grid users
-* show a link to profile page instead of the form in profile shortcode
-* removed W4OS Grid Info and W4OS Grid Status widgets (already available as blocks)
+= 2.2.8 =
+* new web assets server
+* new profile page
+* new config instructions for new grid users
+* new blocks support
+* new grid and wordpress users sync
+* new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
+* new admin can create avatars for existing users
+* new grid info settings are fetched from Robust server if set or localhost:8002
+* new check grid info url validity (cron and manual)
 
-= 2.2.6 =
+* added option to replace name by avatar name in users list
+* added profile image to gridprofile
+* added assets permalink settings
+* added states in admin pages list for known urls (from grid_info)
+* added lost password and register links on login page
+* added buttons to create missing pages on status dashboard
 * added Born and Last Seen columns to users list
 * added hop:// link to login uri
 * added in-world profile link to profile page
-* responsive profile display for smartphones
+* added Partner, Wants, Skills and RL to web profile
+
+* removed Avatar section from WooCommerce account page until fixed
+* removed W4OS Grid Info and W4OS Grid Status widgets (now available as blocks)
 * fix duplicate admin notices
 * fix squished profile picture
-* guess new avatar name from user_login if first name and last name not provided
-
-= 2.2.5 =
-* added Partner, Wants, Skills and RL to web profile
-* removed Avatar section from WooCommerce account page until fixed
-
-= 2.2.4 =
 * fix avatar not created, or not created at first attempt
 * fix inventory items not transferred to new avatars
 * fix errors not displayed on avatar creation page
 * fix avatar model not shown if default account never connected
-* show image placeholder if profile picture not set
-
-= 2.2.3.1 =
-* fix a couple of fatal errors
-* added imagick to the recommended php extensions
-
-= 2.2.2 =
-* new admin can create avatars for existing users
-* new check grid info url validity (cron and manual)
-* added states in admin pages list for known urls (from grid_info)
-* added lost password and register links on login page
-* added buttons to create missing pages on status dashboard
-* lighter template for profiles when loaded from the viewer
 * fix missing error messages on login page
 * fix user login broken if w4os_login_page is set to profile and OpenSim database is not connected
-
-= 2.2 =
-* new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
-* new profile page
-* new grid and wordpress users sync
-* new basic blocks support
-* new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
-* new 'Grid info' and 'Grid status' sidebar widgets
-* new internal web assets server
-* added option to replace name by avatar name in users list
-* added internal update process
-* added assets permalink settings
-* added profile image to gridprofile output
+* fix a couple of fatal errors
 * fix slow assets, store cached images in upload folder to serve them directly by the web server
-* fix #21 Fatal error Call to undefined function each()
-* assets optimized (write converted images inside upload/ folder to let them serve directly by the web server)
+* fix Fatal error Call to undefined function each()
+
+* show a link to profile page instead of the form in profile shortcode
+* responsive profile display for smartphones
+* show image placeholder if profile picture not set
+* added imagick to the recommended php extensions
+* lighter template for profiles when loaded from the viewer
+* guess new avatar name from user_login if first name and last name not provided
 * replace wp avatar picture with in-world profile picture if set
 * use version provided by .version if present
 * More comprehensive database connection error reporting
-* show internal or external asset server uri according to provide web assets service value
 
 = 2.1 =
 * added login form to gridprofile shortcode when not connected instead of login message

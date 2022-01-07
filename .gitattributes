@@ -46,3 +46,4 @@ yarn.lock export-ignore
 .distignore.wp export-ignore
 .version export-ignore
 README.md export-ignore
+tmp/ export-ignore

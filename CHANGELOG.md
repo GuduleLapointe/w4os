@@ -1,70 +1,54 @@
 # Changelog
 
-## 2.2.7
+## 2.2.8
 
-- added config instructions for new grid users
-- show a link to profile page instead of the form in profile shortcode
-- removed W4OS Grid Info and W4OS Grid Status widgets (already available as blocks)
+- new web assets server
+- new profile page
+- new config instructions for new grid users
+- new blocks support
+- new grid and wordpress users sync
+- new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
+- new admin can create avatars for existing users
+- new grid info settings are fetched from Robust server if set or localhost:8002
+- new check grid info url validity (cron and manual)
 
-## 2.2.6
+- added option to replace name by avatar name in users list
 
+- added profile image to gridprofile
+- added assets permalink settings
+- added states in admin pages list for known urls (from grid_info)
+- added lost password and register links on login page
+- added buttons to create missing pages on status dashboard
 - added Born and Last Seen columns to users list
 - added hop:// link to login uri
 - added in-world profile link to profile page
-- responsive profile display for smartphones
-- fix duplicate admin notices
-- fix squished profile picture
-- guess new avatar name from user_login if first name and last name not provided
-
-## 2.2.5
-
 - added Partner, Wants, Skills and RL to web profile
+
 - removed Avatar section from WooCommerce account page until fixed
 
-## 2.2.4
-
+- removed W4OS Grid Info and W4OS Grid Status widgets (now available as blocks)
+- fix duplicate admin notices
+- fix squished profile picture
 - fix avatar not created, or not created at first attempt
 - fix inventory items not transferred to new avatars
 - fix errors not displayed on avatar creation page
 - fix avatar model not shown if default account never connected
-- show image placeholder if profile picture not set
-
-## 2.2.3.1
-
-- fix a couple of fatal errors
-- added imagick to the recommended php extensions
-
-## 2.2.2
-
-- new admin can create avatars for existing users
-- new check grid info url validity (cron and manual)
-- added states in admin pages list for known urls (from grid_info)
-- added lost password and register links on login page
-- added buttons to create missing pages on status dashboard
-- lighter template for profiles when loaded from the viewer
 - fix missing error messages on login page
 - fix user login broken if w4os_login_page is set to profile and OpenSim database is not connected
-
-## 2.2
-
-- new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
-- new profile page
-- new grid and wordpress users sync
-- new basic blocks support
-- new Grid info settings are checked against Robust server. If Login URI is not set, localhost:8002 is checked.
-- new 'Grid info' and 'Grid status' sidebar widgets
-- new internal web assets server
-- added option to replace name by avatar name in users list
-- added internal update process
-- added assets permalink settings
-- added profile image to gridprofile output
+- fix a couple of fatal errors
 - fix slow assets, store cached images in upload folder to serve them directly by the web server
-- fix #21 Fatal error Call to undefined function each()
-- assets optimized (write converted images inside upload/ folder to let them serve directly by the web server)
+- fix Fatal error Call to undefined function each()
+
+- show a link to profile page instead of the form in profile shortcode
+
+- responsive profile display for smartphones
+- show image placeholder if profile picture not set
+- added imagick to the recommended php extensions
+- lighter template for profiles when loaded from the viewer
+- guess new avatar name from user_login if first name and last name not provided
 - replace wp avatar picture with in-world profile picture if set
 - use version provided by .version if present
 - More comprehensive database connection error reporting
-- show internal or external asset server uri according to provide web assets service value
 
 ## 2.1
 
