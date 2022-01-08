@@ -103,7 +103,7 @@ $count = w4os_count_users();
 						if($count['tech'] > 0) {
 							echo '<p>' . sprintf(_n(
 								"%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks.",
-								"%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.",
+								"%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.",
 								$count['tech'],
 								'w4os'
 								) . ' ' . __('Real accounts need a unique email address for W4OS to function properly.', 'w4os'

@@ -1,20 +1,20 @@
-# Copyright (C) 2021 Speculoos World
+# Copyright (C) 2022 Speculoos World
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface (dev) 2.2.6\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.2.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-27T11:56:27-04:00\n"
+"POT-Creation-Date: 2022-01-08T09:15:34-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface (dev)"
+msgid "w4os - OpenSimulator Web Interface"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -120,11 +120,11 @@ msgid "OpenSimulator Offline Messages"
 msgstr ""
 
 #: admin/admin-init.php:256
-#: admin/admin-init.php:269
+#: admin/admin-init.php:270
 msgid "The followed link has expired, please try again"
 msgstr ""
 
-#: admin/admin-init.php:276
+#: admin/admin-init.php:277
 msgid "Page %s already exists."
 msgstr ""
 
@@ -145,67 +145,75 @@ msgid "The base URL for avatar web profiles."
 msgstr ""
 
 #: admin/admin-init.php:314
-msgid "Search"
+msgid "Search Service"
 msgstr ""
 
 #: admin/admin-init.php:315
-msgid "Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities."
+msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
 msgstr ""
 
 #: admin/admin-init.php:325
+msgid "Web Search"
+msgstr ""
+
+#: admin/admin-init.php:326
+msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
+msgstr ""
+
+#: admin/admin-init.php:336
 #: admin/settings.php:98
 msgid "Offline messages"
 msgstr ""
 
-#: admin/admin-init.php:326
+#: admin/admin-init.php:337
 msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:331
+#: admin/admin-init.php:342
 msgid "Splash"
 msgstr ""
 
-#: admin/admin-init.php:332
+#: admin/admin-init.php:343
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr ""
 
-#: admin/admin-init.php:357
+#: admin/admin-init.php:368
 msgid "Registration page"
 msgstr ""
 
-#: admin/admin-init.php:358
+#: admin/admin-init.php:369
 msgid "Link to the user registration."
 msgstr ""
 
-#: admin/admin-init.php:363
+#: admin/admin-init.php:374
 msgid "Password revovery"
 msgstr ""
 
-#: admin/admin-init.php:364
+#: admin/admin-init.php:375
 msgid "Link to lost password page."
 msgstr ""
 
-#: admin/admin-init.php:369
+#: admin/admin-init.php:380
 msgid "Economy"
 msgstr ""
 
-#: admin/admin-init.php:370
+#: admin/admin-init.php:381
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:376
+#: admin/admin-init.php:387
 msgid "About this grid"
 msgstr ""
 
-#: admin/admin-init.php:377
+#: admin/admin-init.php:388
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr ""
 
-#: admin/admin-init.php:381
+#: admin/admin-init.php:392
 msgid "Help"
 msgstr ""
 
-#: admin/admin-init.php:382
+#: admin/admin-init.php:393
 msgid "Link to a help page on your website."
 msgstr ""
 
@@ -458,7 +466,7 @@ msgstr[1] ""
 
 #: admin/status-page.php:104
 msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
-msgid_plural "%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
+msgid_plural "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
 msgstr[0] ""
 msgstr[1] ""
 

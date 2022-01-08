@@ -7,16 +7,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-27T11:56:27-04:00\n"
-"PO-Revision-Date: 2021-12-27 11:56-0400\n"
+"POT-Creation-Date: 2022-01-08T09:15:34-04:00\n"
+"PO-Revision-Date: 2022-01-08 09:15-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface (dev)"
-msgstr "w4os - Interface web pour OpenSimulator (dev)"
+msgid "w4os - OpenSimulator Web Interface"
+msgstr "w4os - Interface web pour OpenSimulator"
 
 # wpml-name: 8a556ddad981269d9764cbf640cfd337
 #. Plugin URI of the plugin
@@ -36,7 +36,7 @@ msgstr "Speculoos World"
 # wpml-name: 8a556ddad981269d9764cbf640cfd337
 #. Author URI of the plugin
 msgid "https://speculoos.world"
-msgstr "https://speculoos.world/fr"
+msgstr "https://speculoos.world"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: admin/admin-init.php:26
@@ -138,11 +138,11 @@ msgid "OpenSimulator Offline Messages"
 msgstr "OpenSimulator - Messages hors-ligne"
 
 #: admin/admin-init.php:256
-#: admin/admin-init.php:269
+#: admin/admin-init.php:270
 msgid "The followed link has expired, please try again"
 msgstr "Le lien suivi a expiré, merci de réessayer"
 
-#: admin/admin-init.php:276
+#: admin/admin-init.php:277
 msgid "Page %s already exists."
 msgstr "La page %s existe déjà."
 
@@ -164,68 +164,76 @@ msgid "The base URL for avatar web profiles."
 msgstr "La base d'URL pour les profils d'avatars."
 
 #: admin/admin-init.php:314
-msgid "Search"
-msgstr "Recherche"
+msgid "Search Service"
+msgstr "Service de recherche"
 
 #: admin/admin-init.php:315
-msgid "Search service used by the viewer. Search can be enabled on the simulator itself, or handled by an external service for additional functionalities."
-msgstr "Service de recherche utilisé par le visualiseur. La recherche peut être activée au niveau du simulateur ou gérée avec un service externe pour des fonctionnalités supplémentaires."
+msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
+msgstr "Service de recherche utilisé par le visualiseur. La recherche peut être fournie par le coeur du simulateur (limité) ou par un service externe pour des fonctionnalités supplémentaires (comme les événements). Nécessite OpenSimSearch.Modules.dll."
 
 #: admin/admin-init.php:325
+msgid "Web Search"
+msgstr "Recherche web"
+
+#: admin/admin-init.php:326
+msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
+msgstr "Onglet web de la fenêtre de recherche. Utile si vous avez une page de recherche fournissant des résultats pour la grille."
+
+#: admin/admin-init.php:336
 #: admin/settings.php:98
 msgid "Offline messages"
 msgstr "Messages hors-ligne"
 
-#: admin/admin-init.php:326
+#: admin/admin-init.php:337
 msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
 msgstr "Requis par les visualiseurs pour conserver les messages envoyés lorsque l'utilisateur est hors-ligne, et les lui délivrer lorsqu'il revient en ligne. Service interne, non accessible par l'utilisateur."
 
-#: admin/admin-init.php:331
+#: admin/admin-init.php:342
 msgid "Splash"
 msgstr "Splash"
 
-#: admin/admin-init.php:332
+#: admin/admin-init.php:343
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr "La page de bienvenue affichée dans le visualiseur avec le formulaire de connexion. Une page courte, sans défilement, avec seulement le contenu essentiel. Requise, ou tout au moins hautement recommandée."
 
-#: admin/admin-init.php:357
+#: admin/admin-init.php:368
 msgid "Registration page"
 msgstr "Page d'enregistrement"
 
-#: admin/admin-init.php:358
+#: admin/admin-init.php:369
 msgid "Link to the user registration."
 msgstr "Lien vers l'inscription."
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/admin-init.php:363
+#: admin/admin-init.php:374
 msgid "Password revovery"
 msgstr "Récupération du mot de passe"
 
-#: admin/admin-init.php:364
+#: admin/admin-init.php:375
 msgid "Link to lost password page."
 msgstr "Lien vers la page de récupération de mot de passe."
 
-#: admin/admin-init.php:369
+#: admin/admin-init.php:380
 msgid "Economy"
 msgstr "Économie"
 
-#: admin/admin-init.php:370
+#: admin/admin-init.php:381
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr "Devises et quelques autres services interrogés par le visualiseur. Ils ne sont pas accessibles par l'utilisateur."
 
-#: admin/admin-init.php:376
+#: admin/admin-init.php:387
 msgid "About this grid"
 msgstr "À propos de cette grille"
 
-#: admin/admin-init.php:377
+#: admin/admin-init.php:388
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr "Page d'informations détaillées, sur votre site web, via un lien affiché sur la page de connexion du visualiseur."
 
-#: admin/admin-init.php:381
+#: admin/admin-init.php:392
 msgid "Help"
 msgstr "Aide"
 
-#: admin/admin-init.php:382
+#: admin/admin-init.php:393
 msgid "Link to a help page on your website."
 msgstr "Lien vers une page d'aide sur votre site web."
 
@@ -495,9 +503,9 @@ msgstr[1] "%d comptes WordPress sont liés à des avatars inexistants (mauvais U
 
 #: admin/status-page.php:104
 msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
-msgid_plural "%s grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
-msgstr[0] "%s compte de grille (en dehors des modèles) n'a pas d'adresse e-mail, ce qui est correct tant qu'il est utilisé uniquement pour la maintenance ou des tâches techniques."
-msgstr[1] "%s comptes de grille (en dehors des modèles) n'ont pas d'adresse e-mail, ce qui est correct tant qu'ils sont utilisés uniquement pour la maintenance ou des tâches techniques."
+msgid_plural "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
+msgstr[0] "%d compte de grille (en dehors des modèles) n'a pas d'adresse e-mail, ce qui est correct tant qu'il est utilisé uniquement pour la maintenance ou des tâches techniques."
+msgstr[1] "%d comptes de grille (en dehors des modèles) n'ont pas d'adresse e-mail, ce qui est correct tant qu'ils sont utilisés uniquement pour la maintenance ou des tâches techniques."
 
 #: admin/status-page.php:109
 msgid "Real accounts need a unique email address for W4OS to function properly."
@@ -1114,46 +1122,3 @@ msgstr "Vous avez déjà installé la version officielle de <strong>W4OS - Inter
 #: w4os.php:53
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
 msgstr "Une autre version de <strong>W4OS - Interface Web pour OpenSimulator</strong> est installée et active. Le doublon a été désactivé."
-
-#~ msgid "Profile picture"
-#~ msgstr "Image de profil"
-
-# wpml-name: dca56d6af7010d3d34aadf3fd1666bf7
-#~ msgid "https://github.com/GuduleLapointe/w4os/"
-#~ msgstr "https://github.com/GuduleLapointe/w4os/"
-
-#~ msgid "You have no grid account yet."
-#~ msgstr "Vous n'avez pas encore de compte de grille."
-
-# wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#~ msgid "Your avatar"
-#~ msgstr "Votre avatar"
-
-# wpml-name: 69675902f4d4a3da44638540557562af
-#~ msgid "Public profile"
-#~ msgstr "Profil public"
-
-#~ msgid "Make the avatar profile available in search and on the website"
-#~ msgstr "Afficher le profil d'avatar "
-
-#~ msgid "This is a preview, your profile is actually private."
-#~ msgstr "Ceci est un aperçu, votre profil est en réalité privé."
-
-# wpml-name: 9e186e1c05cc43a7c8e119a8ad12e201
-#~ msgid "Action %s not implemented"
-#~ msgstr "Action %s non implémentée"
-
-#~ msgid "Provide web assets service"
-#~ msgstr "Fournir le service web de ressources"
-
-#~ msgid "Handle offline messages"
-#~ msgstr "Gérer les messages hors-ligne"
-
-#~ msgid "Fournir les services"
-#~ msgstr "Fournir les services"
-
-#~ msgid "Web assets"
-#~ msgstr "Serveur web de ressources"
-
-#~ msgid "System pages"
-#~ msgstr "Pages système"
