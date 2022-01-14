@@ -175,22 +175,21 @@ function w4os_register_settings() {
 							'label' => __('Provide web assets server', 'w4os'),
 							'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
 							'onchange' => 'onchange="valueChanged(this)"',
+							'description' => '<p>' . __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os') . '</p>',
 						),
 						'w4os_internal_asset_server_uri' => array(
 							'label' => __('Web asset server', 'w4os'),
 							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
 							'readonly' => true,
-							'description' => __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os')
-							. sprintf(
-								'<br>' . __('You can change the asset slug in %spermalinks settings%s.', 'w4os'),
+							'description' => sprintf(
+								__('You can set the asset slug in %spermalinks settings%s.', 'w4os'),
 								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
 							),
 						),
 						'w4os_external_asset_server_uri' => array(
 							'label' => __('External assets server URI', 'w4os'),
+							'description' => __('If W4OS web assets service is disabled, you need a third-party web application.', 'w4os'),
 							'default' => W4OS_DEFAULT_ASSET_SERVER_URI,
-							'description' => __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os')
-							. '<br>' . __('If W4OS web assets service is disabled, you need a third-party web application.', 'w4os'),
 						),
 					),
 				),
@@ -225,10 +224,78 @@ function w4os_register_settings() {
 				// 		),
 				// 	),
 				// ),
+				'w4os_options_economy' => array(
+				  'name' => 'Economy',
+				  'fields' => array(
+				    'w4os_provide_economy_helpers' => array(
+				      'type' => 'boolean',
+				      'label' => __('Provide economy helpers', 'w4os'),
+				      'default' => false,
+				      'onchange' => 'onchange="valueChanged(this)"',
+							'description' => '<p>' . __('Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os') . '</p>'
+							. '<p>' . __('Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments...', 'w4os') . '</p>'
+							. '<p>' . sprintf(
+								__('Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s or %s.', 'w4os'),
+								'<a href=https://github.com/BigManzai/OpenSimCurrencyServer-2021>BigManzai OpenSimCurrencyServer</a>',
+								'<a href=http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer>DTL/NSL Money Server for OpenSim</a>',
+								// '<a href=http://dev.gloebit.com/opensim/configuration-instructions/>Gloebit</a>',
+							) . '</p>'
+							// . '<p>' . __('A money server is also needed if you implement a fake currency or want to allow zero (no cost) operations.', 'w4os') . '</p>'
+				    ),
+				    'w4os_economy_helper_uri' => array(
+				      'label' => __('Economy base URI', 'w4os'),
+				      'default' => (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'),
+				      'readonly' => true,
+							'description' =>
+							__('The URL must be set in Robust configuration.', 'w4os')
+							. w4os_format_ini(array(
+								'Robust.HG.ini' => array(
+									'[GridInfoService]' => array(
+										'economy' =>  (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'),
+									),
+								),
+								'MoneyServer.ini' => array(
+									'[MySql]' => array(
+										'hostname' => '"hostname"',
+										'database' => '"dbname"',
+										'username' => '"dbuser"',
+										'password' => '"dbpassword"',
+									),
+								),
+							)),
+				    ),
+						'w4os_economy_use_robust_db' => array(
+				      'type' => 'boolean',
+				      'label' => __('Use Robust database', 'w4os'),
+				      'default' => true,
+				      'onchange' => 'onchange="valueChanged(this)"',
+							'description' =>
+							 w4os_format_ini(array(
+							)),
+				    ),
+						'w4os_economy_db_host' => array(
+							'label' => __('Hostname', 'w4os'),
+							'default' => esc_attr(get_option('w4os_db_host', 'localhost')),
+						),
+						'w4os_economy_db_database' => array(
+							'label' => __('Database name', 'w4os'),
+							'default' => esc_attr(get_option('w4os_db_database', 'currency')),
+						),
+						'w4os_economy_db_user' => array(
+							'label' => __('Username', 'w4os'),
+							'autocomplete' => 'off',
+							'default' => esc_attr(get_option('w4os_db_user', 'opensim')),
+						),
+						'w4os_economy_db_pass' => array(
+							'label' => __('Password', 'w4os'),
+							'type' => 'password',
+							'autocomplete' => 'off',
+							'default' => esc_attr(get_option('w4os_db_pass')),
+						),
+				  ),
 				),
 			),
 		),
-
 	);
 
 	foreach($settings_pages as $page_slug => $page) {

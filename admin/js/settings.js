@@ -4,11 +4,19 @@ function valueChanged() {
   document.getElementById("w4os_external_asset_server_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_asset_server').checked ? "none" : "table-row";
 
   // show internal offline helper uri according to provide checkbox
-  document.getElementById("w4os_offline_helper_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_offline_messages').checked ? "table-row" : "none";
+  // document.getElementById("w4os_offline_helper_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_offline_messages').checked ? "table-row" : "none";
+
+  // show internal economy helper uri according to provide checkbox
+  document.getElementById("w4os_economy_helper_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked ? "table-row" : "none";
+  document.getElementById("w4os_economy_use_robust_db").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked ? "table-row" : "none";
+  document.getElementById("w4os_economy_db_host").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_economy_use_robust_db').checked ? "table-row" : "none";
+  document.getElementById("w4os_economy_db_database").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_economy_use_robust_db').checked ? "table-row" : "none";
+  document.getElementById("w4os_economy_db_user").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_economy_use_robust_db').checked ? "table-row" : "none";
+  document.getElementById("w4os_economy_db_pass").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_economy_use_robust_db').checked ? "table-row" : "none";
 }
 // force check on load
 valueChanged();
-
+w4os_economy_db_host
 // /*
 //  * Try to autofill grid info when login uri is updated.
 //  * Abandoned for now, requires a workaround for CORS cross-origin limitation
