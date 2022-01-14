@@ -32,6 +32,14 @@ function w4os_register_options_pages() {
 		'w4os_settings', // menu slug
 		'w4os_settings_page' // function
 	);
+  add_submenu_page(
+    'w4os', // parent
+    __('OpenSimulator Helpers', "w4os"), // page title
+    __('Helpers'), // menu title
+    'manage_options', // capability
+    'w4os_helpers', // menu slug
+    'w4os_helpers_page' // function
+  );
 }
 add_action('admin_menu', 'w4os_register_options_pages');
 
@@ -63,6 +71,26 @@ function w4os_settings_page()
 	</div>
 <?php
 	wp_enqueue_script( 'w4os-admin-settings-form-js', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
+}
+
+function w4os_helpers_page()
+{
+	if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+	}
+?>
+	<div class="wrap">
+		<h1><?php _e("OpenSimulator Helpers", 'w4os'); ?></h1>
+		<form method="post" action="options.php" autocomplete="off">
+			<?php
+			settings_fields( 'w4os_helpers' );
+			do_settings_sections( 'w4os_helpers' );
+			submit_button();
+			 ?>
+		</form>
+	</div>
+<?php
+	wp_enqueue_script( 'w4os-admin-helpers-form-js', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
 }
 
 /**
