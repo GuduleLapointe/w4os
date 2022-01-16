@@ -13,12 +13,14 @@ function valueChanged() {
   document.getElementById("w4os_economy_db_database").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_economy_use_robust_db').checked ? "table-row" : "none";
   document.getElementById("w4os_economy_db_user").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_economy_use_robust_db').checked ? "table-row" : "none";
   document.getElementById("w4os_economy_db_pass").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_economy_use_robust_db').checked ? "table-row" : "none";
-  document.getElementById("w4os_podex_redirect_url").parentNode.parentNode.style.display = document.getElementById('w4os_currency_provider_podex').checked ? "table-row" : "none";
-  document.getElementById("w4os_podex_error_message").parentNode.parentNode.style.display = document.getElementById('w4os_currency_provider_podex').checked ? "table-row" : "none";
+  document.getElementById("w4os_podex_redirect_url").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked && document.getElementById('w4os_currency_provider_podex').checked ? "table-row" : "none";
+  document.getElementById("w4os_podex_error_message").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked && document.getElementById('w4os_currency_provider_podex').checked ? "table-row" : "none";
+  document.getElementById("w4os_currency_provider_").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked ? "table-row" : "none";
+  document.getElementById("w4os_money_script_access_key").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked ? "table-row" : "none";
 }
 // force check on load
 valueChanged();
-w4os_economy_db_host
+
 // /*
 //  * Try to autofill grid info when login uri is updated.
 //  * Abandoned for now, requires a workaround for CORS cross-origin limitation
