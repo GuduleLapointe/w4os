@@ -7,15 +7,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-01-08T09:15:34-04:00\n"
-"PO-Revision-Date: 2022-01-08 09:16-0400\n"
+"POT-Creation-Date: 2022-01-16T13:08:36-04:00\n"
+"PO-Revision-Date: 2022-01-16 13:16-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 # wpml-name: 89e15c20b6fff50f9caa1f171381251d
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
+#, fuzzy
+msgid "w4os - OpenSimulator Web Interface (dev)"
 msgstr "w4os - OpenSimulator Web Interface"
 
 # #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
@@ -57,187 +58,197 @@ msgid "OpenSimulator Settings"
 msgstr "OpenSimulator-instellingen"
 
 #: admin/admin-init.php:30
-#: admin/settings.php:387
+#: admin/settings.php:495
 msgid "Settings"
 msgstr "Instellingen"
 
+# wpml-name: d0f651f1495d346088ae49450c620e9b
+#: admin/admin-init.php:37
+#: admin/admin-init.php:83
+#, fuzzy
+msgid "OpenSimulator Helpers"
+msgstr "OpenSimulator"
+
+#: admin/admin-init.php:38
+msgid "Helpers"
+msgstr ""
+
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/admin-init.php:75
+#: admin/admin-init.php:103
 #: includes/profile.php:118
 msgid "Avatar Name"
 msgstr "Avatar naam"
 
-#: admin/admin-init.php:81
-#: admin/admin-init.php:87
+#: admin/admin-init.php:109
+#: admin/admin-init.php:115
 #: includes/profile.php:124
 msgid "Born"
 msgstr ""
 
-#: admin/admin-init.php:82
-#: admin/admin-init.php:88
+#: admin/admin-init.php:110
+#: admin/admin-init.php:116
 msgid "Last Seen"
 msgstr ""
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/admin-init.php:103
+#: admin/admin-init.php:131
 #: includes/shortcodes.php:104
 msgid "View profile"
 msgstr ""
 
-#: admin/admin-init.php:160
+#: admin/admin-init.php:188
 msgid "With Avatar"
 msgstr "Met avatar"
 
 # wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#: admin/admin-init.php:161
+#: admin/admin-init.php:189
 msgid "Without Avatar"
 msgstr "Zonder avatar"
 
-#: admin/admin-init.php:178
+#: admin/admin-init.php:206
 msgid "Filter users..."
 msgstr ""
 
-#: admin/admin-init.php:184
+#: admin/admin-init.php:212
 msgid "Filter"
 msgstr ""
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:230
+#: admin/admin-init.php:258
 msgid "OpenSimulator Profile"
 msgstr "OpenSimulator profiel"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:232
+#: admin/admin-init.php:260
 msgid "OpenSimulator Splash"
 msgstr ""
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:234
+#: admin/admin-init.php:262
 msgid "OpenSimulator Search"
 msgstr ""
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:236
+#: admin/admin-init.php:264
 msgid "OpenSimulator Economy"
 msgstr ""
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:238
+#: admin/admin-init.php:266
 msgid "OpenSimulator About"
 msgstr "OpenSimulator"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:240
+#: admin/admin-init.php:268
 msgid "OpenSimulator Register"
 msgstr ""
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:242
+#: admin/admin-init.php:270
 msgid "OpenSimulator Password"
 msgstr ""
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:244
+#: admin/admin-init.php:272
 msgid "OpenSimulator Offline Messages"
 msgstr ""
 
-#: admin/admin-init.php:256
-#: admin/admin-init.php:270
+#: admin/admin-init.php:284
+#: admin/admin-init.php:298
 msgid "The followed link has expired, please try again"
 msgstr ""
 
-#: admin/admin-init.php:277
+#: admin/admin-init.php:305
 msgid "Page %s already exists."
 msgstr ""
 
-#: admin/admin-init.php:294
+#: admin/admin-init.php:322
 msgid "New page %s created."
 msgstr ""
 
-#: admin/admin-init.php:298
+#: admin/admin-init.php:326
 msgid "Error while creating page %s."
 msgstr ""
 
 # wpml-name: 317e8940a1b9f03b83ef85393bd49552
-#: admin/admin-init.php:310
+#: admin/admin-init.php:338
 msgid "Avatar profile"
 msgstr "Avatar profiel"
 
-#: admin/admin-init.php:311
+#: admin/admin-init.php:339
 msgid "The base URL for avatar web profiles."
 msgstr ""
 
-#: admin/admin-init.php:314
+#: admin/admin-init.php:342
 msgid "Search Service"
 msgstr ""
 
-#: admin/admin-init.php:315
+#: admin/admin-init.php:343
 msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
 msgstr ""
 
-#: admin/admin-init.php:325
+#: admin/admin-init.php:353
 msgid "Web Search"
 msgstr ""
 
-#: admin/admin-init.php:326
+#: admin/admin-init.php:354
 msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
 msgstr ""
 
-#: admin/admin-init.php:336
-#: admin/settings.php:98
+#: admin/admin-init.php:364
 msgid "Offline messages"
 msgstr ""
 
-#: admin/admin-init.php:337
+#: admin/admin-init.php:365
 msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:342
+#: admin/admin-init.php:370
 msgid "Splash"
 msgstr ""
 
-#: admin/admin-init.php:343
+#: admin/admin-init.php:371
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr ""
 
-#: admin/admin-init.php:368
+#: admin/admin-init.php:396
 msgid "Registration page"
 msgstr ""
 
-#: admin/admin-init.php:369
+#: admin/admin-init.php:397
 msgid "Link to the user registration."
 msgstr ""
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/admin-init.php:374
+#: admin/admin-init.php:402
 msgid "Password revovery"
 msgstr ""
 
-#: admin/admin-init.php:375
+#: admin/admin-init.php:403
 msgid "Link to lost password page."
 msgstr ""
 
-#: admin/admin-init.php:380
+#: admin/admin-init.php:408
 msgid "Economy"
 msgstr ""
 
-#: admin/admin-init.php:381
+#: admin/admin-init.php:409
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr ""
 
-#: admin/admin-init.php:387
+#: admin/admin-init.php:415
 msgid "About this grid"
 msgstr ""
 
-#: admin/admin-init.php:388
+#: admin/admin-init.php:416
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr ""
 
-#: admin/admin-init.php:392
+#: admin/admin-init.php:420
 msgid "Help"
 msgstr ""
 
-#: admin/admin-init.php:393
+#: admin/admin-init.php:421
 msgid "Link to a help page on your website."
 msgstr ""
 
@@ -279,20 +290,24 @@ msgid "Robust server database"
 msgstr "Robust server database"
 
 #: admin/settings.php:58
+#: admin/settings.php:274
 msgid "Hostname"
 msgstr "Hostnaam"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: admin/settings.php:61
+#: admin/settings.php:278
 msgid "Database name"
 msgstr "Database naam"
 
 #: admin/settings.php:64
+#: admin/settings.php:282
 msgid "Username"
 msgstr "Gebruikersnaam"
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: admin/settings.php:68
+#: admin/settings.php:287
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -305,134 +320,177 @@ msgstr ""
 # wpml-name: b2d0fb30e09bf39693f6183c33455748
 #: admin/settings.php:79
 msgid "First Name = "
-msgstr "Voornaam ="
+msgstr "Voornaam = "
 
 # wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
 #: admin/settings.php:83
 msgid "OR Last Name = "
-msgstr "OF Achternaam ="
-
-#: admin/settings.php:89
-msgid "Helpers"
-msgstr ""
-
-#: admin/settings.php:94
-msgid "Provide services"
-msgstr ""
-
-#: admin/settings.php:97
-msgid "Web assets server"
-msgstr "Web asset-server"
-
-#: admin/settings.php:103
-msgid "Web asset server"
-msgstr "Web asset-server"
-
-#: admin/settings.php:106
-#: admin/settings.php:115
-msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
-msgstr ""
-
-#: admin/settings.php:108
-msgid "You can change the asset slug in %spermalinks settings%s."
-msgstr ""
-
-#: admin/settings.php:113
-msgid "External assets server URI"
-msgstr ""
-
-#: admin/settings.php:116
-msgid "If W4OS web assets service is disabled, you need a third-party web application."
-msgstr ""
-
-#: admin/settings.php:119
-msgid "Offline helper URI"
-msgstr ""
-
-#: admin/settings.php:123
-msgid "Set the URL in Robust and OpenSimulator configurations."
-msgstr ""
+msgstr "OF Achternaam = "
 
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab
-#: admin/settings.php:141
+#: admin/settings.php:89
 msgid "Grid users"
 msgstr "Grid gebruikers"
 
-#: admin/settings.php:145
-#: admin/settings.php:160
+#: admin/settings.php:93
+#: admin/settings.php:108
 msgid "Profile page"
 msgstr ""
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/settings.php:147
-#: admin/settings.php:162
+#: admin/settings.php:95
+#: admin/settings.php:110
 msgid "Provide web profile page for avatars"
 msgstr ""
 
-#: admin/settings.php:149
-#: admin/settings.php:164
+#: admin/settings.php:97
+#: admin/settings.php:112
 msgid "Defaults"
 msgstr ""
 
-#: admin/settings.php:153
-#: admin/settings.php:168
+#: admin/settings.php:101
+#: admin/settings.php:116
 msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgstr ""
 
-#: admin/settings.php:176
+#: admin/settings.php:124
 msgid "Show configuration instructions to new users."
 msgstr ""
 
 # wpml-name: 751cfef8ad45902372601aeac58bdad7
-#: admin/settings.php:181
+#: admin/settings.php:129
 msgid "Login page"
 msgstr ""
 
-#: admin/settings.php:183
+#: admin/settings.php:131
 msgid "Use profile page as login page"
 msgstr ""
 
-#: admin/settings.php:185
+#: admin/settings.php:133
 msgid "Default"
 msgstr ""
 
-#: admin/settings.php:192
+#: admin/settings.php:140
 msgid "Replace user name"
 msgstr ""
 
-#: admin/settings.php:193
+#: admin/settings.php:141
 msgid "Show avatar name instead of user name in users list."
 msgstr ""
 
-#: admin/settings.php:197
+#: admin/settings.php:145
 msgid "Exclude from stats"
 msgstr "Uitsluiten van statistieken"
 
-#: admin/settings.php:199
+#: admin/settings.php:147
 msgid "Models"
 msgstr "Modellen"
 
-#: admin/settings.php:200
+#: admin/settings.php:148
 msgid "Accounts without mail address"
 msgstr "Accounts zonder e-mailadres"
 
-#: admin/settings.php:201
+#: admin/settings.php:149
 msgid "Hypergrid visitors"
 msgstr ""
 
-#: admin/settings.php:203
+#: admin/settings.php:151
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr "Accounts zonder e-mailadres zijn meestal testaccounts die vanaf de console zijn gemaakt. Schakel het vinkje alleen uit als je echte avatars hebt zonder e-mailadres."
 
-#: admin/settings.php:365
+#: admin/settings.php:170
+#, fuzzy
+msgid "Web Assets Server"
+msgstr "Web asset-server"
+
+#: admin/settings.php:175
+#, fuzzy
+msgid "Provide web assets server"
+msgstr "Web asset-server"
+
+#: admin/settings.php:178
+msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
+msgstr ""
+
+#: admin/settings.php:181
+msgid "Web asset server"
+msgstr "Web asset-server"
+
+#: admin/settings.php:185
+msgid "You can set the asset slug in %spermalinks settings%s."
+msgstr ""
+
+#: admin/settings.php:190
+msgid "External assets server URI"
+msgstr ""
+
+#: admin/settings.php:191
+msgid "If W4OS web assets service is disabled, you need a third-party web application."
+msgstr ""
+
+#: admin/settings.php:232
+msgid "Provide economy helpers"
+msgstr ""
+
+#: admin/settings.php:235
+msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
+msgstr ""
+
+#: admin/settings.php:236
+msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
+msgstr ""
+
+#: admin/settings.php:238
+msgid "Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s."
+msgstr ""
+
+#: admin/settings.php:246
+msgid "Economy base URI"
+msgstr ""
+
+#: admin/settings.php:250
+msgid "The URL must be set in Robust configuration."
+msgstr ""
+
+# wpml-name: 193fe27dd7fcd662652841a7b7e6c912
+#: admin/settings.php:269
+#, fuzzy
+msgid "Use Robust database"
+msgstr "Robust server database"
+
+#: admin/settings.php:293
+msgid "Money Script Access Key"
+msgstr ""
+
+#: admin/settings.php:305
+msgid "Currency Provider"
+msgstr ""
+
+#: admin/settings.php:309
+msgid "No provider, use fake money."
+msgstr ""
+
+#: admin/settings.php:316
+msgid "Podex redirect message"
+msgstr ""
+
+#: admin/settings.php:317
+msgid "Please use our terminals in-world to proceed."
+msgstr ""
+
+#: admin/settings.php:320
+msgid "Podex redirect URL"
+msgstr ""
+
+#: admin/settings.php:473
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 
-#: admin/settings.php:366
+#: admin/settings.php:474
 msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
 msgstr ""
 
-#: admin/settings.php:371
+#: admin/settings.php:479
 msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
 msgstr "Grid-accounts die overeenkomen met de hieronder ingestelde voornaam of achternaam, verschijnen als avatar-modellen, met hun profielfoto, indien ingesteld, op het avatar-registratieformulier."
 
@@ -896,7 +954,7 @@ msgstr "Bevestig uw wachtwoord"
 
 #: includes/profile.php:711
 msgid "Your in-world Avatar password is the same as your password on this website."
-msgstr "Uw in-world Avatar-wachtwoord is hetzelfde als uw wachtwoord op deze website"
+msgstr "Uw in-world Avatar-wachtwoord is hetzelfde als uw wachtwoord op deze website."
 
 #: includes/profile.php:725
 msgid "Your initial appearance"

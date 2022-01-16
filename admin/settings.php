@@ -235,8 +235,8 @@ function w4os_register_settings() {
 							'description' => '<p>' . __('Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os') . '</p>'
 							. '<p>' . __('Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments...', 'w4os') . '</p>'
 							. '<p>' . sprintf(
-								__('Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s or %s.', 'w4os'),
-								'<a href=https://github.com/BigManzai/OpenSimCurrencyServer-2021>BigManzai OpenSimCurrencyServer</a>',
+								__('Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s.', 'w4os'),
+								// '<a href=https://github.com/BigManzai/OpenSimCurrencyServer-2021>BigManzai OpenSimCurrencyServer</a>',
 								'<a href=http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer>DTL/NSL Money Server for OpenSim</a>',
 								// '<a href=http://dev.gloebit.com/opensim/configuration-instructions/>Gloebit</a>',
 							) . '</p>'
@@ -269,9 +269,6 @@ function w4os_register_settings() {
 				      'label' => __('Use Robust database', 'w4os'),
 				      'default' => true,
 				      'onchange' => 'onchange="valueChanged(this)"',
-							'description' =>
-							 w4os_format_ini(array(
-							)),
 				    ),
 						'w4os_economy_db_host' => array(
 							'label' => __('Hostname', 'w4os'),
@@ -291,6 +288,37 @@ function w4os_register_settings() {
 							'type' => 'password',
 							'autocomplete' => 'off',
 							'default' => esc_attr(get_option('w4os_db_pass')),
+						),
+						'w4os_money_script_access_key' => array(
+							'label' => __('Money Script Access Key', 'w4os'),
+							// 'default' => '123456789',
+							'description' => w4os_format_ini(array(
+								'MoneyServer.ini' => array(
+									'[MoneyServer]' => array(
+										'EnableScriptSendMoney' => 'true',
+										'MoneyScriptAccessKey' => esc_attr(get_option('w4os_money_script_access_key')),
+									),
+								),
+							)),
+						),
+						'w4os_currency_provider' => array(
+							'label' => __('Currency Provider', 'w4os'),
+							'type' => 'radio',
+							'default' => 'internal',
+							'values' => array(
+								'' => __('No provider, use fake money.', 'w4os'),
+								'podex' => 'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)',
+								'gloebit' => 'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>www.gloebit.com</a>)',
+							),
+							'onchange' => 'onchange="valueChanged(this)"',
+						),
+						'w4os_podex_error_message' => array(
+							'label' => __('Podex redirect message', 'w4os'),
+							'default' => __('Please use our terminals in-world to proceed.', 'w4os'),
+						),
+						'w4os_podex_redirect_url' => array(
+							'label' => __('Podex redirect URL', 'w4os'),
+							'placeholder' => 'secondlife://Welcome/128/128/21',
 						),
 				  ),
 				),

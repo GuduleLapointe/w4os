@@ -7,16 +7,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-01-08T09:15:34-04:00\n"
-"PO-Revision-Date: 2022-01-08 09:15-0400\n"
+"POT-Creation-Date: 2022-01-16T13:08:36-04:00\n"
+"PO-Revision-Date: 2022-01-16 13:15-0400\n"
 "Language: fr_FR\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - Interface web pour OpenSimulator"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - Interface web pour OpenSimulator (dev)"
 
 # wpml-name: 8a556ddad981269d9764cbf640cfd337
 #. Plugin URI of the plugin
@@ -53,187 +53,196 @@ msgid "OpenSimulator Settings"
 msgstr "Réglages OpenSimulator"
 
 #: admin/admin-init.php:30
-#: admin/settings.php:387
+#: admin/settings.php:495
 msgid "Settings"
 msgstr "Réglages"
 
+# wpml-name: 2e7502f81f2bff60e1170982af2e5ede
+#: admin/admin-init.php:37
+#: admin/admin-init.php:83
+msgid "OpenSimulator Helpers"
+msgstr "Assistants OpenSimulator"
+
+#: admin/admin-init.php:38
+msgid "Helpers"
+msgstr "Assistants"
+
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
-#: admin/admin-init.php:75
+#: admin/admin-init.php:103
 #: includes/profile.php:118
 msgid "Avatar Name"
 msgstr "Nom de l'avatar"
 
-#: admin/admin-init.php:81
-#: admin/admin-init.php:87
+#: admin/admin-init.php:109
+#: admin/admin-init.php:115
 #: includes/profile.php:124
 msgid "Born"
 msgstr "Naissance"
 
-#: admin/admin-init.php:82
-#: admin/admin-init.php:88
+#: admin/admin-init.php:110
+#: admin/admin-init.php:116
 msgid "Last Seen"
 msgstr "Dernière apparition"
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/admin-init.php:103
+#: admin/admin-init.php:131
 #: includes/shortcodes.php:104
 msgid "View profile"
 msgstr "Voir le profil"
 
-#: admin/admin-init.php:160
+#: admin/admin-init.php:188
 msgid "With Avatar"
 msgstr "Avec avatar"
 
 # wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
-#: admin/admin-init.php:161
+#: admin/admin-init.php:189
 msgid "Without Avatar"
 msgstr "Sans avatar"
 
-#: admin/admin-init.php:178
+#: admin/admin-init.php:206
 msgid "Filter users..."
 msgstr "Filtrer les utilisateurs..."
 
-#: admin/admin-init.php:184
+#: admin/admin-init.php:212
 msgid "Filter"
 msgstr "Filtre"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:230
+#: admin/admin-init.php:258
 msgid "OpenSimulator Profile"
 msgstr "OpenSimulator - Profil"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:232
+#: admin/admin-init.php:260
 msgid "OpenSimulator Splash"
 msgstr "OpenSimulator - Splash"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:234
+#: admin/admin-init.php:262
 msgid "OpenSimulator Search"
 msgstr "OpenSimulator - Recherche"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:236
+#: admin/admin-init.php:264
 msgid "OpenSimulator Economy"
 msgstr "OpenSimulator - Économie"
 
 # wpml-name: d0f651f1495d346088ae49450c620e9b
-#: admin/admin-init.php:238
+#: admin/admin-init.php:266
 msgid "OpenSimulator About"
 msgstr "OpenSimulator - À propos"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:240
+#: admin/admin-init.php:268
 msgid "OpenSimulator Register"
 msgstr "OpenSimulator - Inscription"
 
 # wpml-name: 2e7502f81f2bff60e1170982af2e5ede
-#: admin/admin-init.php:242
+#: admin/admin-init.php:270
 msgid "OpenSimulator Password"
 msgstr "OpenSimulator - Mot de passe"
 
 # wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
-#: admin/admin-init.php:244
+#: admin/admin-init.php:272
 msgid "OpenSimulator Offline Messages"
 msgstr "OpenSimulator - Messages hors-ligne"
 
-#: admin/admin-init.php:256
-#: admin/admin-init.php:270
+#: admin/admin-init.php:284
+#: admin/admin-init.php:298
 msgid "The followed link has expired, please try again"
 msgstr "Le lien suivi a expiré, merci de réessayer"
 
-#: admin/admin-init.php:277
+#: admin/admin-init.php:305
 msgid "Page %s already exists."
 msgstr "La page %s existe déjà."
 
-#: admin/admin-init.php:294
+#: admin/admin-init.php:322
 msgid "New page %s created."
 msgstr "Nouvelle page %s créée."
 
-#: admin/admin-init.php:298
+#: admin/admin-init.php:326
 msgid "Error while creating page %s."
 msgstr "Erreur lors de la création de la page %s."
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/admin-init.php:310
+#: admin/admin-init.php:338
 msgid "Avatar profile"
 msgstr "Profil d'avatar"
 
-#: admin/admin-init.php:311
+#: admin/admin-init.php:339
 msgid "The base URL for avatar web profiles."
 msgstr "La base d'URL pour les profils d'avatars."
 
-#: admin/admin-init.php:314
+#: admin/admin-init.php:342
 msgid "Search Service"
 msgstr "Service de recherche"
 
-#: admin/admin-init.php:315
+#: admin/admin-init.php:343
 msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
 msgstr "Service de recherche utilisé par le visualiseur. La recherche peut être fournie par le coeur du simulateur (limité) ou par un service externe pour des fonctionnalités supplémentaires (comme les événements). Nécessite OpenSimSearch.Modules.dll."
 
-#: admin/admin-init.php:325
+#: admin/admin-init.php:353
 msgid "Web Search"
 msgstr "Recherche web"
 
-#: admin/admin-init.php:326
+#: admin/admin-init.php:354
 msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
 msgstr "Onglet web de la fenêtre de recherche. Utile si vous avez une page de recherche fournissant des résultats pour la grille."
 
-#: admin/admin-init.php:336
-#: admin/settings.php:98
+#: admin/admin-init.php:364
 msgid "Offline messages"
 msgstr "Messages hors-ligne"
 
-#: admin/admin-init.php:337
+#: admin/admin-init.php:365
 msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
 msgstr "Requis par les visualiseurs pour conserver les messages envoyés lorsque l'utilisateur est hors-ligne, et les lui délivrer lorsqu'il revient en ligne. Service interne, non accessible par l'utilisateur."
 
-#: admin/admin-init.php:342
+#: admin/admin-init.php:370
 msgid "Splash"
 msgstr "Splash"
 
-#: admin/admin-init.php:343
+#: admin/admin-init.php:371
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr "La page de bienvenue affichée dans le visualiseur avec le formulaire de connexion. Une page courte, sans défilement, avec seulement le contenu essentiel. Requise, ou tout au moins hautement recommandée."
 
-#: admin/admin-init.php:368
+#: admin/admin-init.php:396
 msgid "Registration page"
 msgstr "Page d'enregistrement"
 
-#: admin/admin-init.php:369
+#: admin/admin-init.php:397
 msgid "Link to the user registration."
 msgstr "Lien vers l'inscription."
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
-#: admin/admin-init.php:374
+#: admin/admin-init.php:402
 msgid "Password revovery"
 msgstr "Récupération du mot de passe"
 
-#: admin/admin-init.php:375
+#: admin/admin-init.php:403
 msgid "Link to lost password page."
 msgstr "Lien vers la page de récupération de mot de passe."
 
-#: admin/admin-init.php:380
+#: admin/admin-init.php:408
 msgid "Economy"
 msgstr "Économie"
 
-#: admin/admin-init.php:381
+#: admin/admin-init.php:409
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr "Devises et quelques autres services interrogés par le visualiseur. Ils ne sont pas accessibles par l'utilisateur."
 
-#: admin/admin-init.php:387
+#: admin/admin-init.php:415
 msgid "About this grid"
 msgstr "À propos de cette grille"
 
-#: admin/admin-init.php:388
+#: admin/admin-init.php:416
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr "Page d'informations détaillées, sur votre site web, via un lien affiché sur la page de connexion du visualiseur."
 
-#: admin/admin-init.php:392
+#: admin/admin-init.php:420
 msgid "Help"
 msgstr "Aide"
 
-#: admin/admin-init.php:393
+#: admin/admin-init.php:421
 msgid "Link to a help page on your website."
 msgstr "Lien vers une page d'aide sur votre site web."
 
@@ -275,20 +284,24 @@ msgid "Robust server database"
 msgstr "Base de données du serveur Robust"
 
 #: admin/settings.php:58
+#: admin/settings.php:274
 msgid "Hostname"
 msgstr "Nom d'hôte"
 
 # wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: admin/settings.php:61
+#: admin/settings.php:278
 msgid "Database name"
 msgstr "Nom de la base de données"
 
 #: admin/settings.php:64
+#: admin/settings.php:282
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
 # wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: admin/settings.php:68
+#: admin/settings.php:287
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -308,126 +321,166 @@ msgstr "Prénom = "
 msgid "OR Last Name = "
 msgstr "OU Nom de famille = "
 
-#: admin/settings.php:89
-msgid "Helpers"
-msgstr "Assistants"
-
-#: admin/settings.php:94
-msgid "Provide services"
-msgstr "Fournir les services"
-
-#: admin/settings.php:97
-msgid "Web assets server"
-msgstr "Serveur web de ressources"
-
-#: admin/settings.php:103
-msgid "Web asset server"
-msgstr "Serveur web de ressources"
-
-#: admin/settings.php:106
-#: admin/settings.php:115
-msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
-msgstr "Un serveur web de ressources (web assets server) est requis pour afficher les images du monde virtuel sur le site web (par exempe les images de profil)."
-
-#: admin/settings.php:108
-msgid "You can change the asset slug in %spermalinks settings%s."
-msgstr "Vous pouvez régler le slug des ressources sur %sla page d'option des permaliens%s."
-
-#: admin/settings.php:113
-msgid "External assets server URI"
-msgstr "Serveur web de ressources externe"
-
-#: admin/settings.php:116
-msgid "If W4OS web assets service is disabled, you need a third-party web application."
-msgstr "Si le service de ressources web est désactivé, vous devez installer une application web indépendante."
-
-#: admin/settings.php:119
-msgid "Offline helper URI"
-msgstr "Assistant de messagerie hors-ligne"
-
-#: admin/settings.php:123
-msgid "Set the URL in Robust and OpenSimulator configurations."
-msgstr "Réglez l'URL dans la configuration de  Robust et OpenSim."
-
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab
-#: admin/settings.php:141
+#: admin/settings.php:89
 msgid "Grid users"
 msgstr "Utilisateurs de la grille"
 
-#: admin/settings.php:145
-#: admin/settings.php:160
+#: admin/settings.php:93
+#: admin/settings.php:108
 msgid "Profile page"
 msgstr "Page de profil"
 
 # wpml-name: 69675902f4d4a3da44638540557562af
-#: admin/settings.php:147
-#: admin/settings.php:162
+#: admin/settings.php:95
+#: admin/settings.php:110
 msgid "Provide web profile page for avatars"
 msgstr "Fournir une page web de profil pour les avatars"
 
-#: admin/settings.php:149
-#: admin/settings.php:164
+#: admin/settings.php:97
+#: admin/settings.php:112
 msgid "Defaults"
 msgstr "Défaut"
 
-#: admin/settings.php:153
-#: admin/settings.php:168
+#: admin/settings.php:101
+#: admin/settings.php:116
 msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgstr "La page %s doit exister, comme définie dans les %sréglages des permaliens%s."
 
-#: admin/settings.php:176
+#: admin/settings.php:124
 msgid "Show configuration instructions to new users."
 msgstr "Afficher les instructions de configuration aux nouveaux utilisateurs."
 
-#: admin/settings.php:181
+#: admin/settings.php:129
 msgid "Login page"
 msgstr "Page de connexion"
 
-#: admin/settings.php:183
+#: admin/settings.php:131
 msgid "Use profile page as login page"
 msgstr "Utiliser la page de profil comme page de connexion"
 
-#: admin/settings.php:185
+#: admin/settings.php:133
 msgid "Default"
 msgstr "Défaut"
 
-#: admin/settings.php:192
+#: admin/settings.php:140
 msgid "Replace user name"
 msgstr "Remplacer le nom d'utilisateur"
 
-#: admin/settings.php:193
+#: admin/settings.php:141
 msgid "Show avatar name instead of user name in users list."
 msgstr "Affiche le nom de l'avatar au lieu du nom d'utilisateur dans la liste."
 
-#: admin/settings.php:197
+#: admin/settings.php:145
 msgid "Exclude from stats"
 msgstr "Exclure des statistiques"
 
-#: admin/settings.php:199
+#: admin/settings.php:147
 msgid "Models"
 msgstr "Modèles"
 
-#: admin/settings.php:200
+#: admin/settings.php:148
 msgid "Accounts without mail address"
 msgstr "Comptes sans adresse e=mail"
 
-#: admin/settings.php:201
+#: admin/settings.php:149
 msgid "Hypergrid visitors"
 msgstr "Visiteurs hypergrid"
 
-#: admin/settings.php:203
+#: admin/settings.php:151
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr "Les comptes sans adresse e-mail sont généralement des comptes tests créés à partir de la console. Décochez cette case uniquement si vous avez des avatars réels sans adresse e-mail."
 
-#: admin/settings.php:365
+#: admin/settings.php:170
+msgid "Web Assets Server"
+msgstr "Serveur web de ressources"
+
+#: admin/settings.php:175
+msgid "Provide web assets server"
+msgstr "Fournir le service web de ressources"
+
+#: admin/settings.php:178
+msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
+msgstr "Un serveur web de ressources (web assets server) est requis pour afficher les images du monde virtuel sur le site web (par exempe les images de profil)."
+
+#: admin/settings.php:181
+msgid "Web asset server"
+msgstr "Serveur web de ressources"
+
+#: admin/settings.php:185
+msgid "You can set the asset slug in %spermalinks settings%s."
+msgstr "Vous pouvez régler le slug des ressources sur %sla page d'option des permaliens%s."
+
+#: admin/settings.php:190
+msgid "External assets server URI"
+msgstr "Serveur web de ressources externe"
+
+#: admin/settings.php:191
+msgid "If W4OS web assets service is disabled, you need a third-party web application."
+msgstr "Si le service de ressources web est désactivé, vous devez installer une application web indépendante."
+
+#: admin/settings.php:232
+msgid "Provide economy helpers"
+msgstr "Fournir les services d'économie"
+
+#: admin/settings.php:235
+msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
+msgstr "Les assistants d'économie sont des scripts additionnels, nécessaires si vous implémentez une économie dans votre grille (avec une monnaie réelle ou factice)."
+
+#: admin/settings.php:236
+msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
+msgstr "Les scripts permettent la communication entre le serveur de monnaie et la grille: mise à jour de la balance, estimation du coût d'achat de maonnaie, vente d'objets et de terrains, paiements..."
+
+#: admin/settings.php:238
+msgid "Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s."
+msgstr "Le serveur de monnaie n'est pas inclus dans la distribution d'OpenSimulator et nécessite une installation séparée, par exemple %s."
+
+#: admin/settings.php:246
+msgid "Economy base URI"
+msgstr "Base d'URI économie"
+
+#: admin/settings.php:250
+msgid "The URL must be set in Robust configuration."
+msgstr "Réglez l'URL dans la configuration de  Robust."
+
+# wpml-name: 193fe27dd7fcd662652841a7b7e6c912
+#: admin/settings.php:269
+msgid "Use Robust database"
+msgstr "Utiliser la base de données de Robust"
+
+#: admin/settings.php:293
+msgid "Money Script Access Key"
+msgstr "Clé d'accès des scripts de devise"
+
+#: admin/settings.php:305
+msgid "Currency Provider"
+msgstr "Fournisseur de devises"
+
+#: admin/settings.php:309
+msgid "No provider, use fake money."
+msgstr "Pas de fournisseur, utiliser une monnaie factice."
+
+#: admin/settings.php:316
+msgid "Podex redirect message"
+msgstr "Message de redirection de Podex"
+
+#: admin/settings.php:317
+msgid "Please use our terminals in-world to proceed."
+msgstr "Merci d'utiliser les terminals dans le simulateur."
+
+#: admin/settings.php:320
+msgid "Podex redirect URL"
+msgstr "URL de redirection de Podex"
+
+#: admin/settings.php:473
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr "Les valeurs doivent correspondre à celles du fichier Robust.HG.ini (ou Robust.HG.ini)."
 
-#: admin/settings.php:366
+#: admin/settings.php:474
 msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
 msgstr "Le serveur Robust doit être actif. Les valeurs entrées ici seront vérifiées depuis le serveur Robust et corrigées si nécessaires."
 
-#: admin/settings.php:371
+#: admin/settings.php:479
 msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
 msgstr "Les comptes avec un prénom ou un nom identique à ceux spécifiés ci-dessous sont considérés comme des modèles d'avatar. Ils apparaîtront  avec leur image de profil sur le formulaire d'enregistrement d'un avatar."
 
@@ -1122,3 +1175,6 @@ msgstr "Vous avez déjà installé la version officielle de <strong>W4OS - Inter
 #: w4os.php:53
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
 msgstr "Une autre version de <strong>W4OS - Interface Web pour OpenSimulator</strong> est installée et active. Le doublon a été désactivé."
+
+#~ msgid "Offline helper URI"
+#~ msgstr "Assistant de messagerie hors-ligne"

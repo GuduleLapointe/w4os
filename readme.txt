@@ -153,6 +153,8 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 == Changelog ==
 
 = Unreleased =
+* new currency helpers
+* separate helpers settings page
 
 = 2.2.10 =
 * tested up to wp 5.8.3

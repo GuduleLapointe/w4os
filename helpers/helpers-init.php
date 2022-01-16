@@ -1,4 +1,5 @@
-<?php namespace OpenSimCurrency;
+<?php namespace OpenSimulator\Helpers;
+
 if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
 if(get_option('w4os_provide_economy_helpers') &! empty(W4OS_GRID_INFO['economy']) ) {

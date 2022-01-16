@@ -1,6 +1,8 @@
 ## Changelog
 
 ### Unreleased
+* new currency helpers
+* separate helpers settings page
 
 ### 2.2.10
 * tested up to wp 5.8.3
