@@ -254,21 +254,23 @@ function w4os_register_settings() {
 										'economy' =>  (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'),
 									),
 								),
-								'MoneyServer.ini' => array(
-									'[MySql]' => array(
-										'hostname' => '"hostname"',
-										'database' => '"dbname"',
-										'username' => '"dbuser"',
-										'password' => '"dbpassword"',
-									),
-								),
 							)),
 				    ),
 						'w4os_economy_use_robust_db' => array(
 				      'type' => 'boolean',
-				      'label' => __('Use Robust database', 'w4os'),
+				      'label' => __('Economy database', 'w4os'),
 				      'default' => true,
 				      'onchange' => 'onchange="valueChanged(this)"',
+							'description' => __('Use the same database as Robust') . '<p>' . w4os_format_ini(array(
+								'MoneyServer.ini' => array(
+									'[MySql]' => array(
+										'hostname' => get_option('w4os_economy_db_host'),
+										'database' => get_option('w4os_economy_db_database'),
+										'username' => get_option('w4os_economy_db_user'),
+										'password' => "(hidden)",
+									),
+								),
+							)),
 				    ),
 						'w4os_economy_db_host' => array(
 							'label' => __('Hostname', 'w4os'),
@@ -289,18 +291,6 @@ function w4os_register_settings() {
 							'autocomplete' => 'off',
 							'default' => esc_attr(get_option('w4os_db_pass')),
 						),
-						'w4os_money_script_access_key' => array(
-							'label' => __('Money Script Access Key', 'w4os'),
-							// 'default' => '123456789',
-							'description' => w4os_format_ini(array(
-								'MoneyServer.ini' => array(
-									'[MoneyServer]' => array(
-										'EnableScriptSendMoney' => 'true',
-										'MoneyScriptAccessKey' => esc_attr(get_option('w4os_money_script_access_key')),
-									),
-								),
-							)),
-						),
 						'w4os_currency_provider' => array(
 							'label' => __('Currency Provider', 'w4os'),
 							'type' => 'radio',
@@ -319,6 +309,18 @@ function w4os_register_settings() {
 						'w4os_podex_redirect_url' => array(
 							'label' => __('Podex redirect URL', 'w4os'),
 							'placeholder' => 'secondlife://Welcome/128/128/21',
+						),
+						'w4os_money_script_access_key' => array(
+							'label' => __('Money Script Access Key', 'w4os'),
+							// 'default' => '123456789',
+							'description' => w4os_format_ini(array(
+								'MoneyServer.ini' => array(
+									'[MoneyServer]' => array(
+										'EnableScriptSendMoney' => 'true',
+										'MoneyScriptAccessKey' => esc_attr(get_option('w4os_money_script_access_key')),
+									),
+								),
+							)),
 						),
 				  ),
 				),
