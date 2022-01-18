@@ -80,8 +80,8 @@ $DbLink = new DB(OFFLINE_DB_HOST, OFFLINE_DB_NAME, OFFLINE_DB_USER, OFFLINE_DB_P
 $method = $_SERVER['PATH_INFO)'];
 if(empty($method)) $method = '/' . basename(getenv('REDIRECT_URL')) . '/';
 
-if ($method == "/SaveMessage/")
-{
+switch($method) {
+	case "/SaveMessage/":
 	if (strpos($HTTP_RAW_POST_DATA, "?>") == -1) {
 		xmlSuccess(false);
 		die;
@@ -189,9 +189,9 @@ if ($method == "/SaveMessage/")
 			die();
 		}
 	}
-}
+	break;
 
-if ($method == "/RetrieveMessages/") {
+ 	case "/RetrieveMessages/"):
 	$xml = new SimpleXMLElement($HTTP_RAW_POST_DATA);
 
 	$errno = -1;
@@ -229,7 +229,9 @@ if ($method == "/RetrieveMessages/") {
 		}
 	}
 	exit;
-}
+	break;
 
-error_log("Offline messages: V2 method $method not implemented, please configure OfflineMessageModule = OfflineMessageModule in OpenSim.ini");
-die();
+	default:
+	error_log("Offline messages: method $method not implemented, please configure OfflineMessageModule = OfflineMessageModule in OpenSim.ini");
+	die();
+}
