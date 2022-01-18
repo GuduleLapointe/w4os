@@ -191,7 +191,7 @@ switch($method) {
 	}
 	break;
 
- 	case "/RetrieveMessages/"):
+ 	case "/RetrieveMessages/":
 	$xml = new SimpleXMLElement($HTTP_RAW_POST_DATA);
 
 	$errno = -1;
