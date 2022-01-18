@@ -172,6 +172,7 @@ function w4os_update_grid_info($rechecknow = false) {
 	if ( get_option('w4os_profile_page' ) == 'provide' && empty($grid_info['profile'])) $grid_info['profile'] = W4OS_PROFILE_URL;
 	if ( ! empty($grid_info['login']) ) update_option('w4os_login_uri', preg_replace('+/*$+', '', preg_replace('+https*://+', '', $grid_info['login'])));
 	if ( ! empty($grid_info['gridname']) ) update_option('w4os_grid_name', $grid_info['gridname']);
+	update_option('w4os_offline_helper_uri', $grid_info['message']);
 
 	if(isset($urls) && is_array($urls)) w4os_get_urls_statuses($urls, get_option('w4os_check_urls_now'));
 

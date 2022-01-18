@@ -4,7 +4,7 @@ function valueChanged() {
   document.getElementById("w4os_external_asset_server_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_asset_server').checked ? "none" : "table-row";
 
   // show internal offline helper uri according to provide checkbox
-  // document.getElementById("w4os_offline_helper_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_offline_messages').checked ? "table-row" : "none";
+  document.getElementById("w4os_offline_helper_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_offline_messages').checked ? "table-row" : "none";
 
   // show internal economy helper uri according to provide checkbox
   document.getElementById("w4os_economy_helper_uri").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked ? "table-row" : "none";

@@ -1,6 +1,7 @@
 ## Changelog
 
 ### Unreleased
+* new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)
 * new currency helpers
 * separate helpers settings page
 

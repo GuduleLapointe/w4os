@@ -18,6 +18,8 @@ define('OPENSIM_DB_NAME', get_option('w4os_db_database'));
 define('OPENSIM_DB_USER', get_option('w4os_db_user'));
 define('OPENSIM_DB_PASS', get_option('w4os_db_pass'));
 
+define('GRID_NAME', get_option('w4os_grid_name', 'OpenSimulator'));
+
 define('OPENSIM_DB_MYSQLI', true);		// if you use MySQLi interface, please set true
 
 
@@ -74,7 +76,9 @@ define('OFFLINE_DB_NAME',     		OPENSIM_DB_NAME);
 define('OFFLINE_DB_USER',     		OPENSIM_DB_USER);
 define('OFFLINE_DB_PASS',     		OPENSIM_DB_PASS);
 define('OFFLINE_DB_MYSQLI',    		OPENSIM_DB_MYSQLI);
-define('OFFLINE_MESSAGE_TBL', 		'offline_message');
+define('OFFLINE_MESSAGE_TBL', 		'im_offline'); // Same DB as Offline Module V2?
+
+define("OFFLINE_SENDER_MAIL", get_option('w4os_offline_sender', 'no-reply@' . $_SERVER['SERVER_NAME']));
 
 
 // MuteList DB
