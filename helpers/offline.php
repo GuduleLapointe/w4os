@@ -163,7 +163,9 @@ switch($method) {
 			$subject = "Message from $xml->fromAgentName";
 			$intro = "$xml->fromAgentName sent you a message$in:";
 		}
-
+		$body = htmlspecialchars($body);
+		$subject = htmlspecialchars($subject);
+		
 		$body = "<html><body>"
 		. "<p>$intro</p>"
 		. "<blockquote>$body</blockquote>"
