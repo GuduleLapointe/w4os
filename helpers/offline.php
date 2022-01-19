@@ -165,7 +165,7 @@ switch($method) {
 		}
 		$body = htmlspecialchars($body);
 		$subject = htmlspecialchars($subject);
-		
+
 		$body = "<html><body>"
 		. "<p>$intro</p>"
 		. "<blockquote>$body</blockquote>"
@@ -206,25 +206,20 @@ switch($method) {
 		);
 		$DbLink->query($query);
 		$result = $DbLink->Errno;
-		$delete_query = '';
 		if ($result==0) {
+			$delivered = array();
 			echo '<?xml version="1.0" encoding="utf-8"?>';
 			echo '<ArrayOfGridInstantMessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
 			while(list($id, $message) = $DbLink->next_record()) {
 				$start = strpos($message, "?>");
 				if ($start != -1) $message = substr($message, $start + 2);
 				echo $message;
-				$delete_query .= sprintf(
-					"DELETE FROM %s WHERE ID = %d; ",
-					OFFLINE_MESSAGE_TBL,
-					$id,
-				);
+				$delivered[] = $id;
 			}
 			echo '</ArrayOfGridInstantMessage>';
-			if(!empty($delete_query)) {
-				$DbLink->query($delete_query);
-				$result = $DbLink->Errno;
-				if ($result!=0) error_log("DB error while deleting sent messages");
+			if(!empty($delivered)) {
+				$query = sprintf( "DELETE FROM %s WHERE ID=%s", OFFLINE_MESSAGE_TBL, join(' OR ID=', $delivered) );
+				$DbLink->query($query);
 			}
 		} else {
 			error_log("DB error while retrieving messages $result");

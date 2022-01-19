@@ -47,8 +47,7 @@ class DB
 
 	function halt($msg)
 	{
-		error_log("<b>DB ERROR   :</b> $msg<br />\n"
-		. "<b>MySQL ERROR:</b> $this->Error ($this->Errno)<br />\n");
+		error_log(__FILE__ . ' MySQL ERROR : ' . $msg);
 		// die('Session Halted.');
 	}
 
