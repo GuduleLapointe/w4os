@@ -1,11 +1,11 @@
 <?php
 
-require_once('include/env_interface.php');
+require_once('include/config.php');
 
 // Attempt to connect to the database
 try {
-  $db = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $SearchDB = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
 {
@@ -13,6 +13,10 @@ catch(PDOException $e)
   $error = "Error establishing a database connection";
   echo "$error";
   error_log(__FILE__ . " $error");
+  die();
+}
+if(!$SearchDB) {
+  error_log(__FILE__ . " should have a db, but no.");
   die();
 }
 
@@ -35,7 +39,7 @@ function tableExists($pdo, $tables) {
   }
   return true;
 }
-if( ! tableExists($db, [ 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
+if( ! tableExists($SearchDB, [ 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
   die();
 }
 
@@ -64,7 +68,7 @@ function GetURL($host, $port, $url)
 
 function CheckHost($hostname, $port)
 {
-    global $db, $now;
+    global $SearchDB, $now;
 
     $xml = GetURL($hostname, $port, "?method=collector");
     if (empty($xml)) $failcounter = "failcounter + 1";
@@ -74,7 +78,7 @@ function CheckHost($hostname, $port)
     //won't be checked again until at least this much time has gone by.
     $next = $now + 600;
 
-    $query = $db->prepare( "UPDATE hostsregister
+    $query = $SearchDB->prepare( "UPDATE hostsregister
       SET nextcheck = ?, checked = 1, failcounter = $failcounter
       WHERE host = ? AND port = ?"
     );
@@ -85,7 +89,7 @@ function CheckHost($hostname, $port)
 
 function parse($hostname, $port, $xml)
 {
-    global $db, $now;
+    global $SearchDB, $now;
 
     ///////////////////////////////////////////////////////////////////////
     //
@@ -120,7 +124,7 @@ function parse($hostname, $port, $xml)
     $expire = $regiondata->getElementsByTagName("expire")->item(0)->nodeValue;
     $next = $now + $expire;
 
-    $query = $db->prepare("UPDATE hostsregister SET nextcheck = ? WHERE host = ? AND port = ?");
+    $query = $SearchDB->prepare("UPDATE hostsregister SET nextcheck = ? WHERE host = ? AND port = ?");
     $query->execute( array($next, $hostname, $port) );
 
     //
@@ -148,20 +152,20 @@ function parse($hostname, $port, $xml)
         //
         // First, check if we already have a region that is the same
         //
-        // $check = $db->prepare("SELECT * FROM search_regions WHERE regionUUID = ?");
+        // $check = $SearchDB->prepare("SELECT * FROM search_regions WHERE regionUUID = ?");
         // $check->execute( array($regionuuid) );
         //
         // if ($check->rowCount() > 0)
         // {
-            // $query = $db->prepare("DELETE FROM search_regions WHERE regionUUID = ?");
+            // $query = $SearchDB->prepare("DELETE FROM search_regions WHERE regionUUID = ?");
             // $query->execute( array($regionuuid) );
-            $query = $db->prepare("DELETE FROM parcels WHERE regionUUID = ?");
+            $query = $SearchDB->prepare("DELETE FROM parcels WHERE regionUUID = ?");
             $query->execute( array($regionuuid) );
-            $query = $db->prepare("DELETE FROM allparcels WHERE regionUUID = ?");
+            $query = $SearchDB->prepare("DELETE FROM allparcels WHERE regionUUID = ?");
             $query->execute( array($regionuuid) );
-            $query = $db->prepare("DELETE FROM parcelsales WHERE regionUUID = ?");
+            $query = $SearchDB->prepare("DELETE FROM parcelsales WHERE regionUUID = ?");
             $query->execute( array($regionuuid) );
-            $query = $db->prepare("DELETE FROM objects WHERE regionuuid = ?");
+            $query = $SearchDB->prepare("DELETE FROM objects WHERE regionuuid = ?");
             $query->execute( array($regionuuid) );
         // }
 
@@ -174,7 +178,7 @@ function parse($hostname, $port, $xml)
         //
         // Second, add the new info to the database
         //
-        // $query = $db->prepare("INSERT INTO search_regions VALUES(:r_name, :r_uuid, " .
+        // $query = $SearchDB->prepare("INSERT INTO search_regions VALUES(:r_name, :r_uuid, " .
         //                       ":r_handle, :url, :u_name, :u_uuid)");
         // $query->execute( array("r_name" => $regionname, "r_uuid" => $regionuuid,
         //                         "r_handle" => $regionhandle, "url" => $url,
@@ -224,13 +228,13 @@ function parse($hostname, $port, $xml)
 
             //Prepare for the insert of data in to the popularplaces table. This gets
             //rid of any obsolete data for parcels no longer set to show in search.
-            $query = $db->prepare("DELETE FROM popularplaces WHERE parcelUUID = ?");
+            $query = $SearchDB->prepare("DELETE FROM popularplaces WHERE parcelUUID = ?");
             $query->execute( array($parceluuid) );
 
             //
             // Save
             //
-            $query = $db->prepare("INSERT INTO allparcels VALUES(:r_uuid, :p_name, :o_uuid, :g_uuid, :landing, :p_uuid, :i_uuid, :area)");
+            $query = $SearchDB->prepare("INSERT INTO allparcels VALUES(:r_uuid, :p_name, :o_uuid, :g_uuid, :landing, :p_uuid, :i_uuid, :area)");
             $query->execute( array(
               "r_uuid"  => $regionuuid,
               "p_name"  => $parcelname,
@@ -244,7 +248,7 @@ function parse($hostname, $port, $xml)
 
             if ($parceldirectory == "true")
             {
-                $query = $db->prepare("INSERT INTO parcels
+                $query = $SearchDB->prepare("INSERT INTO parcels
                   VALUES(:r_uuid, :p_name, :p_uuid, :landing, :desc, :cat, :build, :script, :public, :dwell, :i_uuid, :r_cat)"
                 );
                 $query->execute( array(
@@ -262,7 +266,7 @@ function parse($hostname, $port, $xml)
                   "r_cat"   => $regioncategory)
                 );
 
-                $query = $db->prepare("INSERT INTO popularplaces VALUES(:p_uuid, :p_name, :dwell, :i_uuid, :has_pic, :r_cat)");
+                $query = $SearchDB->prepare("INSERT INTO popularplaces VALUES(:p_uuid, :p_name, :dwell, :i_uuid, :has_pic, :r_cat)");
                 $query->execute( array(
                   "p_uuid"  => $parceluuid,
                   "p_name"  => $parcelname,
@@ -275,7 +279,7 @@ function parse($hostname, $port, $xml)
 
             if ($parcelforsale == "true")
             {
-                $query = $db->prepare("INSERT INTO parcelsales VALUES(:r_uuid, :p_name, :p_uuid, :area, :price, :landing, :i_uuid, :dwell, :e_id, :r_cat)");
+                $query = $SearchDB->prepare("INSERT INTO parcelsales VALUES(:r_uuid, :p_name, :p_uuid, :area, :price, :landing, :i_uuid, :dwell, :e_id, :r_cat)");
                 $query->execute( array(
                   "r_uuid"  => $regionuuid,
                   "p_name"  => $parcelname,
@@ -306,7 +310,7 @@ function parse($hostname, $port, $xml)
             $description = $value->getElementsByTagName("description")->item(0)->nodeValue;
             $flags = $value->getElementsByTagName("flags")->item(0)->nodeValue;
 
-            $query = $db->prepare("INSERT INTO objects VALUES(:uuid, :p_uuid, :location, :title, :descr, :r_uuid)");
+            $query = $SearchDB->prepare("INSERT INTO objects VALUES(:uuid, :p_uuid, :location, :title, :descr, :r_uuid)");
             $query->execute( array(
               "uuid"     => $uuid,
               "p_uuid"   => $parceluuid,
@@ -320,7 +324,7 @@ function parse($hostname, $port, $xml)
 }
 
 $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,10";
-$jobsearch = $db->query($sql);
+$jobsearch = $SearchDB->query($sql);
 
 //
 // If the sql query returns no rows, all entries in the hostsregister
@@ -330,13 +334,13 @@ $jobsearch = $db->query($sql);
 
 if ($jobsearch->rowCount() == 0)
 {
-    $jobsearch = $db->query("UPDATE hostsregister SET checked = 0");
+    $jobsearch = $SearchDB->query("UPDATE hostsregister SET checked = 0");
 
-    $jobsearch = $db->query($sql);
+    $jobsearch = $SearchDB->query($sql);
 }
 
 while ($jobs = $jobsearch->fetch(PDO::FETCH_NUM))
     CheckHost($jobs[0], $jobs[1]);
 
-$db = NULL;
+$SearchDB = NULL;
 die();
