@@ -10,6 +10,13 @@ function w4os_register_settings() {
 	if(!get_option('w4os_model_lastname')) update_option('w4os_model_lastname', 'Default');
 	if(!w4os_option_exists('w4os_configuration_instructions')) update_option('w4os_configuration_instructions', true);
 
+	if(get_option('w4os_search_use_robust_db')) {
+		update_option('w4os_search_db_host', get_option('w4os_db_host'));
+		update_option('w4os_search_db_database', get_option('w4os_db_database'));
+		update_option('w4os_search_db_user', get_option('w4os_db_user'));
+		update_option('w4os_search_db_pass', get_option('w4os_db_pass'));
+	}
+
 	$settings_pages = array(
 		'w4os_status' => array(
 			'sections' => array(
