@@ -15,10 +15,10 @@
 
 require("include/config.php");
 
-$DB_HOST=OPENSIM_DB_HOST;
-$DB_NAME=OPENSIM_DB_NAME;
-$DB_USER=OPENSIM_DB_USER;
-$DB_PASSWORD=OPENSIM_DB_PASS;
+$DB_HOST=SEARCH_DB_HOST;
+$DB_NAME=SEARCH_DB_NAME;
+$DB_USER=SEARCH_DB_USER;
+$DB_PASSWORD=SEARCH_DB_PASS;
 
 $host = $_GET['host'];
 $port = $_GET['port'];
@@ -34,7 +34,7 @@ if ($host == "" || $port == "")
 
 // Attempt to connect to the database
 try {
-  $db = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+  $db = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)

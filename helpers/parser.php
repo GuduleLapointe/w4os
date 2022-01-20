@@ -4,7 +4,7 @@ require_once('include/config.php');
 
 // Attempt to connect to the database
 try {
-  $SearchDB = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
   $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
@@ -28,12 +28,12 @@ function tableExists($pdo, $tables) {
     try {
       $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
     } catch (Exception $e) {
-      error_log(__FILE__ . ": " . OPENSIM_DB_NAME . " is missing table $table" );
+      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
       // We got an exception == table not found
       return false;
     }
     if($result == false) {
-      error_log(__FILE__ . ": " . OPENSIM_DB_NAME . " is missing table $table" );
+      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
       return false;
     }
   }
@@ -221,6 +221,7 @@ function parse($hostname, $port, $xml)
             // Check bits on Public, Build, Script
             //
             $parcelforsale = $value->getAttributeNode("forsale")->nodeValue;
+            error_log('$parcelforsale=' . $parcelforsale);
             $parceldirectory = $value->getAttributeNode("showinsearch")->nodeValue;
             $parcelbuild = $value->getAttributeNode("build")->nodeValue;
             $parcelscript = $value->getAttributeNode("scripts")->nodeValue;

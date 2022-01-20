@@ -202,6 +202,32 @@ function w4os_register_settings() {
 							'onchange' => 'onchange="valueChanged(this)"',
 							// 'description' => __('Using ')
 						),
+						'w4os_search_use_robust_db' => array(
+						  'type' => 'boolean',
+						  'label' => __('Search database', 'w4os'),
+						  'default' => false,
+						  'onchange' => 'onchange="valueChanged(this)"',
+						  'description' => __('Use the same database as Robust'),
+						),
+						'w4os_search_db_host' => array(
+						  'label' => __('Hostname', 'w4os'),
+						  'default' => esc_attr(get_option('w4os_db_host', 'localhost')),
+						),
+						'w4os_search_db_database' => array(
+						  'label' => __('Database name', 'w4os'),
+						  'default' => esc_attr(get_option('w4os_db_database', 'currency')),
+						),
+						'w4os_search_db_user' => array(
+						  'label' => __('Username', 'w4os'),
+						  'autocomplete' => 'off',
+						  'default' => esc_attr(get_option('w4os_db_user', 'opensim')),
+						),
+						'w4os_search_db_pass' => array(
+						  'label' => __('Password', 'w4os'),
+						  'type' => 'password',
+						  'autocomplete' => 'off',
+						  'default' => esc_attr(get_option('w4os_db_pass')),
+						),
 						'w4os_search_url' => array(
 							'label' => __('Search engine URL', 'w4os'),
 							'placeholder' => 'https://example.org/helpers/query.php',
