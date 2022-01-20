@@ -33,6 +33,14 @@ if ( get_option('w4os_provide_search') ) {
       require('parser.php');
       die();
     }
+
+    if(! empty(get_option('w4os_hypevents_url'))) {
+      $hypevents = preg_replace(':^//:', '/', dirname($search) . '/eventsparser.php');
+      if(preg_match(":^$hypevents:", "$url/")) {
+        require('eventsparser.php');
+        die();
+      }
+    }
   }
 
   if(! empty(get_option('w4os_search_register'))) {

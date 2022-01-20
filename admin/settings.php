@@ -9,6 +9,7 @@ function w4os_register_settings() {
 	if(!get_option('w4os_model_firstname')) update_option('w4os_model_firstname', 'Default');
 	if(!get_option('w4os_model_lastname')) update_option('w4os_model_lastname', 'Default');
 	if(!w4os_option_exists('w4os_configuration_instructions')) update_option('w4os_configuration_instructions', true);
+	if(!w4os_option_exists('w4os_hypevents_url')) update_option('w4os_hypevents_url', 'http://2do.pm/events/');
 
 	if(get_option('w4os_search_use_robust_db')) {
 		update_option('w4os_search_db_host', get_option('w4os_db_host'));
@@ -275,6 +276,13 @@ function w4os_register_settings() {
 									),
 								),
 							)),
+						),
+						'w4os_hypevents_url' => array(
+							'label' => __('Events server URL', 'w4os'),
+							'placeholder' => 'https://2do.pm/events/',
+							'description' => __('HYPEvents server URL, used to fetch upcoming events and make them available in search.', 'w4os')
+							. ' ' . __('Leave blank to ignore events or if you have an other events implementation.', 'w4os')
+							. ' <a href=https://2do.pm/ target=_blank>2do HYPEvents project</a>',
 						),
 					),
 				),
