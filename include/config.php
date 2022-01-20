@@ -115,6 +115,12 @@ define('PROFILE_USERSETTINGS_TBL',	'usersettings');
 
 
 // Search the In World. see also search_config.php
+
+define('SEARCH_DB_HOST',          get_option('w4os_search_db_host', OPENSIM_DB_HOST));
+define('SEARCH_DB_NAME',          get_option('w4os_search_db_database', OPENSIM_DB_NAME));
+define('SEARCH_DB_USER',          get_option('w4os_search_db_user', OPENSIM_DB_USER));
+define('SEARCH_DB_PASS',          get_option('w4os_search_db_pass', OPENSIM_DB_PASS));
+
 define('SEARCH_ALLPARCELS_TBL',		'allparcels');
 define('SEARCH_EVENTS_TBL',			'events');
 define('SEARCH_HOSTSREGISTER_TBL',	'hostsregister');
