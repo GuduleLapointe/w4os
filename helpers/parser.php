@@ -1,8 +1,6 @@
 <?php
 
 require_once('include/env_interface.php');
-//
-// require("include/config.php");
 
 // Attempt to connect to the database
 try {
@@ -320,9 +318,6 @@ function parse($hostname, $port, $xml)
         }
     }
 }
-// debug
-$jobsearch = $db->query("UPDATE hostsregister SET nextcheck=0, checked = 0");
-// end debug
 
 $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,10";
 $jobsearch = $db->query($sql);
@@ -332,7 +327,6 @@ $jobsearch = $db->query($sql);
 // table have been checked. Reset the checked flag and re-run the
 // query to select the next set of hosts to be checked.
 //
-error_log("jobs " . $jobsearch->rowCount());
 
 if ($jobsearch->rowCount() == 0)
 {
