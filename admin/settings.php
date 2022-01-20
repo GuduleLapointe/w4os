@@ -193,8 +193,60 @@ function w4os_register_settings() {
 						),
 					),
 				),
+				'w4os_options_search' => array(
+					'name' => __('Search', 'w4os'),
+					'fields' => array(
+						'w4os_provide_search' => array(
+							'type' => 'boolean',
+							'label' => __('Provide in-world search', 'w4os'),
+							'onchange' => 'onchange="valueChanged(this)"',
+							// 'description' => __('Using ')
+						),
+						'w4os_search_url' => array(
+							'label' => __('Search engine URL', 'w4os'),
+							'placeholder' => 'https://example.org/helpers/query.php',
+							'description' =>
+							__('URL of the search engine used internally by the viewer.', 'w4os')
+							. w4os_format_ini(array(
+								'OpenSim.ini' => array(
+									'[Search]' => array(
+										'Module' => 'OpenSimSearch',
+										'SearchURL' => (!empty(get_option('w4os_search_url'))) ? get_option('w4os_search_url') : 'https://example.org/helpers/query.php',
+									),
+								),
+							))
+							. '<p>' . __('Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names.', 'w4os') . '</p>'
+								. w4os_format_ini(array(
+									'Robust.HG.ini' => array(
+										'[LoginService]' => array(
+											'SearchURL' => (!empty(get_option('w4os_websearch_url'))) ? get_option('w4os_websearch_url') : 'https://example.org/search/',
+										),
+										'[GridInfoService]' => array(
+											'search' =>  (!empty(get_option('w4os_websearch_url'))) ? get_option('w4os_websearch_url') : 'https://example.org/search/',
+										),
+									),
+								)),
+						),
+						'w4os_search_register' => array(
+							'label' => __('Search register', 'w4os'),
+							'placeholder' => 'https://example.org/helpers/register.php',
+							'description' =>
+							__('Data service, used to register regions, objects or land for sale.', 'w4os')
+							. w4os_format_ini(array(
+								'OpenSim.ini' => array(
+									'[DataSnapshot]' => array(
+										'index_sims' => 'true',
+										'gridname' => '"' . get_option('w4os_grid_name') . '"',
+										// 'data_services' => (!empty(get_option('w4os_search_url'))) ? get_option('w4os_search_url') : 'https://example.org/helpers/register.php',
+										'DATA_SRV_MISearch' => (!empty(get_option('w4os_search_url'))) ? get_option('w4os_search_url') : 'https://example.org/helpers/register.php',
+									),
+								),
+							)),
+						),
+					),
+				),
 				'w4os_options_offline' => array(
-					'name' => 'Offline messages',
+					'name' => __('Offline messages', 'w4os'),
 					'fields' => array(
 						'w4os_provide_offline_messages' => array(
 							'type' => 'boolean',

@@ -12,6 +12,7 @@
  * date is older, make a request to the Parser to grab new data
  */
 
+
 require("include/config.php");
 
 $DB_HOST=OPENSIM_DB_HOST;
@@ -25,28 +26,29 @@ $service = $_GET['service'];
 
 if ($host == "" || $port == "")
 {
-  header("HTTP/1.0 404 Bad Request");
-  echo "Missing region host and/or port\n";
+  header("HTTP/1.0 400 Bad Request");
+  echo "400 Bad Request: missing region host and/or port\n";
   exit;
 }
 
+
 // Attempt to connect to the database
 try {
-  $db = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USER, $DB_PASSWORD);
+  $db = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
 {
-  echo "Error connecting to database\n";
-  file_put_contents('PDOErrors.txt', $e->getMessage() . "\n-----\n", FILE_APPEND);
-  exit;
+  header("HTTP/1.0 500 Internal Server Error");
+  error_log(__FILE__ . " Could not connect to the database");
+  die();
 }
 
-if ($service == "online")
-{
+switch($service) {
+  case 'online':
   // Check if there is already a database row for this host
-  $query = $db->prepare("SELECT register FROM hostsregister WHERE host = ? AND port = ?");
-  $query->execute( array($host, $port) );
+  $query = $db->prepare("SELECT register FROM hostsregister WHERE host = :host AND port = :port");
+  $query->execute( array( ':host' => $host, ':port' => $port ) );
 
   // Get the request time as a timestamp for later
   $timestamp = $_SERVER['REQUEST_TIME'];
@@ -54,24 +56,24 @@ if ($service == "online")
   // If a database row was returned check the nextcheck date
   if ($query->rowCount() > 0)
   {
-    $query = $db->prepare("UPDATE hostsregister SET " .
-    "register = ?, " .
-    "nextcheck = 0, checked = 0, failcounter = 0 " .
-    "WHERE host = ? AND port = ?");
-    $query->execute( array($timestamp, $host, $port) );
+    $query = $db->prepare("UPDATE hostsregister SET register = :timestamp, nextcheck = 0, checked = 0, failcounter = 0 WHERE host = :host AND port = :port");
   }
   else
   {
     // The SELECT did not return a result. Insert a new record.
-    $query = $db->prepare("INSERT INTO hostsregister VALUES (?, ?, ?, 0, 0, 0)");
-    $query->execute( array($host, $port, $timestamp) );
+    $query = $db->prepare("INSERT INTO hostsregister VALUES (:host, :port, :timestamp, 0, 0, 0)");
+    // $query->execute( array($host, $port, $timestamp) );
   }
-}
+  $query->execute( array( ':host' => $host, ':port' => $port, ':timestamp' => $timestamp ) );
+  break;
 
-if ($service == "offline")
-{
-  $query = $db->prepare("DELETE FROM hostsregister WHERE host = ? AND port = ?");
-  $query->execute( array($host, $port) );
+  case 'offline':
+  $query = $db->prepare("DELETE FROM hostsregister WHERE host = :host AND port = :port");
+  $query->execute( array( ':host' => $host, ':port' => $port ) );
+  break;
+
+  default:
+  error_log(__FILE__ . " request not understood " . getenv('QUERY_STRING') . " raw data " . $HTTP_RAW_POST_DATA);
 }
 
 $db = NULL;
@@ -83,3 +85,4 @@ if (is_array($otherRegistrars) && $hostname != "" && $port != "" && $service != 
 		$result=file_get_contents("$registrar?$querystring");
 	}
 }
+die;

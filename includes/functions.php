@@ -382,7 +382,7 @@ function w4os_format_ini($array) {
 			}
 		}
 		$content = preg_replace('/<br>$/', '', $content);
-		$content .= '</pre></p>';
+		$content .= '</pre></p></div>';
 	}
 	return $content;
 }

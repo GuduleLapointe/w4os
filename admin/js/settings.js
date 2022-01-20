@@ -17,6 +17,9 @@ function valueChanged() {
   document.getElementById("w4os_podex_error_message").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked && document.getElementById('w4os_currency_provider_podex').checked ? "table-row" : "none";
   document.getElementById("w4os_currency_provider_").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked ? "table-row" : "none";
   document.getElementById("w4os_money_script_access_key").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked ? "table-row" : "none";
+
+  document.getElementById("w4os_search_register").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked ? "table-row" : "none";
+  document.getElementById("w4os_search_url").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked ? "table-row" : "none";
 }
 // force check on load
 valueChanged();
