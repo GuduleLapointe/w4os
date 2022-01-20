@@ -362,6 +362,10 @@ function w4os_register_settings() {
 							),
 							'onchange' => 'onchange="valueChanged(this)"',
 						),
+						'w4os_currency_rate' => array(
+							'label' => __('Currency conversion rate', 'w4os'),
+							'description' => __('Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)', 'w4os'),
+						),
 						'w4os_podex_error_message' => array(
 							'label' => __('Podex redirect message', 'w4os'),
 							'default' => __('Please use our terminals in-world to proceed.', 'w4os'),
