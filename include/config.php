@@ -1,9 +1,9 @@
-<?php
-//
-// Configration file for non Web Interface
-//
-//
-//
+<?php if ( ! defined( 'W4OS_PLUGIN' ) );
+/*
+ * Helpers configuration for W4OS plugin.
+ * Part of https://wordpress.org/plugins/w4os-opensimulator-web-interface/
+ * Not for use with standalone helpers.
+ */
 
 // Please set this hepler script URL and directory
 if (!defined('ENV_HELPER_URL'))  define('ENV_HELPER_URL', (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'));
