@@ -1,47 +1,16 @@
 <?php
+/*
+ * parser.php
+ *
+ * Part of "flexible_helpers_scripts" collection
+ * https://github.com/GuduleLapointe/flexible_helper_scripts
+ *
+ * This script parses data from registered hosts to feed the search database.
+ * It must be run regularly by a cron task for the search to work properly.
+ */
 
 require_once('include/config.php');
-
-// Attempt to connect to the database
-try {
-  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-  header("HTTP/1.0 500 Internal Server Error");
-  $error = "Error establishing a database connection";
-  echo "$error";
-  error_log(__FILE__ . " $error");
-  die();
-}
-if(!$SearchDB) {
-  error_log(__FILE__ . " should have a db, but no.");
-  die();
-}
-
-function tableExists($pdo, $tables) {
-  if(is_string($tables)) $tables=array($tables);
-  foreach($tables as $table) {
-    // Try a select statement against the table
-    // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
-    try {
-      $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
-    } catch (Exception $e) {
-      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
-      // We got an exception == table not found
-      return false;
-    }
-    if($result == false) {
-      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
-      return false;
-    }
-  }
-  return true;
-}
-if( ! tableExists($SearchDB, [ 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
-  die();
-}
+require_once('include/ossearch_db.php');
 
 $now = time();
 
@@ -69,6 +38,7 @@ function GetURL($host, $port, $url)
 function CheckHost($hostname, $port)
 {
     global $SearchDB, $now;
+    error_log("http://$hostname:$port/?method=collector");
 
     $xml = GetURL($hostname, $port, "?method=collector");
     if (empty($xml)) $failcounter = "failcounter + 1";
@@ -90,7 +60,6 @@ function CheckHost($hostname, $port)
 function parse($hostname, $port, $xml)
 {
     global $SearchDB, $now;
-
     ///////////////////////////////////////////////////////////////////////
     //
     // Search engine sim scanner
@@ -221,7 +190,6 @@ function parse($hostname, $port, $xml)
             // Check bits on Public, Build, Script
             //
             $parcelforsale = $value->getAttributeNode("forsale")->nodeValue;
-            error_log('$parcelforsale=' . $parcelforsale);
             $parceldirectory = $value->getAttributeNode("showinsearch")->nodeValue;
             $parcelbuild = $value->getAttributeNode("build")->nodeValue;
             $parcelscript = $value->getAttributeNode("scripts")->nodeValue;
