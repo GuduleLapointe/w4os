@@ -114,6 +114,9 @@ define('PROFILE_USERPROFILE_TBL',	'userprofile');
 define('PROFILE_USERSETTINGS_TBL',	'usersettings');
 
 
+// define('HYPEVENTS_URL', get_option('w4os_hypevents_url', 'https://2do.pm/events'));
+define('HYPEVENTS_URL', preg_replace(':/$:', '', get_option('w4os_hypevents_url')));
+
 // Search the In World. see also search_config.php
 
 define('SEARCH_DB_HOST',          get_option('w4os_search_db_host', OPENSIM_DB_HOST));
