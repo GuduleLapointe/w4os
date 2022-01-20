@@ -23,10 +23,12 @@ define('GRID_NAME', get_option('w4os_grid_name', 'OpenSimulator'));
 define('OPENSIM_DB_MYSQLI', true);		// if you use MySQLi interface, please set true
 
 
-// Money Server Access Key
+// Money Server
 // Please set same key with MoneyScriptAccessKey in MoneyServer.ini
 define('CURRENCY_SCRIPT_KEY', get_option('w4os_money_script_access_key', '123456789'));
 
+define('CURRENCY_RATE', get_option('w4os_currency_rate', 10));
+define('CURRENCY_RATE_PER', get_option('w4os_currency_rate_per', 1000));
 
 // Group Module Access Keys
 // Please set same keys with at [Groups] section in OpenSim.ini (case of Aurora-Sim, it is Groups.ini)
@@ -136,6 +138,9 @@ switch(get_option('w4os_currency_provider')) {
   ));
   define('GLOEBIT_CONVERSION_THRESHOLD', 1.2);
   break;
+
+  default:
+
 }
 
 define('NULL_KEY', '00000000-0000-0000-0000-000000000000');

@@ -91,7 +91,7 @@ function convert_to_real($amount)
 	return $real;
 	*/
 
-	$cost = (integer)( 4 * $amount / 10 );
+	$cost = (integer)( CURRENCY_RATE / CURRENCY_RATE_PER * 100 * $amount );
 
 	return $cost;
 }
