@@ -72,8 +72,8 @@ switch($service) {
   $query->execute( array( ':host' => $host, ':port' => $port ) );
   break;
 
-  default:
-  error_log(__FILE__ . " request not understood " . getenv('QUERY_STRING') . " raw data " . $HTTP_RAW_POST_DATA);
+  // default:
+  // error_log(__FILE__ . " bad request " . getenv('QUERY_STRING') . " raw data " . $HTTP_RAW_POST_DATA);
 }
 
 $db = NULL;

@@ -271,7 +271,6 @@ function dir_land_query($method_name, $params, $app_data)
     if (!is_int($query_start)) $query_start = 0;
 
     $sql = "SELECT *,saleprice/area AS lsq FROM parcelsales $where ORDER BY " . $order . " LIMIT $query_start,101";
-    error_log($sql);
     $query = $db->prepare($sql);
     $result = $query->execute($sqldata);
 
