@@ -11,25 +11,43 @@
  * the libopenmetaverse library.
  */
 
-require("config/config.php");
-
-$DB_HOST=OPENSIM_DB_HOST;
-$DB_NAME=OPENSIM_DB_NAME;
-$DB_USER=OPENSIM_DB_USER;
-$DB_PASSWORD=OPENSIM_DB_PASS;
+require("include/config.php");
 
 // Attempt to connect to the database
 try {
-  $db = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USER, $DB_PASSWORD);
+  $db = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
 {
-  echo "Error connecting to database\n";
-  file_put_contents('PDOErrors.txt', $e->getMessage() . "\n-----\n", FILE_APPEND);
-  exit;
+  header("HTTP/1.0 500 Internal Server Error");
+  error_log(__FILE__ . " Could not connect to the database");
+  die();
 }
 
+function tableExists($pdo, $tables) {
+  if(is_string($tables)) $tables=array($tables);
+  foreach($tables as $table) {
+    // Try a select statement against the table
+    // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
+    try {
+      $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
+    } catch (Exception $e) {
+      error_log(__FILE__ . ": " . OPENSIM_DB_NAME . " is missing table $table" );
+      // We got an exception == table not found
+      return false;
+    }
+    if($result == false) {
+      error_log(__FILE__ . ": " . OPENSIM_DB_NAME . " is missing table $table" );
+      return false;
+    }
+  }
+  return true;
+}
+
+if( ! tableExists($db, [ 'parcels', 'popularplaces', 'events', 'classifieds', 'parcelsales' ] )) {
+  die();
+}
 
 ###################### No user serviceable parts below #####################
 
@@ -37,27 +55,12 @@ catch(PDOException $e)
 //This function is used in place of the simpler join to handle the cases where
 //one or more of the supplied terms are an empty string. The parentheses can
 //be added when mixing AND and OR clauses in a SQL query.
-function join_terms($glue, $terms, $add_paren)
-{
-    if (count($terms) > 1)
-    {
-        $type = join($glue, $terms);
-        if ($add_paren == True)
-            $type = "(" . $type . ")";
-    }
-    else
-    {
-        if (count($terms) == 1)
-            $type = $terms[0];
-        else
-            $type = "";
-    }
-
-    return $type;
+function join_terms($glue, $terms, $deprecated = true) {
+  if(empty($terms)) return "";
+  return "(" . join($glue, $terms) . ")";
 }
 
-
-function process_region_type_flags($flags)
+function buildTypeConditions($flags)
 {
     $terms = array();
 
@@ -68,9 +71,8 @@ function process_region_type_flags($flags)
     if ($flags & 67108864)  //IncludeAdult (1 << 26)
         $terms[] = "mature = 'Adult'";
 
-    return join_terms(" OR ", $terms, True);
+    return join_terms(" OR ", $terms);
 }
-
 
 #
 # The XMLRPC server object
@@ -78,101 +80,80 @@ function process_region_type_flags($flags)
 
 $xmlrpc_server = xmlrpc_server_create();
 
+function xmlRpcDie($message = "") {
+  echo xmlrpc_encode(array(
+    'success'      => false,
+    'errorMessage' => $message,
+  ));
+  die;
+}
+
 #
 # Places Query
 #
-
-xmlrpc_server_register_method($xmlrpc_server, "dir_places_query",
-        "dir_places_query");
-
+xmlrpc_server_register_method($xmlrpc_server, "dir_places_query", "dir_places_query");
 function dir_places_query($method_name, $params, $app_data)
 {
-    global $db;
+  global $db;
 
-    $req             = $params[0];
+  $req             = $params[0];
 
-    $flags           = $req['flags'];
-    $text            = $req['text'];
-    $category        = $req['category'];
-    $query_start     = $req['query_start'];
+  $flags           = $req['flags'];
+  $text            = $req['text'];
+  $category        = $req['category'];
+  $query_start     = $req['query_start'];
+  if (!is_int($query_start)) $query_start = 0;
 
-    $pieces = explode(" ", $text);
-    $text = join("%", $pieces);
+  $pieces = explode(" ", $text);
+  $text = join("%", $pieces);
 
-    if ($text != "%%%")
-        $text = "%$text%";
-    else
-    {
-        $response_xml = xmlrpc_encode(array(
-                'success'      => False,
-                'errorMessage' => "Invalid search terms"
-        ));
+  if(empty($text) || $text == '%%%') xmlRpcDie('Invalid search terms'); // die
 
-        print $response_xml;
+  $text = "%$text%";
 
-        return;
-    }
+  $terms = array();
+  $sqldata = array();
 
-    $terms = array();
-    $sqldata = array();
+  $order = ($flags & 1024) ? "dwell DESC, parcelname": 'parcelname';
 
-    $type = process_region_type_flags($flags);
-    if ($type != "")
-        $type = " AND " . $type;
+  $terms[] = "(parcelname LIKE :text OR description LIKE :text)";
+  $type = buildTypeConditions($flags);
+  if(!empty($type)) $terms[] = "$type";
+  if($category > 0) $terms[] = "searchcategory = :cat";
 
-    if ($flags & 1024)
-        $order = "dwell DESC,";
+  $query = $db->prepare("SELECT * FROM parcels WHERE " . join(' AND ', $terms) . " ORDER BY :order LIMIT $query_start,101");
+  $result = $query->execute( array(
+    ':text' => $text,
+    ':order'  => $order,
+    ':cat' => $category,
+  ));
 
-    if ($category <= 0)
-        $cat_where = "";
-    else
-    {
-        $cat_where = "searchcategory = :cat AND ";
+  $data = array();
+  while ($row = $query->fetch(PDO::FETCH_ASSOC))
+  {
+    $data[] = array(
+      "parcel_id" => $row["infouuid"],
+      "name" => $row["parcelname"],
+      "for_sale" => "False",
+      "auction" => "False",
+      "dwell" => $row["dwell"]
+    );
+  }
 
-        $sqldata['cat'] = $category;
-    }
-
-    $sqldata['text1'] = $text;
-    $sqldata['text2'] = $text;
-
-    //Prevent SQL injection by checking that $query_start is a number
-    if (!is_int($query_start))
-         $query_start = 0;
-
-    $sql = "SELECT * FROM parcels WHERE $cat_where" .
-           " (parcelname LIKE :text1" .
-           " OR description LIKE :text2)" .
-           $type . " ORDER BY $order parcelname" .
-           " LIMIT $query_start,101";
-    $query = $db->prepare($sql);
-    $result = $query->execute($sqldata);
-
-    $data = array();
-    while ($row = $query->fetch(PDO::FETCH_ASSOC))
-    {
-        $data[] = array(
-                "parcel_id" => $row["infouuid"],
-                "name" => $row["parcelname"],
-                "for_sale" => "False",
-                "auction" => "False",
-                "dwell" => $row["dwell"]);
-    }
-    $response_xml = xmlrpc_encode(array(
-        'success'      => True,
-        'errorMessage' => "",
-        'data' => $data
-    ));
-
-    print $response_xml;
+  $response_xml = xmlrpc_encode(array(
+    'success'      => true,
+    'errorMessage' => "",
+    'data' => $data
+  ));
+  print $response_xml;
+  die();
 }
 
 #
 # Popular Places Query
 #
 
-xmlrpc_server_register_method($xmlrpc_server, "dir_popular_query",
-        "dir_popular_query");
-
+xmlrpc_server_register_method($xmlrpc_server, "dir_popular_query", "dir_popular_query");
 function dir_popular_query($method_name, $params, $app_data)
 {
     global $db;
@@ -201,7 +182,7 @@ function dir_popular_query($method_name, $params, $app_data)
     }
 
     if (count($terms) > 0)
-        $where = " WHERE " . join_terms(" AND ", $terms, False);
+        $where = " WHERE " . join(" AND ", $terms);
     else
         $where = "";
 
@@ -233,59 +214,40 @@ function dir_popular_query($method_name, $params, $app_data)
 #
 # Land Query
 #
-
-xmlrpc_server_register_method($xmlrpc_server, "dir_land_query",
-        "dir_land_query");
-
+xmlrpc_server_register_method($xmlrpc_server, "dir_land_query", "dir_land_query");
 function dir_land_query($method_name, $params, $app_data)
 {
-    global $db;
+  global $db;
 
-    $req            = $params[0];
+  $req            = $params[0];
+  $flags          = $req['flags'];
+  $type           = $req['type'];
+  $price          = $req['price'];
+  $area           = $req['area'];
+  $query_start    = $req['query_start'];
 
-    $flags          = $req['flags'];
-    $type           = $req['type'];
-    $price          = $req['price'];
-    $area           = $req['area'];
-    $query_start    = $req['query_start'];
+  $terms = array();
+  $sqldata = array();
 
-    $terms = array();
-    $sqldata = array();
+  if ($type != 4294967295)    //Include all types of land?
+  {
+    //Do this check first so we can bail out quickly on Auction search
+    if (($type & 26) == 2) xmlRpcDie("No auctions listed"); // Auction (from SearchTypeFlags enum)
 
-    if ($type != 4294967295)    //Include all types of land?
-    {
-        //Do this check first so we can bail out quickly on Auction search
-        if (($type & 26) == 2)  // Auction (from SearchTypeFlags enum)
-        {
-            $response_xml = xmlrpc_encode(array(
-                    'success' => False,
-                    'errorMessage' => "No auctions listed"));
+    if (($type & 24) == 8) $terms[] = "parentestate = 1"; // Mainland (24=0x18 [bits 3 & 4])
+    if (($type & 24) == 16) $terms[] = "parentestate <> 1"; // Estate (24=0x18 [bits 3 & 4])
+  }
 
-            print $response_xml;
-
-            return;
-        }
-
-        if (($type & 24) == 8)  //Mainland (24=0x18 [bits 3 & 4])
-            $terms[] = "parentestate = 1";
-        if (($type & 24) == 16) //Estate (24=0x18 [bits 3 & 4])
-            $terms[] = "parentestate <> 1";
-    }
-
-    $s = process_region_type_flags($flags);
-    if ($s != "")
-        $terms[] = $s;
-
+  $typeCondition = buildTypeConditions($flags);
+  if (!empty($typeCondition != "")) $terms[] = $typeCondition;
     if ($flags & 0x100000)  //LimitByPrice (1 << 20)
     {
         $terms[] = "saleprice <= :price";
-
         $sqldata['price'] = $price;
     }
     if ($flags & 0x200000)  //LimitByArea (1 << 21)
     {
         $terms[] = "area >= :area";
-
         $sqldata['area'] = $area;
     }
 
@@ -302,17 +264,14 @@ function dir_land_query($method_name, $params, $app_data)
     if (!($flags & 0x8000)) //SortAsc (1 << 15)
         $order .= " DESC";
 
-    if (count($terms) > 0)
-        $where = " WHERE " . join_terms(" AND ", $terms, False);
-    else
-        $where = "";
+    if (count($terms) > 0) $where = " WHERE " . join(" AND ", $terms);
+    else $where = "";
 
     //Prevent SQL injection by checking that $query_start is a number
-    if (!is_int($query_start))
-         $query_start = 0;
+    if (!is_int($query_start)) $query_start = 0;
 
-    $sql = "SELECT *,saleprice/area AS lsq FROM parcelsales" . $where .
-           " ORDER BY " . $order . " LIMIT $query_start,101";
+    $sql = "SELECT *,saleprice/area AS lsq FROM parcelsales $where ORDER BY " . $order . " LIMIT $query_start,101";
+    error_log($sql);
     $query = $db->prepare($sql);
     $result = $query->execute($sqldata);
 
@@ -420,7 +379,7 @@ function dir_events_query($method_name, $params, $app_data)
 
     //Was there at least one PG, Mature, or Adult flag?
     if (count($type) > 0)
-        $terms[] = join_terms(" OR ", $type, True);
+        $terms[] = join_terms(" OR ", $type);
 
     if ($search_text != "")
     {
@@ -433,7 +392,7 @@ function dir_events_query($method_name, $params, $app_data)
     }
 
     if (count($terms) > 0)
-        $where = " WHERE " . join_terms(" AND ", $terms, False);
+        $where = " WHERE " . join(" AND ", $terms);
     else
         $where = "";
 
@@ -515,7 +474,7 @@ function dir_classified_query ($method_name, $params, $app_data)
 
     //Was there at least one PG, Mature, or Adult flag?
     if (count($f) > 0)
-        $terms[] = join_terms(" OR ", $f, True);
+        $terms[] = join_terms(" OR ", $f);
 
     //Only restrict results based on category if it is not 0 (Any Category)
     if ($category > 0)
@@ -537,7 +496,7 @@ function dir_classified_query ($method_name, $params, $app_data)
 
     //Was there at least condition for the search?
     if (count($terms) > 0)
-        $where = " WHERE " . join_terms(" AND ", $terms, False);
+        $where = " WHERE " . join(" AND ", $terms);
     else
         $where = "";
 
@@ -683,15 +642,16 @@ function classifieds_info_query($method_name, $params, $app_data)
 # Process the request
 #
 
-$request_xml = file_get_contents("php://input");
+// $request_xml = file_get_contents("php://input");
+$request_xml = $HTTP_RAW_POST_DATA;
 
-file_put_contents("../tmp/query_output.log",
-  date("Y-m-d H:i:s")
-  . "\npost/get " . print_r($_REQUEST, true)
-  . "\nxml " . $request_xml);
+// error_log(
+//   date("Y-m-d H:i:s") . "
+//   post/get " . print_r($_REQUEST, true) . "
+//   xml " . $request_xml
+// );
 
 xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
-xmlrpc_server_destroy($xmlrpc_server);
 
-$db = NULL;
-?>
+xmlrpc_server_destroy($xmlrpc_server);
+die();

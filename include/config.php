@@ -138,4 +138,6 @@ switch(get_option('w4os_currency_provider')) {
   break;
 }
 
+define('NULL_KEY', '00000000-0000-0000-0000-000000000000');
+
 define('ENV_CONFIG_PARSED', true);
