@@ -86,6 +86,7 @@ require_once __DIR__ . '/shortcodes.php';
 require_once __DIR__ . '/users.php';
 require_once __DIR__ . '/gridauth.php';
 require_once __DIR__ . '/profile.php';
+require_once __DIR__ . '/cron.php';
 require_once dirname(__DIR__) . '/helpers/helpers-init.php';
 require_once dirname(__DIR__) . '/blocks/blocks.php';
 

@@ -1,35 +1,43 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
-/*
- * Disabled, we rely now on action scheduler to get asynchronous background tasks
- */
 
-// add_filter( 'cron_schedules', 'w4os_add_cron_intervals' );
-// function w4os_add_cron_intervals( $schedules ) {
-// 	if(!isset($schedules['hourly'])) {
-// 		$schedules['hourly'] = array(
-// 			'interval' => 3600,
-//       'display'  => esc_html__( 'hourly', 'w4os' ),
-// 		);
-// 	}
-// 	return $schedules;
-// }
-//
+if(get_option('w4os_provide_search') &! empty(get_option('w4os_search_url'))) {
+  if ( ! wp_next_scheduled( 'w4os_search_parser_cron' ) ) {
+    wp_schedule_event( time(), 'every_five_minute', 'w4os_search_parser_cron' );
+  }
+  // add_action('init','register_w4os_search_parser_async_cron');
+} else {
+  wp_unschedule_event( wp_next_scheduled( 'w4os_search_parser_cron' ), 'w4os_search_parser_cron' );
+  // add_action('init','unregister_w4os_search_parser_async_cron');
+}
+
+add_filter( 'cron_schedules', 'w4os_add_cron_intervals' );
+function w4os_add_cron_intervals( $schedules ) {
+	if(!isset($schedules['every_five_minute'])) {
+		$schedules['every_five_minute'] = array(
+			'interval' => 300,
+      'display'  => esc_html__( 'hourly', 'w4os' ),
+		);
+	}
+	return $schedules;
+}
+
+add_action( 'w4os_search_parser_cron', 'w4os_search_parser_exec', 10, 0 );
+function w4os_search_parser_exec($args=array()) {
+  $search = get_option('w4os_search_url');
+  $parser = preg_replace(':^//:', '/', dirname($search) . '/parser.php');
+  $result = file_get_contents($parser);
+  // require(dirname(__DIR__) . '/helpers/parser.php');
+}
+
 // register_activation_hook( WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, 'w4os_activate' );
 // function w4os_activate($args = array()) {
 //   // $args = array( $args_1, $args_2 );
-//   if ( ! wp_next_scheduled( 'w4os_sync_users_cron' ) ) {
-//     wp_schedule_event( time(), 'hourly', 'w4os_sync_users_cron' );
+//   if ( ! wp_next_scheduled( 'w4os_search_parser_cron' ) ) {
+//     wp_schedule_event( time(), 'hourly', 'w4os_search_parser_cron' );
 //   }
 // }
-//
-// add_action( 'w4os_sync_users_cron', 'w4os_sync_users_exec', 10, 0 );
-// function w4os_sync_users_exec($args=array()) {
-//   update_option('w4os_sync_users', true);
-// }
-//
-// register_deactivation_hook( WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, 'w4os_deactivate' );
-// function w4os_deactivate($args = array()) {
-// 	wp_unschedule_event( wp_next_scheduled( 'w4os_sync_users_cron' ), 'w4os_sync_users_cron' );
-// 	wp_unschedule_event( wp_next_scheduled( 'w4os_get_urls_statuses' ), 'w4os_get_urls_statuses' );
-// 	wp_unschedule_event( wp_next_scheduled( 'w4os_sync_users' ), 'w4os_sync_users' );
-// }
+
+register_deactivation_hook( WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, 'w4os_deactivate' );
+function w4os_deactivate($args = array()) {
+	wp_unschedule_event( wp_next_scheduled( 'w4os_search_parser_cron' ), 'w4os_search_parser_cron' );
+}

@@ -30,11 +30,11 @@ if ( get_option('w4os_provide_search') ) {
     }
     $parser = preg_replace(':^//:', '/', dirname($search) . '/parser.php');
     if(preg_match(":^$parser/:", "$url/")) {
-      error_log("parser $parser");
       require('parser.php');
       die();
     }
   }
+
   if(! empty(get_option('w4os_search_register'))) {
     $register = parse_url(get_option('w4os_search_register'))['path'];
     if(preg_match(":^$register:", "$url/")) {
