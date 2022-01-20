@@ -1,60 +1,20 @@
 <?php
 /*
- * query.php
+ * parser.php
  *
- * Author: Copyright (c)Melanie Thielker (http://opensimulator.org/)
- *         Modified to fit "flexible_helpers_scripts" collection
- * Source: https://git.magiiic.com/opensimulator/flexible_helper_scripts
+ * Part of "flexible_helpers_scripts" collection
+ * https://github.com/GuduleLapointe/flexible_helper_scripts
  *
- * The description of the flags used in this file are being based on the
- * DirFindFlags enum which is defined in OpenMetaverse/DirectoryManager.cs of
- * the libopenmetaverse library.
+ * This script process queries sent by the viewer.
  */
 
-require("include/config.php");
+require_once('include/config.php');
+require_once('include/ossearch_db.php');
 
-// Attempt to connect to the database
-try {
-  $db = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-  header("HTTP/1.0 500 Internal Server Error");
-  error_log(__FILE__ . " Could not connect to the database");
+if( ! tableExists($SearchDB, [ 'parcels', 'popularplaces', 'events', 'classifieds', 'parcelsales' ] )) {
   die();
 }
 
-function tableExists($pdo, $tables) {
-  if(is_string($tables)) $tables=array($tables);
-  foreach($tables as $table) {
-    // Try a select statement against the table
-    // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
-    try {
-      $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
-    } catch (Exception $e) {
-      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
-      // We got an exception == table not found
-      return false;
-    }
-    if($result == false) {
-      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
-      return false;
-    }
-  }
-  return true;
-}
-
-if( ! tableExists($db, [ 'parcels', 'popularplaces', 'events', 'classifieds', 'parcelsales' ] )) {
-  die();
-}
-
-###################### No user serviceable parts below #####################
-
-//Join a series of terms together with optional parentheses around the result.
-//This function is used in place of the simpler join to handle the cases where
-//one or more of the supplied terms are an empty string. The parentheses can
-//be added when mixing AND and OR clauses in a SQL query.
 function join_terms($glue, $terms, $deprecated = true) {
   if(empty($terms)) return "";
   return "(" . join($glue, $terms) . ")";
@@ -94,7 +54,7 @@ function xmlRpcDie($message = "") {
 xmlrpc_server_register_method($xmlrpc_server, "dir_places_query", "dir_places_query");
 function dir_places_query($method_name, $params, $app_data)
 {
-  global $db;
+  global $SearchDB;
 
   $req             = $params[0];
 
@@ -121,7 +81,7 @@ function dir_places_query($method_name, $params, $app_data)
   if(!empty($type)) $terms[] = "$type";
   if($category > 0) $terms[] = "searchcategory = :cat";
 
-  $query = $db->prepare("SELECT * FROM parcels WHERE " . join(' AND ', $terms) . " ORDER BY :order LIMIT $query_start,101");
+  $query = $SearchDB->prepare("SELECT * FROM parcels WHERE " . join(' AND ', $terms) . " ORDER BY :order LIMIT $query_start,101");
   $result = $query->execute( array(
     ':text' => $text,
     ':order'  => $order,
@@ -156,7 +116,7 @@ function dir_places_query($method_name, $params, $app_data)
 xmlrpc_server_register_method($xmlrpc_server, "dir_popular_query", "dir_popular_query");
 function dir_popular_query($method_name, $params, $app_data)
 {
-    global $db;
+    global $SearchDB;
 
     $req         = $params[0];
 
@@ -190,7 +150,7 @@ function dir_popular_query($method_name, $params, $app_data)
     if (!is_int($query_start))
          $query_start = 0;
 
-    $query = $db->prepare("SELECT * FROM popularplaces" . $where .
+    $query = $SearchDB->prepare("SELECT * FROM popularplaces" . $where .
                           " LIMIT $query_start,101");
     $result = $query->execute($sqldata);
 
@@ -217,7 +177,7 @@ function dir_popular_query($method_name, $params, $app_data)
 xmlrpc_server_register_method($xmlrpc_server, "dir_land_query", "dir_land_query");
 function dir_land_query($method_name, $params, $app_data)
 {
-  global $db;
+  global $SearchDB;
 
   $req            = $params[0];
   $flags          = $req['flags'];
@@ -271,7 +231,7 @@ function dir_land_query($method_name, $params, $app_data)
     if (!is_int($query_start)) $query_start = 0;
 
     $sql = "SELECT *,saleprice/area AS lsq FROM parcelsales $where ORDER BY " . $order . " LIMIT $query_start,101";
-    $query = $db->prepare($sql);
+    $query = $SearchDB->prepare($sql);
     $result = $query->execute($sqldata);
 
     $data = array();
@@ -305,7 +265,7 @@ xmlrpc_server_register_method($xmlrpc_server, "dir_events_query",
 
 function dir_events_query($method_name, $params, $app_data)
 {
-    global $db;
+    global $SearchDB;
 
     $req            = $params[0];
 
@@ -401,7 +361,7 @@ function dir_events_query($method_name, $params, $app_data)
 
     $sql = "SELECT owneruuid,name,eventid,dateUTC,eventflags,globalPos" .
            " FROM events". $where. " LIMIT $query_start,101";
-    $query = $db->prepare($sql);
+    $query = $SearchDB->prepare($sql);
     $result = $query->execute($sqldata);
 
     $data = array();
@@ -438,7 +398,7 @@ xmlrpc_server_register_method($xmlrpc_server, "dir_classified_query",
 
 function dir_classified_query ($method_name, $params, $app_data)
 {
-    global $db;
+    global $SearchDB;
 
     $req            = $params[0];
 
@@ -506,7 +466,7 @@ function dir_classified_query ($method_name, $params, $app_data)
     $sql = "SELECT * FROM classifieds" . $where .
            " ORDER BY priceforlisting DESC" .
            " LIMIT $query_start,101";
-    $query = $db->prepare($sql);
+    $query = $SearchDB->prepare($sql);
 
     $result = $query->execute($sqldata);
 
@@ -539,13 +499,13 @@ xmlrpc_server_register_method($xmlrpc_server, "event_info_query",
 
 function event_info_query($method_name, $params, $app_data)
 {
-    global $db;
+    global $SearchDB;
 
     $req        = $params[0];
 
     $eventID    = $req['eventID'];
 
-    $query = $db->prepare("SELECT * FROM events WHERE eventID = ?");
+    $query = $SearchDB->prepare("SELECT * FROM events WHERE eventID = ?");
     $result = $query->execute( array($eventID) );
 
     $data = array();
@@ -599,13 +559,13 @@ xmlrpc_server_register_method($xmlrpc_server, "classifieds_info_query",
 
 function classifieds_info_query($method_name, $params, $app_data)
 {
-    global $db;
+    global $SearchDB;
 
     $req            = $params[0];
 
     $classifiedID   = $req['classifiedID'];
 
-    $query = $db->prepare("SELECT * FROM classifieds WHERE classifieduuid = ?");
+    $query = $SearchDB->prepare("SELECT * FROM classifieds WHERE classifieduuid = ?");
     $result = $query->execute( array($classifiedID) );
 
     $data = array();

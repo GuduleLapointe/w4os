@@ -3,22 +3,17 @@
  * register.php
  *
  * Part of "flexible_helpers_scripts" collection
- * Source: https://git.magiiic.com/opensimulator/flexible_helper_scripts
+ * https://github.com/GuduleLapointe/flexible_helper_scripts
  *
- * This file contains the registration of a simulator to the database and checks
- * if the simulator is new in the database or a reconnected one
+ * This this script allow hosts to register on the search engine. It is called
+ * by the simulator upon start and on regular intervals defined in OpenSim.ini.
  *
- * If the simulator is old, check if the nextcheck date > registration When the
- * date is older, make a request to the Parser to grab new data
+ * Actual search data are fetched by parser.php for registered hosts with
+ * past nextcheck date.
  */
 
-
-require("include/config.php");
-
-$DB_HOST=SEARCH_DB_HOST;
-$DB_NAME=SEARCH_DB_NAME;
-$DB_USER=SEARCH_DB_USER;
-$DB_PASSWORD=SEARCH_DB_PASS;
+require_once('include/config.php');
+require_once('include/ossearch_db.php');
 
 $host = $_GET['host'];
 $port = $_GET['port'];
@@ -34,8 +29,8 @@ if ($host == "" || $port == "")
 
 // Attempt to connect to the database
 try {
-  $db = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
+  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
 {
@@ -47,7 +42,7 @@ catch(PDOException $e)
 switch($service) {
   case 'online':
   // Check if there is already a database row for this host
-  $query = $db->prepare("SELECT register FROM hostsregister WHERE host = :host AND port = :port");
+  $query = $SearchDB->prepare("SELECT register FROM hostsregister WHERE host = :host AND port = :port");
   $query->execute( array( ':host' => $host, ':port' => $port ) );
 
   // Get the request time as a timestamp for later
@@ -56,19 +51,19 @@ switch($service) {
   // If a database row was returned check the nextcheck date
   if ($query->rowCount() > 0)
   {
-    $query = $db->prepare("UPDATE hostsregister SET register = :timestamp, nextcheck = 0, checked = 0, failcounter = 0 WHERE host = :host AND port = :port");
+    $query = $SearchDB->prepare("UPDATE hostsregister SET register = :timestamp, nextcheck = 0, checked = 0, failcounter = 0 WHERE host = :host AND port = :port");
   }
   else
   {
     // The SELECT did not return a result. Insert a new record.
-    $query = $db->prepare("INSERT INTO hostsregister VALUES (:host, :port, :timestamp, 0, 0, 0)");
+    $query = $SearchDB->prepare("INSERT INTO hostsregister VALUES (:host, :port, :timestamp, 0, 0, 0)");
     // $query->execute( array($host, $port, $timestamp) );
   }
   $query->execute( array( ':host' => $host, ':port' => $port, ':timestamp' => $timestamp ) );
   break;
 
   case 'offline':
-  $query = $db->prepare("DELETE FROM hostsregister WHERE host = :host AND port = :port");
+  $query = $SearchDB->prepare("DELETE FROM hostsregister WHERE host = :host AND port = :port");
   $query->execute( array( ':host' => $host, ':port' => $port ) );
   break;
 
@@ -76,7 +71,7 @@ switch($service) {
   // error_log(__FILE__ . " bad request " . getenv('QUERY_STRING') . " raw data " . $HTTP_RAW_POST_DATA);
 }
 
-$db = NULL;
+$SearchDB = NULL;
 
 if (is_array($otherRegistrars) && $hostname != "" && $port != "" && $service != "")
 {
