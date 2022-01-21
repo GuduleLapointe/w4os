@@ -8,7 +8,7 @@ try {
 catch(PDOException $e)
 {
   header("HTTP/1.0 500 Internal Server Error");
-  error_log(__FILE__ . " Could not connect to the database");
+  error_log(__FILE__ . " Could not connect to " . SEARCH_DB_NAME . " database");
   die();
 }
 
@@ -162,5 +162,6 @@ function OSSearchCreateTables($db) {
 }
 
 if( ! tableExists($SearchDB, [ 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
+  error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
   OSSearchCreateTables($SearchDB);
 }
