@@ -202,6 +202,10 @@ function parse($hostname, $port, $xml)
             //
             // Save
             //
+
+            // It looks likes sometimes the parcel is inserted more than once and it causes a fatal issue
+            $query = $SearchDB->prepare("DELETE FROM allparcels WHERE parcelUUID = :p_uuid");
+            $query->execute( array( "p_uuid"  => $parceluuid ));
             $query = $SearchDB->prepare("INSERT INTO allparcels VALUES(:r_uuid, :p_name, :o_uuid, :g_uuid, :landing, :p_uuid, :i_uuid, :area)");
             $query->execute( array(
               "r_uuid"  => $regionuuid,
