@@ -11,7 +11,22 @@
 require_once('include/config.php');
 require_once('include/ossearch_db.php');
 
-if( ! tableExists($SearchDB, [ 'parcels', 'popularplaces', 'events', 'classifieds', 'parcelsales' ] )) {
+if( ! tableExists($SearchDB, [ 'parcels', 'popularplaces', 'events', 'parcelsales' ] )) {
+  die();
+}
+
+try {
+  $OpenSimDB = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch(PDOException $e)
+{
+  header("HTTP/1.0 500 Internal Server Error");
+  error_log(__FILE__ . " Could not connect to the database");
+  die();
+}
+
+if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
   die();
 }
 
@@ -398,7 +413,7 @@ xmlrpc_server_register_method($xmlrpc_server, "dir_classified_query",
 
 function dir_classified_query ($method_name, $params, $app_data)
 {
-    global $SearchDB;
+    global $OpenSimDB;
 
     $req            = $params[0];
 
@@ -466,7 +481,7 @@ function dir_classified_query ($method_name, $params, $app_data)
     $sql = "SELECT * FROM classifieds" . $where .
            " ORDER BY priceforlisting DESC" .
            " LIMIT $query_start,101";
-    $query = $SearchDB->prepare($sql);
+    $query = $OpenSimDB->prepare($sql);
 
     $result = $query->execute($sqldata);
 
