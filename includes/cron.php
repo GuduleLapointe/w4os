@@ -2,7 +2,9 @@
 
 if(get_option('w4os_provide_search') &! empty(get_option('w4os_search_url'))) {
   if ( ! wp_next_scheduled( 'w4os_search_parser_cron' ) ) {
-    wp_schedule_event( time(), 'every_five_minute', 'w4os_search_parser_cron' );
+    add_action('init',function() {
+      wp_schedule_event( time(), 'every_five_minutes', 'w4os_search_parser_cron' );
+    });
   }
   // add_action('init','register_w4os_search_parser_async_cron');
 } else {
@@ -12,10 +14,10 @@ if(get_option('w4os_provide_search') &! empty(get_option('w4os_search_url'))) {
 
 add_filter( 'cron_schedules', 'w4os_add_cron_intervals' );
 function w4os_add_cron_intervals( $schedules ) {
-	if(!isset($schedules['every_five_minute'])) {
-		$schedules['every_five_minute'] = array(
+	if(!isset($schedules['every_five_minutes'])) {
+		$schedules['every_five_minutes'] = array(
 			'interval' => 300,
-      'display'  => esc_html__( 'hourly', 'w4os' ),
+      'display'  => esc_html__( 'every_five_minutes', 'w4os' ),
 		);
 	}
 	return $schedules;
@@ -26,6 +28,10 @@ function w4os_search_parser_exec($args=array()) {
   $search = get_option('w4os_search_url');
   $parser = preg_replace(':^//:', '/', dirname($search) . '/parser.php');
   $result = file_get_contents($parser);
+  if(!empty(get_option('w4os_hypevents_url'))) {
+    $eventsparser = preg_replace(':^//:', '/', dirname($search) . '/eventsparser.php');
+    $result = file_get_contents($eventsparser);
+  }
   // require(dirname(__DIR__) . '/helpers/parser.php');
 }
 
