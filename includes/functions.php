@@ -369,7 +369,7 @@ function w4os_status_icon($bool = NULL) {
 
 function w4os_format_ini($array) {
 	if(empty($array)) return;
-	$content = '<div class=iniconfig>';
+	$content .= '<div class=iniconfig>';
 	foreach($array as $inifile => $sections) {
 		$content .= '<p class="inifile dashicons-before dashicons-media-text">';
 		$content .= sprintf(__('%s', 'w4os'), $inifile);
@@ -382,8 +382,9 @@ function w4os_format_ini($array) {
 			}
 		}
 		$content = preg_replace('/<br>$/', '', $content);
-		$content .= '</pre></p></div>';
+		$content .= '</pre></p>';
 	}
+	$content.="</div>";
 	return $content;
 }
 
