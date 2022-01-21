@@ -38,7 +38,6 @@ function GetURL($host, $port, $url)
 function CheckHost($hostname, $port)
 {
     global $SearchDB, $now;
-    error_log("http://$hostname:$port/?method=collector");
 
     $xml = GetURL($hostname, $port, "?method=collector");
     if (empty($xml)) $failcounter = "failcounter + 1";
