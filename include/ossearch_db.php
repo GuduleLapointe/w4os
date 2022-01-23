@@ -1,4 +1,19 @@
 <?php if(!defined('ENV_CONFIG_PARSED')) die;
+/*
+ * economy.php
+ *
+ * Provides database and functions required by OpenSimSearch scripts
+ *
+ * Part of "flexible_helpers_scripts" collection
+ *   https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   by Gudule Lapointe <gudule@speculoos.world>
+ *
+ * Requires OpenSimulator Search module
+ *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
+ *
+ * Includes portions of code from
+ *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
+ */
 
 // Attempt to connect to the database
 try {

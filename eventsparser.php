@@ -9,7 +9,7 @@
  * It must be run regularly by a cron task for the search to work properly.
  */
 
-require_once('include/config.php');
+require_once('include/wp-config.php');
 require_once('include/ossearch_db.php');
 
 function checkpoint($message = 'Check point') {
@@ -74,9 +74,9 @@ foreach($json as $json_event) {
   $duration = ($end > $start) ? round((strtotime($json_event['end']) - $start) / 60) : 60;
   $duration = ($duration > 0) ? $duration : 60;
   $description = strip_tags(html_entity_decode($json_event['description']));
-  $links = formatDestinationLink($json_event['hgurl'], LINK_FORMAT_TXT + LINK_FORMAT_HOP + LINK_FORMAT_APPTP);
+  $links = destinationLink($json_event['hgurl'], LINK_FORMAT_TXT + LINK_FORMAT_HOP + LINK_FORMAT_APPTP);
   $description .= "\n\n" . $links;
-  $slurl = formatDestinationLink($json_event['hgurl'], LINK_FORMAT_HOP);
+  $slurl = destinationLink($json_event['hgurl'], LINK_FORMAT_HOP);
   if(preg_match('!.*[:/]([0-9]+)/([0-9]+)/([0-9]+)/?$!', $json_event['hgurl']))
   $pos = preg_replace('!.*[:/]([0-9]+)/([0-9]+)/([0-9]+)/?$!', '$1,$2,$3', $json_event['hgurl']);
   else $pos = '128,128,25';

@@ -1,6 +1,5 @@
 <?php
 
-
 class DB
 {
 	var $Host 	  = null;				// Hostname of our MySQL server
@@ -17,9 +16,6 @@ class DB
 	var $UseMySQLi= false;
 	var $Timeout;						// not implement yet
 
-
-
-
 	function DB($dbhost=null, $dbname=null, $dbuser=null, $dbpass=null, $usemysqli=false, $timeout=60)
 	{
 		$this->Host 	= $dbhost;
@@ -32,8 +28,6 @@ class DB
 		ini_set('mysql.connect_timeout', $timeout);
 	}
 
-
-
 	function set_DB($dbhost, $dbname, $dbuser, $dbpass, $usemysqli=false)
 	{
 		$this->Host 	= $dbhost;
@@ -43,15 +37,11 @@ class DB
 		$this->UseMySQLi= $usemysqli;
 	}
 
-
-
 	function halt($msg)
 	{
 		error_log(__FILE__ . ' MySQL ERROR : ' . $msg);
 		// die('Session Halted.');
 	}
-
-
 
 	function connect()
 	{
@@ -85,8 +75,6 @@ class DB
 		}
 	}
 
-
-
  	function escape($String)
  	{
 		$this->connect();
@@ -94,8 +82,6 @@ class DB
 		if (!$this->UseMySQLi) return mysql_real_escape_string($String);
  		return mysqli_real_escape_string($this->Link_ID, $String);
  	}
-
-
 
 	function query($Query_String)
 	{
@@ -119,8 +105,6 @@ class DB
 		}
 		return $this->Query_ID;
 	}
-
-
 
 	function next_record()
 	{
@@ -150,23 +134,17 @@ class DB
 		return $this->Record;
 	}
 
-
-
 	function num_rows()
 	{
 		if (!$this->UseMySQLi) return mysql_num_rows($this->Query_ID);
 		return mysqli_num_rows($this->Query_ID);
 	}
 
-
-
 	function affected_rows()
 	{
 		if (!$this->UseMySQLi) return mysql_affected_rows($this->Link_ID);
 		return mysqli_affected_rows($this->Link_ID);
 	}
-
-
 
 	function optimize($tbl_name)
 	{
@@ -181,8 +159,6 @@ class DB
 		}
 	}
 
-
-
 	function clean_results()
 	{
 		if ($this->Query_ID!=null) {
@@ -196,8 +172,6 @@ class DB
 		}
 	}
 
-
-
 	function close()
 	{
 	/*
@@ -208,8 +182,6 @@ class DB
 		}
 	*/
 	}
-
-
 
 	function exist_table($table, $lower_case=true)
 	{
@@ -230,8 +202,6 @@ class DB
 
 		return $ret;
 	}
-
-
 
 	function exist_field($table, $field, $lower_case=true)
 	{
@@ -267,8 +237,6 @@ class DB
 		return $ret2;
 	}
 
-
-
 	//
 	// InnoDB では Update_time は NULL になる!
 	//
@@ -291,8 +259,6 @@ class DB
 		return $update;
 	}
 
-
-
 	//
 	// Lock
 	//
@@ -301,14 +267,10 @@ class DB
 		$this->query("LOCK TABLES ".$table." ".$mode);
 	}
 
-
-
 	function unlock_table()
 	{
 		$this->query("UNLOCK TABLES");
 	}
-
-
 
 	//
 	// Timeout
@@ -319,14 +281,10 @@ class DB
 		$this->Timeout = $tm;
 	}
 
-
-
 	function set_temp_timeout($tm)
 	{
     	ini_set('mysql.connect_timeout', $tm);
 	}
-
-
 
 	function reset_timeout()
 	{

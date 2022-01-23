@@ -1,301 +1,293 @@
 <?php
 /*
- * parser.php
- *
- * Part of "flexible_helpers_scripts" collection
- * https://github.com/GuduleLapointe/flexible_helper_scripts
- *
- * This script parses data from registered hosts to feed the search database.
- * It must be run regularly by a cron task for the search to work properly.
- */
+* parser.php
+*
+* Parse data from registered hosts to feed the search database.
+* If in a standalone helpers implementation, it must be run on a regular basis
+* (with a cron job) for the search to work.
+*
+* Part of "flexible_helpers_scripts" collection
+*   https://github.com/GuduleLapointe/flexible_helper_scripts
+*   by Gudule Lapointe <gudule@speculoos.world>
+*
+* Requires OpenSimulator Search module
+*   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
+* Events are fetched from 2do HYPEvents or any other HYPEvents implementation
+*   [2do HYPEvents](https://2do.pm)
+*
+* Includes portions of code from
+*   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
+*/
 
-require_once('include/config.php');
+require_once('include/wp-config.php');
 require_once('include/ossearch_db.php');
 
 $now = time();
 
-function GetURL($host, $port, $url)
-{
-    $url = "http://$host:$port/$url";
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-    $data = curl_exec($ch);
-    if (curl_errno($ch) == 0)
-    {
-        curl_close($ch);
-        return $data;
-    }
-
-    curl_close($ch);
-    return "";
-}
-
 function CheckHost($hostname, $port)
 {
-    global $SearchDB, $now;
+  global $SearchDB, $now;
 
-    $xml = GetURL($hostname, $port, "?method=collector");
-    if (empty($xml)) $failcounter = "failcounter + 1";
-    else $failcounter = "0";
+  // $xml = GetURL($hostname, $port, "?method=collector");
+  $xml = file_get_contents("http://$hostname:$port/?method=collector");
+  if (empty($xml)) $failcounter = "failcounter + 1";
+  else $failcounter = "0";
 
-    //Update nextcheck to be 10 minutes from now. The current OS instance
-    //won't be checked again until at least this much time has gone by.
-    $next = $now + 600;
+  //Update nextcheck to be 10 minutes from now. The current OS instance
+  //won't be checked again until at least this much time has gone by.
+  $nextcheck = $now + 600;
+  $query = $SearchDB->prepare( "UPDATE hostsregister
+    SET nextcheck = ?, checked = 1, failcounter = $failcounter
+    WHERE host = ? AND port = ?"
+  );
+  $query->execute( array($nextcheck, $hostname, $port) );
 
-    $query = $SearchDB->prepare( "UPDATE hostsregister
-      SET nextcheck = ?, checked = 1, failcounter = $failcounter
-      WHERE host = ? AND port = ?"
-    );
-    $query->execute( array($next, $hostname, $port) );
-
-    if (!empty($xml)) parse($hostname, $port, $xml);
+  if (!empty($xml)) parse($hostname, $port, $xml);
 }
 
 function parse($hostname, $port, $xml)
 {
-    global $SearchDB, $now;
-    ///////////////////////////////////////////////////////////////////////
-    //
-    // Search engine sim scanner
-    //
+  global $SearchDB, $now;
+  ///////////////////////////////////////////////////////////////////////
+  //
+  // Search engine sim scanner
+  //
+
+  //
+  // Load XML doc from URL
+  //
+  $objDOM = new DOMDocument();
+  $objDOM->resolveExternals = false;
+
+  //Don't try and parse if XML is invalid or we got an HTML 404 error.
+  if ($objDOM->loadXML($xml) == False) return;
+
+  //
+  // Get the region data to update
+  //
+  $regiondata = $objDOM->getElementsByTagName("regiondata");
+
+  //If returned length is 0, collector method may have returned an error
+  if ($regiondata->length == 0) return;
+
+  $regiondata = $regiondata->item(0);
+
+  //
+  // Update nextcheck so this host entry won't be checked again until after
+  // the DataSnapshot module has generated a new set of data to be parsed.
+  //
+  $expire = $regiondata->getElementsByTagName("expire")->item(0)->nodeValue;
+  $next = $now + $expire;
+
+  $query = $SearchDB->prepare("UPDATE hostsregister SET nextcheck = ? WHERE host = ? AND port = ?");
+  $query->execute( array($next, $hostname, $port) );
+
+  //
+  // Get the region data to be saved in the database
+  //
+  $regionlist = $regiondata->getElementsByTagName("region");
+
+  foreach ($regionlist as $region)
+  {
+    $mature = $region->getAttributeNode("category")->nodeValue;
 
     //
-    // Load XML doc from URL
+    // Start reading the Region info
     //
-    $objDOM = new DOMDocument();
-    $objDOM->resolveExternals = false;
+    $info = $region->getElementsByTagName("info")->item(0);
+    $regionUUID = $info->getElementsByTagName("uuid")->item(0)->nodeValue;
+    $regionname = $info->getElementsByTagName("name")->item(0)->nodeValue;
+    $regionhandle = $info->getElementsByTagName("handle")->item(0)->nodeValue;
+    $url = $info->getElementsByTagName("url")->item(0)->nodeValue;
 
-    //Don't try and parse if XML is invalid or we got an HTML 404 error.
-    if ($objDOM->loadXML($xml) == False)
-        return;
+    /*
+     * First, check if we already have a region that is the same
+     *
+     * "region" table conflicts with OpenSim region table. This table could be
+     * renamed, but as for now it's not used anywhere else, so we ignore it.
+     */
 
+    // $check = $SearchDB->prepare("SELECT * FROM search_regions WHERE regionUUID = ?");
+    // $check->execute( array($regionUUID) );
     //
-    // Get the region data to update
-    //
-    $regiondata = $objDOM->getElementsByTagName("regiondata");
+    // if ($check->rowCount() > 0)
+    // {
+    // $query = $SearchDB->prepare("DELETE FROM search_regions WHERE regionUUID = ?");
+    // $query->execute( array($regionUUID) );
+    $query = $SearchDB->prepare("DELETE FROM parcels WHERE regionUUID = ?");
+    $query->execute( array($regionUUID) );
+    $query = $SearchDB->prepare("DELETE FROM allparcels WHERE regionUUID = ?");
+    $query->execute( array($regionUUID) );
+    $query = $SearchDB->prepare("DELETE FROM parcelsales WHERE regionUUID = ?");
+    $query->execute( array($regionUUID) );
+    $query = $SearchDB->prepare("DELETE FROM objects WHERE regionuuid = ?");
+    $query->execute( array($regionUUID) );
+    // }
 
-    //If returned length is 0, collector method may have returned an error
-    if ($regiondata->length == 0)
-        return;
+    $data = $region->getElementsByTagName("data")->item(0);
+    $estate = $data->getElementsByTagName("estate")->item(0);
+    $parentestate = $estate->getElementsByTagName("id")->item(0)->nodeValue;
+    $username = $estate->getElementsByTagName("name")->item(0)->nodeValue;
+    $useruuid = $estate->getElementsByTagName("uuid")->item(0)->nodeValue;
 
-    $regiondata = $regiondata->item(0);
+    /*
+     * Second, add the new info to the database
+     *
+     * (same as above, regions table conflict, ignore it)
+     */
+    // $query = $SearchDB->prepare("INSERT INTO search_regions VALUES(:r_name, :regionUUID, " .
+    //                       ":r_handle, :url, :u_name, :u_uuid)");
+    // $query->execute( array("r_name" => $regionname, 'regionUUID' => $regionUUID,
+    //                         "r_handle" => $regionhandle, 'url' => $url,
+    //                         "u_name" => $username, "u_uuid" => $useruuid) );
 
-    //
-    // Update nextcheck so this host entry won't be checked again until after
-    // the DataSnapshot module has generated a new set of data to be parsed.
-    //
-    $expire = $regiondata->getElementsByTagName("expire")->item(0)->nodeValue;
-    $next = $now + $expire;
+    /*
+     * Read parcel info
+     */
 
-    $query = $SearchDB->prepare("UPDATE hostsregister SET nextcheck = ? WHERE host = ? AND port = ?");
-    $query->execute( array($next, $hostname, $port) );
-
-    //
-    // Get the region data to be saved in the database
-    //
-    $regionlist = $regiondata->getElementsByTagName("region");
-
-    foreach ($regionlist as $region)
+    $parcel = $data->getElementsByTagName("parcel");
+    foreach ($parcel as $value)
     {
-        $regioncategory = $region->getAttributeNode("category")->nodeValue;
+      $parcelname = $value->getElementsByTagName("name")->item(0)->nodeValue;
+      $parcelUUID = $value->getElementsByTagName("uuid")->item(0)->nodeValue;
+      $infoUUID = $value->getElementsByTagName("infouuid")->item(0)->nodeValue;
+      $landingpoint = $value->getElementsByTagName("location")->item(0)->nodeValue;
+      $parceldescription = $value->getElementsByTagName("description")->item(0)->nodeValue;
+      $parcelarea = $value->getElementsByTagName("area")->item(0)->nodeValue;
+      $searchcategory = $value->getAttributeNode("category")->nodeValue;
+      $saleprice = $value->getAttributeNode("salesprice")->nodeValue;
+      $dwell = $value->getElementsByTagName("dwell")->item(0)->nodeValue;
 
-        //
-        // Start reading the Region info
-        //
-        $info = $region->getElementsByTagName("info")->item(0);
+      //The image tag will only exist if the parcel has a snapshot image
+      $has_picture = 0;
+      $image_node = $value->getElementsByTagName("image");
+      if ($image_node->length > 0) {
+        $image = $image_node->item(0)->nodeValue;
+        if ($image != NULL_KEY) $has_picture = 1;
+      }
 
-        $regionuuid = $info->getElementsByTagName("uuid")->item(0)->nodeValue;
+      $owner = $value->getElementsByTagName("owner")->item(0);
+      $ownerUUID = $owner->getElementsByTagName("uuid")->item(0)->nodeValue;
 
-        $regionname = $info->getElementsByTagName("name")->item(0)->nodeValue;
+      // Adding support for groups
+      $group = $value->getElementsByTagName("group")->item(0);
+      if ($group != "") $groupUUID = $group->getElementsByTagName("groupUUID")->item(0)->nodeValue;
+      else $groupUUID = NULL_KEY;
 
-        $regionhandle = $info->getElementsByTagName("handle")->item(0)->nodeValue;
+      //
+      // Check bits on Public, Build, Script
+      //
+      $parcelforsale = $value->getAttributeNode("forsale")->nodeValue;
+      $parceldirectory = $value->getAttributeNode("showinsearch")->nodeValue;
+      $parcelbuild = $value->getAttributeNode("build")->nodeValue;
+      $parcelscript = $value->getAttributeNode("scripts")->nodeValue;
+      $parcelpublic = $value->getAttributeNode("public")->nodeValue;
 
-        $url = $info->getElementsByTagName("url")->item(0)->nodeValue;
+      //Prepare for the insert of data in to the popularplaces table. This gets
+      //rid of any obsolete data for parcels no longer set to show in search.
+      $query = $SearchDB->prepare("DELETE FROM popularplaces WHERE parcelUUID = ?");
+      $query->execute( array($parcelUUID) );
 
-        //
-        // First, check if we already have a region that is the same
-        //
-        // $check = $SearchDB->prepare("SELECT * FROM search_regions WHERE regionUUID = ?");
-        // $check->execute( array($regionuuid) );
-        //
-        // if ($check->rowCount() > 0)
-        // {
-            // $query = $SearchDB->prepare("DELETE FROM search_regions WHERE regionUUID = ?");
-            // $query->execute( array($regionuuid) );
-            $query = $SearchDB->prepare("DELETE FROM parcels WHERE regionUUID = ?");
-            $query->execute( array($regionuuid) );
-            $query = $SearchDB->prepare("DELETE FROM allparcels WHERE regionUUID = ?");
-            $query->execute( array($regionuuid) );
-            $query = $SearchDB->prepare("DELETE FROM parcelsales WHERE regionUUID = ?");
-            $query->execute( array($regionuuid) );
-            $query = $SearchDB->prepare("DELETE FROM objects WHERE regionuuid = ?");
-            $query->execute( array($regionuuid) );
-        // }
+      /*
+       * Save
+       *
+       * Sometimes, the parcel is inserted more than once, which causes a fatal
+       * issue. Delete it first (quick workaround, should be investigated).
+       */
 
-        $data = $region->getElementsByTagName("data")->item(0);
-        $estate = $data->getElementsByTagName("estate")->item(0);
-        $estateid = $estate->getElementsByTagName("id")->item(0)->nodeValue;
-        $username = $estate->getElementsByTagName("name")->item(0)->nodeValue;
-        $useruuid = $estate->getElementsByTagName("uuid")->item(0)->nodeValue;
+      $query = $SearchDB->prepare("DELETE FROM allparcels WHERE parcelUUID = :parcelUUID");
+      $query->execute( array( 'parcelUUID' => $parcelUUID ));
+      $query = $SearchDB->prepare("INSERT INTO allparcels VALUES(:regionUUID, :parcelname, :ownerUUID, :groupUUID, :landingpoint, :parcelUUID, :infoUUID, :parcelarea)");
+      $query->execute(array(
+        'regionUUID' => $regionUUID,
+        'parcelname' => $parcelname,
+        'ownerUUID' => $ownerUUID,
+        'groupUUID' => $groupUUID,
+        'landingpoint' => $landingpoint,
+        'parcelUUID' => $parcelUUID,
+        'infoUUID' => $infoUUID,
+        'parcelarea' => $parcelarea,
+      ));
 
-        //
-        // Second, add the new info to the database
-        //
-        // $query = $SearchDB->prepare("INSERT INTO search_regions VALUES(:r_name, :r_uuid, " .
-        //                       ":r_handle, :url, :u_name, :u_uuid)");
-        // $query->execute( array("r_name" => $regionname, "r_uuid" => $regionuuid,
-        //                         "r_handle" => $regionhandle, "url" => $url,
-        //                         "u_name" => $username, "u_uuid" => $useruuid) );
+      if ($parceldirectory == "true")
+      {
+        $query = $SearchDB->prepare( "INSERT INTO parcels
+          VALUES(:regionUUID, :parcelname, :parcelUUID, :landingpoint, :description, :searchcategory, :build, :script, :public, :dwell, :infoUUID, :mature)"
+        );
+        $query->execute(array(
+          'regionUUID' => $regionUUID,
+          'parcelname' => $parcelname,
+          'parcelUUID' => $parcelUUID,
+          'landingpoint' => $landingpoint,
+          'description' => $parceldescription,
+          'searchcategory' => $searchcategory,
+          'build' => $parcelbuild,
+          'script' => $parcelscript,
+          'public' => $parcelpublic,
+          'dwell' => $dwell,
+          'infoUUID' => $infoUUID,
+          "mature"   => $mature,
+        ));
 
-        //
-        // Start reading the parcel info
-        //
-        $parcel = $data->getElementsByTagName("parcel");
+        $query = $SearchDB->prepare("INSERT INTO popularplaces VALUES(:parcelUUID, :parcelname, :dwell, :infoUUID, :has_picture, :mature)");
+        $query->execute( array(
+          'parcelUUID' => $parcelUUID,
+          'parcelname' => $parcelname,
+          'dwell' => $dwell,
+          'infoUUID' => $infoUUID,
+          "has_picture" => $has_picture,
+          "mature"   => $mature,
+        ));
+      }
 
-        foreach ($parcel as $value)
-        {
-            $parcelname = $value->getElementsByTagName("name")->item(0)->nodeValue;
-            $parceluuid = $value->getElementsByTagName("uuid")->item(0)->nodeValue;
-            $infouuid = $value->getElementsByTagName("infouuid")->item(0)->nodeValue;
-            $parcellanding = $value->getElementsByTagName("location")->item(0)->nodeValue;
-            $parceldescription = $value->getElementsByTagName("description")->item(0)->nodeValue;
-            $parcelarea = $value->getElementsByTagName("area")->item(0)->nodeValue;
-            $parcelcategory = $value->getAttributeNode("category")->nodeValue;
-            $parcelsaleprice = $value->getAttributeNode("salesprice")->nodeValue;
-            $dwell = $value->getElementsByTagName("dwell")->item(0)->nodeValue;
-
-            //The image tag will only exist if the parcel has a snapshot image
-            $has_pic = 0;
-            $image_node = $value->getElementsByTagName("image");
-            if ($image_node->length > 0) {
-                $image = $image_node->item(0)->nodeValue;
-                if ($image != NULL_KEY) $has_pic = 1;
-            }
-
-            $owner = $value->getElementsByTagName("owner")->item(0);
-            $owneruuid = $owner->getElementsByTagName("uuid")->item(0)->nodeValue;
-
-            // Adding support for groups
-            $group = $value->getElementsByTagName("group")->item(0);
-            if ($group != "") $groupuuid = $group->getElementsByTagName("groupuuid")->item(0)->nodeValue;
-            else $groupuuid = NULL_KEY;
-
-            //
-            // Check bits on Public, Build, Script
-            //
-            $parcelforsale = $value->getAttributeNode("forsale")->nodeValue;
-            $parceldirectory = $value->getAttributeNode("showinsearch")->nodeValue;
-            $parcelbuild = $value->getAttributeNode("build")->nodeValue;
-            $parcelscript = $value->getAttributeNode("scripts")->nodeValue;
-            $parcelpublic = $value->getAttributeNode("public")->nodeValue;
-
-            //Prepare for the insert of data in to the popularplaces table. This gets
-            //rid of any obsolete data for parcels no longer set to show in search.
-            $query = $SearchDB->prepare("DELETE FROM popularplaces WHERE parcelUUID = ?");
-            $query->execute( array($parceluuid) );
-
-            //
-            // Save
-            //
-
-            // It looks likes sometimes the parcel is inserted more than once and it causes a fatal issue
-            $query = $SearchDB->prepare("DELETE FROM allparcels WHERE parcelUUID = :p_uuid");
-            $query->execute( array( "p_uuid"  => $parceluuid ));
-            $query = $SearchDB->prepare("INSERT INTO allparcels VALUES(:r_uuid, :p_name, :o_uuid, :g_uuid, :landing, :p_uuid, :i_uuid, :area)");
-            $query->execute( array(
-              "r_uuid"  => $regionuuid,
-              "p_name"  => $parcelname,
-              "o_uuid"  => $owneruuid,
-              "g_uuid"  => $groupuuid,
-              "landing" => $parcellanding,
-              "p_uuid"  => $parceluuid,
-              "i_uuid"  => $infouuid,
-              "area"    => $parcelarea)
-            );
-
-            if ($parceldirectory == "true")
-            {
-                $query = $SearchDB->prepare("INSERT INTO parcels
-                  VALUES(:r_uuid, :p_name, :p_uuid, :landing, :desc, :cat, :build, :script, :public, :dwell, :i_uuid, :r_cat)"
-                );
-                $query->execute( array(
-                  "r_uuid"  => $regionuuid,
-                  "p_name"  => $parcelname,
-                  "p_uuid"  => $parceluuid,
-                  "landing" => $parcellanding,
-                  "desc"    => $parceldescription,
-                  "cat"     => $parcelcategory,
-                  "build"   => $parcelbuild,
-                  "script"  => $parcelscript,
-                  "public"  => $parcelpublic,
-                  "dwell"   => $dwell,
-                  "i_uuid"  => $infouuid,
-                  "r_cat"   => $regioncategory)
-                );
-
-                $query = $SearchDB->prepare("INSERT INTO popularplaces VALUES(:p_uuid, :p_name, :dwell, :i_uuid, :has_pic, :r_cat)");
-                $query->execute( array(
-                  "p_uuid"  => $parceluuid,
-                  "p_name"  => $parcelname,
-                  "dwell"   => $dwell,
-                  "i_uuid"  => $infouuid,
-                  "has_pic" => $has_pic,
-                  "r_cat"   => $regioncategory)
-                );
-            }
-
-            if ($parcelforsale == "true")
-            {
-                $query = $SearchDB->prepare("INSERT INTO parcelsales VALUES(:r_uuid, :p_name, :p_uuid, :area, :price, :landing, :i_uuid, :dwell, :e_id, :r_cat)");
-                $query->execute( array(
-                  "r_uuid"  => $regionuuid,
-                  "p_name"  => $parcelname,
-                  "p_uuid"  => $parceluuid,
-                  "area"    => $parcelarea,
-                  "price"   => $parcelsaleprice,
-                  "landing" => $parcellanding,
-                  "i_uuid"  => $infouuid,
-                  "dwell"   => $dwell,
-                  "e_id"    => $estateid,
-                  "r_cat"   => $regioncategory)
-                );
-            }
-        }
-
-        //
-        // Handle objects
-        //
-        $objects = $data->getElementsByTagName("object");
-
-        foreach ($objects as $value)
-        {
-            $uuid = $value->getElementsByTagName("uuid")->item(0)->nodeValue;
-            $regionuuid = $value->getElementsByTagName("regionuuid")->item(0)->nodeValue;
-            $parceluuid = $value->getElementsByTagName("parceluuid")->item(0)->nodeValue;
-            $location = $value->getElementsByTagName("location")->item(0)->nodeValue;
-            $title = $value->getElementsByTagName("title")->item(0)->nodeValue;
-            $description = $value->getElementsByTagName("description")->item(0)->nodeValue;
-            $flags = $value->getElementsByTagName("flags")->item(0)->nodeValue;
-
-            $query = $SearchDB->prepare("INSERT INTO objects VALUES(:uuid, :p_uuid, :location, :title, :descr, :r_uuid)");
-            $query->execute( array(
-              "uuid"     => $uuid,
-              "p_uuid"   => $parceluuid,
-              "location" => $location,
-              "title"    => $title,
-              "descr"     => $description,
-              "r_uuid"   => $regionuuid)
-            );
-        }
+      if ($parcelforsale == "true")
+      {
+        $query = $SearchDB->prepare("INSERT INTO parcelsales VALUES(:regionUUID, :parcelname, :parcelUUID, :parcelarea, :saleprice, :landingpoint, :infoUUID, :dwell, :parentestate, :mature)");
+        $query->execute( array(
+        'regionUUID' => $regionUUID,
+        'parcelname' => $parcelname,
+        'parcelUUID' => $parcelUUID,
+        'parcelarea' => $parcelarea,
+        'saleprice' => $saleprice,
+        'landingpoint' => $landingpoint,
+        'infoUUID' => $infoUUID,
+        'dwell' => $dwell,
+        'parentestate' => $parentestate,
+        'mature' => $mature)
+        );
+      }
     }
+
+    //
+    // Handle objects
+    //
+    $objects = $data->getElementsByTagName("object");
+
+    foreach ($objects as $value)
+    {
+      $uuid = $value->getElementsByTagName("uuid")->item(0)->nodeValue;
+      $regionUUID = $value->getElementsByTagName("regionuuid")->item(0)->nodeValue;
+      $parcelUUID = $value->getElementsByTagName("parcelUUID")->item(0)->nodeValue;
+      $location = $value->getElementsByTagName("location")->item(0)->nodeValue;
+      $title = $value->getElementsByTagName("title")->item(0)->nodeValue;
+      $description = $value->getElementsByTagName("description")->item(0)->nodeValue;
+      $flags = $value->getElementsByTagName("flags")->item(0)->nodeValue;
+
+      $query = $SearchDB->prepare("INSERT INTO objects VALUES(:uuid, :parcelUUID, :location, :title, :descr, :regionUUID)");
+      $query->execute( array(
+      'uuid' => $uuid,
+      'parcelUUID' => $parcelUUID,
+      'location' => $location,
+      'title' => $title,
+      'descr' => $description,
+      'regionUUID' => $regionUUID)
+      );
+    }
+  }
 }
 
-$sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
+$sql = "SELECT host, port FROM hostsregister LIMIT 0,100";
+// $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
 $jobsearch = $SearchDB->query($sql);
 
 //
@@ -306,13 +298,11 @@ $jobsearch = $SearchDB->query($sql);
 
 if ($jobsearch->rowCount() == 0)
 {
-    $jobsearch = $SearchDB->query("UPDATE hostsregister SET checked = 0");
-
-    $jobsearch = $SearchDB->query($sql);
+  $jobsearch = $SearchDB->query("UPDATE hostsregister SET checked = 0");
+  $jobsearch = $SearchDB->query($sql);
 }
 
 while ($jobs = $jobsearch->fetch(PDO::FETCH_NUM))
-    CheckHost($jobs[0], $jobs[1]);
+CheckHost($jobs[0], $jobs[1]);
 
-$SearchDB = NULL;
 die();

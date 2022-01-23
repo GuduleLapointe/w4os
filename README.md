@@ -1,10 +1,28 @@
-# OpenSimulator helpers
+# Flexible helper scripts 2
 
-Helpers are a compilation of scripts, rewritten for W4OS from several sources, including:
+- Project URL: <https://github.com/GuduleLapointe/flexible_helper_scripts>
+- Donate: <https://w4os.org/donate/>
+- Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, helpers
+- Requires PHP: 5.5.0
+- License: AGPLv3
+
+A compilation of scripts to complement OpenSimulator services or external modules:
+
+- In-world Search
+- Currency
+- Offline messaging (with mail forwarding)
+- Events
+
+Flexible helper scripts include new code and code rewritten from several sources, in the hope to ease their integration within another platform (e.g. in a WordPress plugin like W4OS).
+
+While most of the code has been created or rewritten from scratch, portions of code may remain from the legacy projects, including:
 
 - [Speculoos' Flexible helper scripts](https://github.com/GuduleLapointe/flexible_helper_scripts)
+- [2do HYPEvents](https://2do.pm)
 - [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
 - [DTL/NSL Money Server for OpenSim](http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer)
-- [BigManzai OpenSimCurrencyServer](https://github.com/BigManzai/OpenSimCurrencyServer-2021)
+- [DTL/NSL Helper scripts](http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer%2FHelper%20Script)
+- [OpenSimMaps](https://github.com/hawddamor/opensimmaps)
+- [Offline Messaging](http://opensimulator.org/wiki/Offline_Messaging)
 
-Unless otherwise specified inside script files, they are distributed as part of W4OS package under Affero GPL v3 license.
+Unless otherwise specified inside the files, code is distributed as part of Flexible Helper Scripts package, under Affero GPL v3 license.
