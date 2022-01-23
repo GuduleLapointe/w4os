@@ -1,12 +1,18 @@
 <?php
+/*
+ * This file contains functions that aren't used anymore.
+ * It is not loaded and can probably be deleted but it is kept for now by
+ * abundance of caution.
+ */
+
 /*********************************************************************************
- * opensim.mysql.php v1.1.0 for OpenSim 	by Fumi.Iseki  2013 10/20
+ * functions-opensim.php v1.1.0 for OpenSim 	by Fumi.Iseki  2013 10/20
  *
  * 			Copyright (c) 2009,2010,2011,2013   http://www.nsl.tuis.ac.jp/
  *
  *			supported versions of OpenSim are 0.6.7, 0.6.8, 0.6.9 and 0.7.x
- *			tools.func.php is needed
- *			mysql.func.php is needed
+ *			functions-opensim.php is needed
+ *			classes-db.php is needed
  *
  *********************************************************************************/
 
@@ -138,8 +144,8 @@ define('DEFAULT_AVATAR_PARAMS', '33,61,85,23,58,127,63,85,63,42,0,85,63,36,85,95
 // Load Function
 //
 
-require_once('tools.func.php');
-require_once('mysql.func.php');
+require_once('functions-opensim.php');
+require_once('classes-db.php');
 
 
 
@@ -346,7 +352,7 @@ function  opensim_get_avatar_name($uuid, &$db=null)
 	global $OpenSimVersion;
 
 	$name = array();
-	if (!isGUID($uuid) or $uuid=='00000000-0000-0000-0000-000000000000') return $name;
+	if (!isUUID($uuid) or $uuid=='00000000-0000-0000-0000-000000000000') return $name;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -407,53 +413,6 @@ function  opensim_get_avatar_uuid($name, &$db=null)
 
 
 
-function  opensim_get_avatar_session($uuid, &$db=null)
-{
-	global $OpenSimVersion;
-
-	if (!isGUID($uuid)) return null;
-
-	if (!is_object($db)) $db = opensim_new_db();
-	if ($OpenSimVersion==null) opensim_get_db_version($db);
-
-	$avssn = array();
-
-	//
-	if ($OpenSimVersion==OPENSIM_V07) {
-		$sql = "SELECT RegionID,SessionID,SecureSessionID FROM Presence WHERE UserID='".$uuid."'";
-		$db->query($sql);
-		if ($db->Errno==0) list($RegionID, $SessionID, $SecureSessionID) = $db->next_record();
-	}
-
-	else if ($OpenSimVersion==OPENSIM_V06) {
-		$sql = "SELECT currentRegion,sessionID,secureSessionID FROM agents WHERE UUID='".$uuid."'";
-		$db->query($sql);
-		if ($db->Errno==0) list($RegionID, $SessionID, $SecureSessionID) = $db->next_record();
-	}
-
-	else if ($OpenSimVersion==AURORASIM) {
-		$sql = "SELECT CurrentRegionID,token FROM tokens,userinfo WHERE UUID='".$uuid."' AND UUID=UserID AND IsOnline='1'";
-		$db->query($sql);
-		if ($db->Errno==0) {
-			while (list($rg, $ss) = $db->next_record()) {		// Get Last Record
-				$RegionID  = $rg;
-				$SessionID = null;
-				$SecureSessionID = $ss;
-			}
-		}
-	}
-
-	else return $avssn;
-
-
-	if ($db->Errno==0) {
-		$avssn['regionID']  = $RegionID;
-		$avssn['sessionID'] = $SessionID;
-		$avssn['secureID']  = $SecureSessionID;
-	}
-
-	return $avssn;
-}
 
 
 
@@ -461,7 +420,7 @@ function  opensim_get_avatar_info($uuid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return null;
+	if (!isUUID($uuid)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -606,7 +565,7 @@ function  opensim_get_avatar_online($uuid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return null;
+	if (!isUUID($uuid)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -672,7 +631,7 @@ function  opensim_get_avatar_flags($uuid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return null;
+	if (!isUUID($uuid)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -704,8 +663,8 @@ function  opensim_set_avatar_flags($uuid, $flags=0, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) 	return false;
-	if (!isNumeric($flags)) return false;
+	if (!isUUID($uuid)) 	return false;
+	if (!is_numeric($flags)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -733,7 +692,7 @@ function  opensim_create_avatar($UUID, $firstname, $lastname, $passwd, $homeregi
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($UUID)) return false;
+	if (!isUUID($UUID)) return false;
 	if (!isAlphabetNumericSpecial($firstname))  return false;
 	if (!isAlphabetNumericSpecial($lastname))   return false;
 	if (!isAlphabetNumericSpecial($passwd))		return false;
@@ -812,7 +771,7 @@ function  opensim_delete_avatar($uuid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return false;
+	if (!isUUID($uuid)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -905,12 +864,12 @@ function  opensim_get_region_name($id, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($id) and !isNumeric($id)) return null;
+	if (!isUUID($id) and !is_numeric($id)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
 
-	if (isGUID($id)) {
+	if (isUUID($id)) {
 		$db->query("SELECT regionName FROM regions WHERE uuid='$id'");
 		list($regionName) = $db->next_record();
 	}
@@ -954,7 +913,7 @@ function  opensim_get_region_info($region, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($region)) return null;
+	if (!isUUID($region)) return null;
 	if ($region=='00000000-0000-0000-0000-000000000000') return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
@@ -1083,37 +1042,6 @@ function  opensim_get_regions_infos($condition='', &$db=null)
 
 
 
-function  opensim_set_current_region($uuid, $regionid, &$db=null)
-{
-	global $OpenSimVersion;
-
-	if (!isGUID($uuid) or !isGUID($regionid)) return false;
-
-	if (!is_object($db)) $db = opensim_new_db();
-	if ($OpenSimVersion==null) opensim_get_db_version($db);
-
-	//
-	if ($OpenSimVersion==OPENSIM_V07) {
-		$sql = "UPDATE Presence SET RegionID='".$regionid."' WHERE UserID='". $uuid."'";
-	}
-
-	else if ($OpenSimVersion==OPENSIM_V06) {
-		$sql = "UPDATE agents SET currentRegion='".$regionid."' WHERE UUID='".$uuid."'";
-	}
-
-	else if ($OpenSimVersion==AURORASIM) {
-		$sql = "UPDATE userinfo SET CurrentRegionID='".$regionid."' WHERE UserID='".$uuid."'";
-	}
-
-	else return false;
-
-
-	$db->query($sql);
-	if ($db->Errno!=0) return false;
-
-	$db->next_record();
-	return true;
-}
 
 
 
@@ -1127,7 +1055,7 @@ function  opensim_get_home_region($uuid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return null;
+	if (!isUUID($uuid)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -1151,9 +1079,9 @@ function  opensim_set_home_region($uuid, $hmregion, $pos_x='128', $pos_y='128', 
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return false;
+	if (!isUUID($uuid)) return false;
 //	if (!isAlphabetNumericSpecial($hmregion)) return false;
-	if (!isNumeric($pos_x) or !isNumeric($pos_y) or !isNumeric($pos_z)) return false;
+	if (!is_numeric($pos_x) or !is_numeric($pos_y) or !is_numeric($pos_z)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -1197,7 +1125,7 @@ function  opensim_set_home_region($uuid, $hmregion, $pos_x='128', $pos_y='128', 
 //
 function  opensim_set_region_estate($region, $estate, $owner, &$db=null)
 {
-	if (!isGUID($region) or $estate=='' or !isGUID($owner)) return false;
+	if (!isUUID($region) or $estate=='' or !isUUID($owner)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 
@@ -1218,7 +1146,7 @@ function  opensim_set_region_estate($region, $estate, $owner, &$db=null)
 //
 function  opensim_create_estate($estate, $owner, &$db=null)
 {
-	if ($estate=='' or !isGUID($owner)) return 0;
+	if ($estate=='' or !isUUID($owner)) return 0;
 
 	if (!is_object($db)) $db = opensim_new_db();
 
@@ -1289,7 +1217,7 @@ function  opensim_get_estate_info($region, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($region)) return null;
+	if (!isUUID($region)) return null;
 
 	$firstname = null;
 	$lastname  = null;
@@ -1338,7 +1266,7 @@ function  opensim_get_estate_info($region, &$db=null)
 //
 function  opensim_set_region_estateid($region, $estateid, &$db=null)
 {
-	if (!isGUID($region) or !isNumeric($estateid)) return false;
+	if (!isUUID($region) or !is_numeric($estateid)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 
@@ -1364,7 +1292,7 @@ function  opensim_set_region_estateid($region, $estateid, &$db=null)
 //
 function  opensim_set_estate_owner($region, $owner, &$db=null)
 {
-	if (!isGUID($region) or !isGUID($owner))  return false;
+	if (!isUUID($region) or !isUUID($owner))  return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 
@@ -1380,7 +1308,7 @@ function  opensim_set_estate_owner($region, $owner, &$db=null)
 
 function  opensim_del_estate($id, &$db=null)
 {
-	if (!isNumeric($id)) return;
+	if (!is_numeric($id)) return;
 	if (!is_object($db)) $db = opensim_new_db();
 
 	$db->query("DELETE from estate_settings WHERE EstateID=$id");
@@ -1391,7 +1319,7 @@ function  opensim_update_estate($id, $name, $owner, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isNumeric($id)) return;
+	if (!is_numeric($id)) return;
 	if (!$name and !$owner) return;
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -1418,7 +1346,7 @@ function  opensim_get_parcel_name($parcel, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($parcel)) return null;
+	if (!isUUID($parcel)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -1437,7 +1365,7 @@ function  opensim_get_parcel_info($parcel, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($parcel)) return null;
+	if (!isUUID($parcel)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -1465,7 +1393,7 @@ function  opensim_get_asset_data($uuid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return $asset;
+	if (!isUUID($uuid)) return $asset;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -1490,7 +1418,7 @@ function  opensim_get_asset_data($uuid, &$db=null)
 
 function  opensim_display_texture_data($uuid, $prog, $xsize='0', $ysize='0', $cachedir='', $use_tga=false)
 {
-	if (!isGuid($uuid)) return false;
+	if (!isUUID($uuid)) return false;
 	if ($prog==null or $prog=='') return false;
 
 	if ($cachedir=='') $cachedir = '/tmp';
@@ -1668,12 +1596,12 @@ function  opensim_create_avatar_wear_dup($touuid, $fromid, $invent, &$db=null)
 		while (list($PrincipalID,$Name,$Value) = $db->next_record()) {
 			if (!strncasecmp($Name, 'Wearable ', 9)) {
 				$id = explode(':', $Value);
-				if (isGUID($id[0]) and isGUID($id[1])) {
+				if (isUUID($id[0]) and isUUID($id[1])) {
 					if (isset($invent[$id[0]])) $Value = $invent[$id[0]].':'.$id[1];
 				}
 			}
 			else if (!strncasecmp($Name, '_ap_', 4)) {
-				if (isGUID($Value)) {
+				if (isUUID($Value)) {
 					if (isset($invent[$Value])) $Value = $invent[$Value];
 				}
 			}
@@ -1744,7 +1672,7 @@ function  opensim_create_inventory_folders_dup($touuid, $fromid, &$db=null)
 	if (!is_object($db)) $db = opensim_new_db();
 
 	$folder = array();
-	if (!isGUID($fromid)) return $folder;
+	if (!isUUID($fromid)) return $folder;
 
 	$db->query("SELECT * FROM inventoryfolders WHERE agentID='$fromid'");
 	$errno = $db->Errno;
@@ -1816,7 +1744,7 @@ function  opensim_create_default_avatar_wear($uuid, $invent, &$db=null)
 
 function  opensim_create_default_inventory_items($uuid, &$db=null)
 {
-	if (!isGUID($uuid)) return false;
+	if (!isUUID($uuid)) return false;
 	if (!is_object($db)) $db = opensim_new_db();
 
 	$db->query("SELECT folderID FROM inventoryfolders WHERE agentID='$uuid' AND type='13'");	// Body Parts Folder
@@ -1887,7 +1815,7 @@ function  opensim_create_default_inventory_folders($uuid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return false;
+	if (!isUUID($uuid)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -1939,7 +1867,7 @@ function  opensim_get_password($uuid, $tbl='', &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return null;
+	if (!isUUID($uuid)) return null;
 	if (!isAlphabetNumeric($tbl, true)) return null;
 
 	if (!is_object($db)) $db = opensim_new_db();
@@ -1975,7 +1903,7 @@ function  opensim_set_password($uuid, $passwdhash, $passwdsalt='', $tbl='', &$db
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($uuid)) return false;
+	if (!isUUID($uuid)) return false;
 	if (!isAlphabetNumeric($passwdhash)) return false;
 	if (!isAlphabetNumeric($passwdsalt, true)) return false;
 	if (!isAlphabetNumeric($tbl, true)) return false;
@@ -2056,7 +1984,7 @@ function  opensim_succession_agents_to_griduser($region_id, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($region_id)) return false;
+	if (!isUUID($region_id)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -2107,7 +2035,7 @@ function  opensim_succession_useraccounts_to_griduser($region_id, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($region_id)) return false;
+	if (!isUUID($region_id)) return false;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -2213,7 +2141,7 @@ function  opensim_get_voice_mode($region, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($region)) return -1;
+	if (!isUUID($region)) return -1;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -2236,7 +2164,7 @@ function  opensim_set_voice_mode($region, $mode, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($region)) false;
+	if (!isUUID($region)) false;
 	if (!preg_match('/^[0-2]$/', $mode)) false;
 
 	if (!is_object($db)) $db = opensim_new_db();
@@ -2272,71 +2200,8 @@ function  opensim_set_voice_mode($region, $mode, &$db=null)
 //
 // for Currency
 
-function opensim_set_currency_transaction($sourceId, $destId, $amount, $type, $flags, $description, &$db=null)
-{
-	if (!isNumeric($amount)) return;
-	if (!isGUID($sourceId))  $sourceId = '00000000-0000-0000-0000-000000000000';
-	if (!isGUID($destId)) 	 $destId   = '00000000-0000-0000-0000-000000000000';
-
-	if (!is_object($db)) $db = opensim_new_db();
-
-	$handle   = 0;
-	$secure   = '00000000-0000-0000-0000-000000000000';
-	$client	  = $sourceId;
-	$UUID	 = make_random_guid();
-	$sourceID = $sourceId;
-	$destID   = $destId;
-	if ($client=='00000000-0000-0000-0000-000000000000') $client = $destId;
-
-	$avt = opensim_get_avatar_session($client);
-	if ($avt!=null) {
-		$region = $avt['regionID'];
-		$secure = $avt['secureID'];
-
-		$rgn = opensim_get_region_info($region);
-		if ($rgn!=null) $handle = $rgn["regionHandle"];
-	}
-
-	$sql = "INSERT INTO ".CURRENCY_TRANSACTION_TBL." (UUID,sender,receiver,amount,objectUUID,".
-													"regionHandle,type,time,secure,status,description) ".
-			"VALUES ('".
-				$UUID."','".
-				$sourceID."','".
-				$destID."','".
-				$amount."','".
-				"00000000-0000-0000-0000-000000000000','".
-				$handle."','".
-				$db->escape($type)."','".
-				time()."','".
-				$secure."','".
-				$db->escape($flags)."','".
-				$db->escape($description)."')";
-	$db->query($sql);
-}
 
 
-
-function opensim_set_currency_balance($agentid, $amount, &$db=null)
-{
-	if (!isGUID($agentid) or !isNumeric($amount)) return;
-
-	if (!is_object($db)) $db = opensim_new_db();
-
-	$userid = $db->escape($agentid);
-
-	$db->lock_table(CURRENCY_MONEY_TBL);
-
-	$db->query("SELECT balance FROM ".CURRENCY_MONEY_TBL." WHERE user='".$userid."'");
-	if ($db->Errno==0) {
-		list($cash) = $db->next_record();
-		$balance = (integer)$cash + (integer)$amount;
-
-		$db->query("UPDATE ".CURRENCY_MONEY_TBL." SET balance='".$balance."' WHERE user='".$userid."'");
-		if ($db->Errno==0) $db->next_record();
-	}
-
-	$db->unlock_table();
-}
 
 
 
@@ -2344,7 +2209,7 @@ function opensim_get_currency_balance($agentid, &$db=null)
 {
 	global $OpenSimVersion;
 
-	if (!isGUID($agentid)) return;
+	if (!isUUID($agentid)) return;
 
 	if (!is_object($db)) $db = opensim_new_db();
 	if ($OpenSimVersion==null) opensim_get_db_version($db);
@@ -2389,62 +2254,6 @@ function  opensim_get_servers_ip(&$db=null)
 
 
 
-function  opensim_get_server_info($userid, &$db=null)
-{
-	global $OpenSimVersion;
-
-	if (!isGUID($userid)) return $ret;
-
-	if (!is_object($db)) $db = opensim_new_db();
-	if ($OpenSimVersion==null) opensim_get_db_version($db);
-
-	$ret = array();
-
-	//
-	if ($OpenSimVersion==OPENSIM_V07) {
-		$sql = "SELECT serverIP,serverHttpPort,serverURI,regionSecret FROM GridUser ";
-		$sql.= "INNER JOIN regions ON regions.uuid=GridUser.LastRegionID WHERE GridUser.UserID='".$userid."'";
-		$db->query($sql);
-		if ($db->Errno==0) list($serverip, $httpport, $serveruri, $secret) = $db->next_record();
-	}
-
-	else if ($OpenSimVersion==OPENSIM_V06) {
-		$sql = "SELECT serverIP,serverHttpPort,serverURI,regionSecret FROM agents ";
-		$sql.= "INNRT JOIN regions ON regions.uuid=agents.currentRegion WHERE agents.UUID='".$userid."'";
-		$db->query($sql);
-		if ($db->Errno==0) list($serverip, $httpport, $serveruri, $secret) = $db->next_record();
-	}
-
-	else if ($OpenSimVersion==AURORASIM) {
-
-		$sql = "SELECT gridregions.Info FROM userinfo,gridregions ";
-		$sql.= "WHERE UserID='".$userid."' AND userinfo.CurrentRegionID=gridregions.RegionUUID";
-
-		//$sql = "SELECT RegionInfo FROM userinfo,simulator ";
-		//$sql.= "WHERE UserID='".$userid."' AND CurrentRegionID=simulator.RegionID";
-
-		$db->query($sql);
-		if ($db->Errno==0) {
-			list($regioninfo) = $db->next_record();
-			$info = split_key_value($regioninfo);		// from tools.func.php
-			$serverip  = gethostbyname($info["serverIP"]);
-			$httpport  = $info["serverHttpPort"];
-			$serveruri = $info["serverURI"];
-			$secret	= null;
-		}
-	}
-
-	else return $ret;
-
-
-	if ($db->Errno==0) {
-		$ret["serverIP"] 	   = $serverip;
-		$ret["serverHttpPort"] = $httpport;
-		$ret["serverURI"] 	   = $serveruri;
-		$ret["regionSecret"]   = $secret;
-	}
-	return $ret;
-}
 
 
 
@@ -2471,79 +2280,10 @@ function  opensim_is_access_from_region_server()
 
 
 //
-function  opensim_check_secure_session($uuid, $regionid, $secure, &$db=null)
-{
-	global $OpenSimVersion;
-
-	if (!isGUID($uuid) or !isGUID($secure)) return false;
-
-	if (!is_object($db)) $db = opensim_new_db();
-	if ($OpenSimVersion==null) opensim_get_db_version($db);
-
-	//
-	if ($OpenSimVersion==OPENSIM_V07) {
-		$sql = "SELECT UserID FROM Presence WHERE UserID='".$uuid."' AND SecureSessionID='".$secure."'";
-		if (isGUID($regionid)) $sql = $sql." AND RegionID='".$regionid."'";
-	}
-
-	else if ($OpenSimVersion==OPENSIM_V06) {
-		$sql = "SELECT UUID FROM agents WHERE UUID='".$uuid."' AND secureSessionID='".$secure."' AND agentOnline='1'";
-		if (isGUID($regionid)) $sql = $sql." AND currentRegion='".$regionid."'";
-	}
-
-	else if ($OpenSimVersion==AURORASIM) {
-		$sql = "SELECT UUID FROM tokens,userinfo WHERE UUID='".$uuid."' AND UUID=UserID AND token='".$secure."' AND IsOnline='1'";
-		if (isGUID($regionid)) $sql = $sql." AND CurrentRegionID='".$regionid."'";
-	}
-
-	else return false;
-
-
-	$db->query($sql);
-	if ($db->Errno!=0) return false;
-
-	list($UUID) = $db->next_record();
-	if ($UUID!=$uuid) return false;
-	return true;
-}
 
 
 
 //
-function  opensim_check_region_secret($uuid, $secret, &$db=null)
-{
-	global $OpenSimVersion;
-
-	if (!isGUID($uuid)) return false;
-
-	if (!is_object($db)) $db = opensim_new_db();
-	if ($OpenSimVersion==null) opensim_get_db_version($db);
-
-	//
-	if ($OpenSimVersion==OPENSIM_V07 or $OpenSimVersion==OPENSIM_V06) {
-		$sql = "SELECT UUID FROM regions WHERE UUID='".$uuid."' AND regionSecret='".$db->escape($secret)."'";
-
-		$db->query($sql);
-		if ($db->Errno==0) {
-			list($UUID) = $db->next_record();
-			if ($UUID==$uuid) return true;
-		}
-	}
-
-	else {
-		$sql = "SELECT RegionInfo FROM userinfo,simulator ";
-		$sql.= "WHERE UserID='".$userid."' AND CurrentRegionID=simulator.RegionID";
-
-		$db->query($sql);
-		if ($db->Errno==0) {
-			list($regioninfo) = $db->next_record();
-			$info = split_key_value($regioninfo);		// from tools.func.php
-			if ($secret==$info["password"]) return true;
-		}
-	}
-
-	return false;
-}
 
 
 
@@ -2588,4 +2328,79 @@ function  opensim_debug_command(&$db=null)
 	while (list($name,$type,$id,$flags) = $db->next_record()) {
 		echo $name." ".$type." ".$id." ".$flags."<br />";
 	}
+}
+
+function simpleXMLToArray(SimpleXMLElement $xml,$attributesKey=null,$childrenKey=null,$valueKey=null){
+
+	if($childrenKey && !is_string($childrenKey)){$childrenKey = '@children';}
+	if($attributesKey && !is_string($attributesKey)){$attributesKey = '@attributes';}
+	if($valueKey && !is_string($valueKey)){$valueKey = '@values';}
+
+	$return = array();
+	$name = $xml->getName();
+	$_value = trim((string)$xml);
+	if(!strlen($_value)){$_value = null;};
+
+	if($_value!==null){
+		if($valueKey){$return[$valueKey] = $_value;}
+		else{$return = $_value;}
+	}
+
+	$children = array();
+	$first = true;
+	foreach($xml->children() as $elementName => $child){
+		$value = simpleXMLToArray($child,$attributesKey, $childrenKey,$valueKey);
+		if(isset($children[$elementName])){
+			if(is_array($children[$elementName])){
+				if($first){
+					$temp = $children[$elementName];
+					unset($children[$elementName]);
+					$children[$elementName][] = $temp;
+					$first=false;
+				}
+				$children[$elementName][] = $value;
+			}else{
+				$children[$elementName] = array($children[$elementName],$value);
+			}
+		}
+		else{
+			$children[$elementName] = $value;
+		}
+	}
+	if($children){
+		if($childrenKey){$return[$childrenKey] = $children;}
+		else{$return = array_merge($return,$children);}
+	}
+
+	$attributes = array();
+	foreach($xml->attributes() as $name=>$value){
+		$attributes[$name] = trim($value);
+	}
+	if($attributes){
+		if($attributesKey){$return[$attributesKey] = $attributes;}
+		else{$return = array_merge($return, $attributes);}
+	}
+
+	return $return;
+}
+
+function GetURL($host, $port, $url)
+{
+    $url = "http://$host:$port/$url";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+    $data = curl_exec($ch);
+    if (curl_errno($ch) == 0)
+    {
+        curl_close($ch);
+        return $data;
+    }
+
+    curl_close($ch);
+    return "";
 }

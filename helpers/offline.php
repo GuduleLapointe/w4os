@@ -1,78 +1,27 @@
 <?php
 /*
- * Mail forwarding enabled version @ 2010-2018 gudule.lapointe@speculoos.world
+ * offline.php
  *
- * Based on http://opensimulator.org/wiki/Offline_Messaging
- * Copyright (c) 2007, 2008 Contributors, http://opensimulator.org/
- * See CONTRIBUTORS for a full list of copyright holders.
+ * Handles Instant Messages sent to offline users and deliver them when the user
+ * comes back online. If the user has enabled Send offline IM by email (in
+ * viewer preferences), the messages are also forwarded immediately by email.
  *
- * This looks like its lifted from http://www.weberdev.com/get_example-4372.html
- * I'd contact the original developer for licensing info, but his website is broken.
+ * Part of "flexible_helpers_scripts" collection
+ *   https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   by Gudule Lapointe <gudule@speculoos.world>
  *
- * See LICENSE for the full licensing terms of this file.
- *
-*/
+ * Includes portions of code from
+ *   http://opensimulator.org/wiki/Offline_Messaging
+ *   http://www.weberdev.com/get_example-4372.html
+ */
 
-require_once('include/env_interface.php');
+require_once('include/wp-config.php');
+require_once('include/classes-db.php');
 
 function xmlSuccess($boolean = true) {
 	$result = ($boolean) ? 'true' : 'false';
 	$answer = new SimpleXMLElement("<boolean>$result</boolean>");
 	echo $answer->asXML();
-}
-
-function simpleXMLToArray(SimpleXMLElement $xml,$attributesKey=null,$childrenKey=null,$valueKey=null){
-
-	if($childrenKey && !is_string($childrenKey)){$childrenKey = '@children';}
-	if($attributesKey && !is_string($attributesKey)){$attributesKey = '@attributes';}
-	if($valueKey && !is_string($valueKey)){$valueKey = '@values';}
-
-	$return = array();
-	$name = $xml->getName();
-	$_value = trim((string)$xml);
-	if(!strlen($_value)){$_value = null;};
-
-	if($_value!==null){
-		if($valueKey){$return[$valueKey] = $_value;}
-		else{$return = $_value;}
-	}
-
-	$children = array();
-	$first = true;
-	foreach($xml->children() as $elementName => $child){
-		$value = simpleXMLToArray($child,$attributesKey, $childrenKey,$valueKey);
-		if(isset($children[$elementName])){
-			if(is_array($children[$elementName])){
-				if($first){
-					$temp = $children[$elementName];
-					unset($children[$elementName]);
-					$children[$elementName][] = $temp;
-					$first=false;
-				}
-				$children[$elementName][] = $value;
-			}else{
-				$children[$elementName] = array($children[$elementName],$value);
-			}
-		}
-		else{
-			$children[$elementName] = $value;
-		}
-	}
-	if($children){
-		if($childrenKey){$return[$childrenKey] = $children;}
-		else{$return = array_merge($return,$children);}
-	}
-
-	$attributes = array();
-	foreach($xml->attributes() as $name=>$value){
-		$attributes[$name] = trim($value);
-	}
-	if($attributes){
-		if($attributesKey){$return[$attributesKey] = $attributes;}
-		else{$return = array_merge($return, $attributes);}
-	}
-
-	return $return;
 }
 
 $DbLink = new DB(OFFLINE_DB_HOST, OFFLINE_DB_NAME, OFFLINE_DB_USER, OFFLINE_DB_PASS, OFFLINE_DB_MYSQLI);
@@ -198,7 +147,7 @@ switch($method) {
 
 	$errno = -1;
 
-	if (isGUID($xml->Guid)) {
+	if (isUUID($xml->Guid)) {
 		$query = sprintf(
 			"SELECT ID, Message FROM %s WHERE PrincipalID='%s'",
 			OFFLINE_MESSAGE_TBL,

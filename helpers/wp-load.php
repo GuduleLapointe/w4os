@@ -1,4 +1,14 @@
 <?php namespace OpenSimulator\Helpers;
+/*
+ * wp-load.php
+ *
+ * Loader for helpers implmentation in W4OS WordPress plugin.
+ * Not needed in standalone implementations.
+ *
+ * Part of w4os - WordPress interface For OpenSimulator
+ *   https://github.com/GuduleLapointe/w4os/
+ *   by Gudule Lapointe <gudule@speculoos.world>
+ */
 
 if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 

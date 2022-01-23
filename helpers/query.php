@@ -1,14 +1,22 @@
 <?php
 /*
- * parser.php
+ * query.php
+ *
+ * Script called by the viewer, provides search results for places, land sales end events
  *
  * Part of "flexible_helpers_scripts" collection
- * https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   by Gudule Lapointe <gudule@speculoos.world>
  *
- * This script process queries sent by the viewer.
+ * Requires OpenSimulator Search module
+ *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
+ * Events need to be fetched with a separate script, from an HYPEvents server
+ *
+ * Includes portions of code from
+ *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-require_once('include/config.php');
+require_once('include/wp-config.php');
 require_once('include/ossearch_db.php');
 
 if( ! tableExists($SearchDB, [ 'parcels', 'popularplaces', 'events', 'parcelsales' ] )) {

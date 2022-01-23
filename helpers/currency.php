@@ -1,76 +1,36 @@
 <?php
-#
-#  Copyright (c)Melanie Thielker and Teravus Ovares (http://opensimulator.org/)
-#
-#  Redistribution and use in source and binary forms, with or without
-#  modification, are permitted provided that the following conditions are met:
-#	  * Redistributions of source code must retain the above copyright
-#		notice, this list of conditions and the following disclaimer.
-#	  * Redistributions in binary form must reproduce the above copyright
-#		notice, this list of conditions and the following disclaimer in the
-#		documentation and/or other materials provided with the distribution.
-#	  * Neither the name of the OpenSim Project nor the
-#		names of its contributors may be used to endorse or promote products
-#		derived FROM this software without specific prior written permission.
-#
-#  THIS SOFTWARE IS PROVIDED BY THE DEVELOPERS ``AS IS'' AND ANY
-#  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-#  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#  DISCLAIMED. IN NO EVENT SHALL THE CONTRIBUTORS BE LIABLE FOR ANY
-#  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-#  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-#  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-#  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-#  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+/*
+ * currency.php
+ *
+ * Provides web tools for OpenSim currencies
+ *
+ * Part of "flexible_helpers_scripts" collection
+ *   https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   by Gudule Lapointe <gudule@speculoos.world>
+ *
+ * Requires an OpenSimulator Money Server
+ *    [DTL/NSL Money Server for OpenSim](http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer)
+ * or [Gloebit module](http://dev.gloebit.com/opensim/configuration-instructions/)
+ *
+ * Includes portions of code from
+ *   Melanie Thielker and Teravus Ovares (http://opensimulator.org/)
+ *   Fumi.Iseki for CMS/LMS '09 5/31
+ */
 
-########################################################################
-# This file enables buying currency in the client.
-#
-# For this to work, the all clients using currency need to add
-#
-#				-helperURI <WebpathToThisDirectory>
-#
-# to the commandline parameters when starting the client!
-#
-# Example:
-#	client.exe -loginuri http://foo.com:8002/ -helperuri http://foo.com/
-#
-# Don't forget to change the currency conversion value in the wi_economy_money
-# table!
-#
-# This requires PHP curl, XMLRPC, and MySQL extensions.
-#
-# If placed in the opensimwiredux web directory, it will share the db module
-#
+// error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-
-########################################################################
-#
-# Modified by Fumi.Iseki for XoopenSim/Modlos
-#
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
-require_once('include/env_interface.php');
-require_once('helpers.php');
-
-
+require_once('include/wp-config.php');
+require_once('include/economy.php');
 
 #
 # The XMLRPC server object
 #
-
 $xmlrpc_server = xmlrpc_server_create();
-
-
 
 #
 # Viewer retrieves currency buy quote
 #
-
 xmlrpc_server_register_method($xmlrpc_server, "getCurrencyQuote", "get_currency_quote");
-
 function get_currency_quote($method_name, $params, $app_data)
 {
 	$req	   = $params[0];
@@ -122,13 +82,10 @@ function get_currency_quote($method_name, $params, $app_data)
 	return "";
 }
 
-
-
 #
 # Viewer buys currency
 #
 xmlrpc_server_register_method($xmlrpc_server, "buyCurrency", "buy_currency");
-
 function buy_currency($method_name, $params, $app_data)
 {
 	$req	   = $params[0];
@@ -207,12 +164,9 @@ function buy_currency($method_name, $params, $app_data)
 	return "";
 }
 
-
-
 #
 # Region requests account balance
 #
-
 xmlrpc_server_register_method($xmlrpc_server, "simulatorUserBalanceRequest", "balance_request");
 
 function balance_request($method_name, $params, $app_data)
@@ -240,14 +194,10 @@ function balance_request($method_name, $params, $app_data)
 	return "";
 }
 
-
-
 #
 # Region initiates money transfer (Direct DB Operation for security)
 #
-
 xmlrpc_server_register_method($xmlrpc_server, "regionMoveMoney", "region_move_money");
-
 function region_move_money($method_name, $params, $app_data)
 {
 	$req					= $params[0];
@@ -311,14 +261,10 @@ function region_move_money($method_name, $params, $app_data)
 	return "";
 }
 
-
-
 #
 # Region claims user
 #
-
 xmlrpc_server_register_method($xmlrpc_server, "simulatorClaimUserRequest", "claimUser_func");
-
 function claimUser_func($method_name, $params, $app_data)
 {
 	$req	   = $params[0];
@@ -366,15 +312,12 @@ function claimUser_func($method_name, $params, $app_data)
 	return "";
 }
 
-
-
-
 #
 # Process the request
 #
-
 $request_xml = file_get_contents("php://input");
-//error_log("currency.php: ".$request_xml);
+//error_log(__FILE__ . ' '. $request_xml);
 
 xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
 xmlrpc_server_destroy($xmlrpc_server);
+die();

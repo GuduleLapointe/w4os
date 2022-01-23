@@ -1,9 +1,16 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) );
 /*
+ * wp-config.php
+ *
  * Helpers configuration for W4OS plugin.
- * Part of https://wordpress.org/plugins/w4os-opensimulator-web-interface/
  * Not for use with standalone helpers.
+ *
+ * Part of "flexible_helpers_scripts" collection
+ *   https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   by Gudule Lapointe <gudule@speculoos.world>
  */
+
+require_once('functions.php');
 
 // Please set this hepler script URL and directory
 if (!defined('ENV_HELPER_URL'))  define('ENV_HELPER_URL', (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'));
@@ -175,37 +182,5 @@ define('LINK_FORMAT_NAMING', array(
   'LINK_FORMAT_MAP' => 'map',
   'LINK_FORMAT_DEFAULT' => 'DEFAULT',
 ));
-
-function formatDestinationLink($uri, $format = LINK_FORMAT, $sep = "\n") {
-  $uri = preg_replace('#!#', '', $uri);
-  $uri = preg_replace('#.*://+#', '', $uri);
-  $uri = preg_replace('#[\|:]#', '/', $uri);
-  $uri = preg_replace('#^([^/]+)/([0-9]+)/#', '$1:$2/', $uri);
-  $uri = preg_replace('#^[[:blank:]]*#', '', $uri);
-  // $uri = preg_replace('#(\d{4}):#', '$1/', $uri);
-  $parts = explode("/", $uri);
-  $loginuri = array_shift($parts);
-  $hostparts = explode(":", $loginuri);
-  $host = $hostparts[0];
-  $port = (empty($hostparts[1])) ? 80 : $hostparts[1];
-  $region = urldecode(array_shift($parts));
-  $regionencoded = urlencode($region);
-  if(count($parts) >=3 && is_numeric($parts[0]) && is_numeric($parts[1]) && is_numeric($parts[2]) ) {
-    $posparts = array($parts[0],$parts[1],$parts[2]);
-    $pos = join('/', $posparts);
-    $pos_sl = ($parts[0]>=256 || $parts[0]>=256) ? "" : $pos;
-  }
-  $pos_mandatory = (empty($pos)) ? "128/128/25" : $pos;
-  $links = array();
-  if ($format & LINK_FORMAT_TXT)    $links[LINK_FORMAT_TXT] = "$host:$port/$region/$pos";
-  if ($format & LINK_FORMAT_LOCAL)  $links[LINK_FORMAT_LOCAL] = "secondlife://$region/$pos";
-  if ($format & LINK_FORMAT_HG)     $links[LINK_FORMAT_HG] = "secondlife://$host:$port/$region/$pos";
-  if ($format & LINK_FORMAT_V3HG)     $links[LINK_FORMAT_V3HG] = "secondlife://http|!!$host|$port+$region";
-  if ($format & LINK_FORMAT_HOP)    $links[LINK_FORMAT_HOP] = "hop://$host:$port/$regionencoded/$pos_mandatory";
-  if ($format & LINK_FORMAT_APPTP)     $links[LINK_FORMAT_APPTP] = "secondlife:///app/teleport/$host:$port:$regionencoded/" . ((!empty($pos_sl)) ? "$pos_sl/" : "");
-  if ($format & LINK_FORMAT_MAP)     $links[LINK_FORMAT_MAP] = "secondlife:///app/map/$host:$port:$regionencoded/$pos";
-
-  return join($sep, $links);
-}
 
 define('ENV_CONFIG_PARSED', true);

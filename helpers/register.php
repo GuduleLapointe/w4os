@@ -2,17 +2,23 @@
 /*
  * register.php
  *
+ * Script called by the simulator to register on the search engine. Actual data
+ * fetch is processed by parser.php.
+ *
  * Part of "flexible_helpers_scripts" collection
- * https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   https://github.com/GuduleLapointe/flexible_helper_scripts
+ *   by Gudule Lapointe <gudule@speculoos.world>
  *
- * This this script allow hosts to register on the search engine. It is called
- * by the simulator upon start and on regular intervals defined in OpenSim.ini.
+ * Requires OpenSimulator Search module
+ *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
+ * Events are fetched from 2do HYPEvents or any other HYPEvents implementation
+ *   [2do HYPEvents](https://2do.pm)
  *
- * Actual search data are fetched by parser.php for registered hosts with
- * past nextcheck date.
+ * Includes portions of code from
+ *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-require_once('include/config.php');
+require_once('include/wp-config.php');
 require_once('include/ossearch_db.php');
 
 $host = $_GET['host'];
