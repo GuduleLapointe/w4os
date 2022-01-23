@@ -1,5 +1,56 @@
 <?php
 
+class OSPDO extends PDO {
+	public function __construct($dsn, $username=null, $password=null, $driver_options=null)
+	{
+		try {
+			parent::__construct($dsn, $username, $password, $driver_options);
+		  // $OpenSimDB = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=no' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+		  // $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}
+		catch(PDOException $e)
+		{
+			// $message = "Could not connect to the database";
+		  header("HTTP/1.0 500 Internal Server Error");
+			// echo "500 Internal Server Error\n";
+		  error_log($e);
+		  die();
+		}
+	}
+
+	/**
+	 * Prepare SQL query, execute with params and log error if any
+	 * @param  string $query
+	 * @param  array  $options  options passed to prepare()
+	 * @param  array 	$params		substitute markers passed to execute()
+	 * @return PDOstatement if success, false on error
+	 */
+	public function prepareAndExecute($query, $params = NULL, $options = []) {
+		$statement = $this->prepare($query, $options);
+		$result = $statement->execute($params);
+
+		if($result) return $statement;
+
+		$trace = debug_backtrace()[0];
+		$trace = $trace['file'] . ':' . $trace['line'];
+		error_log('Error ' . $statement->errorCode() . ' ' . $statement->errorInfo()[2] . ' ' . $trace);
+		return false;
+	}
+}
+
+// Attempt to connect to the database
+try {
+  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
+  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch(PDOException $e)
+{
+  header("HTTP/1.0 500 Internal Server Error");
+  error_log(__FILE__ . " Could not connect to the database");
+  die();
+}
+
+
 class DB
 {
 	var $Host 	  = null;				// Hostname of our MySQL server
@@ -70,7 +121,6 @@ class DB
 					$this->Error = mysqli_connect_error();
 					$this->halt('cannot select database <i>'.$this->Database.'</i>');
 				}
-				mysqli_set_charset($this->Link_ID, 'utf8');
 			}
 		}
 	}
