@@ -96,3 +96,20 @@ function xmlResponse($success = true, $errorMessage = false, $data = false) {
 	}
 	echo $answer->asXML();
 }
+
+/**
+ * Flush output and free client so following commands are executed in background
+ * @return void
+ */
+function dontWait() {
+	$size = ob_get_length();
+
+	header("Content-Length:$size");
+	header("Connection:close");
+	header("Content-Encoding: none");
+	header("Content-Type: text/html; charset=utf-8");
+
+	ob_flush();
+	ob_end_flush();
+	flush();
+}
