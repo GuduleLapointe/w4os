@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'W4OS_PLUGIN' ) );
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die();
 /*
  * wp-config.php
  *
@@ -10,7 +10,6 @@
  *   by Gudule Lapointe <gudule@speculoos.world>
  */
 
-require_once('functions.php');
 
 // Please set this hepler script URL and directory
 if (!defined('ENV_HELPER_URL'))  define('ENV_HELPER_URL', (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'));
@@ -184,3 +183,6 @@ define('LINK_FORMAT_NAMING', array(
 ));
 
 define('ENV_CONFIG_PARSED', true);
+
+require_once('classes-db.php');
+require_once('functions.php');

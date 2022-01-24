@@ -1,6 +1,6 @@
-<?php if(!defined('ENV_CONFIG_PARSED')) die;
+<?php
 /*
- * economy.php
+ * search.php
  *
  * Provides database and functions required by OpenSimSearch scripts
  *
@@ -15,37 +15,7 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-// Attempt to connect to the database
-try {
-  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-  header("HTTP/1.0 500 Internal Server Error");
-  error_log(__FILE__ . " Could not connect to " . SEARCH_DB_NAME . " database");
-  die();
-}
-
-function tableExists($pdo, $tables) {
-  if(is_string($tables)) $tables=array($tables);
-  foreach($tables as $table) {
-    // Try a select statement against the table
-    // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
-    try {
-      $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
-    } catch (Exception $e) {
-      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
-      // We got an exception == table not found
-      return false;
-    }
-    if($result == false) {
-      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
-      return false;
-    }
-  }
-  return true;
-}
+$SearchDB = new OSPDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
 
 function OSSearchCreateTables($db) {
   $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
@@ -179,4 +149,32 @@ function OSSearchCreateTables($db) {
 if( ! tableExists($SearchDB, [ 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
   error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
   OSSearchCreateTables($SearchDB);
+}
+
+
+function join_terms($glue, $terms, $deprecated = true) {
+  if(empty($terms)) return "";
+  return "(" . join($glue, $terms) . ")";
+}
+
+function buildMatureConditions($flags)
+{
+    $terms = array();
+    if ($flags & pow(2, 24)) $terms[] = "mature = 'PG'";
+    if ($flags & pow(2, 25)) $terms[] = "mature = 'Mature'";
+    if ($flags & pow(2, 26)) $terms[] = "mature = 'Adult'";
+
+    return join_terms(" OR ", $terms);
+}
+
+function hostUnregister($hostname, $port) {
+  global $SearchDB;
+
+  $SearchDB->prepareAndExecute("DELETE FROM hostsregister
+    WHERE host = :host AND port = :port",
+    array(
+      'host' => $hostname,
+      'port' => $port,
+    )
+  );
 }

@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * New database class using PDO, replaces DB class using mysqli
+ */
 class OSPDO extends PDO {
 	public function __construct($dsn, $username=null, $password=null, $driver_options=null)
 	{
 		try {
 			parent::__construct($dsn, $username, $password, $driver_options);
-		  // $OpenSimDB = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=no' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
-		  // $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		  $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 		catch(PDOException $e)
 		{
@@ -36,21 +38,24 @@ class OSPDO extends PDO {
 		error_log('Error ' . $statement->errorCode() . ' ' . $statement->errorInfo()[2] . ' ' . $trace);
 		return false;
 	}
+
+	public function insert($table, $values) {
+		foreach ($values as $field => $value) {
+			$markers[] = ':' . $field;
+		}
+		$markers = implode(',', $markers);
+		$fields = implode(',', array_keys($values));
+		$sql = "INSERT INTO $table ($fields) VALUES ($markers)";
+		$statement = $this->prepare($sql);
+		return $statement->execute($values);
+	}
 }
 
-// Attempt to connect to the database
-try {
-  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-  header("HTTP/1.0 500 Internal Server Error");
-  error_log(__FILE__ . " Could not connect to the database");
-  die();
-}
+$OpenSimDB = new OSPDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
 
-
+/**
+ * deprecated, use OSPDO class instead
+ */
 class DB
 {
 	var $Host 	  = null;				// Hostname of our MySQL server
@@ -340,5 +345,25 @@ class DB
 	{
     	ini_set('mysql.connect_timeout', $this->Timeout);
 	}
+}
 
+function tableExists($pdo, $tables) {
+	if(!is_object($pdo)) return false;
+  if(is_string($tables)) $tables=array($tables);
+  foreach($tables as $table) {
+    // Try a select statement against the table
+    // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
+    try {
+      $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
+    } catch (Exception $e) {
+      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
+      // We got an exception == table not found
+      return false;
+    }
+    if($result == false) {
+      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
+      return false;
+    }
+  }
+  return true;
 }

@@ -82,8 +82,8 @@ function xmlResponse($success = true, $errorMessage = false, $data = false) {
 		$array = array(
 			'success'      => $success,
 			'errorMessage' => $errorMessage,
-			'data' => $tata,
 		);
+		if(!empty($data)) $array['data'] = $data;
 		array_filter($array);
 		$response_xml = xmlrpc_encode($array);
 		echo $response_xml;
@@ -95,6 +95,11 @@ function xmlResponse($success = true, $errorMessage = false, $data = false) {
 		$answer = new SimpleXMLElement("<error>$errorMessage</error>");
 	}
 	echo $answer->asXML();
+}
+
+function xmlDie($message = "") {
+	xmlResponse(false, $message, []);
+  die;
 }
 
 /**

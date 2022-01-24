@@ -23,8 +23,6 @@ if(empty($HTTP_RAW_POST_DATA)) {
 	die();
 }
 
-$OpenSimDB = new OSPDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
-
 $method = $_SERVER['PATH_INFO)'];
 if(empty($method)) $method = '/' . basename(getenv('REDIRECT_URL')) . '/';
 

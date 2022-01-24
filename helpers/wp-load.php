@@ -58,7 +58,6 @@ if ( get_option('w4os_provide_search') == true ) {
   if(! empty(get_option('w4os_search_register'))) {
     $register = parse_url(get_option('w4os_search_register'))['path'];
     if(preg_match(":^$register:", "$url/")) {
-      error_log("register $register");
       require('register.php');
     }
   }
