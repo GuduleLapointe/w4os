@@ -16,7 +16,7 @@
  * @param  boolean $strict               apply strict UUID v4 implentation (default true)
  * @return boolean
  */
-function isUUID($uuid, $nullok=false, $strict = true)
+function isUUID($uuid, $nullok=false, $strict = false)
 {
 	if ($uuid==null) return $nullok;
   if(defined('NULL_KEY') && $uuid == NULL_KEY) return $nullok;
