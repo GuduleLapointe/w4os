@@ -19,7 +19,7 @@
  */
 
 require_once('include/wp-config.php');
-require_once('include/ossearch_db.php');
+require_once('include/search.php');
 
 $host = $_GET['host'];
 $port = $_GET['port'];
@@ -30,19 +30,6 @@ if ($host == "" || $port == "")
   header("HTTP/1.0 400 Bad Request");
   echo "400 Bad Request: missing region host and/or port\n";
   exit;
-}
-
-
-// Attempt to connect to the database
-try {
-  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-  header("HTTP/1.0 500 Internal Server Error");
-  error_log(__FILE__ . " Could not connect to the database");
-  die();
 }
 
 switch($service) {
@@ -69,15 +56,12 @@ switch($service) {
   break;
 
   case 'offline':
-  $query = $SearchDB->prepare("DELETE FROM hostsregister WHERE host = :host AND port = :port");
-  $query->execute( array( ':host' => $host, ':port' => $port ) );
+  hostUnregister($host, $port);
   break;
 
   // default:
   // error_log(__FILE__ . " bad request " . getenv('QUERY_STRING') . " raw data " . $HTTP_RAW_POST_DATA);
 }
-
-$SearchDB = NULL;
 
 if (is_array($otherRegistrars) && $hostname != "" && $port != "" && $service != "")
 {
