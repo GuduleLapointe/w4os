@@ -18,48 +18,49 @@
 require_once('include/wp-config.php');
 require_once('include/classes-db.php');
 
-function xmlSuccess($boolean = true) {
-	$result = ($boolean) ? 'true' : 'false';
-	$answer = new SimpleXMLElement("<boolean>$result</boolean>");
-	echo $answer->asXML();
+if(empty($HTTP_RAW_POST_DATA)) {
+	xmlResponse(false, 'Invalid request');
+	die();
 }
 
-$DbLink = new DB(OFFLINE_DB_HOST, OFFLINE_DB_NAME, OFFLINE_DB_USER, OFFLINE_DB_PASS, OFFLINE_DB_MYSQLI);
+$OpenSimDB = new OSPDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
 
 $method = $_SERVER['PATH_INFO)'];
 if(empty($method)) $method = '/' . basename(getenv('REDIRECT_URL')) . '/';
 
+$xml = new SimpleXMLElement($HTTP_RAW_POST_DATA);
+
 switch($method) {
 	case "/SaveMessage/":
 	if (strpos($HTTP_RAW_POST_DATA, "?>") == -1) {
-		xmlSuccess(false);
+		xmlResponse(false);
 		die;
 	}
 
-	$xml = new SimpleXMLElement($HTTP_RAW_POST_DATA);
-
 	// Save for in-world delivery
-	$query = sprintf(
-		"INSERT INTO %s (PrincipalID, FromID, Message) VALUES ('%s', '%s', '%s');",
-		OFFLINE_MESSAGE_TBL,
-		$DbLink->escape($xml->toAgentID),
-		$DbLink->escape($xml->fromAgentID),
-		$DbLink->escape(preg_replace('/>\n/', '>', $xml->asXML())),
+	$saved = $OpenSimDB->prepareAndExecute(
+		"INSERT INTO " . OFFLINE_MESSAGE_TBL . " (PrincipalID, FromID, Message)
+		VALUES (:PrincipalID, :FromID, :Message)",
+		array(
+			'PrincipalID' => $xml->toAgentID,
+			'FromID' => $xml->fromAgentID,
+			'Message' => preg_replace('/>\n/', '>', $xml->asXML()),
+		)
 	);
-	$DbLink->query($query);
-	// Send in-world save result, send by mail is bonus
-	xmlSuccess($DbLink->Errno==0);
+	xmlResponse($saved);	// Output in-world save result
+	dontWait(); // flush output, continue in background
 
 	// Save to mail queue if mail forwarding is set
-	$query = sprintf(
-		"SELECT imviaemail, email FROM usersettings WHERE useruuid='%s';",
-		$DbLink->escape($xml->toAgentID),
+	$emailinfo = $OpenSimDB->prepareAndExecute(
+		"SELECT imviaemail, email FROM usersettings WHERE useruuid = :useruuid",
+		array(
+			'useruuid' => $xml->toAgentID,
+		),
 	);
-	$DbLink->query($query);
 
-	if($DbLink) {
-		list($sendmail, $email) = $DbLink->next_record();
-		if(empty($email) || $sendmail =='false') exit;
+	if($emailinfo) {
+		list($sendmail, $email) = $emailinfo->fetch();
+		if(empty($email) || $sendmail =='false') die();
 
 		if($xml->fromAgentName == "Server") $xml->fromAgentName = GRID_NAME;
 
@@ -143,23 +144,18 @@ switch($method) {
 	break;
 
  	case "/RetrieveMessages/":
-	$xml = new SimpleXMLElement($HTTP_RAW_POST_DATA);
-
-	$errno = -1;
-
 	if (isUUID($xml->Guid)) {
-		$query = sprintf(
-			"SELECT ID, Message FROM %s WHERE PrincipalID='%s'",
-			OFFLINE_MESSAGE_TBL,
-			$xml->Guid,
+		$pendingmessages = $OpenSimDB->prepareAndExecute(
+			"SELECT ID, Message FROM " . OFFLINE_MESSAGE_TBL . " WHERE PrincipalID = :PrincipalID",
+			array(
+				'PrincipalID' => $xml->Guid,
+			),
 		);
-		$DbLink->query($query);
-		$result = $DbLink->Errno;
-		if ($result==0) {
+		if ($pendingmessages) {
 			$delivered = array();
 			echo '<?xml version="1.0" encoding="utf-8"?>';
 			echo '<ArrayOfGridInstantMessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
-			while(list($id, $message) = $DbLink->next_record()) {
+			while(list($id, $message) = $pendingmessages->fetch()) {
 				$start = strpos($message, "?>");
 				if ($start != -1) $message = substr($message, $start + 2);
 				echo $message;
@@ -167,17 +163,22 @@ switch($method) {
 			}
 			echo '</ArrayOfGridInstantMessage>';
 			if(!empty($delivered)) {
-				$query = sprintf( "DELETE FROM %s WHERE ID=%s", OFFLINE_MESSAGE_TBL, join(' OR ID=', $delivered) );
-				$DbLink->query($query);
+				$result = $OpenSimDB->prepareAndExecute(
+					"DELETE FROM " . OFFLINE_MESSAGE_TBL . " WHERE ID=" . join(' OR ID=', $delivered)
+				);
 			}
 		} else {
-			error_log("DB error while retrieving messages $result");
+			error_log("error retrieving pending messages");
+			xmlResponse(false);
 		}
+	} else {
+		error_log($xml->Guid . ' is not a valid UUID');
 	}
-	exit;
+	die();
 	break;
 
 	default:
 	error_log("Offline messages: method $method not implemented, please configure OfflineMessageModule = OfflineMessageModule in OpenSim.ini");
+	xmlResponse(false, "method $method not implemented");
 	die();
 }
