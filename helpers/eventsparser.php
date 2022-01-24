@@ -10,13 +10,10 @@
  */
 
 require_once('include/wp-config.php');
-require_once('include/ossearch_db.php');
+require_once('include/search.php');
+define('EVENTS_NULL_KEY', '00000000-0000-0000-0000-000000000001');
 
-function checkpoint($message = 'Check point') {
-  $message = basename(__FILE__) . ': ' . $message;
-  echo $message;
-  error_log($message);
-}
+dontWait();
 
 $json_url = HYPEVENTS_URL . '/events.json';
 $json = json_decode(file_get_contents($json_url), true);
@@ -62,8 +59,6 @@ function getEventCategory($values) {
 }
 $notbefore = time() - 3600;
 // print_r($json);
-
-define('EVENTS_NULL_KEY', '00000000-0000-0000-0000-000000000001');
 
 $events=array();
 foreach($json as $json_event) {

@@ -20,32 +20,54 @@
 */
 
 require_once('include/wp-config.php');
-require_once('include/ossearch_db.php');
+require_once('include/search.php');
+dontWait();
 
 $now = time();
 
-function CheckHost($hostname, $port)
+function hostCheck($hostname, $port)
 {
   global $SearchDB, $now;
 
-  // $xml = GetURL($hostname, $port, "?method=collector");
+  $failcounter = 0;
+  $interval = 600; // Wait at least 10 minutes before scanning the same host
+
   $xml = file_get_contents("http://$hostname:$port/?method=collector");
-  if (empty($xml)) $failcounter = "failcounter + 1";
-  else $failcounter = "0";
+  if (empty($xml)) {
+    error_log("$hostname:$port unreachable");
+    $fails = $SearchDB->prepareAndExecute("SELECT failcounter FROM hostsregister
+      WHERE host = :host AND port = :port",
+      array(
+        'host' => $hostname,
+        'port' => $port,
+      )
+    );
+    $failcounter = $fails->fetch()[0] + 1;
+    $interval = $interval * pow(2, $failcounter); // extend scanning interval for inactive hosts
+    if($failcounter > 10) {
+      hostUnregister($hostname, $port);
+      return;
+    }
+  }
+  $nextcheck = time() + $interval;
 
-  //Update nextcheck to be 10 minutes from now. The current OS instance
-  //won't be checked again until at least this much time has gone by.
-  $nextcheck = $now + 600;
-  $query = $SearchDB->prepare( "UPDATE hostsregister
-    SET nextcheck = ?, checked = 1, failcounter = $failcounter
-    WHERE host = ? AND port = ?"
+  // Update nextcheck time. The next check interval is multiplied by the number
+  // of fails to minimize useless requests
+  $query = $SearchDB->prepareAndExecute( "UPDATE hostsregister
+    SET failcounter = :failcounter, nextcheck = :nextcheck, checked = 1
+    WHERE host = :host AND port = :port",
+    array(
+      'failcounter' => $failcounter,
+      'nextcheck' => 0,
+      'host' => $hostname,
+      'port' => $port,
+    )
   );
-  $query->execute( array($nextcheck, $hostname, $port) );
 
-  if (!empty($xml)) parse($hostname, $port, $xml);
+  if (!empty($xml)) hostScan($hostname, $port, $xml);
 }
 
-function parse($hostname, $port, $xml)
+function hostScan($hostname, $port, $xml)
 {
   global $SearchDB, $now;
   ///////////////////////////////////////////////////////////////////////
@@ -59,7 +81,7 @@ function parse($hostname, $port, $xml)
   $objDOM = new DOMDocument();
   $objDOM->resolveExternals = false;
 
-  //Don't try and parse if XML is invalid or we got an HTML 404 error.
+  //Don't try and scan if XML is invalid or we got an HTML 404 error.
   if ($objDOM->loadXML($xml) == False) return;
 
   //
@@ -74,7 +96,7 @@ function parse($hostname, $port, $xml)
 
   //
   // Update nextcheck so this host entry won't be checked again until after
-  // the DataSnapshot module has generated a new set of data to be parsed.
+  // the DataSnapshot module has generated a new set of data to be scanned.
   //
   $expire = $regiondata->getElementsByTagName("expire")->item(0)->nodeValue;
   $next = $now + $expire;
@@ -286,8 +308,8 @@ function parse($hostname, $port, $xml)
   }
 }
 
-$sql = "SELECT host, port FROM hostsregister LIMIT 0,100";
 // $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
+$sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 LIMIT 0,100";
 $jobsearch = $SearchDB->query($sql);
 
 //
@@ -303,6 +325,6 @@ if ($jobsearch->rowCount() == 0)
 }
 
 while ($jobs = $jobsearch->fetch(PDO::FETCH_NUM))
-CheckHost($jobs[0], $jobs[1]);
+hostCheck($jobs[0], $jobs[1]);
 
 die();

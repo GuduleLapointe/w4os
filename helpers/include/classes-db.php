@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * New database class using PDO, replaces DB class using mysqli
+ */
 class OSPDO extends PDO {
 	public function __construct($dsn, $username=null, $password=null, $driver_options=null)
 	{
 		try {
 			parent::__construct($dsn, $username, $password, $driver_options);
-		  // $OpenSimDB = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=no' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
-		  // $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		  $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 		catch(PDOException $e)
 		{
@@ -38,19 +40,9 @@ class OSPDO extends PDO {
 	}
 }
 
-// Attempt to connect to the database
-try {
-  $SearchDB = new PDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-  header("HTTP/1.0 500 Internal Server Error");
-  error_log(__FILE__ . " Could not connect to the database");
-  die();
-}
-
-
+/**
+ * deprecated, use OSPDO class instead
+ */
 class DB
 {
 	var $Host 	  = null;				// Hostname of our MySQL server
@@ -340,5 +332,4 @@ class DB
 	{
     	ini_set('mysql.connect_timeout', $this->Timeout);
 	}
-
 }

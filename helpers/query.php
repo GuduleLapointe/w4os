@@ -17,59 +17,13 @@
  */
 
 require_once('include/wp-config.php');
-require_once('include/ossearch_db.php');
-
-if( ! tableExists($SearchDB, [ 'parcels', 'popularplaces', 'events', 'parcelsales' ] )) {
-  die();
-}
-
-try {
-  $OpenSimDB = new PDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
-  $SearchDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-  header("HTTP/1.0 500 Internal Server Error");
-  error_log(__FILE__ . " Could not connect to the database");
-  die();
-}
-
-if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
-  die();
-}
-
-function join_terms($glue, $terms, $deprecated = true) {
-  if(empty($terms)) return "";
-  return "(" . join($glue, $terms) . ")";
-}
-
-function buildTypeConditions($flags)
-{
-    $terms = array();
-
-    if ($flags & 16777216)  //IncludePG (1 << 24)
-        $terms[] = "mature = 'PG'";
-    if ($flags & 33554432)  //IncludeMature (1 << 25)
-        $terms[] = "mature = 'Mature'";
-    if ($flags & 67108864)  //IncludeAdult (1 << 26)
-        $terms[] = "mature = 'Adult'";
-
-    return join_terms(" OR ", $terms);
-}
+require_once('include/search.php');
 
 #
 # The XMLRPC server object
 #
 
 $xmlrpc_server = xmlrpc_server_create();
-
-function xmlRpcDie($message = "") {
-  echo xmlrpc_encode(array(
-    'success'      => false,
-    'errorMessage' => $message,
-  ));
-  die;
-}
 
 #
 # Places Query
@@ -88,29 +42,28 @@ function dir_places_query($method_name, $params, $app_data)
   if (!is_int($query_start)) $query_start = 0;
 
   $pieces = explode(" ", $text);
+  array_filter($pieces);
   $text = join("%", $pieces);
-
-  if(empty($text) || $text == '%%%') xmlRpcDie('Invalid search terms'); // die
-
   $text = "%$text%";
+  if(empty($text) || $text == '%%%') xmlDie('Invalid search terms');
 
   $terms = array();
   $sqldata = array();
 
+  // order by traffic or by parcename
   $order = ($flags & 1024) ? "dwell DESC, parcelname": 'parcelname';
 
   $terms[] = "(parcelname LIKE :text OR description LIKE :text)";
-  $type = buildTypeConditions($flags);
+  $type = buildMatureConditions($flags);
   if(!empty($type)) $terms[] = "$type";
   if($category > 0) $terms[] = "searchcategory = :cat";
 
-  $query = $SearchDB->prepare("SELECT * FROM parcels WHERE " . join(' AND ', $terms) . " ORDER BY :order LIMIT $query_start,101");
-  $result = $query->execute( array(
+  $query = $SearchDB->prepareAndExecute("SELECT * FROM parcels WHERE " . join(' AND ', $terms) . " ORDER BY :order LIMIT $query_start,101",
+  array(
     ':text' => $text,
     ':order'  => $order,
     ':cat' => $category,
   ));
-
   $data = array();
   while ($row = $query->fetch(PDO::FETCH_ASSOC))
   {
@@ -123,23 +76,24 @@ function dir_places_query($method_name, $params, $app_data)
     );
   }
 
-  $response_xml = xmlrpc_encode(array(
-    'success'      => true,
-    'errorMessage' => "",
-    'data' => $data
-  ));
-  print $response_xml;
+  // $response_xml = xmlrpc_encode(array(
+  //   'success'      => true,
+  //   'errorMessage' => "",
+  //   'data' => $data
+  // ));
+  // print $response_xml;
+  xmlResponse(true, '', $data);
   die();
 }
 
 #
 # Popular Places Query
 #
-
 xmlrpc_server_register_method($xmlrpc_server, "dir_popular_query", "dir_popular_query");
 function dir_popular_query($method_name, $params, $app_data)
 {
     global $SearchDB;
+    error_log(__FUNCTION__);
 
     $req         = $params[0];
 
@@ -150,18 +104,13 @@ function dir_popular_query($method_name, $params, $app_data)
     $terms = array();
     $sqldata = array();
 
-    if ($flags & 0x1000)    //PicturesOnly (1 << 12)
-        $terms[] = "has_picture = 1";
-
-    if ($flags & 0x0800)    //PgSimsOnly (1 << 11)
-        $terms[] = "mature = 0";
+    if ($flags & pow(2,12)) $terms[] = "has_picture = 1";
+    if ($flags & pow(2,11)) $terms[] = "mature = 0";     //PgSimsOnly (1 << 11)
 
     if ($text != "")
     {
         $terms[] = "(name LIKE :text)";
-
-        $text = "%text%";
-        $sqldata['text'] = $text;
+        $sqldata['text'] = "%$text%";
     }
 
     if (count($terms) > 0)
@@ -215,20 +164,20 @@ function dir_land_query($method_name, $params, $app_data)
   if ($type != 4294967295)    //Include all types of land?
   {
     //Do this check first so we can bail out quickly on Auction search
-    if (($type & 26) == 2) xmlRpcDie("No auctions listed"); // Auction (from SearchTypeFlags enum)
+    if (($type & 26) == 2) xmlDie("No auctions listed"); // Auction (from SearchTypeFlags enum)
 
     if (($type & 24) == 8) $terms[] = "parentestate = 1"; // Mainland (24=0x18 [bits 3 & 4])
     if (($type & 24) == 16) $terms[] = "parentestate <> 1"; // Estate (24=0x18 [bits 3 & 4])
   }
 
-  $typeCondition = buildTypeConditions($flags);
+  $typeCondition = buildMatureConditions($flags);
   if (!empty($typeCondition != "")) $terms[] = $typeCondition;
-    if ($flags & 0x100000)  //LimitByPrice (1 << 20)
+    if ($flags & pow(2, 20))  //LimitByPrice (1 << 20)
     {
         $terms[] = "saleprice <= :price";
         $sqldata['price'] = $price;
     }
-    if ($flags & 0x200000)  //LimitByArea (1 << 21)
+    if ($flags & pow(2, 21))  //LimitByArea (1 << 21)
     {
         $terms[] = "area >= :area";
         $sqldata['area'] = $area;
@@ -238,14 +187,10 @@ function dir_land_query($method_name, $params, $app_data)
     //It doesn't hurt to have this as the default search order.
     $order = "lsq";     //PerMeterSort (1 << 17)
 
-    if ($flags & 0x80000)   //NameSort (1 << 19)
-        $order = "parcelname";
-    if ($flags & 0x10000)   //PriceSort (1 << 16)
-        $order = "saleprice";
-    if ($flags & 0x40000)   //AreaSort (1 << 18)
-        $order = "area";
-    if (!($flags & 0x8000)) //SortAsc (1 << 15)
-        $order .= " DESC";
+    if ($flags & pow(2, 19)) $order = "parcelname";
+    if ($flags & pow(2, 16)) $order = "saleprice";
+    if ($flags & pow(2, 18)) $order = "area";
+    if (!($flags & pow(2, 15))) $order .= " DESC";
 
     if (count($terms) > 0) $where = " WHERE " . join(" AND ", $terms);
     else $where = "";
@@ -352,16 +297,10 @@ function dir_events_query($method_name, $params, $app_data)
     }
 
     $type = array();
-    if ($flags & 16777216)  //IncludePG (1 << 24)
-        $type[] = "eventflags = 0";
-    if ($flags & 33554432)  //IncludeMature (1 << 25)
-        $type[] = "eventflags = 1";
-    if ($flags & 67108864)  //IncludeAdult (1 << 26)
-        $type[] = "eventflags = 2";
-
-    //Was there at least one PG, Mature, or Adult flag?
-    if (count($type) > 0)
-        $terms[] = join_terms(" OR ", $type);
+    if ($flags & pow(2, 24)) $type[] = "eventflags = 0"; //IncludePG (1 << 24)
+    if ($flags & pow(2, 25)) $type[] = "eventflags = 1"; //IncludeMature (1 << 25)
+    if ($flags & pow(2, 26)) $type[] = "eventflags = 2"; //IncludeAdult (1 << 26)
+    if (count($type) > 0) $terms[] = join_terms(" OR ", $type);
 
     if ($search_text != "")
     {
@@ -416,12 +355,13 @@ function dir_events_query($method_name, $params, $app_data)
 # Classifieds Query
 #
 
-xmlrpc_server_register_method($xmlrpc_server, "dir_classified_query",
-        "dir_classified_query");
-
+xmlrpc_server_register_method($xmlrpc_server, "dir_classified_query", "dir_classified_query");
 function dir_classified_query ($method_name, $params, $app_data)
 {
-    global $OpenSimDB;
+  $OpenSimDB = new OSPDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+  if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
+    die();
+  }
 
     $req            = $params[0];
 
@@ -432,14 +372,8 @@ function dir_classified_query ($method_name, $params, $app_data)
 
     if ($text == "%%%")
     {
-        $response_xml = xmlrpc_encode(array(
-                'success'      => False,
-                'errorMessage' => "Invalid search terms"
-        ));
-
-        print $response_xml;
-
-        return;
+      xmlResponse(false, "Invalid search terms", []);
+      return;
     }
 
     $terms = array();
@@ -447,70 +381,50 @@ function dir_classified_query ($method_name, $params, $app_data)
 
     //Renew Weekly flag is bit 5 (32) in $flags.
     $f = array();
-    if ($flags & 4)     //PG (1 << 2)
-        $f[] = "classifiedflags & 4 = 4";
-    if ($flags & 8)     //Mature (1 << 3)
-        $f[] = "classifiedflags & 8 = 8";
-    if ($flags & 64)    //Adult (1 << 6)
-        $f[] = "classifiedflags & 64 = 64";
-
-    //Was there at least one PG, Mature, or Adult flag?
-    if (count($f) > 0)
-        $terms[] = join_terms(" OR ", $f);
+    if ($flags & 4) $f[] = "classifiedflags & 4"; // PG (1 << 2)
+    if ($flags & 8) $f[] = "classifiedflags & 8"; // Mature (1 << 3)
+    if ($flags & 64) $f[] = "classifiedflags & 64"; // Adult (1 << 6)
+    if (count($f) > 0) $terms[] = join_terms(" OR ", $f);
 
     //Only restrict results based on category if it is not 0 (Any Category)
-    if ($category > 0)
-    {
-        $terms[] = "category = :category";
-
-        $sqldata['category'] = $category;
-    }
+    if ($category > 0) $terms[] = "category = $category";
 
     if ($text != "")
     {
-        $terms[] = "(name LIKE :text1" .
-                   " OR description LIKE :text2)";
-
-        $text = "%$text%";
-        $sqldata['text1'] = $text;
-        $sqldata['text2'] = $text;
+        $terms[] = "(name LIKE :text OR description LIKE :text)";
+        $sqldata['text'] = "%$text%";
     }
 
     //Was there at least condition for the search?
-    if (count($terms) > 0)
-        $where = " WHERE " . join(" AND ", $terms);
-    else
-        $where = "";
+    if (count($terms) > 0) $where = " WHERE " . join(" AND ", $terms);
+    else $where = "";
 
     //Prevent SQL injection by checking that $query_start is a number
-    if (!is_int($query_start))
-         $query_start = 0;
+    if (!is_int($query_start)) $query_start = 0;
 
-    $sql = "SELECT * FROM classifieds" . $where .
-           " ORDER BY priceforlisting DESC" .
-           " LIMIT $query_start,101";
-    $query = $OpenSimDB->prepare($sql);
-
-    $result = $query->execute($sqldata);
+    $sql = "SELECT * FROM classifieds $where ORDER BY priceforlisting DESC LIMIT $query_start,101";
+    $query = $OpenSimDB->prepareAndExecute($sql, $sqldata);
 
     $data = array();
     while ($row = $query->fetch(PDO::FETCH_ASSOC))
     {
-        $data[] = array(
-                "classifiedid" => $row["classifieduuid"],
-                "name" => $row["name"],
-                "classifiedflags" => $row["classifiedflags"],
-                "creation_date" => $row["creationdate"],
-                "expiration_date" => $row["expirationdate"],
-                "priceforlisting" => $row["priceforlisting"]);
+      $data[] = array(
+        "classifiedid" => $row["classifieduuid"],
+        "name" => $row["name"],
+        "classifiedflags" => $row["classifiedflags"],
+        "creation_date" => $row["creationdate"],
+        "expiration_date" => $row["expirationdate"],
+        "priceforlisting" => $row["priceforlisting"],
+      );
     }
 
-    $response_xml = xmlrpc_encode(array(
-            'success'      => True,
-            'errorMessage' => "",
-            'data' => $data));
-
-    print $response_xml;
+    echo xmlResponse(true, NULL, $data);
+    // $response_xml = xmlrpc_encode(array(
+    //         'success'      => True,
+    //         'errorMessage' => "",
+    //         'data' => $data));
+    //
+    // print $response_xml;
 }
 
 #
