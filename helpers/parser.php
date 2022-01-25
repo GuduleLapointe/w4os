@@ -282,12 +282,17 @@ function hostScan($hostname, $port, $xml)
 
     foreach ($objects as $object)
     {
-      // $flags = $object->getElementsByTagName("flags")->item(0)->nodeValue; // unused
+      $objectname = $object->getElementsByTagName("title")->item(0)->nodeValue;
+      $location = $object->getElementsByTagName("location")->item(0)->nodeValue;
+      $parcelUUID = $object->getElementsByTagName("parceluuid")->item(0)->nodeValue;
+      $regionUUID = $object->getElementsByTagName("regionuuid")->item(0)->nodeValue;
+      // $flags = $object->getElementsByTagName("flags")->item(0)->nodeValue; // not implemented
+      // $image = $object->getElementsByTagName("image")->item(0)->nodeValue; // not implemented
       $SearchDB->insert('objects', array(
         'objectuuid' => $object->getElementsByTagName("uuid")->item(0)->nodeValue,
-        'parceluuid' => $object->getElementsByTagName("parcelUUID")->item(0)->nodeValue,
-        'location' => $object->getElementsByTagName("location")->item(0)->nodeValue,
-        'name' => $object->getElementsByTagName("title")->item(0)->nodeValue,
+        'parceluuid' => $parcelUUID,
+        'location' => $location,
+        'name' => $location,
         'description' => $object->getElementsByTagName("description")->item(0)->nodeValue,
         'regionuuid' => $object->getElementsByTagName("regionuuid")->item(0)->nodeValue,
       ));
