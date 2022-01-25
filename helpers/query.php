@@ -432,9 +432,7 @@ function dir_classified_query ($method_name, $params, $app_data)
 # Events Info Query
 #
 
-xmlrpc_server_register_method($xmlrpc_server, "event_info_query",
-        "event_info_query");
-
+xmlrpc_server_register_method($xmlrpc_server, "event_info_query", "event_info_query");
 function event_info_query($method_name, $params, $app_data)
 {
     global $SearchDB;
@@ -491,13 +489,10 @@ function event_info_query($method_name, $params, $app_data)
 #
 # Classifieds Info Query
 #
-
-xmlrpc_server_register_method($xmlrpc_server, "classifieds_info_query",
-        "classifieds_info_query");
-
+xmlrpc_server_register_method($xmlrpc_server, "classifieds_info_query", "classifieds_info_query");
 function classifieds_info_query($method_name, $params, $app_data)
 {
-    global $SearchDB;
+    global $OpenSimDB;
 
     $req            = $params[0];
 
