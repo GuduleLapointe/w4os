@@ -21,7 +21,7 @@
 
 require_once('include/wp-config.php');
 require_once('include/search.php');
-dontWait();
+// dontWait();
 
 $now = time();
 
@@ -67,7 +67,7 @@ function hostCheck($hostname, $port)
   if (!empty($xml)) hostScan($hostname, $port, $xml);
 }
 
-function hostScan($hostname, $port, $xml)
+function hostScan($hostname, $port, $xmlcontent)
 {
   global $SearchDB, $now;
   ///////////////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ function hostScan($hostname, $port, $xml)
   $objDOM->resolveExternals = false;
 
   //Don't try and scan if XML is invalid or we got an HTML 404 error.
-  if ($objDOM->loadXML($xml) == False) return;
+  if ($objDOM->loadXML($xmlcontent) == False) return;
 
   //
   // Get the region data to update
@@ -167,43 +167,43 @@ function hostScan($hostname, $port, $xml)
      * Read parcel info
      */
 
-    $parcel = $data->getElementsByTagName("parcel");
-    foreach ($parcel as $value)
+    $parcels = $data->getElementsByTagName("parcel");
+    foreach ($parcels as $parcel)
     {
-      $parcelname = $value->getElementsByTagName("name")->item(0)->nodeValue;
-      $parcelUUID = $value->getElementsByTagName("uuid")->item(0)->nodeValue;
-      $infoUUID = $value->getElementsByTagName("infouuid")->item(0)->nodeValue;
-      $landingpoint = $value->getElementsByTagName("location")->item(0)->nodeValue;
-      $parceldescription = $value->getElementsByTagName("description")->item(0)->nodeValue;
-      $parcelarea = $value->getElementsByTagName("area")->item(0)->nodeValue;
-      $searchcategory = $value->getAttributeNode("category")->nodeValue;
-      $saleprice = $value->getAttributeNode("salesprice")->nodeValue;
-      $dwell = $value->getElementsByTagName("dwell")->item(0)->nodeValue;
+      $parcelname = $parcel->getElementsByTagName("name")->item(0)->nodeValue;
+      $parcelUUID = $parcel->getElementsByTagName("uuid")->item(0)->nodeValue;
+      $infoUUID = $parcel->getElementsByTagName("infouuid")->item(0)->nodeValue;
+      $landingpoint = $parcel->getElementsByTagName("location")->item(0)->nodeValue;
+      $parceldescription = $parcel->getElementsByTagName("description")->item(0)->nodeValue;
+      $parcelarea = $parcel->getElementsByTagName("area")->item(0)->nodeValue;
+      $searchcategory = $parcel->getAttributeNode("category")->nodeValue;
+      $saleprice = $parcel->getAttributeNode("salesprice")->nodeValue;
+      $dwell = $parcel->getElementsByTagName("dwell")->item(0)->nodeValue;
 
       //The image tag will only exist if the parcel has a snapshot image
       $has_picture = 0;
-      $image_node = $value->getElementsByTagName("image");
+      $image_node = $parcel->getElementsByTagName("image");
       if ($image_node->length > 0) {
         $image = $image_node->item(0)->nodeValue;
         if ($image != NULL_KEY) $has_picture = 1;
       }
 
-      $owner = $value->getElementsByTagName("owner")->item(0);
+      $owner = $parcel->getElementsByTagName("owner")->item(0);
       $ownerUUID = $owner->getElementsByTagName("uuid")->item(0)->nodeValue;
 
       // Adding support for groups
-      $group = $value->getElementsByTagName("group")->item(0);
-      if ($group != "") $groupUUID = $group->getElementsByTagName("groupUUID")->item(0)->nodeValue;
-      else $groupUUID = NULL_KEY;
+      $group = $parcel->getElementsByTagName("group")->item(0);
+      if($group) $groupUUID = $group->getElementsByTagName("groupuuid")->item(0)->nodeValue;
+      if(empty($groupUUID)) $groupUUID = NULL_KEY;  // empty group, should it happen?
 
       //
       // Check bits on Public, Build, Script
       //
-      $parcelforsale = $value->getAttributeNode("forsale")->nodeValue;
-      $parceldirectory = $value->getAttributeNode("showinsearch")->nodeValue;
-      $parcelbuild = $value->getAttributeNode("build")->nodeValue;
-      $parcelscript = $value->getAttributeNode("scripts")->nodeValue;
-      $parcelpublic = $value->getAttributeNode("public")->nodeValue;
+      $parcelforsale = $parcel->getAttributeNode("forsale")->nodeValue;
+      $parceldirectory = $parcel->getAttributeNode("showinsearch")->nodeValue;
+      $parcelbuild = $parcel->getAttributeNode("build")->nodeValue;
+      $parcelscript = $parcel->getAttributeNode("scripts")->nodeValue;
+      $parcelpublic = $parcel->getAttributeNode("public")->nodeValue;
 
       //Prepare for the insert of data in to the popularplaces table. This gets
       //rid of any obsolete data for parcels no longer set to show in search.
