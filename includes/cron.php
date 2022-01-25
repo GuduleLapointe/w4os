@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
-if(get_option('w4os_provide_search') &! empty(get_option('w4os_search_url'))) {
+if(get_option('w4os_provide_search') && !empty(get_option('w4os_search_url'))) {
   if ( ! wp_next_scheduled( 'w4os_search_parser_cron' ) ) {
     add_action('init',function() {
       wp_schedule_event( time(), 'every_five_minutes', 'w4os_search_parser_cron' );
