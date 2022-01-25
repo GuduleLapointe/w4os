@@ -2,6 +2,7 @@
 
 add_action( 'template_include', 'w4os_template_include' );
 function w4os_template_include( $template ) {
+  global $wp_query;
   $plugindir = dirname( __DIR__ );
   $post_name = $wp_query->queried_object->post_name;
   $template_slug=str_replace('.php', '', basename($template));

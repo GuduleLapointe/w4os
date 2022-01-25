@@ -67,7 +67,7 @@ function w4os_gridinfo_block_render($args=[], $dumb="", $block_object=[]) {
 
 	return sprintf(
 		'<div>%s</div>',
-		w4os_gridinfo_html($atts, $args )
+		w4os_gridinfo_html(NULL, $args )
 	);
 }
 
@@ -82,6 +82,6 @@ function w4os_gridstatus_block_render($args=[], $dumb="", $block_object=[]) {
 
 	return sprintf(
 		'<div>%s</div>',
-		w4os_gridstatus_html($atts, $args )
+		w4os_gridstatus_html(NULL, $args )
 	);
 }

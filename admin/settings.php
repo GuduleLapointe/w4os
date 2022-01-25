@@ -536,7 +536,7 @@ function w4os_settings_field($args, $user = false) {
 			if($args['type']=='checkbox') $option_id = $field_id ."_" . $option_key;
 			else {
 				$option_id = $field_id;
-				$option_name = $args['description'];
+				$option_name = isset($args['description']) ? $args['description'] : '';
 				unset($args['description']);
 			}
 			if($user) $value = get_user_meta( $user->ID, $option_id, true );
