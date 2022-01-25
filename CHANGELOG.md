@@ -6,6 +6,8 @@
 * new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)
 * new currency helpers
 * added currency conversion rate setting
+* helpers migrated from old mysqli db connection method to PDO
+* dropped aurora and OpenSim 0.6 support
 * separate helpers settings page
 
 ### 2.2.10
