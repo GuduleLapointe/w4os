@@ -20,6 +20,10 @@ if(get_option('w4os_provide_economy_helpers') == true &! empty(W4OS_GRID_INFO['e
     $helper = preg_replace(":^$economy:", "", $url);
     require($helper);
     die();
+  } else if($url == $economy) {
+    // Probably the url check, just accept it
+    // TODO: redirect to support page if set
+    die();
   }
 }
 
