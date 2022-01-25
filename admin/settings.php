@@ -409,7 +409,7 @@ function w4os_register_settings() {
 						),
 						'w4os_podex_error_message' => array(
 							'label' => __('Podex redirect message', 'w4os'),
-							'default' => __('Please use our terminals in-world to proceed.', 'w4os'),
+							'default' => __('Please use our terminals in-world to proceed. Click OK to teleport to terminals region.', 'w4os'),
 						),
 						'w4os_podex_redirect_url' => array(
 							'label' => __('Podex redirect URL', 'w4os'),

@@ -66,11 +66,11 @@ function noserver_get_balance($agentID)
 
   $credits = $CurrencyDB->prepareAndExecute("SELECT SUM(amount) FROM ".CURRENCY_TRANSACTION_TBL." WHERE destId = :destId",
   array('destId' => $agentID,));
-  if($credits) list($received_sum) = $CurrencyDB->fetch();
+  if($credits) list($received_sum) = $credits->fetch();
 
   $debits = $CurrencyDB->prepareAndExecute("SELECT SUM(amount) FROM ".CURRENCY_TRANSACTION_TBL." WHERE sourceId = :sourceId",
   array('sourceId' => $agentID));
-  if ($debits) list($sent_sum) = $CurrencyDB->fetch();
+  if ($debits) list($sent_sum) = $debits->fetch();
 
 	$cash = (integer)$received_sum - (integer)$sent_sum;
 	return $cash;
@@ -348,8 +348,8 @@ function convert_to_real($amount)
 	# Get the currency conversion ratio in USD Cents per Money Unit
 	# Actually, it's whatever currency your credit card processor uses
 
-	$CurrencyDB->query("SELECT CentsPerMoneyUnit FROM ".CURRENCY_MONEY_TBL." limit 1");
-	list($CentsPerMoneyUnit) = $CurrencyDB->fetch();
+	$cents = $CurrencyDB->query("SELECT CentsPerMoneyUnit FROM ".CURRENCY_MONEY_TBL." limit 1");
+	list($CentsPerMoneyUnit) = $cents->fetch();
 	$CurrencyDB->close();
 
 	if (!$CentsPerMoneyUnit) $CentsPerMoneyUnit = 0;
@@ -405,11 +405,11 @@ function do_call($host, $port, $uri, $request)
 
 function opensim_get_avatar_session($agentID, &$deprecated=null)
 {
-  global $CurrencyDB;
+  global $OpenSimDB;
   if (!isUUID($agentID)) return null;
 
-  $query = $CurrencyDB->query("SELECT RegionID,SessionID,SecureSessionID FROM Presence WHERE UserID='$agentID'");
-  if ($query) list($RegionID, $SessionID, $SecureSessionID) = $query->fetch();
+  $result = $OpenSimDB->query("SELECT RegionID,SessionID,SecureSessionID FROM Presence WHERE UserID='$agentID'");
+  if ($result) list($RegionID, $SessionID, $SecureSessionID) = $result->fetch();
   else return array();
 
   $av_session['regionID']  = $RegionID;
@@ -440,7 +440,7 @@ function opensim_get_server_info($userid, &$deprecated=null)
     FROM GridUser INNER JOIN regions ON regions.uuid=GridUser.LastRegionID
     WHERE GridUser.UserID='$userid'"
   );
-  if ($result) list($serverip, $httpport, $serveruri, $secret) = $OpenSimDB->fetch();
+  if ($result) list($serverip, $httpport, $serveruri, $secret) = $result->fetch();
   else return array();
 
   $serverinfo["serverIP"] 	   = $serverip;
@@ -458,10 +458,10 @@ function opensim_check_secure_session($agentID, $regionid, $secure, &$deprecated
   $sql = "SELECT UserID FROM Presence WHERE UserID='$agentID' AND SecureSessionID='$secure'";
   if (isUUID($regionid)) $sql = $sql." AND RegionID='$regionid'";
 
-	$query = $OpenSimDB->query($sql);
-	if (!$query) return false;
+	$result = $OpenSimDB->query($sql);
+	if (!$result) return false;
 
-	list($UUID) = $query->fetch();
+	list($UUID) = $result->fetch();
 	if ($UUID!=$agentID) return false;
 	return true;
 }

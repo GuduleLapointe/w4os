@@ -37,7 +37,7 @@ define('CURRENCY_RATE', get_option('w4os_currency_rate', 10));
 define('CURRENCY_RATE_PER', get_option('w4os_currency_rate_per', 1000));
 
 // Group Module Access Keys
-// Please set same keys with at [Groups] section in OpenSim.ini (case of Aurora-Sim, it is Groups.ini)
+// Please set same keys with at [Groups] section in OpenSim.ini
 define('XMLGROUP_RKEY', '1234');	// Read Key
 define('XMLGROUP_WKEY', '1234');	// Write key
 
