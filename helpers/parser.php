@@ -21,7 +21,7 @@
 
 require_once('include/wp-config.php');
 require_once('include/search.php');
-// dontWait();
+dontWait();
 
 $now = time();
 
