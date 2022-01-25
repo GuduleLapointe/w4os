@@ -27,6 +27,24 @@ function isUUID($uuid, $nullok=false, $strict = false)
   return (preg_match('/^[0-9A-F]{8,8}-[0-9A-F]{4,4}-[0-9A-F]{4,4}-[0-9A-F]{4,4}-[0-9A-F]{12,12}$/i', $uuid));
 }
 
+function  make_random_hash()
+{
+ 	$ret = sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',
+  mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),
+ 													  mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff));
+	return $ret;
+}
+
+function  make_random_guid()
+{
+	$uuid = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+					  mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+					  mt_rand( 0, 0x0fff ) | 0x4000,
+					  mt_rand( 0, 0x3fff ) | 0x8000,
+		   			  mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ) );
+	return $uuid;
+}
+
 /**
  * Format destination uri as a valid local or hypergrid link url
  *

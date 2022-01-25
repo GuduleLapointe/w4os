@@ -96,8 +96,7 @@
  function  opensim_set_voice_mode($region, $mode, &$db=null)
 
 // for Currency
- function opensim_set_currency_transaction($sourceId, $destId, $amount, $type, $flags, $description, &$db=null)
- function opensim_set_currency_balance($uuid, $amount, &$db=null)
+ function opensim_save_transaction($sourceId, $destId, $amount, $type, $flags, $description, &$db=null)
  function opensim_get_currency_balance($uuid, &$db=null)
 
 // Tools
@@ -166,26 +165,6 @@ function  opensim_new_db($timeout=60)
 
 
 
-function  opensim_get_db_version(&$db=null)
-{
-	global $OpenSimVersion;
-
-	if (!is_object($db)) $db = opensim_new_db();
-
-	$ver = null;
-	if ($db->exist_table('GridUser')) {
-		$ver = OPENSIM_V07;
-	}
-	else if ($db->exist_table('users')) {
-		$ver = OPENSIM_V06;
-	}
-	else if ($db->exist_field('userinfo', 'UserID')) {
-		$ver = AURORASIM;
-	}
-
-	$OpenSimVersion = $ver;
-	return $ver;
-}
 
 
 
@@ -2403,4 +2382,64 @@ function GetURL($host, $port, $url)
 
     curl_close($ch);
     return "";
+}
+
+function j2k_to_tga($file, $iscopy=true)
+{
+	if (!file_exists($file)) return false;
+
+	$com_totga = get_j2k_to_tga_command();
+	if ($com_totga=='') return false;
+
+	if ($iscopy) $ret = copy  ($file, $file.'.j2k');
+	else 		 $ret = rename($file, $file.'.j2k');
+	if (!$ret) return false;
+
+	exec("$com_totga -i $file.j2k -o $file.tga 1>/dev/null 2>&1");
+	unlink($file.'.j2k');
+
+	return true;
+}
+
+function get_j2k_to_tga_command()
+{
+	$command = find_command_path('j2k_to_image');
+	return $command;
+}
+
+function get_image_size_convert_command($xsize, $ysize)
+{
+	if (!is_numeric($xsize) or !is_numeric($ysize)) return '';
+
+	$command = find_command_path('convert');
+	if ($command=='') return '';
+
+	$prog = $command.' - -geometry '.$xsize.'x'.$ysize.'! -';
+	return $prog;
+}
+
+function find_command_path($command)
+{
+	$path = '';
+	if (file_exists('/usr/local/bin/'.$command))	  $path = '/usr/local/bin/';
+	else if (file_exists('/usr/bin/'.$command))		  $path = '/usr/bin/';
+	else if (file_exists('/usr/X11R6/bin/'.$command)) $path = '/usr/X11R6/bin/';
+	else if (file_exists('/bin/'.$command))			  $path = '/bin/';
+	else return '';
+
+	return $path.$command;
+}
+
+function isAlphabetNumeric($str, $nullok=false)
+{
+	if ($str!='0' and $str==null) return $nullok;
+	if (!preg_match('/^\w+$/', $str)) return false;
+	return true;
+}
+
+function isAlphabetNumericSpecial($str, $nullok=false)
+{
+	if ($str!='0' and $str==null) return $nullok;
+	if (!preg_match('/^[_a-zA-Z0-9 &@%#\-\.]+$/', $str)) return false;
+	return true;
 }
