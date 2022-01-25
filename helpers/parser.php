@@ -124,27 +124,23 @@ function hostScan($hostname, $port, $xmlcontent)
 
     /*
      * First, check if we already have a region that is the same
-     *
-     * "region" table conflicts with OpenSim region table. This table could be
-     * renamed, but as for now it's not used anywhere else, so we ignore it.
      */
 
-    // $check = $SearchDB->prepare("SELECT * FROM search_regions WHERE regionUUID = ?");
-    // $check->execute( array($regionUUID) );
-    //
-    // if ($check->rowCount() > 0)
-    // {
-    // $query = $SearchDB->prepare("DELETE FROM search_regions WHERE regionUUID = ?");
-    // $query->execute( array($regionUUID) );
-    $query = $SearchDB->prepare("DELETE FROM parcels WHERE regionUUID = ?");
-    $query->execute( array($regionUUID) );
-    $query = $SearchDB->prepare("DELETE FROM allparcels WHERE regionUUID = ?");
-    $query->execute( array($regionUUID) );
-    $query = $SearchDB->prepare("DELETE FROM parcelsales WHERE regionUUID = ?");
-    $query->execute( array($regionUUID) );
-    $query = $SearchDB->prepare("DELETE FROM objects WHERE regionuuid = ?");
-    $query->execute( array($regionUUID) );
-    // }
+    // <tl;tr> To avoid data loss, fatal errors or conflicts, we ignore regions
+    // table if it seems to be from robust database. For obscure and historical
+    // reasons, search regions table has the same name as robust regions table,
+    // although it has a different structure and a different purpose. It could
+    // be renamed but some developers are reluctant to do it.
+    $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
+    if($formatCheck->rowCount() == 0) $saveregions = true;
+
+    if($saveregions) {
+      $SearchDB->prepareAndExecute("DELETE FROM regions WHERE regionUUID = ?", [$regionUUID] );
+    }
+    $SearchDB->prepareAndExecute("DELETE FROM parcels WHERE regionUUID = ?", [$regionUUID] );
+    $SearchDB->prepareAndExecute("DELETE FROM allparcels WHERE regionUUID = ?", [$regionUUID] );
+    $SearchDB->prepareAndExecute("DELETE FROM parcelsales WHERE regionUUID = ?", [$regionUUID] );
+    $SearchDB->prepareAndExecute("DELETE FROM objects WHERE regionuuid = ?", [$regionUUID] );
 
     $data = $region->getElementsByTagName("data")->item(0);
     $estate = $data->getElementsByTagName("estate")->item(0);
@@ -153,15 +149,19 @@ function hostScan($hostname, $port, $xmlcontent)
     $useruuid = $estate->getElementsByTagName("uuid")->item(0)->nodeValue;
 
     /*
-     * Second, add the new info to the database
-     *
-     * (same as above, regions table conflict, ignore it)
+     * Second, add the new info to the database again
      */
-    // $query = $SearchDB->prepare("INSERT INTO search_regions VALUES(:r_name, :regionUUID, " .
-    //                       ":r_handle, :url, :u_name, :u_uuid)");
-    // $query->execute( array("r_name" => $regionname, 'regionUUID' => $regionUUID,
-    //                         "r_handle" => $regionhandle, 'url' => $url,
-    //                         "u_name" => $username, "u_uuid" => $useruuid) );
+
+    if($saveregions) { // <tl;tr> Ignore if from robust database
+      $SearchDB->insert('regions',array(
+        'regionname' => $regionname,
+        'regionUUID' => $regionUUID,
+        'regionhandle' => $regionhandle,
+        'url' => $url,
+        'owner' => $username,
+        'ownerUUID' => $useruuid,
+      ));
+    }
 
     /*
      * Read parcel info
