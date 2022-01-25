@@ -197,4 +197,25 @@ function hostUnregister($hostname, $port) {
       'port' => $port,
     )
   );
+
+  $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
+  if($formatCheck->rowCount() == 0) $saveregions = true;
+  if($saveregions) {
+    $query = $SearchDB->prepareAndExecute("SELECT regionUUID FROM regions WHERE url = ?",
+    [ "http://$hostname:$port/"] );
+    // TODO: make similar request on robust database if $saveregions == false or nothing found
+    if($query) {
+      $regions=$query->fetchAll();
+      foreach($regions as $region) {
+        $regionUUID = $region[0];
+        // TODO: query parcels and delete related popularplaces
+        // $SearchDB->prepareAndExecute("DELETE FROM popularplaces WHERE parcelUUID = ?", [$parcelUUID] );
+        $SearchDB->prepareAndExecute("DELETE FROM parcels WHERE regionUUID = ?", [$regionUUID] );
+        $SearchDB->prepareAndExecute("DELETE FROM allparcels WHERE regionUUID = ?", [$regionUUID] );
+        $SearchDB->prepareAndExecute("DELETE FROM parcelsales WHERE regionUUID = ?", [$regionUUID] );
+        $SearchDB->prepareAndExecute("DELETE FROM objects WHERE regionuuid = ?", [$regionUUID] );
+        if($saveregions) $SearchDB->prepareAndExecute("DELETE FROM regions WHERE regionUUID = ?", [$regionUUID] );
+      }
+    }
+  }
 }
