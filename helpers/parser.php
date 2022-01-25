@@ -284,7 +284,7 @@ function hostScan($hostname, $port, $xml)
     {
       // $flags = $object->getElementsByTagName("flags")->item(0)->nodeValue; // unused
       $SearchDB->insert('objects', array(
-        'uuid' => $object->getElementsByTagName("uuid")->item(0)->nodeValue,
+        'objectuuid' => $object->getElementsByTagName("uuid")->item(0)->nodeValue,
         'parceluuid' => $object->getElementsByTagName("parcelUUID")->item(0)->nodeValue,
         'location' => $object->getElementsByTagName("location")->item(0)->nodeValue,
         'name' => $object->getElementsByTagName("title")->item(0)->nodeValue,
