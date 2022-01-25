@@ -123,7 +123,7 @@ add_filter( 'login_errors', function( $error ) {
 
 add_action( 'template_include', function( $template ) {
   global $wp_query;
-  if($wp_query->queried_object->post_name != get_option('w4os_profile_slug')) return $template;
+  if(isset($wp_query->queried_object->post_name)) && $wp_query->queried_object->post_name != get_option('w4os_profile_slug')) return $template;
   // echo "post_name " . $wp_query->queried_object->post_name;
 
   if ( isset($_REQUEST['w4os_update_avatar'] ) ) {

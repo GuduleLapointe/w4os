@@ -4,7 +4,7 @@ add_action( 'template_include', 'w4os_template_include' );
 function w4os_template_include( $template ) {
   global $wp_query;
   $plugindir = dirname( __DIR__ );
-  $post_name = $wp_query->queried_object->post_name;
+  $post_name = (isset($wp_query->queried_object->post_name)) ? $wp_query->queried_object->post_name : '';
   $template_slug=str_replace('.php', '', basename($template));
   $post_type_slug=get_post_type();
   $custom = "$plugindir/templates/$template_slug-$post_name.php";
@@ -19,7 +19,7 @@ function w4os_the_content ( $content ) {
   if(function_exists('wc_print_notices')) wc_print_notices();
   $plugindir = dirname( __DIR__ );
   $post_type_slug=get_post_type();
-  $post_name = $wp_query->queried_object->post_name;
+  $post_name = (isset($wp_query->queried_object->post_name)) ? $wp_query->queried_object->post_name : '';
   $template_slug=str_replace('.php', '', basename($template));
   $custom_slug = "content-$post_type_slug-$post_name";
   $custom = "$plugindir/templates/$custom_slug.php";

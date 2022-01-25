@@ -889,7 +889,7 @@ function w4os_gridprofile_block_render($args=[], $dumb="", $block_object=[]) {
 	$args['title'] = __('Grid profile', 'w4os');
 	return sprintf(
 		'<div>%s</div>',
-		w4os_gridprofile_html($atts, $args )
+		w4os_gridprofile_html(NULL, $args )
 	);
 }
 

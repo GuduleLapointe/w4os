@@ -125,9 +125,10 @@ if(get_option('w4os_rewrite_rules') || get_option('w4os_rewrite_version') != W4O
 }
 
 
-add_filter( 'body_class','mes_classes_body' );
-function mes_classes_body( $classes ) {
+add_filter( 'body_class','w4os_css_classes_body' );
+function w4os_css_classes_body( $classes ) {
   $post=get_post();
+  if(!$post) return array();
   $helper = array_search($post->guid, W4OS_GRID_INFO);
   if(!empty($helper)) {
     $classes[] = 'w4os-' . $helper;
