@@ -135,7 +135,7 @@ function buy_currency($method_name, $params, $app_data)
 			break;
 
 			case 'gloebit':
-			if(GLOEBIT_SANDBOX) {
+			if(defined(GLOEBIT_SANDBOX) && GLOEBIT_SANDBOX) {
         $baseurl="https://sandbox.gloebit.com/purchase";
       } else {
         $baseurl="https://www.gloebit.com/purchase";
@@ -146,15 +146,15 @@ function buy_currency($method_name, $params, $app_data)
 
       $informurl="http://${serverip}:${httpport}/gloebit/buy_complete?agentId=${agentid}";
       $errorURI="${baseurl}?reset&r=&inform=$informurl";
-			$errorMessage = "We need to bring you to Gloebit website do finish the transaction";
+			$errorMessage = "Click OK to finish the transaction on Gloebit website.";
 			break;
 
 			default:
-			$errorMessage = 'Unable to process the transaction. The gateway denied your charge';
+			$errorMessage = 'Unable to process the transaction. The gateway denied your charge. Open help page?';
 			$errorURI = empty(W4OS_GRID_INFO['help']) ? SYSURL : W4OS_GRID_INFO['help'];
 		}
 		$response_xml = xmlrpc_encode(array('success'	  => False,
-		'errorMessage'=> "\n\n" . $errorMessage,
+		'errorMessage'=> $errorMessage,
 		'errorURI'	  => $errorURI));
 	}
 
