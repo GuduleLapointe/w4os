@@ -20,13 +20,10 @@
 require_once('functions.php');
 
 if (defined('CURRENCY_DB_HOST')) {
-  error_log(CURRENCY_DB_HOST . ';dbname=' . CURRENCY_DB_NAME . ',' . CURRENCY_DB_USER. ',' . CURRENCY_DB_PASS);
-
   $CurrencyDB = new OSPDO('mysql:host=' . CURRENCY_DB_HOST . ';dbname=' . CURRENCY_DB_NAME, CURRENCY_DB_USER, CURRENCY_DB_PASS);
 } else {
   $CurrencyDB = &$OpenSimDB;
 }
-if ($OpenSimVersion==null) opensim_get_db_version();
 
 function noserver_save_transaction($sourceId, $destId, $amount, $type, $flags, $desc, $prminvent, $nxtowner, $ip)
 {
@@ -437,46 +434,14 @@ function opensim_set_current_region($agentID, $regionid, &$deprecated=null)
 function opensim_get_server_info($userid, &$deprecated=null)
 {
   global $OpenSimDB;
-
-
   if (!isUUID($userid)) return array();
 
-  switch($OpenSimVersion) {
-    case OPENSIM_V07:
-    $result = $OpenSimDB->query("SELECT serverIP,serverHttpPort,serverURI,regionSecret
-      FROM GridUser INNER JOIN regions ON regions.uuid=GridUser.LastRegionID
-      WHERE GridUser.UserID='$userid'"
-    );
-    if ($result) list($serverip, $httpport, $serveruri, $secret) = $OpenSimDB->fetch();
-    else return array();
-    break;
-
-    case OPENSIM_V06:
-    $sql = "SELECT serverIP,serverHttpPort,serverURI,regionSecret FROM agents
-    INNER JOIN regions ON regions.uuid=agents.currentRegion WHERE agents.UUID='$userid'";
-    $result = $OpenSimDB->query($sql);
-    if ($result) list($serverip, $httpport, $serveruri, $secret) = $OpenSimDB->fetch();
-    else return array();
-    break;
-
-    case AURORASIM:
-    $sql = "SELECT gridregions.Info FROM userinfo,gridregions
-    WHERE UserID='$userid' AND userinfo.CurrentRegionID=gridregions.RegionUUID";
-    $result = $OpenSimDB->query($sql);
-    if ($result) {
-      list($regioninfo) = $OpenSimDB->fetch();
-      $info = aurora_split_key_value($regioninfo);		// from functions-opensim.php
-      $serverip  = gethostbyname($info["serverIP"]);
-      $httpport  = $info["serverHttpPort"];
-      $serveruri = $info["serverURI"];
-      $secret	= null;
-    }
-    else return array();
-    break;
-
-    default:
-    return array();
-  }
+  $result = $OpenSimDB->query("SELECT serverIP,serverHttpPort,serverURI,regionSecret
+    FROM GridUser INNER JOIN regions ON regions.uuid=GridUser.LastRegionID
+    WHERE GridUser.UserID='$userid'"
+  );
+  if ($result) list($serverip, $httpport, $serveruri, $secret) = $OpenSimDB->fetch();
+  else return array();
 
   $serverinfo["serverIP"] 	   = $serverip;
   $serverinfo["serverHttpPort"] = $httpport;
@@ -488,29 +453,10 @@ function opensim_get_server_info($userid, &$deprecated=null)
 function opensim_check_secure_session($agentID, $regionid, $secure, &$deprecated=null)
 {
   global $OpenSimDB;
-
-
 	if (!isUUID($agentID) or !isUUID($secure)) return false;
 
-	switch($OpenSimVersion) {
-    case OPENSIM_V07:
-		$sql = "SELECT UserID FROM Presence WHERE UserID='$agentID' AND SecureSessionID='$secure'";
-		if (isUUID($regionid)) $sql = $sql." AND RegionID='$regionid'";
-    break;
-
-    case OPENSIM_V06:
-		$sql = "SELECT UUID FROM agents WHERE UUID='$agentID' AND secureSessionID='$secure' AND agentOnline='1'";
-		if (isUUID($regionid)) $sql = $sql." AND currentRegion='$regionid'";
-    break;
-
-    case AURORASIM:
-		$sql = "SELECT UUID FROM tokens,userinfo WHERE UUID='$agentID' AND UUID=UserID AND token='$secure' AND IsOnline='1'";
-		if (isUUID($regionid)) $sql = $sql." AND CurrentRegionID='$regionid'";
-    break;
-
-    default:
-    return false;
-  }
+  $sql = "SELECT UserID FROM Presence WHERE UserID='$agentID' AND SecureSessionID='$secure'";
+  if (isUUID($regionid)) $sql = $sql." AND RegionID='$regionid'";
 
 	$query = $OpenSimDB->query($sql);
 	if (!$query) return false;
@@ -523,112 +469,18 @@ function opensim_check_secure_session($agentID, $regionid, $secure, &$deprecated
 function opensim_check_region_secret($regionID, $secret, &$deprecated=null)
 {
   global $OpenSimDB, $CurrencyDB;
-
-
 	if (!isUUID($regionID)) return false;
 
-	switch($OpenSimVersion) {
-    case OPENSIM_V07:
-    case OPENSIM_V06:
-		$result = $OpenSimDB->prepareAndExecute("SELECT UUID FROM regions WHERE UUID=:uuid AND regionSecret=:regionSecret", array(
-      'uuid' => $regionID,
-      'regionSecret' => $secret,
-    ));
-		if ($result) {
-			list($UUID) = $result->fetch();
-			if ($UUID==$regionID) return true;
-		}
-    break;
-
-    case AURORASIM:
-		$result = $CurrencyDB->query("SELECT RegionInfo FROM userinfo,simulator WHERE UserID=:UserID AND CurrentRegionID=simulator.RegionID", array(
-      'UserID' => $userid,
-    ));
-		if ($result) {
-			list($regioninfo) = $result->fetch();
-			$info = aurora_split_key_value($regioninfo);		// from functions-opensim.php
-			if ($secret==$info["password"]) return true;
-		}
-    break;
-	}
+  $result = $OpenSimDB->prepareAndExecute("SELECT UUID FROM regions WHERE UUID=:uuid AND regionSecret=:regionSecret", array(
+    'uuid' => $regionID,
+    'regionSecret' => $secret,
+  ));
+  if ($result) {
+    list($UUID) = $result->fetch();
+    if ($UUID==$regionID) return true;
+  }
 
 	return false;
-}
-
-function opensim_get_db_version(&$deprecated=null)
-{
-  global $OpenSimDB;
-
-
-	if (tableExists($OpenSimDB, [ 'GridUser' ])) $OpenSimVersion = OPENSIM_V07;
-  else if (tableExists($OpenSimDB, [ 'users' ])) $OpenSimVersion = OPENSIM_V06;
-  else if (tableExists($OpenSimDB, [ 'UserID' ])) $OpenSimVersion = AURORASIM;
-  else {
-    error_log('Invalid OpenSimulator database');
-    die();
-  }
-	return $OpenSimVersion;
-}
-
-function aurora_split_key_value($str)
-{
-	$info = array();
-	$str  = trim($str);
-
-	if (substr($str, 0, 1)=='{' and substr($str, -1)=='}') {
-		$str = substr($str, 1, -1);
-		$inbrkt = 0;
-		$inquot = false;
-		$inkkko = false;
-		$isakey = true;
-		$key    = "";
-		$val    = "";
-
-		for ($i=0; $i<strlen($str); $i++) {
-			$cc = substr($str, $i, 1);
-
-			if ($inbrkt==0 and !$inquot and ($cc=='"' or $cc=='\'')) {
-				$inquot = true;
-			}
-			else if ($inbrkt==0 and $inquot and ($cc=='"' or $cc=='\'')) {
-				$inquot = false;
-			}
-			else if ($inbrkt==0 and $isakey  and !$inquot and !$inkkko and $cc==':') {
-				$isakey = false;
-			}
-			else if ($inbrkt==0 and !$isakey and !$inquot and !$inkkko and $cc==',') {
-				if (substr($val, 0, 1)=='{' and substr($val, -1)=='}') {
-					$info[$key] = aurora_split_key_value($val);
-				}
-				else $info[$key] = $val;
-
-				$isakey = true;
-				$key    = "";
-				$val    = "";
-			}
-			else {
-				if      ($cc=='{') $inbrkt++;
-				else if ($cc=='}') $inbrkt--;
-				else {
-					if      ($inbrkt==0 and !$inkkko and $cc=='[') $inkkko = true;
-					else if ($inbrkt==0 and $inkkko  and $cc==']') $inkkko = false;
-				}
-
-				if ($isakey) $key .= $cc;
-				else         $val .= $cc;
-			}
-		}
-
-		//
-		if ($key!="") {
-			if (substr($val, 0, 1)=='{' and substr($val, -1)=='}') {
-				$info[$key] = aurora_split_key_value($val);
-			}
-			else $info[$key] = $val;
-		}
-	}
-
-	return $info;
 }
 
 function user_alert($agentID, $message, $secureID=null)

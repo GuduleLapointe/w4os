@@ -2443,3 +2443,78 @@ function isAlphabetNumericSpecial($str, $nullok=false)
 	if (!preg_match('/^[_a-zA-Z0-9 &@%#\-\.]+$/', $str)) return false;
 	return true;
 }
+
+function opensim_get_db_version(&$deprecated=null)
+{
+  global $OpenSimDB;
+
+	if (tableExists($OpenSimDB, [ 'GridUser' ])) $OpenSimVersion = OPENSIM_V07;
+  else if (tableExists($OpenSimDB, [ 'users' ])) $OpenSimVersion = OPENSIM_V06;
+  else if (tableExists($OpenSimDB, [ 'UserID' ])) $OpenSimVersion = AURORASIM;
+  else {
+    error_log('Invalid OpenSimulator database');
+    die();
+  }
+	return $OpenSimVersion;
+}
+
+function aurora_split_key_value($str)
+{
+	$info = array();
+	$str  = trim($str);
+
+	if (substr($str, 0, 1)=='{' and substr($str, -1)=='}') {
+		$str = substr($str, 1, -1);
+		$inbrkt = 0;
+		$inquot = false;
+		$inkkko = false;
+		$isakey = true;
+		$key    = "";
+		$val    = "";
+
+		for ($i=0; $i<strlen($str); $i++) {
+			$cc = substr($str, $i, 1);
+
+			if ($inbrkt==0 and !$inquot and ($cc=='"' or $cc=='\'')) {
+				$inquot = true;
+			}
+			else if ($inbrkt==0 and $inquot and ($cc=='"' or $cc=='\'')) {
+				$inquot = false;
+			}
+			else if ($inbrkt==0 and $isakey  and !$inquot and !$inkkko and $cc==':') {
+				$isakey = false;
+			}
+			else if ($inbrkt==0 and !$isakey and !$inquot and !$inkkko and $cc==',') {
+				if (substr($val, 0, 1)=='{' and substr($val, -1)=='}') {
+					$info[$key] = aurora_split_key_value($val);
+				}
+				else $info[$key] = $val;
+
+				$isakey = true;
+				$key    = "";
+				$val    = "";
+			}
+			else {
+				if      ($cc=='{') $inbrkt++;
+				else if ($cc=='}') $inbrkt--;
+				else {
+					if      ($inbrkt==0 and !$inkkko and $cc=='[') $inkkko = true;
+					else if ($inbrkt==0 and $inkkko  and $cc==']') $inkkko = false;
+				}
+
+				if ($isakey) $key .= $cc;
+				else         $val .= $cc;
+			}
+		}
+
+		//
+		if ($key!="") {
+			if (substr($val, 0, 1)=='{' and substr($val, -1)=='}') {
+				$info[$key] = aurora_split_key_value($val);
+			}
+			else $info[$key] = $val;
+		}
+	}
+
+	return $info;
+}
