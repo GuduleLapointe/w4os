@@ -12,7 +12,7 @@ function w4os_gridauth ( $user, $username, $password ) {
 
   if(!is_object($user)) return false;
   // echo "user was " . $user-ID . '<br>';
-  if(is_array($user->errors) && ( $user->errors['invalid_username'] || $user->errors['incorrect_password'] ) ) {
+  if(is_array($user->errors) && ( @$user->errors['invalid_username'] || @$user->errors['incorrect_password'] ) ) {
     if(w4os_is_email($username)) {
       $match = "Email = '$username'";
     } else if (preg_match('/ /', trim($username) )) {

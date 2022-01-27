@@ -5,6 +5,8 @@ global $avatar;
 $query_firstname = get_query_var( 'profile_firstname' );
 $query_lastname = get_query_var( 'profile_lastname' );
 
+$page_content = "";
+
 if ( empty($query_firstname) || empty($query_lastname) ) {
   if(is_user_logged_in()) {
     // User logged in, get profile if exists, avatar form otherwise

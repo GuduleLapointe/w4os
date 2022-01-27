@@ -199,7 +199,7 @@ add_action( 'template_include', function( $template ) {
     }
   }
 
-  if($not_found) {
+  if(@$not_found) {
     // header("Status: 404 Not Found");
     $wp_query->set_404();
     status_header( 404 );
