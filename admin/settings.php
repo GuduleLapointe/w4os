@@ -44,7 +44,7 @@ function w4os_register_settings() {
 					'section_callback' => 'w4os_settings_callback_gridinfo',
 					'fields' => array(
 						'w4os_login_uri' => array(
-							'label' => 'Login URI',
+							'name' => 'Login URI',
 							'placeholder' => 'example.org:8002',
 							'default' => $default_loginuri,
 							// 'type' => 'string',
@@ -53,7 +53,7 @@ function w4os_register_settings() {
 							// 'placeholder' => 'Grid Name',
 						),
 						'w4os_grid_name' => array(
-							'label' => __('Grid name', 'w4os'),
+							'name' => __('Grid name', 'w4os'),
 							'placeholder' => 'MyGrid',
 							'default' => $default_gridname,
 						),
@@ -63,17 +63,17 @@ function w4os_register_settings() {
 					'name' => __('Robust server database', 'w4os'),
 					'fields' => array(
 						'w4os_db_host' => array(
-							'label' => __('Hostname', 'w4os'),
+							'name' => __('Hostname', 'w4os'),
 						),
 						'w4os_db_database' => array(
-							'label' => __('Database name', 'w4os'),
+							'name' => __('Database name', 'w4os'),
 						),
 						'w4os_db_user' => array(
-							'label' => __('Username', 'w4os'),
+							'name' => __('Username', 'w4os'),
 							'autocomplete' => 'off',
 						),
 						'w4os_db_pass' => array(
-							'label' => __('Password', 'w4os'),
+							'name' => __('Password', 'w4os'),
 							'type' => 'password',
 							'autocomplete' => 'off',
 						),
@@ -84,11 +84,11 @@ function w4os_register_settings() {
 					'section_callback' => 'w4os_settings_callback_models',
 					'fields' => array(
 						'w4os_model_firstname' => array(
-							'label' => __('First Name = ', 'w4os'),
+							'name' => __('First Name = ', 'w4os'),
 							'default' => 'Default'
 						),
 						'w4os_model_lastname' => array(
-							'label' => __('OR Last Name = ', 'w4os'),
+							'name' => __('OR Last Name = ', 'w4os'),
 							'default' => 'Default'
 						),
 					),
@@ -98,7 +98,7 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_profile_page' => array(
 							'type' => 'radio',
-							'label' => __('Profile page', 'w4os'),
+							'name' => __('Profile page', 'w4os'),
 							'values' => array(
 								'provide' => __('Provide web profile page for avatars', 'w4os'),
 								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
@@ -113,7 +113,7 @@ function w4os_register_settings() {
 						),
 						'w4os_profile_page' => array(
 							'type' => 'radio',
-							'label' => __('Profile page', 'w4os'),
+							'name' => __('Profile page', 'w4os'),
 							'values' => array(
 								'provide' => __('Provide web profile page for avatars', 'w4os'),
 								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
@@ -128,13 +128,13 @@ function w4os_register_settings() {
 						),
 						'w4os_configuration_instructions' => array(
 							'type' => 'boolean',
-							'label' => '', // __('Configuration instructions', 'w4os'),
-							'description' => __('Show configuration instructions to new users.', 'w4os'),
+							'name' => '', // __('Configuration instructions', 'w4os'),
+							'label' => __('Show configuration instructions to new users.', 'w4os'),
 						),
 
 						'w4os_login_page' => array(
 						  'type' => 'radio',
-						  'label' => __('Login page', 'w4os'),
+						  'name' => __('Login page', 'w4os'),
 						  'values' => array(
 						    'profile' => __('Use profile page as login page', 'w4os'),
 						    // 'custom' => __('Custom page (with shortcode)', 'w4os'),
@@ -145,12 +145,12 @@ function w4os_register_settings() {
 						),
 						'w4os_userlist_replace_name' => array(
 							'type' => 'boolean',
-							'label' => __('Replace user name', 'w4os'),
-							'description' => __('Show avatar name instead of user name in users list.', 'w4os'),
+							'name' => __('Replace user name', 'w4os'),
+							'label' => __('Show avatar name instead of user name in users list.', 'w4os'),
 						),
 						'w4os_exclude' => array(
 							'type' => 'checkbox',
-							'label' => __('Exclude from stats', 'w4os'),
+							'name' => __('Exclude from stats', 'w4os'),
 							'values' => array(
 								'models' =>  __('Models', 'w4os'),
 								'nomail' => __('Accounts without mail address', 'w4os'),
@@ -165,7 +165,7 @@ function w4os_register_settings() {
 				// 	'fields' => array(
 				// 		'w4os_assets_permalink' => array(
 				// 			'type' => 'description',
-				// 			'label' => __('Permalinks', 'w4os'),
+				// 			'name' => __('Permalinks', 'w4os'),
 				// 			'description' => sprintf(__('Set w4os slugs on %spermalink options page%s.', 'w4os'), '<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>'),
 				// 		),
 				// 	),
@@ -180,13 +180,13 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_provide_asset_server' => array(
 							'type' => 'boolean',
-							'label' => __('Provide web assets server', 'w4os'),
+							'name' => __('Provide web assets server', 'w4os'),
 							'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
 							'onchange' => 'onchange="valueChanged(this)"',
 							'description' => '<p>' . __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os') . '</p>',
 						),
 						'w4os_internal_asset_server_uri' => array(
-							'label' => __('Web asset server', 'w4os'),
+							'name' => __('Web asset server', 'w4os'),
 							'default' => get_home_url(NULL, '/' . get_option('w4os_assets_slug') . '/'),
 							'readonly' => true,
 							'description' => sprintf(
@@ -195,7 +195,7 @@ function w4os_register_settings() {
 							),
 						),
 						'w4os_external_asset_server_uri' => array(
-							'label' => __('External assets server URI', 'w4os'),
+							'name' => __('External assets server URI', 'w4os'),
 							'description' => __('If W4OS web assets service is disabled, you need a third-party web application.', 'w4os'),
 							'default' => W4OS_DEFAULT_ASSET_SERVER_URI,
 						),
@@ -206,38 +206,38 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_provide_search' => array(
 							'type' => 'boolean',
-							'label' => __('Provide in-world search', 'w4os'),
+							'name' => __('Provide in-world search', 'w4os'),
 							'onchange' => 'onchange="valueChanged(this)"',
 							// 'description' => __('Using ')
 						),
 						'w4os_search_use_robust_db' => array(
 						  'type' => 'boolean',
-						  'label' => __('Search database', 'w4os'),
+						  'name' => __('Search database', 'w4os'),
 						  'default' => false,
 						  'onchange' => 'onchange="valueChanged(this)"',
-						  'description' => __('Use the same database as Robust'),
+						  'label' => __('Use the same database as Robust'),
 						),
 						'w4os_search_db_host' => array(
-						  'label' => __('Hostname', 'w4os'),
+						  'name' => __('Hostname', 'w4os'),
 						  'default' => esc_attr(get_option('w4os_db_host', 'localhost')),
 						),
 						'w4os_search_db_database' => array(
-						  'label' => __('Database name', 'w4os'),
+						  'name' => __('Database name', 'w4os'),
 						  'default' => esc_attr(get_option('w4os_db_database', 'currency')),
 						),
 						'w4os_search_db_user' => array(
-						  'label' => __('Username', 'w4os'),
+						  'name' => __('Username', 'w4os'),
 						  'autocomplete' => 'off',
 						  'default' => esc_attr(get_option('w4os_db_user', 'opensim')),
 						),
 						'w4os_search_db_pass' => array(
-						  'label' => __('Password', 'w4os'),
+						  'name' => __('Password', 'w4os'),
 						  'type' => 'password',
 						  'autocomplete' => 'off',
 						  'default' => esc_attr(get_option('w4os_db_pass')),
 						),
 						'w4os_search_url' => array(
-							'label' => __('Search engine URL', 'w4os'),
+							'name' => __('Search engine URL', 'w4os'),
 							'placeholder' => 'https://example.org/helpers/query.php',
 							'description' =>
 							__('URL of the search engine used internally by the viewer.', 'w4os')
@@ -262,7 +262,7 @@ function w4os_register_settings() {
 								)),
 						),
 						'w4os_search_register' => array(
-							'label' => __('Search register', 'w4os'),
+							'name' => __('Search register', 'w4os'),
 							'placeholder' => 'https://example.org/helpers/register.php',
 							'description' =>
 							__('Data service, used to register regions, objects or land for sale.', 'w4os')
@@ -278,7 +278,7 @@ function w4os_register_settings() {
 							)),
 						),
 						'w4os_hypevents_url' => array(
-							'label' => __('Events server URL', 'w4os'),
+							'name' => __('Events server URL', 'w4os'),
 							'placeholder' => 'https://2do.pm/events/',
 							'description' => __('HYPEvents server URL, used to fetch upcoming events and make them available in search.', 'w4os')
 							. ' ' . __('Leave blank to ignore events or if you have an other events implementation.', 'w4os')
@@ -291,13 +291,13 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_provide_offline_messages' => array(
 							'type' => 'boolean',
-							'label' => __('Provide offline helper', 'w4os'),
+							'name' => __('Provide offline helper', 'w4os'),
 							'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
 							'onchange' => 'onchange="valueChanged(this)"',
 							// 'description' => __('Using ')
 						),
 						'w4os_offline_helper_uri' => array(
-							'label' => __('Offline helper URI', 'w4os'),
+							'name' => __('Offline helper URI', 'w4os'),
 							'default' => (!empty(W4OS_GRID_INFO['message'])) ? W4OS_GRID_INFO['message'] : get_home_url(NULL, '/helpers/offline/'),
 							'readonly' => true,
 							'description' =>
@@ -317,7 +317,7 @@ function w4os_register_settings() {
 							)),
 						),
 						'w4os_offline_sender' => array(
-							'label' => __('Sender e-mail address', 'w4os'),
+							'name' => __('Sender e-mail address', 'w4os'),
 							'placeholder' => 'no-reply@example.com',
 							// 'default' => 'no-reply@' . parse_url(W4OS_GRID_LOGIN_URI)['host'],
 							'default' => 'no-reply@' . $_SERVER['SERVER_NAME'],
@@ -330,7 +330,7 @@ function w4os_register_settings() {
 				  'fields' => array(
 				    'w4os_provide_economy_helpers' => array(
 				      'type' => 'boolean',
-				      'label' => __('Provide economy helpers', 'w4os'),
+				      'name' => __('Provide economy helpers', 'w4os'),
 				      'default' => false,
 				      'onchange' => 'onchange="valueChanged(this)"',
 							'description' => '<p>' . __('Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os') . '</p>'
@@ -344,7 +344,7 @@ function w4os_register_settings() {
 							// . '<p>' . __('A money server is also needed if you implement a fake currency or want to allow zero (no cost) operations.', 'w4os') . '</p>'
 				    ),
 				    'w4os_economy_helper_uri' => array(
-				      'label' => __('Economy base URI', 'w4os'),
+				      'name' => __('Economy base URI', 'w4os'),
 				      'default' => (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'),
 				      'readonly' => true,
 							'description' =>
@@ -359,10 +359,11 @@ function w4os_register_settings() {
 				    ),
 						'w4os_economy_use_robust_db' => array(
 				      'type' => 'boolean',
-				      'label' => __('Economy database', 'w4os'),
+				      'name' => __('Economy database', 'w4os'),
 				      'default' => true,
 				      'onchange' => 'onchange="valueChanged(this)"',
-							'description' => __('Use the same database as Robust') . '<p>' . w4os_format_ini(array(
+							'label' => __('Use the same database as Robust', 'w4os'),
+							'description' => w4os_format_ini(array(
 								'MoneyServer.ini' => array(
 									'[MySql]' => array(
 										'hostname' => get_option('w4os_economy_db_host'),
@@ -374,26 +375,26 @@ function w4os_register_settings() {
 							)),
 				    ),
 						'w4os_economy_db_host' => array(
-							'label' => __('Hostname', 'w4os'),
+							'name' => __('Hostname', 'w4os'),
 							'default' => esc_attr(get_option('w4os_db_host', 'localhost')),
 						),
 						'w4os_economy_db_database' => array(
-							'label' => __('Database name', 'w4os'),
+							'name' => __('Database name', 'w4os'),
 							'default' => esc_attr(get_option('w4os_db_database', 'currency')),
 						),
 						'w4os_economy_db_user' => array(
-							'label' => __('Username', 'w4os'),
+							'name' => __('Username', 'w4os'),
 							'autocomplete' => 'off',
 							'default' => esc_attr(get_option('w4os_db_user', 'opensim')),
 						),
 						'w4os_economy_db_pass' => array(
-							'label' => __('Password', 'w4os'),
+							'name' => __('Password', 'w4os'),
 							'type' => 'password',
 							'autocomplete' => 'off',
 							'default' => esc_attr(get_option('w4os_db_pass')),
 						),
 						'w4os_currency_provider' => array(
-							'label' => __('Currency Provider', 'w4os'),
+							'name' => __('Currency Provider', 'w4os'),
 							'type' => 'radio',
 							'default' => 'internal',
 							'values' => array(
@@ -404,19 +405,19 @@ function w4os_register_settings() {
 							'onchange' => 'onchange="valueChanged(this)"',
 						),
 						'w4os_currency_rate' => array(
-							'label' => __('Currency conversion rate', 'w4os'),
+							'name' => __('Currency conversion rate', 'w4os'),
 							'description' => __('Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)', 'w4os'),
 						),
 						'w4os_podex_error_message' => array(
-							'label' => __('Podex redirect message', 'w4os'),
+							'name' => __('Podex redirect message', 'w4os'),
 							'default' => __('Please use our terminals in-world to proceed. Click OK to teleport to terminals region.', 'w4os'),
 						),
 						'w4os_podex_redirect_url' => array(
-							'label' => __('Podex redirect URL', 'w4os'),
+							'name' => __('Podex redirect URL', 'w4os'),
 							'placeholder' => 'secondlife://Welcome/128/128/21',
 						),
 						'w4os_money_script_access_key' => array(
-							'label' => __('Money Script Access Key', 'w4os'),
+							'name' => __('Money Script Access Key', 'w4os'),
 							// 'default' => '123456789',
 							'description' => w4os_format_ini(array(
 								'MoneyServer.ini' => array(
@@ -459,7 +460,7 @@ function w4os_register_setting($option_page, $option_slug, $args = array() ) {
 		break;
 
 		case 'radio':
-		$register_args = [ 'label' => $args['label'], 'type' => 'string'];
+		$register_args = [ 'name' => $args['name'], 'type' => 'string'];
 		register_setting( $option_page, $option_slug, $register_args );
 		break;
 
@@ -468,13 +469,13 @@ function w4os_register_setting($option_page, $option_slug, $args = array() ) {
 		// if(!in_array($args['type'], [ 'string', 'boolean', 'integer', 'number', 'array', 'object'] ) ) $args['type'] = 'string';
 		register_setting( $option_page, $option_slug, $args );
 	}
-	// if(!isset($args['label'])) $args['label'] = $option_slug;
+	// if(!isset($args['name'])) $args['name'] = $option_slug;
 	if(empty($args['sanitize_callback'])) $args['sanitize_callback'] = 'w4os_settings_field';
-	// add_settings_field( $option_slug, $args['label'], $args['sanitize_callback'], 'w4os_settings', $option_page, $args);
+	// add_settings_field( $option_slug, $args['name'], $args['sanitize_callback'], 'w4os_settings', $option_page, $args);
 	$args['option_slug']=$option_slug;
 	add_settings_field(
 		$option_slug,                   // Field ID
-		(isset($args['label'])) ? $args['label'] : $option_slug,  // Title
+		(isset($args['name'])) ? $args['name'] : $option_slug,  // Title
 		$args['sanitize_callback'],            // Callback to display the field
 		$option_page,                // Page
 		$args['section'],
@@ -536,8 +537,8 @@ function w4os_settings_field($args, $user = false) {
 			if($args['type']=='checkbox') $option_id = $field_id ."_" . $option_key;
 			else {
 				$option_id = $field_id;
-				$option_name = isset($args['description']) ? $args['description'] : '';
-				unset($args['description']);
+				$option_name = isset($args['label']) ? $args['label'] : '';
+				// unset($args['description']);
 			}
 			if($user) $value = get_user_meta( $user->ID, $option_id, true );
 			else $value = esc_attr(get_option($option_id));
