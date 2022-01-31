@@ -32,7 +32,6 @@ xmlrpc_server_register_method($xmlrpc_server, "dir_places_query", "dir_places_qu
 function dir_places_query($method_name, $params, $app_data)
 {
   global $SearchDB;
-
   $req             = $params[0];
 
   $flags           = $req['flags'];
@@ -58,12 +57,19 @@ function dir_places_query($method_name, $params, $app_data)
   if(!empty($type)) $terms[] = "$type";
   if($category > 0) $terms[] = "searchcategory = :cat";
 
-  $query = $SearchDB->prepareAndExecute("SELECT * FROM parcels WHERE " . join(' AND ', $terms) . " ORDER BY :order LIMIT $query_start,101",
-  array(
+  $values =   array(
     ':text' => $text,
     ':order'  => $order,
     ':cat' => $category,
-  ));
+  );
+  if(isset($_REQUEST['grid']) &! empty($_REQUEST['grid'])) {
+    $gatekeeperURL = $_REQUEST['grid'];
+    $terms[] = 'parcels.gatekeeperURL = :gatekeeperURL';
+    $values['gatekeeperURL'] = $gatekeeperURL;
+  }
+  $query = $SearchDB->prepareAndExecute("SELECT * FROM parcels
+    WHERE " . join(' AND ', $terms) . " ORDER BY :order LIMIT $query_start,101", $values);
+
   $data = array();
   while ($row = $query->fetch(PDO::FETCH_ASSOC))
   {
@@ -93,7 +99,6 @@ xmlrpc_server_register_method($xmlrpc_server, "dir_popular_query", "dir_popular_
 function dir_popular_query($method_name, $params, $app_data)
 {
     global $SearchDB;
-    error_log(__FUNCTION__);
 
     $req         = $params[0];
 
@@ -532,16 +537,7 @@ function classifieds_info_query($method_name, $params, $app_data)
 #
 # Process the request
 #
-
-// $request_xml = file_get_contents("php://input");
 $request_xml = $HTTP_RAW_POST_DATA;
-
-// error_log(
-//   date("Y-m-d H:i:s") . "
-//   post/get " . print_r($_REQUEST, true) . "
-//   xml " . $request_xml
-// );
-
 xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
 
 xmlrpc_server_destroy($xmlrpc_server);
