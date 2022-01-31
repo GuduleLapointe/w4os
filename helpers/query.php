@@ -498,7 +498,7 @@ function classifieds_info_query($method_name, $params, $app_data)
 
     $classifiedID   = $req['classifiedID'];
 
-    $query = $SearchDB->prepare("SELECT * FROM classifieds WHERE classifieduuid = ?");
+    $query = $OpenSimDB->prepare("SELECT * FROM classifieds WHERE classifieduuid = ?");
     $result = $query->execute( array($classifiedID) );
 
     $data = array();
