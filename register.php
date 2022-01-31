@@ -40,16 +40,18 @@ switch($service) {
 
   // Get the request time as a timestamp for later
   $timestamp = $_SERVER['REQUEST_TIME'];
-
+  $gatewayURL = 'http'
   // If a database row was returned check the nextcheck date
   if ($query->rowCount() > 0)
   {
-    $query = $SearchDB->prepare("UPDATE hostsregister SET register = :timestamp, nextcheck = 0, checked = 0, failcounter = 0 WHERE host = :host AND port = :port");
+    $query = $SearchDB->prepare("UPDATE hostsregister
+      SET register = :timestamp, nextcheck = 0, checked = 0, failcounter = 0
+      WHERE host = :host AND port = :port");
   }
   else
   {
     // The SELECT did not return a result. Insert a new record.
-    $query = $SearchDB->prepare("INSERT INTO hostsregister VALUES (:host, :port, :timestamp, 0, 0, 0)");
+    $query = $SearchDB->prepare("INSERT INTO hostsregister VALUES (:host, :port, :timestamp, 0, 0, 0, '')");
     // $query->execute( array($host, $port, $timestamp) );
   }
   $query->execute( array( ':host' => $host, ':port' => $port, ':timestamp' => $timestamp ) );

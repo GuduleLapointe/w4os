@@ -103,8 +103,8 @@ function hostScan($hostname, $port, $xmlcontent)
   $expire = $regiondata->getElementsByTagName("expire")->item(0)->nodeValue;
   $next = $now + $expire;
 
-  $query = $SearchDB->prepare("UPDATE hostsregister SET nextcheck = ? WHERE host = ? AND port = ?");
-  $query->execute( array($next, $hostname, $port) );
+  $query = $SearchDB->prepare("UPDATE hostsregister SET nextcheck = ?, gatekeeperURL = ? WHERE host = ? AND port = ?");
+  $query->execute( array($next, $gatekeeperURL, $hostname, $port) );
 
   //
   // Get the region data to be saved in the database
