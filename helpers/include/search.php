@@ -17,6 +17,10 @@
 
 $SearchDB = new OSPDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
 
+$formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
+if($formatCheck->rowCount() == 0) $saveregions = true;
+define('SEARCH_REGION_FORMAT', ($formatCheck->rowCount() == 0) ? 'ossearch' : 'robust');
+
 function OSSearchCreateTables($db) {
   $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
     `regionUUID` char(36) NOT NULL,
@@ -27,6 +31,7 @@ function OSSearchCreateTables($db) {
     `parcelUUID` char(36) NOT NULL default '00000000-0000-0000-0000-000000000000',
     `infoUUID` char(36) NOT NULL default '00000000-0000-0000-0000-000000000000',
     `parcelarea` int(11) NOT NULL,
+    `gatekeeperURL` varchar(255),
     PRIMARY KEY  (`parcelUUID`),
     KEY `regionUUID` (`regionUUID`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -65,6 +70,7 @@ function OSSearchCreateTables($db) {
     `parcelUUID` char(36) NOT NULL,
     `globalPos` varchar(255) NOT NULL,
     `eventflags` int(1) NOT NULL,
+    `gatekeeperURL` varchar(255),
     PRIMARY KEY (`eventid`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -75,6 +81,7 @@ function OSSearchCreateTables($db) {
     `nextcheck` int(10) NOT NULL,
     `checked` tinyint(1) NOT NULL,
     `failcounter` int(10) NOT NULL,
+    `gatekeeperURL` varchar(255),
     PRIMARY KEY (`host`,`port`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -85,13 +92,14 @@ function OSSearchCreateTables($db) {
     `name` varchar(255) NOT NULL,
     `description` varchar(255) NOT NULL,
     `regionuuid` char(36) NOT NULL default '',
+    `gatekeeperURL` varchar(255),
     PRIMARY KEY  (`objectuuid`,`parceluuid`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
   CREATE TABLE IF NOT EXISTS `parcels` (
+    `parcelUUID` char(36) NOT NULL,
     `regionUUID` char(36) NOT NULL,
     `parcelname` varchar(255) NOT NULL,
-    `parcelUUID` char(36) NOT NULL,
     `landingpoint` varchar(255) NOT NULL,
     `description` varchar(255) NOT NULL,
     `searchcategory` varchar(50) NOT NULL,
@@ -101,6 +109,7 @@ function OSSearchCreateTables($db) {
     `dwell` float NOT NULL default '0',
     `infouuid` varchar(36) NOT NULL default '',
     `mature` varchar(10) NOT NULL default 'PG',
+    `gatekeeperURL` varchar(255),
     PRIMARY KEY  (`regionUUID`,`parcelUUID`),
     KEY `name` (`parcelname`),
     KEY `description` (`description`),
@@ -119,6 +128,7 @@ function OSSearchCreateTables($db) {
     `dwell` int(11) NOT NULL,
     `parentestate` int(11) NOT NULL default '1',
     `mature` varchar(10) NOT NULL default 'PG',
+    `gatekeeperURL` varchar(255),
     PRIMARY KEY  (`regionUUID`,`parcelUUID`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -129,19 +139,22 @@ function OSSearchCreateTables($db) {
     `infoUUID` char(36) NOT NULL,
     `has_picture` tinyint(1) NOT NULL,
     `mature` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+    `gatekeeperURL` varchar(255),
     PRIMARY KEY  (`parcelUUID`)
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+  CREATE TABLE IF NOT EXISTS `regions` (
+    `regionname` varchar(255) NOT NULL,
+    `regionUUID` char(36) NOT NULL,
+    `regionhandle` varchar(255) NOT NULL,
+    `url` varchar(255) NOT NULL,
+    `owner` varchar(255) NOT NULL,
+    `owneruuid` char(36) NOT NULL,
+    `gatekeeperURL` varchar(255),
+    PRIMARY KEY  (`regionUUID`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
   ");
 
-  // CREATE TABLE IF NOT EXISTS `regions` (
-  //   `regionname` varchar(255) NOT NULL,
-  //   `regionUUID` char(36) NOT NULL,
-  //   `regionhandle` varchar(255) NOT NULL,
-  //   `url` varchar(255) NOT NULL,
-  //   `owner` varchar(255) NOT NULL,
-  //   `owneruuid` char(36) NOT NULL,
-  //   PRIMARY KEY  (`regionUUID`)
-  // ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
   $result = $query->execute();
 }

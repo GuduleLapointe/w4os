@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die;
 
-if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 4 );
+if ( ! defined( 'W4OS_UPDATES' ) ) define('W4OS_UPDATES', 5 );
 
 if(get_option('w4os_upated') < W4OS_UPDATES ) {
   w4os_updates();
@@ -109,4 +109,20 @@ function w4os_update_4() {
   update_option('w4os_sync_users', true);
   update_option('w4os_rewrite_rules', true);
   return __('Grid and WordPress users synchronized.', 'w4os');
+}
+
+/*
+ * Create search tables if SEARCH_DB is set but tables do not exist.
+ * Add gatekeeperURL column.
+ */
+function w4os_update_5() {
+  require_once(dirname(__DIR__) . '/helpers/include/wp-config.php');
+  require_once(dirname(__DIR__) . '/helpers/include/search.php');
+  $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
+  foreach($tables as $table) {
+    if (!count($SearchDB->query("SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'")->fetchAll())) {
+      $SearchDB->query("ALTER TABLE $table ADD gatekeeperURL varchar(255)");
+    }
+  }
+  return __("OpenSim Search tables updated.", 'w4os');
 }
