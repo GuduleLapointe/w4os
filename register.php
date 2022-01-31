@@ -40,7 +40,7 @@ switch($service) {
 
   // Get the request time as a timestamp for later
   $timestamp = $_SERVER['REQUEST_TIME'];
-  $gatewayURL = 'http'
+
   // If a database row was returned check the nextcheck date
   if ($query->rowCount() > 0)
   {
