@@ -30,6 +30,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 - **Web profiles**: excerpt of the avatar's profile
 - **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
 - **Web assets server**: the needed bridge to display in-world images on a website
+- **Helpers**: currency, search, offline messages
 - **OpenSimulator settings page**:
   - grid name, login uri and database connection settings
   - naming scheme of default models
@@ -107,6 +108,7 @@ See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
 
 - [x] get grid info from http://login.uri:8002/get_grid_info
 - [x] Web Assets server
+- [x] Helpers (search, currency, map...)
 - Improve avatar profile
   - Switch to allow web profile
   - Switch set in-world prefs for public profiles
@@ -115,7 +117,6 @@ See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
 - Admin Start / Stop regions
 - Admin Create region
 - Admin Use sim/grid configuration file to fetch settings if on the same host
-- Helpers (search, currency, map...)
 
 = Long term =
 
