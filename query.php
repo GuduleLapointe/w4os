@@ -111,6 +111,11 @@ function dir_popular_query($method_name, $params, $app_data)
     $terms[] = "(name LIKE :text)";
     $sqldata['text'] = "%$text%";
   }
+  if(isset($_REQUEST['gk']) &! empty($_REQUEST['gk'])) {
+    $gatekeeperURL = $_REQUEST['gk'];
+    $terms[] = 'gatekeeperURL = :gatekeeperURL';
+    $sqldata['gatekeeperURL'] = $gatekeeperURL;
+  }
 
   if (count($terms) > 0)
   $where = " WHERE " . join(" AND ", $terms);
@@ -176,6 +181,11 @@ function dir_land_query($method_name, $params, $app_data)
   {
     $terms[] = "area >= :area";
     $sqldata['area'] = $area;
+  }
+  if(isset($_REQUEST['gk']) &! empty($_REQUEST['gk'])) {
+    $gatekeeperURL = $_REQUEST['gk'];
+    $terms[] = 'gatekeeperURL = :gatekeeperURL';
+    $sqldata['gatekeeperURL'] = $gatekeeperURL;
   }
 
   //The PerMeterSort flag is always passed from a map item query.
