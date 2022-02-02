@@ -62,8 +62,8 @@ function dir_places_query($method_name, $params, $app_data)
     ':order'  => $order,
     ':cat' => $category,
   );
-  if(isset($_REQUEST['grid']) &! empty($_REQUEST['grid'])) {
-    $gatekeeperURL = $_REQUEST['grid'];
+  if(isset($_REQUEST['gk']) &! empty($_REQUEST['gk'])) {
+    $gatekeeperURL = $_REQUEST['gk'];
     $terms[] = 'parcels.gatekeeperURL = :gatekeeperURL';
     $values['gatekeeperURL'] = $gatekeeperURL;
   }
