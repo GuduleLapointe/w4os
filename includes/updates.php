@@ -37,7 +37,7 @@ function w4os_updates($args = array()) {
     $class='success';
     $return=true;
   }
-  if($errors) {
+  if(@$errors) {
     $messages[] = sprintf(
       __('Error processing update %s', 'band-tools'),
       $errors[0] );
@@ -116,15 +116,18 @@ function w4os_update_4() {
  * Add gatekeeperURL column.
  */
 function w4os_update_5() {
-  require_once(dirname(__DIR__) . '/helpers/include/wp-config.php');
-  require_once(dirname(__DIR__) . '/helpers/include/search.php');
-  if($SearchDB) {
-    $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
-    foreach($tables as $table) {
-      if (!count($SearchDB->query("SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'")->fetchAll())) {
-        $SearchDB->query("ALTER TABLE $table ADD gatekeeperURL varchar(255)");
+  if(get_option('w4os_provide_search') == true) {
+    require_once(dirname(__DIR__) . '/helpers/include/wp-config.php');
+    require_once(dirname(__DIR__) . '/helpers/include/search.php');
+    if($SearchDB) {
+      $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
+      foreach($tables as $table) {
+        if (!count($SearchDB->query("SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'")->fetchAll())) {
+          $SearchDB->query("ALTER TABLE $table ADD gatekeeperURL varchar(255)");
+        }
       }
+      return __("OpenSim Search tables updated.", 'w4os');
     }
-    return __("OpenSim Search tables updated.", 'w4os');
   }
+  return true;
 }
