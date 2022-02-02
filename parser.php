@@ -128,17 +128,7 @@ function hostScan($hostname, $port, $xmlcontent)
      * First, check if we already have a region that is the same
      */
 
-    // <tl;tr> To avoid data loss, fatal errors or conflicts, we ignore regions
-    // table if it seems to be from robust database. For obscure and historical
-    // reasons, search regions table has the same name as robust regions table,
-    // although it has a different structure and a different purpose. It could
-    // be renamed but some developers are reluctant to do it.
-    $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
-    if($formatCheck->rowCount() == 0) $saveregions = true;
-
-    if($saveregions) {
-      $SearchDB->prepareAndExecute("DELETE FROM regions WHERE regionUUID = ?", [$regionUUID] );
-    }
+    $SearchDB->prepareAndExecute("DELETE FROM " . SEARCH_REGION_TABLE . " WHERE regionUUID = ?", [$regionUUID] );
     $SearchDB->prepareAndExecute("DELETE FROM parcels WHERE regionUUID = ?", [$regionUUID] );
     $SearchDB->prepareAndExecute("DELETE FROM allparcels WHERE regionUUID = ?", [$regionUUID] );
     $SearchDB->prepareAndExecute("DELETE FROM parcelsales WHERE regionUUID = ?", [$regionUUID] );
@@ -154,17 +144,15 @@ function hostScan($hostname, $port, $xmlcontent)
      * Second, add the new info to the database again
      */
 
-    if($saveregions) { // <tl;tr> Ignore if from robust database
-      $SearchDB->insert('regions',array(
-        'regionname' => $regionname,
-        'regionUUID' => $regionUUID,
-        'regionhandle' => $regionhandle,
-        'url' => $url,
-        'owner' => $username,
-        'ownerUUID' => $useruuid,
-        'gatekeeperURL' => $gatekeeperURL,
-      ));
-    }
+    $SearchDB->insert(SEARCH_REGION_TABLE, array(
+      'regionname' => $regionname,
+      'regionUUID' => $regionUUID,
+      'regionhandle' => $regionhandle,
+      'url' => $url,
+      'owner' => $username,
+      'ownerUUID' => $useruuid,
+      'gatekeeperURL' => $gatekeeperURL,
+    ));
 
     /*
      * Read parcel info

@@ -17,9 +17,14 @@
 
 $SearchDB = new OSPDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
 
+// <tl;tr> To avoid data loss, fatal errors or conflicts, we use regionsregister
+// table instead of regions if it seems to be a robust database. For obscure and
+// historical reasons, search regions table has the same name as robust regions
+// table, although it has a different structure and a different purpose. It
+// could be renamed but some developers are reluctant to do it, so we keep the
+// original name for backward compatibility when in a separate database.
 $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
-if($formatCheck->rowCount() == 0) $saveregions = true;
-define('SEARCH_REGION_FORMAT', ($formatCheck->rowCount() == 0) ? 'ossearch' : 'robust');
+define('SEARCH_REGION_TABLE', ($formatCheck->rowCount() == 0) ? 'regions' : 'regionsregister');
 
 function OSSearchCreateTables($db) {
   $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
@@ -143,7 +148,7 @@ function OSSearchCreateTables($db) {
     PRIMARY KEY  (`parcelUUID`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-  CREATE TABLE IF NOT EXISTS `regions` (
+  CREATE TABLE IF NOT EXISTS `" . SEARCH_REGION_TABLE . "` (
     `regionname` varchar(255) NOT NULL,
     `regionUUID` char(36) NOT NULL,
     `regionhandle` varchar(255) NOT NULL,
@@ -159,11 +164,10 @@ function OSSearchCreateTables($db) {
   $result = $query->execute();
 }
 
-if( ! tableExists($SearchDB, [ 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
+if( ! tableExists($SearchDB, [ SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
   error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
   OSSearchCreateTables($SearchDB);
 }
-
 
 function join_terms($glue, $terms, $deprecated = true) {
   if(empty($terms)) return "";
@@ -191,24 +195,17 @@ function hostUnregister($hostname, $port) {
     )
   );
 
-  $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
-  if($formatCheck->rowCount() == 0) $saveregions = true;
-  if($saveregions) {
-    $query = $SearchDB->prepareAndExecute("SELECT regionUUID FROM regions WHERE url = ?",
-    [ "http://$hostname:$port/"] );
-    // TODO: make similar request on robust database if $saveregions == false or nothing found
-    if($query) {
-      $regions=$query->fetchAll();
-      foreach($regions as $region) {
-        $regionUUID = $region[0];
-        // TODO: query parcels and delete related popularplaces
-        // $SearchDB->prepareAndExecute("DELETE FROM popularplaces WHERE parcelUUID = ?", [$parcelUUID] );
-        $SearchDB->prepareAndExecute("DELETE FROM parcels WHERE regionUUID = ?", [$regionUUID] );
-        $SearchDB->prepareAndExecute("DELETE FROM allparcels WHERE regionUUID = ?", [$regionUUID] );
-        $SearchDB->prepareAndExecute("DELETE FROM parcelsales WHERE regionUUID = ?", [$regionUUID] );
-        $SearchDB->prepareAndExecute("DELETE FROM objects WHERE regionuuid = ?", [$regionUUID] );
-        if($saveregions) $SearchDB->prepareAndExecute("DELETE FROM regions WHERE regionUUID = ?", [$regionUUID] );
-      }
+  $query = $SearchDB->prepareAndExecute("SELECT regionUUID FROM " . SEARCH_REGION_TABLE . " WHERE url = ?", [ "http://$hostname:$port/"] );
+  if($query) {
+    $regions=$query->fetchAll();
+    foreach($regions as $region) {
+      $regionUUID = $region[0];
+      $SearchDB->prepareAndExecute("DELETE pop FROM popularplaces AS pop INNER JOIN parcels AS par ON pop.parcelUUID = par.parcelUUID WHERE regionUUID = ?", [$regionUUID] );
+      $SearchDB->prepareAndExecute("DELETE FROM parcels WHERE regionUUID = ?", [$regionUUID] );
+      $SearchDB->prepareAndExecute("DELETE FROM allparcels WHERE regionUUID = ?", [$regionUUID] );
+      $SearchDB->prepareAndExecute("DELETE FROM parcelsales WHERE regionUUID = ?", [$regionUUID] );
+      $SearchDB->prepareAndExecute("DELETE FROM objects WHERE regionuuid = ?", [$regionUUID] );
+      $SearchDB->prepareAndExecute("DELETE FROM " . SEARCH_REGION_TABLE . " WHERE regionUUID = ?", [$regionUUID] );
     }
   }
 }
