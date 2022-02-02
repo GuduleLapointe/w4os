@@ -10,7 +10,7 @@ function w4os_updates($args = array()) {
   $u = get_option('w4os_upated') + 1;
 
   $messages = array();
-  if($args['message']) $messages[] = $args['message'];
+  if(@$args['message']) $messages[] = $args['message'];
   while ($u <= W4OS_UPDATES) {
     $update="w4os_update_$u";
     if(function_exists($update)) {
@@ -31,7 +31,7 @@ function w4os_updates($args = array()) {
     }
     $u++;
   }
-  if($success) {
+  if(@$success) {
     if(empty($messages))
     $messages[] = sprintf( _n('Update %s applied sucessfully', 'Updates %s applied sucessfully', count($success), 'band-tools'), join(', ', $success) );
     $class='success';
@@ -118,11 +118,13 @@ function w4os_update_4() {
 function w4os_update_5() {
   require_once(dirname(__DIR__) . '/helpers/include/wp-config.php');
   require_once(dirname(__DIR__) . '/helpers/include/search.php');
-  $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
-  foreach($tables as $table) {
-    if (!count($SearchDB->query("SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'")->fetchAll())) {
-      $SearchDB->query("ALTER TABLE $table ADD gatekeeperURL varchar(255)");
+  if($SearchDB) {
+    $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
+    foreach($tables as $table) {
+      if (!count($SearchDB->query("SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'")->fetchAll())) {
+        $SearchDB->query("ALTER TABLE $table ADD gatekeeperURL varchar(255)");
+      }
     }
+    return __("OpenSim Search tables updated.", 'w4os');
   }
-  return __("OpenSim Search tables updated.", 'w4os');
 }

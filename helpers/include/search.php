@@ -15,17 +15,6 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-$SearchDB = new OSPDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
-
-// <tl;tr> To avoid data loss, fatal errors or conflicts, we use regionsregister
-// table instead of regions if it seems to be a robust database. For obscure and
-// historical reasons, search regions table has the same name as robust regions
-// table, although it has a different structure and a different purpose. It
-// could be renamed but some developers are reluctant to do it, so we keep the
-// original name for backward compatibility when in a separate database.
-$formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
-define('SEARCH_REGION_TABLE', ($formatCheck->rowCount() == 0) ? 'regions' : 'regionsregister');
-
 function OSSearchCreateTables($db) {
   $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
     `regionUUID` char(36) NOT NULL,
@@ -164,11 +153,6 @@ function OSSearchCreateTables($db) {
   $result = $query->execute();
 }
 
-if( ! tableExists($SearchDB, [ SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
-  error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
-  OSSearchCreateTables($SearchDB);
-}
-
 function join_terms($glue, $terms, $deprecated = true) {
   if(empty($terms)) return "";
   return "(" . join($glue, $terms) . ")";
@@ -207,5 +191,30 @@ function hostUnregister($hostname, $port) {
       $SearchDB->prepareAndExecute("DELETE FROM objects WHERE regionuuid = ?", [$regionUUID] );
       $SearchDB->prepareAndExecute("DELETE FROM " . SEARCH_REGION_TABLE . " WHERE regionUUID = ?", [$regionUUID] );
     }
+  }
+}
+
+try {
+  $SearchDB = new OSPDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
+}
+catch(PDOException $e) {
+  // error_log("could not connect to " . SEARCH_DB_HOST);
+  error_log($e);
+  $SearchDB = NULL;
+}
+
+if($SearchDB) {
+  // <tl;tr> To avoid data loss, fatal errors or conflicts, we use regionsregister
+  // table instead of regions if it seems to be a robust database. For obscure and
+  // historical reasons, search regions table has the same name as robust regions
+  // table, although it has a different structure and a different purpose. It
+  // could be renamed but some developers are reluctant to do it, so we keep the
+  // original name for backward compatibility when in a separate database.
+  $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
+  define('SEARCH_REGION_TABLE', ($formatCheck->rowCount() == 0) ? 'regions' : 'regionsregister');
+
+  if( ! tableExists($SearchDB, [ SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
+    error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
+    OSSearchCreateTables($SearchDB);
   }
 }

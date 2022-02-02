@@ -240,7 +240,7 @@ function w4os_register_settings() {
 							'name' => __('Search engine URL', 'w4os'),
 							'placeholder' => 'https://example.org/helpers/query.php',
 							'description' =>
-							__('URL of the search engine used internally by the viewer.', 'w4os')
+							__('URL of the search engine used internally by the viewer (without arguments).', 'w4os')
 							. w4os_format_ini(array(
 								'OpenSim.ini' => array(
 									'[Search]' => array(

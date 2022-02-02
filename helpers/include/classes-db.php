@@ -6,17 +6,15 @@
 class OSPDO extends PDO {
 	public function __construct($dsn, $username=null, $password=null, $driver_options=null)
 	{
+		@parent::__construct($dsn, $username, $password, $driver_options);
 		try {
-			parent::__construct($dsn, $username, $password, $driver_options);
-		  $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->connected = true;
 		}
 		catch(PDOException $e)
 		{
-			// $message = "Could not connect to the database";
-		  header("HTTP/1.0 500 Internal Server Error");
-			// echo "500 Internal Server Error\n";
 		  error_log($e);
-		  die();
+			$this->connected = false;
 		}
 	}
 
