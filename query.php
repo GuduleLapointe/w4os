@@ -104,7 +104,7 @@ function dir_popular_query($method_name, $params, $app_data)
   $sqldata = array();
 
   if ($flags & pow(2,12)) $terms[] = "has_picture = 1";
-  if ($flags & pow(2,11)) $terms[] = "mature = 0";     //PgSimsOnly (1 << 11)
+  if ($flags & pow(2,11)) $terms[] = "pop.mature = 0";     //PgSimsOnly (1 << 11)
 
   if ($text != "")
   {
@@ -126,8 +126,10 @@ function dir_popular_query($method_name, $params, $app_data)
   if (!is_int($query_start))
   $query_start = 0;
 
-  $query = $SearchDB->prepare("SELECT * FROM popularplaces" . $where .
-  " LIMIT $query_start,101");
+  $query = $SearchDB->prepare("SELECT * FROM popularplaces as pop
+    INNER JOIN parcels as par ON pop.parcelUUID = par.parcelUUID
+    INNER JOIN " . SEARCH_REGION_TABLE . " as r ON par.regionUUID = r.regionUUID"
+    . $where . " LIMIT $query_start,101");
   $result = $query->execute($sqldata);
 
   $data = array();
@@ -137,6 +139,10 @@ function dir_popular_query($method_name, $params, $app_data)
       "parcel_id" => $row["infoUUID"],
       "name" => $row["name"],
       "dwell" => $row["dwell"],
+      "gatekeeperURL" => $row["gatekeeperURL"],
+      "regionname" => $row["regionname"],
+      "regionUUID" => $row["regionUUID"],
+      "landingpoint" => $row["landingpoint"],
     );
   }
 
