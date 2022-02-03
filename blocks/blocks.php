@@ -85,3 +85,5 @@ function w4os_gridstatus_block_render($args=[], $dumb="", $block_object=[]) {
 		w4os_gridstatus_html(NULL, $args )
 	);
 }
+
+require_once(__DIR__ . '/popular-places.php');
