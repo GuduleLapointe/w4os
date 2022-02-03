@@ -48,13 +48,17 @@
 		 * @param {Object} [props] Properties passed from the editor.
 		 * @return {Element}       Element to render.
 		 */
-		edit: function( props ) {
-			return el(
-				'p',
-				{ className: 'components-placeholder ' + props.className },
-				__( 'Grid profile', 'w4os' )
-			);
-		},
+		 edit: function ( props ) {
+				 // var blockProps = useBlockProps();
+				 return el(
+						 'div',
+						 props,
+						 el( ServerSideRender, {
+								 block: 'w4os/w4os-gridprofile-block',
+								 attributes: props.attributes,
+						 } )
+				 );
+		 },
 
 		 /**
 		 * The save function defines the way in which the different attributes should be combined
