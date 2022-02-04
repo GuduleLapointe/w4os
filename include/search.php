@@ -104,6 +104,7 @@ function OSSearchCreateTables($db) {
     `infouuid` varchar(36) NOT NULL default '',
     `mature` varchar(10) NOT NULL default 'PG',
     `gatekeeperURL` varchar(255),
+    `image` char(36) NOT NULL,
     PRIMARY KEY  (`regionUUID`,`parcelUUID`),
     KEY `name` (`parcelname`),
     KEY `description` (`description`),
@@ -151,6 +152,27 @@ function OSSearchCreateTables($db) {
 
 
   $result = $query->execute();
+}
+
+function OSSearch_DBupdate_1() {
+  global $SearchDB;
+  if(!$SearchDB) return false;
+
+  $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
+  foreach($tables as $table) {
+    if (!count($SearchDB->query("SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'")->fetchAll())) {
+      $SearchDB->query("ALTER TABLE $table ADD gatekeeperURL varchar(255)");
+    }
+  }
+}
+
+function OSSearch_dbupdate_2() {
+  global $SearchDB;
+  if(!$SearchDB) return false;
+
+  if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'imageUUID'")->fetchAll())) {
+    $SearchDB->query("ALTER TABLE parcels ADD imageUUID char(36)");
+  }
 }
 
 function join_terms($glue, $terms, $deprecated = true) {
@@ -217,4 +239,9 @@ if($SearchDB) {
     error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
     OSSearchCreateTables($SearchDB);
   }
+
+  if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'gatekeeperURL'")->fetchAll()))
+  OSSearch_DBupdate_1();
+  if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'imageUUID'")->fetchAll()))
+  OSSearch_DBupdate_2();
 }

@@ -38,7 +38,8 @@ class OSPDO extends PDO {
 	}
 
 /**
- * deprecated, use OSPDO class instead
+ * Deprecated, use OSPDO class instead
+ * Still in use in currency scripts untill they are updated too
  */
 class DB
 {
