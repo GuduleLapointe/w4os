@@ -243,15 +243,19 @@ function hostScan($hostname, $port, $xmlcontent)
           'imageUUID' => $image,
         ));
 
-        $SearchDB->insert('popularplaces', array(
-          'parcelUUID' => $parcelUUID,
-          'name' => $parcelname,
-          'dwell' => $dwell,
-          'infoUUID' => $infoUUID,
-          'has_picture' => $has_picture,
-          'mature'   => $mature,
-          'gatekeeperURL' => $gatekeeperURL,
-        ));
+        // We don't want land for sale in popular places.
+        // We don't want places without traffic either.
+        if($dwell > 0 && $parcelforsale=="false") {
+          $SearchDB->insert('popularplaces', array(
+            'parcelUUID' => $parcelUUID,
+            'name' => $parcelname,
+            'dwell' => $dwell,
+            'infoUUID' => $infoUUID,
+            'has_picture' => $has_picture,
+            'mature'   => $mature,
+            'gatekeeperURL' => $gatekeeperURL,
+          ));
+        }
       }
 
       if ($parcelforsale == "true")
