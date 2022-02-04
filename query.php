@@ -130,10 +130,6 @@ function dir_popular_query($method_name, $params, $app_data)
     INNER JOIN parcels as par ON pop.parcelUUID = par.parcelUUID
     INNER JOIN " . SEARCH_REGION_TABLE . " as r ON par.regionUUID = r.regionUUID"
     . $where . " ORDER BY pop.dwell DESC, parcelname LIMIT $query_start,100");
-  error_log("SELECT * FROM popularplaces as pop
-    INNER JOIN parcels as par ON pop.parcelUUID = par.parcelUUID
-    INNER JOIN " . SEARCH_REGION_TABLE . " as r ON par.regionUUID = r.regionUUID"
-    . $where . " ORDER BY dwell DESC, parcelname LIMIT $query_start,100");
   $result = $query->execute($sqldata);
 
   $data = array();
