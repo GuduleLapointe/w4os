@@ -154,6 +154,7 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 == Changelog ==
 
 = Unreleased =
+* new Popular Places block and [popular-places] shortcode
 * new events parser (fetch events from 2do.pm or another HYPEvents server)
 * new search helper
 * new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)
