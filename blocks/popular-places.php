@@ -57,11 +57,10 @@ function popular_places_block_init() {
 
 	add_shortcode('popular-places', 'w4os_popular_places_shortcode');
 }
-
 add_action( 'init', 'popular_places_block_init' );
 
 function w4os_popular_places_block_render($args=[], $dumb="", $block_object=[]) {
-	if(! W4OS_DB_CONNECTED) return;
+	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
 	$block = (array) $block_object;
 	$block['before_title'] = '<h4>';
 	$block['after_title'] = '</h4>';
@@ -77,14 +76,14 @@ function w4os_popular_places_block_render($args=[], $dumb="", $block_object=[]) 
 
 function w4os_popular_places_shortcode($atts = [], $content = null)
 {
-	if(! W4OS_DB_CONNECTED) return;
+	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
 	empty($content) ? $content='' : $content="<div>$content</div>";
 	$args=array(
 		'before_title' => '<h4>',
 		'after_title' => '</h4>',
 	);
 	$content .= w4os_popular_places_html($atts, $args);
-	if(!empty($content)) return "<div class='w4os-shortcode w4os-shortcode-popular-places'>$content</div>";
+	if(!empty($content)) return "<div class='w4os-shortcode w4os-popular-places'>$content</div>";
 }
 
 function w4os_popular_places_html($atts = [], $args = []) {
@@ -118,8 +117,10 @@ function w4os_popular_places_html($atts = [], $args = []) {
 	$response = xmlrpc_decode(file_get_contents($searchURL, false, $context));
 	if (is_array($response) &! xmlrpc_is_fault($response)) {
 		$places = $response['data'];
-
+		$max = get_option('w4os_popular_places_max', 5);
+		$i=0;
 		foreach($places as $place) {
+			if($i++ >= $max) break;
 			$content .= sprintf('<p><a href="secondlife://%s/%s">%s</a>',
 				$place['regionname'],
 				$place['landingpoint'],
