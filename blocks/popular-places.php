@@ -66,11 +66,13 @@ function w4os_popular_places_block_render($args=[], $dumb="", $block_object=[]) 
 	$block['after_title'] = '</h4>';
 	$atts = $block_object->block_type->attributes;
 
+	$content = w4os_popular_places_html($atts, $block );
+	if(empty($content)) return "";
 	$class = preg_replace(":/:", "-", $block_object->name);
 	return sprintf(
 		'<div class="w4os-block %s">%s</div>',
 		$class,
-		w4os_popular_places_html($atts, $block ),
+		$content,
 	);
 }
 
@@ -82,37 +84,29 @@ function w4os_popular_places_shortcode($atts = [], $content = null)
 		'before_title' => '<h4>',
 		'after_title' => '</h4>',
 	);
-	$content .= w4os_popular_places_html($atts, $args);
-	if(!empty($content)) return "<div class='w4os-shortcode w4os-popular-places'>$content</div>";
+	$result = w4os_popular_places_html($atts, $args);
+	if(empty($result)) return "nothing in shortcode";
+
+	$content .= $result;
+	return "<div class='w4os-shortcode w4os-popular-places'>$result</div>";
 }
 
-function w4os_popular_places_html($atts = [], $args = []) {
+function w4os_popular_places($atts = []) {
 	$searchURL = get_option('w4os_search_url');
 	if(empty($searchURL)) return "Search URL not set";
 
-	extract( $args );
-	isset($atts['title']) ? $title=$atts['title'] : $title=__("Popular places", 'w4os');
-	$content = $before_title . $title . $after_title;
-	$debug = '';
-	// dir_popular_query
-	//
-	//
 	$req['query_start'] = 0;
 	$req['text'] = '';
-	$req['flags'] = pow(2,12);
-	// if ($flags & pow(2,12)) $terms[] = "has_picture = 1";
+	$req['flags'] = pow(2,12);	// has_picture
 
 	if($atts['rating']=='pg') $req['flags'] += pow(2,24); // PG Only
-	else	if($atts['rating']!='adult') $req['flags'] += pow(2,24) + pow(2,25); // default PG & Mature
-	// if ($flags & pow(2, 24)) $terms[] = "${table}mature = 'PG'";
-	// if ($flags & pow(2, 25)) $terms[] = "${table}mature = 'Mature'";
-	// if ($flags & pow(2, 26)) $terms[] = "${table}mature = 'Adult'";
+	else	if($atts['rating']!='adult') $req['flags'] += pow(2,24) + pow(2,25);
+	// 24 PG; 25 Mature; 26 Adult; default PG & Mature
 
 	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
 	$req['sim_name'] = '';
 	$request = xmlrpc_encode_request('dir_popular_query', $req );
 	$debug .= "request " . '<pre>' . print_r($request, true) . '</pre>';
-	// $response = do_call($host, $port, $request);
 
 	$post_data = array('xml' => $request);
 	$context = stream_context_create(array('http' => array(
@@ -121,32 +115,44 @@ function w4os_popular_places_html($atts = [], $args = []) {
 		'content' =>  $request
 	)));
 	$response = xmlrpc_decode(file_get_contents($searchURL, false, $context));
-	if (is_array($response) &! xmlrpc_is_fault($response) &! empty($response)) {
-		$places = $response['data'];
-		if(empty($places)) return;
 
-		$max = (isset($atts['max'])) ? $atts['max'] : get_option('w4os_popular_places_max', 5);
-		$i=0;
-		$content .= '<div class=places>';
-		foreach($places as $place) {
-			if (w4os_empty($place['imageUUID'])) continue;
-			if($i++ >= $max) break;
-			// if (!empty($place['imageUUID']) && $place['imageUUID']!=W4OS_NULL_KEY) {
-			$image = sprintf(
-				'<img src="%1$s" alt="%2$s">',
-				w4os_get_asset_url($place['imageUUID']),
-				$place['name'],
-			);
-			// }
-			$content .= sprintf('<div class=place><a href="secondlife://%1$s/%2$s"><h5>%3$s</h5>%4$s</a></div>',
-				$place['regionname'],
-				$place['landingpoint'],
-				$place['name'],
-				$image,
-			);
-		}
-		$content .= '</div>';
-		return $content;
+	if (is_array($response) &! xmlrpc_is_fault($response) &! empty($response))
+	return $response['data'];
+	else return [];
+}
+
+function w4os_popular_places_html($atts = [], $args = []) {
+	extract( $args );
+	isset($atts['title']) ? $title=$atts['title'] : $title=__("Popular places", 'w4os');
+	$content = $before_title . $title . $after_title;
+
+	$places=w4os_popular_places($atts);
+	if(empty($places)) {
+		if($_REQUEST['context'] == 'edit')
+		return  $content.__("No result", 'w4os');
+		else return;
 	}
-	return;
+
+	$max = (isset($atts['max'])) ? $atts['max'] : get_option('w4os_popular_places_max', 5);
+	$i=0;
+	$content .= '<div class=places>';
+	foreach($places as $place) {
+		if (w4os_empty($place['imageUUID'])) continue;
+		if($i++ >= $max) break;
+		// if (!empty($place['imageUUID']) && $place['imageUUID']!=W4OS_NULL_KEY) {
+		$image = sprintf(
+			'<img src="%1$s" alt="%2$s">',
+			w4os_get_asset_url($place['imageUUID']),
+			$place['name'],
+		);
+		// }
+		$content .= sprintf('<div class=place><a href="secondlife://%1$s/%2$s"><h5>%3$s</h5>%4$s</a></div>',
+			$place['regionname'],
+			$place['landingpoint'],
+			$place['name'],
+			$image,
+		);
+	}
+	$content .= '</div>';
+	return $content;
 }

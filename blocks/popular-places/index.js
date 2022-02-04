@@ -55,15 +55,14 @@
 		 * @return {Element}       Element to render.
 		 */
 		 edit: function ( props ) {
-				 // var blockProps = useBlockProps();
-				 return el(
-						 'div',
-						 props,
-						 props.isSelected ? __( 'Popular Places', 'w4os' ) : el( ServerSideRender, {
-								 block: 'w4os/popular-places',
-								 attributes: props.attributes,
-						 } )
-				 );
+			 return el(
+				 'div',
+				 props,
+				 el( ServerSideRender, {
+					 block: 'w4os/popular-places',
+					 attributes: props.attributes,
+				 } )
+			 );
 		 },
 		/**
 		 * The save function defines the way in which the different attributes should be combined
