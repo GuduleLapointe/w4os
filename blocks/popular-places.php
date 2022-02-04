@@ -122,7 +122,7 @@ function w4os_popular_places_html($atts = [], $args = []) {
 		$content .= '<div class=places>';
 		foreach($places as $place) {
 			if($i++ >= $max) break;
-			if (!empty($place['imageUUID']) && $place['imageUUID']!=NULL_KEY) {
+			if (!empty($place['imageUUID']) && $place['imageUUID']!=W4OS_NULL_KEY) {
 				$image = sprintf(
 					'<img src="%1$s" alt="%2$s">',
 					w4os_get_asset_url($place['imageUUID']),
