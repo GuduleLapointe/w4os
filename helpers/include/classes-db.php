@@ -52,7 +52,8 @@ class OSPDO extends PDO {
 $OpenSimDB = new OSPDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
 
 /**
- * deprecated, use OSPDO class instead
+ * Deprecated, use OSPDO class instead
+ * Still in use in currency scripts untill they are updated too
  */
 class DB
 {

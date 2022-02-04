@@ -143,6 +143,7 @@ function dir_popular_query($method_name, $params, $app_data)
       "regionname" => $row["regionname"],
       "regionUUID" => $row["regionUUID"],
       "landingpoint" => $row["landingpoint"],
+      "imageUUID" => $row["imageUUID"],
     );
   }
 

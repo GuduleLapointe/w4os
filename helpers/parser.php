@@ -178,6 +178,7 @@ function hostScan($hostname, $port, $xmlcontent)
         $image = $image_node->item(0)->nodeValue;
         if ($image != NULL_KEY) $has_picture = 1;
       }
+      if(empty($image)) $image = NULL_KEY;
 
       $owner = $parcel->getElementsByTagName("owner")->item(0);
       $ownerUUID = $owner->getElementsByTagName("uuid")->item(0)->nodeValue;
@@ -239,6 +240,7 @@ function hostScan($hostname, $port, $xmlcontent)
           'infouuid' => $infoUUID,
           'mature'   => $mature,
           'gatekeeperURL' => $gatekeeperURL,
+          'imageUUID' => $image,
         ));
 
         $SearchDB->insert('popularplaces', array(
@@ -298,7 +300,7 @@ function hostScan($hostname, $port, $xmlcontent)
 
 // $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
 $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 LIMIT 0,100";
-$sql = "SELECT host, port FROM hostsregister WHERE checked=0 LIMIT 0,100";
+// $sql = "SELECT host, port FROM hostsregister WHERE checked=0 LIMIT 0,100";
 $jobsearch = $SearchDB->query($sql);
 
 //

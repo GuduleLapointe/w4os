@@ -115,18 +115,29 @@ function w4os_popular_places_html($atts = [], $args = []) {
 		'content' =>  $request
 	)));
 	$response = xmlrpc_decode(file_get_contents($searchURL, false, $context));
-	if (is_array($response) &! xmlrpc_is_fault($response)) {
+	if (is_array($response) &! xmlrpc_is_fault($response) &! empty($response)) {
 		$places = $response['data'];
 		$max = (isset($atts['max'])) ? $atts['max'] : get_option('w4os_popular_places_max', 5);
 		$i=0;
+		$content .= '<div class=places>';
 		foreach($places as $place) {
 			if($i++ >= $max) break;
-			$content .= sprintf('<p><a href="secondlife://%s/%s">%s</a>',
+			if (!empty($place['imageUUID']) && $place['imageUUID']!=NULL_KEY) {
+				$image = sprintf(
+					'<img src="%1$s" alt="%2$s">',
+					w4os_get_asset_url($place['imageUUID']),
+					$place['name'],
+				);
+			}
+			$content .= sprintf('<div class=place><a href="secondlife://%1$s/%2$s"><h5>%3$s</h5>%4$s</a></div>',
 				$place['regionname'],
 				$place['landingpoint'],
 				$place['name'],
+				$image,
 			);
 		}
+		$content .= '</div>';
+		// $content.='<pre>' . print_r($places) . '</pre>';
 		return $content;
 	}
 	return;

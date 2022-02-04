@@ -4,5 +4,30 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-w4os-popular-places {
+.w4os-popular-places .places {
+  display: flex;
+  flex-flow: row wrap;
+ justify-content: start;
+   gap: 10px;
+  overflow-x: hidden;
+}
+.w4os-popular-places .places::after {
+ content: "";
+ flex: 2 0 256px;
+}
+.w4os-popular-places .place {
+  position: relative;
+  flex: 2 0 256px;
+}
+.w4os-popular-places .place h5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+   padding: 10px;
+   width: 100%;
+  color: white;
+}
+.w4os-popular-places .place img {
+  width: 384px;
+  height: 192px;
 }
