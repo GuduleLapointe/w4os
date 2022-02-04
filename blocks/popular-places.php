@@ -146,9 +146,9 @@ function w4os_popular_places_html($atts = [], $args = []) {
 			$place['name'],
 		);
 		// }
-		$content .= sprintf('<div class=place><a href="secondlife://%1$s/%2$s"><h5>%3$s</h5>%4$s</a></div>',
-			$place['regionname'],
-			$place['landingpoint'],
+		$tplink = preg_replace('#.*://#', 'secondlife://', $place['gatekeeperURL'] . ':' . $place['regionname'] . '/' . $place['landingpoint'] . '/');
+		$content .= sprintf('<div class=place><a href="%1$s"><h5>%2$s</h5>%3$s</a></div>',
+			$tplink,
 			$place['name'],
 			$image,
 		);
