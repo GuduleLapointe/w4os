@@ -117,7 +117,7 @@ function w4os_popular_places_html($atts = [], $args = []) {
 	$response = xmlrpc_decode(file_get_contents($searchURL, false, $context));
 	if (is_array($response) &! xmlrpc_is_fault($response)) {
 		$places = $response['data'];
-		$max = get_option('w4os_popular_places_max', 5);
+		$max = (isset($atts['max'])) ? $atts['max'] : get_option('w4os_popular_places_max', 5);
 		$i=0;
 		foreach($places as $place) {
 			if($i++ >= $max) break;
