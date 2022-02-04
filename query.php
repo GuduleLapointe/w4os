@@ -104,16 +104,22 @@ function dir_popular_query($method_name, $params, $app_data)
   $sqldata = array();
 
   if ($flags & pow(2,12)) $terms[] = "has_picture = 1";
-  if ($flags & pow(2,11)) $terms[] = "pop.mature = 0";     //PgSimsOnly (1 << 11)
+  // if ($flags & pow(2,11)) $terms[] = "pop.mature = 0";     //PgSimsOnly (1 << 11)
+  $typeCondition = buildMatureConditions($flags, 'pop');
+  if (!empty($typeCondition)) $terms[] = $typeCondition;
 
   if ($text != "")
   {
     $terms[] = "(name LIKE :text)";
     $sqldata['text'] = "%$text%";
   }
-  if(isset($_REQUEST['gk']) &! empty($_REQUEST['gk'])) {
+  if(! empty($_REQUEST['gk'])) {
     $gatekeeperURL = $_REQUEST['gk'];
-    $terms[] = 'gatekeeperURL = :gatekeeperURL';
+  } else if(! empty(isset($req['gatekeeper_url']))) {
+    $gatekeeperURL = $req['gatekeeper_url'];
+  }
+  if(!empty($gatekeeperURL)) {
+    $terms[] = 'pop.gatekeeperURL = :gatekeeperURL';
     $sqldata['gatekeeperURL'] = $gatekeeperURL;
   }
 
@@ -178,7 +184,7 @@ function dir_land_query($method_name, $params, $app_data)
   }
 
   $typeCondition = buildMatureConditions($flags);
-  if (!empty($typeCondition != "")) $terms[] = $typeCondition;
+  if (!empty($typeCondition)) $terms[] = $typeCondition;
   if ($flags & pow(2, 20))  //LimitByPrice (1 << 20)
   {
     $terms[] = "saleprice <= :price";
