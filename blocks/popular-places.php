@@ -99,9 +99,15 @@ function w4os_popular_places_html($atts = [], $args = []) {
 	//
 	$req['query_start'] = 0;
 	$req['text'] = '';
-	$req['flags'] = pow(2,12) + pow(2,11);
+	$req['flags'] = pow(2,12);
 	// if ($flags & pow(2,12)) $terms[] = "has_picture = 1";
-	// if ($flags & pow(2,11)) $terms[] = "mature = 0";     //PgSimsOnly (1 << 11)
+
+	if($atts['rating']=='pg') $req['flags'] += pow(2,24); // PG Only
+	else	if($atts['rating']!='adult') $req['flags'] += pow(2,24) + pow(2,25); // default PG & Mature
+	// if ($flags & pow(2, 24)) $terms[] = "${table}mature = 'PG'";
+	// if ($flags & pow(2, 25)) $terms[] = "${table}mature = 'Mature'";
+	// if ($flags & pow(2, 26)) $terms[] = "${table}mature = 'Adult'";
+
 	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
 	$req['sim_name'] = '';
 	$request = xmlrpc_encode_request('dir_popular_query', $req );
@@ -117,18 +123,21 @@ function w4os_popular_places_html($atts = [], $args = []) {
 	$response = xmlrpc_decode(file_get_contents($searchURL, false, $context));
 	if (is_array($response) &! xmlrpc_is_fault($response) &! empty($response)) {
 		$places = $response['data'];
+		if(empty($places)) return;
+
 		$max = (isset($atts['max'])) ? $atts['max'] : get_option('w4os_popular_places_max', 5);
 		$i=0;
 		$content .= '<div class=places>';
 		foreach($places as $place) {
+			if (w4os_empty($place['imageUUID'])) continue;
 			if($i++ >= $max) break;
-			if (!empty($place['imageUUID']) && $place['imageUUID']!=W4OS_NULL_KEY) {
-				$image = sprintf(
-					'<img src="%1$s" alt="%2$s">',
-					w4os_get_asset_url($place['imageUUID']),
-					$place['name'],
-				);
-			}
+			// if (!empty($place['imageUUID']) && $place['imageUUID']!=W4OS_NULL_KEY) {
+			$image = sprintf(
+				'<img src="%1$s" alt="%2$s">',
+				w4os_get_asset_url($place['imageUUID']),
+				$place['name'],
+			);
+			// }
 			$content .= sprintf('<div class=place><a href="secondlife://%1$s/%2$s"><h5>%3$s</h5>%4$s</a></div>',
 				$place['regionname'],
 				$place['landingpoint'],
@@ -137,7 +146,6 @@ function w4os_popular_places_html($atts = [], $args = []) {
 			);
 		}
 		$content .= '</div>';
-		// $content.='<pre>' . print_r($places) . '</pre>';
 		return $content;
 	}
 	return;

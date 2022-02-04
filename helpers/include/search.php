@@ -180,13 +180,13 @@ function join_terms($glue, $terms, $deprecated = true) {
   return "(" . join($glue, $terms) . ")";
 }
 
-function buildMatureConditions($flags)
+function buildMatureConditions($flags, $table="")
 {
+  if(!empty($table)) $table="$table.";
     $terms = array();
-    if ($flags & pow(2, 24)) $terms[] = "mature = 'PG'";
-    if ($flags & pow(2, 25)) $terms[] = "mature = 'Mature'";
-    if ($flags & pow(2, 26)) $terms[] = "mature = 'Adult'";
-
+    if ($flags & pow(2, 24)) $terms[] = "${table}mature = 'PG'";
+    if ($flags & pow(2, 25)) $terms[] = "${table}mature = 'Mature'";
+    if ($flags & pow(2, 26)) $terms[] = "${table}mature = 'Adult'";
     return join_terms(" OR ", $terms);
 }
 
