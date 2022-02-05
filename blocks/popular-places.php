@@ -93,7 +93,7 @@ function w4os_popular_places_shortcode($atts = [], $content = null)
 
 function w4os_popular_places($atts = []) {
 	$searchURL = get_option('w4os_search_url');
-	if(empty($searchURL)) return "Search URL not set";
+	if(empty($searchURL)) return [];
 
 	$req['query_start'] = 0;
 	$req['text'] = '';
