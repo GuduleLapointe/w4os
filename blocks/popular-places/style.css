@@ -18,7 +18,6 @@
 .w4os-popular-places .place {
   position: relative;
   flex: 2 0 256px;
-  background: pink;
   max-width: 256px;
 }
 .w4os-popular-places .place h5 {
