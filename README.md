@@ -1,5 +1,6 @@
 # Flexible helper scripts 2
 
+- version: 2.0
 - Project URL: <https://github.com/GuduleLapointe/flexible_helper_scripts>
 - Donate: <https://w4os.org/donate/>
 - Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, helpers
@@ -12,6 +13,15 @@ A compilation of scripts to complement OpenSimulator services or external module
 - Currency
 - Offline messaging (with mail forwarding)
 - Events
+
+## Installation
+
+- move this directory in your root web directory and rename it as helpers, to make it reachable as <http://example.org/helpers/>
+- copy includes/config.example.php to includes/config.php
+- edit includes/config.php with your grid and database settings
+- edit your OpenSim (and Robust or grids) config file(s) accordingly (more on this later, help is on the way)
+
+## Credits
 
 Flexible helper scripts include new code and code rewritten from several sources, in the hope to ease their integration within another platform (e.g. in a WordPress plugin like W4OS).
 
