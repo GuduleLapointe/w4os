@@ -17,6 +17,26 @@
 
 $SearchDB = new OSPDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
 
+function tableExists($pdo, $tables) {
+  if(is_string($tables)) $tables=array($tables);
+  foreach($tables as $table) {
+    // Try a select statement against the table
+    // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
+    try {
+      $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
+    } catch (Exception $e) {
+      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
+      // We got an exception == table not found
+      return false;
+    }
+    if($result == false) {
+      error_log(__FILE__ . ": " . SEARCH_DB_NAME . " is missing table $table" );
+      return false;
+    }
+  }
+  return true;
+}
+
 function OSSearchCreateTables($db) {
   $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
     `regionUUID` char(36) NOT NULL,

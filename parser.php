@@ -21,7 +21,7 @@
 
 require_once('include/wp-config.php');
 require_once('include/search.php');
-// dontWait();
+dontWait();
 
 $now = time();
 
@@ -295,8 +295,8 @@ function hostScan($hostname, $port, $xml)
   }
 }
 
-// $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 LIMIT 0,100";
-$sql = "SELECT host, port FROM hostsregister LIMIT 0,100";
+// $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
+$sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 LIMIT 0,100";
 $jobsearch = $SearchDB->query($sql);
 
 //
