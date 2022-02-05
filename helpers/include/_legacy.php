@@ -157,7 +157,7 @@ require_once('classes-db.php');
 
 function  opensim_new_db($timeout=60)
 {
-	$db = new DB(OPENSIM_DB_HOST, OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS, OPENSIM_DB_MYSQLI, $timeout);
+	$db = new DB(OPENSIM_DB_HOST, OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS, true, $timeout);
 
 	return $db;
 }

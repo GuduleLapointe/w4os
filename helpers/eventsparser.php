@@ -69,9 +69,9 @@ foreach($json as $json_event) {
   $duration = ($end > $start) ? round((strtotime($json_event['end']) - $start) / 60) : 60;
   $duration = ($duration > 0) ? $duration : 60;
   $description = strip_tags(html_entity_decode($json_event['description']));
-  $links = destinationLink($json_event['hgurl'], LINK_FORMAT_TXT + LINK_FORMAT_HOP + LINK_FORMAT_APPTP);
+  $links = destinationLink($json_event['hgurl'], TPLINK_TXT + TPLINK_HOP + TPLINK_APPTP);
   $description .= "\n\n" . $links;
-  $slurl = destinationLink($json_event['hgurl'], LINK_FORMAT_HOP);
+  $slurl = destinationLink($json_event['hgurl'], TPLINK_HOP);
   if(preg_match('!.*[:/]([0-9]+)/([0-9]+)/([0-9]+)/?$!', $json_event['hgurl']))
   $pos = preg_replace('!.*[:/]([0-9]+)/([0-9]+)/([0-9]+)/?$!', '$1,$2,$3', $json_event['hgurl']);
   else $pos = '128,128,25';
