@@ -363,7 +363,8 @@ function dir_events_query($method_name, $params, $app_data)
 xmlrpc_server_register_method($xmlrpc_server, "dir_classified_query", "dir_classified_query");
 function dir_classified_query ($method_name, $params, $app_data)
 {
-  $OpenSimDB = new OSPDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+  global $OpenSimDB;
+
   if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
     die();
   }
