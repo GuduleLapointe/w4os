@@ -17,8 +17,8 @@
  *   Fumi.Iseki for CMS/LMS '09 5/31
  */
 
-require_once('include/wp-config.php');
-require_once('include/economy.php');
+require_once('includes/config.php');
+require_once('includes/economy.php');
 
 ###################### No user serviceable parts below #####################
 #

@@ -15,8 +15,8 @@
  *   http://www.weberdev.com/get_example-4372.html
  */
 
-require_once('include/wp-config.php');
-require_once('include/classes-db.php');
+require_once('includes/config.php');
+require_once('includes/databases.php');
 
 if(empty($HTTP_RAW_POST_DATA)) {
 	osXmlResponse(false, 'Invalid request');
