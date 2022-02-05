@@ -84,6 +84,8 @@ function hostScan($hostname, $port, $xmlcontent)
   //Don't try and scan if XML is invalid or we got an HTML 404 error.
   if ($objDOM->loadXML($xmlcontent) == False) return;
 
+  $gatekeeperURL = $objDOM->getElementsByTagName("gatekeeperURL")->item(0)->nodeValue;
+
   //
   // Get the region data to update
   //
@@ -160,6 +162,7 @@ function hostScan($hostname, $port, $xmlcontent)
         'url' => $url,
         'owner' => $username,
         'ownerUUID' => $useruuid,
+        'gatekeeperURL' => $gatekeeperURL,
       ));
     }
 
@@ -229,6 +232,7 @@ function hostScan($hostname, $port, $xmlcontent)
         'parcelUUID' => $parcelUUID,
         'infoUUID' => $infoUUID,
         'parcelarea' => $parcelarea,
+        'gatekeeperURL' => $gatekeeperURL,
       ));
 
       if ($parceldirectory == "true")
@@ -245,7 +249,8 @@ function hostScan($hostname, $port, $xmlcontent)
           'public' => $parcelpublic,
           'dwell' => $dwell,
           'infouuid' => $infoUUID,
-          "mature"   => $mature,
+          'mature'   => $mature,
+          'gatekeeperURL' => $gatekeeperURL,
         ));
 
         $SearchDB->insert('popularplaces', array(
@@ -255,6 +260,7 @@ function hostScan($hostname, $port, $xmlcontent)
           'infoUUID' => $infoUUID,
           'has_picture' => $has_picture,
           'mature'   => $mature,
+          'gatekeeperURL' => $gatekeeperURL,
         ));
       }
 
@@ -271,6 +277,7 @@ function hostScan($hostname, $port, $xmlcontent)
           'dwell' => $dwell,
           'parentestate' => $parentestate,
           'mature' => $mature,
+          'gatekeeperURL' => $gatekeeperURL,
         ));
       }
     }
@@ -295,6 +302,7 @@ function hostScan($hostname, $port, $xmlcontent)
         'name' => $location,
         'description' => $object->getElementsByTagName("description")->item(0)->nodeValue,
         'regionuuid' => $object->getElementsByTagName("regionuuid")->item(0)->nodeValue,
+        'gatekeeperURL' => $gatekeeperURL,
       ));
     }
   }
@@ -302,6 +310,7 @@ function hostScan($hostname, $port, $xmlcontent)
 
 // $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
 $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 LIMIT 0,100";
+$sql = "SELECT host, port FROM hostsregister WHERE checked=0 LIMIT 0,100";
 $jobsearch = $SearchDB->query($sql);
 
 //
