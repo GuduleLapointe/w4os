@@ -45,7 +45,7 @@ function hostCheck($hostname, $port)
     $failcounter = $fails->fetch()[0] + 1;
     $interval = $interval * pow(2, $failcounter); // extend scanning interval for inactive hosts
     if($failcounter > 10) {
-      hostUnregister($hostname, $port);
+      ossearch_hostUnregister($hostname, $port);
       return;
     }
   }

@@ -19,7 +19,7 @@ require_once('include/wp-config.php');
 require_once('include/classes-db.php');
 
 if(empty($HTTP_RAW_POST_DATA)) {
-	xmlResponse(false, 'Invalid request');
+	osXmlResponse(false, 'Invalid request');
 	die();
 }
 
@@ -31,7 +31,7 @@ $xml = new SimpleXMLElement($HTTP_RAW_POST_DATA);
 switch($method) {
 	case "/SaveMessage/":
 	if (strpos($HTTP_RAW_POST_DATA, "?>") == -1) {
-		xmlResponse(false);
+		osXmlResponse(false);
 		die;
 	}
 
@@ -45,7 +45,7 @@ switch($method) {
 			'Message' => preg_replace('/>\n/', '>', $xml->asXML()),
 		)
 	);
-	xmlResponse($saved);	// Output in-world save result
+	osXmlResponse($saved);	// Output in-world save result
 	dontWait(); // flush output, continue in background
 
 	// Save to mail queue if mail forwarding is set
@@ -142,7 +142,7 @@ switch($method) {
 	break;
 
  	case "/RetrieveMessages/":
-	if (isUUID($xml->Guid)) {
+	if (opensim_isuuid($xml->Guid)) {
 		$pendingmessages = $OpenSimDB->prepareAndExecute(
 			"SELECT ID, Message FROM " . OFFLINE_MESSAGE_TBL . " WHERE PrincipalID = :PrincipalID",
 			array(
@@ -167,7 +167,7 @@ switch($method) {
 			}
 		} else {
 			error_log("error retrieving pending messages");
-			xmlResponse(false);
+			osXmlResponse(false);
 		}
 	} else {
 		error_log($xml->Guid . ' is not a valid UUID');
@@ -177,6 +177,6 @@ switch($method) {
 
 	default:
 	error_log("Offline messages: method $method not implemented, please configure OfflineMessageModule = OfflineMessageModule in OpenSim.ini");
-	xmlResponse(false, "method $method not implemented");
+	osXmlResponse(false, "method $method not implemented");
 	die();
 }
