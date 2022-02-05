@@ -18,8 +18,8 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-require_once('include/wp-config.php');
-require_once('include/search.php');
+require_once('includes/config.php');
+require_once('includes/search.php');
 
 $host = $_GET['host'];
 $port = $_GET['port'];

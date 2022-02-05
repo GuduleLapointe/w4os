@@ -117,8 +117,8 @@ function w4os_update_4() {
  */
 function w4os_update_5() {
   if(get_option('w4os_provide_search') == true) {
-    require_once(dirname(__DIR__) . '/helpers/include/wp-config.php');
-    require_once(dirname(__DIR__) . '/helpers/include/search.php');
+    require_once(dirname(__DIR__) . '/helpers/includes/config.php');
+    require_once(dirname(__DIR__) . '/helpers/includes/search.php');
     if($SearchDB) {
       $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
       foreach($tables as $table) {

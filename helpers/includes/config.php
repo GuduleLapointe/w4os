@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) die();
 /*
- * wp-config.php
+ * config.php
  *
  * Helpers configuration for W4OS plugin.
  * Not for use with standalone helpers.
@@ -10,20 +10,13 @@
  *   by Gudule Lapointe <gudule@speculoos.world>
  */
 
-//////////////////////////////////////////////////////////////////////////////////i
-// Valiables for OpenSim
 /**
  * Grid info
  */
-
 define('OPENSIM_GRID_NAME', get_option('w4os_grid_name', 'OpenSimulator'));
 define('OPENSIM_LOGIN_URI', W4OS_GRID_LOGIN_URI);
 define("OPENSIM_MAIL_SENDER", get_option('w4os_offline_sender', 'no-reply@' . $_SERVER['SERVER_NAME']));
-
-// $logo = get_theme_mod( 'custom_logo' );
-// $image = wp_get_attachment_image_src( $logo , 'full' );
-// $image_url = $image[0];
-// define('OPENSIM_GRID_LOGO_URL', $image_url);
+// define('OPENSIM_GRID_LOGO_URL', (get_theme_mod( 'custom_logo' )) ? wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ) , 'full' )[0] : '');
 
 /**
  * Main database. For grids, use Robust database credentials. For standalone
@@ -139,5 +132,5 @@ define('TPLINK_NAMING', array(
   'TPLINK_DEFAULT' => 'DEFAULT',
 ));
 
-require_once('classes-db.php');
+require_once('databases.php');
 require_once('functions.php');
