@@ -21,7 +21,7 @@ function valueChanged() {
   document.getElementById("w4os_currency_rate").parentNode.parentNode.style.display = document.getElementById('w4os_provide_economy_helpers').checked &! document.getElementById('w4os_currency_provider_gloebit').checked ? "table-row" : "none";
 
   document.getElementById("w4os_search_register").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked ? "table-row" : "none";
-  document.getElementById("w4os_search_url").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked ? "table-row" : "none";
+  // document.getElementById("w4os_search_url").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked ? "table-row" : "none";
   document.getElementById("w4os_search_use_robust_db").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked ? "table-row" : "none";
   document.getElementById("w4os_search_db_host").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked &! document.getElementById('w4os_search_use_robust_db').checked ? "table-row" : "none";
   document.getElementById("w4os_search_db_database").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked &! document.getElementById('w4os_search_use_robust_db').checked ? "table-row" : "none";
