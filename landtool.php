@@ -51,10 +51,10 @@ function buy_land_prep($method_name, $params, $app_data)
 	$ret = opensim_check_secure_session($agentid, null, $sessionid);
 
 	if($ret) {
-		$confirmvalue = get_confirm_value($ipAddress);
+		$confirmvalue = currency_get_confirm_value($ipAddress);
 		$membership_levels = array('levels' => array('id' => "00000000-0000-0000-0000-000000000000", 'description' => "some level"));
 		$landUse	= array('upgrade' => False, 'action' => "".CURRENCY_HELPER_URL."");
-		$currency   = array('estimatedCost' => convert_to_real($amount));
+		$currency   = array('estimatedCost' => currency_virtual_to_real($amount));
 		$membership = array('upgrade' => False, 'action' => "".CURRENCY_HELPER_URL."", 'levels' => $membership_levels);
 		$response_xml = xmlrpc_encode(array('success'	=> True,
 											'currency'  => $currency,
@@ -94,7 +94,7 @@ function buy_land($method_name, $params, $app_data)
 	$ipAddress	  = $_SERVER['REMOTE_ADDR'];
 
 	//
-	if ($confim!=get_confirm_value($ipAddress)) {
+	if ($confim!=currency_get_confirm_value($ipAddress)) {
 		$response_xml = xmlrpc_encode(array('success'     => False,
 											'errorMessage'=> "\n\nMissmatch Confirm Value!!",
 											'errorURI'    => "".CURRENCY_HELPER_URL.""));
@@ -107,8 +107,8 @@ function buy_land($method_name, $params, $app_data)
 
 	if ($ret) {
 		if($amount>=0) {
-		 	if (!$cost) $cost = convert_to_real($amount);
-			if(!process_transaction($agentid, $cost, $ipAddress)) {
+		 	if (!$cost) $cost = currency_virtual_to_real($amount);
+			if(!currency_process_transaction($agentid, $cost, $ipAddress)) {
 				$response_xml = xmlrpc_encode(array(
 						'success'	   => False,
 						'errorMessage' => "\n\nThe gateway has declined your transaction. Please update your payment method AND try again later.",
@@ -116,13 +116,13 @@ function buy_land($method_name, $params, $app_data)
 			}
 			//
 			$enough_money = false;
-			$res = add_money($agentid, $amount, $sessionid);
+			$res = currency_add_money($agentid, $amount, $sessionid);
 			if ($res["success"]) $enough_money = true;
 
 			if ($enough_money) {
-				$amount += get_balance($agentid);
-				move_money($agentid, null, $amount, 5002, 0, "Land Purchase", 0, 0, $ipAddress);
-				update_simulator_balance($agentid, -1, $sessionid);
+				$amount += currency_get_balance($agentid);
+				currency_move_money($agentid, null, $amount, 5002, 0, "Land Purchase", 0, 0, $ipAddress);
+				currency_update_simulator_balance($agentid, -1, $sessionid);
 				$response_xml = xmlrpc_encode(array('success' => True));
 			}
 			else {

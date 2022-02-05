@@ -58,7 +58,7 @@ switch($service) {
   break;
 
   case 'offline':
-  hostUnregister($host, $port);
+  ossearch_hostUnregister($host, $port);
   break;
 
   // default:

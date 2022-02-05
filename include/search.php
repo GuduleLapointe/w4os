@@ -15,7 +15,7 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-function OSSearchCreateTables($db) {
+function ossearch_db_tables($db) {
   $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
     `regionUUID` char(36) NOT NULL,
     `parcelname` varchar(255) NOT NULL,
@@ -154,7 +154,7 @@ function OSSearchCreateTables($db) {
   $result = $query->execute();
 }
 
-function OSSearch_DBupdate_1() {
+function ossearch_db_update_1() {
   global $SearchDB;
   if(!$SearchDB) return false;
 
@@ -166,7 +166,7 @@ function OSSearch_DBupdate_1() {
   }
 }
 
-function OSSearch_dbupdate_2() {
+function ossearch_db_update_2() {
   global $SearchDB;
   if(!$SearchDB) return false;
 
@@ -175,22 +175,22 @@ function OSSearch_dbupdate_2() {
   }
 }
 
-function join_terms($glue, $terms, $deprecated = true) {
+function ossearch_terms_join($glue, $terms, $deprecated = true) {
   if(empty($terms)) return "";
   return "(" . join($glue, $terms) . ")";
 }
 
-function buildMatureConditions($flags, $table="")
+function ossearch_terms_build_rating($flags, $table="")
 {
   if(!empty($table)) $table="$table.";
     $terms = array();
     if ($flags & pow(2, 24)) $terms[] = "${table}mature = 'PG'";
     if ($flags & pow(2, 25)) $terms[] = "${table}mature = 'Mature'";
     if ($flags & pow(2, 26)) $terms[] = "${table}mature = 'Adult'";
-    return join_terms(" OR ", $terms);
+    return ossearch_terms_join(" OR ", $terms);
 }
 
-function hostUnregister($hostname, $port) {
+function ossearch_hostUnregister($hostname, $port) {
   global $SearchDB;
 
   $SearchDB->prepareAndExecute("DELETE FROM hostsregister
@@ -237,11 +237,11 @@ if($SearchDB) {
 
   if( ! tableExists($SearchDB, [ SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
     error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
-    OSSearchCreateTables($SearchDB);
+    ossearch_db_tables($SearchDB);
   }
 
   if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'gatekeeperURL'")->fetchAll()))
-  OSSearch_DBupdate_1();
+  ossearch_db_update_1();
   if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'imageUUID'")->fetchAll()))
-  OSSearch_DBupdate_2();
+  ossearch_db_update_2();
 }

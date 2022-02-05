@@ -44,7 +44,7 @@ function dir_places_query($method_name, $params, $app_data)
   array_filter($pieces);
   $text = join("%", $pieces);
   $text = "%$text%";
-  if(empty($text) || $text == '%%%') xmlDie('Invalid search terms');
+  if(empty($text) || $text == '%%%') osXmlDie('Invalid search terms');
 
   $terms = array();
   $sqldata = array();
@@ -53,7 +53,7 @@ function dir_places_query($method_name, $params, $app_data)
   $order = ($flags & 1024) ? "dwell DESC, parcelname": 'parcelname';
 
   $terms[] = "(parcelname LIKE :text OR description LIKE :text)";
-  $type = buildMatureConditions($flags);
+  $type = ossearch_terms_build_rating($flags);
   if(!empty($type)) $terms[] = "$type";
   if($category > 0) $terms[] = "searchcategory = :cat";
 
@@ -82,7 +82,7 @@ function dir_places_query($method_name, $params, $app_data)
     );
   }
 
-  xmlResponse(true, '', $data);
+  osXmlResponse(true, '', $data);
   die();
 }
 
@@ -105,7 +105,7 @@ function dir_popular_query($method_name, $params, $app_data)
 
   if ($flags & pow(2,12)) $terms[] = "has_picture = 1";
   // if ($flags & pow(2,11)) $terms[] = "pop.mature = 0";     //PgSimsOnly (1 << 11)
-  $typeCondition = buildMatureConditions($flags, 'pop');
+  $typeCondition = ossearch_terms_build_rating($flags, 'pop');
   if (!empty($typeCondition)) $terms[] = $typeCondition;
 
   if ($text != "")
@@ -153,7 +153,7 @@ function dir_popular_query($method_name, $params, $app_data)
     );
   }
 
-  xmlResponse(true, '', $data);
+  osXmlResponse(true, '', $data);
 }
 
 #
@@ -177,13 +177,13 @@ function dir_land_query($method_name, $params, $app_data)
   if ($type != 4294967295)    //Include all types of land?
   {
     //Do this check first so we can bail out quickly on Auction search
-    if (($type & 26) == 2) xmlDie("No auctions listed"); // Auction (from SearchTypeFlags enum)
+    if (($type & 26) == 2) osXmlDie("No auctions listed"); // Auction (from SearchTypeFlags enum)
 
     if (($type & 24) == 8) $terms[] = "parentestate = 1"; // Mainland (24=0x18 [bits 3 & 4])
     if (($type & 24) == 16) $terms[] = "parentestate <> 1"; // Estate (24=0x18 [bits 3 & 4])
   }
 
-  $typeCondition = buildMatureConditions($flags);
+  $typeCondition = ossearch_terms_build_rating($flags);
   if (!empty($typeCondition)) $terms[] = $typeCondition;
   if ($flags & pow(2, 20))  //LimitByPrice (1 << 20)
   {
@@ -234,7 +234,7 @@ function dir_land_query($method_name, $params, $app_data)
     "area" => $row["area"]);
   }
 
-  xmlResponse(true, '', $data);
+  osXmlResponse(true, '', $data);
 }
 
 #
@@ -311,7 +311,7 @@ function dir_events_query($method_name, $params, $app_data)
   if ($flags & pow(2, 24)) $type[] = "eventflags = 0"; //IncludePG (1 << 24)
   if ($flags & pow(2, 25)) $type[] = "eventflags = 1"; //IncludeMature (1 << 25)
   if ($flags & pow(2, 26)) $type[] = "eventflags = 2"; //IncludeAdult (1 << 26)
-  if (count($type) > 0) $terms[] = join_terms(" OR ", $type);
+  if (count($type) > 0) $terms[] = ossearch_terms_join(" OR ", $type);
 
   if ($search_text != "")
   {
@@ -354,7 +354,7 @@ function dir_events_query($method_name, $params, $app_data)
     "landing_point" => $row["globalPos"]);
   }
 
-  xmlResponse(true, '', $data);
+  osXmlResponse(true, '', $data);
 }
 
 #
@@ -377,7 +377,7 @@ function dir_classified_query ($method_name, $params, $app_data)
 
   if ($text == "%%%")
   {
-    xmlResponse(false, "Invalid search terms", []);
+    osXmlResponse(false, "Invalid search terms", []);
     return;
   }
 
@@ -389,7 +389,7 @@ function dir_classified_query ($method_name, $params, $app_data)
   if ($flags & 4) $f[] = "classifiedflags & 4"; // PG (1 << 2)
   if ($flags & 8) $f[] = "classifiedflags & 8"; // Mature (1 << 3)
   if ($flags & 64) $f[] = "classifiedflags & 64"; // Adult (1 << 6)
-  if (count($f) > 0) $terms[] = join_terms(" OR ", $f);
+  if (count($f) > 0) $terms[] = ossearch_terms_join(" OR ", $f);
 
   //Only restrict results based on category if it is not 0 (Any Category)
   if ($category > 0) $terms[] = "category = $category";
@@ -423,7 +423,7 @@ function dir_classified_query ($method_name, $params, $app_data)
     );
   }
 
-  xmlResponse(true, '', $data);
+  osXmlResponse(true, '', $data);
 }
 
 #
@@ -477,7 +477,7 @@ function event_info_query($method_name, $params, $app_data)
     );
   }
 
-  xmlResponse(true, '', $data);
+  osXmlResponse(true, '', $data);
 }
 
 #
@@ -517,7 +517,7 @@ function classifieds_info_query($method_name, $params, $app_data)
     );
   }
 
-  xmlResponse(true, '', $data);
+  osXmlResponse(true, '', $data);
 }
 
 #

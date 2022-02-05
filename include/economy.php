@@ -30,8 +30,8 @@ function noserver_save_transaction($sourceId, $destId, $amount, $type, $flags, $
   global $CurrencyDB;
 
   if (!is_numeric($amount)) return;
-	if (!isUUID($sourceId))  $sourceId = NULL_KEY;
-	if (!isUUID($destId))    $destId   = NULL_KEY;
+	if (!opensim_isuuid($sourceId))  $sourceId = NULL_KEY;
+	if (!opensim_isuuid($destId))    $destId   = NULL_KEY;
 
 	$region = NULL_KEY;
 	$client = $sourceId;
@@ -59,7 +59,7 @@ function noserver_get_balance($agentID)
 {
   global $CurrencyDB;
 
-	if (!isUUID($agentID)) return -1;
+	if (!opensim_isuuid($agentID)) return -1;
 
 	$sent_sum = 0;
 	$received_sum = 0;
@@ -76,13 +76,13 @@ function noserver_get_balance($agentID)
 	return $cash;
 }
 
-function opensim_save_transaction($sourceId, $destId, $amount, $type, $flags, $description, &$deprecated=null)
+function currency_save_transaction($sourceId, $destId, $amount, $type, $flags, $description, &$deprecated=null)
 {
   global $CurrencyDB;
 
 	if (!is_numeric($amount)) return;
-	if (!isUUID($sourceId))  $sourceId = NULL_KEY;
-	if (!isUUID($destId)) 	 $destId   = NULL_KEY;
+	if (!opensim_isuuid($sourceId))  $sourceId = NULL_KEY;
+	if (!opensim_isuuid($destId)) 	 $destId   = NULL_KEY;
 
 	$handle   = 0;
 	$secure   = NULL_KEY;
@@ -116,9 +116,9 @@ function opensim_save_transaction($sourceId, $destId, $amount, $type, $flags, $d
   ));
 }
 
-function opensim_set_currency_balance($agentID, $amount, &$deprecated=null)
+function currency_set_currency_balance($agentID, $amount, &$deprecated=null)
 {
-  if (!isUUID($agentID) or !is_numeric($amount)) return false;
+  if (!opensim_isuuid($agentID) or !is_numeric($amount)) return false;
 
   global $CurrencyDB;
   $balances_table = CURRENCY_MONEY_TBL;
@@ -141,17 +141,17 @@ function opensim_set_currency_balance($agentID, $amount, &$deprecated=null)
   return $result;
 }
 
-function update_simulator_balance($agentID, $amount=-1, $secureID=null)
+function currency_update_simulator_balance($agentID, $amount=-1, $secureID=null)
 {
-	if (!isUUID($agentID)) return false;
+	if (!opensim_isuuid($agentID)) return false;
 
 	if ($amount<0) {
-		$amount = get_balance($agentID, $secureID);
+		$amount = currency_get_balance($agentID, $secureID);
 		if ($amount<0) return false;
 	}
 
 	// XML RPC to Region Server
-	if (!isUUID($secureID, true)) return false;
+	if (!opensim_isuuid($secureID, true)) return false;
 
 	$agentServer = opensim_get_server_info($agentID);
 	if (!$agentServer) return false;
@@ -170,12 +170,12 @@ function update_simulator_balance($agentID, $amount=-1, $secureID=null)
     'clientSecureSessionID'=>$secureID,
     "Balance"=>$amount,
   )));
-	$response = do_call($serverip, $httpport, $serveruri, $request);
+	$response = currency_xmlrpc_call($serverip, $httpport, $serveruri, $request);
 
 	return $response;
 }
 
-function move_money($agentID, $destID, $amount, $type, $flags, $desc, $prminvent=0, $nxtowner=0, $ip="")
+function currency_move_money($agentID, $destID, $amount, $type, $flags, $desc, $prminvent=0, $nxtowner=0, $ip="")
 {
 	if (!CURRENCY_USE_MONEYSERVER) {
     noserver_save_transaction($agentID, $destID, $amount, $type, $flags, $desc, $prminvent, $nxtowner, $ip);
@@ -185,24 +185,24 @@ function move_money($agentID, $destID, $amount, $type, $flags, $desc, $prminvent
 	// Direct DB access for security
 	//$url = preg_split("/[:\/]/", USER_SERVER_URI);
 	//$userip = $url[3];
- 	opensim_save_transaction($agentID, $destID, $amount, $type, $flags, $desc);
+ 	currency_save_transaction($agentID, $destID, $amount, $type, $flags, $desc);
 
   // TODO: Shouldn't we execute both balance updates only if all of the four
   // conditions are met and none of them if any of the checks fails?
-	if (isUUID($agentID) and $agentID!=NULL_KEY) {
-		opensim_set_currency_balance($agentID, -$amount);
+	if (opensim_isuuid($agentID) and $agentID!=NULL_KEY) {
+		currency_set_currency_balance($agentID, -$amount);
 	}
-	if (isUUID($destID)  and $destID !=NULL_KEY) {
-		opensim_set_currency_balance($destID, $amount);
+	if (opensim_isuuid($destID)  and $destID !=NULL_KEY) {
+		currency_set_currency_balance($destID, $amount);
 	}
 
 	return true;
 }
 
 //
-function add_money($agentID, $amount, $secureID=null)
+function currency_add_money($agentID, $amount, $secureID=null)
 {
-	if (!isUUID($agentID)) return false;
+	if (!opensim_isuuid($agentID)) return false;
 
 	//
 	if (!CURRENCY_USE_MONEYSERVER) {
@@ -214,7 +214,7 @@ function add_money($agentID, $amount, $secureID=null)
 	//
 	// XML RPC to Region Server
 	//
-	if (!isUUID($secureID, true)) return false;
+	if (!opensim_isuuid($secureID, true)) return false;
 
 	$agentServer = opensim_get_server_info($agentID);
 	$serverip  = $agentServer["serverIP"];
@@ -233,7 +233,7 @@ function add_money($agentID, $amount, $secureID=null)
     'clientSecureSessionID'=>$secureID,
     'amount'=>$amount,
   )));
-	$response = do_call($serverip, $httpport, $serveruri, $request);
+	$response = currency_xmlrpc_call($serverip, $httpport, $serveruri, $request);
 
 	return $response;
 }
@@ -242,9 +242,9 @@ function add_money($agentID, $amount, $secureID=null)
 // Send the money to avatar for bonus
 // 										by Milo
 //
-function send_money($agentID, $amount, $secretCode=null)
+function currency_send_money($agentID, $amount, $secretCode=null)
 {
-  if (!isUUID($agentID)) return false;
+  if (!opensim_isuuid($agentID)) return false;
 
   if (!CURRENCY_USE_MONEYSERVER) {
     noserver_save_transaction(null, $agentID, $amount, 5003, 0, "Send Money", 0, 0, "");
@@ -265,7 +265,7 @@ function send_money($agentID, $amount, $secretCode=null)
 	if ($secretCode!=null) {
 		$secretCode = md5($secretCode."_".$serverip);
 	} else {
-		$secretCode = get_confirm_value($serverip);
+		$secretCode = currency_get_confirm_value($serverip);
 	}
 
   $request  = xmlrpc_encode_request('SendMoneyBalance', array(array(
@@ -273,22 +273,22 @@ function send_money($agentID, $amount, $secretCode=null)
     'secretAccessCode'=>$secretCode,
     'amount'=>$amount,
   )));
-	$response = do_call($serverip, $httpport, $serveruri, $request);
+	$response = currency_xmlrpc_call($serverip, $httpport, $serveruri, $request);
 
 	return $response;
 }
 
-function get_balance($agentID, $secureID=null)
+function currency_get_balance($agentID, $secureID=null)
 {
 	$cash = -1;
-	if (!isUUID($agentID)) return (integer)$cash;
+	if (!opensim_isuuid($agentID)) return (integer)$cash;
 
 	if (!CURRENCY_USE_MONEYSERVER) {
 		$cash = noserver_get_balance($agentID);
 		return (integer)$cash;
 	}
 
-	if (!isUUID($secureID, true)) return (integer)$cash;
+	if (!opensim_isuuid($secureID, true)) return (integer)$cash;
 
 	$agentServer = opensim_get_server_info($agentID);
 	$serverip  = $agentServer["serverIP"];
@@ -306,13 +306,13 @@ function get_balance($agentID, $secureID=null)
     'clientSessionID'=>$sessionID,
     'clientSecureSessionID'=>$secureID,
   )));
-	$response = do_call($serverip, $httpport, $serveruri, $request);
+	$response = currency_xmlrpc_call($serverip, $httpport, $serveruri, $request);
 
 	if ($response) $cash = $response["balance"];
 	return (integer)$cash;
 }
 
-function get_confirm_value($ipAddress)
+function currency_get_confirm_value($ipAddress)
 {
   // TODO:
   // Option to force key to be something else than default
@@ -322,7 +322,7 @@ function get_confirm_value($ipAddress)
 	return $confirmvalue;
 }
 
-function process_transaction($avatarID, $cost, $ipAddress)
+function currency_process_transaction($avatarID, $cost, $ipAddress)
 {
 	# Do external processing here! (credit card, paypal, any money system)
 	# Return False if it fails!
@@ -337,35 +337,8 @@ function process_transaction($avatarID, $cost, $ipAddress)
 	return true;
 }
 
-function convert_to_real($amount)
+function currency_virtual_to_real($amount)
 {
-	/*
-  global $CurrencyDB;
-	if($currency == 0) return 0;
-
-	$CurrencyDB = new DB(CURRENCY_DB_HOST, CURRENCY_DB_NAME, CURRENCY_DB_USER, CURRENCY_DB_PASS, true);
-
-	# Get the currency conversion ratio in USD Cents per Money Unit
-	# Actually, it's whatever currency your credit card processor uses
-
-	$cents = $CurrencyDB->query("SELECT CentsPerMoneyUnit FROM ".CURRENCY_MONEY_TBL." limit 1");
-	list($CentsPerMoneyUnit) = $cents->fetch();
-	$CurrencyDB->close();
-
-	if (!$CentsPerMoneyUnit) $CentsPerMoneyUnit = 0;
-
-	# Multiply the cents per unit times the requested amount
-
-	$real = $CentsPerMoneyUnit * $currency;
-
-	// Dealing in cents here. The XML requires an integer
-	// so we have to ceil out any decimal places and cast as an integer
-
-	$real = (integer)ceil($real);
-
-	return $real;
-	*/
-
 	$cost = (integer)( CURRENCY_RATE / CURRENCY_RATE_PER * 100 * $amount );
 
 	return $cost;
@@ -373,7 +346,7 @@ function convert_to_real($amount)
 
 
 // XML RPC
-function do_call($host, $port, $uri, $request)
+function currency_xmlrpc_call($host, $port, $uri, $request)
 {
 	$url = "";
 	if ($uri!="") {
@@ -403,10 +376,15 @@ function do_call($host, $port, $uri, $request)
 	return $ret;
 }
 
+/**
+ * Following functions are not specific to money and could be useful in other
+ * helpers. However, they are not: they are currently only used in currency
+ * scripts, so I leave them here, hence the opensim_ prefix.
+ */
 function opensim_get_avatar_session($agentID, &$deprecated=null)
 {
   global $OpenSimDB;
-  if (!isUUID($agentID)) return null;
+  if (!opensim_isuuid($agentID)) return null;
 
   $result = $OpenSimDB->query("SELECT RegionID,SessionID,SecureSessionID FROM Presence WHERE UserID='$agentID'");
   if ($result) list($RegionID, $SessionID, $SecureSessionID) = $result->fetch();
@@ -423,7 +401,7 @@ function opensim_set_current_region($agentID, $regionid, &$deprecated=null)
 {
   global $OpenSimDB;
 
-	if (!isUUID($agentID) or !isUUID($regionid)) return false;
+	if (!opensim_isuuid($agentID) or !opensim_isuuid($regionid)) return false;
 
   $sql = "UPDATE Presence SET RegionID='$regionid' WHERE UserID='$agentID'";
   $result = $OpenSimDB->query($sql);
@@ -434,7 +412,7 @@ function opensim_set_current_region($agentID, $regionid, &$deprecated=null)
 function opensim_get_server_info($userid, &$deprecated=null)
 {
   global $OpenSimDB;
-  if (!isUUID($userid)) return array();
+  if (!opensim_isuuid($userid)) return array();
 
   $result = $OpenSimDB->query("SELECT serverIP,serverHttpPort,serverURI,regionSecret
     FROM GridUser INNER JOIN regions ON regions.uuid=GridUser.LastRegionID
@@ -453,10 +431,10 @@ function opensim_get_server_info($userid, &$deprecated=null)
 function opensim_check_secure_session($agentID, $regionid, $secure, &$deprecated=null)
 {
   global $OpenSimDB;
-	if (!isUUID($agentID) or !isUUID($secure)) return false;
+	if (!opensim_isuuid($agentID) or !opensim_isuuid($secure)) return false;
 
   $sql = "SELECT UserID FROM Presence WHERE UserID='$agentID' AND SecureSessionID='$secure'";
-  if (isUUID($regionid)) $sql = $sql." AND RegionID='$regionid'";
+  if (opensim_isuuid($regionid)) $sql = $sql." AND RegionID='$regionid'";
 
 	$result = $OpenSimDB->query($sql);
 	if (!$result) return false;
@@ -468,8 +446,8 @@ function opensim_check_secure_session($agentID, $regionid, $secure, &$deprecated
 
 function opensim_check_region_secret($regionID, $secret, &$deprecated=null)
 {
-  global $OpenSimDB, $CurrencyDB;
-	if (!isUUID($regionID)) return false;
+  global $OpenSimDB;
+	if (!opensim_isuuid($regionID)) return false;
 
   $result = $OpenSimDB->prepareAndExecute("SELECT UUID FROM regions WHERE UUID=:uuid AND regionSecret=:regionSecret", array(
     'uuid' => $regionID,
@@ -481,28 +459,4 @@ function opensim_check_region_secret($regionID, $secret, &$deprecated=null)
   }
 
 	return false;
-}
-
-function user_alert($agentID, $message, $secureID=null)
-{
-	$agentServer = opensim_get_server_info($agentID);
-	if (!$agentServer) return false;
-	$serverip  = $agentServer["serverIP"];
-	$httpport  = $agentServer["serverHttpPort"];
-	$serveruri = $agentServer["serverURI"];
-
-	$avatarSession = opensim_get_avatar_session($agentID);
-	if (!$avatarSession) return false;
-	$sessionID = $avatarSession["sessionID"];
-	if ($secureID==null) $secureID = $avatarSession["secureID"];
-
-  $request  = xmlrpc_encode_request(
-    'UserAlert', array(array('clientUUID'=>$agentID,
-    'clientSessionID'=>$sessionID,
-    'clientSecureSessionID'=>$secureID,
-    'Description'=>$message,
-  )));
-	$response = do_call($serverip, $httpport, $serveruti, $request);
-
-	return $response;
 }

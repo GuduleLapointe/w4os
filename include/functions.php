@@ -10,46 +10,29 @@
  */
 
 /**
- * Verify if given string is an UUID
+ * Verify if given string is an UUID.
+ * In theory, we would check want v4-compliant uuids
+ * (xxxxxxxx-xxxx-4xxx-[89AB]xxx-xxxxxxxxxxxx) but OpenSimulator seems to have
+ * lot of non v4-compliant uuids left, so stict defaults to false.
  * @param  [type]  $uuid                 string to verify
  * @param  boolean $nullok               accept null value or null key as valid (default false)
- * @param  boolean $strict               apply strict UUID v4 implentation (default true)
+ * @param  boolean $strict               apply strict UUID v4 implentation (default false)
  * @return boolean
  */
-function isUUID($uuid, $nullok=false, $strict = false)
+function opensim_isuuid($uuid, $nullok=false, $strict = false)
 {
 	if ($uuid==null) return $nullok;
   if(defined('NULL_KEY') && $uuid == NULL_KEY) return $nullok;
-  // Official V4 uuid (xxxxxxxx-xxxx-4xxx-[89AB]xxx-xxxxxxxxxxxx), should be
-  if($strict)
-  return (preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $uuid));
-  else
-  return (preg_match('/^[0-9A-F]{8,8}-[0-9A-F]{4,4}-[0-9A-F]{4,4}-[0-9A-F]{4,4}-[0-9A-F]{12,12}$/i', $uuid));
-}
 
-function  make_random_hash()
-{
- 	$ret = sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',
-  mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),
- 													  mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff));
-	return $ret;
-}
-
-function  make_random_guid()
-{
-	$uuid = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-					  mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-					  mt_rand( 0, 0x0fff ) | 0x4000,
-					  mt_rand( 0, 0x3fff ) | 0x8000,
-		   			  mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ) );
-	return $uuid;
+  if($strict) return (preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $uuid));
+	else return (preg_match('/^[0-9A-F]{8,8}-[0-9A-F]{4,4}-[0-9A-F]{4,4}-[0-9A-F]{4,4}-[0-9A-F]{12,12}$/i', $uuid));
 }
 
 /**
  * Format destination uri as a valid local or hypergrid link url
  *
  * @param  string $uri      Destination uri, as "host:port:Region Name" or already formatted URL
- * @param  integer $format  The disired format as binary flags. Several values can be specified with an addition
+ * @param  integer $format  The desired format as binary flags. Several values can be specified with an addition
  *                          e.g. TPLINK_V3HG + TPLINK_APPTP
  *                          TPLINK_LOCAL or 1:   secondlife://Region Name/x/y/z
  *                          TPLINK_HG or 2:      original HG format (obsolete?)
@@ -62,7 +45,7 @@ function  make_random_guid()
  * @param  string $sep      Separator for multiple formats, default new line
  * @return string
  */
-function destinationLink($uri, $format = TPLINK, $sep = "\n") {
+function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
   if(empty($uri)) return;
   $uri = preg_replace('#!#', '', $uri);
   $uri = preg_replace('#.*://+#', '', $uri);
@@ -95,7 +78,31 @@ function destinationLink($uri, $format = TPLINK, $sep = "\n") {
   return join($sep, $links);
 }
 
-function xmlResponse($success = true, $errorMessage = false, $data = false) {
+function opensim_user_alert($agentID, $message, $secureID=null)
+{
+	$agentServer = opensim_get_server_info($agentID);
+	if (!$agentServer) return false;
+	$serverip  = $agentServer["serverIP"];
+	$httpport  = $agentServer["serverHttpPort"];
+	$serveruri = $agentServer["serverURI"];
+
+	$avatarSession = opensim_get_avatar_session($agentID);
+	if (!$avatarSession) return false;
+	$sessionID = $avatarSession["sessionID"];
+	if ($secureID==null) $secureID = $avatarSession["secureID"];
+
+  $request  = xmlrpc_encode_request(
+    'UserAlert', array(array('clientUUID'=>$agentID,
+    'clientSessionID'=>$sessionID,
+    'clientSecureSessionID'=>$secureID,
+    'Description'=>$message,
+  )));
+	$response = currency_xmlrpc_call($serverip, $httpport, $serveruti, $request);
+
+	return $response;
+}
+
+function osXmlResponse($success = true, $errorMessage = false, $data = false) {
 	if( is_array($data) ) {
 		$array = array(
 			'success'      => $success,
@@ -115,8 +122,8 @@ function xmlResponse($success = true, $errorMessage = false, $data = false) {
 	echo $answer->asXML();
 }
 
-function xmlDie($message = "") {
-	xmlResponse(false, $message, []);
+function osXmlDie($message = "") {
+	osXmlResponse(false, $message, []);
   die;
 }
 

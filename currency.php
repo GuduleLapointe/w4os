@@ -30,8 +30,8 @@ $xmlrpc_server = xmlrpc_server_create();
 #
 # Viewer retrieves currency buy quote
 #
-xmlrpc_server_register_method($xmlrpc_server, "getCurrencyQuote", "get_currency_quote");
-function get_currency_quote($method_name, $params, $app_data)
+xmlrpc_server_register_method($xmlrpc_server, "getCurrencyQuote", "currency_xmlrpc_quote");
+function currency_xmlrpc_quote($method_name, $params, $app_data)
 {
 	$req	   = $params[0];
 	$agentid   = $req['agentId'];
@@ -42,7 +42,7 @@ function get_currency_quote($method_name, $params, $app_data)
 	$ret = opensim_check_secure_session($agentid, null, $sessionid);
 
 	if ($ret) {
-		$confirmvalue = get_confirm_value($ipAddress);
+		$confirmvalue = currency_get_confirm_value($ipAddress);
 		switch(CURRENCY_PROVIDER) {
 			case 'gloebit':
 				$cost = 1; // default cost if no table;
@@ -61,7 +61,7 @@ function get_currency_quote($method_name, $params, $app_data)
 				break;
 
 			default:
-			$cost = convert_to_real($amount);
+			$cost = currency_virtual_to_real($amount);
 			$realamount=$amount;
 		}
 
@@ -85,8 +85,8 @@ function get_currency_quote($method_name, $params, $app_data)
 #
 # Viewer buys currency
 #
-xmlrpc_server_register_method($xmlrpc_server, "buyCurrency", "buy_currency");
-function buy_currency($method_name, $params, $app_data)
+xmlrpc_server_register_method($xmlrpc_server, "buyCurrency", "currency_xmlrpc_buy");
+function currency_xmlrpc_buy($method_name, $params, $app_data)
 {
 	$req	   = $params[0];
 	$agentid   = $req['agentId'];
@@ -96,7 +96,7 @@ function buy_currency($method_name, $params, $app_data)
 	$ipAddress = $_SERVER['REMOTE_ADDR'];
 
 	//
-	if ($confim!=get_confirm_value($ipAddress)) {
+	if ($confim!=currency_get_confirm_value($ipAddress)) {
 		$response_xml = xmlrpc_encode(array('success'	  => False,
 											'errorMessage'=> "\n\nMissmatch Confirm Value!!",
 											'errorURI'	  => "".CURRENCY_HELPER_URL.""));
@@ -116,11 +116,11 @@ function buy_currency($method_name, $params, $app_data)
 	}
 
 	$ret  = false;
-	$cost = convert_to_real($amount);
-	$transactionPermit = process_transaction($agentid, $cost, $ipAddress);
+	$cost = currency_virtual_to_real($amount);
+	$transactionPermit = currency_process_transaction($agentid, $cost, $ipAddress);
 
 	if ($transactionPermit) {
-		$res = add_money($agentid, $amount, $sessionid);
+		$res = currency_add_money($agentid, $amount, $sessionid);
 		if ($res["success"]) $ret = true;
 	}
 
@@ -167,15 +167,14 @@ function buy_currency($method_name, $params, $app_data)
 #
 # Region requests account balance
 #
-xmlrpc_server_register_method($xmlrpc_server, "simulatorUserBalanceRequest", "balance_request");
-
-function balance_request($method_name, $params, $app_data)
+xmlrpc_server_register_method($xmlrpc_server, "simulatorUserBalanceRequest", "currency_xmlrpc_balance");
+function currency_xmlrpc_balance($method_name, $params, $app_data)
 {
 	$req	   = $params[0];
 	$agentid   = $req['agentId'];
 	$sessionid = $req['secureSessionId'];
 
-	$balance = get_balance($agentid, $sessionid);
+	$balance = currency_get_balance($agentid, $sessionid);
 
 	if ($balance>=0) {
 		$response_xml = xmlrpc_encode(array('success' => True,
@@ -197,8 +196,8 @@ function balance_request($method_name, $params, $app_data)
 #
 # Region initiates money transfer (Direct DB Operation for security)
 #
-xmlrpc_server_register_method($xmlrpc_server, "regionMoveMoney", "region_move_money");
-function region_move_money($method_name, $params, $app_data)
+xmlrpc_server_register_method($xmlrpc_server, "regionMoveMoney", "currency_xmlrpc_regionMoveMoney");
+function currency_xmlrpc_regionMoveMoney($method_name, $params, $app_data)
 {
 	$req					= $params[0];
 	$agentid				= $req['agentId'];
@@ -221,12 +220,12 @@ function region_move_money($method_name, $params, $app_data)
 		$ret = opensim_check_secure_session($agentid, $regionid, $sessionid);
 
 		if ($ret) {
-			$balance = get_balance($agentid, $sessionid);
+			$balance = currency_get_balance($agentid, $sessionid);
 			if ($balance >= $cash) {
-				move_money($agentid, $destid, $cash, $transactiontype, $flags, $description,
+				currency_move_money($agentid, $destid, $cash, $transactiontype, $flags, $description,
 										$aggregatePermInventory, $aggregatePermNextOwner, $ipAddress);
-				$sbalance = get_balance($agentid, $sessionid);
-				$dbalance = get_balance($destid);
+				$sbalance = currency_get_balance($agentid, $sessionid);
+				$dbalance = currency_get_balance($destid);
 
 				$response_xml = xmlrpc_encode(array('success'		=> True,
 													'agentId'		=> $agentid,
@@ -234,8 +233,8 @@ function region_move_money($method_name, $params, $app_data)
 													'funds2'		=> $balance,
 													'currencySecret'=> " "));
 
-				update_simulator_balance($agentid, $sbalance, $sessionid);
-				update_simulator_balance($destid,  $dbalance);
+				currency_update_simulator_balance($agentid, $sbalance, $sessionid);
+				currency_update_simulator_balance($destid,  $dbalance);
 			}
 			else {
 				$response_xml = xmlrpc_encode(array('success'	  => False,
@@ -264,8 +263,8 @@ function region_move_money($method_name, $params, $app_data)
 #
 # Region claims user
 #
-xmlrpc_server_register_method($xmlrpc_server, "simulatorClaimUserRequest", "claimUser_func");
-function claimUser_func($method_name, $params, $app_data)
+xmlrpc_server_register_method($xmlrpc_server, "simulatorClaimUserRequest", "currency_xmlrpc_claimUserRequest");
+function currency_xmlrpc_claimUserRequest($method_name, $params, $app_data)
 {
 	$req	   = $params[0];
 	$agentid   = $req['agentId'];
@@ -282,7 +281,7 @@ function claimUser_func($method_name, $params, $app_data)
 			$ret = opensim_set_current_region($agentid, $regionid);
 
 			if ($ret) {
-				$balance = get_balance($agentid, $sessionid);
+				$balance = currency_get_balance($agentid, $sessionid);
 				$response_xml = xmlrpc_encode(array('success'		=> True,
 													'agentId'		=> $agentid,
 													'funds'		    => $balance,
