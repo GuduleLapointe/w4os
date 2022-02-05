@@ -50,19 +50,19 @@ function  make_random_guid()
  *
  * @param  string $uri      Destination uri, as "host:port:Region Name" or already formatted URL
  * @param  integer $format  The disired format as binary flags. Several values can be specified with an addition
- *                          e.g. LINK_FORMAT_V3HG + LINK_FORMAT_APPTP
- *                          LINK_FORMAT_LOCAL or 1:   secondlife://Region Name/x/y/z
- *                          LINK_FORMAT_HG or 2:      original HG format (obsolete?)
- *                          LINK_FORMAT_V3HG or 4:    v3 HG format (Singularity)
- *                          LINK_FORMAT_HOP or 8:     hop:// format (FireStorm)
- *                          LINK_FORMAT_TXT or 16:    host:port:Region Name
- *                          LINK_FORMAT_APPTP or 32:  secondlife:///app/teleport link
- *                          LINK_FORMAT_MAP or 64:    (not implemented)
+ *                          e.g. TPLINK_V3HG + TPLINK_APPTP
+ *                          TPLINK_LOCAL or 1:   secondlife://Region Name/x/y/z
+ *                          TPLINK_HG or 2:      original HG format (obsolete?)
+ *                          TPLINK_V3HG or 4:    v3 HG format (Singularity)
+ *                          TPLINK_HOP or 8:     hop:// format (FireStorm)
+ *                          TPLINK_TXT or 16:    host:port:Region Name
+ *                          TPLINK_APPTP or 32:  secondlife:///app/teleport link
+ *                          TPLINK_MAP or 64:    (not implemented)
  *                          127:                      output all formats
  * @param  string $sep      Separator for multiple formats, default new line
  * @return string
  */
-function destinationLink($uri, $format = LINK_FORMAT, $sep = "\n") {
+function destinationLink($uri, $format = TPLINK, $sep = "\n") {
   if(empty($uri)) return;
   $uri = preg_replace('#!#', '', $uri);
   $uri = preg_replace('#.*://+#', '', $uri);
@@ -84,13 +84,13 @@ function destinationLink($uri, $format = LINK_FORMAT, $sep = "\n") {
   }
   $pos_mandatory = (empty($pos)) ? "128/128/25" : $pos;
   $links = array();
-  if ($format & LINK_FORMAT_TXT)    $links[LINK_FORMAT_TXT] = "$host:$port/$region/$pos";
-  if ($format & LINK_FORMAT_LOCAL)  $links[LINK_FORMAT_LOCAL] = "secondlife://$region/$pos";
-  if ($format & LINK_FORMAT_HG)     $links[LINK_FORMAT_HG] = "secondlife://$host:$port/$region/$pos";
-  if ($format & LINK_FORMAT_V3HG)     $links[LINK_FORMAT_V3HG] = "secondlife://http|!!$host|$port+$region";
-  if ($format & LINK_FORMAT_HOP)    $links[LINK_FORMAT_HOP] = "hop://$host:$port/$regionencoded/$pos_mandatory";
-  if ($format & LINK_FORMAT_APPTP)     $links[LINK_FORMAT_APPTP] = "secondlife:///app/teleport/$host:$port:$regionencoded/" . ((!empty($pos_sl)) ? "$pos_sl/" : "");
-  if ($format & LINK_FORMAT_MAP)     $links[LINK_FORMAT_MAP] = "secondlife:///app/map/$host:$port:$regionencoded/$pos";
+  if ($format & TPLINK_TXT)    $links[TPLINK_TXT] = "$host:$port/$region/$pos";
+  if ($format & TPLINK_LOCAL)  $links[TPLINK_LOCAL] = "secondlife://$region/$pos";
+  if ($format & TPLINK_HG)     $links[TPLINK_HG] = "secondlife://$host:$port/$region/$pos";
+  if ($format & TPLINK_V3HG)     $links[TPLINK_V3HG] = "secondlife://http|!!$host|$port+$region";
+  if ($format & TPLINK_HOP)    $links[TPLINK_HOP] = "hop://$host:$port/$regionencoded/$pos_mandatory";
+  if ($format & TPLINK_APPTP)     $links[TPLINK_APPTP] = "secondlife:///app/teleport/$host:$port:$regionencoded/" . ((!empty($pos_sl)) ? "$pos_sl/" : "");
+  if ($format & TPLINK_MAP)     $links[TPLINK_MAP] = "secondlife:///app/map/$host:$port:$regionencoded/$pos";
 
   return join($sep, $links);
 }

@@ -43,7 +43,7 @@ function get_currency_quote($method_name, $params, $app_data)
 
 	if ($ret) {
 		$confirmvalue = get_confirm_value($ipAddress);
-		switch(get_option('w4os_currency_provider')) {
+		switch(CURRENCY_PROVIDER) {
 			case 'gloebit':
 				$cost = 1; // default cost if no table;
 				$conversion_table = GLOEBIT_CONVERSION_TABLE;
@@ -73,7 +73,7 @@ function get_currency_quote($method_name, $params, $app_data)
 	else {
 		$response_xml = xmlrpc_encode(array('success'	  => False,
 											'errorMessage'=> "Unable to Authenticate\n\nClick URL for more info.",
-											'errorURI'	  => "".SYSURL.""));
+											'errorURI'	  => "".CURRENCY_HELPER_URL.""));
 	}
 
 	header("Content-type: text/xml");
@@ -99,7 +99,7 @@ function buy_currency($method_name, $params, $app_data)
 	if ($confim!=get_confirm_value($ipAddress)) {
 		$response_xml = xmlrpc_encode(array('success'	  => False,
 											'errorMessage'=> "\n\nMissmatch Confirm Value!!",
-											'errorURI'	  => "".SYSURL.""));
+											'errorURI'	  => "".CURRENCY_HELPER_URL.""));
 		header("Content-type: text/xml");
 		echo $response_xml;
 		return "";
@@ -109,7 +109,7 @@ function buy_currency($method_name, $params, $app_data)
 	if (!$checkSecure) {
 		$response_xml = xmlrpc_encode(array('success'	  => False,
 											'errorMessage'=> "\n\nMissmatch Secure Session ID!!",
-											'errorURI'	  => "".SYSURL.""));
+											'errorURI'	  => "".CURRENCY_HELPER_URL.""));
 		header("Content-type: text/xml");
 		echo $response_xml;
 		return "";
@@ -128,7 +128,7 @@ function buy_currency($method_name, $params, $app_data)
 		$response_xml = xmlrpc_encode(array('success' => True));
 	}
 	else {
-		switch(get_option('w4os_currency_provider')) {
+		switch(CURRENCY_PROVIDER) {
 			case 'podex':
 			$errorMessage = get_option('w4os_podex_error_message');
 			$errorURI = get_option('w4os_podex_redirect_url');
@@ -151,7 +151,7 @@ function buy_currency($method_name, $params, $app_data)
 
 			default:
 			$errorMessage = 'Unable to process the transaction. The gateway denied your charge. Open help page?';
-			$errorURI = empty(W4OS_GRID_INFO['help']) ? SYSURL : W4OS_GRID_INFO['help'];
+			$errorURI = empty(W4OS_GRID_INFO['help']) ? CURRENCY_HELPER_URL : W4OS_GRID_INFO['help'];
 		}
 		$response_xml = xmlrpc_encode(array('success'	  => False,
 		'errorMessage'=> $errorMessage,

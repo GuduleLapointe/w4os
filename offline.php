@@ -60,9 +60,9 @@ switch($method) {
 		list($sendmail, $email) = $emailinfo->fetch();
 		if(empty($email) || $sendmail =='false') die();
 
-		if($xml->fromAgentName == "Server") $xml->fromAgentName = GRID_NAME;
+		if($xml->fromAgentName == "Server") $xml->fromAgentName = OPENSIM_GRID_NAME;
 
-		$headers = "From: $xml->fromAgentName <" . OFFLINE_SENDER_MAIL . ">\r\n";
+		$headers = "From: $xml->fromAgentName <" . OPENSIM_MAIL_SENDER . ">\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type: text/html; charset=UTF-8\r\n";
 		$parts = explode('|', $xml->message);
@@ -73,8 +73,8 @@ switch($method) {
 			$body = $xml->message;
 		}
 		$body = str_replace("\n", "\n<br>", $body);
-		if(!empty(GRID_NAME)) {
-			$in=" in " . GRID_NAME;
+		if(!empty(OPENSIM_GRID_NAME)) {
+			$in=" in " . OPENSIM_GRID_NAME;
 		}
 
 		switch($xml->dialog) {
@@ -120,7 +120,7 @@ switch($method) {
 		. "\r\n"
 		. "\r\n"
 		. "<hr>"
-		. "<p style='font-size:small'><b>" . GRID_NAME . "</b> Instant Messages mail forwarding by w4os."
+		. "<p style='font-size:small'><b>" . OPENSIM_GRID_NAME . "</b> Instant Messages mail forwarding by w4os."
 		. "<br>Please log in-world to answer to this message. Emails to the sender address will not be processed."
 		. "<br>To disable mail notifications, uncheck option \"Send IM to mail\" in your viewer preferences (tab \"Chat\" or \"Communications\")."
 		. "</p></body></html>";

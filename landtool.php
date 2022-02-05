@@ -53,9 +53,9 @@ function buy_land_prep($method_name, $params, $app_data)
 	if($ret) {
 		$confirmvalue = get_confirm_value($ipAddress);
 		$membership_levels = array('levels' => array('id' => "00000000-0000-0000-0000-000000000000", 'description' => "some level"));
-		$landUse	= array('upgrade' => False, 'action' => "".SYSURL."");
+		$landUse	= array('upgrade' => False, 'action' => "".CURRENCY_HELPER_URL."");
 		$currency   = array('estimatedCost' => convert_to_real($amount));
-		$membership = array('upgrade' => False, 'action' => "".SYSURL."", 'levels' => $membership_levels);
+		$membership = array('upgrade' => False, 'action' => "".CURRENCY_HELPER_URL."", 'levels' => $membership_levels);
 		$response_xml = xmlrpc_encode(array('success'	=> True,
 											'currency'  => $currency,
 											'membership'=> $membership,
@@ -66,7 +66,7 @@ function buy_land_prep($method_name, $params, $app_data)
 	else {
 		$response_xml = xmlrpc_encode(array( 'success'	  	=> False,
 											 'errorMessage'	=> "Unable to Authenticate\n\nClick URL for more info.",
-											 'errorURI'		=> "".SYSURL.""));
+											 'errorURI'		=> "".CURRENCY_HELPER_URL.""));
 	}
 
 	header("Content-type: text/xml");
@@ -97,7 +97,7 @@ function buy_land($method_name, $params, $app_data)
 	if ($confim!=get_confirm_value($ipAddress)) {
 		$response_xml = xmlrpc_encode(array('success'     => False,
 											'errorMessage'=> "\n\nMissmatch Confirm Value!!",
-											'errorURI'    => "".SYSURL.""));
+											'errorURI'    => "".CURRENCY_HELPER_URL.""));
 		header("Content-type: text/xml");
 		echo $response_xml;
 		return "";
@@ -112,7 +112,7 @@ function buy_land($method_name, $params, $app_data)
 				$response_xml = xmlrpc_encode(array(
 						'success'	   => False,
 						'errorMessage' => "\n\nThe gateway has declined your transaction. Please update your payment method AND try again later.",
-						'errorURI'	   => "".SYSURL.""));
+						'errorURI'	   => "".CURRENCY_HELPER_URL.""));
 			}
 			//
 			$enough_money = false;
@@ -128,14 +128,14 @@ function buy_land($method_name, $params, $app_data)
 			else {
 				$response_xml = xmlrpc_encode(array('success'     => False,
 												'errorMessage'=> "\n\nYou do not have sufficient funds for this purchase",
-												'errorURI'	  => "".SYSURL.""));
+												'errorURI'	  => "".CURRENCY_HELPER_URL.""));
 			}
 		}
 	}
 	else {
 		$response_xml = xmlrpc_encode(array('success'	   => False,
 											'errorMessage' => "\n\nUnable to Authenticate\n\nClick URL for more info.",
-											'errorURI'	   => "".SYSURL.""));
+											'errorURI'	   => "".CURRENCY_HELPER_URL.""));
 	}
 
 	header("Content-type: text/xml");

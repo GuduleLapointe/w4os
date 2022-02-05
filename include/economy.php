@@ -177,7 +177,7 @@ function update_simulator_balance($agentID, $amount=-1, $secureID=null)
 
 function move_money($agentID, $destID, $amount, $type, $flags, $desc, $prminvent=0, $nxtowner=0, $ip="")
 {
-	if (!USE_CURRENCY_SERVER) {
+	if (!CURRENCY_USE_MONEYSERVER) {
     noserver_save_transaction($agentID, $destID, $amount, $type, $flags, $desc, $prminvent, $nxtowner, $ip);
     return true;
 	}
@@ -205,7 +205,7 @@ function add_money($agentID, $amount, $secureID=null)
 	if (!isUUID($agentID)) return false;
 
 	//
-	if (!USE_CURRENCY_SERVER) {
+	if (!CURRENCY_USE_MONEYSERVER) {
 		noserver_save_transaction(null, $agentID, $amount, 5010, 0, "Add Money", 0, 0, "");
 		$response = [ "success" => true ];
 		return $response;
@@ -246,7 +246,7 @@ function send_money($agentID, $amount, $secretCode=null)
 {
   if (!isUUID($agentID)) return false;
 
-  if (!USE_CURRENCY_SERVER) {
+  if (!CURRENCY_USE_MONEYSERVER) {
     noserver_save_transaction(null, $agentID, $amount, 5003, 0, "Send Money", 0, 0, "");
     $response = [ "success" => true ];
     return $response;
@@ -283,7 +283,7 @@ function get_balance($agentID, $secureID=null)
 	$cash = -1;
 	if (!isUUID($agentID)) return (integer)$cash;
 
-	if (!USE_CURRENCY_SERVER) {
+	if (!CURRENCY_USE_MONEYSERVER) {
 		$cash = noserver_get_balance($agentID);
 		return (integer)$cash;
 	}
@@ -343,7 +343,7 @@ function convert_to_real($amount)
   global $CurrencyDB;
 	if($currency == 0) return 0;
 
-	$CurrencyDB = new DB(CURRENCY_DB_HOST, CURRENCY_DB_NAME, CURRENCY_DB_USER, CURRENCY_DB_PASS, CURRENCY_DB_MYSQLI);
+	$CurrencyDB = new DB(CURRENCY_DB_HOST, CURRENCY_DB_NAME, CURRENCY_DB_USER, CURRENCY_DB_PASS, true);
 
 	# Get the currency conversion ratio in USD Cents per Money Unit
 	# Actually, it's whatever currency your credit card processor uses
