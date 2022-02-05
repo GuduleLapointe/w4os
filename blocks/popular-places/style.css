@@ -7,29 +7,32 @@
 .w4os-popular-places .places {
   display: flex;
   flex-flow: row wrap;
- justify-content: start;
-   gap: 10px;
+  justify-content: start;
+  gap: 10px;
   overflow-x: hidden;
 }
 .w4os-popular-places .places::after {
- content: "";
- flex: 2 0 256px;
+  content: "";
+  flex: 2 0 256px;
 }
 .w4os-popular-places .place {
   position: relative;
   flex: 2 0 256px;
+  background: pink;
+  max-width: 256px;
 }
 .w4os-popular-places .place h5 {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   padding: 10px;
-  width: 100%;
-  max-width: 256px;
+  box-sizing: border-box;
   color: white;
   background-image: linear-gradient(rgba(0, 0, 0, 0.25),rgba(0, 0, 0, 0));
 }
 .w4os-popular-places .place img {
   width: 256px;
   height: 192px;
+  display: block;
 }
