@@ -23,11 +23,13 @@
   position: absolute;
   top: 0;
   left: 0;
-   padding: 10px;
-   width: 100%;
+  padding: 10px;
+  width: 100%;
+  max-width: 256px;
   color: white;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25),rgba(0, 0, 0, 0));
 }
 .w4os-popular-places .place img {
-  width: 384px;
+  width: 256px;
   height: 192px;
 }
