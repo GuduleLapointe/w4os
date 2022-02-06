@@ -18,7 +18,8 @@
 require_once('includes/config.php');
 require_once('includes/databases.php');
 
-if(empty($HTTP_RAW_POST_DATA)) {
+$request_xml = file_get_contents("php://input");
+if(empty($request_xml)) {
 	osXmlResponse(false, 'Invalid request');
 	die();
 }
@@ -26,11 +27,11 @@ if(empty($HTTP_RAW_POST_DATA)) {
 $method = $_SERVER['PATH_INFO)'];
 if(empty($method)) $method = '/' . basename(getenv('REDIRECT_URL')) . '/';
 
-$xml = new SimpleXMLElement($HTTP_RAW_POST_DATA);
+$xml = new SimpleXMLElement($request_xml);
 
 switch($method) {
 	case "/SaveMessage/":
-	if (strpos($HTTP_RAW_POST_DATA, "?>") == -1) {
+	if (strpos($request_xml, "?>") == -1) {
 		osXmlResponse(false);
 		die;
 	}
