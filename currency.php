@@ -130,8 +130,8 @@ function currency_xmlrpc_buy($method_name, $params, $app_data)
 	else {
 		switch(CURRENCY_PROVIDER) {
 			case 'podex':
-			$errorMessage = get_option('w4os_podex_error_message');
-			$errorURI = get_option('w4os_podex_redirect_url');
+			$errorMessage = PODEX_ERROR_MESSAGE;
+			$errorURI = PODEX_REDIRECT_URL;
 			break;
 
 			case 'gloebit':

@@ -18,7 +18,7 @@ Version 2.x is This is a complete rewrite. The initial project was basicly an in
 
 ## Installation
 
-- Move this directory inside your web root directory and rename it as helpers (for example), so it is reachable as <http://example.org/helpers/>
+- Move this directory inside your web root directory and rename it as helpers (for example), so it is reachable as <http://yourgrid.org/helpers/>
 - Copy includes/config.example.php to includes/config.php
 - Edit includes/config.php with your grid and database settings
 - Install required modules in your OpenSimulator (only fetch the .dll modules and OpenSim .ini files, this project provides all the web-side functionalties)
