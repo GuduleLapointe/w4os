@@ -60,6 +60,7 @@ function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
   $port = (empty($hostparts[1])) ? 80 : $hostparts[1];
   $region = urldecode(array_shift($parts));
   $regionencoded = urlencode($region);
+	$pos="";
   if(count($parts) >=3 && is_numeric($parts[0]) && is_numeric($parts[1]) && is_numeric($parts[2]) ) {
     $posparts = array($parts[0],$parts[1],$parts[2]);
     $pos = join('/', $posparts);
