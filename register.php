@@ -65,7 +65,7 @@ switch($service) {
   // error_log(__FILE__ . " bad request " . getenv('QUERY_STRING') . " raw data " . $HTTP_RAW_POST_DATA);
 }
 
-if (is_array(SEARCH_REGISTRARS) && $hostname != "" && $port != "" && $service != "")
+if (is_array(SEARCH_REGISTRARS) &! empty($hostname) &! empty($port) &! empty($service))
 {
 	$querystring=getenv('QUERY_STRING');
 	foreach (SEARCH_REGISTRARS as $registrar) {

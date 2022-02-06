@@ -104,7 +104,7 @@ function ossearch_db_tables($db) {
     `infouuid` varchar(36) NOT NULL default '',
     `mature` varchar(10) NOT NULL default 'PG',
     `gatekeeperURL` varchar(255),
-    `image` char(36) NOT NULL,
+    `imageUUID` char(36),
     PRIMARY KEY  (`regionUUID`,`parcelUUID`),
     KEY `name` (`parcelname`),
     KEY `description` (`description`),
