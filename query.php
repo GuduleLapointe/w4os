@@ -365,7 +365,7 @@ function dir_classified_query ($method_name, $params, $app_data)
 {
   global $OpenSimDB;
   if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
-    osXmlResponse(false, '', $data);
+    osXmlResponse(false);
     die();
   }
 
@@ -489,7 +489,7 @@ function classifieds_info_query($method_name, $params, $app_data)
 {
   global $OpenSimDB;
   if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
-    osXmlResponse(false, '', $data);
+    osXmlResponse(false);
     die();
   }
 
