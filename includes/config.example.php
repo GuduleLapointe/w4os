@@ -33,6 +33,7 @@ define('HYPEVENTS_URL', preg_replace(':/$:', '', 'https://2do.pm/events'));
  * a multi-grid search engine). In this case search will only provide results
  * for places, land for sale and events.
  */
+define('OPENSIM_DB', true); // Set to false for search only, see above
 define('OPENSIM_DB_HOST', 'localhost');
 define('OPENSIM_DB_NAME', 'opensim');
 define('OPENSIM_DB_USER', 'opensim');
@@ -84,7 +85,7 @@ define('CURRENCY_TRANSACTION_TBL', 'transactions');
 define('CURRENCY_USE_MONEYSERVER', false);
 define('CURRENCY_SCRIPT_KEY', '123456789');
 define('CURRENCY_RATE', 10); // amount in dollar...
-define('CURRENCY_RATE_PER', 1000); // ... for this amount in virtuall currency
+define('CURRENCY_RATE_PER', 1000); // ... for this amount in virtual currency
 define('CURRENCY_PROVIDER', NULL); // NULL, 'podex' or 'gloebit'
 define('CURRENCY_HELPER_URL', 'http://yourgrid.org/helpers/');
 // if (!defined('CURRENCY_HELPER_PATH')) define('CURRENCY_HELPER_PATH', dirname(__DIR__));
