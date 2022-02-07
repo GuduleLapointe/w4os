@@ -76,6 +76,13 @@ DATA_SRV_YourGrid = http://yourgrid.org/helpers/register.php
 
 (you can add several DATA_SRV_* lines if you want to register on multiple search engines)
 
+Use a task scheduler to parse data regularly. It's useless to parse data too often, as they don't change that fast, it's better to keep both search and opensim servers load low and avoid triggering spam reject. With cron, it could be something like this.
+
+```
+0 * * * * curl -s http://2do.directory/helpers/parse.php
+30 */2 * * * curl -s http://2do.directory/helpers/eventsparser.php
+```
+
 ## Credits
 
 Version 2.x is This is a complete rewrite. The initial project was basicly a meta installer, combining several other projects repositories. It has been completely rewritten to ease installation, as well as ease inclusion in other projects like [W4OS OpenSim Web Interface](https://w4os.org/).
