@@ -70,6 +70,10 @@ function opensim_sanitize_uri($url, $gatekeeperURL = NULL, $array_outout = false
   if(empty($port) &! empty($host)) $port = 80;
 	$host=strtolower(trim($host));
 	$region = trim($region);
+	if(is_numeric($region)) {
+		$pos = "$region/$pos";
+		$region = "";
+	}
   if($array_outout) {
     return array(
       'host' => $host,
@@ -77,7 +81,15 @@ function opensim_sanitize_uri($url, $gatekeeperURL = NULL, $array_outout = false
       'region' => $region,
       'pos' => $pos
     );
-  } else return preg_replace('#^[: ]*(.*)/*$#', '$1', "$host:$port $region" . ((empty($pos)) ? '' : "/$pos"));
+  } else return trim(
+		$host
+		. (empty($port) ? '' : ":$port")
+		. (empty($region) ? '' : " $region")
+		. (empty($pos) ? '' : "/$pos")
+	);
+
+	// trim(string $string, string $characters = " \n\r\t\v\x00"): string
+	// return preg_replace('#^[: ]*(.*)/*$#', '$1', "$host:$port $region" . ((empty($pos)) ? '' : "/$pos"));
 }
 
 /**
@@ -119,7 +131,7 @@ function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
   //   $pos_sl = ($parts[0]>=256 || $parts[0]>=256) ? "" : $pos;
   // }
 	$uri_parts = opensim_sanitize_uri($uri, '', true);
-	extract($uri_parts);
+	debug($uri_parts);
 
 	$regionencoded = urlencode($region);
   $pos_mandatory = (empty($pos)) ? "128/128/25" : $pos;
