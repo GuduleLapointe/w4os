@@ -29,6 +29,58 @@ function opensim_isuuid($uuid, $nullok=false, $strict = false)
 }
 
 /**
+ * Sanitize a destination URI or URL
+ * @param  string  $url								url or uri (secondlife:// url, hop:// url, region name...)
+ * @param  string  $gatekeeperURL			default login uri to add to urls sithout host:port
+ * @param  boolean $array_outout			output as array
+ * @return string		(default)					$host:$port $region/$pos
+ *			 or array											array($host, $port, $region, $pos)
+ */
+function opensim_sanitize_uri($url, $gatekeeperURL = NULL, $array_outout = false) {
+  // $normalized = opensim_format_tp($uri, TPLINK_TXT);
+  $host = NULL;
+	$port = NULL;
+	$region = NULL;
+	$pos = NULL;
+  $uri = urldecode($url);
+  $uri = preg_replace('#.*://(([a-z0-9_-]+\.[a-z0-9\._-]+)([:/ ]+)?)?(([0-9]+?)([:/  ]+))?([^/]+)(/|$)#', '$2:$5:$7/', $uri);
+  $split = explode('/', $uri);
+  $uri = array_shift($split);
+  if(count($split) == 2 || count($split) == 3) $pos = implode('/', $split);
+  else $pos = "";
+  $split = explode(':', $uri);
+  if(count($split) == 1) {
+    $region = $split[0];
+  } else if (count($split) == 2 && preg_match('/ /', $split[1])) {
+    // could probably improve the preg_replace to avoid this
+    $host = $split[0];
+    $split = explode(' ', $split[1]);
+    $port = $split[0];
+    $region = $split[1];
+  } else {
+    $host = $split[0];
+    $port = $split[1];
+    $region = $split[2];
+  }
+  if(empty($host) &! empty($gatekeeperURL)) {
+    $split = explode(":", preg_replace('#.*://([^/]+)/?.*#', '$1', $gatekeeperURL));
+    $host = $split[0];
+    $port = $split[1];
+  }
+  if(empty($port) &! empty($host)) $port = 80;
+	$host=strtolower(trim($host));
+	$region = trim($region);
+  if($array_outout) {
+    return array(
+      'host' => $host,
+      'port' => $port,
+      'region' => $region,
+      'pos' => $pos
+    );
+  } else return preg_replace('#^[: ]*(.*)/*$#', '$1', "$host:$port $region" . ((empty($pos)) ? '' : "/$pos"));
+}
+
+/**
  * Format destination uri as a valid local or hypergrid link url
  *
  * @param  string $uri      Destination uri, as "host:port:Region Name" or already formatted URL
@@ -47,34 +99,40 @@ function opensim_isuuid($uuid, $nullok=false, $strict = false)
  */
 function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
   if(empty($uri)) return;
-  $uri = preg_replace('#!#', '', $uri);
-  $uri = preg_replace('#.*://+#', '', $uri);
-  $uri = preg_replace('#[\|:]#', '/', $uri);
-  $uri = preg_replace('#^([^/]+)/([0-9]+)/#', '$1:$2/', $uri);
-  $uri = preg_replace('#^[[:blank:]]*#', '', $uri);
-  // $uri = preg_replace('#(\d{4}):#', '$1/', $uri);
-  $parts = explode("/", $uri);
-  $loginuri = array_shift($parts);
-  $hostparts = explode(":", $loginuri);
-  $host = $hostparts[0];
-  $port = (empty($hostparts[1])) ? 80 : $hostparts[1];
-  $region = urldecode(array_shift($parts));
-  $regionencoded = urlencode($region);
-	$pos="";
-  if(count($parts) >=3 && is_numeric($parts[0]) && is_numeric($parts[1]) && is_numeric($parts[2]) ) {
-    $posparts = array($parts[0],$parts[1],$parts[2]);
-    $pos = join('/', $posparts);
-    $pos_sl = ($parts[0]>=256 || $parts[0]>=256) ? "" : $pos;
-  }
+  // $uri = preg_replace('#!#', '', $uri);
+  // $uri = preg_replace('#.*://+#', '', $uri);
+  // $uri = preg_replace('#[\|:]#', '/', $uri);
+  // $uri = preg_replace('#^([^/]+)/([0-9]+)/#', '$1:$2/', $uri);
+  // $uri = preg_replace('#^[[:blank:]]*#', '', $uri);
+	// echo "$uri ";
+  // // $uri = preg_replace('#(\d{4}):#', '$1/', $uri);
+  // $parts = explode("/", $uri);
+  // $loginuri = array_shift($parts);
+  // $hostparts = explode(":", $loginuri);
+  // $host = $hostparts[0];
+  // $port = (empty($hostparts[1])) ? 80 : $hostparts[1];
+  // $region = urldecode(array_shift($parts));
+	// $pos="";
+  // if(count($parts) >=3 && is_numeric($parts[0]) && is_numeric($parts[1]) && is_numeric($parts[2]) ) {
+  //   $posparts = array($parts[0],$parts[1],$parts[2]);
+  //   $pos = join('/', $posparts);
+  //   $pos_sl = ($parts[0]>=256 || $parts[0]>=256) ? "" : $pos;
+  // }
+	$uri_parts = opensim_sanitize_uri($uri, '', true);
+	extract($uri_parts);
+
+	$regionencoded = urlencode($region);
   $pos_mandatory = (empty($pos)) ? "128/128/25" : $pos;
   $links = array();
-  if ($format & TPLINK_TXT)    $links[TPLINK_TXT] = "$host:$port/$region/$pos";
-  if ($format & TPLINK_LOCAL)  $links[TPLINK_LOCAL] = "secondlife://$region/$pos";
-  if ($format & TPLINK_HG)     $links[TPLINK_HG] = "secondlife://$host:$port/$region/$pos";
-  if ($format & TPLINK_V3HG)     $links[TPLINK_V3HG] = "secondlife://http|!!$host|$port+$region";
-  if ($format & TPLINK_HOP)    $links[TPLINK_HOP] = "hop://$host:$port/$regionencoded/$pos_mandatory";
-  if ($format & TPLINK_APPTP)     $links[TPLINK_APPTP] = "secondlife:///app/teleport/$host:$port:$regionencoded/" . ((!empty($pos_sl)) ? "$pos_sl/" : "");
-  if ($format & TPLINK_MAP)     $links[TPLINK_MAP] = "secondlife:///app/map/$host:$port:$regionencoded/$pos";
+  if ($format & TPLINK_TXT)		$links[TPLINK_TXT]		= "$host:$port $region/$pos";
+  if ($format & TPLINK_LOCAL || ($format & TPLINK_HG && empty($host)) )
+															$links[TPLINK_LOCAL]	= "secondlife://$region/$pos";
+  if ($format & TPLINK_HG)		$links[TPLINK_HG]			= "secondlife://$host:$port+$region/$pos";
+  if ($format & TPLINK_V3HG)	$links[TPLINK_V3HG]		= "secondlife://http|!!$host|$port+$region";
+  if ($format & TPLINK_HOP)		$links[TPLINK_HOP]		= "hop://$host:$port/$regionencoded/$pos_mandatory";
+  if ($format & TPLINK_APPTP)	$links[TPLINK_APPTP]	= "secondlife:///app/teleport/$host:$port+$regionencoded/" . ((!empty($pos_sl)) ? "$pos_sl/" : "");
+  // if ($format & TPLINK_MAP)		$links[TPLINK_MAP]		= "secondlife:///app/map/$host:$port+$regionencoded/$pos";
+	$links = preg_replace('#^[^[:alnum:]]*|[^[:alnum:]]+$#', '', $links);
 
   return join($sep, $links);
 }
