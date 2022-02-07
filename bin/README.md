@@ -1,10 +1,10 @@
-# OpenSimulator Binaries
+# OpenSimulator helpers Binaries
 
-Download here pre-built binaries for the modules needed by the helpers. Download the dlls according to your OpenSim version and place them in your OpenSim bin/ directory.
+Pre-built binaries for the modules needed by the helpers. Download the dlls according to your OpenSim version and place them in the base of your OpenSimulator bin/ directory (not in subfolders).
 
-This folder is not needed in your website, you can safely delete it once after copying the needed files to your OpenSim server.
+_This folder is not needed in your website, you can safely delete it after copying the needed files to your OpenSim server._
 
-If you don't find a version compatible with your setup, you can drop us a note, we might add pre-built binaries for your version in the repository.
+If you don't find a version for your setup, you can drop us a note, we might add pre-built binaries you need to the repository (if it's not too old).
 
 Alternatively, you can build the binaries from sources.
 
