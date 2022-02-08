@@ -70,10 +70,7 @@ foreach($json as $json_event) {
   $duration = ($duration > 0) ? $duration : 60;
   $description = strip_tags(html_entity_decode($json_event['description']));
   $online = opensim_region_is_online($json_event['hgurl']);
-  if(!$online) {
-    error_log($json_event['hgurl'] . " unreachable, ignoring");
-    continue;
-  }
+  if(!$online) continue; // ignore event if region is malformatted or unreachable
   $links = opensim_format_tp($json_event['hgurl'], TPLINK_APPTP + TPLINK_HOP);
   $description = $links . "\n\n" .  $description;
   $slurl = opensim_format_tp($json_event['hgurl'], TPLINK_TXT );
