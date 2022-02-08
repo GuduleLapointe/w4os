@@ -108,7 +108,7 @@ function opensim_sanitize_uri($url, $gatekeeperURL = NULL, $array_outout = false
  *                          TPLINK_HG or 2:      original HG format (obsolete?)
  *                          TPLINK_V3HG or 4:    v3 HG format (Singularity)
  *                          TPLINK_HOP or 8:     hop:// format (FireStorm)
- *                          TPLINK_TXT or 16:    host:port:Region Name
+ *                          TPLINK_TXT or 16:    host:port Region Name
  *                          TPLINK_APPTP or 32:  secondlife:///app/teleport link
  *                          TPLINK_MAP or 64:    (not implemented)
  *                          127:                      output all formats
@@ -142,7 +142,7 @@ function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
 	$regionencoded = urlencode($region);
   $pos_mandatory = (empty($pos)) ? "128/128/25" : $pos;
   $links = array();
-  if ($format & TPLINK_TXT)		$links[TPLINK_TXT]		= "$host:$port/$region/$pos";
+  if ($format & TPLINK_TXT)		$links[TPLINK_TXT]		= "$host:$port $region/$pos";
   if ($format & TPLINK_LOCAL || ($format & TPLINK_HG && empty($host)) )
 															$links[TPLINK_LOCAL]	= "secondlife://$region/$pos";
   if ($format & TPLINK_HG)		$links[TPLINK_HG]			= "secondlife://$host:$port+$region/$pos";
