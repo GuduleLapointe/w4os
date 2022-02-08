@@ -42,12 +42,15 @@ function opensim_sanitize_uri($url, $gatekeeperURL = NULL, $array_outout = false
 	$port = NULL;
 	$region = NULL;
 	$pos = NULL;
-  $uri = urldecode($url);
-  $uri = preg_replace('#.*://(([a-z0-9_-]+\.[a-z0-9\._-]+)([:/ ]+)?)?(([0-9]+?)([:/  ]+))?([^/]+)(/|$)#', '$2:$5:$7/', $uri);
+  $uri = urldecode(trim($url));
+  $uri = preg_replace('#^(.*://)?(([A-Za-z0-9_-]+\.[A-Za-z0-9\._-]+)([:/ ]+)?)?(([0-9]+)([ /:]))?([^/]+)(/|$)(.*)#', '$3:$6:$8/$10', "$uri");
+	$uri = preg_replace('/^([^:]+)::([0-9]+)/', '$1:$2', $uri);
+	$uri = preg_replace('+[:/]*$+', '', $uri);
   $split = explode('/', $uri);
   $uri = array_shift($split);
   if(count($split) == 2 || count($split) == 3) $pos = implode('/', $split);
   else $pos = "";
+	// $pos = preg_replace('+[^0-9/]+e', '', $pos);
   $split = explode(':', $uri);
   if(count($split) == 1) {
     $region = $split[0];
@@ -59,8 +62,8 @@ function opensim_sanitize_uri($url, $gatekeeperURL = NULL, $array_outout = false
     $region = $split[1];
   } else {
     $host = $split[0];
-    $port = $split[1];
-    $region = $split[2];
+    $port = @$split[1];
+    $region = @$split[2];
   }
   if(empty($host) &! empty($gatekeeperURL)) {
     $split = explode(":", preg_replace('#.*://([^/]+)/?.*#', '$1', $gatekeeperURL));
@@ -79,13 +82,16 @@ function opensim_sanitize_uri($url, $gatekeeperURL = NULL, $array_outout = false
       'host' => $host,
       'port' => $port,
       'region' => $region,
-      'pos' => $pos
+      'pos' => $pos,
+			'gatekeeper' => "http://$host:$port",
+			'key' => strtolower("$host:$port/$region"),
     );
   } else return trim(
 		$host
 		. (empty($port) ? '' : ":$port")
 		. (empty($region) ? '' : " $region")
-		. (empty($pos) ? '' : "/$pos")
+		. (empty($pos) ? '' : "/$pos"),
+		":/ \n\r\t\v\x00"
 	);
 
 	// trim(string $string, string $characters = " \n\r\t\v\x00"): string
@@ -131,12 +137,12 @@ function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
   //   $pos_sl = ($parts[0]>=256 || $parts[0]>=256) ? "" : $pos;
   // }
 	$uri_parts = opensim_sanitize_uri($uri, '', true);
-	debug($uri_parts);
+	extract($uri_parts);
 
 	$regionencoded = urlencode($region);
   $pos_mandatory = (empty($pos)) ? "128/128/25" : $pos;
   $links = array();
-  if ($format & TPLINK_TXT)		$links[TPLINK_TXT]		= "$host:$port $region/$pos";
+  if ($format & TPLINK_TXT)		$links[TPLINK_TXT]		= "$host:$port/$region/$pos";
   if ($format & TPLINK_LOCAL || ($format & TPLINK_HG && empty($host)) )
 															$links[TPLINK_LOCAL]	= "secondlife://$region/$pos";
   if ($format & TPLINK_HG)		$links[TPLINK_HG]			= "secondlife://$host:$port+$region/$pos";
@@ -147,6 +153,46 @@ function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
 	$links = preg_replace('#^[^[:alnum:]]*|[^[:alnum:]]+$#', '', $links);
 
   return join($sep, $links);
+}
+
+/**
+ * Use xmlrpc link_region method to request region data from robust
+ * @param  mixed  $args   region uri or sanitized region array
+ * @param  string $var		output a single variable value
+ * @return array (or string if var specified)
+ */
+function opensim_get_region_data($args, $var=NULL) {
+  if(empty($args)) return [];
+  global $OPENSIM_CACHE;
+
+  if(is_array($args)) $region_array=$args;
+  else $region_array = opensim_sanitize_uri($args, '', true);
+  extract($region_array); // $host, $port, $region, $pos, $gatekeeper, $key
+
+  if(isset($OPENSIM_CACHE['regions'][$key]['link_region'])) {
+    $link_region = $OPENSIM_CACHE['regions'][$key]['link_region'];
+  } else {
+    $link_region = oxXmlRequest($gatekeeper, 'link_region', ['region_name'=>$region]);
+    $OPENSIM_CACHE['regions'][$key]['link_region'] = $link_region;
+  }
+  if($link_region) {
+    if($var) {
+      return $link_region[$var];
+    } else {
+      return $link_region;
+    }
+  }
+  return [];
+}
+
+/**
+ * Check if region is online
+ * @param  mixed  $region   region uri or sanitized region array
+ * @return boolean					true if online
+ */
+function opensim_region_is_online($region) {
+  $data = opensim_get_region_data($region);
+  return ($data && $data['result']=='True');
 }
 
 function opensim_user_alert($agentID, $message, $secureID=null)
@@ -171,6 +217,33 @@ function opensim_user_alert($agentID, $message, $secureID=null)
 	$response = currency_xmlrpc_call($serverip, $httpport, $serveruti, $request);
 
 	return $response;
+}
+
+/**
+ * [oxXmlRequest description]
+ * @param  string $gatekeeper               [description]
+ * @param  string $method                   [description]
+ * @param  array $request                  [description]
+ * @return array             received xml response
+ */
+function oxXmlRequest($gatekeeper, $method, $request) {
+  $xml_request  = xmlrpc_encode_request($method, array($request));
+
+  $context = stream_context_create(array('http' => array(
+    'method'  => 'POST',
+    'header'  => 'Content-Type: text/xml' . "\r\n",
+    'timeout' => 1,
+    'content' =>  $xml_request
+  )));
+
+  $response = @file_get_contents($gatekeeper, false, $context);
+  if($response === false) return false;
+
+  $xml_array = xmlrpc_decode($response);
+  if(empty($xml_array)) return;
+  if (is_array($xml_array) &! xmlrpc_is_fault($xml_array)) return $xml_array;
+
+  return false;
 }
 
 function osXmlResponse($success = true, $errorMessage = false, $data = false) {
