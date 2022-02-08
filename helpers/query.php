@@ -364,8 +364,8 @@ xmlrpc_server_register_method($xmlrpc_server, "dir_classified_query", "dir_class
 function dir_classified_query ($method_name, $params, $app_data)
 {
   global $OpenSimDB;
-
   if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
+    osXmlResponse(false);
     die();
   }
 
@@ -488,6 +488,10 @@ xmlrpc_server_register_method($xmlrpc_server, "classifieds_info_query", "classif
 function classifieds_info_query($method_name, $params, $app_data)
 {
   global $OpenSimDB;
+  if( ! tableExists($OpenSimDB, [ 'classifieds' ] )) {
+    osXmlResponse(false);
+    die();
+  }
 
   $req            = $params[0];
 
@@ -524,7 +528,7 @@ function classifieds_info_query($method_name, $params, $app_data)
 #
 # Process the request
 #
-$request_xml = $HTTP_RAW_POST_DATA;
+$request_xml = file_get_contents("php://input");
 xmlrpc_server_call_method($xmlrpc_server, $request_xml, '');
 
 xmlrpc_server_destroy($xmlrpc_server);

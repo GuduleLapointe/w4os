@@ -104,7 +104,7 @@ function ossearch_db_tables($db) {
     `infouuid` varchar(36) NOT NULL default '',
     `mature` varchar(10) NOT NULL default 'PG',
     `gatekeeperURL` varchar(255),
-    `image` char(36) NOT NULL,
+    `imageUUID` char(36),
     PRIMARY KEY  (`regionUUID`,`parcelUUID`),
     KEY `name` (`parcelname`),
     KEY `description` (`description`),
@@ -232,8 +232,13 @@ if($SearchDB) {
   // table, although it has a different structure and a different purpose. It
   // could be renamed but some developers are reluctant to do it, so we keep the
   // original name for backward compatibility when in a separate database.
-  $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
-  define('SEARCH_REGION_TABLE', ($formatCheck->rowCount() == 0) ? 'regions' : 'regionsregister');
+  if( tableExists($SearchDB, [ 'regions' ] )) {
+    $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
+    $regions_table = ($formatCheck->rowCount() == 0) ? 'regions' : 'regionsregister';
+  } else {
+    $regions_table = 'regions';
+  }
+  define('SEARCH_REGION_TABLE', $regions_table);
 
   if( ! tableExists($SearchDB, [ SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
     error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
