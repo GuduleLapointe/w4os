@@ -70,5 +70,5 @@ function tableExists($pdo, $tables) {
   return true;
 }
 
-if(defined('OPENSIM_DB') && OPENSIM_DB === true)
+if(!defined('OPENSIM_DB') || OPENSIM_DB === true)
 $OpenSimDB = new OSPDO('mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME, OPENSIM_DB_USER, OPENSIM_DB_PASS);
