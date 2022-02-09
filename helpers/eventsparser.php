@@ -58,7 +58,6 @@ function getEventCategory($values) {
   return 29; // Not undefined, but unknown, so we return Miscellaneous
 }
 $notbefore = time() - 3600;
-// print_r($json);
 
 $events=array();
 foreach($json as $json_event) {
@@ -68,16 +67,23 @@ foreach($json as $json_event) {
   $end = strtotime($json_event['end']);
   $duration = ($end > $start) ? round((strtotime($json_event['end']) - $start) / 60) : 60;
   $duration = ($duration > 0) ? $duration : 60;
-  $description = strip_tags(html_entity_decode($json_event['description']));
+
   $online = opensim_region_is_online($json_event['hgurl']);
   if(!$online) continue; // ignore event if region is malformatted or unreachable
-  $links = opensim_format_tp($json_event['hgurl'], TPLINK_APPTP + TPLINK_HOP);
-  $description = $links . "\n\n" .  $description;
-  $slurl = opensim_format_tp($json_event['hgurl'], TPLINK_TXT );
-  if(preg_match('!.*[:/]([0-9]+)/([0-9]+)/([0-9]+)/?$!', $json_event['hgurl']))
-  $pos = preg_replace('!.*[:/]([0-9]+)/([0-9]+)/([0-9]+)/?$!', '$1,$2,$3', $json_event['hgurl']);
-  else $pos = '128,128,25';
 
+  $region = opensim_sanitize_uri($json_event['hgurl'], '', true);
+  $get_region = opensim_get_region($json_event['hgurl']);
+  $pos = (empty($region['pos'])) ? [128,128,25] : explode('/', $region['pos']);
+  if(!empty($get_region['x']) &! empty($get_region['y'])) {
+    $pos[0] += $get_region['x'];
+    $pos[1] += $get_region['y'];
+  }
+  $pos = implode(',', $pos);
+
+  $slurl = opensim_format_tp($json_event['hgurl'], TPLINK_TXT );
+  $links = opensim_format_tp($json_event['hgurl'], TPLINK_APPTP + TPLINK_HOP);
+  $description = strip_tags(html_entity_decode($json_event['description']));
+  $description = "$links\n\n$description";
 
   $fields = array(
     'owneruuid' => EVENTS_NULL_KEY, // Not implemented
@@ -94,6 +100,7 @@ foreach($json as $json_event) {
     'parcelUUID' => EVENTS_NULL_KEY, // Not implemented
     'globalPos' => $pos,
     'eventflags' => 0, // Not implemented
+    'gatekeeperURL' => $region['gatekeeper'],
     // 'hash' => $json_event['hash'], // Not implemented, though
   );
   $events[] = $fields;
@@ -101,10 +108,6 @@ foreach($json as $json_event) {
 
 $SearchDB->query("DELETE FROM events");
 foreach($events as $event) {
-  $query = $SearchDB->prepare("INSERT INTO events
-    (owneruuid, name, creatoruuid, category, description, dateUTC, duration, covercharge, coveramount, simname, parcelUUID, globalPos, eventflags )
-    VALUES (:owneruuid, :name, :creatoruuid, :category, :description, :dateUTC, :duration, :covercharge, :coveramount, :simname, :parcelUUID, :globalPos, :eventflags )"
-  );
-  $result = $query->execute($event);
-  if(!$result) error_log("error while insert(ing new events)");
+  $result = $SearchDB->insert('events', $event);
+  if(!$result) error_log("error while inserting new events)");
 }

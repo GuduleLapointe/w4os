@@ -353,7 +353,6 @@ function dir_events_query($method_name, $params, $app_data)
     "event_flags" => $row["eventflags"],
     "landing_point" => $row["globalPos"]);
   }
-
   osXmlResponse(true, '', $data);
 }
 
@@ -461,6 +460,11 @@ function event_info_query($method_name, $params, $app_data)
     if ($row['category'] == 28)    $category = "Charity/Support Groups";
     if ($row['category'] == 29)    $category = "Miscellaneous";
 
+    // debug($row);
+    if(isset($_REQUEST['gk']) &! empty($_REQUEST['gk']) && $_REQUEST['gk'] == $row['gatekeeperURL'])
+    $simname = preg_replace('/^[^ ]*/', '', $row['simname']);
+    else $simname = $row['simname'];
+
     $data[] = array(
       "event_id" => $row["eventid"],
       "creator" => $row["creatoruuid"],
@@ -472,7 +476,7 @@ function event_info_query($method_name, $params, $app_data)
       "duration" => $row["duration"],
       "covercharge" => $row["covercharge"],
       "coveramount" => $row["coveramount"],
-      "simname" => $row["simname"],
+      "simname" => $simname,
       "globalposition" => $row["globalPos"],
       "eventflags" => $row["eventflags"],
     );
