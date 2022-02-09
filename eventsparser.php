@@ -103,10 +103,8 @@ foreach($json as $json_event) {
     'gatekeeperURL' => $region['gatekeeper'],
     // 'hash' => $json_event['hash'], // Not implemented, though
   );
-  debug("parsed " . $fields['name']);
   $events[] = $fields;
 }
-debug(count($events) . " events found");
 
 $SearchDB->query("DELETE FROM events");
 foreach($events as $event) {

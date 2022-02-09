@@ -185,14 +185,14 @@ function opensim_link_region($args, $var=NULL) {
   return [];
 }
 
-if(!function_exists('debug')) {
-  function debug($message = "") {
-    if(empty($message)) return;
-    if(!is_string($message)) $message = print_r($message, true);
-    error_log('debug ' . $message);
-    echo $message . "\n";
-  }
-}
+// if(!function_exists('debug')) {
+//   function debug($message = "") {
+//     if(empty($message)) return;
+//     if(!is_string($message)) $message = print_r($message, true);
+//     error_log('debug ' . $message);
+//     echo $message . "\n";
+//   }
+// }
 
 function opensim_get_region($region_uri, $var=NULL) {
   if(empty($region_uri)) return [];
