@@ -156,24 +156,24 @@ function opensim_format_tp($uri, $format = TPLINK, $sep = "\n") {
 }
 
 /**
- * Use xmlrpc link_region method to request region data from robust
+ * Use xmlrpc link_region method to request link_region data from robust
  * @param  mixed  $args   region uri or sanitized region array
  * @param  string $var		output a single variable value
  * @return array (or string if var specified)
  */
-function opensim_get_region_data($args, $var=NULL) {
+function opensim_link_region($args, $var=NULL) {
   if(empty($args)) return [];
-  global $OPENSIM_CACHE;
+  global $OSSEARCH_CACHE;
 
   if(is_array($args)) $region_array=$args;
   else $region_array = opensim_sanitize_uri($args, '', true);
   extract($region_array); // $host, $port, $region, $pos, $gatekeeper, $key
 
-  if(isset($OPENSIM_CACHE['regions'][$key]['link_region'])) {
-    $link_region = $OPENSIM_CACHE['regions'][$key]['link_region'];
+  if(isset($OSSEARCH_CACHE['link_region'][$key])) {
+    $link_region = $OSSEARCH_CACHE['link_region'][$key];
   } else {
-    $link_region = oxXmlRequest($gatekeeper, 'link_region', ['region_name'=>$region]);
-    $OPENSIM_CACHE['regions'][$key]['link_region'] = $link_region;
+    $link_region = oxXmlRequest($gatekeeper, 'link_region', ['region_name'=>"$region"]);
+    $OSSEARCH_CACHE['link_region'][$key] = $link_region;
   }
   if($link_region) {
     if($var) {
@@ -185,13 +185,52 @@ function opensim_get_region_data($args, $var=NULL) {
   return [];
 }
 
+if(!function_exists('debug')) {
+  function debug($message = "") {
+    if(empty($message)) return;
+    if(!is_string($message)) $message = print_r($message, true);
+    error_log('debug ' . $message);
+    echo $message . "\n";
+  }
+}
+
+function opensim_get_region($region_uri, $var=NULL) {
+  if(empty($region_uri)) return [];
+  global $OSSEARCH_CACHE;
+
+	$region = opensim_sanitize_uri($region_uri, '', true);
+	$uuid = @$link_region['uuid'];
+
+	if(isset($OSSEARCH_CACHE['get_region'][$uuid])) {
+		$get_region = $OSSEARCH_CACHE['get_region'][$uuid];
+	} else {
+		$gatekeeper = $region['gatekeeper'];
+		$link_region = opensim_link_region($region);
+		if(!opensim_isuuid($uuid)) return [];
+
+		$get_region = oxXmlRequest($gatekeeper, 'get_region', ['region_uuid'=>"$uuid"]);
+		// $get_region = oxXmlRequest('http://dev.w4os.org:8402/grid', 'get_region_by_name', ['scopeid' => NULL_KEY,'name'=>"$region"]);
+    $OSSEARCH_CACHE['get_region'][$uuid] = $get_region;
+  }
+	$get_region['link_region'] = $link_region;
+
+  if($get_region) {
+    if($var) {
+      return $get_region[$var];
+    } else {
+      return $get_region;
+    }
+  }
+  return [];
+}
+
 /**
  * Check if region is online
  * @param  mixed  $region   region uri or sanitized region array
  * @return boolean					true if online
  */
 function opensim_region_is_online($region) {
-  $data = opensim_get_region_data($region);
+  $data = opensim_link_region($region);
   return ($data && $data['result']=='True');
 }
 
@@ -232,7 +271,7 @@ function oxXmlRequest($gatekeeper, $method, $request) {
   $context = stream_context_create(array('http' => array(
     'method'  => 'POST',
     'header'  => 'Content-Type: text/xml' . "\r\n",
-    'timeout' => 1,
+    'timeout' => 3, // most of the time below 1 sec, but leave some time for slow ones
     'content' =>  $xml_request
   )));
 
