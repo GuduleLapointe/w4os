@@ -199,15 +199,15 @@ function opensim_get_region($region_uri, $var=NULL) {
   global $OSSEARCH_CACHE;
 
 	$region = opensim_sanitize_uri($region_uri, '', true);
+	$gatekeeper = $region['gatekeeper'];
+
+	$link_region = opensim_link_region($region);
 	$uuid = @$link_region['uuid'];
+	if(!opensim_isuuid($uuid)) return [];
 
 	if(isset($OSSEARCH_CACHE['get_region'][$uuid])) {
 		$get_region = $OSSEARCH_CACHE['get_region'][$uuid];
 	} else {
-		$gatekeeper = $region['gatekeeper'];
-		$link_region = opensim_link_region($region);
-		if(!opensim_isuuid($uuid)) return [];
-
 		$get_region = oxXmlRequest($gatekeeper, 'get_region', ['region_uuid'=>"$uuid"]);
 		// $get_region = oxXmlRequest('http://dev.w4os.org:8402/grid', 'get_region_by_name', ['scopeid' => NULL_KEY,'name'=>"$region"]);
     $OSSEARCH_CACHE['get_region'][$uuid] = $get_region;

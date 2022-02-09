@@ -81,8 +81,6 @@ foreach($json as $json_event) {
   $pos = implode(',', $pos);
 
   $slurl = opensim_format_tp($json_event['hgurl'], TPLINK_TXT );
-
-
   $links = opensim_format_tp($json_event['hgurl'], TPLINK_APPTP + TPLINK_HOP);
   $description = strip_tags(html_entity_decode($json_event['description']));
   $description = "$links\n\n$description";
@@ -105,8 +103,10 @@ foreach($json as $json_event) {
     'gatekeeperURL' => $region['gatekeeper'],
     // 'hash' => $json_event['hash'], // Not implemented, though
   );
+  debug("parsed " . $fields['name']);
   $events[] = $fields;
 }
+debug(count($events) . " events found");
 
 $SearchDB->query("DELETE FROM events");
 foreach($events as $event) {
