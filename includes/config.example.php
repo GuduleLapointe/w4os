@@ -14,7 +14,7 @@
  * Grid info
  */
 define('OPENSIM_GRID_NAME', "Your Grid");
-define('OPENSIM_LOGIN_URI', "http://yougrid.org:8002");
+define('OPENSIM_LOGIN_URI', "http://yourgrid.org:8002");
 define("OPENSIM_MAIL_SENDER", "no-reply@{$_SERVER['SERVER_NAME']}");
 // define('OPENSIM_GRID_LOGO_URL', "http://yougrid.org/logo.png");
 
