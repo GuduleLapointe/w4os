@@ -18,13 +18,15 @@
 require_once('includes/config.php');
 require_once('includes/databases.php');
 
+if(!isset($OpenSimDB)) die();
+
 $request_xml = file_get_contents("php://input");
 if(empty($request_xml)) {
 	osXmlResponse(false, 'Invalid request');
 	die();
 }
 
-$method = $_SERVER['PATH_INFO)'];
+$method = @$_SERVER['PATH_INFO)'];
 if(empty($method)) $method = '/' . basename(getenv('REDIRECT_URL')) . '/';
 
 $xml = new SimpleXMLElement($request_xml);
@@ -175,6 +177,8 @@ switch($method) {
 	}
 	die();
 	break;
+
+	// '//': die(); // empty request
 
 	default:
 	error_log("Offline messages: method $method not implemented, please configure OfflineMessageModule = OfflineMessageModule in OpenSim.ini");
