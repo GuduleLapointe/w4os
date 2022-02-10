@@ -331,7 +331,7 @@ if(!function_exists('osdebug')) {
  * OpenSim source to help further attempts to allow Hypergrid search results.
  * Infouuid is a fake parcelid resolving to region handle and (region-level?)
  * pos which might (or not) give enough information to allow hg results.
- * 1. Link region
+ * 1. Link region locally with link-region (or directly in db?)
  * 2. Use local link region handle (instead of remote one) to generate infouuid
  * 3. Use local link Global pos instead of remote one
  */
