@@ -55,6 +55,12 @@ switch($service) {
     // $query->execute( array($host, $port, $timestamp) );
   }
   $query->execute( array( ':host' => $host, ':port' => $port, ':timestamp' => $timestamp ) );
+
+  // Trigger parser for new host
+  dontwait(); // make sure simulator doesn't pause start process
+  sleep(2); // leave simulator start process some time before querying it
+  $parser = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}" . dirname($_SERVER['REQUEST_URI']) . '/parser.php' ;
+  $result=file_get_contents($parser);
   break;
 
   case 'offline':
