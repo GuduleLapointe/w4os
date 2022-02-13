@@ -185,15 +185,6 @@ function opensim_link_region($args, $var=NULL) {
   return [];
 }
 
-// if(!function_exists('debug')) {
-//   function debug($message = "") {
-//     if(empty($message)) return;
-//     if(!is_string($message)) $message = print_r($message, true);
-//     error_log('debug ' . $message);
-//     echo $message . "\n";
-//   }
-// }
-
 function opensim_get_region($region_uri, $var=NULL) {
   if(empty($region_uri)) return [];
   global $OSSEARCH_CACHE;
@@ -326,3 +317,43 @@ function dontWait() {
 	ob_end_flush();
 	flush();
 }
+
+if(!function_exists('osdebug')) {
+  function osdebug($message = "") {
+    if(empty($message)) return;
+    if(!is_string($message)) $message = print_r($message, true);
+    error_log('osdebug ' . $message);
+    echo $message . "\n";
+  }
+}
+
+/**
+ * OpenSim source to help further attempts to allow Hypergrid search results.
+ * Infouuid is a fake parcelid resolving to region handle and (region-level?)
+ * pos which might (or not) give enough information to allow hg results.
+ * 1. Link region locally with link-region (or directly in db?)
+ * 2. Use local link region handle (instead of remote one) to generate infouuid
+ * 3. Use local link Global pos instead of remote one
+ */
+//
+// public static UUID BuildFakeParcelID(ulong regionHandle, uint x, uint y)
+// {
+// 		byte[] bytes =
+// 		{
+// 				(byte)regionHandle, (byte)(regionHandle >> 8), (byte)(regionHandle >> 16), (byte)(regionHandle >> 24),
+// 				(byte)(regionHandle >> 32), (byte)(regionHandle >> 40), (byte)(regionHandle >> 48), (byte)(regionHandle >> 56),
+// 				(byte)x, (byte)(x >> 8), 0, 0,
+// 				(byte)y, (byte)(y >> 8), 0, 0 };
+// 		return new UUID(bytes, 0);
+// }
+//
+// public static UUID BuildFakeParcelID(ulong regionHandle, uint x, uint y, uint z)
+// {
+// 		byte[] bytes =
+// 		{
+// 				(byte)regionHandle, (byte)(regionHandle >> 8), (byte)(regionHandle >> 16), (byte)(regionHandle >> 24),
+// 				(byte)(regionHandle >> 32), (byte)(regionHandle >> 40), (byte)(regionHandle >> 48), (byte)(regionHandle >> 56),
+// 				(byte)x, (byte)(x >> 8), (byte)z, (byte)(z >> 8),
+// 				(byte)y, (byte)(y >> 8), 0, 0 };
+// 		return new UUID(bytes, 0);
+// }
