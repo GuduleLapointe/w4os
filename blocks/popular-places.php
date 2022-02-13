@@ -85,7 +85,7 @@ function w4os_popular_places_shortcode($atts = [], $content = null)
 		'after_title' => '</h4>',
 	);
 	$result = w4os_popular_places_html($atts, $args);
-	if(empty($result)) return "nothing in shortcode";
+	if(empty($result)) return "";
 
 	$content .= $result;
 	return "<div class='w4os-shortcode w4os-popular-places'>$result</div>";
