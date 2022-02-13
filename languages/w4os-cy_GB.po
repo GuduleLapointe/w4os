@@ -1,0 +1,1192 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: w4os\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
+"Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
+"Language-Team: Speculoos World\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-02-13T13:23:32-04:00\n"
+"PO-Revision-Date: 2022-02-13 13:24-0400\n"
+"Language: cy_GB\n"
+"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Plugin Name of the plugin
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://w4os.org/"
+msgstr ""
+
+#. Description of the plugin
+msgid "WordPress interface for OpenSimulator (w4os)."
+msgstr ""
+
+#. Author of the plugin
+msgid "Speculoos World"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://speculoos.world"
+msgstr ""
+
+#: admin/admin-init.php:26
+msgid "OpenSimulator Status"
+msgstr ""
+
+#: admin/admin-init.php:26
+msgid "Status"
+msgstr ""
+
+#: admin/admin-init.php:29
+msgid "OpenSimulator Settings"
+msgstr ""
+
+#: admin/admin-init.php:30
+#: admin/settings.php:603
+msgid "Settings"
+msgstr ""
+
+#: admin/admin-init.php:37
+#: admin/admin-init.php:83
+msgid "OpenSimulator Helpers"
+msgstr ""
+
+#: admin/admin-init.php:38
+msgid "Helpers"
+msgstr ""
+
+#: admin/admin-init.php:103
+#: includes/profile.php:118
+msgid "Avatar Name"
+msgstr ""
+
+#: admin/admin-init.php:109
+#: admin/admin-init.php:115
+#: includes/profile.php:124
+msgid "Born"
+msgstr ""
+
+#: admin/admin-init.php:110
+#: admin/admin-init.php:116
+msgid "Last Seen"
+msgstr ""
+
+#: admin/admin-init.php:131
+#: includes/shortcodes.php:104
+msgid "View profile"
+msgstr ""
+
+#: admin/admin-init.php:188
+msgid "With Avatar"
+msgstr ""
+
+#: admin/admin-init.php:189
+msgid "Without Avatar"
+msgstr ""
+
+#: admin/admin-init.php:206
+msgid "Filter users..."
+msgstr ""
+
+#: admin/admin-init.php:212
+msgid "Filter"
+msgstr ""
+
+#: admin/admin-init.php:258
+msgid "OpenSimulator Profile"
+msgstr ""
+
+#: admin/admin-init.php:260
+msgid "OpenSimulator Splash"
+msgstr ""
+
+#: admin/admin-init.php:262
+msgid "OpenSimulator Search"
+msgstr ""
+
+#: admin/admin-init.php:264
+msgid "OpenSimulator Economy"
+msgstr ""
+
+#: admin/admin-init.php:266
+msgid "OpenSimulator About"
+msgstr ""
+
+#: admin/admin-init.php:268
+msgid "OpenSimulator Register"
+msgstr ""
+
+#: admin/admin-init.php:270
+msgid "OpenSimulator Password"
+msgstr ""
+
+#: admin/admin-init.php:272
+msgid "OpenSimulator Offline Messages"
+msgstr ""
+
+#: admin/admin-init.php:284
+#: admin/admin-init.php:298
+msgid "The followed link has expired, please try again"
+msgstr ""
+
+#: admin/admin-init.php:305
+msgid "Page %s already exists."
+msgstr ""
+
+#: admin/admin-init.php:322
+msgid "New page %s created."
+msgstr ""
+
+#: admin/admin-init.php:326
+msgid "Error while creating page %s."
+msgstr ""
+
+#: admin/admin-init.php:338
+msgid "Avatar profile"
+msgstr ""
+
+#: admin/admin-init.php:339
+msgid "The base URL for avatar web profiles."
+msgstr ""
+
+#: admin/admin-init.php:342
+msgid "Search Service"
+msgstr ""
+
+#: admin/admin-init.php:343
+msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
+msgstr ""
+
+#: admin/admin-init.php:353
+msgid "Web Search"
+msgstr ""
+
+#: admin/admin-init.php:354
+msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
+msgstr ""
+
+#: admin/admin-init.php:364
+#: admin/settings.php:290
+msgid "Offline messages"
+msgstr ""
+
+#: admin/admin-init.php:365
+msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
+msgstr ""
+
+#: admin/admin-init.php:370
+msgid "Splash"
+msgstr ""
+
+#: admin/admin-init.php:371
+msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
+msgstr ""
+
+#: admin/admin-init.php:396
+msgid "Registration page"
+msgstr ""
+
+#: admin/admin-init.php:397
+msgid "Link to the user registration."
+msgstr ""
+
+#: admin/admin-init.php:402
+msgid "Password revovery"
+msgstr ""
+
+#: admin/admin-init.php:403
+msgid "Link to lost password page."
+msgstr ""
+
+#: admin/admin-init.php:408
+msgid "Economy"
+msgstr ""
+
+#: admin/admin-init.php:409
+msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
+msgstr ""
+
+#: admin/admin-init.php:415
+msgid "About this grid"
+msgstr ""
+
+#: admin/admin-init.php:416
+msgid "Detailed info page on your website, via a link displayed on the viewer login page."
+msgstr ""
+
+#: admin/admin-init.php:420
+msgid "Help"
+msgstr ""
+
+#: admin/admin-init.php:421
+msgid "Link to a help page on your website."
+msgstr ""
+
+#: admin/dashboard.php:13
+#: admin/settings.php:43
+#: includes/shortcodes.php:125
+#: includes/widgets.php:47
+#: blocks/w4os-gridinfo-block/index.js:27
+#: blocks/w4os-gridinfo-block/index.js:74
+msgid "Grid info"
+msgstr ""
+
+#: admin/dashboard.php:20
+#: includes/shortcodes.php:152
+#: includes/widgets.php:79
+#: includes/widgets.php:115
+#: blocks/w4os-gridstatus-block/index.js:27
+#: blocks/w4os-gridstatus-block/index.js:74
+msgid "Grid status"
+msgstr ""
+
+#: admin/dashboard.php:28
+msgid "Recent users"
+msgstr ""
+
+#: admin/settings.php:56
+#: includes/shortcodes.php:128
+msgid "Grid name"
+msgstr ""
+
+#: admin/settings.php:63
+msgid "Robust server database"
+msgstr ""
+
+#: admin/settings.php:66
+#: admin/settings.php:221
+#: admin/settings.php:378
+msgid "Hostname"
+msgstr ""
+
+#: admin/settings.php:69
+#: admin/settings.php:225
+#: admin/settings.php:382
+msgid "Database name"
+msgstr ""
+
+#: admin/settings.php:72
+#: admin/settings.php:229
+#: admin/settings.php:386
+msgid "Username"
+msgstr ""
+
+#: admin/settings.php:76
+#: admin/settings.php:234
+#: admin/settings.php:391
+msgid "Password"
+msgstr ""
+
+#: admin/settings.php:83
+#: admin/status-page.php:67
+msgid "Avatar models"
+msgstr ""
+
+#: admin/settings.php:87
+msgid "First Name = "
+msgstr ""
+
+#: admin/settings.php:91
+msgid "OR Last Name = "
+msgstr ""
+
+#: admin/settings.php:97
+msgid "Grid users"
+msgstr ""
+
+#: admin/settings.php:101
+#: admin/settings.php:116
+msgid "Profile page"
+msgstr ""
+
+#: admin/settings.php:103
+#: admin/settings.php:118
+msgid "Provide web profile page for avatars"
+msgstr ""
+
+#: admin/settings.php:105
+#: admin/settings.php:120
+msgid "Defaults"
+msgstr ""
+
+#: admin/settings.php:109
+#: admin/settings.php:124
+msgid "The page %s must exist, as defined in %spermalinks settings%s."
+msgstr ""
+
+#: admin/settings.php:132
+msgid "Show configuration instructions to new users."
+msgstr ""
+
+#: admin/settings.php:137
+msgid "Login page"
+msgstr ""
+
+#: admin/settings.php:139
+msgid "Use profile page as login page"
+msgstr ""
+
+#: admin/settings.php:141
+msgid "Default"
+msgstr ""
+
+#: admin/settings.php:148
+msgid "Replace user name"
+msgstr ""
+
+#: admin/settings.php:149
+msgid "Show avatar name instead of user name in users list."
+msgstr ""
+
+#: admin/settings.php:153
+msgid "Exclude from stats"
+msgstr ""
+
+#: admin/settings.php:155
+msgid "Models"
+msgstr ""
+
+#: admin/settings.php:156
+msgid "Accounts without mail address"
+msgstr ""
+
+#: admin/settings.php:157
+msgid "Hypergrid visitors"
+msgstr ""
+
+#: admin/settings.php:159
+msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
+msgstr ""
+
+#: admin/settings.php:178
+msgid "Web Assets Server"
+msgstr ""
+
+#: admin/settings.php:183
+msgid "Provide web assets server"
+msgstr ""
+
+#: admin/settings.php:186
+msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
+msgstr ""
+
+#: admin/settings.php:189
+msgid "Web asset server"
+msgstr ""
+
+#: admin/settings.php:193
+msgid "You can set the asset slug in %spermalinks settings%s."
+msgstr ""
+
+#: admin/settings.php:198
+msgid "External assets server URI"
+msgstr ""
+
+#: admin/settings.php:199
+msgid "If W4OS web assets service is disabled, you need a third-party web application."
+msgstr ""
+
+#: admin/settings.php:205
+msgid "Search"
+msgstr ""
+
+#: admin/settings.php:209
+msgid "Provide in-world search"
+msgstr ""
+
+#: admin/settings.php:215
+msgid "Search database"
+msgstr ""
+
+#: admin/settings.php:218
+#: admin/settings.php:365
+msgid "Use the same database as Robust"
+msgstr ""
+
+#: admin/settings.php:240
+msgid "Search engine URL"
+msgstr ""
+
+#: admin/settings.php:243
+msgid "URL of the search engine used internally by the viewer (without arguments)."
+msgstr ""
+
+#: admin/settings.php:252
+msgid "Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names."
+msgstr ""
+
+#: admin/settings.php:265
+msgid "Search register"
+msgstr ""
+
+#: admin/settings.php:268
+msgid "Data service, used to register regions, objects or land for sale."
+msgstr ""
+
+#: admin/settings.php:281
+msgid "Events server URL"
+msgstr ""
+
+#: admin/settings.php:283
+msgid "HYPEvents server URL, used to fetch upcoming events and make them available in search."
+msgstr ""
+
+#: admin/settings.php:284
+msgid "Leave blank to ignore events or if you have an other events implementation."
+msgstr ""
+
+#: admin/settings.php:294
+msgid "Provide offline helper"
+msgstr ""
+
+#: admin/settings.php:300
+msgid "Offline helper URI"
+msgstr ""
+
+#: admin/settings.php:304
+msgid "Set the URL in Robust and OpenSimulator configurations."
+msgstr ""
+
+#: admin/settings.php:320
+msgid "Sender e-mail address"
+msgstr ""
+
+#: admin/settings.php:324
+msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
+msgstr ""
+
+#: admin/settings.php:333
+msgid "Provide economy helpers"
+msgstr ""
+
+#: admin/settings.php:336
+msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
+msgstr ""
+
+#: admin/settings.php:337
+msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
+msgstr ""
+
+#: admin/settings.php:339
+msgid "Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s."
+msgstr ""
+
+#: admin/settings.php:347
+msgid "Economy base URI"
+msgstr ""
+
+#: admin/settings.php:351
+msgid "The URL must be set in Robust configuration."
+msgstr ""
+
+#: admin/settings.php:362
+msgid "Economy database"
+msgstr ""
+
+#: admin/settings.php:397
+msgid "Currency Provider"
+msgstr ""
+
+#: admin/settings.php:401
+msgid "No provider, use fake money."
+msgstr ""
+
+#: admin/settings.php:408
+msgid "Currency conversion rate"
+msgstr ""
+
+#: admin/settings.php:409
+msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
+msgstr ""
+
+#: admin/settings.php:412
+msgid "Podex redirect message"
+msgstr ""
+
+#: admin/settings.php:413
+msgid "Please use our terminals in-world to proceed. Click OK to teleport to terminals region."
+msgstr ""
+
+#: admin/settings.php:416
+msgid "Podex redirect URL"
+msgstr ""
+
+#: admin/settings.php:420
+msgid "Money Script Access Key"
+msgstr ""
+
+#: admin/settings.php:581
+msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
+msgstr ""
+
+#: admin/settings.php:582
+msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
+msgstr ""
+
+#: admin/settings.php:587
+msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
+msgstr ""
+
+#: admin/status-page.php:15
+msgid "Available shortcodes"
+msgstr ""
+
+#: admin/status-page.php:20
+msgid "General information (grid name and login uri)"
+msgstr ""
+
+#: admin/status-page.php:26
+msgid "Online users, regions, etc."
+msgstr ""
+
+#: admin/status-page.php:32
+msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
+msgstr ""
+
+#: admin/status-page.php:33
+msgid "(formerly %s)"
+msgstr ""
+
+#: admin/status-page.php:43
+msgid "Users"
+msgstr ""
+
+#: admin/status-page.php:48
+msgid "Total"
+msgstr ""
+
+#: admin/status-page.php:49
+msgid "WP only"
+msgstr ""
+
+#: admin/status-page.php:50
+msgid "Sync"
+msgstr ""
+
+#: admin/status-page.php:51
+msgid "Grid only"
+msgstr ""
+
+#: admin/status-page.php:55
+msgid "Grid accounts"
+msgstr ""
+
+#: admin/status-page.php:62
+msgid "Linked WordPress accounts"
+msgstr ""
+
+#: admin/status-page.php:74
+msgid "Other service accounts"
+msgstr ""
+
+#: admin/status-page.php:88
+msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
+msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/status-page.php:96
+msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference."
+msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/status-page.php:104
+msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
+msgid_plural "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/status-page.php:109
+msgid "Real accounts need a unique email address for W4OS to function properly."
+msgstr ""
+
+#: admin/status-page.php:117
+msgid "Synchronize users now"
+msgstr ""
+
+#: admin/status-page.php:119
+msgid "Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console."
+msgstr ""
+
+#: admin/status-page.php:137
+msgid "Missing PHP modules"
+msgstr ""
+
+#: admin/status-page.php:139
+msgid "These modules were not found: %s. Install them to get the most of this plugin."
+msgstr ""
+
+#: admin/status-page.php:147
+msgid "OpenSimulator pages"
+msgstr ""
+
+#: admin/status-page.php:149
+msgid "The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file."
+msgstr ""
+
+#: admin/status-page.php:159
+msgid "Grid not running, start Robust server or %scheck OpenSimulator settings%s."
+msgstr ""
+
+#: admin/status-page.php:179
+msgid "Check pages now"
+msgstr ""
+
+#: admin/status-page.php:183
+msgid "Last checked %s ago."
+msgstr ""
+
+#: admin/status-page.php:184
+msgid "OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status."
+msgstr ""
+
+#: admin/status-page.php:205
+msgid "Should be %s"
+msgstr ""
+
+#: admin/status-page.php:211
+msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
+msgstr ""
+
+#: blocks/popular-places.php:126
+msgid "Popular places"
+msgstr ""
+
+#: blocks/popular-places.php:132
+#: includes/shortcodes.php:159
+msgid "No result"
+msgstr ""
+
+#: includes/assets.php:37
+msgid "Assets base"
+msgstr ""
+
+#: includes/cron.php:20
+msgid "every_five_minutes"
+msgstr ""
+
+#: includes/functions.php:149
+msgid "A local Robust server has been found. Please check Login URI and Grid name configuration."
+msgstr ""
+
+#: includes/functions.php:168
+msgid "OpenSimulator settings page"
+msgstr ""
+
+#: includes/functions.php:211
+msgid "Yes"
+msgstr ""
+
+#: includes/functions.php:213
+msgid "No"
+msgstr ""
+
+#: includes/functions.php:226
+msgid "Grid online"
+msgstr ""
+
+#: includes/functions.php:227
+msgid "Members"
+msgstr ""
+
+#: includes/functions.php:229
+msgid "Active members (30 days)"
+msgstr ""
+
+#: includes/functions.php:232
+msgid "Members in world"
+msgstr ""
+
+#: includes/functions.php:239
+msgid "Active users (30 days)"
+msgstr ""
+
+#: includes/functions.php:241
+msgid "Total users in world"
+msgstr ""
+
+#: includes/functions.php:245
+msgid "Regions"
+msgstr ""
+
+#: includes/functions.php:247
+msgid "Total area"
+msgstr ""
+
+#: includes/functions.php:355
+msgid "%s"
+msgstr ""
+
+#: includes/functions.php:394
+msgid "Joined today"
+msgstr ""
+
+#: includes/functions.php:395
+msgid "%s days old"
+msgstr ""
+
+#: includes/profile-page.php:51
+msgid "Lost Password"
+msgstr ""
+
+#: includes/profile-page.php:56
+msgid "Register"
+msgstr ""
+
+#: includes/profile-page.php:87
+msgid "Lost your password? Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr ""
+
+#: includes/profile-page.php:89
+msgid "Email"
+msgstr ""
+
+#: includes/profile-page.php:90
+msgid "Reset Password"
+msgstr ""
+
+#: includes/profile-page.php:91
+#: includes/profile-page.php:152
+#: templates/content-configuration.php:40
+#: templates/content-page-profile.php:26
+msgid "Log in"
+msgstr ""
+
+#: includes/profile-page.php:96
+msgid "Log in to create your avatar, view your profile or set your options."
+msgstr ""
+
+#: includes/profile-page.php:147
+msgid "My Profile"
+msgstr ""
+
+#: includes/profile-page.php:149
+msgid "Create My Avatar"
+msgstr ""
+
+#: includes/profile-page.php:165
+#: templates/content-page-profile.php:54
+msgid "%s's profile"
+msgstr ""
+
+#: includes/profile-page.php:168
+msgid "Avatar not found"
+msgstr ""
+
+#: includes/profile-page.php:220
+msgid "Profile base"
+msgstr ""
+
+#: includes/profile.php:66
+msgid "Profiles are not available at the moment."
+msgstr ""
+
+#: includes/profile.php:93
+msgid "Build"
+msgstr ""
+
+#: includes/profile.php:94
+msgid "Explore"
+msgstr ""
+
+#: includes/profile.php:95
+msgid "Meet"
+msgstr ""
+
+#: includes/profile.php:96
+msgid "Group"
+msgstr ""
+
+#: includes/profile.php:97
+msgid "Buy"
+msgstr ""
+
+#: includes/profile.php:98
+msgid "Sell"
+msgstr ""
+
+#: includes/profile.php:99
+msgid "Be Hired"
+msgstr ""
+
+#: includes/profile.php:100
+msgid "Hire"
+msgstr ""
+
+#: includes/profile.php:103
+msgid "Textures"
+msgstr ""
+
+#: includes/profile.php:104
+msgid "Architecture"
+msgstr ""
+
+#: includes/profile.php:105
+msgid "Event Planning"
+msgstr ""
+
+#: includes/profile.php:106
+msgid "Modeling"
+msgstr ""
+
+#: includes/profile.php:107
+msgid "Scripting"
+msgstr ""
+
+#: includes/profile.php:108
+msgid "Custom Characters"
+msgstr ""
+
+#: includes/profile.php:122
+msgid "About"
+msgstr ""
+
+#: includes/profile.php:125
+msgid "Partner"
+msgstr ""
+
+#: includes/profile.php:126
+msgid "Wants to"
+msgstr ""
+
+#: includes/profile.php:127
+msgid "Skills"
+msgstr ""
+
+#: includes/profile.php:128
+msgid "Languages"
+msgstr ""
+
+#: includes/profile.php:129
+msgid "Real Life"
+msgstr ""
+
+#: includes/profile.php:241
+msgid "%s local users updated with avatar data"
+msgstr ""
+
+#: includes/profile.php:255
+#: includes/profile.php:967
+msgid "OpenSimulator"
+msgstr ""
+
+#: includes/profile.php:404
+msgid "This user already has an avatar."
+msgstr ""
+
+#: includes/profile.php:415
+msgid "First name required"
+msgstr ""
+
+#: includes/profile.php:416
+msgid "Last name required"
+msgstr ""
+
+#: includes/profile.php:418
+msgid "Password required"
+msgstr ""
+
+#: includes/profile.php:419
+msgid "The password does not match."
+msgstr ""
+
+#: includes/profile.php:428
+#: includes/profile.php:432
+msgid "The name %s is not allowed"
+msgstr ""
+
+#: includes/profile.php:436
+msgid "Names can only contain alphanumeric characters"
+msgstr ""
+
+#: includes/profile.php:442
+msgid "There is already a grid user named %s"
+msgstr ""
+
+#: includes/profile.php:448
+msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
+msgstr ""
+
+#: includes/profile.php:470
+msgid "Error while creating user"
+msgstr ""
+
+#: includes/profile.php:479
+msgid "Error while setting password"
+msgstr ""
+
+#: includes/profile.php:490
+msgid "Error while setting home region"
+msgstr ""
+
+#: includes/profile.php:507
+msgid "Error while creating user inventory"
+msgstr ""
+
+#: includes/profile.php:629
+msgid "Error while adding inventory item"
+msgstr ""
+
+#: includes/profile.php:640
+msgid "Error while adding inventory outfit link"
+msgstr ""
+
+#: includes/profile.php:652
+msgid "Error while adding avatar"
+msgstr ""
+
+#: includes/profile.php:658
+msgid "Errors occurred while creating the user"
+msgstr ""
+
+#: includes/profile.php:663
+msgid "Avatar %s created successfully."
+msgstr ""
+
+#: includes/profile.php:676
+msgid "You need an avatar to explore our virtual world."
+msgstr ""
+
+#: includes/profile.php:677
+msgid "Choose a name below. This is how people will see you in-world. Once set, your avatar name cannot be changed."
+msgstr ""
+
+#: includes/profile.php:700
+msgid "Avatar first name"
+msgstr ""
+
+#: includes/profile.php:704
+msgid "Avatar last name"
+msgstr ""
+
+#: includes/profile.php:709
+msgid "Confirm your password"
+msgstr ""
+
+#: includes/profile.php:711
+msgid "Your in-world Avatar password is the same as your password on this website."
+msgstr ""
+
+#: includes/profile.php:725
+msgid "Your initial appearance"
+msgstr ""
+
+#: includes/profile.php:726
+msgid "You can change it as often as you want in the virtual world."
+msgstr ""
+
+#: includes/profile.php:762
+msgid "Save"
+msgstr ""
+
+#: includes/profile.php:795
+msgid "leave blank to leave unchanged"
+msgstr ""
+
+#: includes/profile.php:803
+msgid "Create an avatar"
+msgstr ""
+
+#: includes/profile.php:889
+#: blocks/w4os-gridprofile-block/index.js:27
+#: blocks/w4os-gridprofile-block/index.js:74
+msgid "Grid profile"
+msgstr ""
+
+#: includes/profile.php:977
+msgid "Avatar First Name"
+msgstr ""
+
+#: includes/profile.php:983
+msgid "Avatar Last Name"
+msgstr ""
+
+#: includes/profile.php:989
+msgid "Profile Picture"
+msgstr ""
+
+#: includes/profile.php:991
+msgid "Must be set in the viewer."
+msgstr ""
+
+#: includes/profile.php:996
+msgid "Web Profile URL"
+msgstr ""
+
+#: includes/shortcodes.php:70
+msgid "Configure W4OS database "
+msgstr ""
+
+#: includes/shortcodes.php:103
+msgid "Edit user"
+msgstr ""
+
+#: includes/shortcodes.php:119
+msgid "Configure W4OS: "
+msgstr ""
+
+#: includes/shortcodes.php:129
+msgid "Login URI"
+msgstr ""
+
+#: includes/shortcodes.php:134
+msgid "OpenSimulator not configured"
+msgstr ""
+
+#: includes/shortcodes.php:143
+msgid "Configure W4OS database: "
+msgstr ""
+
+#: includes/updates.php:25
+msgid "Update %s applied"
+msgstr ""
+
+#: includes/updates.php:36
+msgid "Update %s applied sucessfully"
+msgid_plural "Updates %s applied sucessfully"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/updates.php:42
+msgid "Error processing update %s"
+msgstr ""
+
+#: includes/updates.php:47
+msgid "W4OS updated"
+msgstr ""
+
+#: includes/updates.php:71
+msgid "Grid user"
+msgstr ""
+
+#: includes/updates.php:92
+msgid "Profiles service is not configured on your Robust server. It is required for full functionalities."
+msgstr ""
+
+#: includes/updates.php:111
+msgid "Grid and WordPress users synchronized."
+msgstr ""
+
+#: includes/updates.php:129
+msgid "OpenSim Search tables updated."
+msgstr ""
+
+#: includes/users.php:138
+msgid "Error while updating %s %s (%s) %s"
+msgstr ""
+
+#: includes/users.php:155
+msgid "Error while updating newly created user %s for %s %s (%s) %s"
+msgstr ""
+
+#: includes/users.php:167
+msgid "%d reference updated"
+msgid_plural "%d references updated"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/users.php:173
+msgid "%d new WordPress account created"
+msgid_plural "%d new WordPress accounts created"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/users.php:179
+msgid "%d broken reference removed"
+msgid_plural "%d broken references removed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/w4osdb.php:12
+msgid "ROBUST database is not configured. To finish configuration, go to "
+msgstr ""
+
+#: includes/w4osdb.php:23
+msgid "Could not connect to the database server, please verify your credentials on "
+msgstr ""
+
+#: includes/w4osdb.php:30
+msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
+msgstr ""
+
+#: includes/w4osdb.php:69
+msgid "Missing tables: %s. The ROBUST database is connected, but it does not seem valid. "
+msgstr ""
+
+#: includes/widgets.php:10
+msgid "Grid info Widget"
+msgstr ""
+
+#: includes/widgets.php:51
+#: includes/widgets.php:119
+msgid "Title:"
+msgstr ""
+
+#: templates/content-configuration.php:2
+msgid "this grid"
+msgstr ""
+
+#: templates/content-configuration.php:18
+msgid "Configuration"
+msgstr ""
+
+#: templates/content-configuration.php:21
+msgid "Install the viewer"
+msgstr ""
+
+#: templates/content-configuration.php:24
+msgid "You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to access %2$s."
+msgstr ""
+
+#: templates/content-configuration.php:30
+msgid "Add %1$s to your viewer"
+msgstr ""
+
+#: templates/content-configuration.php:31
+msgid "Instructions may vary depending on the viewer"
+msgstr ""
+
+#: templates/content-configuration.php:33
+msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
+msgstr ""
+
+#: templates/content-configuration.php:34
+msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
+msgstr ""
+
+#: templates/content-configuration.php:35
+msgid "Under \"Add new grid\", enter"
+msgstr ""
+
+#: templates/content-configuration.php:37
+msgid "Click the \"Apply\" button"
+msgstr ""
+
+#: templates/content-configuration.php:42
+msgid "Make sure %1$s is selected in the Grid menu"
+msgstr ""
+
+#: templates/content-configuration.php:43
+msgid "Enter your avatar’s first and last name in the \"Username\" box and your password in the \"Password\" box"
+msgstr ""
+
+#: templates/content-configuration.php:44
+msgid "Click \"Log In\""
+msgstr ""
+
+#: templates/content-page-profile.php:15
+msgid "My Avatar"
+msgstr ""
+
+#: w4os.php:44
+msgid "You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled."
+msgstr ""
+
+#: w4os.php:53
+msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
+msgstr ""
