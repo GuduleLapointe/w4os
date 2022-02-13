@@ -1,231 +1,257 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os\n"
-"Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
-"Language-Team: Speculoos World\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-13T13:23:32-04:00\n"
-"PO-Revision-Date: 2022-02-13 13:24-0400\n"
-"Language: cy_GB\n"
-"X-Generator: Poedit 2.4.2\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: w4os\n"
+"Language: cy\n"
+"Plural-Forms: nplurals=4; plural= (n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;\n"
 
+#. wpml-name: 89e15c20b6fff50f9caa1f171381251d
 #. Plugin Name of the plugin
+#: 
 msgid "w4os - OpenSimulator Web Interface (dev)"
-msgstr ""
+msgstr "w4os - Rhyngwyneb Gwe OpenSimulator (dev)"
 
+#. #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
+#. wpml-name: 8a556ddad981269d9764cbf640cfd337
+#. wpml-name: f279731266ee1b5ff0b7bd85e585dfef
 #. Plugin URI of the plugin
+#: 
 msgid "https://w4os.org/"
-msgstr ""
+msgstr "https://w4os.org/"
 
+#. wpml-name: 374124f21084c34d958491bf98d72af4
 #. Description of the plugin
+#: 
 msgid "WordPress interface for OpenSimulator (w4os)."
-msgstr ""
+msgstr "Rhyngwyneb WordPress ar gyfer OpenSimulator (w4os)."
 
+#. wpml-name: 6dfd7d212f1bf0f6121142f105f7c704
 #. Author of the plugin
+#: 
 msgid "Speculoos World"
-msgstr ""
+msgstr "Speculoos Byd"
 
+#. #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
+#. wpml-name: 8a556ddad981269d9764cbf640cfd337
+#. wpml-name: f279731266ee1b5ff0b7bd85e585dfef
 #. Author URI of the plugin
+#: 
 msgid "https://speculoos.world"
-msgstr ""
+msgstr "https://speculoos.world"
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: admin/admin-init.php:26
 msgid "OpenSimulator Status"
-msgstr ""
+msgstr "Statws OpenSimulator"
 
 #: admin/admin-init.php:26
 msgid "Status"
-msgstr ""
+msgstr "Statws"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: admin/admin-init.php:29
 msgid "OpenSimulator Settings"
-msgstr ""
+msgstr "Gosodiadau OpenSimulator"
 
 #: admin/admin-init.php:30
 #: admin/settings.php:603
 msgid "Settings"
-msgstr ""
+msgstr "Gosodiadau"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: admin/admin-init.php:37
 #: admin/admin-init.php:83
 msgid "OpenSimulator Helpers"
-msgstr ""
+msgstr "Cynorthwywyr OpenSimulator"
 
 #: admin/admin-init.php:38
 msgid "Helpers"
-msgstr ""
+msgstr "Cynorthwywyr"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: admin/admin-init.php:103
 #: includes/profile.php:118
 msgid "Avatar Name"
-msgstr ""
+msgstr "Enw Avatar"
 
 #: admin/admin-init.php:109
 #: admin/admin-init.php:115
 #: includes/profile.php:124
 msgid "Born"
-msgstr ""
+msgstr "Eni"
 
 #: admin/admin-init.php:110
 #: admin/admin-init.php:116
 msgid "Last Seen"
-msgstr ""
+msgstr "Gwelwyd Diwethaf"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: admin/admin-init.php:131
 #: includes/shortcodes.php:104
 msgid "View profile"
-msgstr ""
+msgstr "Gweld proffil"
 
 #: admin/admin-init.php:188
 msgid "With Avatar"
-msgstr ""
+msgstr "Gyda Avatar"
 
+#. wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
 #: admin/admin-init.php:189
 msgid "Without Avatar"
-msgstr ""
+msgstr "Heb Avatar"
 
 #: admin/admin-init.php:206
 msgid "Filter users..."
-msgstr ""
+msgstr "Hidlo defnyddwyr..."
 
 #: admin/admin-init.php:212
 msgid "Filter"
-msgstr ""
+msgstr "Hidlo"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: admin/admin-init.php:258
 msgid "OpenSimulator Profile"
-msgstr ""
+msgstr "Proffil OpenSimulator"
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: admin/admin-init.php:260
 msgid "OpenSimulator Splash"
-msgstr ""
+msgstr "OpenSimulator Sblash"
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: admin/admin-init.php:262
 msgid "OpenSimulator Search"
-msgstr ""
+msgstr "Chwiliad OpenSimulator"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: admin/admin-init.php:264
 msgid "OpenSimulator Economy"
-msgstr ""
+msgstr "Economi OpenSimulator"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: admin/admin-init.php:266
 msgid "OpenSimulator About"
-msgstr ""
+msgstr "OpenSimulator Amdanom"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: admin/admin-init.php:268
 msgid "OpenSimulator Register"
-msgstr ""
+msgstr "Cofrestr OpenSimulator"
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: admin/admin-init.php:270
 msgid "OpenSimulator Password"
-msgstr ""
+msgstr "Cyfrinair OpenSimulator"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: admin/admin-init.php:272
 msgid "OpenSimulator Offline Messages"
-msgstr ""
+msgstr "Negeseuon All-lein OpenSimulator"
 
 #: admin/admin-init.php:284
 #: admin/admin-init.php:298
 msgid "The followed link has expired, please try again"
-msgstr ""
+msgstr "Mae'r ddolen ganlynol wedi dod i ben, ceisiwch eto"
 
 #: admin/admin-init.php:305
 msgid "Page %s already exists."
-msgstr ""
+msgstr "Mae tudalen %s yn bodoli yn barod."
 
 #: admin/admin-init.php:322
 msgid "New page %s created."
-msgstr ""
+msgstr "Tudalen newydd %s wedi'i chreu."
 
 #: admin/admin-init.php:326
 msgid "Error while creating page %s."
-msgstr ""
+msgstr "Gwall wrth greu tudalen %s."
 
+#. wpml-name: 317e8940a1b9f03b83ef85393bd49552
 #: admin/admin-init.php:338
 msgid "Avatar profile"
-msgstr ""
+msgstr "Proffil avatar"
 
 #: admin/admin-init.php:339
 msgid "The base URL for avatar web profiles."
-msgstr ""
+msgstr "Yr URL sylfaenol ar gyfer proffiliau gwe avatar."
 
 #: admin/admin-init.php:342
 msgid "Search Service"
-msgstr ""
+msgstr "Gwasanaeth Chwilio"
 
 #: admin/admin-init.php:343
 msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
-msgstr ""
+msgstr "Gwasanaeth chwilio a ddefnyddir gan y gwyliwr. Gellir darparu chwiliad gan graidd yr efelychydd (cyfyngedig), neu gan wasanaeth allanol ar gyfer swyddogaethau ychwanegol (fel digwyddiadau). Angen OpenSimSearch.Modules.dll."
 
 #: admin/admin-init.php:353
 msgid "Web Search"
-msgstr ""
+msgstr "Chwiliad Gwe"
 
 #: admin/admin-init.php:354
 msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
-msgstr ""
+msgstr "Tab gwe o ffenestri chwilio gwyliwr. Yn berthnasol os oes gennych dudalen chwilio sy'n darparu cynnwys o'r grid."
 
 #: admin/admin-init.php:364
 #: admin/settings.php:290
 msgid "Offline messages"
-msgstr ""
+msgstr "Negeseuon all-lein"
 
 #: admin/admin-init.php:365
 msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
-msgstr ""
+msgstr "Mae ei angen ar wylwyr i gadw negeseuon tra bod y defnyddiwr all-lein a'u cyflwyno pan fyddant yn dod yn ôl ar-lein. Gwasanaeth mewnol, na chaiff ei gyrchu'n uniongyrchol gan y defnyddiwr."
 
 #: admin/admin-init.php:370
 msgid "Splash"
-msgstr ""
+msgstr "Sblash"
 
 #: admin/admin-init.php:371
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
-msgstr ""
+msgstr "Y dudalen groeso a ddangosir yn y gwyliwr gyda'r ffurflen mewngofnodi. Tudalen fer, heb sgrolio, gyda dim ond gwybodaeth hanfodol. Mae'n ofynnol, neu o leiaf yn cael ei argymell yn fawr."
 
 #: admin/admin-init.php:396
 msgid "Registration page"
-msgstr ""
+msgstr "Tudalen gofrestru"
 
 #: admin/admin-init.php:397
 msgid "Link to the user registration."
-msgstr ""
+msgstr "Dolen i'r cofrestriad defnyddiwr."
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: admin/admin-init.php:402
 msgid "Password revovery"
-msgstr ""
+msgstr "Dirymiad cyfrinair"
 
 #: admin/admin-init.php:403
 msgid "Link to lost password page."
-msgstr ""
+msgstr "Dolen i dudalen cyfrinair coll."
 
 #: admin/admin-init.php:408
 msgid "Economy"
-msgstr ""
+msgstr "Economi"
 
 #: admin/admin-init.php:409
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
-msgstr ""
+msgstr "Arian cyfred a rhai gwasanaethau eraill yn cael eu holi gan y gwyliwr. Nid yw'r defnyddiwr yn mynd atynt yn uniongyrchol."
 
 #: admin/admin-init.php:415
 msgid "About this grid"
-msgstr ""
+msgstr "Am y grid hwn"
 
 #: admin/admin-init.php:416
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
-msgstr ""
+msgstr "Tudalen wybodaeth fanwl ar eich gwefan, trwy ddolen a ddangosir ar dudalen mewngofnodi'r gwyliwr."
 
 #: admin/admin-init.php:420
 msgid "Help"
-msgstr ""
+msgstr "Help"
 
 #: admin/admin-init.php:421
 msgid "Link to a help page on your website."
-msgstr ""
+msgstr "Dolen i dudalen gymorth ar eich gwefan."
 
+#. wpml-name: 6b8467e13ae11c479efa8843f1b95826
 #: admin/dashboard.php:13
 #: admin/settings.php:43
 #: includes/shortcodes.php:125
@@ -233,960 +259,1029 @@ msgstr ""
 #: blocks/w4os-gridinfo-block/index.js:27
 #: blocks/w4os-gridinfo-block/index.js:74
 msgid "Grid info"
-msgstr ""
+msgstr "Gwybodaeth grid"
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: admin/dashboard.php:20
+#: includes/functions.php:227
 #: includes/shortcodes.php:152
 #: includes/widgets.php:79
 #: includes/widgets.php:115
 #: blocks/w4os-gridstatus-block/index.js:27
 #: blocks/w4os-gridstatus-block/index.js:74
 msgid "Grid status"
-msgstr ""
+msgstr "Statws grid"
 
 #: admin/dashboard.php:28
 msgid "Recent users"
-msgstr ""
+msgstr "Defnyddwyr diweddar"
 
+#. wpml-name: 46eb01f349dc6c317e78cd1830545358
 #: admin/settings.php:56
 #: includes/shortcodes.php:128
 msgid "Grid name"
-msgstr ""
+msgstr "Enw grid"
 
+#. wpml-name: 193fe27dd7fcd662652841a7b7e6c912
 #: admin/settings.php:63
 msgid "Robust server database"
-msgstr ""
+msgstr "Cronfa ddata gweinyddwr cadarn"
 
 #: admin/settings.php:66
 #: admin/settings.php:221
 #: admin/settings.php:378
 msgid "Hostname"
-msgstr ""
+msgstr "Enw gwesteiwr"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: admin/settings.php:69
 #: admin/settings.php:225
 #: admin/settings.php:382
 msgid "Database name"
-msgstr ""
+msgstr "Enw cronfa ddata"
 
 #: admin/settings.php:72
 #: admin/settings.php:229
 #: admin/settings.php:386
 msgid "Username"
-msgstr ""
+msgstr "Enw defnyddiwr"
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: admin/settings.php:76
 #: admin/settings.php:234
 #: admin/settings.php:391
 msgid "Password"
-msgstr ""
+msgstr "Cyfrinair"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: admin/settings.php:83
 #: admin/status-page.php:67
 msgid "Avatar models"
-msgstr ""
+msgstr "Modelau avatar"
 
+#. wpml-name: b2d0fb30e09bf39693f6183c33455748
 #: admin/settings.php:87
 msgid "First Name = "
-msgstr ""
+msgstr "Enw Cyntaf = "
 
+#. wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
 #: admin/settings.php:91
 msgid "OR Last Name = "
-msgstr ""
+msgstr "NEU Cyfenw = "
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: admin/settings.php:97
 msgid "Grid users"
-msgstr ""
+msgstr "Defnyddwyr grid"
 
 #: admin/settings.php:101
 #: admin/settings.php:116
 msgid "Profile page"
-msgstr ""
+msgstr "Tudalen proffil"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: admin/settings.php:103
 #: admin/settings.php:118
 msgid "Provide web profile page for avatars"
-msgstr ""
+msgstr "Darparu tudalen proffil gwe ar gyfer avatars"
 
 #: admin/settings.php:105
 #: admin/settings.php:120
 msgid "Defaults"
-msgstr ""
+msgstr "Rhagosodiadau"
 
 #: admin/settings.php:109
 #: admin/settings.php:124
 msgid "The page %s must exist, as defined in %spermalinks settings%s."
-msgstr ""
+msgstr "Rhaid i'r dudalen %s fodoli, fel y'i diffinnir yng ngosodiadau %spermalinks%s."
 
 #: admin/settings.php:132
 msgid "Show configuration instructions to new users."
-msgstr ""
+msgstr "Dangos cyfarwyddiadau ffurfweddu i ddefnyddwyr newydd."
 
+#. wpml-name: 751cfef8ad45902372601aeac58bdad7
 #: admin/settings.php:137
 msgid "Login page"
-msgstr ""
+msgstr "Tudalen mewngofnodi"
 
 #: admin/settings.php:139
 msgid "Use profile page as login page"
-msgstr ""
+msgstr "Defnyddiwch dudalen proffil fel tudalen mewngofnodi"
 
 #: admin/settings.php:141
 msgid "Default"
-msgstr ""
+msgstr "Diofyn"
 
 #: admin/settings.php:148
 msgid "Replace user name"
-msgstr ""
+msgstr "Amnewid enw defnyddiwr"
 
 #: admin/settings.php:149
 msgid "Show avatar name instead of user name in users list."
-msgstr ""
+msgstr "Dangos enw avatar yn lle enw defnyddiwr yn y rhestr defnyddwyr."
 
 #: admin/settings.php:153
 msgid "Exclude from stats"
-msgstr ""
+msgstr "Eithrio o ystadegau"
 
 #: admin/settings.php:155
 msgid "Models"
-msgstr ""
+msgstr "Modelau"
 
 #: admin/settings.php:156
 msgid "Accounts without mail address"
-msgstr ""
+msgstr "Cyfrifon heb gyfeiriad post"
 
 #: admin/settings.php:157
 msgid "Hypergrid visitors"
-msgstr ""
+msgstr "Ymwelwyr Hypergrid"
 
 #: admin/settings.php:159
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
-msgstr ""
+msgstr "Mae cyfrifon heb gyfeiriad e-bost fel arfer yn gyfrifon prawf sy'n cael eu creu o'r consol. Dad-diciwch dim ond os oes gennych avatars go iawn heb gyfeiriad e-bost."
 
 #: admin/settings.php:178
 msgid "Web Assets Server"
-msgstr ""
+msgstr "Gweinydd Asedau Gwe"
 
 #: admin/settings.php:183
 msgid "Provide web assets server"
-msgstr ""
+msgstr "Darparu gweinydd asedau gwe"
 
 #: admin/settings.php:186
 msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
-msgstr ""
+msgstr "Mae angen gweinydd asedau gwe i arddangos asedau yn y byd (o'r grid) ar y wefan (e.e. lluniau proffil)."
 
 #: admin/settings.php:189
 msgid "Web asset server"
-msgstr ""
+msgstr "Gweinydd asedau gwe"
 
 #: admin/settings.php:193
 msgid "You can set the asset slug in %spermalinks settings%s."
-msgstr ""
+msgstr "Gallwch osod y wlithen ased yng ngosodiadau %spermalinks%s."
 
 #: admin/settings.php:198
 msgid "External assets server URI"
-msgstr ""
+msgstr "URI gweinydd asedau allanol"
 
 #: admin/settings.php:199
 msgid "If W4OS web assets service is disabled, you need a third-party web application."
-msgstr ""
+msgstr "Os yw gwasanaeth asedau gwe W4OS yn anabl, mae angen cymhwysiad gwe trydydd parti arnoch chi."
 
 #: admin/settings.php:205
 msgid "Search"
-msgstr ""
+msgstr "Chwiliwch"
 
 #: admin/settings.php:209
 msgid "Provide in-world search"
-msgstr ""
+msgstr "Darparu chwiliad yn y byd"
 
 #: admin/settings.php:215
 msgid "Search database"
-msgstr ""
+msgstr "Chwilio cronfa ddata"
 
 #: admin/settings.php:218
 #: admin/settings.php:365
 msgid "Use the same database as Robust"
-msgstr ""
+msgstr "Defnyddiwch yr un gronfa ddata â Strong"
 
 #: admin/settings.php:240
 msgid "Search engine URL"
-msgstr ""
+msgstr "URL peiriant chwilio"
 
 #: admin/settings.php:243
 msgid "URL of the search engine used internally by the viewer (without arguments)."
-msgstr ""
+msgstr "URL y peiriant chwilio a ddefnyddir yn fewnol gan y gwyliwr (heb ddadleuon)."
 
 #: admin/settings.php:252
 msgid "Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names."
-msgstr ""
+msgstr "Sylwch fod URL Chwilio yn wahanol i URL chwilio Gwe, nad yw W4OS yn ei drin ar hyn o bryd. Mae chwiliad gwe yn berthnasol os oes gennych chi dudalen chwilio gwe sy'n ymroddedig i gynnwys grid, sy'n darparu canlyniadau gydag URLs yn y byd (hop: / neu secondlife://). Mae'n ddewisol a chyfeirir ato yma dim ond i ddadamwys gosodiadau sydd yn anffodus ag enwau tebyg."
 
 #: admin/settings.php:265
 msgid "Search register"
-msgstr ""
+msgstr "Chwilio cofrestr"
 
 #: admin/settings.php:268
 msgid "Data service, used to register regions, objects or land for sale."
-msgstr ""
+msgstr "Gwasanaeth data, a ddefnyddir i gofrestru rhanbarthau, gwrthrychau neu dir ar werth."
 
 #: admin/settings.php:281
 msgid "Events server URL"
-msgstr ""
+msgstr "URL gweinydd digwyddiadau"
 
 #: admin/settings.php:283
 msgid "HYPEvents server URL, used to fetch upcoming events and make them available in search."
-msgstr ""
+msgstr "URL gweinydd HYPEvents, a ddefnyddir i nôl digwyddiadau sydd ar ddod a sicrhau eu bod ar gael wrth chwilio."
 
 #: admin/settings.php:284
 msgid "Leave blank to ignore events or if you have an other events implementation."
-msgstr ""
+msgstr "Gadewch yn wag i anwybyddu digwyddiadau neu os oes gennych weithrediad digwyddiadau eraill."
 
 #: admin/settings.php:294
 msgid "Provide offline helper"
-msgstr ""
+msgstr "Darparu cynorthwyydd all-lein"
 
 #: admin/settings.php:300
 msgid "Offline helper URI"
-msgstr ""
+msgstr "Cynorthwyydd URI all-lein"
 
 #: admin/settings.php:304
 msgid "Set the URL in Robust and OpenSimulator configurations."
-msgstr ""
+msgstr "Gosodwch yr URL mewn ffurfweddiadau Cadarn ac OpenSimulator."
 
 #: admin/settings.php:320
 msgid "Sender e-mail address"
-msgstr ""
+msgstr "Cyfeiriad e-bost yr anfonwr"
 
 #: admin/settings.php:324
 msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
-msgstr ""
+msgstr "Cyfeiriad e-bost dim ateb a ddefnyddir i anfon negeseuon ymlaen ar gyfer defnyddwyr sy'n galluogi opsiwn \"E-bostiwch IMs ataf pan fyddaf all-lein\"."
 
 #: admin/settings.php:333
 msgid "Provide economy helpers"
-msgstr ""
+msgstr "Darparu cynorthwywyr economi"
 
 #: admin/settings.php:336
 msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
-msgstr ""
+msgstr "Mae cynorthwywyr economi yn sgriptiau ychwanegol sydd eu hangen os ydych chi'n gweithredu economi ar eich grid (gydag arian cyfred go iawn neu ffug)."
 
 #: admin/settings.php:337
 msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
-msgstr ""
+msgstr "Mae sgriptiau cynorthwywyr yn caniatáu cyfathrebu rhwng y gweinydd arian a'r grid: diweddariad balans cyfredol, amcangyfrif cost arian cyfred, gwerthu tir a gwrthrychau, taliadau ..."
 
 #: admin/settings.php:339
 msgid "Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s."
-msgstr ""
+msgstr "Nid yw gweinydd arian wedi'i gynnwys yn nosbarthiad OpenSimulator ac mae angen gosodiad ar wahân, e.e. o %s."
 
 #: admin/settings.php:347
 msgid "Economy base URI"
-msgstr ""
+msgstr "Sylfaen economi URI"
 
 #: admin/settings.php:351
 msgid "The URL must be set in Robust configuration."
-msgstr ""
+msgstr "Rhaid gosod yr URL mewn ffurfweddiad cadarn."
 
 #: admin/settings.php:362
 msgid "Economy database"
-msgstr ""
+msgstr "Cronfa ddata economi"
 
 #: admin/settings.php:397
 msgid "Currency Provider"
-msgstr ""
+msgstr "Darparwr Arian Parod"
 
 #: admin/settings.php:401
 msgid "No provider, use fake money."
-msgstr ""
+msgstr "Dim darparwr, defnyddiwch arian ffug."
 
 #: admin/settings.php:408
 msgid "Currency conversion rate"
-msgstr ""
+msgstr "Cyfradd trosi arian cyfred"
 
 #: admin/settings.php:409
 msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
-msgstr ""
+msgstr "Swm i'w dalu mewn US$ am 1000 o unedau arian yn y byd. Defnyddir ar gyfer amcangyfrif cost. Os na chaiff ei gosod, y gyfradd fydd 10/1000 (1 cant fesul uned arian)"
 
 #: admin/settings.php:412
 msgid "Podex redirect message"
-msgstr ""
+msgstr "Neges ailgyfeirio Podex"
 
 #: admin/settings.php:413
 msgid "Please use our terminals in-world to proceed. Click OK to teleport to terminals region."
-msgstr ""
+msgstr "Defnyddiwch ein terfynellau yn y byd i symud ymlaen. Cliciwch OK i deleportio i ranbarth terfynellau."
 
 #: admin/settings.php:416
 msgid "Podex redirect URL"
-msgstr ""
+msgstr "URL ailgyfeirio Podex"
 
 #: admin/settings.php:420
 msgid "Money Script Access Key"
-msgstr ""
+msgstr "Allwedd Mynediad Sgript Arian"
 
 #: admin/settings.php:581
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
-msgstr ""
+msgstr "Rhaid i werthoedd gyd-fynd â ffeil ffurfweddu Robust.HG.ini (neu Robust.HG.ini)."
 
 #: admin/settings.php:582
 msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
-msgstr ""
+msgstr "Rhaid i weinydd cadarn fod yn rhedeg. Bydd y gwerthoedd a nodir yma yn cael eu gwirio yn erbyn eich gweinydd Cadarn a'u diweddaru os oes angen."
 
 #: admin/settings.php:587
 msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
-msgstr ""
+msgstr "Mae cyfrifon grid sy'n cyfateb i'r enw cyntaf neu'r enw olaf a osodwyd isod yn cael eu hystyried fel modelau avatar. Byddant yn ymddangos ar y ffurflen gofrestru avatar, gyda'u llun proffil yn y byd."
 
+#. wpml-name: 6bdda8124d6ca549428567dfc1c0532d
 #: admin/status-page.php:15
 msgid "Available shortcodes"
-msgstr ""
+msgstr "Codau byr sydd ar gael"
 
+#. wpml-name: 119154a6f7028c6f8ebe3e470e626296
 #: admin/status-page.php:20
 msgid "General information (grid name and login uri)"
-msgstr ""
+msgstr "Gwybodaeth gyffredinol (enw grid a uri mewngofnodi)"
 
+#. wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
 #: admin/status-page.php:26
 msgid "Online users, regions, etc."
-msgstr ""
+msgstr "Defnyddwyr ar-lein, rhanbarthau, ac ati."
 
 #: admin/status-page.php:32
 msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
-msgstr ""
+msgstr "Proffil grid os yw'r defnyddiwr wedi'i gysylltu a bod ganddo avatar, ffurflen gofrestru avatar fel arall"
 
 #: admin/status-page.php:33
 msgid "(formerly %s)"
-msgstr ""
+msgstr "(%s yn flaenorol)"
 
 #: admin/status-page.php:43
 msgid "Users"
-msgstr ""
+msgstr "Defnyddwyr"
 
+#. wpml-name: 6834699b2d08455d0475c76d54356191
 #: admin/status-page.php:48
 msgid "Total"
-msgstr ""
+msgstr "Cyfanswm"
 
 #: admin/status-page.php:49
 msgid "WP only"
-msgstr ""
+msgstr "WP yn unig"
 
 #: admin/status-page.php:50
 msgid "Sync"
-msgstr ""
+msgstr "Cysoni"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: admin/status-page.php:51
 msgid "Grid only"
-msgstr ""
+msgstr "Grid yn unig"
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: admin/status-page.php:55
 msgid "Grid accounts"
-msgstr ""
+msgstr "Cyfrifon grid"
 
 #: admin/status-page.php:62
 msgid "Linked WordPress accounts"
-msgstr ""
+msgstr "Cyfrifon WordPress cysylltiedig"
 
 #: admin/status-page.php:74
 msgid "Other service accounts"
-msgstr ""
+msgstr "Cyfrifon gwasanaeth eraill"
 
 #: admin/status-page.php:88
 msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
 msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
-msgstr[0] ""
+msgstr[0] "Does gan %d cyfrif grid ddim cyfrif WP cysylltiedig. Bydd cysoni yn creu cyfrif WP newydd."
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: admin/status-page.php:96
 msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference."
 msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference."
-msgstr[0] ""
+msgstr[0] "Mae %d cyfrif WordPress wedi'i gysylltu ag avatar nad yw'n bodoli (UUID anghywir). Bydd cysoni cyfrifon yn cadw'r cyfrif WP hwn ond yn dileu'r cyfeirnod sydd wedi torri."
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: admin/status-page.php:104
 msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
 msgid_plural "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
-msgstr[0] ""
+msgstr[0] "Nid oes gan %d cyfrif grid (ac eithrio modelau) gyfeiriad e-bost, sy'n iawn cyn belled ei fod yn cael ei ddefnyddio ar gyfer tasgau cynnal a chadw neu wasanaeth yn unig."
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: admin/status-page.php:109
 msgid "Real accounts need a unique email address for W4OS to function properly."
-msgstr ""
+msgstr "Mae cyfrifon go iawn angen cyfeiriad e-bost unigryw er mwyn i W4OS weithredu'n iawn."
 
 #: admin/status-page.php:117
 msgid "Synchronize users now"
-msgstr ""
+msgstr "Cydamseru defnyddwyr nawr"
 
 #: admin/status-page.php:119
 msgid "Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console."
-msgstr ""
+msgstr "Gwneir cydamseru wrth actifadu ategyn a chaiff ei drin yn awtomatig wedyn, ond mewn rhai amgylchiadau efallai y bydd angen ei gychwyn â llaw i gael canlyniad ar unwaith, yn enwedig os yw defnyddwyr wedi'u hychwanegu neu eu dileu yn uniongyrchol o'r consol gweinyddu grid."
 
 #: admin/status-page.php:137
 msgid "Missing PHP modules"
-msgstr ""
+msgstr "Modiwlau PHP ar goll"
 
 #: admin/status-page.php:139
 msgid "These modules were not found: %s. Install them to get the most of this plugin."
-msgstr ""
+msgstr "Ni ddaethpwyd o hyd i'r modiwlau hyn: %s. Gosodwch nhw i gael y gorau o'r ategyn hwn."
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: admin/status-page.php:147
 msgid "OpenSimulator pages"
-msgstr ""
+msgstr "Tudalennau OpenSimulator"
 
 #: admin/status-page.php:149
 msgid "The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file."
-msgstr ""
+msgstr "Mae angen y dudalen ganlynol gan OpenSimulator a/neu drwy ategyn W4OS. Gwnewch yn siŵr eu bod yn bodoli neu addaswch eich ffeil .ini efelychydd."
 
 #: admin/status-page.php:159
 msgid "Grid not running, start Robust server or %scheck OpenSimulator settings%s."
-msgstr ""
+msgstr "Grid ddim yn rhedeg, cychwyn gweinydd cadarn neu %scheck gosodiadau OpenSimulator%s."
 
 #: admin/status-page.php:179
 msgid "Check pages now"
-msgstr ""
+msgstr "Gwiriwch y tudalennau nawr"
 
 #: admin/status-page.php:183
 msgid "Last checked %s ago."
-msgstr ""
+msgstr "Gwiriwyd ddiwethaf %s yn ôl."
 
 #: admin/status-page.php:184
 msgid "OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status."
-msgstr ""
+msgstr "Mae tudalennau OpenSimulator yn cael eu gwirio'n rheolaidd yn y cefndir. Cydamserwch nawr dim ond os gwnaethoch newidiadau ac eisiau statws ar unwaith."
 
 #: admin/status-page.php:205
 msgid "Should be %s"
-msgstr ""
+msgstr "Dylai fod yn %s"
 
 #: admin/status-page.php:211
 msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
-msgstr ""
+msgstr "Mae angen rhaglen we ar wahân ar gyfer y gwasanaeth hwn.<br>Ceisiwch <a href=\"%1$s\" target=_blank>%1$s</a>."
 
 #: blocks/popular-places.php:126
 msgid "Popular places"
-msgstr ""
+msgstr "Lleoedd poblogaidd"
 
 #: blocks/popular-places.php:132
 #: includes/shortcodes.php:159
 msgid "No result"
-msgstr ""
+msgstr "Dim canlyniad"
 
 #: includes/assets.php:37
 msgid "Assets base"
-msgstr ""
+msgstr "Sylfaen asedau"
 
 #: includes/cron.php:20
 msgid "every_five_minutes"
-msgstr ""
+msgstr "pob_pum_munud"
 
 #: includes/functions.php:149
 msgid "A local Robust server has been found. Please check Login URI and Grid name configuration."
-msgstr ""
+msgstr "Mae gweinydd cadarn lleol wedi'i ganfod. Gwiriwch URI Mewngofnodi a ffurfweddiad enw Grid."
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: includes/functions.php:168
 msgid "OpenSimulator settings page"
-msgstr ""
+msgstr "Tudalen gosodiadau OpenSimulator"
 
-#: includes/functions.php:211
-msgid "Yes"
-msgstr ""
+#: includes/functions.php:210
+msgid "Online"
+msgstr "Ar-lein"
 
-#: includes/functions.php:213
-msgid "No"
-msgstr ""
+#: includes/functions.php:210
+msgid "Offline"
+msgstr "All-lein"
 
-#: includes/functions.php:226
-msgid "Grid online"
-msgstr ""
-
-#: includes/functions.php:227
+#. wpml-name: ef53538ae41a651c7f72ab6cb1135d8c
+#: includes/functions.php:228
 msgid "Members"
-msgstr ""
+msgstr "Aelodau"
 
-#: includes/functions.php:229
+#. wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
+#: includes/functions.php:230
 msgid "Active members (30 days)"
-msgstr ""
+msgstr "Aelodau gweithredol (30 diwrnod)"
 
-#: includes/functions.php:232
+#. wpml-name: 67ea4b3432b974a20b2c8ee6609e363c
+#: includes/functions.php:233
 msgid "Members in world"
-msgstr ""
+msgstr "Aelodau yn y byd"
 
-#: includes/functions.php:239
+#. wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
+#: includes/functions.php:240
 msgid "Active users (30 days)"
-msgstr ""
+msgstr "Defnyddwyr gweithredol (30 diwrnod)"
 
-#: includes/functions.php:241
+#. wpml-name: 9143e8053fefd25ce03ae81136931586
+#: includes/functions.php:242
 msgid "Total users in world"
-msgstr ""
+msgstr "Cyfanswm y defnyddwyr yn y byd"
 
-#: includes/functions.php:245
+#. wpml-name: 5948f3347ebc02ebc690227c059661e1
+#: includes/functions.php:246
 msgid "Regions"
-msgstr ""
+msgstr "Rhanbarthau"
 
-#: includes/functions.php:247
+#. wpml-name: 6834699b2d08455d0475c76d54356191
+#: includes/functions.php:248
 msgid "Total area"
-msgstr ""
+msgstr "Cyfanswm arwynebedd"
 
-#: includes/functions.php:355
+#: includes/functions.php:356
 msgid "%s"
-msgstr ""
-
-#: includes/functions.php:394
-msgid "Joined today"
-msgstr ""
+msgstr "%s"
 
 #: includes/functions.php:395
-msgid "%s days old"
-msgstr ""
+msgid "Joined today"
+msgstr "Ymunodd heddiw"
 
+#: includes/functions.php:396
+msgid "%s days old"
+msgstr "%s diwrnod oed"
+
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: includes/profile-page.php:51
 msgid "Lost Password"
-msgstr ""
+msgstr "Cyfrinair Coll"
 
+#. wpml-name: 5948f3347ebc02ebc690227c059661e1
 #: includes/profile-page.php:56
 msgid "Register"
-msgstr ""
+msgstr "Cofrestrwch"
 
 #: includes/profile-page.php:87
 msgid "Lost your password? Please enter your username or email address. You will receive a link to create a new password via email."
-msgstr ""
+msgstr "Wedi colli eich cyfrinair? Rhowch eich enw defnyddiwr neu gyfeiriad e-bost. Byddwch yn derbyn dolen i greu cyfrinair newydd trwy e-bost."
 
 #: includes/profile-page.php:89
 msgid "Email"
-msgstr ""
+msgstr "Ebost"
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: includes/profile-page.php:90
 msgid "Reset Password"
-msgstr ""
+msgstr "Ailosod cyfrinair"
 
 #: includes/profile-page.php:91
 #: includes/profile-page.php:152
 #: templates/content-configuration.php:40
 #: templates/content-page-profile.php:26
 msgid "Log in"
-msgstr ""
+msgstr "Mewngofnodi"
 
 #: includes/profile-page.php:96
 msgid "Log in to create your avatar, view your profile or set your options."
-msgstr ""
+msgstr "Mewngofnodwch i greu eich avatar, gweld eich proffil neu osod eich opsiynau."
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: includes/profile-page.php:147
 msgid "My Profile"
-msgstr ""
+msgstr "Fy mhroffil"
 
 #: includes/profile-page.php:149
 msgid "Create My Avatar"
-msgstr ""
+msgstr "Creu Fy Avatar"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: includes/profile-page.php:165
 #: templates/content-page-profile.php:54
 msgid "%s's profile"
-msgstr ""
+msgstr "proffil %s"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: includes/profile-page.php:168
 msgid "Avatar not found"
-msgstr ""
+msgstr "Avatar heb ei ddarganfod"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: includes/profile-page.php:220
 msgid "Profile base"
-msgstr ""
+msgstr "Sylfaen proffil"
 
 #: includes/profile.php:66
 msgid "Profiles are not available at the moment."
-msgstr ""
+msgstr "Nid yw proffiliau ar gael ar hyn o bryd."
 
 #: includes/profile.php:93
 msgid "Build"
-msgstr ""
+msgstr "Adeiladu"
 
 #: includes/profile.php:94
 msgid "Explore"
-msgstr ""
+msgstr "Archwiliwch"
 
 #: includes/profile.php:95
 msgid "Meet"
-msgstr ""
+msgstr "Cyfarfod"
 
 #: includes/profile.php:96
 msgid "Group"
-msgstr ""
+msgstr "Grwp"
 
 #: includes/profile.php:97
 msgid "Buy"
-msgstr ""
+msgstr "Prynwch"
 
 #: includes/profile.php:98
 msgid "Sell"
-msgstr ""
+msgstr "Gwerthu"
 
 #: includes/profile.php:99
 msgid "Be Hired"
-msgstr ""
+msgstr "Byddwch yn Llogi"
 
 #: includes/profile.php:100
 msgid "Hire"
-msgstr ""
+msgstr "Llogi"
 
 #: includes/profile.php:103
 msgid "Textures"
-msgstr ""
+msgstr "Gweadau"
 
 #: includes/profile.php:104
 msgid "Architecture"
-msgstr ""
+msgstr "Pensaernïaeth"
 
 #: includes/profile.php:105
 msgid "Event Planning"
-msgstr ""
+msgstr "Cynllunio Digwyddiadau"
 
 #: includes/profile.php:106
 msgid "Modeling"
-msgstr ""
+msgstr "Modelu"
 
 #: includes/profile.php:107
 msgid "Scripting"
-msgstr ""
+msgstr "Sgriptio"
 
 #: includes/profile.php:108
 msgid "Custom Characters"
-msgstr ""
+msgstr "Cymeriadau Personol"
 
 #: includes/profile.php:122
 msgid "About"
-msgstr ""
+msgstr "Ynghylch"
 
 #: includes/profile.php:125
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #: includes/profile.php:126
 msgid "Wants to"
-msgstr ""
+msgstr "Eisiau"
 
 #: includes/profile.php:127
 msgid "Skills"
-msgstr ""
+msgstr "Sgiliau"
 
 #: includes/profile.php:128
 msgid "Languages"
-msgstr ""
+msgstr "Ieithoedd"
 
 #: includes/profile.php:129
 msgid "Real Life"
-msgstr ""
+msgstr "Bywyd go iawn"
 
 #: includes/profile.php:241
 msgid "%s local users updated with avatar data"
-msgstr ""
+msgstr "Diweddarwyd %s defnyddiwr lleol gyda data avatar"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: includes/profile.php:255
 #: includes/profile.php:967
 msgid "OpenSimulator"
-msgstr ""
+msgstr "OpenSimulator"
 
+#. wpml-name: 0d3e39fb622d9e6d7b389757aa651fff
 #: includes/profile.php:404
 msgid "This user already has an avatar."
-msgstr ""
+msgstr "Mae gan y defnyddiwr hwn avatar yn barod."
 
+#. wpml-name: b2d0fb30e09bf39693f6183c33455748
 #: includes/profile.php:415
 msgid "First name required"
-msgstr ""
+msgstr "Angen enw cyntaf"
 
+#. wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
 #: includes/profile.php:416
 msgid "Last name required"
-msgstr ""
+msgstr "Angen enw olaf"
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: includes/profile.php:418
 msgid "Password required"
-msgstr ""
+msgstr "Angen cyfrinair"
 
 #: includes/profile.php:419
 msgid "The password does not match."
-msgstr ""
+msgstr "Nid yw'r cyfrinair yn cyfateb."
 
+#. wpml-name: 4eb86d524f30b9885871ed68c24b0f29
 #: includes/profile.php:428
 #: includes/profile.php:432
 msgid "The name %s is not allowed"
-msgstr ""
+msgstr "Ni chaniateir yr enw %s"
 
 #: includes/profile.php:436
 msgid "Names can only contain alphanumeric characters"
-msgstr ""
+msgstr "Dim ond nodau alffaniwmerig y gall enwau eu cynnwys"
 
 #: includes/profile.php:442
 msgid "There is already a grid user named %s"
-msgstr ""
+msgstr "Mae defnyddiwr grid o'r enw %s yn barod"
 
 #: includes/profile.php:448
 msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
-msgstr ""
+msgstr "Ni ddylai hyn byth ddigwydd! Wedi creu UUID ar hap sy'n bodoli eisoes. Mae'n ddrwg gennyf. Ceisio eto."
 
 #: includes/profile.php:470
 msgid "Error while creating user"
-msgstr ""
+msgstr "Gwall wrth greu defnyddiwr"
 
+#. wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
 #: includes/profile.php:479
 msgid "Error while setting password"
-msgstr ""
+msgstr "Gwall wrth osod cyfrinair"
 
 #: includes/profile.php:490
 msgid "Error while setting home region"
-msgstr ""
+msgstr "Gwall wrth osod y rhanbarth cartref"
 
 #: includes/profile.php:507
 msgid "Error while creating user inventory"
-msgstr ""
+msgstr "Gwall wrth greu rhestr eiddo defnyddwyr"
 
 #: includes/profile.php:629
 msgid "Error while adding inventory item"
-msgstr ""
+msgstr "Gwall wrth ychwanegu eitem rhestr eiddo"
 
 #: includes/profile.php:640
 msgid "Error while adding inventory outfit link"
-msgstr ""
+msgstr "Gwall wrth ychwanegu dolen gwisg rhestr eiddo"
 
 #: includes/profile.php:652
 msgid "Error while adding avatar"
-msgstr ""
+msgstr "Gwall wrth ychwanegu avatar"
 
 #: includes/profile.php:658
 msgid "Errors occurred while creating the user"
-msgstr ""
+msgstr "Digwyddodd gwallau wrth greu'r defnyddiwr"
 
+#. wpml-name: 02cb97a68e5137af44e882dbe2180485
 #: includes/profile.php:663
 msgid "Avatar %s created successfully."
-msgstr ""
+msgstr "Crëwyd avatar %s yn llwyddiannus."
 
 #: includes/profile.php:676
 msgid "You need an avatar to explore our virtual world."
-msgstr ""
+msgstr "Mae angen avatar arnoch i archwilio ein byd rhithwir."
 
+#. wpml-name: 1a87f41bc2db648685564cf6fa5b2903
 #: includes/profile.php:677
 msgid "Choose a name below. This is how people will see you in-world. Once set, your avatar name cannot be changed."
-msgstr ""
+msgstr "Dewiswch enw isod. Dyma sut bydd pobl yn eich gweld chi yn y byd. Ar ôl ei osod, ni ellir newid enw eich avatar."
 
+#. wpml-name: bfc045552fb736eb0e776baee784de42
 #: includes/profile.php:700
 msgid "Avatar first name"
-msgstr ""
+msgstr "Enw cyntaf avatar"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: includes/profile.php:704
 msgid "Avatar last name"
-msgstr ""
+msgstr "Enw olaf avatar"
 
+#. wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
 #: includes/profile.php:709
 msgid "Confirm your password"
-msgstr ""
+msgstr "Cadarnhewch eich cyfrinair"
 
 #: includes/profile.php:711
 msgid "Your in-world Avatar password is the same as your password on this website."
-msgstr ""
+msgstr "Mae eich cyfrinair Avatar yn y byd yr un peth â'ch cyfrinair ar y wefan hon."
 
 #: includes/profile.php:725
 msgid "Your initial appearance"
-msgstr ""
+msgstr "Eich ymddangosiad cychwynnol"
 
+#. wpml-name: 90efd059f58183a99038e138b8fe17f0
 #: includes/profile.php:726
 msgid "You can change it as often as you want in the virtual world."
-msgstr ""
+msgstr "Gallwch ei newid mor aml ag y dymunwch yn y byd rhithwir."
 
 #: includes/profile.php:762
 msgid "Save"
-msgstr ""
+msgstr "Arbed"
 
+#. wpml-name: 877a81d559efa8e5dac0cccac9f80a09
 #: includes/profile.php:795
 msgid "leave blank to leave unchanged"
-msgstr ""
+msgstr "gadael yn wag i adael heb ei newid"
 
 #: includes/profile.php:803
 msgid "Create an avatar"
-msgstr ""
+msgstr "Creu avatar"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: includes/profile.php:889
 #: blocks/w4os-gridprofile-block/index.js:27
 #: blocks/w4os-gridprofile-block/index.js:74
 msgid "Grid profile"
-msgstr ""
+msgstr "Proffil grid"
 
+#. wpml-name: bfc045552fb736eb0e776baee784de42
 #: includes/profile.php:977
 msgid "Avatar First Name"
-msgstr ""
+msgstr "Enw Cyntaf Avatar"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: includes/profile.php:983
 msgid "Avatar Last Name"
-msgstr ""
+msgstr "Enw olaf Avatar"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: includes/profile.php:989
 msgid "Profile Picture"
-msgstr ""
+msgstr "Llun Proffil"
 
 #: includes/profile.php:991
 msgid "Must be set in the viewer."
-msgstr ""
+msgstr "Rhaid ei osod yn y gwyliwr."
 
 #: includes/profile.php:996
 msgid "Web Profile URL"
-msgstr ""
+msgstr "URL Proffil Gwe"
 
 #: includes/shortcodes.php:70
 msgid "Configure W4OS database "
-msgstr ""
+msgstr "Ffurfweddu cronfa ddata W4OS "
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: includes/shortcodes.php:103
 msgid "Edit user"
-msgstr ""
+msgstr "Golygu defnyddiwr"
 
 #: includes/shortcodes.php:119
 msgid "Configure W4OS: "
-msgstr ""
+msgstr "Ffurfweddu W4OS: "
 
+#. wpml-name: 751cfef8ad45902372601aeac58bdad7
 #: includes/shortcodes.php:129
 msgid "Login URI"
-msgstr ""
+msgstr "Mewngofnodi URI"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: includes/shortcodes.php:134
 msgid "OpenSimulator not configured"
-msgstr ""
+msgstr "OpenSimulator heb ei ffurfweddu"
 
 #: includes/shortcodes.php:143
 msgid "Configure W4OS database: "
-msgstr ""
+msgstr "Ffurfweddu cronfa ddata W4OS: "
 
 #: includes/updates.php:25
 msgid "Update %s applied"
-msgstr ""
+msgstr "Diweddariad %s wedi'i gymhwyso"
 
+#. wpml-name: 02cb97a68e5137af44e882dbe2180485
 #: includes/updates.php:36
 msgid "Update %s applied sucessfully"
 msgid_plural "Updates %s applied sucessfully"
-msgstr[0] ""
+msgstr[0] "Diweddariad %s wedi'i gymhwyso'n llwyddiannus"
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: includes/updates.php:42
 msgid "Error processing update %s"
-msgstr ""
+msgstr "Gwall wrth brosesu diweddariad %s"
 
 #: includes/updates.php:47
 msgid "W4OS updated"
-msgstr ""
+msgstr "W4OS wedi'i ddiweddaru"
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: includes/updates.php:71
 msgid "Grid user"
-msgstr ""
+msgstr "Defnyddiwr grid"
 
 #: includes/updates.php:92
 msgid "Profiles service is not configured on your Robust server. It is required for full functionalities."
-msgstr ""
+msgstr "Nid yw gwasanaeth proffiliau wedi'i ffurfweddu ar eich gweinydd Cadarn. Mae'n ofynnol ar gyfer swyddogaethau llawn."
 
 #: includes/updates.php:111
 msgid "Grid and WordPress users synchronized."
-msgstr ""
+msgstr "Defnyddwyr grid a WordPress wedi'u cysoni."
 
 #: includes/updates.php:129
 msgid "OpenSim Search tables updated."
-msgstr ""
+msgstr "Mae tablau OpenSim Search wedi'u diweddaru."
 
 #: includes/users.php:138
 msgid "Error while updating %s %s (%s) %s"
-msgstr ""
+msgstr "Gwall wrth ddiweddaru %s %s (%s) %s"
 
 #: includes/users.php:155
 msgid "Error while updating newly created user %s for %s %s (%s) %s"
-msgstr ""
+msgstr "Gwall wrth ddiweddaru defnyddiwr newydd ei greu %s ar gyfer %s %s (%s) %s"
 
 #: includes/users.php:167
 msgid "%d reference updated"
 msgid_plural "%d references updated"
-msgstr[0] ""
+msgstr[0] "%d cyfeirnod wedi'i ddiweddaru"
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: includes/users.php:173
 msgid "%d new WordPress account created"
 msgid_plural "%d new WordPress accounts created"
-msgstr[0] ""
+msgstr[0] "%d cyfrif WordPress newydd wedi'i greu"
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: includes/users.php:179
 msgid "%d broken reference removed"
 msgid_plural "%d broken references removed"
-msgstr[0] ""
+msgstr[0] "%d cyfeirnod toredig wedi'i dynnu"
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: includes/w4osdb.php:12
 msgid "ROBUST database is not configured. To finish configuration, go to "
-msgstr ""
+msgstr "Nid yw cronfa ddata ROBUST wedi'i ffurfweddu. I orffen cyfluniad, ewch i "
 
 #: includes/w4osdb.php:23
 msgid "Could not connect to the database server, please verify your credentials on "
-msgstr ""
+msgstr "Methu cysylltu â gweinydd y gronfa ddata, gwiriwch eich manylion adnabod ymlaen "
 
 #: includes/w4osdb.php:30
 msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
-msgstr ""
+msgstr "Methu cysylltu â chronfa ddata ROBUST, gwiriwch enw'r gronfa ddata a/neu'r manylion adnabod ymlaen "
 
 #: includes/w4osdb.php:69
 msgid "Missing tables: %s. The ROBUST database is connected, but it does not seem valid. "
-msgstr ""
+msgstr "Tablau coll: %s. Mae cronfa ddata ROBUST wedi'i chysylltu, ond nid yw'n ymddangos yn ddilys. "
 
+#. wpml-name: 6b8467e13ae11c479efa8843f1b95826
 #: includes/widgets.php:10
 msgid "Grid info Widget"
-msgstr ""
+msgstr "Teclyn gwybodaeth grid"
 
 #: includes/widgets.php:51
 #: includes/widgets.php:119
 msgid "Title:"
-msgstr ""
+msgstr "Teitl:"
 
 #: templates/content-configuration.php:2
 msgid "this grid"
-msgstr ""
+msgstr "y grid hwn"
 
 #: templates/content-configuration.php:18
 msgid "Configuration"
-msgstr ""
+msgstr "Cyfluniad"
 
 #: templates/content-configuration.php:21
 msgid "Install the viewer"
-msgstr ""
+msgstr "Gosodwch y gwyliwr"
 
 #: templates/content-configuration.php:24
 msgid "You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to access %2$s."
-msgstr ""
+msgstr "Gallwch ddefnyddio <a href=\"%1$s\" target=_blank>unrhyw wyliwr cydnaws</a> i gael mynediad i %2$s."
 
 #: templates/content-configuration.php:30
 msgid "Add %1$s to your viewer"
-msgstr ""
+msgstr "Ychwanegu %1$s at eich syllwr"
 
 #: templates/content-configuration.php:31
 msgid "Instructions may vary depending on the viewer"
-msgstr ""
+msgstr "Gall cyfarwyddiadau amrywio yn dibynnu ar y gwyliwr"
 
 #: templates/content-configuration.php:33
 msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
-msgstr ""
+msgstr "Dewiswch \"Preferences\" o dan y ddewislen \"Viewer\" (neu teipiwch Ctrl-P)"
 
 #: templates/content-configuration.php:34
 msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
-msgstr ""
+msgstr "Dewiswch \"OpenSim\", yna tab \"Rheolwr Grid\"."
 
 #: templates/content-configuration.php:35
 msgid "Under \"Add new grid\", enter"
-msgstr ""
+msgstr "O dan \"Ychwanegu grid newydd\", nodwch"
 
 #: templates/content-configuration.php:37
 msgid "Click the \"Apply\" button"
-msgstr ""
+msgstr "Cliciwch ar y botwm \"Gwneud Cais\"."
 
 #: templates/content-configuration.php:42
 msgid "Make sure %1$s is selected in the Grid menu"
-msgstr ""
+msgstr "Sicrhewch fod %1$s wedi ei ddewis yn newislen Grid"
 
 #: templates/content-configuration.php:43
 msgid "Enter your avatar’s first and last name in the \"Username\" box and your password in the \"Password\" box"
-msgstr ""
+msgstr "Rhowch enw cyntaf ac olaf eich avatar yn y blwch \"Enw Defnyddiwr\" a'ch cyfrinair yn y blwch \"Cyfrinair\""
 
 #: templates/content-configuration.php:44
 msgid "Click \"Log In\""
-msgstr ""
+msgstr "Cliciwch \"Mewngofnodi\""
 
 #: templates/content-page-profile.php:15
 msgid "My Avatar"
-msgstr ""
+msgstr "Fy Avatar"
 
 #: w4os.php:44
 msgid "You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled."
-msgstr ""
+msgstr "Rydych chi eisoes wedi gosod datganiad swyddogol <strong>W4OS - OpenSimulator Web Interface</strong> o gyfeiriadur ategion WordPress. Mae fersiwn y datblygwr wedi'i dadactifadu a dylid ei ddadosod."
 
 #: w4os.php:53
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
-msgstr ""
+msgstr "Mae fersiwn arall o <strong>W4OS - OpenSimulator Web Interface</strong> wedi'i osod ac yn weithredol. Analluogwyd dyblyg."
+
