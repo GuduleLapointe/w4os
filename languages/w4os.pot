@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-04T16:03:48-04:00\n"
+"POT-Creation-Date: 2022-02-13T12:22:48-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 
@@ -236,6 +236,7 @@ msgid "Grid info"
 msgstr ""
 
 #: admin/dashboard.php:20
+#: includes/functions.php:227
 #: includes/shortcodes.php:152
 #: includes/widgets.php:79
 #: includes/widgets.php:115
@@ -653,8 +654,13 @@ msgstr ""
 msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
 msgstr ""
 
-#: blocks/popular-places.php:94
+#: blocks/popular-places.php:126
 msgid "Popular places"
+msgstr ""
+
+#: blocks/popular-places.php:132
+#: includes/shortcodes.php:159
+msgid "No result"
 msgstr ""
 
 #: includes/assets.php:37
@@ -673,55 +679,51 @@ msgstr ""
 msgid "OpenSimulator settings page"
 msgstr ""
 
-#: includes/functions.php:211
-msgid "Yes"
+#: includes/functions.php:210
+msgid "Online"
 msgstr ""
 
-#: includes/functions.php:213
-msgid "No"
+#: includes/functions.php:210
+msgid "Offline"
 msgstr ""
 
-#: includes/functions.php:226
-msgid "Grid online"
-msgstr ""
-
-#: includes/functions.php:227
+#: includes/functions.php:228
 msgid "Members"
 msgstr ""
 
-#: includes/functions.php:229
+#: includes/functions.php:230
 msgid "Active members (30 days)"
 msgstr ""
 
-#: includes/functions.php:232
+#: includes/functions.php:233
 msgid "Members in world"
 msgstr ""
 
-#: includes/functions.php:239
+#: includes/functions.php:240
 msgid "Active users (30 days)"
 msgstr ""
 
-#: includes/functions.php:241
+#: includes/functions.php:242
 msgid "Total users in world"
 msgstr ""
 
-#: includes/functions.php:245
+#: includes/functions.php:246
 msgid "Regions"
 msgstr ""
 
-#: includes/functions.php:247
+#: includes/functions.php:248
 msgid "Total area"
 msgstr ""
 
-#: includes/functions.php:355
+#: includes/functions.php:356
 msgid "%s"
 msgstr ""
 
-#: includes/functions.php:394
+#: includes/functions.php:395
 msgid "Joined today"
 msgstr ""
 
-#: includes/functions.php:395
+#: includes/functions.php:396
 msgid "%s days old"
 msgstr ""
 
@@ -1037,10 +1039,6 @@ msgstr ""
 msgid "Configure W4OS database: "
 msgstr ""
 
-#: includes/shortcodes.php:159
-msgid "No result"
-msgstr ""
-
 #: includes/updates.php:25
 msgid "Update %s applied"
 msgstr ""
@@ -1191,7 +1189,6 @@ msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is
 msgstr ""
 
 #: blocks/popular-places/index.js:27
-#: blocks/popular-places/index.js:62
-#: blocks/popular-places/index.js:80
+#: blocks/popular-places/index.js:79
 msgid "Popular Places"
 msgstr ""
