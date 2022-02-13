@@ -207,11 +207,12 @@ function w4os_grid_status_text() {
 			$host=$urlinfo['0'];
 			$port=$urlinfo['1'];
 			$fp = @fsockopen($host, $port, $errno, $errstr, 1.0);
-			if ($fp) {
-				$gridonline = __("Yes", 'w4os' );
-			} else {
-				$gridonline = __("No", 'w4os' );
-			}
+			$gridonline = ($fp) ? __("Online", 'w4os' ) : __("Offline", 'w4os' );;
+			// if ($fp) {
+			// 	$gridonline = __("Yes", 'w4os' );
+			// } else {
+			// 	$gridonline = __("No", 'w4os' );
+			// }
 			$filter="";
 			if(get_option('w4os_exclude_models')) {
 				$filter .= "u.FirstName != '" . get_option('w4os_model_firstname') . "'
@@ -223,7 +224,7 @@ function w4os_grid_status_text() {
 			if(!empty($filter)) $filter = "$filter AND ";
 		}
 		$status = array(
-			__('Grid online', 'w4os') => $gridonline,
+			__('Status', 'w4os') => $gridonline,
 			__('Members', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
 			FROM UserAccounts as u WHERE $filter active=1" )),
 			__('Active members (30 days)', 'w4os') => number_format_i18n($w4osdb->get_var("SELECT COUNT(*)
