@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-04T16:03:48-04:00\n"
-"PO-Revision-Date: 2022-02-04 16:19-0400\n"
+"POT-Creation-Date: 2022-02-13T12:23:16-04:00\n"
+"PO-Revision-Date: 2022-02-13 12:37-0400\n"
 "Language: nl_NL\n"
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -265,6 +265,7 @@ msgstr "Grid info"
 
 # wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: admin/dashboard.php:20
+#: includes/functions.php:227
 #: includes/shortcodes.php:152
 #: includes/widgets.php:79
 #: includes/widgets.php:115
@@ -701,9 +702,14 @@ msgstr ""
 msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
 msgstr ""
 
-#: blocks/popular-places.php:94
+#: blocks/popular-places.php:126
 msgid "Popular places"
 msgstr ""
+
+#: blocks/popular-places.php:132
+#: includes/shortcodes.php:159
+msgid "No result"
+msgstr "Geen resultaat"
 
 #: includes/assets.php:37
 msgid "Assets base"
@@ -722,63 +728,58 @@ msgstr ""
 msgid "OpenSimulator settings page"
 msgstr "OpenSimulator-instellingen"
 
-#: includes/functions.php:211
-msgid "Yes"
-msgstr "Ja"
+#: includes/functions.php:210
+msgid "Online"
+msgstr ""
 
-#: includes/functions.php:213
-msgid "No"
-msgstr "Nee"
-
-# wpml-name: 69675902f4d4a3da44638540557562af
-#: includes/functions.php:226
-msgid "Grid online"
-msgstr "Grid online"
+#: includes/functions.php:210
+msgid "Offline"
+msgstr ""
 
 # wpml-name: ef53538ae41a651c7f72ab6cb1135d8c
-#: includes/functions.php:227
+#: includes/functions.php:228
 msgid "Members"
 msgstr "Leden"
 
 # wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
-#: includes/functions.php:229
+#: includes/functions.php:230
 msgid "Active members (30 days)"
 msgstr "Actieve leden (30 dagen)"
 
 # wpml-name: 67ea4b3432b974a20b2c8ee6609e363c
-#: includes/functions.php:232
+#: includes/functions.php:233
 msgid "Members in world"
 msgstr "Leden op grid"
 
 # wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
-#: includes/functions.php:239
+#: includes/functions.php:240
 msgid "Active users (30 days)"
 msgstr "Actieve gebruikers (30 dagen)"
 
 # wpml-name: 9143e8053fefd25ce03ae81136931586
-#: includes/functions.php:241
+#: includes/functions.php:242
 msgid "Total users in world"
 msgstr "Gebruikers op grid"
 
 # wpml-name: 5948f3347ebc02ebc690227c059661e1
-#: includes/functions.php:245
+#: includes/functions.php:246
 msgid "Regions"
 msgstr "Regio's"
 
 # wpml-name: 6834699b2d08455d0475c76d54356191
-#: includes/functions.php:247
+#: includes/functions.php:248
 msgid "Total area"
 msgstr "Totale oppervlakte"
 
-#: includes/functions.php:355
+#: includes/functions.php:356
 msgid "%s"
 msgstr ""
 
-#: includes/functions.php:394
+#: includes/functions.php:395
 msgid "Joined today"
 msgstr ""
 
-#: includes/functions.php:395
+#: includes/functions.php:396
 msgid "%s days old"
 msgstr ""
 
@@ -1121,10 +1122,6 @@ msgstr "OpenSimulator niet geconfigureerd"
 msgid "Configure W4OS database: "
 msgstr ""
 
-#: includes/shortcodes.php:159
-msgid "No result"
-msgstr "Geen resultaat"
-
 #: includes/updates.php:25
 msgid "Update %s applied"
 msgstr ""
@@ -1276,6 +1273,16 @@ msgstr ""
 #: w4os.php:53
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
 msgstr ""
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nee"
+
+# wpml-name: 69675902f4d4a3da44638540557562af
+#~ msgid "Grid online"
+#~ msgstr "Grid online"
 
 # wpml-name: 193fe27dd7fcd662652841a7b7e6c912
 #, fuzzy
