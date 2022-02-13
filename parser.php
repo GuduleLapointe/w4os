@@ -245,8 +245,7 @@ function hostScan($hostname, $port, $xmlcontent)
         ));
 
         // We don't want land for sale in popular places.
-        // We don't want places without traffic either.
-        if($dwell > 0 && $parcelforsale=="false") {
+        if($parcelforsale=="false") {
           $SearchDB->insert('popularplaces', array(
             'parcelUUID' => $parcelUUID,
             'name' => $parcelname,
