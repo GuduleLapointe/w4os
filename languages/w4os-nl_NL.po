@@ -1,45 +1,42 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: w4os\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Olivier van Helden <olivier@van-helden.net>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
-"Project-Id-Version: w4os\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Language: nl\n"
+"X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. wpml-name: 89e15c20b6fff50f9caa1f171381251d
 #. Plugin Name of the plugin
-#: 
-#, fuzzy
 msgid "w4os - OpenSimulator Web Interface (dev)"
 msgstr "w4os - OpenSimulator Web Interface"
 
-#. #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
 #. wpml-name: 8a556ddad981269d9764cbf640cfd337
 #. wpml-name: f279731266ee1b5ff0b7bd85e585dfef
 #. Plugin URI of the plugin
-#: 
 msgid "https://w4os.org/"
 msgstr "https://w4os.org/"
 
 #. wpml-name: 374124f21084c34d958491bf98d72af4
 #. Description of the plugin
-#: 
 msgid "WordPress interface for OpenSimulator (w4os)."
 msgstr "WordPress-interface voor OpenSimulator (w4os)."
 
 #. wpml-name: 6dfd7d212f1bf0f6121142f105f7c704
 #. Author of the plugin
-#: 
 msgid "Speculoos World"
 msgstr "Speculoos World"
 
-#. #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
 #. wpml-name: 8a556ddad981269d9764cbf640cfd337
 #. wpml-name: f279731266ee1b5ff0b7bd85e585dfef
 #. Author URI of the plugin
-#: 
 msgid "https://speculoos.world"
 msgstr "https://speculoos.world/nl"
 
@@ -65,7 +62,6 @@ msgstr "Instellingen"
 #. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: admin/admin-init.php:37
 #: admin/admin-init.php:83
-#, fuzzy
 msgid "OpenSimulator Helpers"
 msgstr "OpenSimulator"
 
@@ -403,14 +399,12 @@ msgid "Accounts without email address are usually test accounts created from the
 msgstr "Accounts zonder e-mailadres zijn meestal testaccounts die vanaf de console zijn gemaakt. Schakel het vinkje alleen uit als je echte avatars hebt zonder e-mailadres."
 
 #: admin/settings.php:178
-#, fuzzy
 msgid "Web Assets Server"
 msgstr "Web asset-server"
 
 #: admin/settings.php:183
-#, fuzzy
 msgid "Provide web assets server"
-msgstr "Web asset-server"
+msgstr "Bied webassets-server"
 
 #: admin/settings.php:186
 msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
@@ -1274,4 +1268,3 @@ msgstr "U heeft reeds de officiële versie van <strong>W4OS - OpenSimulator Web 
 #: w4os.php:53
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
 msgstr "Een andere versie van <strong>W4OS - OpenSimulator Web Interface</strong> is geïnstalleerd en actief. Duplicaat uitgeschakeld."
-
