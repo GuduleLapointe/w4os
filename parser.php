@@ -84,7 +84,7 @@ function hostScan($hostname, $port, $xmlcontent)
   //Don't try and scan if XML is invalid or we got an HTML 404 error.
   if ($objDOM->loadXML($xmlcontent) == False) return;
 
-  $gatekeeperURL = $objDOM->getElementsByTagName("gatekeeperURL")->item(0)->nodeValue;
+  $gatekeeperURL = (!empty($objDOM->getElementsByTagName("gatekeeperURL"))) ? $objDOM->getElementsByTagName("gatekeeperURL")->item(0)->nodeValue : '';
 
   //
   // Get the region data to update
@@ -139,6 +139,7 @@ function hostScan($hostname, $port, $xmlcontent)
     $parentestate = $estate->getElementsByTagName("id")->item(0)->nodeValue;
     $username = $estate->getElementsByTagName("name")->item(0)->nodeValue;
     $useruuid = $estate->getElementsByTagName("uuid")->item(0)->nodeValue;
+    if(empty($useruuid)) $useruuid = NULL_KEY;
 
     /*
      * Second, add the new info to the database again
