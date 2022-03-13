@@ -13,7 +13,7 @@ WordPress interface for OpenSimulator (w4os)
 
 == Description ==
 
-Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provide user registration, default avatar model choice, login info, statistics and a web assets server for grids or standalone simulators.
+Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provides user registration, default avatar model choice, login info, statistics and a web assets server for grids or standalone simulators.
 
 See Features and Roadmap sections for current and upcoming functionalties.
 
