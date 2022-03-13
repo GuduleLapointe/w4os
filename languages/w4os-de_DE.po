@@ -32,7 +32,7 @@ msgstr "WordPress-Schnittstelle für OpenSimulator (w4os)."
 #. Author of the plugin
 #: 
 msgid "Speculoos World"
-msgstr "Speculoos-Welt"
+msgstr "Speculoos World"
 
 #. #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
 #. wpml-name: 8a556ddad981269d9764cbf640cfd337
