@@ -99,14 +99,15 @@ function w4os_popular_places($atts = []) {
 	$req['text'] = '';
 	$req['flags'] = pow(2,12);	// has_picture
 
-	if($atts['rating']=='pg') $req['flags'] += pow(2,24); // PG Only
-	else	if($atts['rating']!='adult') $req['flags'] += pow(2,24) + pow(2,25);
-	// 24 PG; 25 Mature; 26 Adult; default PG & Mature
+	if(isset($atts['rating'])) {
+		if($atts['rating']=='pg') $req['flags'] += pow(2,24); // PG Only
+		else	if($atts['rating']!='adult') $req['flags'] += pow(2,24) + pow(2,25);
+		// 24 PG; 25 Mature; 26 Adult; default PG & Mature
+	}
 
 	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
 	$req['sim_name'] = '';
 	$request = xmlrpc_encode_request('dir_popular_query', $req );
-	$debug .= "request " . '<pre>' . print_r($request, true) . '</pre>';
 
 	$post_data = array('xml' => $request);
 	$context = stream_context_create(array('http' => array(
@@ -116,7 +117,7 @@ function w4os_popular_places($atts = []) {
 	)));
 	$response = xmlrpc_decode(file_get_contents($searchURL, false, $context));
 
-	if (is_array($response) &! xmlrpc_is_fault($response) &! empty($response))
+	if (is_array($response) &! xmlrpc_is_fault($response) &! empty($response) && isset($response['data']))
 	return $response['data'];
 	else return [];
 }
@@ -128,7 +129,7 @@ function w4os_popular_places_html($atts = [], $args = []) {
 
 	$places=w4os_popular_places($atts);
 	if(empty($places)) {
-		if($_REQUEST['context'] == 'edit')
+		if(isset($_REQUEST['context']) && $_REQUEST['context'] == 'edit')
 		return  $content.__("No result", 'w4os');
 		else return;
 	}
