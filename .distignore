@@ -46,3 +46,5 @@ yarn.lock
 .version
 README.md
 tmp/
+.wpignore
+INSTALLATION.md
