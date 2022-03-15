@@ -153,6 +153,9 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
+= 2.3.2 =
+* fix regression in 2.3.1
+
 = 2.3.1 =
 * fix fatal error and warnings with popular-places shortcode
 * avoid fatal error if php xml-rpc is not installed, show error notice instead
