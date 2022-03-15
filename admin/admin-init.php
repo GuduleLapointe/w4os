@@ -32,14 +32,16 @@ function w4os_register_options_pages() {
 		'w4os_settings', // menu slug
 		'w4os_settings_page' // function
 	);
-  add_submenu_page(
-    'w4os', // parent
-    __('OpenSimulator Helpers', "w4os"), // page title
-    __('Helpers'), // menu title
-    'manage_options', // capability
-    'w4os_helpers', // menu slug
-    'w4os_helpers_page' // function
-  );
+  if(function_exists('xmlrpc_encode_request')) {
+    add_submenu_page(
+      'w4os', // parent
+      __('OpenSimulator Helpers', "w4os"), // page title
+      __('Helpers'), // menu title
+      'manage_options', // capability
+      'w4os_helpers', // menu slug
+      'w4os_helpers_page' // function
+    );
+  }
 }
 add_action('admin_menu', 'w4os_register_options_pages');
 

@@ -92,6 +92,7 @@ function w4os_popular_places_shortcode($atts = [], $content = null)
 }
 
 function w4os_popular_places($atts = []) {
+	if(!function_exists('xmlrpc_encode_request')) return [];
 	$searchURL = get_option('w4os_search_url');
 	if(empty($searchURL)) return [];
 

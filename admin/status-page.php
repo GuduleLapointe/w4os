@@ -8,7 +8,14 @@ $count = w4os_count_users();
 ?><div class="w4os-status-page wrap">
 	<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 	<p><?php echo W4OS_PLUGIN_NAME . " " . W4OS_VERSION ?></p>
-
+	<?php
+	if(!function_exists('xmlrpc_encode_request')) {
+		printf(
+			'<div class="warning error notice notice-error"><p>%s</p></div>',
+			__('PHP xml-rpc is required but is not installed.', 'w4os'),
+		);
+	}
+ 	?>
 	<div class=content>
 		<div class=shortcodes>
 			<h2>
