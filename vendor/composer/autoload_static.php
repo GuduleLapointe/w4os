@@ -4,10 +4,35 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
+class ComposerStaticInitf34fd00e185d3bd4521185ac9a3009be
 {
     public static $files = array (
         '3cdaf8a7feac7dab25a504ea4957b65a' => __DIR__ . '/..' . '/woocommerce/action-scheduler/action-scheduler.php',
+        'd5cf377be82853cc16b8c24acd679a3c' => __DIR__ . '/..' . '/wpmetabox/meta-box/meta-box.php',
+        '214d4fbeb62899c2c81a268cb106dd56' => __DIR__ . '/..' . '/wpmetabox/mb-relationships/mb-relationships.php',
+        'd46e9eb4d08a138d32890bfd33c08c32' => __DIR__ . '/..' . '/meta-box/meta-box-columns/meta-box-columns.php',
+        'd625401fcd6c5ef99e9ddf76eb29ba78' => __DIR__ . '/..' . '/meta-box/meta-box-conditional-logic/meta-box-conditional-logic.php',
+        'e689b9619e9752623f82a67f0b829350' => __DIR__ . '/..' . '/meta-box/meta-box-group/meta-box-group.php',
+        '6fe7b1a900e3e5e440235c52eca5b2e5' => __DIR__ . '/..' . '/meta-box/meta-box-include-exclude/meta-box-include-exclude.php',
+        '0f4371598d037cb8e5a0e45e0f313d28' => __DIR__ . '/..' . '/meta-box/meta-box-show-hide/meta-box-show-hide.php',
+        'be497f88b773aa5c9974da46821effab' => __DIR__ . '/..' . '/meta-box/mb-admin-columns/mb-admin-columns.php',
+        '687e88d103d3c7b7e29ca5e836cb2272' => __DIR__ . '/..' . '/meta-box/mb-settings-page/mb-settings-page.php',
+        '97c3fa63c8d93293fd1d967f126dd1e6' => __DIR__ . '/..' . '/meta-box/mb-frontend-submission/mb-frontend-submission.php',
+        'd7d95f8e01fa05c16f1e2be4b9eb112d' => __DIR__ . '/..' . '/meta-box/meta-box-tabs/meta-box-tabs.php',
+    );
+
+    public static $prefixLengthsPsr4 = array (
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
     );
 
     public static $classMap = array (
@@ -17,7 +42,9 @@ class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf34fd00e185d3bd4521185ac9a3009be::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf34fd00e185d3bd4521185ac9a3009be::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf34fd00e185d3bd4521185ac9a3009be::$classMap;
 
         }, null, ClassLoader::class);
     }
