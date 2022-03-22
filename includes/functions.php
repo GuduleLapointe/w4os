@@ -259,6 +259,17 @@ function w4os_empty($var) {
 	return false;
 }
 
+function w4os_check_mark($status = NULL) {
+	if($status === true) {
+		$icon = 'yes';
+	}	else if($status === false) {
+		$icon = 'warning';
+	} else {
+		$icon = 'no';
+	}
+	return sprintf('<span class="w4os-status dashicons dashicons-%s"></span>',$icon);
+}
+
 function w4os_get_url_status($url, $output = NULL, $force = false) {
 	if(empty($url)) {
 		$status_code = '';
