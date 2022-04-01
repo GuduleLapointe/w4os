@@ -2,12 +2,50 @@
     "name": "speculoos/w4os",
     "description": "W4OS - OpenSimulator Web Interface",
     "type": "wordpress-plugin",
+    "repositories": {
+    },
+    "devel-only-update-with-your-license-key-and-move-in-repositories": {
+      "metabox": {
+        "type": "composer",
+        "url": "https://packages.metabox.io/YOUR_META_BOX_LICENSE_KEY"
+      }
+    },
     "require": {
-        "woocommerce/action-scheduler": "^3.4"
+        "woocommerce/action-scheduler": "^3.4",
+        "wpmetabox/meta-box": "^5.6",
+        "wpmetabox/mb-relationships": "^1.10",
+        "meta-box/mb-admin-columns": "dev-master",
+        "meta-box/mb-frontend-submission": "dev-master",
+        "meta-box/mb-settings-page": "dev-master",
+        "meta-box/meta-box-columns": "dev-master",
+        "meta-box/meta-box-conditional-logic": "dev-master",
+        "meta-box/meta-box-group": "dev-master",
+        "meta-box/meta-box-include-exclude": "dev-master",
+        "meta-box/meta-box-show-hide": "dev-master",
+        "meta-box/meta-box-tabs": "dev-master",
+        "oomphinc/composer-installers-extender": "^2.0"
+    },
+    "extra": {
+      "installer-types": ["library"],
+      "installer-paths": {
+        "lib/meta-box/{$name}": ["vendor:wpmetabox","vendor:meta-box"],
+        "lib/{$vendor}/{$name}": ["type:wordpress-plugin"]
+      }
     },
     "autoload": {
       "files": [
-        "vendor/woocommerce/action-scheduler/action-scheduler.php"
+        "lib/woocommerce/action-scheduler/action-scheduler.php",
+        "lib/meta-box/meta-box/meta-box.php",
+        "lib/meta-box/mb-relationships/mb-relationships.php",
+        "lib/meta-box/meta-box-columns/meta-box-columns.php",
+        "lib/meta-box/meta-box-conditional-logic/meta-box-conditional-logic.php",
+        "lib/meta-box/meta-box-group/meta-box-group.php",
+        "lib/meta-box/meta-box-include-exclude/meta-box-include-exclude.php",
+        "lib/meta-box/meta-box-show-hide/meta-box-show-hide.php",
+        "lib/meta-box/mb-admin-columns/mb-admin-columns.php",
+        "lib/meta-box/mb-settings-page/mb-settings-page.php",
+        "lib/meta-box/mb-frontend-submission/mb-frontend-submission.php",
+        "lib/meta-box/meta-box-tabs/meta-box-tabs.php"
       ]
     },
     "license": "AGPLV3",
@@ -16,5 +54,11 @@
             "name": "Gudule Lapointe",
             "email": "gudule@speculoos.world"
         }
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true
+        }
+    }
 }

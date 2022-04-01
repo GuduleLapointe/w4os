@@ -12,18 +12,18 @@ add_action( 'admin_enqueue_scripts', 'w4os_enqueue_admin_script' );
 
 function w4os_register_options_pages() {
 	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_settings_page');
-	add_menu_page(
-		'OpenSimulator', // page title
-		'OpenSimulator', // menu title
-		'manage_options', // capability
-		'w4os', // slug
-		'w4os_status_page', // callable function
-		// plugin_dir_path(__FILE__) . 'options.php', // slug
-		// null,	// callable function
-		plugin_dir_url(__FILE__) . 'images/opensimulator-logo-24x14.png', // icon url
-		2 // position
-	);
-	add_submenu_page('w4os', __('OpenSimulator Status', "w4os"), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
+	// add_menu_page(
+	// 	'OpenSimulator', // page title
+	// 	'OpenSimulator', // menu title
+	// 	'manage_options', // capability
+	// 	'w4os', // slug
+	// 	'w4os_status_page', // callable function
+	// 	// plugin_dir_path(__FILE__) . 'options.php', // slug
+	// 	// null,	// callable function
+	// 	plugin_dir_url(__FILE__) . 'images/opensimulator-logo-24x14.png', // icon url
+	// 	2 // position
+	// );
+	// add_submenu_page('w4os', __('OpenSimulator Status', "w4os"), __('Status'), 'manage_options', 'w4os', 'w4os_status_page');
 	add_submenu_page(
 		'w4os', // parent
 		__('OpenSimulator Settings', "w4os"), // page title
@@ -32,16 +32,18 @@ function w4os_register_options_pages() {
 		'w4os_settings', // menu slug
 		'w4os_settings_page' // function
 	);
-  add_submenu_page(
-    'w4os', // parent
-    __('OpenSimulator Helpers', "w4os"), // page title
-    __('Helpers'), // menu title
-    'manage_options', // capability
-    'w4os_helpers', // menu slug
-    'w4os_helpers_page' // function
-  );
+  if(function_exists('xmlrpc_encode_request')) {
+    add_submenu_page(
+      'w4os', // parent
+      __('OpenSimulator Helpers', "w4os"), // page title
+      __('Helpers'), // menu title
+      'manage_options', // capability
+      'w4os_helpers', // menu slug
+      'w4os_helpers_page' // function
+    );
+  }
 }
-add_action('admin_menu', 'w4os_register_options_pages');
+add_action('admin_menu', 'w4os_register_options_pages', 999);
 
 function w4os_status_page()
 {
@@ -332,6 +334,7 @@ function w4os_process_actions($args = array()) {
 }
 add_action('admin_init', 'w4os_process_actions');
 
+
 add_action('init', function() {
   define('W4OS_PAGES', array(
     'profile' => array(
@@ -423,3 +426,214 @@ add_action('init', function() {
     ),
   ));
 });
+
+function w4os_dashboard_users_html() {
+  if(!w4os_db_connected()) {
+    echo __('Database not connected', 'w4os');
+    return;
+  }
+	$count = w4os_count_users();
+  ?>
+<table class="w4os-table user-sync">
+  <thead>
+    <tr>
+      <th></th>
+      <th><?php _e('Total', 'w4os');?></th>
+      <th><?php if($count['wp_only'] > 0) _e('WP only', 'w4os');?></th>
+      <th><?php _e('Sync', 'w4os');?></th>
+      <th><?php if($count['grid_only'] > 0) _e('Grid only', 'w4os');?></th>
+    </tr>
+  </thead>
+  <tr>
+    <th><?php _e("Grid accounts", 'w4os') ?></th>
+    <td><?php echo $count['grid_accounts']; ?></td>
+    <td></td>
+    <td class=success rowspan=2><?php echo $count['sync']; ?></td>
+    <td class=error><?php echo $count['grid_only']; ?></td>
+  </tr>
+  <tr>
+    <th><?php _e("Linked WordPress accounts", 'w4os') ?></th>
+    <td><?php echo $count['wp_linked']; ?></td>
+    <td class=error><?php echo $count['wp_only']; ?></td>
+  </tr>
+  <tr>
+    <th><?php _e("Avatar models", 'w4os') ?></th>
+    <td><?php
+    echo $count['models'];
+    ?></td>
+  </tr>
+  <?php if($count['tech'] > 0) { ?>
+    <tr>
+      <th><?php _e("Other service accounts", 'w4os') ?></th>
+      <td><?php
+      echo $count['tech'];
+      ?></td>
+    </tr>
+  <?php } ?>
+</table>
+<?php	if($count['wp_only'] + $count['grid_only'] > 0 |! empty($sync_result)) { ?>
+  <table class="w4os-table .notes">
+    <tr class=notes>
+      <th></th>
+      <td>
+      <?php
+      if($count['grid_only']  > 0 ) {
+        echo '<p>' . sprintf(_n(
+          '%d grid account has no linked WP account. Syncing will create a new WP account.',
+          '%d grid accounts have no linked WP account. Syncing will create new WP accounts.',
+          $count['grid_only'],
+          'w4os'
+        ), $count['grid_only']) . '</p>';
+      }
+      if($count['wp_only']  > 0 ) {
+        echo '<p>' . sprintf(_n(
+          '%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference.',
+          '%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference.',
+          $count['wp_only'],
+          'w4os'
+        ), $count['wp_only']) . '</p>';
+      }
+      if($count['tech'] > 0) {
+        echo '<p>' . sprintf(_n(
+          "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks.",
+          "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.",
+          $count['tech'],
+          'w4os'
+          ) . ' ' . __('Real accounts need a unique email address for W4OS to function properly.', 'w4os'
+        ), $count['tech']) . '</p>';
+      }
+      if($count['grid_only'] + $count['wp_only'] > 0) {
+        echo '<form method="post" action="options.php" autocomplete="off">';
+        settings_fields( 'w4os_status' );
+        echo '<input type="hidden" input-hidden" id="w4os_sync_users" name="w4os_sync_users" value="1">';
+
+        submit_button(__('Synchronize users now', 'w4os'));
+        echo '</form>';
+        echo '<p class=description>' . __('Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console.', 'w4os') . '<p>';
+      }
+      if($sync_result)
+      echo '<p class=info>' . $sync_result . '<p>';
+        ?>
+      </td>
+    </tr>
+  </table>
+<?php	}
+}
+
+function w4os_dependencies_html($foo = NULL, $args = NULL) {
+  if(is_array($args)) {
+    $success = true;
+    if(isset($args['function_exists'])) {
+      if(!function_exists($args['function_exists'])) $success = false;
+    }
+    if(isset($args['extension_loaded'])) {
+      if(!extension_loaded($args['extension_loaded'])) {
+        $success = false;
+      }
+    }
+    if($success) return w4os_check_mark(true);
+    return w4os_check_mark(false);
+  }
+
+  /**
+   * Kept temporarily untill the transition to metabox options page is fully
+   * completed
+   */
+  if ( ! function_exists('curl_init') ) $php_missing_modules[]='curl';
+  if ( ! function_exists('simplexml_load_string') ) $php_missing_modules[]='xml';
+  if (!extension_loaded('imagick')) $php_missing_modules[]='imagick';
+  if(!empty($php_missing_modules)) {
+    echo sprintf(
+      '<div class="missing-modules warning"><h2>%s</h2>%s</div>',
+      __('Missing PHP modules', 'w4os'),
+      sprintf(
+        __('These modules were not found: %s. Install them to get the most of this plugin.', 'w4os'),
+        '<strong>' . join('</strong>, <strong>', $php_missing_modules) . '</strong>',
+      ),
+    );
+  }
+}
+
+function w4os_dashboard_pages_html() {
+  if(!w4os_db_connected()) {
+    echo __('Database not connected', 'w4os');
+    return;
+  }
+  $grid_info = W4OS_GRID_INFO;
+  $grid_info['profile'] = W4OS_LOGIN_PAGE;
+
+  $html = '';
+  $grid_running = w4os_grid_running();
+  if(!w4os_grid_running()) {
+    $other_attributes['disabled'] = true;
+    $html .= '<p class="notice warning">' . sprintf(
+      __('Grid not running, start Robust server or %scheck OpenSimulator settings%s.', 'w4os'),
+      '<a href="' . get_admin_url('', 'admin.php?page=w4os_settings') . '">',
+      '</a>',
+    );
+    return $html;
+  }
+
+  $required = W4OS_PAGES;
+  $html .= '<table class="w4os-table requested-pages">';
+  $html .= '<tr>';
+  $html .= '<td>'. w4os_status_icon($grid_running) . '</td>';
+  $html .= '<td>';
+  $html .= sprintf(
+    '<a class=button href="%s">%s</a>',
+    admin_url('admin.php?' . wp_nonce_url(
+      http_build_query(array(
+        'page'=>'w4os',
+        'action' => 'w4os_check_urls_now',
+      )),
+      'w4os_check_urls_now',
+    )),
+    __('Check pages now', 'w4os'),
+  );
+  $html .= '</td>';
+  $html .= '<td>';
+  $html .= '<p class=description>' . sprintf(__('Last checked %s ago.', 'w4os'), human_time_diff(get_transient('w4os_get_url_status_checked') )) . '</p>';
+  $html .= '<p class=description>' . __('OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status.', 'w4os') . '<p>';
+  $html .= '</td></tr>';
+
+  if($grid_running)
+  foreach($required as $key => $data) {
+    $url = (!empty($grid_info[$key])) ? $grid_info[$key] : '';
+    // if (empty($grid_info[$key]) ) $url = "''";
+    // else $url = sprintf('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
+    $success = w4os_get_url_status($url, 'boolean');
+    $status_icon = w4os_get_url_status($url, 'icon');
+    $html .= sprintf(
+      '<tr>
+      <td>%2$s</td>
+      <td><h3>%1$s</h3>%3$s%4$s%5$s%7$s</td>
+      <td>%6$s</td>
+      </tr>
+      ',
+      $data['name'],
+      $status_icon,
+      (!empty($url)) ? sprintf('<p class=url><a href="%1$s">%1$s</a></p>', $url) : '',
+      (!empty($data['description'])) ? '<p class=description>' . $data['description'] . '</p>' : '',
+      (!empty($data['recommended']) && $url != $data['recommended']) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> ' . sprintf(__('Should be %s', 'w4os'), $data['recommended']) . '</p>' : '',
+      (!empty($data['os_config']))
+      ? sprintf(w4os_format_ini($data['os_config']),(!empty($data['recommended'])) ? $data['recommended'] : $url)
+      : '',
+      ( $success == false && (!empty($data['third_party_url']))
+      ? '<p class=third_party>' .
+      sprintf(__('This service requires a separate web application.<br>Try <a href="%1$s" target=_blank>%1$s</a>.', '<w4os>'),
+      $data['third_party_url'],
+      ) . '</p>'
+      : ( ( $success == false && (!empty($url)) )
+        ? '<a class=button href="' . admin_url(sprintf('admin.php?%s', wp_nonce_url(http_build_query(array('page'=>'w4os', 'action' => 'create_page', 'helper' => $key, 'guid' => $url, 'slug' => basename(strtok($url, '?')) )), 'create_page_'.$key))) . '">'
+          . sprintf(
+            'Create %s page',
+            $data['name'],
+          ) . '</a>'
+        : ''
+        )
+      ),
+    );
+  }
+  $html .= '</table>';
+  return $html;
+}

@@ -1,5 +1,12 @@
 ## Changelog
 
+### 2.3.2
+* fix regression in 2.3.1
+
+### 2.3.1
+* fix fatal error and warnings with popular-places shortcode
+* avoid fatal error if php xml-rpc is not installed, show error notice instead
+
 ### 2.3
 * new search helper
 * new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)

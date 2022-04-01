@@ -47,3 +47,5 @@ yarn.lock export-ignore
 .version export-ignore
 README.md export-ignore
 tmp/ export-ignore
+.wpignore export-ignore
+INSTALLATION.md export-ignore

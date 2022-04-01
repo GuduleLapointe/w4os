@@ -87,7 +87,9 @@ require_once __DIR__ . '/users.php';
 require_once __DIR__ . '/gridauth.php';
 require_once __DIR__ . '/profile.php';
 require_once __DIR__ . '/cron.php';
-require_once dirname(__DIR__) . '/helpers/wp-load.php';
+if(function_exists('xmlrpc_encode_request')) {
+  require_once dirname(__DIR__) . '/helpers/wp-load.php';
+}
 require_once dirname(__DIR__) . '/blocks/blocks.php';
 
 if(W4OS_DB_CONNECTED) {

@@ -13,6 +13,11 @@ if(get_option('w4os_db_user') && get_option('w4os_db_pass') && get_option('w4os_
   );
 }
 
+function w4os_db_connected() {
+  if(defined('W4OS_DB_CONNECTED')) return W4OS_DB_CONNECTED;
+  return false;
+}
+
 function w4os_check_db_tables() {
 	if(defined('W4OS_DB_CONNECTED')) return W4OS_DB_CONNECTED;
 	global $w4osdb;
