@@ -1,5 +1,11 @@
 ## Changelog
 
+### 2.3.3
+* added password reset link to profile page
+* fix fatal error in helpers with poorly encoded unicode text
+* fix fatal errors in helpers when database is not connected
+* fix #57 password not updated on grid when using password recovery in WordPdress
+
 ### 2.3.2
 * fix regression in 2.3.1
 
