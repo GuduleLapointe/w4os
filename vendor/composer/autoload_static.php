@@ -16,6 +16,7 @@ class ComposerStaticInitfa1934b5b3fd384cb998c17ca24a9a93
         '9cfce592e38eb05912eb5a47e7acccb7' => __DIR__ . '/../..' . '/lib/meta-box/meta-box-include-exclude/meta-box-include-exclude.php',
         '4bf68b70edfdd61c5cc19e35e40386b1' => __DIR__ . '/../..' . '/lib/meta-box/meta-box-show-hide/meta-box-show-hide.php',
         '1328150327ecb15a7dfa3b04a1173fc7' => __DIR__ . '/../..' . '/lib/meta-box/mb-admin-columns/mb-admin-columns.php',
+        '631ac2cebce242065bbcb317ca00f02e' => __DIR__ . '/../..' . '/lib/meta-box/mb-user-profile/mb-user-profile.php',
         '9cacee8e40fc8c59c56a5876b22cba5e' => __DIR__ . '/../..' . '/lib/meta-box/mb-settings-page/mb-settings-page.php',
         'a90cc6291d7b6cc02908d1dc6a027f52' => __DIR__ . '/../..' . '/lib/meta-box/mb-frontend-submission/mb-frontend-submission.php',
         'f647d0a65145ae19767fc599402db45b' => __DIR__ . '/../..' . '/lib/meta-box/meta-box-tabs/meta-box-tabs.php',

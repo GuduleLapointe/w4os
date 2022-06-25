@@ -1,0 +1,111 @@
+.rwmb-notice,
+.rwmb-confirmation,
+.rwmb-error,
+.rwmb-info,
+#rwmb-validation-message {
+	padding: .75em 1.25em;
+	margin-bottom: 1em;
+	border: 1px solid transparent;
+	border-radius: .25em;
+}
+.rwmb-notice {
+	color: #856404;
+	border-color: #ffeeba;
+	background-color: #fff3cd;
+}
+.rwmb-confirmation {
+	color: #3c763d;
+	background: #dff0d8;
+	border-color: #d0e9c6;
+}
+.rwmb-error,
+#rwmb-validation-message {
+	color: #721c24;
+	border-color: #f5c6cb;
+	background-color: #f8d7da;
+}
+#rwmb-validation-message p {
+	margin: 0;
+}
+.mbup-form .rwmb-info {
+	color: #0c5460;
+	border-color: #bee5eb;
+	background-color: #d1ecf1;
+}
+
+.mbup-form .rwmb-button.remove-clone {
+	width: 20px;
+	height: 20px;
+}
+.mbup-form .rwmb-button.remove-clone i,
+.mbup-form .rwmb-button.remove-clone i:before {
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-style: normal;
+	text-align: center;
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+}
+.mbup-form .rwmb-button.remove-clone i:before {
+	content: "\2013";
+	top: -2px;
+}
+
+.mbup-form .rwmb-disable {
+	visibility: hidden;
+	position: absolute;
+	opacity: 0;
+}
+
+.mbup-form .rwmb-form-submit {
+	padding-top: 12px;
+}
+
+.mbup-form .rwmb-password-strength {
+	display: block;
+	text-align: center;
+	padding: .75em 1.25em;
+	margin-top: 10px;
+	border: 1px solid transparent;
+	border-radius: .25em;
+}
+.mbup-form .rwmb-password-strength:empty {
+	height: 0;
+	margin-top: -10px;
+	padding: 0;
+}
+.mbup-form .rwmb-password-strength.very-weak,
+.mbup-form .rwmb-password-strength.mismatch {
+	background-color: #f1adad;
+	border-color: #e35b5b;
+}
+.mbup-form .rwmb-password-strength.weak {
+	background-color: #fbc5a9;
+	border-color: #f78b53;
+}
+.mbup-form .rwmb-password-strength.medium {
+	background-color: #ffe399;
+	border-color: #ffc733;
+}
+.mbup-form .rwmb-password-strength.strong {
+	background-color: #c1e1b9;
+	border-color: #83c373;
+}
+
+.mbup-form .rwmb-remember {
+	padding-top: 12px;
+}
+.mbup-form .rwmb-field{
+	flex-direction: column;
+}
+.mbup-form .rwmb-input,
+.mbup-form .rwmb-label{
+	width: 100%;
+}
+.mbup-form .rwmb-label{
+	margin-bottom: 4px;
+}

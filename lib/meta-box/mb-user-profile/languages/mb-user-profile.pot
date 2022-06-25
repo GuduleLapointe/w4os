@@ -1,0 +1,352 @@
+# Copyright (C) 2022 MetaBox.io
+# This file is distributed under the GPL2+.
+msgid ""
+msgstr ""
+"Project-Id-Version: MB User Profile 1.8.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mb-user-profile\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-02-09T14:15:52+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Domain: mb-user-profile\n"
+
+#. Plugin Name of the plugin
+msgid "MB User Profile"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://metabox.io/plugins/mb-user-profile/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Register, edit user profiles with custom fields on the front end."
+msgstr ""
+
+#. Author of the plugin
+msgid "MetaBox.io"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://metabox.io"
+msgstr ""
+
+#. Translators: %1$s - the plugin name, %2$s - extensions, %3$s - action.
+#: mb-user-profile.php:61
+msgid "%1$s requires %2$s to function correctly. %3$s."
+msgstr ""
+
+#. Translators: %1$s - the plugin name, %2$s - extensions, %3$s - action.
+#: mb-user-profile.php:62
+msgid "Activate now"
+msgstr ""
+
+#: src/DefaultFields.php:26
+#: src/Forms/Register.php:22
+msgid "Username"
+msgstr ""
+
+#: src/DefaultFields.php:32
+#: src/Forms/Register.php:23
+msgid "Email"
+msgstr ""
+
+#: src/DefaultFields.php:38
+#: src/DefaultFields.php:67
+#: src/Forms/Login.php:26
+#: src/Forms/Register.php:24
+msgid "Password"
+msgstr ""
+
+#: src/DefaultFields.php:45
+#: src/DefaultFields.php:147
+#: src/DefaultFields.php:184
+#: src/Forms/Info.php:26
+#: src/Forms/Register.php:25
+msgid "Confirm Password"
+msgstr ""
+
+#: src/DefaultFields.php:61
+#: src/DefaultFields.php:106
+#: src/Forms/Login.php:25
+msgid "Username or Email Address"
+msgstr ""
+
+#: src/DefaultFields.php:73
+#: src/Forms/Login.php:27
+msgid "Remember Me"
+msgstr ""
+
+#: src/DefaultFields.php:78
+#: src/Forms/Login.php:29
+msgid "Log In"
+msgstr ""
+
+#: src/DefaultFields.php:89
+#: src/Forms/Login.php:28
+msgid "Lost Password?"
+msgstr ""
+
+#: src/DefaultFields.php:103
+msgid "Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr ""
+
+#: src/DefaultFields.php:112
+msgid "Get New Password"
+msgstr ""
+
+#: src/DefaultFields.php:123
+#: src/DefaultFields.php:164
+msgid "Login"
+msgstr ""
+
+#: src/DefaultFields.php:137
+msgid "Please enter a new password below."
+msgstr ""
+
+#: src/DefaultFields.php:140
+#: src/DefaultFields.php:177
+#: src/Forms/Info.php:25
+msgid "New Password"
+msgstr ""
+
+#: src/DefaultFields.php:153
+msgid "Save"
+msgstr ""
+
+#: src/Email.php:40
+msgid "Account confirmation"
+msgstr ""
+
+#: src/Email.php:61
+msgid "Account unavailable"
+msgstr ""
+
+#: src/Email.php:65
+msgid "Email confirmation is sent successfully."
+msgstr ""
+
+#: src/Email.php:67
+msgid "Unable to send email. Please check your email setting."
+msgstr ""
+
+#: src/Email.php:98
+msgid "Your account is already confirmed."
+msgstr ""
+
+#: src/Email.php:101
+msgid "Your account is confirmed successfully."
+msgstr ""
+
+#. Translators: %s - Homepage URL.
+#: src/Email.php:104
+msgid "<p><a href=\"%s\">Back to homepage</a></p>"
+msgstr ""
+
+#: src/Email.php:113
+msgid "Email Confirmation"
+msgstr ""
+
+#: src/Email.php:114
+msgid "Resend"
+msgstr ""
+
+#: src/Forms/Base.php:101
+msgid "Invalid form submission, please try again."
+msgstr ""
+
+#: src/Forms/Base.php:136
+msgid "Clear"
+msgstr ""
+
+#: src/Forms/Base.php:137
+msgid "Clear color"
+msgstr ""
+
+#: src/Forms/Base.php:138
+msgid "Default"
+msgstr ""
+
+#: src/Forms/Base.php:139
+msgid "Select default color"
+msgstr ""
+
+#: src/Forms/Base.php:140
+msgid "Select Color"
+msgstr ""
+
+#: src/Forms/Base.php:141
+msgid "Color value"
+msgstr ""
+
+#: src/Forms/Base.php:154
+msgid "Very weak"
+msgstr ""
+
+#: src/Forms/Base.php:155
+msgid "Weak"
+msgstr ""
+
+#: src/Forms/Base.php:156
+msgctxt "password strength"
+msgid "Medium"
+msgstr ""
+
+#: src/Forms/Base.php:157
+msgid "Strong"
+msgstr ""
+
+#: src/Forms/Base.php:158
+msgid "Mismatch"
+msgstr ""
+
+#: src/Forms/Base.php:176
+msgid "Error trying to execute grecaptcha."
+msgstr ""
+
+#: src/Forms/Base.php:212
+msgid "Invalid captcha token"
+msgstr ""
+
+#: src/Forms/Base.php:226
+msgid "Cannot verify captcha"
+msgstr ""
+
+#. Translators: %s - ID of meta boxes.
+#: src/Forms/Factory.php:66
+#: src/Forms/Factory.php:162
+msgid "Warning: The following meta box are not available: \"%s\"."
+msgid_plural "Warning: The following meta boxes are not available: \"%s\"."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Forms/Factory.php:155
+msgid "Error: No meta boxes are available!"
+msgstr ""
+
+#: src/Forms/Info.php:27
+msgid "Submit"
+msgstr ""
+
+#: src/Forms/Info.php:33
+msgid "Your information has been successfully submitted. Thank you."
+msgstr ""
+
+#: src/Forms/Info.php:51
+msgid "Please login to continue."
+msgstr ""
+
+#: src/Forms/Login.php:39
+msgid "You are now logged in."
+msgstr ""
+
+#: src/Forms/Login.php:49
+#: src/Forms/Register.php:64
+msgid "You are already logged in."
+msgstr ""
+
+#: src/Forms/Login.php:71
+#: src/Forms/Login.php:99
+msgid "Invalid username or email."
+msgstr ""
+
+#: src/Forms/Login.php:76
+msgid "Your account not comfirm yet. Please contact with admin."
+msgstr ""
+
+#: src/Forms/Login.php:93
+msgid "Please enter a username or email address."
+msgstr ""
+
+#. Translators: %s - Website title.
+#: src/Forms/Login.php:115
+msgid "[%s] Password Reset"
+msgstr ""
+
+#. Translators: %s - User display name.
+#: src/Forms/Login.php:118
+msgid "Hi, %s"
+msgstr ""
+
+#. Translators: %s - Website title.
+#: src/Forms/Login.php:121
+msgid "Someone has requested a new password for your account on %s site."
+msgstr ""
+
+#. Translators: %s - Website title.
+#: src/Forms/Login.php:122
+msgid "Click here to reset your password"
+msgstr ""
+
+#: src/Forms/Login.php:129
+msgid "Error sending email. Please try again."
+msgstr ""
+
+#: src/Forms/Login.php:147
+msgid "This key is invalid or has already been used. Please reset your password again if needed."
+msgstr ""
+
+#: src/Forms/Login.php:158
+msgid "Please enter a valid password."
+msgstr ""
+
+#: src/Forms/Login.php:162
+#: src/User.php:45
+#: src/User.php:76
+msgid "Passwords do not match."
+msgstr ""
+
+#: src/Forms/Login.php:184
+msgid "Please check your email for the confirmation link."
+msgstr ""
+
+#: src/Forms/Login.php:187
+msgid "Your password has been reset."
+msgstr ""
+
+#: src/Forms/Login.php:187
+msgid "Log in"
+msgstr ""
+
+#: src/Forms/Register.php:26
+msgid "Register"
+msgstr ""
+
+#: src/Forms/Register.php:34
+msgid "Your account has been created successfully."
+msgstr ""
+
+#: src/Forms/Register.php:44
+msgid "Your account has been created and is pending. Please check your email to activate your account."
+msgstr ""
+
+#: src/User.php:35
+msgid "Invalid user ID."
+msgstr ""
+
+#: src/User.php:59
+msgid "Your email already exists."
+msgstr ""
+
+#: src/User.php:72
+msgid "Your username already exists."
+msgstr ""
+
+#: templates/confirmation-email.php:1
+msgid "Welcome"
+msgstr ""
+
+#: templates/confirmation-email.php:2
+msgid "Please click the link below to confirm your account:"
+msgstr ""
+
+#: templates/confirmation-email.php:3
+msgid "Confirm Account"
+msgstr ""
+
+#: templates/confirmation-email.php:4
+msgid "If that doesn't work, copy and paste the following link in your browser:"
+msgstr ""

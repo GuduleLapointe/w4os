@@ -17,6 +17,7 @@
         "meta-box/mb-admin-columns": "dev-master",
         "meta-box/mb-frontend-submission": "dev-master",
         "meta-box/mb-settings-page": "dev-master",
+        "meta-box/mb-user-profile": "dev-master",
         "meta-box/meta-box-columns": "dev-master",
         "meta-box/meta-box-conditional-logic": "dev-master",
         "meta-box/meta-box-group": "dev-master",
@@ -43,6 +44,7 @@
         "lib/meta-box/meta-box-include-exclude/meta-box-include-exclude.php",
         "lib/meta-box/meta-box-show-hide/meta-box-show-hide.php",
         "lib/meta-box/mb-admin-columns/mb-admin-columns.php",
+        "lib/meta-box/mb-user-profile/mb-user-profile.php",
         "lib/meta-box/mb-settings-page/mb-settings-page.php",
         "lib/meta-box/mb-frontend-submission/mb-frontend-submission.php",
         "lib/meta-box/meta-box-tabs/meta-box-tabs.php"

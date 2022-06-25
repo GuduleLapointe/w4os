@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "966bb2490a4d3ea06fc92d7a736590ef",
+    "content-hash": "8c97821f005095b46efad89175453cfd",
     "packages": [
         {
             "name": "composer/installers",
@@ -194,6 +194,18 @@
             "type": "wordpress-plugin"
         },
         {
+            "name": "meta-box/mb-user-profile",
+            "version": "master",
+            "dist": {
+                "type": "zip",
+                "url": "https://metabox.io/?action=download&product=mb-user-profile&api_key=42ecdf32b0e76fe7766bc340ad82046b"
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "meta-box/meta-box-columns",
             "version": "master",
             "dist": {
@@ -324,16 +336,16 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.4.0",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "3218a33ff14b968f8cb05de9656c2efa1eeb1330"
+                "reference": "7d8e830b6387410ccf11708194d3836f01cb2942"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/3218a33ff14b968f8cb05de9656c2efa1eeb1330",
-                "reference": "3218a33ff14b968f8cb05de9656c2efa1eeb1330",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/7d8e830b6387410ccf11708194d3836f01cb2942",
+                "reference": "7d8e830b6387410ccf11708194d3836f01cb2942",
                 "shasum": ""
             },
             "require-dev": {
@@ -358,9 +370,9 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.4.0"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.4.2"
             },
-            "time": "2021-10-28T17:09:12+00:00"
+            "time": "2022-06-08T15:46:07+00:00"
         },
         {
             "name": "wpmetabox/mb-relationships",
@@ -412,16 +424,16 @@
         },
         {
             "name": "wpmetabox/meta-box",
-            "version": "5.6.1",
+            "version": "5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmetabox/meta-box.git",
-                "reference": "e3d638d92f58cd796723f647e6e4e11c0063e8c2"
+                "reference": "91dea83f0dac82ff104af7d1eaf597abfba486db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/e3d638d92f58cd796723f647e6e4e11c0063e8c2",
-                "reference": "e3d638d92f58cd796723f647e6e4e11c0063e8c2",
+                "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/91dea83f0dac82ff104af7d1eaf597abfba486db",
+                "reference": "91dea83f0dac82ff104af7d1eaf597abfba486db",
                 "shasum": ""
             },
             "type": "wordpress-plugin",
@@ -450,9 +462,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wpmetabox/meta-box/issues",
-                "source": "https://github.com/wpmetabox/meta-box/tree/5.6.1"
+                "source": "https://github.com/wpmetabox/meta-box/tree/5.6.4"
             },
-            "time": "2022-03-08T01:49:45+00:00"
+            "time": "2022-05-05T08:36:34+00:00"
         }
     ],
     "packages-dev": [],
@@ -462,6 +474,7 @@
         "meta-box/mb-admin-columns": 20,
         "meta-box/mb-frontend-submission": 20,
         "meta-box/mb-settings-page": 20,
+        "meta-box/mb-user-profile": 20,
         "meta-box/meta-box-columns": 20,
         "meta-box/meta-box-conditional-logic": 20,
         "meta-box/meta-box-group": 20,
