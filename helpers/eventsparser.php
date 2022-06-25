@@ -86,7 +86,6 @@ foreach($json as $json_event) {
   $description = "$links\n\n$description";
   // $title = utf8_encode(utf8_decode($json_event['title']));
   $title = strip_tags(html_entity_decode(utf8_encode(utf8_decode($json_event['title']))));
-  error_log($title);
 
   $fields = array(
     'owneruuid' => EVENTS_NULL_KEY, // Not implemented
