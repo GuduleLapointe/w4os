@@ -128,6 +128,9 @@ class W4OS_Avatar extends WP_User {
         __('Languages', 'w4os') => $avatar_row->profileLanguages,
         __('Real Life', 'w4os') => trim($avatar_row->profileFirstImageHtml . ' ' . wpautop($avatar_row->profileFirstText)),
       ));
+      if(wp_get_current_user()->ID == $this->ID) {
+        $profile[__('Change password', 'w4os')] = '<a href="' . wp_lostpassword_url() . '">' . __('Password reset link', 'w4os') . '</a>';
+      }
 
       /* In-world profiles are always public, so are web profiles */
       // if($avatar_row->profileAllowPublish != 1) {
@@ -270,8 +273,16 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
   if(!W4OS_DB_CONNECTED) return;
 	global $w4osdb;
 
-	if( $user_id && $new_pass && current_user_can('edit_user',$user_id ) ) {
-
+  if(is_object($user_id)) {
+    $user = $user_id;
+    $user_id = $user->ID;
+    error_log(__FUNCTION__ . " received user instead of user_id, now $user_id");
+  }
+	if (
+    ( $user_id && $new_pass && current_user_can('edit_user',$user_id ) )
+    || ( isset($_REQUEST) && $_REQUEST['action'] == 'resetpass' && $_REQUEST['pass2'] == $new_pass )
+  ) {
+    error_log(__FUNCTION__ . " proceed to reset password");
 		$user = get_userdata( $user_id );
 		if (! $user ) return;
 		$uuid = w4os_profile_sync($user); // refresh opensim data for this user
@@ -289,8 +300,12 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
 				'UUID' => $uuid,
 			)
 		);
-	}
+	} else {
+    error_log(__FUNCTION__ . " not authorized " . print_r($_REQUEST, true));
+  }
 }
+
+add_action( 'password_reset', 'w4os_set_avatar_password', 10, 2 );
 
 /**
  * Catch password change from user profile page and save it to OpenSimulator
@@ -307,7 +322,6 @@ function w4os_save_account_details ( $args ) {
 }
 add_action('save_account_details', 'w4os_save_account_details', 10, 1);
 // add_action('profile_update', 'w4os_save_account_details', 10, 1);
-
 
 /**
  * Catch password change and save it to OpenSimulator

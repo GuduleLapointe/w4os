@@ -36,13 +36,15 @@ phpunit.xml
 phpunit.xml.dist
 README.md
 CHANGELOG.md
-INSTALLATION.md
 sources
 tests
 Thumbs.db
 webpack.config.js
 wp-cli.local.yml
 yarn.lock
-.wpignore
+.distignore.wp
 .version
+README.md
 tmp/
+.wpignore
+INSTALLATION.md

@@ -6,17 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'de4f8e34632b1f6a337cbef208aa8887' => $baseDir . '/lib/woocommerce/action-scheduler/action-scheduler.php',
-    'bc337b0dfd7b21381155cf4659e32649' => $baseDir . '/lib/meta-box/meta-box/meta-box.php',
-    '7875ea54b7ac4e3dd103a82d3f1b8604' => $baseDir . '/lib/meta-box/mb-relationships/mb-relationships.php',
-    '7b9a8bc10f28505fca1535d99dbab98b' => $baseDir . '/lib/meta-box/meta-box-columns/meta-box-columns.php',
-    'bc9b0eca30b27d69298bc1001d910af0' => $baseDir . '/lib/meta-box/meta-box-conditional-logic/meta-box-conditional-logic.php',
-    'f3009b0f70c9390dd8cfc533e5d4d014' => $baseDir . '/lib/meta-box/meta-box-group/meta-box-group.php',
-    '9cfce592e38eb05912eb5a47e7acccb7' => $baseDir . '/lib/meta-box/meta-box-include-exclude/meta-box-include-exclude.php',
-    '4bf68b70edfdd61c5cc19e35e40386b1' => $baseDir . '/lib/meta-box/meta-box-show-hide/meta-box-show-hide.php',
-    '1328150327ecb15a7dfa3b04a1173fc7' => $baseDir . '/lib/meta-box/mb-admin-columns/mb-admin-columns.php',
-    '631ac2cebce242065bbcb317ca00f02e' => $baseDir . '/lib/meta-box/mb-user-profile/mb-user-profile.php',
-    '9cacee8e40fc8c59c56a5876b22cba5e' => $baseDir . '/lib/meta-box/mb-settings-page/mb-settings-page.php',
-    'a90cc6291d7b6cc02908d1dc6a027f52' => $baseDir . '/lib/meta-box/mb-frontend-submission/mb-frontend-submission.php',
-    'f647d0a65145ae19767fc599402db45b' => $baseDir . '/lib/meta-box/meta-box-tabs/meta-box-tabs.php',
+    '3cdaf8a7feac7dab25a504ea4957b65a' => $vendorDir . '/woocommerce/action-scheduler/action-scheduler.php',
 );
