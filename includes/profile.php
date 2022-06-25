@@ -276,13 +276,11 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
   if(is_object($user_id)) {
     $user = $user_id;
     $user_id = $user->ID;
-    error_log(__FUNCTION__ . " received user instead of user_id, now $user_id");
   }
 	if (
     ( $user_id && $new_pass && current_user_can('edit_user',$user_id ) )
     || ( isset($_REQUEST) && $_REQUEST['action'] == 'resetpass' && $_REQUEST['pass2'] == $new_pass )
   ) {
-    error_log(__FUNCTION__ . " proceed to reset password");
 		$user = get_userdata( $user_id );
 		if (! $user ) return;
 		$uuid = w4os_profile_sync($user); // refresh opensim data for this user
@@ -300,8 +298,6 @@ function w4os_set_avatar_password( $user_id, $new_pass ) {
 				'UUID' => $uuid,
 			)
 		);
-	} else {
-    error_log(__FUNCTION__ . " not authorized " . print_r($_REQUEST, true));
   }
 }
 
