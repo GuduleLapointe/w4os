@@ -302,24 +302,26 @@ function hostScan($hostname, $port, $xmlcontent)
   }
 }
 
-// $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
-$sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 LIMIT 0,100";
-// $sql = "SELECT host, port FROM hostsregister WHERE checked=0 LIMIT 0,100";
-$jobsearch = $SearchDB->query($sql);
-
-//
-// If the sql query returns no rows, all entries in the hostsregister
-// table have been checked. Reset the checked flag and re-run the
-// query to select the next set of hosts to be checked.
-//
-
-if ($jobsearch->rowCount() == 0)
-{
-  $jobsearch = $SearchDB->query("UPDATE hostsregister SET checked = 0");
+if($SearchDB && $SearchDB->connected) {
+  // $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 AND failcounter<10 LIMIT 0,100";
+  $sql = "SELECT host, port FROM hostsregister WHERE nextcheck<$now AND checked=0 LIMIT 0,100";
+  // $sql = "SELECT host, port FROM hostsregister WHERE checked=0 LIMIT 0,100";
   $jobsearch = $SearchDB->query($sql);
-}
 
-while ($jobs = $jobsearch->fetch(PDO::FETCH_NUM))
-hostCheck($jobs[0], $jobs[1]);
+  //
+  // If the sql query returns no rows, all entries in the hostsregister
+  // table have been checked. Reset the checked flag and re-run the
+  // query to select the next set of hosts to be checked.
+  //
+
+  if ($jobsearch->rowCount() == 0)
+  {
+    $jobsearch = $SearchDB->query("UPDATE hostsregister SET checked = 0");
+    $jobsearch = $SearchDB->query($sql);
+  }
+
+  while ($jobs = $jobsearch->fetch(PDO::FETCH_NUM))
+  hostCheck($jobs[0], $jobs[1]);
+}
 
 die();

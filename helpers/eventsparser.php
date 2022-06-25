@@ -106,8 +106,10 @@ foreach($json as $json_event) {
   $events[] = $fields;
 }
 
-$SearchDB->query("DELETE FROM events");
-foreach($events as $event) {
-  $result = $SearchDB->insert('events', $event);
-  if(!$result) error_log("error while inserting new events)");
+if(is_object($SearchDB) && $SearchDB->connected) {
+  $SearchDB->query("DELETE FROM events");
+  foreach($events as $event) {
+    $result = $SearchDB->insert('events', $event);
+    if(!$result) error_log("error while inserting new events)");
+  }
 }

@@ -207,7 +207,7 @@ add_action( 'template_include', function( $template ) {
     exit();
   }
 
-  $user_agent = $_SERVER['HTTP_USER_AGENT'];
+  $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
   if(strpos( $user_agent, ' - SecondLife/') !== false) {
     return plugin_dir_path(__DIR__) . "templates/page-profile-viewer.php"; die();
   }

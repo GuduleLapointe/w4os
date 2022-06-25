@@ -6,14 +6,15 @@
 class OSPDO extends PDO {
 	public function __construct($dsn, $username=null, $password=null, $driver_options=null)
 	{
-		@parent::__construct($dsn, $username, $password, $driver_options);
 		try {
+			@parent::__construct($dsn, $username, $password, $driver_options);
 			$this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->connected = true;
 		}
 		catch(PDOException $e)
 		{
-		  error_log($e);
+			error_log("Could not connect to database $dsn as $username");
+		  // error_log($e);
 			$this->connected = false;
 		}
 	}
@@ -51,6 +52,9 @@ class OSPDO extends PDO {
 
 function tableExists($pdo, $tables) {
 	if(!is_object($pdo)) return false;
+	if(!$pdo->connected) return false;
+	// error_log("pdo " . print_r($pdo, true));
+
   if(is_string($tables)) $tables=array($tables);
   foreach($tables as $table) {
     // Try a select statement against the table

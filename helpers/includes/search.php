@@ -16,6 +16,8 @@
  */
 
 function ossearch_db_tables($db) {
+  if(!$db->connected) return false;
+
   $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
     `regionUUID` char(36) NOT NULL,
     `parcelname` varchar(255) NOT NULL,
@@ -225,7 +227,7 @@ catch(PDOException $e) {
   $SearchDB = NULL;
 }
 
-if($SearchDB) {
+if($SearchDB && $SearchDB->connected) {
   // <tl;tr> To avoid data loss, fatal errors or conflicts, we use regionsregister
   // table instead of regions if it seems to be a robust database. For obscure and
   // historical reasons, search regions table has the same name as robust regions

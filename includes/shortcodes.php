@@ -123,6 +123,8 @@ function w4os_gridinfo_html($atts = [], $args=[])
 	extract( $args );
 
 	isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid info", 'w4os');
+	$before_title = (isset($before_title)) ? $before_title : '';
+	$after_title = (isset($after_title)) ? $before_title : '';
 	$content = $before_title . $title . $after_title;
 	$info=array(
 		__("Grid name", 'w4os') => esc_attr(get_option('w4os_grid_name')),
@@ -150,7 +152,8 @@ function w4os_gridstatus_html($atts = [], $args = [])
 	$filter="";
 
 	isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid status", 'w4os');
-
+	$before_title = (isset($before_title)) ? $before_title : '';
+	$after_title = (isset($after_title)) ? $before_title : '';
 	$content = $before_title . $title . $after_title;
 
 	$status=w4os_grid_status_text();
