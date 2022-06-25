@@ -150,10 +150,16 @@ img.model-picture {
   font-weight: bold;
   margin-right: 20px;
 }
+.profileImage > img,
+.profile-pic > img,
+img.avatar {
+  aspect-ratio: 4/3;
+}
 .profileImage > img {
   width: 512px;
-  height: 384px;
+  height: auto;
 }
+
 .edit-account label {
   display: inline-block;
     width: calc( (100% - 20px) / 2);
