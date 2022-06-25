@@ -153,7 +153,7 @@ function w4os_gridstatus_html($atts = [], $args = [])
 
 	isset($atts['title']) ? $title=$atts['title'] : $title=__("Grid status", 'w4os');
 	$before_title = (isset($before_title)) ? $before_title : '';
-	$after_title = (isset($after_title)) ? $before_title : '';
+	$after_title = (isset($after_title)) ? $after_title : '';
 	$content = $before_title . $title . $after_title;
 
 	$status=w4os_grid_status_text();
