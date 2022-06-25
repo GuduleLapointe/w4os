@@ -155,7 +155,7 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 = 2.3.3 =
 * added password reset link to profile page
-* fix fatal error in helpers with poorly encoded unicode text
+* fix fatal error in helpers for poorly encoded unicode text sources
 * fix fatal errors in helpers when database is not connected
 * fix #57 password not updated on grid when using password recovery in WordPdress
 
