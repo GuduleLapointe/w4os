@@ -128,6 +128,9 @@ class W4OS_Avatar extends WP_User {
         __('Languages', 'w4os') => $avatar_row->profileLanguages,
         __('Real Life', 'w4os') => trim($avatar_row->profileFirstImageHtml . ' ' . wpautop($avatar_row->profileFirstText)),
       ));
+      if(wp_get_current_user()->ID == $this->ID) {
+        $profile[__('Change password', 'w4os')] = '<a href="' . wp_lostpassword_url() . '">' . __('Password reset link', 'w4os') . '</a>';
+      }
 
       /* In-world profiles are always public, so are web profiles */
       // if($avatar_row->profileAllowPublish != 1) {
