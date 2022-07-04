@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.3.4
+* fix profile picture aspect ration (4/3, as in viewer)
+
 ### 2.3.3
 * added password reset link to profile page
 * fix fatal error in helpers for poorly encoded unicode text sources
