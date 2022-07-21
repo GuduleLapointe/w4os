@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.3.5
+* tested up to 6.0.1
+
 ### 2.3.4
 * fix profile picture aspect ration (4/3, as in viewer)
 

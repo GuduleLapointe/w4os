@@ -4,7 +4,7 @@
 * Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 * Requires at least: 5.3.0
 * Requires PHP: 5.6
-* Tested up to: 5.9
+* Tested up to: 6.0.1
 * Stable tag: 2.3.2
 * License: AGPLv3
 * License URI: https://www.gnu.org/licenses/agpl-3.0.txt
