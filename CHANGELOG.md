@@ -1,6 +1,7 @@
 ## Changelog
 
 ### 2.3.6
+* updated translations
 
 ### 2.3.5
 * tested up to 6.0.1
