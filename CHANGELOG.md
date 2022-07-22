@@ -7,7 +7,7 @@
 * tested up to 6.0.1
 
 ### 2.3.4
-* fix profile picture aspect ration (4/3, as in viewer)
+* fix profile picture aspect ratio (4/3, as in viewer)
 
 ### 2.3.3
 * added password reset link to profile page
