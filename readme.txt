@@ -153,6 +153,8 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
+= 2.3.6 =
+
 = 2.3.5 =
 * tested up to 6.0.1
 
