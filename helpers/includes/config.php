@@ -33,11 +33,11 @@ define('HYPEVENTS_URL', preg_replace(':/$:', '', get_option('w4os_hypevents_url'
  * a multi-grid search engine). In this case search will only provide results
  * for places, land for sale and events.
  */
-// define('OPENSIM_DB', true); // Set to false for search only, see above
 define('OPENSIM_DB_HOST', get_option('w4os_db_host'));
 define('OPENSIM_DB_NAME', get_option('w4os_db_database'));
 define('OPENSIM_DB_USER', get_option('w4os_db_user'));
 define('OPENSIM_DB_PASS', get_option('w4os_db_pass'));
+define('OPENSIM_DB', (!empty(OPENSIM_DB_HOST) &! empty(OPENSIM_DB_NAME) &! empty(OPENSIM_DB_USER) &! empty(OPENSIM_DB_PASS)) ? true : false);
 
 /**
  * Search database credentials and settings.
