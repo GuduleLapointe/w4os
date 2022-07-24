@@ -1,8 +1,9 @@
 ## Changelog
 
+### Unreleased
+
 ### 2.3.7
-* updated translations
-* fix opensim db not loaded by helpers (not properly fixed in a6a3b5bbea1c9cfbd091a38b6ff33a79b2ddf9b3)
+* fix offline messages not forwarded by mail (opensim db not properly loaded by helpers)
 
 ### 2.3.6
 * updated translations
