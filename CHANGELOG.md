@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.3.7
+* updated translations
+* fix opensim db not loaded by helpers (not properly fixed in a6a3b5bbea1c9cfbd091a38b6ff33a79b2ddf9b3)
+
 ### 2.3.6
 * updated translations
 
