@@ -104,6 +104,7 @@ function w4os_register_settings() {
 								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
 								'default' =>  __('Defaults', 'w4os'),
 							),
+							'readonly' => true,
 							'default' => 'provide',
 							'description' => sprintf(
 								__('The page %s must exist, as defined in %spermalinks settings%s.', 'w4os'),
@@ -120,10 +121,13 @@ function w4os_register_settings() {
 								'default' =>  __('Defaults', 'w4os'),
 							),
 							'default' => 'provide',
-							'description' => sprintf(
+							'description' => (w4os_check_db_tables('userprofile')) ? sprintf(
 								__('The page %s must exist, as defined in %spermalinks settings%s.', 'w4os'),
 								'<code>' . get_home_url(NULL, get_option('w4os_profile_slug', 'profile')) . '</code>',
 								'<a href=' . get_admin_url('', 'options-permalink.php').'>', '</a>',
+							) : sprintf(
+								__('Table %s not found. User Profiles must be activated in Robust to enable profile page.', 'w4os'),
+								'<code>userprofile</code>',
 							),
 						),
 						'w4os_configuration_instructions' => array(

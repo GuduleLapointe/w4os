@@ -61,13 +61,14 @@ function w4os_check_db() {
 function w4os_check_db_tables($tables, $error = false) {
   global $w4osdb;
   if(!$w4osdb) return false;
-
   if(empty($tables)) return true;
   if(!is_array($tables)) $tables = [ $tables ];
 
+  $cache_key = sanitize_title(__FUNCTION__ . '-' . join('-', $tables));
+  if(wp_cache_get($cache_key)) return wp_cache_get($cache_key);
+
   $missing=array();
   foreach($tables as $table) {
-    $cache_key = __FUNCTION__ . '-' . $table;
     unset($actual_name);
     $lower_name = strtolower($table);
     if($w4osdb->get_var("SHOW TABLES LIKE '$table'") == $table) $actual_name = $table;
@@ -77,8 +78,9 @@ function w4os_check_db_tables($tables, $error = false) {
     }
   }
 
+  wp_cache_set($cache_key, ( 0 === count($missing) ) );
+
   if (count($missing) > 0 ) {
-    error_log('missing tables ' . join(', ', $missing));
     if ( $error ) {
       w4os_admin_notice(
         w4os_give_settings_url(

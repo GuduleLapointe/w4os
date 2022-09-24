@@ -85,6 +85,7 @@ require_once __DIR__ . '/shortcodes.php';
 // require_once __DIR__ . '/widgets.php';
 require_once __DIR__ . '/users.php';
 require_once __DIR__ . '/gridauth.php';
+if(w4os_check_db_tables('userprofile'))
 require_once __DIR__ . '/profile.php';
 require_once __DIR__ . '/cron.php';
 if(function_exists('xmlrpc_encode_request')) {
