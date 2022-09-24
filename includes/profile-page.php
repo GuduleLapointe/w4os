@@ -184,14 +184,14 @@ add_action( 'template_include', function( $template ) {
 
     if(!isset($head_title)) $head_title = $page_title;
 
-
-    if(wp_get_theme()->parent() && wp_get_theme()->Name == 'Divi' || wp_get_theme()->parent()->Name == 'Divi') {
-      // document_title_parts doesn't work with some themes, workaround...
+    switch(get_template()) {
+      case 'Divi':
       add_filter('pre_get_document_title', function() use($head_title) {
         return $head_title . ' – ' . get_bloginfo('name') ;
       }, 20);
-    } else {
-      // Document_title_parts is preferred as it keeps website SEO preferences
+      break;
+
+      default:
       add_filter('document_title_parts', function($title) use($head_title) {
         $title['title'] = $head_title;
         // $title['site'] = get_option('w4os_grid_name');
