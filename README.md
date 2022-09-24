@@ -1,15 +1,11 @@
 # w4os - OpenSimulator Web Interface
-* Contributors: gudulelapointe,magicoli69
-* Donate link: https://w4os.org/donate/
-* Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
-* Requires at least: 5.3.0
-* Requires PHP: 5.6
-* Tested up to: 6.0.1
-* Stable tag: 2.3.7
-* License: AGPLv3
-* License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
-WordPress interface for OpenSimulator (w4os)
+![Stable](https://badgen.net/badge/Stable/2.3.7/yellow)
+![WordPress](https://badgen.net/badge/WordPress/5.3.0-6.0.1/blue)
+![Requires PHP](https://badgen.net/badge/PHP/5.6/purple)
+![License AGPLv3](https://badgen.net/badge/License/AGPLv3)
+
+WordPress interface for OpenSimulator (w4os).
 
 ## Description
 

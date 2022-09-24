@@ -24,8 +24,8 @@
 
 Avatar models are displayed on new avatar registration and allow new users to start with another appearance than Ruth.
 
-* Check (or change) their naming convention in Admin > OpenSimulator > Settings > Avatar models
-* From robust console, create a user named accordingly (for example, "Female Default", Default John", ...).
+- Check (or change) their naming convention in Admin > OpenSimulator > Settings > Avatar models
+- From robust console, create a user named accordingly (for example, "Female Default", Default John", ...).
     ```
     R.O.B.U.S.T. # create user Default John
     Password: ************************
@@ -40,8 +40,8 @@ Avatar models are displayed on new avatar registration and allow new users to st
   - The rest of the name will be displayed in the form, so make it relevant
   - You can leave "Email" and "User ID" blank
   - Leave "Model Name" blank, you are creating a model, not using an existing model to create a user
-* Connect in-world as this avatar and change outfit. Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items.
-* Make a snapshot and attach it to this account profile
+- Connect in-world as this avatar and change outfit. Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items.
+- Make a snapshot and attach it to this account profile
 
 The model will now appear in new avatar registration form, with its profile picture.
 
@@ -49,7 +49,7 @@ These accounts will be excluded from grid statistics.
 
 ### Dependencies
 
-* **Web Asset Server**: the project requires a web asset server to convert simulator assets (profile pictures, model avatars...) and display them on the website. W4OS provides a web assets service, or you can specify an external web assets service URL instead.
+- **Web Asset Server**: the project requires a web asset server to convert simulator assets (profile pictures, model avatars...) and display them on the website. W4OS provides a web assets service, or you can specify an external web assets service URL instead.
 
-* **PHP Modules**: w4os requires php imagemagick module. Also, while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
+- **PHP Modules**: w4os requires php imagemagick module. Also, while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
 
