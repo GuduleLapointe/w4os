@@ -13,7 +13,7 @@ if(get_option('w4os_db_user') && get_option('w4os_db_pass') && get_option('w4os_
   );
 }
 
-function w4os_check_db_tables() {
+function w4os_check_db() {
 	if(defined('W4OS_DB_CONNECTED')) return W4OS_DB_CONNECTED;
 	global $w4osdb;
   if(empty($w4osdb)) return false; // Might happen when using wp-cli
@@ -33,7 +33,11 @@ function w4os_check_db_tables() {
     return false;
   }
 
-	if(!is_object($w4osdb)) return false;
+  if( ! $w4osdb ) {
+    define('W4OS_DB_CONNECTED', false) ;
+    return  false;
+  }
+
 	$required_tables = array(
 		// 'AgentPrefs',
 		// 'assets',
@@ -50,30 +54,46 @@ function w4os_check_db_tables() {
 		// 'tokens',
 		'UserAccounts',
 	);
-  $missing_tables=array();
-	foreach($required_tables as $table_name) {
-		unset($actual_name);
-		$lower_name = strtolower($table_name);
-		if($w4osdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) $actual_name = $table_name;
-		else if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) $actual_name = $lower_name;
-		if(isset($actual_name)) {
-			if (!defined($table_name)) define($table_name, $actual_name);
-			continue;
-		}
-    $missing_tables[] = $table_name;
-	}
-  if(count($missing_tables) > 0) {
-    w4os_admin_notice(
-      w4os_give_settings_url(
-        sprintf(
-          __("Missing tables: %s. The ROBUST database is connected, but it does not seem valid. ", 'w4os'),
-          ' <strong><em>' . join(', ', $missing_tables) . '</em></strong>',
+
+  return w4os_check_db_tables($required_tables, true);
+}
+
+function w4os_check_db_tables($tables, $error = false) {
+  global $w4osdb;
+  if(!$w4osdb) return false;
+
+  if(empty($tables)) return true;
+  if(!is_array($tables)) $tables = [ $tables ];
+
+  $missing=array();
+  foreach($tables as $table) {
+    $cache_key = __FUNCTION__ . '-' . $table;
+    unset($actual_name);
+    $lower_name = strtolower($table);
+    if($w4osdb->get_var("SHOW TABLES LIKE '$table'") == $table) $actual_name = $table;
+    else if($w4osdb->get_var("SHOW TABLES LIKE '$lower_name'") == $lower_name) $actual_name = $lower_name;
+    if(empty($actual_name)) {
+      $missing[] = $table;
+    }
+  }
+
+  if (count($missing) > 0 ) {
+    error_log('missing tables ' . join(', ', $missing));
+    if ( $error ) {
+      w4os_admin_notice(
+        w4os_give_settings_url(
+          sprintf(
+            __("Missing tables: %s. The ROBUST database is connected, but some required tables are missing. ", 'w4os'),
+            ' <strong><em>' . join(', ', $missing) . '</em></strong>',
+          ),
         ),
-      ),
-      'error',
-    );
+        'error',
+      );
+    }
     return false;
   }
-	return true;
+
+  return true;
 }
-if (!defined('W4OS_DB_CONNECTED')) define('W4OS_DB_CONNECTED', w4os_check_db_tables());
+
+define('W4OS_DB_CONNECTED', w4os_check_db() );
