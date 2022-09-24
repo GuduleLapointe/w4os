@@ -184,7 +184,8 @@ add_action( 'template_include', function( $template ) {
 
     if(!isset($head_title)) $head_title = $page_title;
 
-    if(wp_get_theme()->Name == 'Divi' || wp_get_theme()->parent()->Name == 'Divi') {
+
+    if(wp_get_theme()->parent() && wp_get_theme()->Name == 'Divi' || wp_get_theme()->parent()->Name == 'Divi') {
       // document_title_parts doesn't work with some themes, workaround...
       add_filter('pre_get_document_title', function() use($head_title) {
         return $head_title . ' – ' . get_bloginfo('name') ;
