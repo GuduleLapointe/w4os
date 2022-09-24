@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 5.6
 Tested up to: 6.0.1
-Stable tag: 2.3.8
+Stable tag: 2.3.9
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -152,6 +152,9 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.3.9 =
+* updated translations
 
 = 2.3.8 =
 * fix userprofile table queried even if not present (issue #64) when User Profiles are not enabled on robust

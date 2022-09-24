@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.3.9
+- updated translations
+
 ### 2.3.8
 - fix userprofile table queried even if not present (issue #64) when User Profiles are not enabled on robust
 - fix fatal error Argument #2 ($haystack) must be of type array, bool given (issue #64)
