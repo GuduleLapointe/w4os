@@ -50,6 +50,6 @@ These accounts will be excluded from grid statistics.
 ### Dependencies
 
 - **Web Asset Server**: the project requires a web asset server to convert simulator assets (profile pictures, model avatars...) and display them on the website. W4OS provides a web assets service, or you can specify an external web assets service URL instead.
-
+- **PHP** 7.4 to 8.1
 - **PHP Modules**: w4os requires php imagemagick module. Also, while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
 

@@ -1,10 +1,10 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
-Requires PHP: 5.6
-Tested up to: 6.0.1
+Requires PHP: 7.3
+Tested up to: 6.0.2
 Stable tag: 2.3.9
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -97,7 +97,7 @@ These accounts will be excluded from grid statistics.
 = Dependencies =
 
 * **Web Asset Server**: the project requires a web asset server to convert simulator assets (profile pictures, model avatars...) and display them on the website. W4OS provides a web assets service, or you can specify an external web assets service URL instead.
-
+* **PHP** 7.4 to 8.1
 * **PHP Modules**: w4os requires php imagemagick module. Also, while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
 
 == Roadmap ==
@@ -152,6 +152,8 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased =
 
 = 2.3.9 =
 * updated translations
