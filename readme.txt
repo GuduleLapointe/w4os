@@ -153,7 +153,7 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
-= Unreleased (2.3.10-dev.881) =
+= Unreleased (2.3.10-dev.882) =
 
 = 2.3.9 =
 * updated translations
