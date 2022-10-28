@@ -192,6 +192,97 @@ function w4os_sync_users() {
 	if(!empty($messages)) return '<div class=messages><p>' . join('</p><p>', $messages) . '</div>';
 }
 
+function w4os_profile_dereference($user_or_id) {
+  if(!W4OS_DB_CONNECTED) return;
+  global $w4osdb;
+
+  if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
+  else $user = $user_or_id;
+  if(!is_object($user)) return;
+
+  delete_user_meta( $user->ID, 'w4os_uuid' );
+  delete_user_meta( $user->ID, 'w4os_firstname' );
+  delete_user_meta( $user->ID, 'w4os_lastname' );
+  delete_user_meta( $user->ID, 'w4os_avatarname' );
+  delete_user_meta( $user->ID, 'w4os_profileimage' );
+  $roles = (array)$user->roles;
+  if(count($roles)==1) $user->add_role(get_option('default_role'));
+  $user->remove_role('grid_user');
+}
+
+/**
+ * Sync avatar info from OpenSimulator
+ * @param  object $user_or_id   user object or user id
+ * @param  key    $uuid         if set, create link with avatar and update info
+ *                              if not set, update avatar info if link exists
+ * @return object       [description]
+ */
+function w4os_profile_sync($user_or_id, $uuid = NULL) {
+  if(!W4OS_DB_CONNECTED) return;
+	if( ! w4os_check_db_tables('userprofile' ) ) return; // profiles are not enabled on robust
+
+  global $w4osdb;
+
+  if(is_numeric($user_or_id)) $user = get_user_by('ID', $user_or_id);
+  else $user = $user_or_id;
+  if(!is_object($user)) return;
+
+  if(w4os_empty($uuid)) {
+    $condition = "Email = '$user->user_email'";
+  } else {
+    $condition = "PrincipalID = '$uuid'";
+  }
+
+  $avatars=$w4osdb->get_results("SELECT * FROM UserAccounts
+    LEFT JOIN userprofile ON PrincipalID = userUUID
+    LEFT JOIN GridUser ON PrincipalID = UserID
+    WHERE active = 1 AND $condition"
+  );
+  if(empty($avatars)) return false;
+
+  $avatar_row = array_shift($avatars);
+  if(w4os_empty($uuid)) $uuid = $avatar_row->PrincipalID;
+
+  if(w4os_empty($uuid)) {
+    w4os_profile_dereference($user);
+    return false;
+  }
+
+  $user->add_role('grid_user');
+
+  update_user_meta( $user->ID, 'w4os_uuid', $uuid );
+  update_user_meta( $user->ID, 'w4os_firstname', $avatar_row->FirstName );
+  update_user_meta( $user->ID, 'w4os_lastname', $avatar_row->LastName );
+  update_user_meta( $user->ID, 'w4os_avatarname', trim($avatar_row->FirstName . ' ' . $avatar_row->LastName) );
+  update_user_meta( $user->ID, 'w4os_created', $avatar_row->Created);
+  update_user_meta( $user->ID, 'w4os_lastseen', $avatar_row->Login);
+  update_user_meta( $user->ID, 'w4os_profileimage', $avatar_row->profileImage );
+  return $uuid;
+}
+
+
+function w4os_profile_sync_all() {
+  if(!W4OS_DB_CONNECTED) return;
+	if( ! w4os_check_db_tables('userprofile' ) ) return; // profiles are not enabled on robust
+
+  global $wpdb;
+  global $w4osdb;
+
+  $updated = array();
+  $UserAccounts=$w4osdb->get_results("SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText, Email
+    FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
+    WHERE active = 1
+    ");
+  foreach($UserAccounts as $UserAccount) {
+    $user = get_user_by( 'email', $UserAccount->Email );
+    if(!$user) continue;
+    $uuid = w4os_profile_sync($user);
+    $updated[$UserAccount->Email] = $user->ID . ' ' . $uuid;
+  }
+  w4os_admin_notice(sprintf(__('%s local users updated with avatar data', 'w4os'), count($updated)), 'success');
+  return;
+}
+
 function register_w4os_sync_users_async_cron()
 {
 	if ( false === as_next_scheduled_action( 'w4os_sync_users' ) ) {
