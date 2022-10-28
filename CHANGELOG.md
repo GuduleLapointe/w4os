@@ -1,6 +1,8 @@
 ## Changelog
 
-### Unreleased (2.3.10-dev.882)
+### 2.3.10
+- minor fixes (profile page title, profile image, profile text display)
+- tested up to WP 6.1, minimum php 7.3
 
 ### 2.3.9
 - updated translations
