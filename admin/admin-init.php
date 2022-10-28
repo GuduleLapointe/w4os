@@ -190,12 +190,14 @@ function w4os_users_filter_avatars($position)
     'with_avatar' => __('With Avatar', 'w4os'),
     'without_avatar' => __('Without Avatar', 'w4os'),
   );
+  $options_html = '';
   foreach($options as $value => $label) {
+    $param = 'filter_avatar_'. $position;
     $options_html .= sprintf(
       '<option value="%1$s" %3$s>%2$s</option>',
       esc_attr($value),
       esc_attr($label),
-      esc_html(( $_GET['filter_avatar_'. $position ] == $value ) ? 'selected' : ''),
+      esc_html( ( isset( $_GET[$param] ) && $_GET[$param] === $value ) ? 'selected' : '' ),
     );
   }
 
@@ -219,8 +221,8 @@ function w4os_users_filter_avatars_section($query)
 {
   global $pagenow;
   if (is_admin() && 'users.php' == $pagenow) {
-    if( $_GET['filter_avatar_top'] ) $value = $_GET['filter_avatar_top'];
-    else $value = $_GET['filter_avatar_bottom'] ? $_GET['filter_avatar_bottom'] : null;
+    if( isset ( $_GET['filter_avatar_top'] ) ) $value = $_GET['filter_avatar_top'];
+    else $value = isset ( $_GET['filter_avatar_bottom'] ) ? $_GET['filter_avatar_bottom'] : null;
 
     if ( !empty($value) )
     {
