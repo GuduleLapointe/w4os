@@ -1,10 +1,10 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.1
+Tested up to: 6.1-RC4
 Stable tag: 2.3.10
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -152,6 +152,12 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.3.11-dev.887) =
+* fix w4os_profile_sync() fatal error when profiles are disabled
+* fix minor PHP8 warnings
+* fix fatal error when wp object is passed as user_id
+* tested up to WP 6.1, minimum php 7.3
 
 = 2.3.10 =
 - minor fixes (profile page title, profile image, profile text display)
