@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2022-09-24T15:05:37-04:00\n"
+"POT-Creation-Date: 2022-12-11T14:43:43-04:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -57,11 +57,11 @@ msgstr "OpenSimulator Helpers"
 msgid "Helpers"
 msgstr "Helpers"
 
-#: admin/admin-init.php:105 includes/profile.php:118 tmp/class-avatar.php:315
+#: admin/admin-init.php:105 includes/profile.php:119 tmp/class-avatar.php:315
 msgid "Avatar Name"
 msgstr "Avatar naam"
 
-#: admin/admin-init.php:111 admin/admin-init.php:117 includes/profile.php:124
+#: admin/admin-init.php:111 admin/admin-init.php:117 includes/profile.php:125
 #: tmp/class-avatar.php:350
 msgid "Born"
 msgstr "Geboren"
@@ -82,75 +82,75 @@ msgstr "Met avatar"
 msgid "Without Avatar"
 msgstr "Zonder avatar"
 
-#: admin/admin-init.php:208
+#: admin/admin-init.php:210
 msgid "Filter users..."
 msgstr "Filter gebruikers..."
 
-#: admin/admin-init.php:214
+#: admin/admin-init.php:216
 msgid "Filter"
 msgstr "Filter"
 
-#: admin/admin-init.php:260
+#: admin/admin-init.php:262
 msgid "OpenSimulator Profile"
 msgstr "OpenSimulator profiel"
 
-#: admin/admin-init.php:262
+#: admin/admin-init.php:264
 msgid "OpenSimulator Splash"
 msgstr "OpenSimulator Splash"
 
-#: admin/admin-init.php:264
+#: admin/admin-init.php:266
 msgid "OpenSimulator Search"
 msgstr "OpenSimulator Zoeken"
 
-#: admin/admin-init.php:266
+#: admin/admin-init.php:268
 msgid "OpenSimulator Economy"
 msgstr "OpenSimulator economie"
 
-#: admin/admin-init.php:268
+#: admin/admin-init.php:270
 msgid "OpenSimulator About"
 msgstr "OpenSimulator"
 
-#: admin/admin-init.php:270
+#: admin/admin-init.php:272
 msgid "OpenSimulator Register"
 msgstr "OpenSimulator Register"
 
-#: admin/admin-init.php:272
+#: admin/admin-init.php:274
 msgid "OpenSimulator Password"
 msgstr "OpenSimulator wachtwoord"
 
-#: admin/admin-init.php:274
+#: admin/admin-init.php:276
 msgid "OpenSimulator Offline Messages"
 msgstr "OpenSimulator Offline Berichten"
 
-#: admin/admin-init.php:286 admin/admin-init.php:300
+#: admin/admin-init.php:288 admin/admin-init.php:302
 msgid "The followed link has expired, please try again"
 msgstr "De gevolgde link is verlopen, probeer het opnieuw"
 
-#: admin/admin-init.php:307
+#: admin/admin-init.php:309
 msgid "Page %s already exists."
 msgstr "Pagina %s bestaat al."
 
-#: admin/admin-init.php:324
+#: admin/admin-init.php:326
 msgid "New page %s created."
 msgstr "Nieuwe pagina %s aangemaakt."
 
-#: admin/admin-init.php:328
+#: admin/admin-init.php:330
 msgid "Error while creating page %s."
 msgstr "Fout bij het aanmaken van pagina %s."
 
-#: admin/admin-init.php:340
+#: admin/admin-init.php:342
 msgid "Avatar profile"
 msgstr "Avatar profiel"
 
-#: admin/admin-init.php:341
+#: admin/admin-init.php:343
 msgid "The base URL for avatar web profiles."
 msgstr "De basis URL voor avatar web profielen."
 
-#: admin/admin-init.php:344
+#: admin/admin-init.php:346
 msgid "Search Service"
 msgstr "Zoekdienst"
 
-#: admin/admin-init.php:345
+#: admin/admin-init.php:347
 msgid ""
 "Search service used by the viewer. Search can be provided by the simulator "
 "core (limited), or by an external service for additional functionalities "
@@ -160,11 +160,11 @@ msgstr ""
 "simulator kern (beperkt), of door een externe service voor extra "
 "functionaliteiten (zoals gebeurtenissen). Vereist OpenSimSearch.Modules.dll."
 
-#: admin/admin-init.php:355
+#: admin/admin-init.php:357
 msgid "Web Search"
 msgstr "Zoeken op het web"
 
-#: admin/admin-init.php:356
+#: admin/admin-init.php:358
 msgid ""
 "Web tab of viewer search windows. Relevant if you have a search page "
 "providing content from the grid."
@@ -172,11 +172,11 @@ msgstr ""
 "Web tabblad van viewer zoekvensters. Relevant als u een zoekpagina hebt met "
 "inhoud uit het raster."
 
-#: admin/admin-init.php:366 admin/settings.php:294
+#: admin/admin-init.php:368 admin/settings.php:294
 msgid "Offline messages"
 msgstr "Offline berichten"
 
-#: admin/admin-init.php:367
+#: admin/admin-init.php:369
 msgid ""
 "Needed by viewers to keep messages while user is offline and deliver them "
 "when they come back online. Internal service, not accessed directly by the "
@@ -186,11 +186,11 @@ msgstr ""
 "en ze af te leveren wanneer hij weer online komt. Interne dienst, niet "
 "rechtstreeks toegankelijk voor de gebruiker."
 
-#: admin/admin-init.php:372
+#: admin/admin-init.php:374
 msgid "Splash"
 msgstr "Splash"
 
-#: admin/admin-init.php:373
+#: admin/admin-init.php:375
 msgid ""
 "The welcome page displayed in the viewer with the login form. A short, no-"
 "scroll page, with only essential info. It is required, or at least highly "
@@ -200,27 +200,27 @@ msgstr ""
 "korte, niet scrollende pagina, met alleen essentiële info. Het is verplicht, "
 "of op zijn minst sterk aanbevolen."
 
-#: admin/admin-init.php:398
+#: admin/admin-init.php:400
 msgid "Registration page"
 msgstr "Registratie pagina"
 
-#: admin/admin-init.php:399
+#: admin/admin-init.php:401
 msgid "Link to the user registration."
 msgstr "Link naar de gebruikersregistratie."
 
-#: admin/admin-init.php:404
+#: admin/admin-init.php:406
 msgid "Password revovery"
 msgstr "Wachtwoord herontdekking"
 
-#: admin/admin-init.php:405
+#: admin/admin-init.php:407
 msgid "Link to lost password page."
 msgstr "Link naar de verloren wachtwoord pagina."
 
-#: admin/admin-init.php:410
+#: admin/admin-init.php:412
 msgid "Economy"
 msgstr "Economie"
 
-#: admin/admin-init.php:411
+#: admin/admin-init.php:413
 msgid ""
 "Currencies and some other services queried by the viewer. They are not "
 "accessed directly by the user."
@@ -228,11 +228,11 @@ msgstr ""
 "Valuta's en enkele andere diensten die door de kijker worden opgevraagd. Zij "
 "zijn niet rechtstreeks toegankelijk voor de gebruiker."
 
-#: admin/admin-init.php:417
+#: admin/admin-init.php:419
 msgid "About this grid"
 msgstr "Over dit rooster"
 
-#: admin/admin-init.php:418
+#: admin/admin-init.php:420
 msgid ""
 "Detailed info page on your website, via a link displayed on the viewer login "
 "page."
@@ -240,11 +240,11 @@ msgstr ""
 "Gedetailleerde informatiepagina op uw website, via een link op de "
 "inlogpagina van de kijker."
 
-#: admin/admin-init.php:422
+#: admin/admin-init.php:424
 msgid "Help"
 msgstr "Help"
 
-#: admin/admin-init.php:423
+#: admin/admin-init.php:425
 msgid "Link to a help page on your website."
 msgstr "Link naar een hulppagina op uw website."
 
@@ -992,79 +992,75 @@ msgstr "Scripting"
 msgid "Custom Characters"
 msgstr "Aangepaste tekens"
 
-#: includes/profile.php:122
+#: includes/profile.php:123
 msgid "About"
 msgstr "Over"
 
-#: includes/profile.php:125
+#: includes/profile.php:126
 msgid "Partner"
 msgstr "Partner"
 
-#: includes/profile.php:126
+#: includes/profile.php:127
 msgid "Wants to"
 msgstr "Wil je"
 
-#: includes/profile.php:127
+#: includes/profile.php:128
 msgid "Skills"
 msgstr "Vaardigheden"
 
-#: includes/profile.php:128
+#: includes/profile.php:129
 msgid "Languages"
 msgstr "Talen"
 
-#: includes/profile.php:129
+#: includes/profile.php:130
 msgid "Real Life"
 msgstr "Het echte leven"
 
-#: includes/profile.php:132 tmp/class-avatar.php:277
+#: includes/profile.php:133 tmp/class-avatar.php:277
 msgid "Change password"
 msgstr ""
 
-#: includes/profile.php:132
+#: includes/profile.php:133
 msgid "Password reset link"
 msgstr ""
 
-#: includes/profile.php:244
-msgid "%s local users updated with avatar data"
-msgstr "%s lokale gebruikers bijgewerkt met avatar data"
-
-#: includes/profile.php:258 includes/profile.php:977
+#: includes/profile.php:172 includes/profile.php:891
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
-#: includes/profile.php:414
+#: includes/profile.php:328
 msgid "This user already has an avatar."
 msgstr "Deze gebruiker heeft al een avatar."
 
-#: includes/profile.php:425
+#: includes/profile.php:339
 msgid "First name required"
 msgstr "Voornaam vereist"
 
-#: includes/profile.php:426
+#: includes/profile.php:340
 msgid "Last name required"
 msgstr "Achternaam vereist"
 
-#: includes/profile.php:428
+#: includes/profile.php:342
 msgid "Password required"
 msgstr "Wachtwoord vereist"
 
-#: includes/profile.php:429
+#: includes/profile.php:343
 msgid "The password does not match."
 msgstr "Het wachtwoord komt niet overeen."
 
-#: includes/profile.php:438 includes/profile.php:442
+#: includes/profile.php:352 includes/profile.php:356
 msgid "The name %s is not allowed"
 msgstr "Naam% s is niet toegestaan"
 
-#: includes/profile.php:446
+#: includes/profile.php:360
 msgid "Names can only contain alphanumeric characters"
 msgstr "Namen mogen alleen alfanumerieke tekens bevatten"
 
-#: includes/profile.php:452
+#: includes/profile.php:366
 msgid "There is already a grid user named %s"
 msgstr "Er is al een netgebruiker met de naam %s"
 
-#: includes/profile.php:458
+#: includes/profile.php:372
 msgid ""
 "This should never happen! Generated a random UUID that already existed. "
 "Sorry. Try again."
@@ -1072,47 +1068,47 @@ msgstr ""
 "Dit mag nooit gebeuren! Een willekeurige UUID gegenereerd die al bestond. "
 "Sorry. Probeer het opnieuw."
 
-#: includes/profile.php:480
+#: includes/profile.php:394
 msgid "Error while creating user"
 msgstr "Fout bij gebruiker aanmaken"
 
-#: includes/profile.php:489
+#: includes/profile.php:403
 msgid "Error while setting password"
 msgstr "Fout bij het instellen van het wachtwoord"
 
-#: includes/profile.php:500
+#: includes/profile.php:414
 msgid "Error while setting home region"
 msgstr "Fout bij instellen thuisregio"
 
-#: includes/profile.php:517
+#: includes/profile.php:431
 msgid "Error while creating user inventory"
 msgstr "Fout bij het maken van gebruikersinventaris"
 
-#: includes/profile.php:639
+#: includes/profile.php:553
 msgid "Error while adding inventory item"
 msgstr "Fout bij het toevoegen van voorraaditem"
 
-#: includes/profile.php:650
+#: includes/profile.php:564
 msgid "Error while adding inventory outfit link"
 msgstr "Fout bij het toevoegen van inventaris-outfit-link"
 
-#: includes/profile.php:662
+#: includes/profile.php:576
 msgid "Error while adding avatar"
 msgstr "Fout bij het toevoegen van avatar"
 
-#: includes/profile.php:668
+#: includes/profile.php:582
 msgid "Errors occurred while creating the user"
 msgstr "Fout bij gebruiker aanmaken"
 
-#: includes/profile.php:673
+#: includes/profile.php:587
 msgid "Avatar %s created successfully."
 msgstr "De avatar %s is succesvol aangemaakt."
 
-#: includes/profile.php:686
+#: includes/profile.php:600
 msgid "You need an avatar to explore our virtual world."
 msgstr "Je hebt een avatar nodig om onze virtuele wereld te verkennen."
 
-#: includes/profile.php:687
+#: includes/profile.php:601
 msgid ""
 "Choose a name below. This is how people will see you in-world. Once set, "
 "your avatar name cannot be changed."
@@ -1120,66 +1116,66 @@ msgstr ""
 "Kies hieronder uw avatar-naam. Dit is hoe mensen je in de wereld zullen "
 "zien. Zodra de avatar is gemaakt, kan deze niet meer worden gewijzigd."
 
-#: includes/profile.php:710
+#: includes/profile.php:624
 msgid "Avatar first name"
 msgstr "Avatar voornaam"
 
-#: includes/profile.php:714
+#: includes/profile.php:628
 msgid "Avatar last name"
 msgstr "Avatar achternaam"
 
-#: includes/profile.php:719
+#: includes/profile.php:633
 msgid "Confirm your password"
 msgstr "Bevestig uw wachtwoord"
 
-#: includes/profile.php:721
+#: includes/profile.php:635
 msgid ""
 "Your in-world Avatar password is the same as your password on this website."
 msgstr ""
 "Uw in-world Avatar-wachtwoord is hetzelfde als uw wachtwoord op deze website."
 
-#: includes/profile.php:735
+#: includes/profile.php:649
 msgid "Your initial appearance"
 msgstr "Uw eerste verschijning"
 
-#: includes/profile.php:736
+#: includes/profile.php:650
 msgid "You can change it as often as you want in the virtual world."
 msgstr "Je kunt het wijzigen en aanpassen in de wereld, zo vaak als je wilt."
 
-#: includes/profile.php:772
+#: includes/profile.php:686
 msgid "Save"
 msgstr "Opslaan"
 
-#: includes/profile.php:805
+#: includes/profile.php:719
 msgid "leave blank to leave unchanged"
 msgstr "laat leeg om geen wijzigingen aan te brengen"
 
-#: includes/profile.php:813
+#: includes/profile.php:727
 msgid "Create an avatar"
 msgstr "Maak een avatar"
 
-#: includes/profile.php:899 blocks/w4os-gridprofile-block/index.js:27
+#: includes/profile.php:813 blocks/w4os-gridprofile-block/index.js:27
 #: blocks/w4os-gridprofile-block/index.js:74
 msgid "Grid profile"
 msgstr "Rooster profiel"
 
-#: includes/profile.php:987
+#: includes/profile.php:901
 msgid "Avatar First Name"
 msgstr "Avatar voornaam"
 
-#: includes/profile.php:993
+#: includes/profile.php:907
 msgid "Avatar Last Name"
 msgstr "Avatar achternaam"
 
-#: includes/profile.php:999 tmp/class-avatar.php:361
+#: includes/profile.php:913 tmp/class-avatar.php:361
 msgid "Profile Picture"
 msgstr "Profiel foto"
 
-#: includes/profile.php:1001
+#: includes/profile.php:915
 msgid "Must be set in the viewer."
 msgstr "Moet worden ingesteld in de viewer."
 
-#: includes/profile.php:1006
+#: includes/profile.php:920
 msgid "Web Profile URL"
 msgstr "Web profiel URL"
 
@@ -1271,6 +1267,10 @@ msgid "%d broken reference removed"
 msgid_plural "%d broken references removed"
 msgstr[0] "%d gebroken referentie verwijderd"
 msgstr[1] "%d gebroken referenties verwijderd"
+
+#: includes/users.php:282
+msgid "%s local users updated with avatar data"
+msgstr "%s lokale gebruikers bijgewerkt met avatar data"
 
 #: includes/w4osdb.php:12
 msgid "ROBUST database is not configured. To finish configuration, go to "

@@ -1,10 +1,9 @@
 ## Changelog
 
-### Unreleased (2.3.11-dev.887)
+### 2.3.12
 - fix w4os_profile_sync() fatal error when profiles are disabled
 - fix minor PHP8 warnings
 - fix fatal error when wp object is passed as user_id
-- tested up to WP 6.1, minimum php 7.3
 
 ### 2.3.10
 - minor fixes (profile page title, profile image, profile text display)
