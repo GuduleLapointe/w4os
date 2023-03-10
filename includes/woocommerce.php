@@ -42,27 +42,48 @@ function w4os_has_bought( $user_id = 0 ) {
 function w4os_remove_my_account_links( $menu_links ){
   $endpoint = WC()->query->get_current_endpoint();
 
+  $menu_links = array_slice( $menu_links, 0, 1, true )
+	+ array( 'avatar' => __('Avatar', 'w4os' ) )
+	+ array_slice( $menu_links, 1, NULL, true );
+
+  $user = wp_get_current_user();
+  $user_id = ( $user ) ? $user->ID : null;
+
   //unset( $menu_links['dashboard'] ); // Remove Dashboard
   // unset( $menu_links['payment-methods'] ); // Remove Payment Methods
-  //unset( $menu_links['downloads'] ); // Disable Downloads
   //unset( $menu_links['edit-account'] ); // Remove Account details tab
   unset( $menu_links['edit-address'] ); // Addresses
   // unset( $menu_links['customer-logout'] ); // Remove Logout link
 
-  // if(!w4os_has_bought()) {
-    // unset( $menu_links['orders'] ); // Remove Orders
-    // unset( $menu_links['subscriptions'] ); // Remove Subscriptions
-  // }
-  $linkname=$menu_links['edit-account'];
-  unset( $menu_links['edit-account'] ); // Remove Account details tab
-  $menu_links = array_slice( $menu_links, 0, 1, true )
-	+ array( 'edit-account' => $linkname )
-	+ array_slice( $menu_links, 1, NULL, true );
+  if( ! wc_get_customer_available_downloads($user_id) ) {
+    unset( $menu_links['downloads'] ); // Disable Downloads section
+  }
+  if(!w4os_has_bought()) {
+    unset( $menu_links['orders'] ); // Remove Orders section
+  }
+  if ( ! w4os_has_subscription() ) {
+    unset( $menu_links['subscriptions'] ); // Remove Subscriptions section
+  }
+  // $linkname=$menu_links['edit-account'];
+  // unset( $menu_links['edit-account'] ); // Remove Account details tab
+  // $menu_links = array_slice( $menu_links, 0, 1, true )
+	// + array( 'edit-account' => $linkname )
+	// + array_slice( $menu_links, 1, NULL, true );
 
   return $menu_links;
 }
-// add_filter ( 'woocommerce_account_menu_items', 'w4os_remove_my_account_links' );
+add_filter ( 'woocommerce_account_menu_items', 'w4os_remove_my_account_links', 20 );
 
+function w4os_has_subscription( $user_id = null ) {
+  if ( ! function_exists('wcs_user_has_subscription') ) {
+    return false;
+  }
+  if ( ! wcs_user_has_subscription() ) {
+    return false;
+  }
+
+  return true;
+}
 
 /**
  * Rename woocommerce download tab (not implemented yet)
@@ -84,13 +105,13 @@ function w4os_rename_downloads( $menu_links ){
  * @param  array $menu_links [description]
  * @return array             [description]
  */
-function w4os_log_history_link( $menu_links ){
-	$menu_links = array_slice( $menu_links, 0, 2, true )
-	+ array( 'avatar' => 'Avatar' )
-	+ array_slice( $menu_links, 2, NULL, true );
-
-	return $menu_links;
-}
+// function w4os_log_history_link( $menu_links ){
+// 	$menu_links = array_slice( $menu_links, 0, 2, true )
+// 	+ array( 'avatar' => 'Avatar' )
+// 	+ array_slice( $menu_links, 2, NULL, true );
+//
+// 	return $menu_links;
+// }
 // add_filter ( 'woocommerce_account_menu_items', 'w4os_log_history_link', 40 );
 
 /**
@@ -142,7 +163,7 @@ add_filter("woocommerce_get_query_vars", function ($vars) {
  */
 add_action('woocommSerce_save_account_details', 'w4os_woocommerce_save_account_details', 10, 1);
 function w4os_woocommerce_save_account_details ( $user_id ) {
-	if($_REQUEST['password_1'] == $_REQUEST['password_2'])
+	if($_REQUEST['password_1'] == $_REQUEST['confirm_password'])
 	w4os_set_avatar_password( $user_id, $_REQUEST['password_1'] );
 }
 
@@ -154,7 +175,7 @@ function w4os_verify_user() {
       if(isset($_GET['user_login']) && isset($_GET['key'])) {
         global $wpdb;
         $user = $wpdb->get_row($wpdb->prepare("select * from ".$wpdb->prefix."users where user_login = %s and user_activation_key = %s", $_GET['user_login'], $_GET['key']));
-        $uuid = w4os_profile_sync($user); // refresh opensim data for this user
+        $uuid = W4OS3_Avatar::sync_single_avatar($user); // refresh opensim data for this user
         if($uuid) {
           $salt = get_user_meta( $user->ID, 'w4os_tmp_salt', true );
           $hash = get_user_meta( $user->ID, 'w4os_tmp_hash', true );
