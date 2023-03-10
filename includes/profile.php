@@ -717,11 +717,12 @@ function w4os_profile_display( $user, $args=[] ) {
   if ($avatar->UUID) {
     $action = 'w4os_update_avatar';
     $leaveblank= " (" . __('leave blank to leave unchanged', "w4os") . ")";
-    $content.= sprintf(
-      '<div class=profile><div class=profile-pic>%1$s</div><div class=profile-details>%2$s</div></div>',
-      $avatar->profile_picture(),
-      $avatar->AvatarName,
-    );
+    $content.= $avatar->profile_page();
+    // $content.= sprintf(
+    //   '<div class=profile><div class=profile-pic>%1$s</div><div class=profile-details>%2$s</div></div>',
+    //   $avatar->profile_picture(),
+    //   $avatar->AvatarName,
+    // );
     // return $content;
   } else {
     $content .= sprintf( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __("Create an avatar", 'w4os') );
