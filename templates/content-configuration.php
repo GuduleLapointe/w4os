@@ -13,12 +13,14 @@ foreach ($viewers as $key => $value) {
 $viewerslist .= '</ul>';
 $compatibleviewers = 'http://opensimulator.org/wiki/Compatible_Viewers';
 
+$page_content = (empty($page_content)) ? '' : $page_content;
+
 $page_content .= '
 <div class="configuration">
-<h2>' . __('Configuration', 'w4os') . '</h3>
+<h2>' . __('Viewer configuration', 'w4os') . '</h3>
 <ol>
   <li>
-    ' . __('Install the viewer', 'w4os') . '
+    ' . __('Install the viewer and open it.', 'w4os') . '
     <p class=description>
     ' . sprintf(
       __('You can use <a href="%1$s" target=_blank>any compatible viewer</a> to access %2$s.', 'w4os'),

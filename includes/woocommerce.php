@@ -74,6 +74,26 @@ function w4os_remove_my_account_links( $menu_links ){
 }
 add_filter ( 'woocommerce_account_menu_items', 'w4os_remove_my_account_links', 20 );
 
+add_action( 'woocommerce_account_dashboard', 'custom_account_dashboard_content' );
+function custom_account_dashboard_content(){
+    $user = wp_get_current_user();
+    if(!$user) return;
+    $avatar = new W4OS_Avatar($user->ID);
+    if(!$avatar) return;
+
+    $page_content = sprintf(
+      '%3$s <span class=profile><span class=profile-pic>%1$s</span><span class=profile-details>%2$s</span></span>',
+      $avatar->profile_picture(),
+      $avatar->AvatarName,
+      __('Your avatar: ', 'w4os')
+    );
+    // echo w4os_profile_display( $user );
+    if(get_option('w4os_configuration_instructions') && get_the_author_meta( 'w4os_lastseen', $user->ID ) == 0 ) {
+      include(dirname(__DIR__) . "/templates/content-configuration.php");
+    }
+    echo $page_content;
+}
+
 function w4os_has_subscription( $user_id = null ) {
   if ( ! function_exists('wcs_user_has_subscription') ) {
     return false;
