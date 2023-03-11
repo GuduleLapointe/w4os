@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2022-12-11T14:43:43-04:00\n"
+"POT-Creation-Date: 2023-03-11T21:19:19+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -901,8 +901,8 @@ msgstr "E-mail"
 msgid "Reset Password"
 msgstr "Reset Wachtwoord"
 
-#: includes/profile-page.php:91 includes/profile-page.php:152
-#: templates/content-configuration.php:40 templates/content-page-profile.php:26
+#: includes/profile-page.php:91 includes/profile-page.php:156
+#: templates/content-configuration.php:42 templates/content-page-profile.php:26
 msgid "Log in"
 msgstr "Log in"
 
@@ -912,23 +912,23 @@ msgstr ""
 "Log in om uw avatar aan te maken, uw profiel te bekijken of uw opties in te "
 "stellen."
 
-#: includes/profile-page.php:147
+#: includes/profile-page.php:151
 msgid "My Profile"
 msgstr "Mijn Profiel"
 
-#: includes/profile-page.php:149
+#: includes/profile-page.php:153
 msgid "Create My Avatar"
 msgstr "Mijn Avatar aanmaken"
 
-#: includes/profile-page.php:165 templates/content-page-profile.php:54
+#: includes/profile-page.php:169 templates/content-page-profile.php:54
 msgid "%s's profile"
 msgstr "%s's profiel"
 
-#: includes/profile-page.php:168
+#: includes/profile-page.php:172
 msgid "Avatar not found"
 msgstr "Avatar niet gevonden"
 
-#: includes/profile-page.php:221
+#: includes/profile-page.php:225
 msgid "Profile base"
 msgstr "Profiel basis"
 
@@ -1024,7 +1024,7 @@ msgstr ""
 msgid "Password reset link"
 msgstr ""
 
-#: includes/profile.php:172 includes/profile.php:891
+#: includes/profile.php:172 includes/profile.php:892
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
@@ -1150,32 +1150,32 @@ msgstr "Opslaan"
 msgid "leave blank to leave unchanged"
 msgstr "laat leeg om geen wijzigingen aan te brengen"
 
-#: includes/profile.php:727
+#: includes/profile.php:728
 msgid "Create an avatar"
 msgstr "Maak een avatar"
 
-#: includes/profile.php:813 blocks/w4os-gridprofile-block/index.js:27
+#: includes/profile.php:814 blocks/w4os-gridprofile-block/index.js:27
 #: blocks/w4os-gridprofile-block/index.js:74
 msgid "Grid profile"
 msgstr "Rooster profiel"
 
-#: includes/profile.php:901
+#: includes/profile.php:902
 msgid "Avatar First Name"
 msgstr "Avatar voornaam"
 
-#: includes/profile.php:907
+#: includes/profile.php:908
 msgid "Avatar Last Name"
 msgstr "Avatar achternaam"
 
-#: includes/profile.php:913 tmp/class-avatar.php:361
+#: includes/profile.php:914 tmp/class-avatar.php:361
 msgid "Profile Picture"
 msgstr "Profiel foto"
 
-#: includes/profile.php:915
+#: includes/profile.php:916
 msgid "Must be set in the viewer."
 msgstr "Moet worden ingesteld in de viewer."
 
-#: includes/profile.php:920
+#: includes/profile.php:921
 msgid "Web Profile URL"
 msgstr "Web profiel URL"
 
@@ -1307,19 +1307,31 @@ msgstr "Rooster info Widget"
 msgid "Title:"
 msgstr "Titel:"
 
+#: includes/woocommerce.php:46 tmp/class-avatar.php:131
+msgid "Avatar"
+msgstr ""
+
+#: includes/woocommerce.php:88
+msgid "Your avatar: "
+msgstr ""
+
 #: templates/content-configuration.php:2
 msgid "this grid"
 msgstr "dit rooster"
 
-#: templates/content-configuration.php:18
-msgid "Configuration"
+#: templates/content-configuration.php:20
+#, fuzzy
+#| msgid "Configuration"
+msgid "Viewer configuration"
 msgstr "Configuratie"
 
-#: templates/content-configuration.php:21
-msgid "Install the viewer"
+#: templates/content-configuration.php:23
+#, fuzzy
+#| msgid "Install the viewer"
+msgid "Install the viewer and open it."
 msgstr "Installeer de viewer"
 
-#: templates/content-configuration.php:24
+#: templates/content-configuration.php:26
 msgid ""
 "You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to "
 "access %2$s."
@@ -1327,35 +1339,35 @@ msgstr ""
 "U kunt <a href=\"%1$s\" target=_blank>elke compatibele viewer</a> gebruiken "
 "om %2$s te openen."
 
-#: templates/content-configuration.php:30
+#: templates/content-configuration.php:32
 msgid "Add %1$s to your viewer"
 msgstr "Voeg %1$s toe aan uw kijker"
 
-#: templates/content-configuration.php:31
+#: templates/content-configuration.php:33
 msgid "Instructions may vary depending on the viewer"
 msgstr "Instructies kunnen variëren afhankelijk van de kijker"
 
-#: templates/content-configuration.php:33
+#: templates/content-configuration.php:35
 msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
 msgstr "Selecteer \"Voorkeuren\" onder het \"Viewer\" menu (of typ Ctrl-P)"
 
-#: templates/content-configuration.php:34
+#: templates/content-configuration.php:36
 msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
 msgstr "Selecteer \"OpenSim\", dan \"Grid Manager\" tab"
 
-#: templates/content-configuration.php:35
+#: templates/content-configuration.php:37
 msgid "Under \"Add new grid\", enter"
 msgstr "Onder \"Nieuw raster toevoegen\", voert u in"
 
-#: templates/content-configuration.php:37
+#: templates/content-configuration.php:39
 msgid "Click the \"Apply\" button"
 msgstr "Klik op de \"Toepassen\" knop"
 
-#: templates/content-configuration.php:42
+#: templates/content-configuration.php:44
 msgid "Make sure %1$s is selected in the Grid menu"
 msgstr "Zorg ervoor dat %1$s is geselecteerd in het menu Raster"
 
-#: templates/content-configuration.php:43
+#: templates/content-configuration.php:45
 msgid ""
 "Enter your avatar’s first and last name in the \"Username\" box and your "
 "password in the \"Password\" box"
@@ -1363,7 +1375,7 @@ msgstr ""
 "Voer de voor- en achternaam van uw avatar in het vak \"Gebruikersnaam\" in "
 "en uw wachtwoord in het vak \"Wachtwoord"
 
-#: templates/content-configuration.php:44
+#: templates/content-configuration.php:46
 msgid "Click \"Log In\""
 msgstr "Klik \"Inloggen\""
 
@@ -1373,10 +1385,6 @@ msgstr "Mijn Avatar"
 
 #: tmp/class-avatar.php:130 tmp/class-avatar.php:151 tmp/class-avatar.php:164
 msgid "Avatars"
-msgstr ""
-
-#: tmp/class-avatar.php:131
-msgid "Avatar"
 msgstr ""
 
 #: tmp/class-avatar.php:132

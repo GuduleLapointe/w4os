@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.1.1
-Stable tag: 2.3.12
+Stable tag: 2.3.13
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -152,6 +152,10 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.3.13 =
+* restored WooCommerce Account Dashboar avatar section
+* minor fixes (undefined constants and variables)
 
 = 2.3.12 =
 * fix w4os_profile_sync() fatal error when profiles are disabled

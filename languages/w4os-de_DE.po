@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2022-12-11T14:43:43-04:00\n"
+"POT-Creation-Date: 2023-03-11T21:19:19+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -906,8 +906,8 @@ msgstr "E-Mail"
 msgid "Reset Password"
 msgstr "Passwort zurücksetzen"
 
-#: includes/profile-page.php:91 includes/profile-page.php:152
-#: templates/content-configuration.php:40 templates/content-page-profile.php:26
+#: includes/profile-page.php:91 includes/profile-page.php:156
+#: templates/content-configuration.php:42 templates/content-page-profile.php:26
 msgid "Log in"
 msgstr "Einloggen"
 
@@ -917,23 +917,23 @@ msgstr ""
 "Loggen Sie sich ein, um Ihren Avatar zu erstellen, Ihr Profil anzusehen oder "
 "Ihre Optionen einzustellen."
 
-#: includes/profile-page.php:147
+#: includes/profile-page.php:151
 msgid "My Profile"
 msgstr "Mein Profil"
 
-#: includes/profile-page.php:149
+#: includes/profile-page.php:153
 msgid "Create My Avatar"
 msgstr "Meinen Avatar erstellen"
 
-#: includes/profile-page.php:165 templates/content-page-profile.php:54
+#: includes/profile-page.php:169 templates/content-page-profile.php:54
 msgid "%s's profile"
 msgstr "Profil von %s"
 
-#: includes/profile-page.php:168
+#: includes/profile-page.php:172
 msgid "Avatar not found"
 msgstr "Avatar nicht gefunden"
 
-#: includes/profile-page.php:221
+#: includes/profile-page.php:225
 msgid "Profile base"
 msgstr "Profil Basis"
 
@@ -1029,7 +1029,7 @@ msgstr ""
 msgid "Password reset link"
 msgstr ""
 
-#: includes/profile.php:172 includes/profile.php:891
+#: includes/profile.php:172 includes/profile.php:892
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
@@ -1156,32 +1156,32 @@ msgstr "Speichern"
 msgid "leave blank to leave unchanged"
 msgstr "leer lassen, um unverändert zu bleiben"
 
-#: includes/profile.php:727
+#: includes/profile.php:728
 msgid "Create an avatar"
 msgstr "Einen Avatar erstellen"
 
-#: includes/profile.php:813 blocks/w4os-gridprofile-block/index.js:27
+#: includes/profile.php:814 blocks/w4os-gridprofile-block/index.js:27
 #: blocks/w4os-gridprofile-block/index.js:74
 msgid "Grid profile"
 msgstr "Grid Profil"
 
-#: includes/profile.php:901
+#: includes/profile.php:902
 msgid "Avatar First Name"
 msgstr "Avatar Vorname"
 
-#: includes/profile.php:907
+#: includes/profile.php:908
 msgid "Avatar Last Name"
 msgstr "Avatar Nachname"
 
-#: includes/profile.php:913 tmp/class-avatar.php:361
+#: includes/profile.php:914 tmp/class-avatar.php:361
 msgid "Profile Picture"
 msgstr "Profilbild"
 
-#: includes/profile.php:915
+#: includes/profile.php:916
 msgid "Must be set in the viewer."
 msgstr "Muss im Viewer eingestellt werden."
 
-#: includes/profile.php:920
+#: includes/profile.php:921
 msgid "Web Profile URL"
 msgstr "Webprofil-URL"
 
@@ -1313,19 +1313,31 @@ msgstr "Grid info-Widget"
 msgid "Title:"
 msgstr "Titel:"
 
+#: includes/woocommerce.php:46 tmp/class-avatar.php:131
+msgid "Avatar"
+msgstr ""
+
+#: includes/woocommerce.php:88
+msgid "Your avatar: "
+msgstr ""
+
 #: templates/content-configuration.php:2
 msgid "this grid"
 msgstr "dieses Grid"
 
-#: templates/content-configuration.php:18
-msgid "Configuration"
+#: templates/content-configuration.php:20
+#, fuzzy
+#| msgid "Configuration"
+msgid "Viewer configuration"
 msgstr "Konfiguration"
 
-#: templates/content-configuration.php:21
-msgid "Install the viewer"
+#: templates/content-configuration.php:23
+#, fuzzy
+#| msgid "Install the viewer"
+msgid "Install the viewer and open it."
 msgstr "Installieren Sie den Viewer"
 
-#: templates/content-configuration.php:24
+#: templates/content-configuration.php:26
 msgid ""
 "You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to "
 "access %2$s."
@@ -1333,37 +1345,37 @@ msgstr ""
 "Sie können <a href=\"%1$s\" target=_blank>jeden kompatiblen Viewer</a> für "
 "den Zugriff auf %2$s verwenden."
 
-#: templates/content-configuration.php:30
+#: templates/content-configuration.php:32
 msgid "Add %1$s to your viewer"
 msgstr "Füge %1$s zu deinem Viewer hinzu"
 
-#: templates/content-configuration.php:31
+#: templates/content-configuration.php:33
 msgid "Instructions may vary depending on the viewer"
 msgstr "Die Anweisungen können je nach Viewer variieren"
 
-#: templates/content-configuration.php:33
+#: templates/content-configuration.php:35
 msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
 msgstr ""
 "Wählen Sie \"Einstellungen\" unter dem Menü \"Viewer\" (oder geben Sie Strg-"
 "P ein)"
 
-#: templates/content-configuration.php:34
+#: templates/content-configuration.php:36
 msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
 msgstr "Wählen Sie \"OpenSim\", dann die Registerkarte \"Grid Manager\""
 
-#: templates/content-configuration.php:35
+#: templates/content-configuration.php:37
 msgid "Under \"Add new grid\", enter"
 msgstr "Geben Sie unter \"Neues Grid hinzufügen\" ein"
 
-#: templates/content-configuration.php:37
+#: templates/content-configuration.php:39
 msgid "Click the \"Apply\" button"
 msgstr "Klicken Sie auf die Schaltfläche \"Übernehmen\""
 
-#: templates/content-configuration.php:42
+#: templates/content-configuration.php:44
 msgid "Make sure %1$s is selected in the Grid menu"
 msgstr "Vergewissern Sie sich, dass %1$s im Gridmenü ausgewählt ist"
 
-#: templates/content-configuration.php:43
+#: templates/content-configuration.php:45
 msgid ""
 "Enter your avatar’s first and last name in the \"Username\" box and your "
 "password in the \"Password\" box"
@@ -1371,7 +1383,7 @@ msgstr ""
 "Geben Sie den Vor- und Nachnamen Ihres Avatars in das Feld \"Benutzername\" "
 "und Ihr Passwort in das Feld \"Passwort\" ein"
 
-#: templates/content-configuration.php:44
+#: templates/content-configuration.php:46
 msgid "Click \"Log In\""
 msgstr "Klicken Sie auf \"Anmelden\"."
 
@@ -1381,10 +1393,6 @@ msgstr "Mein Avatar"
 
 #: tmp/class-avatar.php:130 tmp/class-avatar.php:151 tmp/class-avatar.php:164
 msgid "Avatars"
-msgstr ""
-
-#: tmp/class-avatar.php:131
-msgid "Avatar"
 msgstr ""
 
 #: tmp/class-avatar.php:132

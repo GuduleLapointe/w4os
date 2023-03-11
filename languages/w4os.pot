@@ -1,15 +1,15 @@
-# Copyright (C) 2022 Speculoos World
+# Copyright (C) 2023 Speculoos World
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface 2.3.12\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.3.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-12-11T14:43:43-04:00\n"
+"POT-Creation-Date: 2023-03-11T21:19:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -759,8 +759,8 @@ msgid "Reset Password"
 msgstr ""
 
 #: includes/profile-page.php:91
-#: includes/profile-page.php:152
-#: templates/content-configuration.php:40
+#: includes/profile-page.php:156
+#: templates/content-configuration.php:42
 #: templates/content-page-profile.php:26
 msgid "Log in"
 msgstr ""
@@ -769,24 +769,24 @@ msgstr ""
 msgid "Log in to create your avatar, view your profile or set your options."
 msgstr ""
 
-#: includes/profile-page.php:147
+#: includes/profile-page.php:151
 msgid "My Profile"
 msgstr ""
 
-#: includes/profile-page.php:149
+#: includes/profile-page.php:153
 msgid "Create My Avatar"
 msgstr ""
 
-#: includes/profile-page.php:165
+#: includes/profile-page.php:169
 #: templates/content-page-profile.php:54
 msgid "%s's profile"
 msgstr ""
 
-#: includes/profile-page.php:168
+#: includes/profile-page.php:172
 msgid "Avatar not found"
 msgstr ""
 
-#: includes/profile-page.php:221
+#: includes/profile-page.php:225
 msgid "Profile base"
 msgstr ""
 
@@ -884,7 +884,7 @@ msgid "Password reset link"
 msgstr ""
 
 #: includes/profile.php:172
-#: includes/profile.php:891
+#: includes/profile.php:892
 msgid "OpenSimulator"
 msgstr ""
 
@@ -1001,34 +1001,34 @@ msgstr ""
 msgid "leave blank to leave unchanged"
 msgstr ""
 
-#: includes/profile.php:727
+#: includes/profile.php:728
 msgid "Create an avatar"
 msgstr ""
 
-#: includes/profile.php:813
+#: includes/profile.php:814
 #: blocks/w4os-gridprofile-block/index.js:27
 #: blocks/w4os-gridprofile-block/index.js:74
 msgid "Grid profile"
 msgstr ""
 
-#: includes/profile.php:901
+#: includes/profile.php:902
 msgid "Avatar First Name"
 msgstr ""
 
-#: includes/profile.php:907
+#: includes/profile.php:908
 msgid "Avatar Last Name"
 msgstr ""
 
-#: includes/profile.php:913
+#: includes/profile.php:914
 #: tmp/class-avatar.php:361
 msgid "Profile Picture"
 msgstr ""
 
-#: includes/profile.php:915
+#: includes/profile.php:916
 msgid "Must be set in the viewer."
 msgstr ""
 
-#: includes/profile.php:920
+#: includes/profile.php:921
 msgid "Web Profile URL"
 msgstr ""
 
@@ -1145,55 +1145,64 @@ msgstr ""
 msgid "Title:"
 msgstr ""
 
+#: includes/woocommerce.php:46
+#: tmp/class-avatar.php:131
+msgid "Avatar"
+msgstr ""
+
+#: includes/woocommerce.php:88
+msgid "Your avatar: "
+msgstr ""
+
 #: templates/content-configuration.php:2
 msgid "this grid"
 msgstr ""
 
-#: templates/content-configuration.php:18
-msgid "Configuration"
+#: templates/content-configuration.php:20
+msgid "Viewer configuration"
 msgstr ""
 
-#: templates/content-configuration.php:21
-msgid "Install the viewer"
+#: templates/content-configuration.php:23
+msgid "Install the viewer and open it."
 msgstr ""
 
-#: templates/content-configuration.php:24
+#: templates/content-configuration.php:26
 msgid "You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to access %2$s."
 msgstr ""
 
-#: templates/content-configuration.php:30
+#: templates/content-configuration.php:32
 msgid "Add %1$s to your viewer"
 msgstr ""
 
-#: templates/content-configuration.php:31
+#: templates/content-configuration.php:33
 msgid "Instructions may vary depending on the viewer"
 msgstr ""
 
-#: templates/content-configuration.php:33
+#: templates/content-configuration.php:35
 msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
 msgstr ""
 
-#: templates/content-configuration.php:34
+#: templates/content-configuration.php:36
 msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
 msgstr ""
 
-#: templates/content-configuration.php:35
+#: templates/content-configuration.php:37
 msgid "Under \"Add new grid\", enter"
 msgstr ""
 
-#: templates/content-configuration.php:37
+#: templates/content-configuration.php:39
 msgid "Click the \"Apply\" button"
 msgstr ""
 
-#: templates/content-configuration.php:42
+#: templates/content-configuration.php:44
 msgid "Make sure %1$s is selected in the Grid menu"
 msgstr ""
 
-#: templates/content-configuration.php:43
+#: templates/content-configuration.php:45
 msgid "Enter your avatar’s first and last name in the \"Username\" box and your password in the \"Password\" box"
 msgstr ""
 
-#: templates/content-configuration.php:44
+#: templates/content-configuration.php:46
 msgid "Click \"Log In\""
 msgstr ""
 
@@ -1205,10 +1214,6 @@ msgstr ""
 #: tmp/class-avatar.php:151
 #: tmp/class-avatar.php:164
 msgid "Avatars"
-msgstr ""
-
-#: tmp/class-avatar.php:131
-msgid "Avatar"
 msgstr ""
 
 #: tmp/class-avatar.php:132

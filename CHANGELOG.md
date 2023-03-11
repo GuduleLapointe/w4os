@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.3.13
+- restored WooCommerce Account Dashboar avatar section
+- minor fixes (undefined constants and variables)
+
 ### 2.3.12
 - fix w4os_profile_sync() fatal error when profiles are disabled
 - fix minor PHP8 warnings
