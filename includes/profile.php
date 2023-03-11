@@ -520,7 +520,7 @@ function w4os_create_avatar( $user, $params ) {
           $item = $uuids[0];
           $asset = $uuids[1];
           $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
-          if(!$destitem) {
+          if(empty($destitem)) {
             $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
             $destinventoryid = w4os_gen_uuid();
             $newitem['inventoryID'] = $destinventoryid;
@@ -532,7 +532,7 @@ function w4os_create_avatar( $user, $params ) {
           foreach($items as $item) {
             $asset = $w4osdb->get_var("SELECT assetID FROM inventoryitems WHERE inventoryID='$item'");
             $destinventoryid = $w4osdb->get_var("SELECT inventoryID FROM inventoryitems WHERE assetID='$asset' AND avatarID='$newavatar_uuid'");
-            if(!$destitem) {
+            if(empty($destitem)) {
               $newitem = $w4osdb->get_row("SELECT * FROM inventoryitems WHERE assetID='$asset' AND avatarID='$model_uuid'", ARRAY_A);
               $destinventoryid = w4os_gen_uuid();
               $newitem['inventoryID'] = $destinventoryid;
