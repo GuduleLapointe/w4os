@@ -340,7 +340,9 @@ function dir_events_query($method_name, $params, $app_data)
   $data = array();
   while ($row = $query->fetch(PDO::FETCH_ASSOC))
   {
-    $date = strftime("%m/%d %I:%M %p", $row["dateUTC"]);
+    $date       = new DateTime("@" . $row["dateUTC"]);
+    $date->setTimezone(new DateTimeZone('America/Los_Angeles'));
+    $LSTDate = $date->format("m/d h:i A");
 
     //The landing point is only needed when this event query is
     //called to allow placement of event markers on the world map.
@@ -348,7 +350,7 @@ function dir_events_query($method_name, $params, $app_data)
     "owner_id" => $row["owneruuid"],
     "name" => $row["name"],
     "event_id" => $row["eventid"],
-    "date" => $date,
+    "date" => $LSTDate,
     "unix_time" => $row["dateUTC"],
     "event_flags" => $row["eventflags"],
     "landing_point" => $row["globalPos"]);
