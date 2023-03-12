@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.1.1
-Stable tag: 2.3.13
+Stable tag: 2.3.14
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -152,6 +152,9 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.3.14 =
+* fix search events wrong time (results showed UTC time instead of grid time)
 
 = 2.3.13 =
 * restored WooCommerce Account Dashboar avatar section

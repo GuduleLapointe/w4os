@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.3.14
+- fix search events wrong time (results showed UTC time instead of grid time)
+
 ### 2.3.13
 - restored WooCommerce Account Dashboar avatar section
 - minor fixes (undefined constants and variables)
