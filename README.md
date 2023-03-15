@@ -1,6 +1,6 @@
-# w4os - OpenSimulator Web Interface
+# w4os - OpenSimulator Web Interface (dev)
 
-![Stable 2.3.13](https://badgen.net/badge/Stable/2.3.13/00aa00)
+![Stable 2.3.14](https://badgen.net/badge/Stable/2.3.14/00aa00)
 ![WordPress 5.3.0 - 6.1.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.1.1/3858e9)
 ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
 ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
