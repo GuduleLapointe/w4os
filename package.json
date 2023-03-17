@@ -1,0 +1,41 @@
+{
+  "name": "w4os",
+  "version": "2.3.15",
+  "description": "WordPress interface for OpenSimulator (w4os)",
+  "main": "webpack.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^26.0.0",
+    "copy-webpack-plugin": "^11.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.magiiic.com:opensimulator/w4os.git"
+  },
+  "keywords": [
+    "OpenSimulator",
+    "Second",
+    "Life",
+    "metaverse",
+    "avatar",
+    "web",
+    "interface",
+    "grids",
+    "standalone",
+    "hypergrid",
+    "3D"
+  ],
+  "author": "Speculoos World",
+  "license": "AGPL-3.0-or-later"
+}
