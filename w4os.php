@@ -56,11 +56,11 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
 // Finally, actually load if no conflict
 } else {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/init.php';
+	require_once plugin_dir_path( __FILE__ ) . 'legacy/init.php';
 	if(file_exists(plugin_dir_path( __FILE__ ) . 'lib/package-updater.php'))
 	include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
 
 	if(is_admin()) {
-		require_once (plugin_dir_path(__FILE__) . 'admin/admin-init.php');
+		require_once (plugin_dir_path(__FILE__) . 'legacy/admin/admin-init.php');
 	}
 }
