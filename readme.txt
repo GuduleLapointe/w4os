@@ -4,7 +4,7 @@ Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.1.1
+Tested up to: 6.2
 Stable tag: 2.3.14
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -153,7 +153,9 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
-= Unreleased (2.3.15-dev.898) =
+= Unreleased (2.3.15-dev.902) =
+* fix Undefined constant "W4OS_PROFILE_URL" fatal error
+* prepare 3.x transision
 
 = 2.3.14 =
 * fix wrong event time in in-world search (UTC shown instead of grid time)

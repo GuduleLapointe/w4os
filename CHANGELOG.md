@@ -1,6 +1,8 @@
 ## Changelog
 
-### Unreleased (2.3.15-dev.898)
+### Unreleased (2.3.15-dev.902)
+- fix Undefined constant "W4OS_PROFILE_URL" fatal error
+- prepare 3.x transision
 
 ### 2.3.14
 - fix wrong event time in in-world search (UTC shown instead of grid time)
