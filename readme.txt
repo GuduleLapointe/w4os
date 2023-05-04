@@ -1,11 +1,11 @@
-=== w4os - OpenSimulator Web Interface (dev) ===
+=== w4os - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2
-Stable tag: 2.3.14
+Stable tag: 2.3.15
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -54,6 +54,10 @@ The free version from WordPress plugins directory and the [paid version](https:/
 - You should have a working assets server (see Dependencies section below)
 
 = WordPress configuration =
+
+Before installing this plugin, make sure your WordPress installation is complete and permalinks are enabled.
+
+If upgrading from a different distribution (e.a. switching from github to WordPress Plugin Directory), make sure you disable the installed verssion before activating the new one.
 
 1. Download and activate the latest stable release
 2. Visit OpenSim settings (admin menu > "Opensim" > "Settings")
@@ -153,7 +157,7 @@ This is an OpenSimulator design limitation. Regions rely on cached data to displ
 
 == Changelog ==
 
-= Unreleased (2.3.15-dev.905) =
+= 2.3.15 =
 * fix array_unique(): Argument #1 ($array) must be of type array, null given on plugin first activation
 * fix Undefined constant "W4OS_PROFILE_URL" fatal error
 * prepare 3.x transision

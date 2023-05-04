@@ -8,6 +8,10 @@
 
 ### WordPress configuration
 
+Before installing this plugin, make sure your WordPress installation is complete and permalinks are enabled.
+
+If upgrading from a different distribution (e.a. switching from github to WordPress Plugin Directory), make sure you disable the installed verssion before activating the new one.
+
 1. Download and activate the latest stable release
 2. Visit OpenSim settings (admin menu > "Opensim" > "Settings")
   - Enter your grid name and grid URI (like example.org:8002 without http://)
