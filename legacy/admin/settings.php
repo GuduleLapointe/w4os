@@ -53,7 +53,7 @@ function w4os_register_settings() {
 							// 'placeholder' => 'Grid Name',
 						),
 						'w4os_grid_name' => array(
-							'name' => __('Grid name', 'w4os'),
+							'name' => __('Grid Name', 'w4os'),
 							'placeholder' => 'MyGrid',
 							'default' => $default_gridname,
 						),
@@ -66,7 +66,7 @@ function w4os_register_settings() {
 							'name' => __('Hostname', 'w4os'),
 						),
 						'w4os_db_database' => array(
-							'name' => __('Database name', 'w4os'),
+							'name' => __('Database Name', 'w4os'),
 						),
 						'w4os_db_user' => array(
 							'name' => __('Username', 'w4os'),
@@ -98,7 +98,7 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_profile_page' => array(
 							'type' => 'radio',
-							'name' => __('Profile page', 'w4os'),
+							'name' => __('Profile Page', 'w4os'),
 							'values' => array(
 								'provide' => __('Provide web profile page for avatars', 'w4os'),
 								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
@@ -114,7 +114,7 @@ function w4os_register_settings() {
 						),
 						'w4os_profile_page' => array(
 							'type' => 'radio',
-							'name' => __('Profile page', 'w4os'),
+							'name' => __('Profile Page', 'w4os'),
 							'values' => array(
 								'provide' => __('Provide web profile page for avatars', 'w4os'),
 								// 'custom' => __('Custom page (with shortcode)', 'w4os'),
@@ -138,7 +138,7 @@ function w4os_register_settings() {
 
 						'w4os_login_page' => array(
 						  'type' => 'radio',
-						  'name' => __('Login page', 'w4os'),
+						  'name' => __('Login Page', 'w4os'),
 						  'values' => array(
 						    'profile' => __('Use profile page as login page', 'w4os'),
 						    // 'custom' => __('Custom page (with shortcode)', 'w4os'),
@@ -184,7 +184,7 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_provide_asset_server' => array(
 							'type' => 'boolean',
-							'name' => __('Provide web assets server', 'w4os'),
+							'name' => __('Provide Web Assets Server', 'w4os'),
 							'default' => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
 							'onchange' => 'onchange="valueChanged(this)"',
 							'description' => '<p>' . __('A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os') . '</p>',
@@ -210,7 +210,7 @@ function w4os_register_settings() {
 					'fields' => array(
 						'w4os_provide_search' => array(
 							'type' => 'boolean',
-							'name' => __('Provide in-world search', 'w4os'),
+							'name' => __('Provide In-world Search', 'w4os'),
 							'onchange' => 'onchange="valueChanged(this)"',
 							// 'description' => __('Using ')
 						),
@@ -226,7 +226,7 @@ function w4os_register_settings() {
 						  'default' => esc_attr(get_option('w4os_db_host', 'localhost')),
 						),
 						'w4os_search_db_database' => array(
-						  'name' => __('Database name', 'w4os'),
+						  'name' => __('Database Name', 'w4os'),
 						  'default' => esc_attr(get_option('w4os_db_database', 'currency')),
 						),
 						'w4os_search_db_user' => array(
@@ -241,7 +241,7 @@ function w4os_register_settings() {
 						  'default' => esc_attr(get_option('w4os_db_pass')),
 						),
 						'w4os_search_url' => array(
-							'name' => __('Search engine URL', 'w4os'),
+							'name' => __('Search Engine URL', 'w4os'),
 							'placeholder' => 'https://example.org/helpers/query.php',
 							'description' =>
 							__('URL of the search engine used internally by the viewer (without arguments).', 'w4os')
@@ -282,9 +282,9 @@ function w4os_register_settings() {
 							)),
 						),
 						'w4os_hypevents_url' => array(
-							'name' => __('Events server URL', 'w4os'),
+							'name' => __('Events Server URL', 'w4os'),
 							'placeholder' => 'https://2do.pm/events/',
-							'description' => __('HYPEvents server URL, used to fetch upcoming events and make them available in search.', 'w4os')
+							'description' => __('HYPEvents Server URL, used to fetch upcoming events and make them available in search.', 'w4os')
 							. ' ' . __('Leave blank to ignore events or if you have an other events implementation.', 'w4os')
 							. ' <a href=https://2do.pm/ target=_blank>2do HYPEvents project</a>',
 						),
@@ -334,7 +334,7 @@ function w4os_register_settings() {
 				  'fields' => array(
 				    'w4os_provide_economy_helpers' => array(
 				      'type' => 'boolean',
-				      'name' => __('Provide economy helpers', 'w4os'),
+				      'name' => __('Provide Economy Helpers', 'w4os'),
 				      'default' => false,
 				      'onchange' => 'onchange="valueChanged(this)"',
 							'description' => '<p>' . __('Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os') . '</p>'
@@ -348,7 +348,7 @@ function w4os_register_settings() {
 							// . '<p>' . __('A money server is also needed if you implement a fake currency or want to allow zero (no cost) operations.', 'w4os') . '</p>'
 				    ),
 				    'w4os_economy_helper_uri' => array(
-				      'name' => __('Economy base URI', 'w4os'),
+				      'name' => __('Economy Base URI', 'w4os'),
 				      'default' => (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'),
 				      'readonly' => true,
 							'description' =>
@@ -363,7 +363,7 @@ function w4os_register_settings() {
 				    ),
 						'w4os_economy_use_robust_db' => array(
 				      'type' => 'boolean',
-				      'name' => __('Economy database', 'w4os'),
+				      'name' => __('Economy Database', 'w4os'),
 				      'default' => true,
 				      'onchange' => 'onchange="valueChanged(this)"',
 							'label' => __('Use the same database as Robust', 'w4os'),
@@ -383,7 +383,7 @@ function w4os_register_settings() {
 							'default' => esc_attr(get_option('w4os_db_host', 'localhost')),
 						),
 						'w4os_economy_db_database' => array(
-							'name' => __('Database name', 'w4os'),
+							'name' => __('Database Name', 'w4os'),
 							'default' => esc_attr(get_option('w4os_db_database', 'currency')),
 						),
 						'w4os_economy_db_user' => array(
@@ -409,7 +409,7 @@ function w4os_register_settings() {
 							'onchange' => 'onchange="valueChanged(this)"',
 						),
 						'w4os_currency_rate' => array(
-							'name' => __('Currency conversion rate', 'w4os'),
+							'name' => __('Currency Conversion Rate', 'w4os'),
 							'description' => __('Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)', 'w4os'),
 						),
 						'w4os_podex_error_message' => array(

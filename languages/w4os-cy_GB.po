@@ -266,7 +266,7 @@ msgid "Recent users"
 msgstr "Defnyddwyr diweddar"
 
 #: admin/settings.php:56 includes/shortcodes.php:130
-msgid "Grid name"
+msgid "Grid Name"
 msgstr "Enw grid"
 
 #: admin/settings.php:63
@@ -278,7 +278,7 @@ msgid "Hostname"
 msgstr "Enw gwesteiwr"
 
 #: admin/settings.php:69 admin/settings.php:229 admin/settings.php:386
-msgid "Database name"
+msgid "Database Name"
 msgstr "Enw cronfa ddata"
 
 #: admin/settings.php:72 admin/settings.php:233 admin/settings.php:390
@@ -307,7 +307,7 @@ msgid "Grid users"
 msgstr "Defnyddwyr grid"
 
 #: admin/settings.php:101 admin/settings.php:117
-msgid "Profile page"
+msgid "Profile Page"
 msgstr "Tudalen proffil"
 
 #: admin/settings.php:103 admin/settings.php:119
@@ -335,7 +335,7 @@ msgid "Show configuration instructions to new users."
 msgstr "Dangos cyfarwyddiadau ffurfweddu i ddefnyddwyr newydd."
 
 #: admin/settings.php:141
-msgid "Login page"
+msgid "Login Page"
 msgstr "Tudalen mewngofnodi"
 
 #: admin/settings.php:143
@@ -384,7 +384,7 @@ msgid "Web Assets Server"
 msgstr "Gweinydd Asedau Gwe"
 
 #: admin/settings.php:187
-msgid "Provide web assets server"
+msgid "Provide Web Assets Server"
 msgstr "Darparu gweinydd asedau gwe"
 
 #: admin/settings.php:190
@@ -420,7 +420,7 @@ msgid "Search"
 msgstr "Chwiliwch"
 
 #: admin/settings.php:213
-msgid "Provide in-world search"
+msgid "Provide In-world Search"
 msgstr "Darparu chwiliad yn y byd"
 
 #: admin/settings.php:219
@@ -432,7 +432,7 @@ msgid "Use the same database as Robust"
 msgstr "Defnyddiwch yr un gronfa ddata â Strong"
 
 #: admin/settings.php:244
-msgid "Search engine URL"
+msgid "Search Engine URL"
 msgstr "URL peiriant chwilio"
 
 #: admin/settings.php:247
@@ -466,12 +466,12 @@ msgstr ""
 "ar werth."
 
 #: admin/settings.php:285
-msgid "Events server URL"
+msgid "Events Server URL"
 msgstr "URL gweinydd digwyddiadau"
 
 #: admin/settings.php:287
 msgid ""
-"HYPEvents server URL, used to fetch upcoming events and make them available "
+"HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
 msgstr ""
 "URL gweinydd HYPEvents, a ddefnyddir i nôl digwyddiadau sydd ar ddod a "
@@ -509,7 +509,7 @@ msgstr ""
 "defnyddwyr sy'n galluogi opsiwn \"E-bostiwch IMs ataf pan fyddaf all-lein\"."
 
 #: admin/settings.php:337
-msgid "Provide economy helpers"
+msgid "Provide Economy Helpers"
 msgstr "Darparu cynorthwywyr economi"
 
 #: admin/settings.php:340
@@ -539,7 +539,7 @@ msgstr ""
 "angen gosodiad ar wahân, e.e. o %s."
 
 #: admin/settings.php:351
-msgid "Economy base URI"
+msgid "Economy Base URI"
 msgstr "Sylfaen economi URI"
 
 #: admin/settings.php:355
@@ -547,7 +547,7 @@ msgid "The URL must be set in Robust configuration."
 msgstr "Rhaid gosod yr URL mewn ffurfweddiad cadarn."
 
 #: admin/settings.php:366
-msgid "Economy database"
+msgid "Economy Database"
 msgstr "Cronfa ddata economi"
 
 #: admin/settings.php:401
@@ -559,7 +559,7 @@ msgid "No provider, use fake money."
 msgstr "Dim darparwr, defnyddiwch arian ffug."
 
 #: admin/settings.php:412
-msgid "Currency conversion rate"
+msgid "Currency Conversion Rate"
 msgstr "Cyfradd trosi arian cyfred"
 
 #: admin/settings.php:413
@@ -844,7 +844,7 @@ msgstr "pob_pum_munud"
 
 #: includes/functions.php:149
 msgid ""
-"A local Robust server has been found. Please check Login URI and Grid name "
+"A local Robust server has been found. Please check Login URI and Grid Name "
 "configuration."
 msgstr ""
 "Mae gweinydd cadarn lleol wedi'i ganfod. Gwiriwch URI Mewngofnodi a "

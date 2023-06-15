@@ -32,7 +32,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - naming scheme of default models
   - exclude models from grid stats
 - Web asset server
-- Login page / Widget
+- Login Page / Widget
 - Manual and cron Grid/WP users sync
 - Public avatar profile
 - Auth with avatar credentials (if no matching wp account, create one)

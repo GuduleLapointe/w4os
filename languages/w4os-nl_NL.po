@@ -265,7 +265,7 @@ msgid "Recent users"
 msgstr "Recente gebruikers"
 
 #: admin/settings.php:56 includes/shortcodes.php:130
-msgid "Grid name"
+msgid "Grid Name"
 msgstr "Grid naam"
 
 #: admin/settings.php:63
@@ -277,7 +277,7 @@ msgid "Hostname"
 msgstr "Hostnaam"
 
 #: admin/settings.php:69 admin/settings.php:229 admin/settings.php:386
-msgid "Database name"
+msgid "Database Name"
 msgstr "Database naam"
 
 #: admin/settings.php:72 admin/settings.php:233 admin/settings.php:390
@@ -306,7 +306,7 @@ msgid "Grid users"
 msgstr "Grid gebruikers"
 
 #: admin/settings.php:101 admin/settings.php:117
-msgid "Profile page"
+msgid "Profile Page"
 msgstr "Profiel pagina"
 
 #: admin/settings.php:103 admin/settings.php:119
@@ -333,7 +333,7 @@ msgid "Show configuration instructions to new users."
 msgstr "Toon configuratie-instructies aan nieuwe gebruikers."
 
 #: admin/settings.php:141
-msgid "Login page"
+msgid "Login Page"
 msgstr "Inlogpagina"
 
 #: admin/settings.php:143
@@ -382,7 +382,7 @@ msgid "Web Assets Server"
 msgstr "Web assets-server"
 
 #: admin/settings.php:187
-msgid "Provide web assets server"
+msgid "Provide Web Assets Server"
 msgstr "Bied webassets-server"
 
 #: admin/settings.php:190
@@ -418,7 +418,7 @@ msgid "Search"
 msgstr "Zoeken op"
 
 #: admin/settings.php:213
-msgid "Provide in-world search"
+msgid "Provide In-world Search"
 msgstr "Zorg voor zoeken in de wereld"
 
 #: admin/settings.php:219
@@ -430,7 +430,7 @@ msgid "Use the same database as Robust"
 msgstr "Gebruik dezelfde database als Robuust"
 
 #: admin/settings.php:244
-msgid "Search engine URL"
+msgid "Search Engine URL"
 msgstr "Zoekmachine URL"
 
 #: admin/settings.php:247
@@ -465,15 +465,15 @@ msgstr ""
 "Gegevensdienst, gebruikt om regio's, objecten of grond te koop aan te melden."
 
 #: admin/settings.php:285
-msgid "Events server URL"
+msgid "Events Server URL"
 msgstr "URL van de voorvallen server"
 
 #: admin/settings.php:287
 msgid ""
-"HYPEvents server URL, used to fetch upcoming events and make them available "
+"HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
 msgstr ""
-"HYPEvents server URL, gebruikt om komende evenementen op te halen en ze "
+"HYPEvents Server URL, gebruikt om komende evenementen op te halen en ze "
 "beschikbaar te maken bij het zoeken."
 
 #: admin/settings.php:288
@@ -509,7 +509,7 @@ msgstr ""
 "ben\" inschakelen."
 
 #: admin/settings.php:337
-msgid "Provide economy helpers"
+msgid "Provide Economy Helpers"
 msgstr "Zorg voor economische helpers"
 
 #: admin/settings.php:340
@@ -539,7 +539,7 @@ msgstr ""
 "aparte installatie, b.v. van %s."
 
 #: admin/settings.php:351
-msgid "Economy base URI"
+msgid "Economy Base URI"
 msgstr "Economie basis URI"
 
 #: admin/settings.php:355
@@ -547,7 +547,7 @@ msgid "The URL must be set in Robust configuration."
 msgstr "De URL moet worden ingesteld in Robuuste configuratie."
 
 #: admin/settings.php:366
-msgid "Economy database"
+msgid "Economy Database"
 msgstr "Gegevensbank economie"
 
 #: admin/settings.php:401
@@ -559,7 +559,7 @@ msgid "No provider, use fake money."
 msgstr "Geen provider, gebruik vals geld."
 
 #: admin/settings.php:412
-msgid "Currency conversion rate"
+msgid "Currency Conversion Rate"
 msgstr "Omrekeningskoers valuta"
 
 #: admin/settings.php:413
@@ -819,7 +819,7 @@ msgstr "elke_vijf_minuten"
 
 #: includes/functions.php:149
 msgid ""
-"A local Robust server has been found. Please check Login URI and Grid name "
+"A local Robust server has been found. Please check Login URI and Grid Name "
 "configuration."
 msgstr ""
 "Er is een lokale Robuuste server gevonden. Controleer de configuratie van de "

@@ -146,7 +146,7 @@ function w4os_update_grid_info($rechecknow = false) {
 	$xml = w4os_fast_xml($check_login_uri . '/get_grid_info');
 
 	if(!$xml) return false;
-	if($check_login_uri == $local_uri) w4os_admin_notice(__('A local Robust server has been found. Please check Login URI and Grid name configuration.', 'w4os'), 'success');
+	if($check_login_uri == $local_uri) w4os_admin_notice(__('A local Robust server has been found. Please check Login URI and Grid Name configuration.', 'w4os'), 'success');
 
 	$grid_info = (array) $xml;
 	if ( 'provide' === get_option('w4os_profile_page' ) && empty($grid_info['profile']) && defined('W4OS_PROFILE_URL') ) $grid_info['profile'] = W4OS_PROFILE_URL;

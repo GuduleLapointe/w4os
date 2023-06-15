@@ -127,7 +127,7 @@ function w4os_gridinfo_html($atts = [], $args=[])
 	$after_title = (isset($after_title)) ? $after_title : '';
 	$content = $before_title . $title . $after_title;
 	$info=array(
-		__("Grid name", 'w4os') => esc_attr(get_option('w4os_grid_name')),
+		__("Grid Name", 'w4os') => esc_attr(get_option('w4os_grid_name')),
 		__("Login URI", 'w4os') => w4os_hop(get_option('w4os_login_uri')),
 	);
 	if(!empty($info)) {

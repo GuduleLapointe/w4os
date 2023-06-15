@@ -266,7 +266,7 @@ msgid "Recent users"
 msgstr "Neue Benutzer"
 
 #: admin/settings.php:56 includes/shortcodes.php:130
-msgid "Grid name"
+msgid "Grid Name"
 msgstr "Grid Name"
 
 #: admin/settings.php:63
@@ -278,7 +278,7 @@ msgid "Hostname"
 msgstr "Hostname"
 
 #: admin/settings.php:69 admin/settings.php:229 admin/settings.php:386
-msgid "Database name"
+msgid "Database Name"
 msgstr "Name der Datenbank"
 
 #: admin/settings.php:72 admin/settings.php:233 admin/settings.php:390
@@ -307,7 +307,7 @@ msgid "Grid users"
 msgstr "Benutzer des Grids"
 
 #: admin/settings.php:101 admin/settings.php:117
-msgid "Profile page"
+msgid "Profile Page"
 msgstr "Profil-Seite"
 
 #: admin/settings.php:103 admin/settings.php:119
@@ -334,7 +334,7 @@ msgid "Show configuration instructions to new users."
 msgstr "Konfigurationsanweisungen für neue Benutzer anzeigen."
 
 #: admin/settings.php:141
-msgid "Login page"
+msgid "Login Page"
 msgstr "Login-Seite"
 
 #: admin/settings.php:143
@@ -384,7 +384,7 @@ msgid "Web Assets Server"
 msgstr "Web Assets Server"
 
 #: admin/settings.php:187
-msgid "Provide web assets server"
+msgid "Provide Web Assets Server"
 msgstr "Server für Web-Assets bereitstellen"
 
 #: admin/settings.php:190
@@ -420,7 +420,7 @@ msgid "Search"
 msgstr "Suche"
 
 #: admin/settings.php:213
-msgid "Provide in-world search"
+msgid "Provide In-world Search"
 msgstr "In-World-Suche bereitstellen"
 
 #: admin/settings.php:219
@@ -432,7 +432,7 @@ msgid "Use the same database as Robust"
 msgstr "Verwenden Sie die gleiche Datenbank wie Robust"
 
 #: admin/settings.php:244
-msgid "Search engine URL"
+msgid "Search Engine URL"
 msgstr "URL der Suchmaschine"
 
 #: admin/settings.php:247
@@ -466,12 +466,12 @@ msgstr ""
 "zu registrieren."
 
 #: admin/settings.php:285
-msgid "Events server URL"
+msgid "Events Server URL"
 msgstr "URL des Eventservers"
 
 #: admin/settings.php:287
 msgid ""
-"HYPEvents server URL, used to fetch upcoming events and make them available "
+"HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
 msgstr ""
 "HYPEvents-Server-URL, die verwendet wird, um bevorstehende Ereignisse "
@@ -510,7 +510,7 @@ msgstr ""
 "offline bin\" aktivieren."
 
 #: admin/settings.php:337
-msgid "Provide economy helpers"
+msgid "Provide Economy Helpers"
 msgstr "Bereitstellung von Wirtschaftshelfern"
 
 #: admin/settings.php:340
@@ -540,7 +540,7 @@ msgstr ""
 "erfordert eine separate Installation, z.B. von %s."
 
 #: admin/settings.php:351
-msgid "Economy base URI"
+msgid "Economy Base URI"
 msgstr "Wirtschaft Basis URI"
 
 #: admin/settings.php:355
@@ -548,7 +548,7 @@ msgid "The URL must be set in Robust configuration."
 msgstr "Die URL muss in der robusten Konfiguration festgelegt werden."
 
 #: admin/settings.php:366
-msgid "Economy database"
+msgid "Economy Database"
 msgstr "Datenbank Wirtschaft"
 
 #: admin/settings.php:401
@@ -560,7 +560,7 @@ msgid "No provider, use fake money."
 msgstr "Kein Anbieter, verwenden Sie Spielgeld."
 
 #: admin/settings.php:412
-msgid "Currency conversion rate"
+msgid "Currency Conversion Rate"
 msgstr "Währungsumrechnungskurs"
 
 #: admin/settings.php:413
@@ -823,7 +823,7 @@ msgstr "alle_fünf_Minuten"
 
 #: includes/functions.php:149
 msgid ""
-"A local Robust server has been found. Please check Login URI and Grid name "
+"A local Robust server has been found. Please check Login URI and Grid Name "
 "configuration."
 msgstr ""
 "Es wurde ein lokaler Robust-Server gefunden. Bitte überprüfen Sie die "

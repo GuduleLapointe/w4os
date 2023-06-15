@@ -253,7 +253,7 @@ msgstr ""
 
 #: admin/settings.php:56
 #: includes/shortcodes.php:130
-msgid "Grid name"
+msgid "Grid Name"
 msgstr ""
 
 #: admin/settings.php:63
@@ -269,7 +269,7 @@ msgstr ""
 #: admin/settings.php:69
 #: admin/settings.php:229
 #: admin/settings.php:386
-msgid "Database name"
+msgid "Database Name"
 msgstr ""
 
 #: admin/settings.php:72
@@ -304,7 +304,7 @@ msgstr ""
 
 #: admin/settings.php:101
 #: admin/settings.php:117
-msgid "Profile page"
+msgid "Profile Page"
 msgstr ""
 
 #: admin/settings.php:103
@@ -331,7 +331,7 @@ msgid "Show configuration instructions to new users."
 msgstr ""
 
 #: admin/settings.php:141
-msgid "Login page"
+msgid "Login Page"
 msgstr ""
 
 #: admin/settings.php:143
@@ -375,7 +375,7 @@ msgid "Web Assets Server"
 msgstr ""
 
 #: admin/settings.php:187
-msgid "Provide web assets server"
+msgid "Provide Web Assets Server"
 msgstr ""
 
 #: admin/settings.php:190
@@ -403,7 +403,7 @@ msgid "Search"
 msgstr ""
 
 #: admin/settings.php:213
-msgid "Provide in-world search"
+msgid "Provide In-world Search"
 msgstr ""
 
 #: admin/settings.php:219
@@ -416,7 +416,7 @@ msgid "Use the same database as Robust"
 msgstr ""
 
 #: admin/settings.php:244
-msgid "Search engine URL"
+msgid "Search Engine URL"
 msgstr ""
 
 #: admin/settings.php:247
@@ -436,11 +436,11 @@ msgid "Data service, used to register regions, objects or land for sale."
 msgstr ""
 
 #: admin/settings.php:285
-msgid "Events server URL"
+msgid "Events Server URL"
 msgstr ""
 
 #: admin/settings.php:287
-msgid "HYPEvents server URL, used to fetch upcoming events and make them available in search."
+msgid "HYPEvents Server URL, used to fetch upcoming events and make them available in search."
 msgstr ""
 
 #: admin/settings.php:288
@@ -468,7 +468,7 @@ msgid "A no-reply e-mail address used to forward messages for users enabling \"E
 msgstr ""
 
 #: admin/settings.php:337
-msgid "Provide economy helpers"
+msgid "Provide Economy Helpers"
 msgstr ""
 
 #: admin/settings.php:340
@@ -484,7 +484,7 @@ msgid "Money server is not included in OpenSimulator distribution and require a 
 msgstr ""
 
 #: admin/settings.php:351
-msgid "Economy base URI"
+msgid "Economy Base URI"
 msgstr ""
 
 #: admin/settings.php:355
@@ -492,7 +492,7 @@ msgid "The URL must be set in Robust configuration."
 msgstr ""
 
 #: admin/settings.php:366
-msgid "Economy database"
+msgid "Economy Database"
 msgstr ""
 
 #: admin/settings.php:401
@@ -504,7 +504,7 @@ msgid "No provider, use fake money."
 msgstr ""
 
 #: admin/settings.php:412
-msgid "Currency conversion rate"
+msgid "Currency Conversion Rate"
 msgstr ""
 
 #: admin/settings.php:413
@@ -683,7 +683,7 @@ msgid "every_five_minutes"
 msgstr ""
 
 #: includes/functions.php:149
-msgid "A local Robust server has been found. Please check Login URI and Grid name configuration."
+msgid "A local Robust server has been found. Please check Login URI and Grid Name configuration."
 msgstr ""
 
 #: includes/functions.php:168

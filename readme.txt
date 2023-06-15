@@ -3,7 +3,7 @@ Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
-Requires PHP: 7.3
+Requires PHP: 5.7
 Tested up to: 6.2
 Stable tag: 2.3.15
 License: AGPLv3
@@ -36,7 +36,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - naming scheme of default models
   - exclude models from grid stats
 - Web asset server
-- Login page / Widget
+- Login Page / Widget
 - Manual and cron Grid/WP users sync
 - Public avatar profile
 - Auth with avatar credentials (if no matching wp account, create one)
