@@ -81,8 +81,8 @@ function w4os_is_email(string $address): bool {
 
   if (\defined('INTL_IDNA_VARIANT_UTS46') ) {
     $variant = INTL_IDNA_VARIANT_UTS46;
-  } else if (\defined('INTL_IDNA_VARIANT_2003') ) {
-    $variant = INTL_IDNA_VARIANT_2003;
+  } else {
+    $variant = 1; // INTL_IDNA_VARIANT_2003;
   }
 
   $domain = \rtrim(\idn_to_ascii($domain, IDNA_DEFAULT, $variant), '.') . '.';

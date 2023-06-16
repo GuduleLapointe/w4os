@@ -47,7 +47,7 @@ function currency_xmlrpc_quote($method_name, $params, $app_data)
 			case 'gloebit':
 				$cost = 1; // default cost if no table;
 				$conversion_table = GLOEBIT_CONVERSION_TABLE;
-				while (list($key, $value) = each($conversion_table)) {
+				foreach ($conversion_table as $key => $value) {
 					$cost = $value;
 					if(GLOEBIT_CONVERSION_THRESHOLD > 0) {
 						$threshold = GLOEBIT_CONVERSION_THRESHOLD;
