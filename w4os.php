@@ -11,7 +11,7 @@
  * Text Domain:       w4os
  * Domain Path:       /languages/
  *
- * @package	w4os
+ * @package w4os
  *
  * Icon1x: https://github.com/GuduleLapointe/w4os/raw/master/assets/icon-128x128.png
  * Icon2x: https://github.com/GuduleLapointe/w4os/raw/master/assets/icon-256x256.png
@@ -35,32 +35,39 @@ if ( ! defined( 'WPINC' ) ) {
  * WordPress Directory, we want to make sure only one version of the plugin is
  * activated.
  */
-$plugin_dir_check = basename(dirname(__FILE__));
+$plugin_dir_check = basename( dirname( __FILE__ ) );
 // First web check if official plugin release is active, even if not yet loaded, as it has priority
 if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-opensimulator-web-interface/w4os.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-	add_action( 'admin_notices', function() {
-		echo sprintf (
-			"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
-			__("You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.", 'w4os'),
-		);
-	} );
-	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
-// Then we check for any other plugin conflict, first loaded is kept
-} else if ( defined( 'W4OS_SLUG' ) ) {
-	add_action( 'admin_notices', function() {
-		echo sprintf (
-			"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
-			__("Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.", 'w4os'),
-		);
-	} );
-	deactivate_plugins($plugin_dir_check . "/" . basename(__FILE__));
-// Finally, actually load if no conflict
+	add_action(
+		'admin_notices',
+		function() {
+			echo sprintf(
+				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
+				__( 'You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.', 'w4os' ),
+			);
+		}
+	);
+	deactivate_plugins( $plugin_dir_check . '/' . basename( __FILE__ ) );
+	// Then we check for any other plugin conflict, first loaded is kept
+} elseif ( defined( 'W4OS_SLUG' ) ) {
+	add_action(
+		'admin_notices',
+		function() {
+			echo sprintf(
+				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
+				__( 'Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.', 'w4os' ),
+			);
+		}
+	);
+	deactivate_plugins( $plugin_dir_check . '/' . basename( __FILE__ ) );
+	// Finally, actually load if no conflict
 } else {
 	require_once plugin_dir_path( __FILE__ ) . 'legacy/init.php';
-	if(file_exists(plugin_dir_path( __FILE__ ) . 'lib/package-updater.php'))
-	include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
+	if ( file_exists( plugin_dir_path( __FILE__ ) . 'lib/package-updater.php' ) ) {
+		include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
+	}
 
-	if(is_admin()) {
-		require_once (plugin_dir_path(__FILE__) . 'legacy/admin/admin-init.php');
+	if ( is_admin() ) {
+		require_once plugin_dir_path( __FILE__ ) . 'legacy/admin/admin-init.php';
 	}
 }

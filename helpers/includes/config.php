@@ -1,4 +1,5 @@
-<?php if ( ! defined( 'W4OS_PLUGIN' ) ) die();
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) {
+	die();}
 /*
  * config.php
  *
@@ -13,12 +14,12 @@
 /**
  * Grid info
  */
-define('OPENSIM_GRID_NAME', get_option('w4os_grid_name', 'OpenSimulator'));
-define('OPENSIM_LOGIN_URI', W4OS_GRID_LOGIN_URI);
-define("OPENSIM_MAIL_SENDER", get_option('w4os_offline_sender', 'no-reply@' . $_SERVER['SERVER_NAME']));
+define( 'OPENSIM_GRID_NAME', get_option( 'w4os_grid_name', 'OpenSimulator' ) );
+define( 'OPENSIM_LOGIN_URI', W4OS_GRID_LOGIN_URI );
+define( 'OPENSIM_MAIL_SENDER', get_option( 'w4os_offline_sender', 'no-reply@' . $_SERVER['SERVER_NAME'] ) );
 // define('OPENSIM_GRID_LOGO_URL', (get_theme_mod( 'custom_logo' )) ? wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ) , 'full' )[0] : '');
 
-define('HYPEVENTS_URL', preg_replace(':/$:', '', get_option('w4os_hypevents_url', 'https://2do.pm/events')));
+define( 'HYPEVENTS_URL', preg_replace( ':/$:', '', get_option( 'w4os_hypevents_url', 'https://2do.pm/events' ) ) );
 
 /**
  * Main database.
@@ -33,11 +34,11 @@ define('HYPEVENTS_URL', preg_replace(':/$:', '', get_option('w4os_hypevents_url'
  * a multi-grid search engine). In this case search will only provide results
  * for places, land for sale and events.
  */
-define('OPENSIM_DB_HOST', get_option('w4os_db_host'));
-define('OPENSIM_DB_NAME', get_option('w4os_db_database'));
-define('OPENSIM_DB_USER', get_option('w4os_db_user'));
-define('OPENSIM_DB_PASS', get_option('w4os_db_pass'));
-define('OPENSIM_DB', (!empty(OPENSIM_DB_HOST) &! empty(OPENSIM_DB_NAME) &! empty(OPENSIM_DB_USER) &! empty(OPENSIM_DB_PASS)) ? true : false);
+define( 'OPENSIM_DB_HOST', get_option( 'w4os_db_host' ) );
+define( 'OPENSIM_DB_NAME', get_option( 'w4os_db_database' ) );
+define( 'OPENSIM_DB_USER', get_option( 'w4os_db_user' ) );
+define( 'OPENSIM_DB_PASS', get_option( 'w4os_db_pass' ) );
+define( 'OPENSIM_DB', ( ! empty( OPENSIM_DB_HOST ) & ! empty( OPENSIM_DB_NAME ) & ! empty( OPENSIM_DB_USER ) & ! empty( OPENSIM_DB_PASS ) ) ? true : false );
 
 /**
  * Search database credentials and settings.
@@ -49,10 +50,10 @@ define('OPENSIM_DB', (!empty(OPENSIM_DB_HOST) &! empty(OPENSIM_DB_NAME) &! empty
  *   - optional for closed grids and standalone simulators
  * These are recommendations, the Robust database can safely be used instead.
  */
-define('SEARCH_DB_HOST', get_option('w4os_search_db_host', OPENSIM_DB_HOST));
-define('SEARCH_DB_NAME', get_option('w4os_search_db_database', OPENSIM_DB_NAME));
-define('SEARCH_DB_USER', get_option('w4os_search_db_user', OPENSIM_DB_USER));
-define('SEARCH_DB_PASS', get_option('w4os_search_db_pass', OPENSIM_DB_PASS));
+define( 'SEARCH_DB_HOST', get_option( 'w4os_search_db_host', OPENSIM_DB_HOST ) );
+define( 'SEARCH_DB_NAME', get_option( 'w4os_search_db_database', OPENSIM_DB_NAME ) );
+define( 'SEARCH_DB_USER', get_option( 'w4os_search_db_user', OPENSIM_DB_USER ) );
+define( 'SEARCH_DB_PASS', get_option( 'w4os_search_db_pass', OPENSIM_DB_PASS ) );
 
 /**
  * Other registrars to forward hosts registrations.
@@ -60,34 +61,40 @@ define('SEARCH_DB_PASS', get_option('w4os_search_db_pass', OPENSIM_DB_PASS));
  * This method is not needed as with current OpenSim server (0.9.x) which allow
  * specifying multiple registrars, but could be used in the future to implement
  * peer to peer information sharing.
+ *
  * @var array
  */
-define('SEARCH_REGISTRARS', array(
-  // 'http://2do.directory/helpers/register.php',
-  // 'http://metaverseink.com/cgi-bin/register.py',
-));
+define(
+	'SEARCH_REGISTRARS',
+	array(
+	// 'http://2do.directory/helpers/register.php',
+	// 'http://metaverseink.com/cgi-bin/register.py',
+	)
+);
 
 /**
  * Currency database credentials and settings.
  * Needed if currency is enabled on OpenSim server.
  * A dedicated database is recommended, but not mandatory.
  */
-define('CURRENCY_DB_HOST', get_option('w4os_economy_db_host'));
-define('CURRENCY_DB_NAME', get_option('w4os_economy_db_database'));
-define('CURRENCY_DB_USER', get_option('w4os_economy_db_user'));
-define('CURRENCY_DB_PASS', get_option('w4os_economy_db_pass'));
-define('CURRENCY_MONEY_TBL',     'balances');
-define('CURRENCY_TRANSACTION_TBL', 'transactions');
+define( 'CURRENCY_DB_HOST', get_option( 'w4os_economy_db_host' ) );
+define( 'CURRENCY_DB_NAME', get_option( 'w4os_economy_db_database' ) );
+define( 'CURRENCY_DB_USER', get_option( 'w4os_economy_db_user' ) );
+define( 'CURRENCY_DB_PASS', get_option( 'w4os_economy_db_pass' ) );
+define( 'CURRENCY_MONEY_TBL', 'balances' );
+define( 'CURRENCY_TRANSACTION_TBL', 'transactions' );
 
 /**
  * Money Server settings.
  */
-define('CURRENCY_USE_MONEYSERVER', true);
-define('CURRENCY_SCRIPT_KEY', get_option('w4os_money_script_access_key', '123456789'));
-define('CURRENCY_RATE', get_option('w4os_currency_rate', 10)); // amount in dollar...
-define('CURRENCY_RATE_PER', get_option('w4os_currency_rate_per', 1000)); // ... for this amount in virtuall currency
-define('CURRENCY_PROVIDER', get_option('w4os_currency_provider'));
-if (!defined('CURRENCY_HELPER_URL'))  define('CURRENCY_HELPER_URL', (!empty(W4OS_GRID_INFO['economy'])) ? W4OS_GRID_INFO['economy'] : get_home_url(NULL, '/economy/'));
+define( 'CURRENCY_USE_MONEYSERVER', true );
+define( 'CURRENCY_SCRIPT_KEY', get_option( 'w4os_money_script_access_key', '123456789' ) );
+define( 'CURRENCY_RATE', get_option( 'w4os_currency_rate', 10 ) ); // amount in dollar...
+define( 'CURRENCY_RATE_PER', get_option( 'w4os_currency_rate_per', 1000 ) ); // ... for this amount in virtuall currency
+define( 'CURRENCY_PROVIDER', get_option( 'w4os_currency_provider' ) );
+if ( ! defined( 'CURRENCY_HELPER_URL' ) ) {
+	define( 'CURRENCY_HELPER_URL', ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ) );
+}
 // if (!defined('CURRENCY_HELPER_PATH')) define('CURRENCY_HELPER_PATH', dirname(__DIR__));
 
 /**
@@ -99,13 +106,14 @@ if (!defined('CURRENCY_HELPER_URL'))  define('CURRENCY_HELPER_URL', (!empty(W4OS
 
 /**
  * OffLine messages DB credentials.
+ *
  * @var [type]
  */
-define('OFFLINE_DB_HOST', OPENSIM_DB_HOST);
-define('OFFLINE_DB_NAME', OPENSIM_DB_NAME);
-define('OFFLINE_DB_USER', OPENSIM_DB_USER);
-define('OFFLINE_DB_PASS', OPENSIM_DB_PASS);
-define('OFFLINE_MESSAGE_TBL', 'im_offline'); // Same DB as Offline Module V2?
+define( 'OFFLINE_DB_HOST', OPENSIM_DB_HOST );
+define( 'OFFLINE_DB_NAME', OPENSIM_DB_NAME );
+define( 'OFFLINE_DB_USER', OPENSIM_DB_USER );
+define( 'OFFLINE_DB_PASS', OPENSIM_DB_PASS );
+define( 'OFFLINE_MESSAGE_TBL', 'im_offline' ); // Same DB as Offline Module V2?
 
 /**
  * Mute list database.
@@ -117,17 +125,17 @@ define('OFFLINE_MESSAGE_TBL', 'im_offline'); // Same DB as Offline Module V2?
 // define('MUTE_DB_PASS', OPENSIM_DB_PASS);
 // define('MUTE_LIST_TBL', 'mute_list');
 
-define('NULL_KEY', '00000000-0000-0000-0000-000000000000');
+define( 'NULL_KEY', '00000000-0000-0000-0000-000000000000' );
 
-define('TPLINK_LOCAL', 1); // seconlife://Region/x/y/z
-define('TPLINK_HG', 2); // seconlife://yourgrid.org:8002 Region/x/y/z
-define('TPLINK_V3HG', 4); // the overcomplicated stuff!
-define('TPLINK_HOP', 8); // hop://yourgrid.org:8002:Region/x/y/z
-define('TPLINK_TXT', 16); // yourgrid.org:8002:Region/x/y/z
-define('TPLINK_APPTP', 32); // secondlife:///app/teleport/yourgrid.org:8002:Region/x/y/z
-define('TPLINK_MAP', 64); // secondlife:///app/map/yourgrid.org:8002:Region/x/y/z
-define('TPLINK', pow(2,8)-1); // all formats
-define('TPLINK_DEFAULT', TPLINK_HOP); // default
+define( 'TPLINK_LOCAL', 1 ); // seconlife://Region/x/y/z
+define( 'TPLINK_HG', 2 ); // seconlife://yourgrid.org:8002 Region/x/y/z
+define( 'TPLINK_V3HG', 4 ); // the overcomplicated stuff!
+define( 'TPLINK_HOP', 8 ); // hop://yourgrid.org:8002:Region/x/y/z
+define( 'TPLINK_TXT', 16 ); // yourgrid.org:8002:Region/x/y/z
+define( 'TPLINK_APPTP', 32 ); // secondlife:///app/teleport/yourgrid.org:8002:Region/x/y/z
+define( 'TPLINK_MAP', 64 ); // secondlife:///app/map/yourgrid.org:8002:Region/x/y/z
+define( 'TPLINK', pow( 2, 8 ) - 1 ); // all formats
+define( 'TPLINK_DEFAULT', TPLINK_HOP ); // default
 
 /**
  * Additional custom config
@@ -139,8 +147,10 @@ define('TPLINK_DEFAULT', TPLINK_HOP); // default
  * DO NOT MAKE CHANGES BELOW THIS
  * Add your custom values above.
  */
-require_once('databases.php');
-require_once('functions.php');
+require_once 'databases.php';
+require_once 'functions.php';
 
-$currency_addon = dirname(__DIR__) . '/addons/currency-' . CURRENCY_PROVIDER . '.php';
-if(file_exists($currency_addon)) include_once($currency_addon);
+$currency_addon = dirname( __DIR__ ) . '/addons/currency-' . CURRENCY_PROVIDER . '.php';
+if ( file_exists( $currency_addon ) ) {
+	require_once $currency_addon;
+}

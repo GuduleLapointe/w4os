@@ -1,4 +1,5 @@
-<?php if(CURRENCY_PROVIDER!='podex') die();
+<?php if ( CURRENCY_PROVIDER != 'podex' ) {
+	die();}
 /**
  * Podex default configuration file.
  *
@@ -12,10 +13,13 @@
  * currency" feature. Podex Buy and sell transactions are actually provided by
  * in-world terminals. Adjust the message and the url to instruct user to
  * teleport to the region providing Podex terminals.
+ *
  * @var [type]
  */
-if(!defined('PODEX_ERROR_MESSAGE'))
-define('PODEX_ERROR_MESSAGE', "Please use our terminals in-world to proceed. Click OK to teleport to terminals region.");
+if ( ! defined( 'PODEX_ERROR_MESSAGE' ) ) {
+	define( 'PODEX_ERROR_MESSAGE', 'Please use our terminals in-world to proceed. Click OK to teleport to terminals region.' );
+}
 
-if(!defined('PODEX_REDIRECT_URL'))
-define('PODEX_REDIRECT_URL', 'secondlife://Podex Exchange/128/128/21');
+if ( ! defined( 'PODEX_REDIRECT_URL' ) ) {
+	define( 'PODEX_REDIRECT_URL', 'secondlife://Podex Exchange/128/128/21' );
+}

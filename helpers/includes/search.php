@@ -15,10 +15,13 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-function ossearch_db_tables($db) {
-  if(!$db->connected) return false;
+function ossearch_db_tables( $db ) {
+	if ( ! $db->connected ) {
+		return false;
+	}
 
-  $query = $db->prepare("CREATE TABLE IF NOT EXISTS `allparcels` (
+	$query = $db->prepare(
+		"CREATE TABLE IF NOT EXISTS `allparcels` (
     `regionUUID` char(36) NOT NULL,
     `parcelname` varchar(255) NOT NULL,
     `ownerUUID` char(36) NOT NULL default '00000000-0000-0000-0000-000000000000',
@@ -140,7 +143,7 @@ function ossearch_db_tables($db) {
     PRIMARY KEY  (`parcelUUID`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-  CREATE TABLE IF NOT EXISTS `" . SEARCH_REGION_TABLE . "` (
+  CREATE TABLE IF NOT EXISTS `" . SEARCH_REGION_TABLE . '` (
     `regionname` varchar(255) NOT NULL,
     `regionUUID` char(36) NOT NULL,
     `regionhandle` varchar(255) NOT NULL,
@@ -150,105 +153,120 @@ function ossearch_db_tables($db) {
     `gatekeeperURL` varchar(255),
     PRIMARY KEY  (`regionUUID`)
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-  ");
+  '
+	);
 
-
-  $result = $query->execute();
+	$result = $query->execute();
 }
 
 function ossearch_db_update_1() {
-  global $SearchDB;
-  if(!$SearchDB) return false;
+	global $SearchDB;
+	if ( ! $SearchDB ) {
+		return false;
+	}
 
-  $tables = [ 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' ];
-  foreach($tables as $table) {
-    if (!count($SearchDB->query("SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'")->fetchAll())) {
-      $SearchDB->query("ALTER TABLE $table ADD gatekeeperURL varchar(255)");
-    }
-  }
+	$tables = array( 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' );
+	foreach ( $tables as $table ) {
+		if ( ! count( $SearchDB->query( "SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'" )->fetchAll() ) ) {
+			$SearchDB->query( "ALTER TABLE $table ADD gatekeeperURL varchar(255)" );
+		}
+	}
 }
 
 function ossearch_db_update_2() {
-  global $SearchDB;
-  if(!$SearchDB) return false;
+	global $SearchDB;
+	if ( ! $SearchDB ) {
+		return false;
+	}
 
-  if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'imageUUID'")->fetchAll())) {
-    $SearchDB->query("ALTER TABLE parcels ADD imageUUID char(36)");
-  }
+	if ( ! count( $SearchDB->query( "SHOW COLUMNS FROM `parcels` LIKE 'imageUUID'" )->fetchAll() ) ) {
+		$SearchDB->query( 'ALTER TABLE parcels ADD imageUUID char(36)' );
+	}
 }
 
-function ossearch_terms_join($glue, $terms, $deprecated = true) {
-  if(empty($terms)) return "";
-  return "(" . join($glue, $terms) . ")";
+function ossearch_terms_join( $glue, $terms, $deprecated = true ) {
+	if ( empty( $terms ) ) {
+		return '';
+	}
+	return '(' . join( $glue, $terms ) . ')';
 }
 
-function ossearch_terms_build_rating($flags, $table="")
-{
-  if(!empty($table)) $table="$table.";
-    $terms = array();
-    if ($flags & pow(2, 24)) $terms[] = "${table}mature = 'PG'";
-    if ($flags & pow(2, 25)) $terms[] = "${table}mature = 'Mature'";
-    if ($flags & pow(2, 26)) $terms[] = "${table}mature = 'Adult'";
-    return ossearch_terms_join(" OR ", $terms);
+function ossearch_terms_build_rating( $flags, $table = '' ) {
+	if ( ! empty( $table ) ) {
+		$table = "$table.";
+	}
+	$terms = array();
+	if ( $flags & pow( 2, 24 ) ) {
+		$terms[] = "${table}mature = 'PG'";
+	}
+	if ( $flags & pow( 2, 25 ) ) {
+		$terms[] = "${table}mature = 'Mature'";
+	}
+	if ( $flags & pow( 2, 26 ) ) {
+		$terms[] = "${table}mature = 'Adult'";
+	}
+	return ossearch_terms_join( ' OR ', $terms );
 }
 
-function ossearch_hostUnregister($hostname, $port) {
-  global $SearchDB;
+function ossearch_hostUnregister( $hostname, $port ) {
+	global $SearchDB;
 
-  $SearchDB->prepareAndExecute("DELETE FROM hostsregister
-    WHERE host = :host AND port = :port",
-    array(
-      'host' => $hostname,
-      'port' => $port,
-    )
-  );
+	$SearchDB->prepareAndExecute(
+		'DELETE FROM hostsregister
+    WHERE host = :host AND port = :port',
+		array(
+			'host' => $hostname,
+			'port' => $port,
+		)
+	);
 
-  $query = $SearchDB->prepareAndExecute("SELECT regionUUID FROM " . SEARCH_REGION_TABLE . " WHERE url = ?", [ "http://$hostname:$port/"] );
-  if($query) {
-    $regions=$query->fetchAll();
-    foreach($regions as $region) {
-      $regionUUID = $region[0];
-      $SearchDB->prepareAndExecute("DELETE pop FROM popularplaces AS pop INNER JOIN parcels AS par ON pop.parcelUUID = par.parcelUUID WHERE regionUUID = ?", [$regionUUID] );
-      $SearchDB->prepareAndExecute("DELETE FROM parcels WHERE regionUUID = ?", [$regionUUID] );
-      $SearchDB->prepareAndExecute("DELETE FROM allparcels WHERE regionUUID = ?", [$regionUUID] );
-      $SearchDB->prepareAndExecute("DELETE FROM parcelsales WHERE regionUUID = ?", [$regionUUID] );
-      $SearchDB->prepareAndExecute("DELETE FROM objects WHERE regionuuid = ?", [$regionUUID] );
-      $SearchDB->prepareAndExecute("DELETE FROM " . SEARCH_REGION_TABLE . " WHERE regionUUID = ?", [$regionUUID] );
-    }
-  }
+	$query = $SearchDB->prepareAndExecute( 'SELECT regionUUID FROM ' . SEARCH_REGION_TABLE . ' WHERE url = ?', array( "http://$hostname:$port/" ) );
+	if ( $query ) {
+		$regions = $query->fetchAll();
+		foreach ( $regions as $region ) {
+			$regionUUID = $region[0];
+			$SearchDB->prepareAndExecute( 'DELETE pop FROM popularplaces AS pop INNER JOIN parcels AS par ON pop.parcelUUID = par.parcelUUID WHERE regionUUID = ?', array( $regionUUID ) );
+			$SearchDB->prepareAndExecute( 'DELETE FROM parcels WHERE regionUUID = ?', array( $regionUUID ) );
+			$SearchDB->prepareAndExecute( 'DELETE FROM allparcels WHERE regionUUID = ?', array( $regionUUID ) );
+			$SearchDB->prepareAndExecute( 'DELETE FROM parcelsales WHERE regionUUID = ?', array( $regionUUID ) );
+			$SearchDB->prepareAndExecute( 'DELETE FROM objects WHERE regionuuid = ?', array( $regionUUID ) );
+			$SearchDB->prepareAndExecute( 'DELETE FROM ' . SEARCH_REGION_TABLE . ' WHERE regionUUID = ?', array( $regionUUID ) );
+		}
+	}
 }
 
 try {
-  $SearchDB = new OSPDO('mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS);
+	$SearchDB = new OSPDO( 'mysql:host=' . SEARCH_DB_HOST . ';dbname=' . SEARCH_DB_NAME, SEARCH_DB_USER, SEARCH_DB_PASS );
+} catch ( PDOException $e ) {
+	// error_log("could not connect to " . SEARCH_DB_HOST);
+	error_log( $e );
+	$SearchDB = null;
 }
-catch(PDOException $e) {
-  // error_log("could not connect to " . SEARCH_DB_HOST);
-  error_log($e);
-  $SearchDB = NULL;
-}
 
-if($SearchDB && $SearchDB->connected) {
-  // <tl;tr> To avoid data loss, fatal errors or conflicts, we use regionsregister
-  // table instead of regions if it seems to be a robust database. For obscure and
-  // historical reasons, search regions table has the same name as robust regions
-  // table, although it has a different structure and a different purpose. It
-  // could be renamed but some developers are reluctant to do it, so we keep the
-  // original name for backward compatibility when in a separate database.
-  if( tableExists($SearchDB, [ 'regions' ] )) {
-    $formatCheck = $SearchDB->query("SHOW COLUMNS FROM regions LIKE 'uuid'");
-    $regions_table = ($formatCheck->rowCount() == 0) ? 'regions' : 'regionsregister';
-  } else {
-    $regions_table = 'regions';
-  }
-  define('SEARCH_REGION_TABLE', $regions_table);
+if ( $SearchDB && $SearchDB->connected ) {
+	// <tl;tr> To avoid data loss, fatal errors or conflicts, we use regionsregister
+	// table instead of regions if it seems to be a robust database. For obscure and
+	// historical reasons, search regions table has the same name as robust regions
+	// table, although it has a different structure and a different purpose. It
+	// could be renamed but some developers are reluctant to do it, so we keep the
+	// original name for backward compatibility when in a separate database.
+	if ( tableExists( $SearchDB, array( 'regions' ) ) ) {
+		$formatCheck   = $SearchDB->query( "SHOW COLUMNS FROM regions LIKE 'uuid'" );
+		$regions_table = ( $formatCheck->rowCount() == 0 ) ? 'regions' : 'regionsregister';
+	} else {
+		$regions_table = 'regions';
+	}
+	define( 'SEARCH_REGION_TABLE', $regions_table );
 
-  if( ! tableExists($SearchDB, [ SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ] )) {
-    error_log("Creating missing OpenSimSearch tables in " . SEARCH_DB_NAME);
-    ossearch_db_tables($SearchDB);
-  }
+	if ( ! tableExists( $SearchDB, array( SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ) ) ) {
+		error_log( 'Creating missing OpenSimSearch tables in ' . SEARCH_DB_NAME );
+		ossearch_db_tables( $SearchDB );
+	}
 
-  if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'gatekeeperURL'")->fetchAll()))
-  ossearch_db_update_1();
-  if (!count($SearchDB->query("SHOW COLUMNS FROM `parcels` LIKE 'imageUUID'")->fetchAll()))
-  ossearch_db_update_2();
+	if ( ! count( $SearchDB->query( "SHOW COLUMNS FROM `parcels` LIKE 'gatekeeperURL'" )->fetchAll() ) ) {
+		ossearch_db_update_1();
+	}
+	if ( ! count( $SearchDB->query( "SHOW COLUMNS FROM `parcels` LIKE 'imageUUID'" )->fetchAll() ) ) {
+		ossearch_db_update_2();
+	}
 }

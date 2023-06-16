@@ -1,4 +1,5 @@
-<?php if(CURRENCY_PROVIDER!='gloebit') die();
+<?php if ( CURRENCY_PROVIDER != 'gloebit' ) {
+	die();}
 /**
  * Gloebit default configuration
  *
@@ -10,9 +11,12 @@
 /**
  * Set to true to activate sandbox mode, during initial installation and tests.
  * Set to false once ready to go live.
+ *
  * @var boolean
  */
-if(!defined('GLOEBIT_SANDBOX')) define('GLOEBIT_SANDBOX', false);
+if ( ! defined( 'GLOEBIT_SANDBOX' ) ) {
+	define( 'GLOEBIT_SANDBOX', false );
+}
 
 /**
  * Gloebit currency conversion table
@@ -24,13 +28,18 @@ if(!defined('GLOEBIT_SANDBOX')) define('GLOEBIT_SANDBOX', false);
  *
  * @var array
  */
-if(!defined('GLOEBIT_CONVERSION_TABLE')) define('GLOEBIT_CONVERSION_TABLE', array(
-  400 => 199,
-  1050 => 499,
-  2150 => 999,
-  4500 => 1999,
-  11500 => 4999,
-));
+if ( ! defined( 'GLOEBIT_CONVERSION_TABLE' ) ) {
+	define(
+		'GLOEBIT_CONVERSION_TABLE',
+		array(
+			400   => 199,
+			1050  => 499,
+			2150  => 999,
+			4500  => 1999,
+			11500 => 4999,
+		)
+	);
+}
 
 /**
  * Affects the suggested purchase amount. Gloebit only allow predifined amounts
@@ -43,4 +52,6 @@ if(!defined('GLOEBIT_CONVERSION_TABLE')) define('GLOEBIT_CONVERSION_TABLE', arra
  *
  * @GLOEBIT_CONVERSION_THRESHOLD float  must be >= 1.0
  */
-if(!defined('GLOEBIT_CONVERSION_THRESHOLD')) define('GLOEBIT_CONVERSION_THRESHOLD', 1.2);
+if ( ! defined( 'GLOEBIT_CONVERSION_THRESHOLD' ) ) {
+	define( 'GLOEBIT_CONVERSION_THRESHOLD', 1.2 );
+}

@@ -3,117 +3,117 @@
  * included in this file.
  */
 .w4os-table {
-    border-collapse: collapse;
-    font-size: 14px;
-    text-align: left;
+	border-collapse: collapse;
+	font-size: 14px;
+	text-align: left;
 }
 .w4os-table :first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .w4os-table > * > * > th,
 .w4os-table > * > * > td {
-    padding: 10px;
-    vertical-align: top;
+	padding: 10px;
+	vertical-align: top;
 }
 .w4os-table > thead > tr > th {
-    text-align: center;
-    padding: 10px 10px 0;
-    font-weight: normal;
+	text-align: center;
+	padding: 10px 10px 0;
+	font-weight: normal;
 }
 .w4os-table > tbody > tr > th {
-    padding-left: 0;
-    width: 200px;
+	padding-left: 0;
+	width: 200px;
 }
 
 .w4os-table > tbody > tr > th p {
-    font-weight: normal;
+	font-weight: normal;
 }
 
 .w4os-table.user-sync {
-    border-spacing: 10px;
-    border-collapse: separate;
-    margin: -10px -10px 0;
+	border-spacing: 10px;
+	border-collapse: separate;
+	margin: -10px -10px 0;
 }
 .w4os-table.user-sync caption {
-    caption-side: bottom;
-    padding: 10px;
+	caption-side: bottom;
+	padding: 10px;
 }
 .w4os-table.user-sync tr:not(.notes) td:not(:empty) {
-    background: white;
-    border: solid 1px lightgrey;
-    border-radius: 5px;
-    min-width: 4em;
-    text-align: center;
-    vertical-align: middle;
+	background: white;
+	border: solid 1px lightgrey;
+	border-radius: 5px;
+	min-width: 4em;
+	text-align: center;
+	vertical-align: middle;
 }
 .w4os-table.user-sync tr.notes td {
-    padding: 0;
+	padding: 0;
 }
 .w4os-table.user-sync td.error {
-    color: red;
+	color: red;
 }
 .w4os-table.user-sync td.success {
-    color: green;
+	color: green;
 }
 
 
 .w4os-table.shortcodes {
-    /* max-width: 60em; */
-    border-spacing: 10px;
-    border-collapse: separate;
-    margin: -10px;
+	/* max-width: 60em; */
+	border-spacing: 10px;
+	border-collapse: separate;
+	margin: -10px;
 }
 
 .w4os-table.shortcodes > tbody > tr > td {
-    background: white;
+	background: white;
 }
 
 .w4os-status-page.wrap > .content {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    flex-direction: row;
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	flex-direction: row;
 }
 
 .iniconfig {
   background: lightgrey;
-    padding: 10px 10px 1px;
+	padding: 10px 10px 1px;
 }
 
 
 .w4os-status-page.wrap > .content > div {
-    flex-basis: 960px;
-    flex-grow: 2;
+	flex-basis: 960px;
+	flex-grow: 2;
 }
 
 .w4os-status-page.wrap > .content > div.shortcodes {
-    flex-basis: 480px;
-    flex-grow: 2;
+	flex-basis: 480px;
+	flex-grow: 2;
 }
 
 .w4os-table.requested-pages td {
-    vertical-align: top;
+	vertical-align: top;
 }
 .w4os-table.requested-pages td:not(:first-child) {
-    width: 50%;
+	width: 50%;
 }
 
 .requested-pages p.submit {
-    margin-top: 0;
-    /* padding-top: 0; */
+	margin-top: 0;
+	/* padding-top: 0; */
 }
 
 table.gridinfo td,
 table.gridstatus td,
 .w4os-shortcode td {
-    vertical-align: bottom;
+	vertical-align: bottom;
 }
 table.gridinfo td:first-child,
 table.gridstatus td:first-child,
 .w4os-shortcode td:first-child {
-    padding-right: 10px;
-    min-width: 12em;
+	padding-right: 10px;
+	min-width: 12em;
 }
 
 .recent-users li {
@@ -125,13 +125,13 @@ table.gridstatus td:first-child,
   line-height: 16px;
 }
 .recent-users li span.row-actions {
-    display: block;
+	display: block;
 }
 .recent-users li span.row-actions > :not(:first-child):before {
-    content: " | ";
+	content: " | ";
 }
 .recent-users li:hover span.row-actions {
-    left: 0;
+	left: 0;
 }
 
 .recent-users .profile-pic {
@@ -146,24 +146,24 @@ table.gridstatus td:first-child,
 }
 
 @media screen and (max-width: 480px) {
-    .w4os-table.shortcodes,
-    .w4os-table.shortcodes > tbody,
-    .w4os-table.shortcodes > * > tr,
-    .w4os-table.shortcodes > * > * > th,
-    .w4os-table.shortcodes > * > * > td {
-        display: block;
-        max-width: 100%;
-        /* padding: 10px; */
-    }
-    .w4os-table.shortcodes {
-        margin: 0;
-    }
-    .w4os-table.shortcodes > tbody > tr > th {
-        margin: 20px 0 0;
-        width: calc(100% - 10px);
-    }
-    .w4os-table.shortcodes > tbody > tr > th p {
-        margin-bottom: 0;
-    }
+	.w4os-table.shortcodes,
+	.w4os-table.shortcodes > tbody,
+	.w4os-table.shortcodes > * > tr,
+	.w4os-table.shortcodes > * > * > th,
+	.w4os-table.shortcodes > * > * > td {
+		display: block;
+		max-width: 100%;
+		/* padding: 10px; */
+	}
+	.w4os-table.shortcodes {
+		margin: 0;
+	}
+	.w4os-table.shortcodes > tbody > tr > th {
+		margin: 20px 0 0;
+		width: calc(100% - 10px);
+	}
+	.w4os-table.shortcodes > tbody > tr > th p {
+		margin-bottom: 0;
+	}
 }
 */

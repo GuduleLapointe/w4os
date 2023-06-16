@@ -1,8 +1,9 @@
-<?php if ( ! defined( 'WPINC' ) ) die;
+<?php if ( ! defined( 'WPINC' ) ) {
+	die;}
 /**
  * Fired when the plugin is uninstalled.
  *
- * @package	w4os
+ * @package w4os
  * @author Olivier van Helden <olivier@van-helden.net>
  *
  * When populating this file, consider the following flow
@@ -20,9 +21,12 @@
  *
  * For more information, see the following discussion:
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
- *
  */
 
 // If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
-if ( ! is_admin() ) exit;
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit;
+}
+if ( ! is_admin() ) {
+	exit;
+}
