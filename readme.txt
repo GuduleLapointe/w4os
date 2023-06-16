@@ -1,10 +1,10 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
-Requires PHP: 5.7
-Tested up to: 6.2
+Requires PHP: 7.3
+Tested up to: 6.2.2
 Stable tag: 2.3.15
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -166,6 +166,11 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.3.16-dev.913) =
+* added troubleshooting guide
+* fix a couple of deprecated code warnings
+* normalized code
 
 = 2.3.15 =
 * fix array_unique(): Argument #1 ($array) must be of type array, null given on plugin first activation

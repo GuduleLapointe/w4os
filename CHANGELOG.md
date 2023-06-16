@@ -1,5 +1,10 @@
 ## Changelog
 
+### Unreleased (2.3.16-dev.913)
+- added troubleshooting guide
+- fix a couple of deprecated code warnings
+- normalized code
+
 ### 2.3.15
 - fix array_unique(): Argument #1 ($array) must be of type array, null given on plugin first activation
 - fix Undefined constant "W4OS_PROFILE_URL" fatal error

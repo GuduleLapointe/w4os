@@ -1,7 +1,7 @@
-# w4os - OpenSimulator Web Interface
+# w4os - OpenSimulator Web Interface (dev)
 
-![Stable 2.3.14](https://badgen.net/badge/Stable/2.3.14/00aa00)
-![WordPress 5.3.0 - 6.2](https://badgen.net/badge/WordPress/5.3.0%20-%206.2/3858e9)
+![Stable 2.3.15](https://badgen.net/badge/Stable/2.3.15/00aa00)
+![WordPress 5.3.0 - 6.2.2](https://badgen.net/badge/WordPress/5.3.0%20-%206.2.2/3858e9)
 ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
 ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
 
@@ -84,6 +84,12 @@ Yes, it works too. Use OpenSim database credentials when requested for Robust cr
 ### Why can't I change my avatar name?
 
 This is an OpenSimulator design limitation. Regions rely on cached data to display avatar information, and once fetched, these are never updated. As a result, if an avatar's name (or grid URI btw) is changed, the change will not be reflected on regions already visited by this avatar (which will still show the old name), but new visited region will display the new one. This could be somewhat handled for a small standalone grid, but never in hypergrid context. There is no process to force a foreign grid to update its cache, and probably never will.
+
+### Shouldn't I copy the helpers/ directory in the root of my webiste ?
+
+No, you don't need to and you shouldn't. The /helpers/ is virtual, it is served as any other page of your website. Like there the /about/ URL website doesn't match a /about/ folder your webste directory.
+Even if there is a helpers/ directory in w4os plugin, it has the same name for convenience, but he could have been named anything. It's content is not accessed directly, it is used by the plugin to generate the answers.
+On the opposite, if there was an actual helpers/ folder in your website root, it would interfer with w4os.
 
 ## Screenshots
 

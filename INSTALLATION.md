@@ -57,3 +57,7 @@ These accounts will be excluded from grid statistics.
 - **PHP** 7.4 to 8.1
 - **PHP Modules**: w4os requires php imagemagick module. Also, while they are not required, WordPress recommends activating PHP **curl** and **xml** modules. They are also recommended by W4OS for full functionalties.
 
+### Troubleshooting
+
+See TROUBLESHOOTING.md for more information.
+
