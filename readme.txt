@@ -167,7 +167,7 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 
 == Changelog ==
 
-= Unreleased (2.3.16-dev.913) =
+= Unreleased (2.3.16-dev.915) =
 * added troubleshooting guide
 * fix a couple of deprecated code warnings
 * normalized code

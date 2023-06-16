@@ -59,5 +59,5 @@ These accounts will be excluded from grid statistics.
 
 ### Troubleshooting
 
-See TROUBLESHOOTING.md for more information.
+See [TROUBLESHOOTING.md](https://w4os.org/troobleshooting/) for more information.
 
