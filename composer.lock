@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.4.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "3218a33ff14b968f8cb05de9656c2efa1eeb1330"
+                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/3218a33ff14b968f8cb05de9656c2efa1eeb1330",
-                "reference": "3218a33ff14b968f8cb05de9656c2efa1eeb1330",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
+                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
                 "shasum": ""
             },
             "require-dev": {
@@ -42,9 +42,9 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.4.0"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.1"
             },
-            "time": "2021-10-28T17:09:12+00:00"
+            "time": "2023-06-14T19:23:12+00:00"
         }
     ],
     "packages-dev": [],
@@ -55,5 +55,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
