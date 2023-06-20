@@ -71,7 +71,7 @@ function w4os_settings_page() {
 		</form>
 	</div>
 	<?php
-	wp_enqueue_script( 'w4os-admin-settings-form-js', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
+	wp_enqueue_script( 'w4os-admin-settings-forms', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
 }
 
 function w4os_helpers_page() {
@@ -90,7 +90,7 @@ function w4os_helpers_page() {
 		</form>
 	</div>
 	<?php
-	wp_enqueue_script( 'w4os-admin-helpers-form-js', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
+	wp_enqueue_script( 'w4os-admin-settings-forms', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
 }
 
 /**

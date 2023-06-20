@@ -1,4 +1,5 @@
 function valueChanged() {
+
 	// show internal or external assets server uri according to provide checkbox
 	document.getElementById( "w4os_internal_asset_server_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_asset_server' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_external_asset_server_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_asset_server' ).checked ? "none" : "table-row";
@@ -21,12 +22,21 @@ function valueChanged() {
 	document.getElementById( "w4os_currency_rate" ).parentNode.parentNode.style.display           = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_currency_provider_gloebit' ).checked ? "table-row" : "none";
 
 	document.getElementById( "w4os_search_register" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
-	// document.getElementById("w4os_search_url").parentNode.parentNode.style.display = document.getElementById('w4os_provide_search').checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_use_robust_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_db_host" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_db_database" ).parentNode.parentNode.style.display   = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_db_user" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_db_pass" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
+
+	// document.getElementById("w4os_search_url").readonly = document.getElementById('w4os_provide_search').checked;
+	// document.getElementById("w4os_search_url").setAttribute("readonly", document.getElementById('w4os_provide_search').checked);
+	// document.getElementById("w4os_search_url").disabled = document.getElementById('w4os_provide_search').checked;
+
+	if(document.getElementById( 'w4os_provide_search' ).checked) {
+		document.getElementById("w4os_search_url").setAttribute("readonly", "readonly");
+	} else {
+		document.getElementById("w4os_search_url").removeAttribute("readonly");
+	}
 }
 // force check on load
 valueChanged();
