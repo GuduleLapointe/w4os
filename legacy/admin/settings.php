@@ -54,7 +54,7 @@ function w4os_register_settings() {
 					'fields'           => array(
 						'w4os_login_uri' => array(
 							'name'        => 'Login URI',
-							'placeholder' => 'example.org:8002',
+							'placeholder' => 'yourgrid.org:8002',
 							'default'     => $default_loginuri,
 							// 'type' => 'string',
 							// 'sanitize_callback' => 'w4os_settings_field',

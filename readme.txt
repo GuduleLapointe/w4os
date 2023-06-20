@@ -61,7 +61,7 @@ If upgrading from a different distribution (e.a. switching from github to WordPr
 
 1. Download and activate the latest stable release
 2. Visit OpenSim settings (admin menu > "Opensim" > "Settings")
-  - Enter your grid name and grid URI (like example.org:8002 without http://)
+  - Enter your grid name and grid URI (like yourgrid.org:8002 without http://)
   - Enter your robust database connection details and submit. If you get a
     database connection error, it might come from a case-sensitivity issue (see
     https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
