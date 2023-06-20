@@ -90,13 +90,13 @@ To ensure proper configuration of the Helpers settings in the OpenSimulator sect
 
 If you have completed the above steps and the plugin is still not working, you can try using "http://" instead of "https://" in the OpenSim.ini file. This is not related to the plugin or WordPress but rather a limitation associated with certain .Net/mono versions used in OpenSimulator binaries. In some cases, the compiled version may not handle recent root certificates, even if they are legitimate. While it is possible to fix this by recompiling OpenSimulator with the correct root certificates, it can be a challenging process. Therefore, using "http://" (and "/helpers/") is often a more straightforward solution.
 
-### Note about search feature
+### Note about the search feature
 
 The search feature relies on three parts: **the simulator**, sending regular updates to **the register**, storing them for **the search engine** to query them to deliver results.
 
 This means that after making sure w4os is setup correctly, you must make sure each simulator of your grid has the right settings for the search register, and restart them for the data to start being sent.
 
-The search register honors the "Show Place in Search" in-world setting for each parcel (in "About Land" > "Options"), so it must be set for any parcel to appear in results.
+The search register honors the "Show Place in Search" in-world setting for each parcel (in "About Land" > "Options"), so it must be set for every parcel supposed to appear in results.
 
 ## 6\. Check the grid settings of the viewer
 
