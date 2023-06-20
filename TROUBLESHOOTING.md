@@ -72,14 +72,16 @@ To ensure proper configuration of the Helpers settings in the OpenSimulator sect
   - if enabled,
 
     - Set the Search Engine URL to <http://yourgrid.org/helpers/query.php>, adjusting it with your Site Address as it appears in WP General settings. Make sure to use "http://" instead of "https://".
-    - Set the Search register to <http://yourgrid.org/helpers/register.php>, adjusting it with your Site Address but using "[http://".By](http://”.By) using your own search engine, you will limit search results to your grid only, whether Hypergrid is enabled or not.
+    - Set the Search register to <http://yourgrid.org/helpers/register.php>, adjusting it with your Site Address but using "http://". By using your own search engine, you will limit search results to your grid only, whether Hypergrid is enabled or not.
 
   - If not enabled and you use a third-party solution like w4os search engine, enter their address in the Search Engine URL field. Using an external provider will provide search results from all the grids registered with the same provider. This option is suitable if Hypergrid is enabled on your grid.Ensure that you enter the same addresses in the OpenSim.ini file to maintain consistency between the plugin settings and the OpenSimulator configuration.
 
 - After saving the settings, access the Search Engine URL in a browser. It should display a blank page.
 
 - Set the Events Server URL to "<http://2do.pm/events/>" or use any other implementation of the HYPEevents server.
+
 - If the "Provide Offline Helper" option is enabled, set the Offline Helper URI to "<http://yourgrid.org/helpers/offline.php>". Make sure the configuration in both Robust.HG.ini and OpenSim.ini matches. Accessing the URI from your browser should result in a blank page.
+
 - It is recommended not to enable the Economy feature until all other components are functioning correctly. However, if you have enabled the "Provide Economy Helpers" option, follow these steps:
 
   - Set the Economy Base URI to "<http://yourgrid.org/helpers/>", adjusting it with your actual Site Address and using "http://" instead of "https://".
@@ -87,6 +89,14 @@ To ensure proper configuration of the Helpers settings in the OpenSimulator sect
   - Accessing this URI should result in a blank page, indicating that the Economy Helpers functionality is set up correctly.Enabling the Economy feature allows for the integration of economic systems within your OpenSimulator grid. However, it's important to ensure that all other components are functioning correctly before enabling this option. By following the above steps, you can configure the Economy Base URI and verify its functionality within the w4os plugin.
 
 If you have completed the above steps and the plugin is still not working, you can try using "http://" instead of "https://" in the OpenSim.ini file. This is not related to the plugin or WordPress but rather a limitation associated with certain .Net/mono versions used in OpenSimulator binaries. In some cases, the compiled version may not handle recent root certificates, even if they are legitimate. While it is possible to fix this by recompiling OpenSimulator with the correct root certificates, it can be a challenging process. Therefore, using "http://" (and "/helpers/") is often a more straightforward solution.
+
+### Note about search feature
+
+The search feature relies on three parts: **the simulator**, sending regular updates to **the register**, storing them for **the search engine** to query them to deliver results.
+
+This means that after making sure w4os is setup correctly, you must make sure each simulator of your grid has the right settings for the search register, and restart them for the data to start being sent.
+
+The search register honors the "Show Place in Search" in-world setting for each parcel (in "About Land" > "Options"), so it must be set for any parcel to appear in results.
 
 ## 6\. Check the grid settings of the viewer
 
