@@ -1,11 +1,11 @@
-=== w4os - OpenSimulator Web Interface (dev) ===
+=== w4os - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.3.15
+Stable tag: 2.3.16
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -167,9 +167,14 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 
 == Changelog ==
 
-= Unreleased (2.3.16-dev.915) =
+= 2.3.16 =
+* added defaults for plugin-provider or external search engines
 * added troubleshooting guide
+* fix search and register url settings
 * fix a couple of deprecated code warnings
+* force default for plugin-provided search engine
+* use yourgrid.org:8002 instead of example.org:8002
+* make search engine url readonly if provide in-world search is enabled
 * normalized code
 
 = 2.3.15 =

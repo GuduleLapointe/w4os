@@ -31,12 +31,12 @@ function valueChanged() {
 	// document.getElementById("w4os_search_url").setAttribute("readonly", document.getElementById('w4os_provide_search').checked);
 	// document.getElementById("w4os_search_url").disabled = document.getElementById('w4os_provide_search').checked;
 
-	if(document.getElementById( 'w4os_provide_search' ).checked) {
-		document.getElementById("w4os_search_url").setAttribute("readonly", "readonly");
-		document.getElementById( "w4os_search_register" ).setAttribute("readonly", "readonly");
+	if (document.getElementById( 'w4os_provide_search' ).checked) {
+		document.getElementById( "w4os_search_url" ).setAttribute( "readonly", "readonly" );
+		document.getElementById( "w4os_search_register" ).setAttribute( "readonly", "readonly" );
 	} else {
-		document.getElementById("w4os_search_url").removeAttribute("readonly");
-		document.getElementById("w4os_search_register").removeAttribute("readonly");
+		document.getElementById( "w4os_search_url" ).removeAttribute( "readonly" );
+		document.getElementById( "w4os_search_register" ).removeAttribute( "readonly" );
 	}
 }
 // force check on load

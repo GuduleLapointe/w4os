@@ -1,8 +1,13 @@
 ## Changelog
 
-### Unreleased (2.3.16-dev.915)
+### 2.3.16
+- added defaults for plugin-provider or external search engines
 - added troubleshooting guide
+- fix search and register url settings
 - fix a couple of deprecated code warnings
+- force default for plugin-provided search engine
+- use yourgrid.org:8002 instead of example.org:8002
+- make search engine url readonly if provide in-world search is enabled
 - normalized code
 
 ### 2.3.15
