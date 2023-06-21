@@ -1,4 +1,4 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
@@ -166,6 +166,10 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.3.17-dev.926) =
+* merge changes from magicoli/opensim-helpers
+* hide Events Server URL if Provide In-world Search is disabled
 
 = 2.3.16 =
 * added defaults for plugin-provider or external search engines

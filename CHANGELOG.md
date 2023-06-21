@@ -1,5 +1,9 @@
 ## Changelog
 
+### Unreleased (2.3.17-dev.926)
+- merge changes from magicoli/opensim-helpers
+- hide Events Server URL if Provide In-world Search is disabled
+
 ### 2.3.16
 - added defaults for plugin-provider or external search engines
 - added troubleshooting guide
