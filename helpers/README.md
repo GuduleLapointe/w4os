@@ -1,15 +1,19 @@
-# Flexible helper scripts 2
+# OpenSimulator Helpers
 
-- Version: 2.0
-- Project URL: <https://github.com/GuduleLapointe/flexible_helper_scripts>
+- Version: 2.1.2
+- Project URL: <https://github.com/magicoli/opensim-helpers>
 - Donate: <https://w4os.org/donate/>
 - Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, helpers
-- Requires PHP: 5.5.0
+- Requires PHP: 7.3
 - License: AGPLv3
 
 ## Description
 
-This is a collection of script to complement OpenSimulator server.
+Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.
+
+They were initially based on a collection of different projects (see Credits below), but were entirely rewritten to use an unified code and set of parameters, as well as for integration in larger projects like [w4os OpenSim WordPress Interface](https://w4os.org/).
+
+Also known as Flexible Helper Scripts.
 
 ### Features
 

@@ -91,7 +91,12 @@ function dir_places_query( $method_name, $params, $app_data ) {
 		);
 	}
 
-	osXmlResponse( true, '', $data );
+	if(empty($data)) {
+		// osXmlDie( 'Nothing found' );
+		osXmlResponse( true, 'No results', $data );
+	} else {
+		osXmlResponse( true, '', $data );
+	}
 	die();
 }
 
