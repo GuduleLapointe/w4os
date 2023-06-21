@@ -21,7 +21,6 @@ function valueChanged() {
 	document.getElementById( "w4os_money_script_access_key" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_currency_rate" ).parentNode.parentNode.style.display           = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_currency_provider_gloebit' ).checked ? "table-row" : "none";
 
-	document.getElementById( "w4os_search_register" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_use_robust_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_db_host" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_db_database" ).parentNode.parentNode.style.display   = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
@@ -34,8 +33,10 @@ function valueChanged() {
 
 	if(document.getElementById( 'w4os_provide_search' ).checked) {
 		document.getElementById("w4os_search_url").setAttribute("readonly", "readonly");
+		document.getElementById( "w4os_search_register" ).setAttribute("readonly", "readonly");
 	} else {
 		document.getElementById("w4os_search_url").removeAttribute("readonly");
+		document.getElementById("w4os_search_register").removeAttribute("readonly");
 	}
 }
 // force check on load
