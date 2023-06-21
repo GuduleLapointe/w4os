@@ -1,0 +1,13 @@
+{
+    "name": "magicoli/opensim-helpers",
+    "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
+    "type": "library",
+    "license": "AGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Gudule Lapointe",
+            "email": "gudule@speculoos.world"
+        }
+    ],
+    "require": {}
+}
