@@ -27,6 +27,8 @@ function valueChanged() {
 	document.getElementById( "w4os_search_db_user" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_search_db_pass" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_robust_db' ).checked ? "table-row" : "none";
 
+	document.getElementById( "w4os_hypevents_url" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
+
 	// document.getElementById("w4os_search_url").readonly = document.getElementById('w4os_provide_search').checked;
 	// document.getElementById("w4os_search_url").setAttribute("readonly", document.getElementById('w4os_provide_search').checked);
 	// document.getElementById("w4os_search_url").disabled = document.getElementById('w4os_provide_search').checked;
