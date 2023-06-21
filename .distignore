@@ -49,3 +49,4 @@ tmp/
 .wpignore
 INSTALLATION.md
 src
+vendor/magicoli/opensim-helpers/
