@@ -94,7 +94,7 @@ If you have completed the above steps and the plugin is still not working, you c
 
 The search feature relies on three parts: **the simulator**, sending regular updates to **the register**, storing them for **the search engine** to query them to deliver results.
 
-This means that after making sure w4os is setup correctly, you must make sure each simulator of your grid has the right settings for the search register, and restart them for the data to start being sent.
+So it is very important that, after w4os is set up correctly, you compare the examples given in w4os settings pages and the content of your .ini files, making sure each simulator of your grid has the right settings for the search query and the search register, and restart each of them for the data to start being sent.
 
 The search register honors the "Show Place in Search" in-world setting for each parcel (in "About Land" > "Options"), so it must be set for every parcel supposed to appear in results.
 
