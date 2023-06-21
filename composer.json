@@ -3,8 +3,7 @@
     "description": "W4OS - OpenSimulator Web Interface",
     "type": "wordpress-plugin",
     "require": {
-        "woocommerce/action-scheduler": "^3.4",
-        "magicoli/opensim-helpers": "^2.1"
+        "woocommerce/action-scheduler": "^3.4"
     },
     "autoload": {
       "files": [
@@ -20,7 +19,10 @@
     ],
     "scripts": {
       "post-update-cmd": [
-        "vendor/magicoli/opensim-helpers/bin/install-library.sh"
+        "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/magicoli/opensim-helpers/bin/install-library.sh"
       ]
+    },
+    "require-dev": {
+        "magicoli/opensim-helpers": "^2.1"
     }
 }

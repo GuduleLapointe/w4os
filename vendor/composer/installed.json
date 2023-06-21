@@ -80,5 +80,7 @@
         }
     ],
     "dev": true,
-    "dev-package-names": []
+    "dev-package-names": [
+        "magicoli/opensim-helpers"
+    ]
 }

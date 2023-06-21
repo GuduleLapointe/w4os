@@ -4,40 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9477ced47698e7801cbbc570bf239443",
+    "content-hash": "5a287535d89ed038f5fc27dd74cfe21b",
     "packages": [
-        {
-            "name": "magicoli/opensim-helpers",
-            "version": "v2.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/magicoli/opensim-helpers.git",
-                "reference": "fc0cf8e7b41c705bdaf033aaaef857ac95ae0180"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/fc0cf8e7b41c705bdaf033aaaef857ac95ae0180",
-                "reference": "fc0cf8e7b41c705bdaf033aaaef857ac95ae0180",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "AGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Gudule Lapointe",
-                    "email": "gudule@speculoos.world"
-                }
-            ],
-            "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
-            "support": {
-                "issues": "https://github.com/magicoli/opensim-helpers/issues",
-                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.3"
-            },
-            "time": "2023-06-21T19:33:03+00:00"
-        },
         {
             "name": "woocommerce/action-scheduler",
             "version": "3.6.1",
@@ -79,7 +47,40 @@
             "time": "2023-06-14T19:23:12+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "magicoli/opensim-helpers",
+            "version": "v2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magicoli/opensim-helpers.git",
+                "reference": "fc0cf8e7b41c705bdaf033aaaef857ac95ae0180"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/fc0cf8e7b41c705bdaf033aaaef857ac95ae0180",
+                "reference": "fc0cf8e7b41c705bdaf033aaaef857ac95ae0180",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Gudule Lapointe",
+                    "email": "gudule@speculoos.world"
+                }
+            ],
+            "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
+            "support": {
+                "issues": "https://github.com/magicoli/opensim-helpers/issues",
+                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.3"
+            },
+            "time": "2023-06-21T19:33:03+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
