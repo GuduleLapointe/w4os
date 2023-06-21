@@ -1,6 +1,6 @@
 # OpenSimulator Helpers
 
-- Version: 2.1.6
+- Version: 2.1.7
 - Project URL: <https://github.com/magicoli/opensim-helpers>
 - Donate: <https://w4os.org/donate/>
 - Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, helpers

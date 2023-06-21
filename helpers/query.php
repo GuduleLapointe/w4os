@@ -19,6 +19,16 @@
 require_once 'includes/config.php';
 require_once 'includes/search.php';
 
+function ossearch_get_gatekeeperURL() {
+	if ( isset( $_REQUEST['gk'] ) && ! empty( $_REQUEST['gk'] ) ) {
+		$gatekeeperURL           = $_REQUEST['gk'];
+		$gatekeeperURL           = preg_match( '#https?://#', $gatekeeperURL ) ? $gatekeeperURL : 'http://' . $gatekeeperURL;
+		return $gatekeeperURL;
+	} else {
+		return false;
+	}
+}
+
 //
 // The XMLRPC server object
 //
@@ -69,8 +79,8 @@ function dir_places_query( $method_name, $params, $app_data ) {
 		':order' => $order,
 		':cat'   => $category,
 	);
-	if ( isset( $_REQUEST['gk'] ) & ! empty( $_REQUEST['gk'] ) ) {
-		$gatekeeperURL           = $_REQUEST['gk'];
+	$gatekeeperURL = ossearch_get_gatekeeperURL();
+	if ( $gatekeeperURL ) {
 		$terms[]                 = 'parcels.gatekeeperURL = :gatekeeperURL';
 		$values['gatekeeperURL'] = $gatekeeperURL;
 	}
@@ -91,7 +101,7 @@ function dir_places_query( $method_name, $params, $app_data ) {
 		);
 	}
 
-	if(empty($data)) {
+	if ( empty( $data ) ) {
 		// osXmlDie( 'Nothing found' );
 		osXmlResponse( true, 'No results', $data );
 	} else {
@@ -129,12 +139,8 @@ function dir_popular_query( $method_name, $params, $app_data ) {
 		$terms[]         = '(name LIKE :text)';
 		$sqldata['text'] = "%$text%";
 	}
-	if ( ! empty( $_REQUEST['gk'] ) ) {
-		$gatekeeperURL = $_REQUEST['gk'];
-	} elseif ( ! empty( isset( $req['gatekeeper_url'] ) ) ) {
-		$gatekeeperURL = $req['gatekeeper_url'];
-	}
-	if ( ! empty( $gatekeeperURL ) ) {
+	$gatekeeperURL = ossearch_get_gatekeeperURL();
+	if ( $gatekeeperURL ) {
 		$terms[]                  = 'pop.gatekeeperURL = :gatekeeperURL';
 		$sqldata['gatekeeperURL'] = $gatekeeperURL;
 	}
@@ -181,8 +187,8 @@ function dir_popular_query( $method_name, $params, $app_data ) {
 xmlrpc_server_register_method( $xmlrpc_server, 'dir_land_query', 'dir_land_query' );
 function dir_land_query( $method_name, $params, $app_data ) {
 	global $SearchDB;
+	$req = $params[0];
 
-	$req         = $params[0];
 	$flags       = $req['flags'];
 	$type        = $req['type'];
 	$price       = $req['price'];
@@ -218,8 +224,8 @@ function dir_land_query( $method_name, $params, $app_data ) {
 		$terms[]         = 'area >= :area';
 		$sqldata['area'] = $area;
 	}
-	if ( isset( $_REQUEST['gk'] ) & ! empty( $_REQUEST['gk'] ) ) {
-		$gatekeeperURL            = $_REQUEST['gk'];
+	$gatekeeperURL = ossearch_get_gatekeeperURL();
+	if ( $gatekeeperURL ) {
 		$terms[]                  = 'gatekeeperURL = :gatekeeperURL';
 		$sqldata['gatekeeperURL'] = $gatekeeperURL;
 	}
@@ -280,7 +286,6 @@ function dir_land_query( $method_name, $params, $app_data ) {
 xmlrpc_server_register_method( $xmlrpc_server, 'dir_events_query', 'dir_events_query' );
 function dir_events_query( $method_name, $params, $app_data ) {
 	global $SearchDB;
-
 	$req = $params[0];
 
 	$text        = $req['text'];
