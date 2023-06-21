@@ -3,7 +3,7 @@
         'name' => 'speculoos/w4os',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '7582f3b04ce96040cc2a398dc96034b2d45e2548',
+        'reference' => '44e01081206cfdc86a9f34c66353b365982ace1b',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'magicoli/opensim-helpers' => array(
-            'pretty_version' => 'v2.1.2',
-            'version' => '2.1.2.0',
-            'reference' => 'c1e17258c82346c1d0971b13dad6a6556d9735ca',
+            'pretty_version' => 'v2.1.3',
+            'version' => '2.1.3.0',
+            'reference' => 'fc0cf8e7b41c705bdaf033aaaef857ac95ae0180',
             'type' => 'library',
             'install_path' => __DIR__ . '/../magicoli/opensim-helpers',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'speculoos/w4os' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7582f3b04ce96040cc2a398dc96034b2d45e2548',
+            'reference' => '44e01081206cfdc86a9f34c66353b365982ace1b',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

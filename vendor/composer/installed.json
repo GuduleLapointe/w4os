@@ -2,20 +2,20 @@
     "packages": [
         {
             "name": "magicoli/opensim-helpers",
-            "version": "v2.1.2",
-            "version_normalized": "2.1.2.0",
+            "version": "v2.1.3",
+            "version_normalized": "2.1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magicoli/opensim-helpers.git",
-                "reference": "c1e17258c82346c1d0971b13dad6a6556d9735ca"
+                "reference": "fc0cf8e7b41c705bdaf033aaaef857ac95ae0180"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/c1e17258c82346c1d0971b13dad6a6556d9735ca",
-                "reference": "c1e17258c82346c1d0971b13dad6a6556d9735ca",
+                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/fc0cf8e7b41c705bdaf033aaaef857ac95ae0180",
+                "reference": "fc0cf8e7b41c705bdaf033aaaef857ac95ae0180",
                 "shasum": ""
             },
-            "time": "2023-06-21T12:23:15+00:00",
+            "time": "2023-06-21T19:33:03+00:00",
             "type": "library",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -31,7 +31,7 @@
             "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
             "support": {
                 "issues": "https://github.com/magicoli/opensim-helpers/issues",
-                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.2"
+                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.3"
             },
             "install-path": "../magicoli/opensim-helpers"
         },

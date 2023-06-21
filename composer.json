@@ -17,5 +17,10 @@
             "name": "Gudule Lapointe",
             "email": "gudule@speculoos.world"
         }
-    ]
+    ],
+    "scripts": {
+      "post-update-cmd": [
+        "vendor/magicoli/opensim-helpers/bin/install-library.sh"
+      ]
+    }
 }
