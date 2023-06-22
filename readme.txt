@@ -1,11 +1,11 @@
-=== w4os - OpenSimulator Web Interface (dev) ===
+=== w4os - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.3.16
+Stable tag: 2.3.17
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -167,7 +167,9 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 
 == Changelog ==
 
-= Unreleased (2.3.17-dev.926) =
+= 2.3.17 =
+* fixed helpers settings hints missing http:// protocol for gatekeeper
+* fixed no result if gatekeeper is passed without http:// protocol
 * merge changes from magicoli/opensim-helpers
 * hide Events Server URL if Provide In-world Search is disabled
 

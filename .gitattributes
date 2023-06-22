@@ -50,3 +50,4 @@ tmp/ export-ignore
 .wpignore export-ignore
 INSTALLATION.md export-ignore
 src export-ignore
+vendor/magicoli/opensim-helpers/ export-ignore

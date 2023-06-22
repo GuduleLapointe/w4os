@@ -1,6 +1,8 @@
 ## Changelog
 
-### Unreleased (2.3.17-dev.926)
+### 2.3.17
+- fixed helpers settings hints missing http:// protocol for gatekeeper
+- fixed no result if gatekeeper is passed without http:// protocol
 - merge changes from magicoli/opensim-helpers
 - hide Events Server URL if Provide In-world Search is disabled
 
