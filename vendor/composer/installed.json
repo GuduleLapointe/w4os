@@ -1,41 +1,6 @@
 {
     "packages": [
         {
-            "name": "magicoli/opensim-helpers",
-            "version": "v2.1.8",
-            "version_normalized": "2.1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/magicoli/opensim-helpers.git",
-                "reference": "a9683cbca9de4f4a3095ef7aa61ebe00bd29524d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/a9683cbca9de4f4a3095ef7aa61ebe00bd29524d",
-                "reference": "a9683cbca9de4f4a3095ef7aa61ebe00bd29524d",
-                "shasum": ""
-            },
-            "time": "2023-06-21T23:36:37+00:00",
-            "type": "library",
-            "installation-source": "dist",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "AGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Gudule Lapointe",
-                    "email": "gudule@speculoos.world"
-                }
-            ],
-            "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
-            "support": {
-                "issues": "https://github.com/magicoli/opensim-helpers/issues",
-                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.8"
-            },
-            "install-path": "../magicoli/opensim-helpers"
-        },
-        {
             "name": "woocommerce/action-scheduler",
             "version": "3.6.1",
             "version_normalized": "3.6.1.0",
@@ -79,8 +44,6 @@
             "install-path": "../woocommerce/action-scheduler"
         }
     ],
-    "dev": true,
-    "dev-package-names": [
-        "magicoli/opensim-helpers"
-    ]
+    "dev": false,
+    "dev-package-names": []
 }

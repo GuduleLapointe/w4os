@@ -8,6 +8,8 @@ function w4os_register_settings() {
 	$default_gridname        = ( isset( $grid_info['gridname'] ) ) ? $grid_info['gridname'] : '';
 	$default_search_url      = ( get_option( 'w4os_provide_search' ) ? str_replace( 'https:', 'http:', get_home_url() ) : 'http://2do.directory' ) . '/helpers/query.php';
 	$default_search_register = ( get_option( 'w4os_provide_search' ) ? str_replace( 'https:', 'http:', get_home_url() ) : 'http://2do.directory' ) . '/helpers/register.php';
+	$login_uri               = get_option( 'w4os_login_uri', 'yourgrid.org:8002' );
+	$gatekeeperURL           = preg_match( '#https?://#', $login_uri ) ? $login_uri : 'http://' . $login_uri;
 
 	if ( get_option( 'w4os_provide_search' ) || empty( get_option( 'w4os_search_url' ) ) ) {
 		update_option( 'w4os_search_url', $default_search_url );
@@ -279,9 +281,9 @@ function w4os_register_settings() {
 									'OpenSim.ini' => array(
 										'[Search]' => array(
 											'Module'       => 'OpenSimSearch',
-											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'SearchURL' => ( empty( get_option( 'w4os_search_url' ) ) ? $default_search_url : get_option( 'w4os_search_url' ) ) . '?gk=' . get_option( 'w4os_login_uri', 'yourgrid.org:8002' ),
-											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'SearchURL' => 'http://2do.directory/helpers/query.php?gk=' . get_option( 'w4os_login_uri', 'yourgrid.org:8002' ),
-											'; SearchURL ' => 'http://example.org/query.php',
+											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'SearchURL' => '"' . ( empty( get_option( 'w4os_search_url' ) ) ? $default_search_url : get_option( 'w4os_search_url' ) ) . '?gk=' . $gatekeeperURL . '"',
+											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'SearchURL' => '"' . 'http://2do.directory/helpers/query.php?gk=' . $gatekeeperURL . '"',
+											'; SearchURL ' => '"http://example.org/query.php"',
 										),
 									),
 								)
@@ -311,9 +313,9 @@ function w4os_register_settings() {
 										'[DataSnapshot]' => array(
 											'index_sims' => 'true',
 											'gridname'   => '"' . get_option( 'w4os_grid_name' ) . '"',
-											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'DATA_SRV_' . str_replace( ' ', '', ucwords( get_option( 'w4os_grid_name' ) ) ) => ( ! empty( get_option( 'w4os_search_register' ) ) ) ? get_option( 'w4os_search_register' ) : 'http://yourgrid.org/helpers/register.php',
-											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'DATA_SRV_2do' => 'http://2do.directory/helpers/register.php',
-											'; DATA_SRV_OtherEngine' => 'http://example.org/register.php',
+											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'DATA_SRV_' . str_replace( ' ', '', ucwords( get_option( 'w4os_grid_name' ) ) ) => '"' . ( ! empty( get_option( 'w4os_search_register' ) ) ? get_option( 'w4os_search_register' ) : 'http://yourgrid.org/helpers/register.php' ) . '"',
+											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'DATA_SRV_2do' => '"http://2do.directory/helpers/register.php"',
+											'; DATA_SRV_OtherEngine' => '"http://example.org/register.php"',
 										),
 									),
 								)
