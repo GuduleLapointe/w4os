@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.3.17
+Stable tag: 2.3.18
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -166,6 +166,11 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.3.18 =
+* added instructionss for nginx users
+* fix invalid DATA_SRV_ example variable when gridname contains invalid characters
+* fix helpers nginx icompatibility (use REQUEST_URI instead of REDIRECT_URL which is specific to Apache)
 
 = 2.3.17 =
 * fixed helpers settings hints missing http:// protocol for gatekeeper

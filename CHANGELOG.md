@@ -1,5 +1,10 @@
 ## Changelog
 
+### 2.3.18
+- added instructionss for nginx users
+- fix invalid DATA_SRV_ example variable when gridname contains invalid characters
+- fix helpers nginx icompatibility (use REQUEST_URI instead of REDIRECT_URL which is specific to Apache)
+
 ### 2.3.17
 - fixed helpers settings hints missing http:// protocol for gatekeeper
 - fixed no result if gatekeeper is passed without http:// protocol
