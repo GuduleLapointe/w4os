@@ -1,6 +1,10 @@
 <?php if ( ! defined( 'W4OS_ADMIN' ) ) {
 	die;}
 
+function w4os_camelcase($string) {
+	if( ! is_string($string)) return $string;
+	return str_replace(' ', '', ucwords( str_replace('-', ' ', sanitize_title( $string ) ) ) );
+}
 function w4os_register_settings() {
 	$grid_info = w4os_update_grid_info();
 	// $check_login_uri = 'http://' . (!empty(get_option('w4os_login_uri'))) ? esc_attr(get_option('w4os_login_uri')) : 'http://localhost:8002';
@@ -313,7 +317,7 @@ function w4os_register_settings() {
 										'[DataSnapshot]' => array(
 											'index_sims' => 'true',
 											'gridname'   => '"' . get_option( 'w4os_grid_name' ) . '"',
-											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'DATA_SRV_' . str_replace( ' ', '', ucwords( get_option( 'w4os_grid_name' ) ) ) => '"' . ( ! empty( get_option( 'w4os_search_register' ) ) ? get_option( 'w4os_search_register' ) : 'http://yourgrid.org/helpers/register.php' ) . '"',
+											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'DATA_SRV_' . w4os_camelcase( get_option( 'w4os_grid_name', 'Your Grid'  ) ) => '"' . ( ! empty( get_option( 'w4os_search_register' ) ) ? get_option( 'w4os_search_register' ) : 'http://yourgrid.org/helpers/register.php' ) . '"',
 											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'DATA_SRV_2do' => '"http://2do.directory/helpers/register.php"',
 											'; DATA_SRV_OtherEngine' => '"http://example.org/register.php"',
 										),
