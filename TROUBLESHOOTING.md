@@ -51,6 +51,16 @@ To ensure smooth operation of the w4os plugin, it's important to verify that you
 
 - Ensure that permalinks are enabled in WordPress. Go to WordPress Admin > Settings > Permalinks and confirm that the Permalink structure is not set to "Plain". Saving any other choice should be sufficient, as w4os relies on the URL translation enabled by the Permalink structure.
 
+### 3.1 Note for Nginx users
+
+You must add this config before the `location ~ \.php$ {...}` directive, to make sure the plugin can process the helpers requests:
+
+```conf
+location ~* ^/helpers/.*\.php$ {
+  try_files $uri $uri/ /index.php?$args;
+}
+```
+
 ## 4\. Review Admin > OpenSimulator > Settings
 
 To continue troubleshooting, review the settings in the OpenSimulator section of your WordPress admin panel. Follow these steps:

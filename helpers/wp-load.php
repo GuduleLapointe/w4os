@@ -15,7 +15,7 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;
 }
 
-$url = getenv( 'REDIRECT_URL' );
+$url = getenv( 'REQUEST_URI' );
 
 if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( W4OS_GRID_INFO['economy'] ) ) {
 	$economy = parse_url( W4OS_GRID_INFO['economy'] )['path'];
