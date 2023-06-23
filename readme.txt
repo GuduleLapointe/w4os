@@ -168,7 +168,7 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 == Changelog ==
 
 = 2.3.18 =
-* added instructionss for nginx users
+* added instructions for nginx users
 * fix invalid DATA_SRV_ example variable when gridname contains invalid characters
 * fix helpers nginx icompatibility (use REQUEST_URI instead of REDIRECT_URL which is specific to Apache)
 
