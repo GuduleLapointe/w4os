@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.3.18
+Stable tag: 2.3.19
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -166,6 +166,9 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.3.19 =
+* fix regression arguments not accepted fro query.php
 
 = 2.3.18 =
 * added instructions for nginx users

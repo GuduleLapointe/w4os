@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.3.19
+- fix regression arguments not accepted fro query.php
+
 ### 2.3.18
 - added instructions for nginx users
 - fix invalid DATA_SRV_ example variable when gridname contains invalid characters
