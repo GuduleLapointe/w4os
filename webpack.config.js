@@ -6,9 +6,9 @@ const CopyPlugin    = require( "copy-webpack-plugin" );
 const config = {
 	...defaultConfig,
 	entry: {
-		// 'admin/admin': './dev/admin/admin-index.js',
-		// '../blocks/popular-places/index': './src/blocks/popular-places/index.js',
-		'../blocks/events/index': './src/blocks/events/index.js',
+		// '../includes/admin/admin': 'src/admin/index.js',
+		// '../blocks/popular-places/popular-places': './src/blocks/popular-places/index.js',
+		// '../blocks/events/index': './src/blocks/events/index.js',
 	},
 	output: {
 		filename: '[name].js',
