@@ -3,7 +3,8 @@
     "description": "W4OS - OpenSimulator Web Interface",
     "type": "wordpress-plugin",
     "require": {
-        "woocommerce/action-scheduler": "^3.4"
+        "woocommerce/action-scheduler": "^3.4",
+        "jelix/inifile": "^3.3"
     },
     "autoload": {
       "files": [

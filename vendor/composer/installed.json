@@ -1,6 +1,95 @@
 {
     "packages": [
         {
+            "name": "jelix/inifile",
+            "version": "v3.3.2",
+            "version_normalized": "3.3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jelix/inifile.git",
+                "reference": "d4e239e376ba41bd7a5a74c8daeeea12f04a4f1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jelix/inifile/zipball/d4e239e376ba41bd7a5a74c8daeeea12f04a4f1a",
+                "reference": "d4e239e376ba41bd7a5a74c8daeeea12f04a4f1a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "8.5.*"
+            },
+            "time": "2023-02-28T13:04:33+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Jelix\\IniFile\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Laurent Jouanneau",
+                    "email": "laurent@jelix.org"
+                },
+                {
+                    "name": "Loic Mathaud"
+                }
+            ],
+            "description": "classes to read and modify ini files by preserving comments and empty lines",
+            "homepage": "http://jelix.org",
+            "keywords": [
+                "files",
+                "ini"
+            ],
+            "support": {
+                "issues": "https://github.com/jelix/inifile/issues",
+                "source": "https://github.com/jelix/inifile/tree/v3.3.2"
+            },
+            "install-path": "../jelix/inifile"
+        },
+        {
+            "name": "magicoli/opensim-helpers",
+            "version": "v2.1.9",
+            "version_normalized": "2.1.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magicoli/opensim-helpers.git",
+                "reference": "829c940615b8b41432f511b895c3966396649933"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/829c940615b8b41432f511b895c3966396649933",
+                "reference": "829c940615b8b41432f511b895c3966396649933",
+                "shasum": ""
+            },
+            "time": "2023-06-24T00:29:23+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Gudule Lapointe",
+                    "email": "gudule@speculoos.world"
+                }
+            ],
+            "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
+            "support": {
+                "issues": "https://github.com/magicoli/opensim-helpers/issues",
+                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.9"
+            },
+            "install-path": "../magicoli/opensim-helpers"
+        },
+        {
             "name": "woocommerce/action-scheduler",
             "version": "3.6.1",
             "version_normalized": "3.6.1.0",
@@ -44,6 +133,8 @@
             "install-path": "../woocommerce/action-scheduler"
         }
     ],
-    "dev": false,
-    "dev-package-names": []
+    "dev": true,
+    "dev-package-names": [
+        "magicoli/opensim-helpers"
+    ]
 }

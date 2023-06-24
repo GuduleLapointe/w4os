@@ -10,6 +10,20 @@ class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
         '3cdaf8a7feac7dab25a504ea4957b65a' => __DIR__ . '/..' . '/woocommerce/action-scheduler/action-scheduler.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'J' => 
+        array (
+            'Jelix\\IniFile\\' => 14,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Jelix\\IniFile\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jelix/inifile/lib',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -17,6 +31,8 @@ class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437::$classMap;
 
         }, null, ClassLoader::class);

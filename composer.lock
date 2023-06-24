@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a287535d89ed038f5fc27dd74cfe21b",
+    "content-hash": "22a8111ebfa04a22f09f0dcb5e2ce6c7",
     "packages": [
+        {
+            "name": "jelix/inifile",
+            "version": "v3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jelix/inifile.git",
+                "reference": "d4e239e376ba41bd7a5a74c8daeeea12f04a4f1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jelix/inifile/zipball/d4e239e376ba41bd7a5a74c8daeeea12f04a4f1a",
+                "reference": "d4e239e376ba41bd7a5a74c8daeeea12f04a4f1a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "8.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jelix\\IniFile\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Laurent Jouanneau",
+                    "email": "laurent@jelix.org"
+                },
+                {
+                    "name": "Loic Mathaud"
+                }
+            ],
+            "description": "classes to read and modify ini files by preserving comments and empty lines",
+            "homepage": "http://jelix.org",
+            "keywords": [
+                "files",
+                "ini"
+            ],
+            "support": {
+                "issues": "https://github.com/jelix/inifile/issues",
+                "source": "https://github.com/jelix/inifile/tree/v3.3.2"
+            },
+            "time": "2023-02-28T13:04:33+00:00"
+        },
         {
             "name": "woocommerce/action-scheduler",
             "version": "3.6.1",
@@ -50,16 +101,16 @@
     "packages-dev": [
         {
             "name": "magicoli/opensim-helpers",
-            "version": "v2.1.8",
+            "version": "v2.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magicoli/opensim-helpers.git",
-                "reference": "a9683cbca9de4f4a3095ef7aa61ebe00bd29524d"
+                "reference": "829c940615b8b41432f511b895c3966396649933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/a9683cbca9de4f4a3095ef7aa61ebe00bd29524d",
-                "reference": "a9683cbca9de4f4a3095ef7aa61ebe00bd29524d",
+                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/829c940615b8b41432f511b895c3966396649933",
+                "reference": "829c940615b8b41432f511b895c3966396649933",
                 "shasum": ""
             },
             "type": "library",
@@ -76,9 +127,9 @@
             "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
             "support": {
                 "issues": "https://github.com/magicoli/opensim-helpers/issues",
-                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.8"
+                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.9"
             },
-            "time": "2023-06-21T23:36:37+00:00"
+            "time": "2023-06-24T00:29:23+00:00"
         }
     ],
     "aliases": [],
