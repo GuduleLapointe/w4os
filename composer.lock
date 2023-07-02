@@ -4,8 +4,153 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22a8111ebfa04a22f09f0dcb5e2ce6c7",
+    "content-hash": "b9ef801f71f369099589835119555f58",
     "packages": [
+        {
+            "name": "composer/installers",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "c29dc4b93137acb82734f672c37e029dfbd95b35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/c29dc4b93137acb82734f672c37e029dfbd95b35",
+                "reference": "c29dc4b93137acb82734f672c37e029dfbd95b35",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "composer/composer": "1.6.* || ^2.0",
+                "composer/semver": "^1 || ^3",
+                "phpstan/phpstan": "^0.12.55",
+                "phpstan/phpstan-phpunit": "^0.12.16",
+                "symfony/phpunit-bridge": "^5.3",
+                "symfony/process": "^5"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Composer\\Installers\\Plugin",
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                },
+                "plugin-modifies-install-path": true
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "https://composer.github.io/installers/",
+            "keywords": [
+                "Dolibarr",
+                "Eliasis",
+                "Hurad",
+                "ImageCMS",
+                "Kanboard",
+                "Lan Management System",
+                "MODX Evo",
+                "MantisBT",
+                "Mautic",
+                "Maya",
+                "OXID",
+                "Plentymarkets",
+                "Porto",
+                "RadPHP",
+                "SMF",
+                "Starbug",
+                "Thelia",
+                "Whmcs",
+                "WolfCMS",
+                "agl",
+                "annotatecms",
+                "attogram",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "cockpit",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "eZ Platform",
+                "elgg",
+                "expressionengine",
+                "fuelphp",
+                "grav",
+                "installer",
+                "itop",
+                "known",
+                "kohana",
+                "laravel",
+                "lavalite",
+                "lithium",
+                "magento",
+                "majima",
+                "mako",
+                "matomo",
+                "mediawiki",
+                "miaoxing",
+                "modulework",
+                "modx",
+                "moodle",
+                "osclass",
+                "pantheon",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "processwire",
+                "puppet",
+                "pxcms",
+                "reindex",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "sydes",
+                "sylius",
+                "tastyigniter",
+                "wordpress",
+                "yawik",
+                "zend",
+                "zikula"
+            ],
+            "support": {
+                "issues": "https://github.com/composer/installers/issues",
+                "source": "https://github.com/composer/installers/tree/v2.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-08-20T06:45:11+00:00"
+        },
         {
             "name": "jelix/inifile",
             "version": "v3.3.2",
@@ -58,6 +203,42 @@
             "time": "2023-02-28T13:04:33+00:00"
         },
         {
+            "name": "meta-box/mb-admin-columns",
+            "version": "master",
+            "dist": {
+                "type": "zip",
+                "url": "https://metabox.io/?action=download&product=mb-admin-columns&api_key=42ecdf32b0e76fe7766bc340ad82046b"
+            },
+            "require": {
+                "composer/installers": "~1.0 || ~2.0"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "meta-box/mb-settings-page",
+            "version": "master",
+            "dist": {
+                "type": "zip",
+                "url": "https://metabox.io/?action=download&product=mb-settings-page&api_key=42ecdf32b0e76fe7766bc340ad82046b"
+            },
+            "require": {
+                "composer/installers": "~1.0 || ~2.0"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "meta-box/meta-box-columns",
+            "version": "master",
+            "dist": {
+                "type": "zip",
+                "url": "https://metabox.io/?action=download&product=meta-box-columns&api_key=42ecdf32b0e76fe7766bc340ad82046b"
+            },
+            "require": {
+                "composer/installers": "~1.0 || ~2.0"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "woocommerce/action-scheduler",
             "version": "3.6.1",
             "source": {
@@ -96,6 +277,55 @@
                 "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.1"
             },
             "time": "2023-06-14T19:23:12+00:00"
+        },
+        {
+            "name": "wpmetabox/meta-box",
+            "version": "5.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wpmetabox/meta-box.git",
+                "reference": "969beb0a5d3a4a6ca2e32b0665303e9ff183537b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/969beb0a5d3a4a6ca2e32b0665303e9ff183537b",
+                "reference": "969beb0a5d3a4a6ca2e32b0665303e9ff183537b",
+                "shasum": ""
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "psr-4": {
+                    "MetaBox\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tran Ngoc Tuan Anh",
+                    "email": "anhtnt@elightup.com",
+                    "homepage": "https://metabox.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A powerful, professional developer toolkit to create custom meta boxes and custom fields for WordPress websites.",
+            "homepage": "https://metabox.io",
+            "keywords": [
+                "custom-field",
+                "meta-box",
+                "select2",
+                "ui",
+                "wordpress",
+                "wordpress-plugin",
+                "wp-admin"
+            ],
+            "support": {
+                "issues": "https://github.com/wpmetabox/meta-box/issues",
+                "source": "https://github.com/wpmetabox/meta-box/tree/5.7.3"
+            },
+            "time": "2023-06-23T02:07:35+00:00"
         }
     ],
     "packages-dev": [
@@ -134,7 +364,11 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "meta-box/mb-admin-columns": 20,
+        "meta-box/mb-settings-page": 20,
+        "meta-box/meta-box-columns": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

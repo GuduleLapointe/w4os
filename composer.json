@@ -1,29 +1,48 @@
 {
-    "name": "speculoos/w4os",
-    "description": "W4OS - OpenSimulator Web Interface",
-    "type": "wordpress-plugin",
-    "require": {
-        "woocommerce/action-scheduler": "^3.4",
-        "jelix/inifile": "^3.3"
-    },
-    "autoload": {
-      "files": [
-        "vendor/woocommerce/action-scheduler/action-scheduler.php"
-      ]
-    },
-    "license": "AGPLV3",
-    "authors": [
-        {
-            "name": "Gudule Lapointe",
-            "email": "gudule@speculoos.world"
-        }
-    ],
-    "scripts": {
-      "post-update-cmd": [
-        "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/magicoli/opensim-helpers/tools/install-library.sh"
-      ]
-    },
-    "require-dev": {
-        "magicoli/opensim-helpers": "^2.1"
+  "name": "speculoos/w4os",
+  "description": "W4OS - OpenSimulator Web Interface",
+  "type": "wordpress-plugin",
+  "require": {
+    "wpmetabox/meta-box": "^5.6",
+    "meta-box/mb-admin-columns": "dev-master",
+    "meta-box/mb-settings-page": "dev-master",
+    "meta-box/mb-admin-columns": "dev-master",
+    "meta-box/meta-box-columns": "dev-master",
+    "woocommerce/action-scheduler": "^3.4",
+    "jelix/inifile": "^3.3"
+  },
+  "autoload": {
+    "files": [
+      "vendor/meta-box/meta-box/meta-box.php",
+      "vendor/meta-box/mb-settings-page/mb-settings-page.php",
+      "vendor/meta-box/mb-admin-columns/mb-admin-columns.php",
+      "vendor/meta-box/meta-box-columns/meta-box-columns.php",
+      "vendor/woocommerce/action-scheduler/action-scheduler.php"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/meta-box/{$name}": ["vendor:wpmetabox","vendor:meta-box"]
     }
+  },
+  "license": "AGPLV3",
+  "authors": [
+    {
+      "name": "Gudule Lapointe",
+      "email": "gudule@speculoos.world"
+    }
+  ],
+  "scripts": {
+    "post-update-cmd": [
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/magicoli/opensim-helpers/tools/install-library.sh"
+    ]
+  },
+  "require-dev": {
+    "magicoli/opensim-helpers": "^2.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
 }

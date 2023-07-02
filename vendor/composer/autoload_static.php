@@ -7,20 +7,40 @@ namespace Composer\Autoload;
 class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
 {
     public static $files = array (
+        '535cf38403fe1a8c6aea5654339f2510' => __DIR__ . '/..' . '/meta-box/meta-box/meta-box.php',
+        '687e88d103d3c7b7e29ca5e836cb2272' => __DIR__ . '/..' . '/meta-box/mb-settings-page/mb-settings-page.php',
+        'be497f88b773aa5c9974da46821effab' => __DIR__ . '/..' . '/meta-box/mb-admin-columns/mb-admin-columns.php',
+        'd46e9eb4d08a138d32890bfd33c08c32' => __DIR__ . '/..' . '/meta-box/meta-box-columns/meta-box-columns.php',
         '3cdaf8a7feac7dab25a504ea4957b65a' => __DIR__ . '/..' . '/woocommerce/action-scheduler/action-scheduler.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'M' => 
+        array (
+            'MetaBox\\' => 8,
+        ),
         'J' => 
         array (
             'Jelix\\IniFile\\' => 14,
         ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'MetaBox\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/meta-box/meta-box/src',
+        ),
         'Jelix\\IniFile\\' => 
         array (
             0 => __DIR__ . '/..' . '/jelix/inifile/lib',
+        ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
     );
 

@@ -6,5 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'MetaBox\\' => array($vendorDir . '/meta-box/meta-box/src'),
     'Jelix\\IniFile\\' => array($vendorDir . '/jelix/inifile/lib'),
+    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );
