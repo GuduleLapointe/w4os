@@ -76,13 +76,13 @@ class W4OS_Loader {
 		/**
 		 * Specific plugin classes.
 		 */
-		// require_once W4OS_DIR . '/includes/class-model.php';
+		require_once W4OS_DIR . '/includes/class-model.php';
 
 		/**
 		 * Database updates
 		 */
 
-		// require_once W4OS_DIR . '/includes/updates.php';
+		require_once W4OS_DIR . '/includes/updates.php';
 
 		// if(is_plugin_active('woocommerce/woocommerce.php')) {
 		// require_once W4OS_DIR . '/includes/modules/class-woocommerce.php';

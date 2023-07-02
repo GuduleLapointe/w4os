@@ -113,7 +113,6 @@ if ( W4OS_DB_CONNECTED ) {
 	if ( get_option( 'w4os_sync_users' ) ) {
 		add_action( 'init', 'w4os_sync_users' );
 	}
-	require_once __DIR__ . '/updates.php';
 }
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	require_once __DIR__ . '/woocommerce.php';

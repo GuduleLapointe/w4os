@@ -2,15 +2,19 @@
 	die;}
 
 if ( ! defined( 'W4OS_UPDATES' ) ) {
-	define( 'W4OS_UPDATES', 5 );
+	define( 'W4OS_UPDATES', 6 );
 }
 
-if ( get_option( 'w4os_upated' ) < W4OS_UPDATES ) {
+$w4os_updated = get_option( 'w4os_updated', get_option( 'w4os_upated' ) );
+error_log("w4os_updated $w4os_updated");
+
+if ( $w4os_updated < W4OS_UPDATES ) {
 	w4os_updates();
 }
 
 function w4os_updates( $args = array() ) {
-	$u = get_option( 'w4os_upated' ) + 1;
+	$u = get_option( 'w4os_updated', get_option( 'w4os_upated' ) ) + 1;
+	$return = null;
 
 	$messages = array();
 	if ( @$args['message'] ) {
@@ -19,6 +23,7 @@ function w4os_updates( $args = array() ) {
 	while ( $u <= W4OS_UPDATES ) {
 		$update = "w4os_update_$u";
 		if ( function_exists( $update ) ) {
+			error_log("processing $update");
 			$result = $update();
 			if ( $result && $result === 'wait' ) {
 				// not a success nor an error, will be processed after confirmation
@@ -30,7 +35,7 @@ function w4os_updates( $args = array() ) {
 				} else {
 					$messages[] = sprintf( __( 'Update %s applied', 'band-tools' ), $u );
 				}
-				update_option( 'w4os_upated', $u );
+				update_option( 'w4os_updated', $u );
 			} else {
 				$errors[] = $u;
 				break;
@@ -143,4 +148,35 @@ function w4os_update_5() {
 		}
 	}
 	return true;
+}
+
+/*
+ * Migrate Avatar Models settings to new dedicated settings page.
+ * Migrate typo w4os_upated to w4os_updated
+ */
+function w4os_update_6() {
+	$w4os_updated = get_option( 'w4os_updated', get_option( 'w4os_upated' ) );
+	update_option('w4os_updated', $w4os_updated);
+	delete_option('w4os_upated');
+
+	$first_name = get_option( 'w4os_model_firstname', false );
+	$last_name = get_option( 'w4os_model_lastname', false );
+	if( true ) {
+		$name = empty($last_name) ? $first_name : $last_name;
+		empty($name) && $name = 'Default';
+		if(empty($first_name)) $match = 'last';
+		else if(empty($last_name)) $match = 'first';
+		else $match = 'any';
+
+		w4os_update_option( 'w4os-models:match', w4os_get_option('w4os-models:match', $match) );
+		w4os_update_option( 'w4os-models:name', w4os_get_option('w4os-models:name', $name) );
+		delete_option('w4os_model_firstname');
+		delete_option('w4os_model_lastname');
+		$new_match = w4os_get_option('w4os-models:match', 'any');
+		$new_name = w4os_get_option('w4os-models:name', 'Default');
+		$notice = "Updated model naming rule to $new_match = $new_name";
+		return $notice;
+	}
+
+	return;
 }

@@ -22,12 +22,6 @@ function w4os_register_settings() {
 		update_option( 'w4os_search_register', $default_search_register );
 	}
 
-	if ( ! get_option( 'w4os_model_firstname' ) ) {
-		update_option( 'w4os_model_firstname', 'Default' );
-	}
-	if ( ! get_option( 'w4os_model_lastname' ) ) {
-		update_option( 'w4os_model_lastname', 'Default' );
-	}
 	if ( ! w4os_option_exists( 'w4os_configuration_instructions' ) ) {
 		update_option( 'w4os_configuration_instructions', true );
 	}
@@ -100,20 +94,6 @@ function w4os_register_settings() {
 							'name'         => __( 'Password', 'w4os' ),
 							'type'         => 'password',
 							'autocomplete' => 'off',
-						),
-					),
-				),
-				'w4os_options_avatarcreation' => array(
-					'name'             => __( 'Avatar models', 'w4os' ),
-					'section_callback' => 'w4os_settings_callback_models',
-					'fields'           => array(
-						'w4os_model_firstname' => array(
-							'name'    => __( 'First Name = ', 'w4os' ),
-							'default' => 'Default',
-						),
-						'w4os_model_lastname'  => array(
-							'name'    => __( 'OR Last Name = ', 'w4os' ),
-							'default' => 'Default',
 						),
 					),
 				),

@@ -82,7 +82,7 @@ $count = w4os_count_users();
 					<td class=error><?php echo $count['wp_only']; ?></td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Avatar models', 'w4os' ); ?></th>
+					<th><?php _e( 'Avatar Models', 'w4os' ); ?></th>
 					<td>
 					<?php
 					echo $count['models'];
