@@ -237,15 +237,22 @@ function w4os_upload_dir( $subfolder = '' ) {
 	return $upload_dir;
 }
 
-
-function w4os_get_asset_url( $uuid = W4OS_NULL_KEY, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
+function w4os_asset_server_uri() {
+	$uri = false;
 	if ( get_option( 'w4os_provide_asset_server' ) ) {
-		$upload_dir = esc_attr( wp_upload_dir()['baseurl'] ) . '/w4os/' . W4OS_ASSETS_CACHE_IMG_FOLDER;
-		return "$upload_dir/$uuid.$format";
-	} elseif ( ! empty( W4OS_WEB_ASSETS_SERVER_URI ) ) {
-		return W4OS_WEB_ASSETS_SERVER_URI . "$uuid";
+		$uri = get_option( 'w4os_internal_asset_server_uri', false );
+	} else {
+		$uri = get_option( 'w4os_external_asset_server_uri', false );
 	}
-	return false;
+	if($uri) {
+		return untrailingslashit($uri);
+	}
+	return $uri;
+}
+function w4os_get_asset_url( $uuid = W4OS_NULL_KEY, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
+	$asset_server_uri = w4os_asset_server_uri();
+	$format = (empty($format) ? '' : ".$format" );
+	return ($asset_server_uri) ? "$asset_server_uri/$uuid$format"  : false;
 }
 
 function w4os_grid_status_text() {
