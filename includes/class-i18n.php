@@ -26,7 +26,6 @@
 class W4OS_I18n extends W4OS_Loader {
 
 	public function __construct() {
-		error_log(__CLASS__ . '::' . __METHOD__);
 
 		$this->actions = array(
 			array(
