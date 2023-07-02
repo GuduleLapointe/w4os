@@ -16,7 +16,6 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 }
 
 $url = parse_url( getenv( 'REQUEST_URI' ), PHP_URL_PATH );
-error_log("url $url");
 
 if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( W4OS_GRID_INFO['economy'] ) ) {
 	$economy = parse_url( W4OS_GRID_INFO['economy'] )['path'];
