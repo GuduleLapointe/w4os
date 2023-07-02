@@ -63,6 +63,7 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 	// Finally, actually load if no conflict
 } else {
 	require_once plugin_dir_path( __FILE__ ) . 'legacy/init.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/loader.php';
 	if ( file_exists( plugin_dir_path( __FILE__ ) . 'lib/package-updater.php' ) ) {
 		include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
 	}

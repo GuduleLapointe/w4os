@@ -18,9 +18,12 @@ define( 'W4OS_ASSETS_DEFAULT_FORMAT', 'jpg' );
 define( 'W4OS_NOTFOUND_IMG', '201ce950-aa38-46d8-a8f1-4396e9d6be00' );
 define( 'W4OS_NOTFOUND_PROFILEPIC', '201ce950-aa38-46d8-a8f1-4396e9d6be00' );
 
+define( 'W4OS_DIR', wp_normalize_path(dirname( dirname( __FILE__ ) ) ));
+
 if ( ! defined( 'W4OS_SLUG' ) ) {
-	define( 'W4OS_SLUG', basename( dirname( dirname( __FILE__ ) ) ) );
+	define( 'W4OS_SLUG', basename(W4OS_DIR) );
 }
+
 if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 }
@@ -77,20 +80,6 @@ if ( get_option( 'w4os_provide_asset_server' ) == 1 ) {
 if ( ! get_option( 'w4os_login_page' ) ) {
 	update_option( 'w4os_login_page', 'profile' );
 }
-
-function w4os_load_textdomain() {
-	// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );
-
-	global $locale;
-	if ( is_textdomain_loaded( W4OS_TXDOM ) ) {
-		unload_textdomain( W4OS_TXDOM );
-	}
-	$mofile = sprintf( '%s-%s.mo', W4OS_TXDOM, $locale );
-
-	$domain_path = path_join( WP_PLUGIN_DIR, W4OS_SLUG . '/languages' );
-	$loaded      = load_textdomain( W4OS_TXDOM, path_join( $domain_path, $mofile ) );
-}
-add_action( 'init', 'w4os_load_textdomain' );
 
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
