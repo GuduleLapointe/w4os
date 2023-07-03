@@ -1,5 +1,11 @@
 ## Changelog
 
+### 2.4
+- new Avatar Models settings page, including list of availabl avatars
+- optimized assets rendering from cache
+- fix typo in 'w4os_upated' option
+- fix profile and avatar models pictures broken
+
 ### 2.3.19
 - fix regression arguments not accepted fro query.php
 

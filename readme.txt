@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.3.19
+Stable tag: 2.4
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -166,6 +166,12 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.4 =
+* new Avatar Models settings page, including list of availabl avatars
+* optimized assets rendering from cache
+* fix typo in 'w4os_upated' option
+* fix profile and avatar models pictures broken
 
 = 2.3.19 =
 * fix regression arguments not accepted fro query.php

@@ -27,8 +27,8 @@ if ( empty( $query_asset ) ) {
 }
 
 define( 'W4OS_ASSETS_CACHE_JP2', get_temp_dir() );
-$w4os_assets_path = trailingslashit( getenv('DOCUMENT_ROOT') . '/' . get_option( 'w4os_assets_slug', 'assets' ) );
-if(!is_writable($w4os_assets_path)) {
+$w4os_assets_path = trailingslashit( getenv( 'DOCUMENT_ROOT' ) . '/' . get_option( 'w4os_assets_slug', 'assets' ) );
+if ( ! is_writable( $w4os_assets_path ) ) {
 	$w4os_assets_path = trailingslashit( w4os_upload_dir( W4OS_ASSETS_CACHE_IMG_FOLDER ) );
 }
 define( 'W4OS_ASSETS_CACHE_IMG_PATH', $w4os_assets_path );
