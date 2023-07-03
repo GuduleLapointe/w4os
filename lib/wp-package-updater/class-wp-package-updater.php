@@ -12,8 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-/* ================================================================================================ */
-/*                                     WP Package Updater                                           */
+/*
+ ================================================================================================ */
+/*
+									 WP Package Updater                                           */
 /* ================================================================================================ */
 
 /**
@@ -24,44 +26,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 * Before deploying the plugin or theme, make sure to change the following value
 * - https://your-update-server.com  => The URL of the server where WP Plugin Update Server is installed.
 * - $prefix_updater                 => Change this variable's name with your plugin or theme prefix
-**/
+*/
 
-/** Uncomment for plugin updates **/
+/** Uncomment for plugin updates */
 // require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
 
-/** Enable plugin updates with license check **/
+/** Enable plugin updates with license check */
 // $prefix_updater = new WP_Package_Updater(
-// 	'https://your-update-server.com',
-// 	wp_normalize_path( __FILE__ ),
-// 	wp_normalize_path( plugin_dir_path( __FILE__ ) ),
-// 	true
+// 'https://your-update-server.com',
+// wp_normalize_path( __FILE__ ),
+// wp_normalize_path( plugin_dir_path( __FILE__ ) ),
+// true
 // );
 
-/** Enable plugin updates without license check **/
+/** Enable plugin updates without license check */
 // $prefix_updater = new WP_Package_Updater(
-// 	'https://your-update-server.com',
-// 	wp_normalize_path( __FILE__ ),
-// 	wp_normalize_path( plugin_dir_path( __FILE__ ) ),
-// 	false // Can be omitted, false by default
+// 'https://your-update-server.com',
+// wp_normalize_path( __FILE__ ),
+// wp_normalize_path( plugin_dir_path( __FILE__ ) ),
+// false // Can be omitted, false by default
 // );
 
-/** Uncomment for theme updates **/
+/** Uncomment for theme updates */
 // require_once get_stylesheet_directory() . '/lib/wp-package-updater/class-wp-package-updater.php';
 
-/** Enable theme updates with license check **/
+/** Enable theme updates with license check */
 // $prefix_updater = new WP_Package_Updater(
-// 	'https://your-update-server.com',
-// 	wp_normalize_path( __FILE__ ),
-// 	get_stylesheet_directory(),
-// 	true
+// 'https://your-update-server.com',
+// wp_normalize_path( __FILE__ ),
+// get_stylesheet_directory(),
+// true
 // );
 
-/** Enable theme updates without license check **/
+/** Enable theme updates without license check */
 // $prefix_updater = new WP_Package_Updater(
-// 	'https://your-update-server.com',
-// 	wp_normalize_path( __FILE__ ),
-// 	get_stylesheet_directory(),
-// 	false // Can be omitted, false by default
+// 'https://your-update-server.com',
+// wp_normalize_path( __FILE__ ),
+// get_stylesheet_directory(),
+// false // Can be omitted, false by default
 // );
 
 /* ================================================================================================ */
@@ -387,10 +389,13 @@ if ( ! class_exists( 'WP_Package_Updater' ) ) {
 			);
 
 			$query    = esc_url_raw( add_query_arg( $api_params, $this->license_server_url ) );
-			$response = wp_remote_get( $query, array(
-				'timeout'   => 20,
-				'sslverify' => true,
-			) );
+			$response = wp_remote_get(
+				$query,
+				array(
+					'timeout'   => 20,
+					'sslverify' => true,
+				)
+			);
 
 			if ( is_wp_error( $response ) ) {
 				$license_data            = new stdClass();

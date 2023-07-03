@@ -29,7 +29,7 @@ class W4OS_I18n extends W4OS_Loader {
 
 		$this->actions = array(
 			array(
-				'hook' => 'plugins_loaded',
+				'hook'     => 'plugins_loaded',
 				'callback' => 'load_plugin_textdomain',
 			),
 		);
@@ -50,7 +50,7 @@ class W4OS_I18n extends W4OS_Loader {
 	}
 
 	function w4os_load_textdomain() {
-		error_log(__CLASS__ . '::' . __METHOD__);
+		error_log( __CLASS__ . '::' . __METHOD__ );
 		// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );
 
 		global $locale;
@@ -88,7 +88,7 @@ class W4OS_I18n extends W4OS_Loader {
 	 * @return string               Fixed html.
 	 */
 	public function fix_mb_show_option_all( $output, $parsed_args ) {
-		error_log(__CLASS__ . '::' . __METHOD__);
+		error_log( __CLASS__ . '::' . __METHOD__ );
 
 		$taxonomy = get_taxonomy( $parsed_args['taxonomy'] );
 		if ( ! $taxonomy ) {

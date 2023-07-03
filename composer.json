@@ -22,7 +22,8 @@
   },
   "extra": {
     "installer-paths": {
-      "vendor/meta-box/{$name}": ["vendor:wpmetabox","vendor:meta-box"]
+      "vendor/meta-box/{$name}": ["vendor:wpmetabox","vendor:meta-box"],
+      "vendor/{$vendor}/{$name}": ["type:wordpress-plugin"]
     }
   },
   "license": "AGPLV3",

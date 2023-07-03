@@ -3,11 +3,11 @@
         'name' => 'speculoos/w4os',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4c01effac24db63ba1414611867475ab063ca148',
+        'reference' => 'b5d408d5e7f294f93a150d1ae8d34e66aef88f63',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'composer/installers' => array(
@@ -27,15 +27,6 @@
             'install_path' => __DIR__ . '/../jelix/inifile',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'magicoli/opensim-helpers' => array(
-            'pretty_version' => 'v2.1.9',
-            'version' => '2.1.9.0',
-            'reference' => '829c940615b8b41432f511b895c3966396649933',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../magicoli/opensim-helpers',
-            'aliases' => array(),
-            'dev_requirement' => true,
         ),
         'meta-box/mb-admin-columns' => array(
             'pretty_version' => 'master',
@@ -67,7 +58,7 @@
         'speculoos/w4os' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4c01effac24db63ba1414611867475ab063ca148',
+            'reference' => 'b5d408d5e7f294f93a150d1ae8d34e66aef88f63',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -78,7 +69,7 @@
             'version' => '3.6.1.0',
             'reference' => '7fd383cad3d64b419ec81bcd05bab44355a6e6ef',
             'type' => 'wordpress-plugin',
-            'install_path' => __DIR__ . '/../../wp-content/plugins/action-scheduler',
+            'install_path' => __DIR__ . '/../woocommerce/action-scheduler',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

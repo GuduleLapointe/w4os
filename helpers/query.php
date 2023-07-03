@@ -21,8 +21,8 @@ require_once 'includes/search.php';
 
 function ossearch_get_gatekeeperURL() {
 	if ( isset( $_REQUEST['gk'] ) && ! empty( $_REQUEST['gk'] ) ) {
-		$gatekeeperURL           = $_REQUEST['gk'];
-		$gatekeeperURL           = preg_match( '#https?://#', $gatekeeperURL ) ? $gatekeeperURL : 'http://' . $gatekeeperURL;
+		$gatekeeperURL = $_REQUEST['gk'];
+		$gatekeeperURL = preg_match( '#https?://#', $gatekeeperURL ) ? $gatekeeperURL : 'http://' . $gatekeeperURL;
 		return $gatekeeperURL;
 	} else {
 		return false;
@@ -74,7 +74,7 @@ function dir_places_query( $method_name, $params, $app_data ) {
 		$terms[] = 'searchcategory = :cat';
 	}
 
-	$values = array(
+	$values        = array(
 		':text'  => $text,
 		':order' => $order,
 		':cat'   => $category,

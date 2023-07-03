@@ -1,0 +1,4 @@
+includes/admin/*.css
+includes/admin/*.js
+includes/public/*.css
+includes/public/*.js

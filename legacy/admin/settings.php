@@ -1,9 +1,11 @@
 <?php if ( ! defined( 'W4OS_ADMIN' ) ) {
 	die;}
 
-function w4os_camelcase($string) {
-	if( ! is_string($string)) return $string;
-	return str_replace(' ', '', ucwords( str_replace('-', ' ', sanitize_title( $string ) ) ) );
+function w4os_camelcase( $string ) {
+	if ( ! is_string( $string ) ) {
+		return $string;
+	}
+	return str_replace( ' ', '', ucwords( str_replace( '-', ' ', sanitize_title( $string ) ) ) );
 }
 function w4os_register_settings() {
 	$grid_info = w4os_update_grid_info();
@@ -57,7 +59,7 @@ function w4os_register_settings() {
 		),
 		'w4os_settings' => array(
 			'sections' => array(
-				'w4os_options_gridinfo'       => array(
+				'w4os_options_gridinfo' => array(
 					'name'             => __( 'Grid info', 'w4os' ),
 					'section_callback' => 'w4os_settings_callback_gridinfo',
 					'fields'           => array(
@@ -77,7 +79,7 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_database'       => array(
+				'w4os_options_database' => array(
 					'name'   => __( 'Robust server database', 'w4os' ),
 					'fields' => array(
 						'w4os_db_host'     => array(
@@ -97,7 +99,7 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_users'          => array(
+				'w4os_options_users'    => array(
 					'name'   => __( 'Grid users', 'w4os' ),
 					'fields' => array(
 						'w4os_profile_page'               => array(
@@ -297,7 +299,7 @@ function w4os_register_settings() {
 										'[DataSnapshot]' => array(
 											'index_sims' => 'true',
 											'gridname'   => '"' . get_option( 'w4os_grid_name' ) . '"',
-											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'DATA_SRV_' . w4os_camelcase( get_option( 'w4os_grid_name', 'Your Grid'  ) ) => '"' . ( ! empty( get_option( 'w4os_search_register' ) ) ? get_option( 'w4os_search_register' ) : 'http://yourgrid.org/helpers/register.php' ) . '"',
+											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'DATA_SRV_' . w4os_camelcase( get_option( 'w4os_grid_name', 'Your Grid' ) ) => '"' . ( ! empty( get_option( 'w4os_search_register' ) ) ? get_option( 'w4os_search_register' ) : 'http://yourgrid.org/helpers/register.php' ) . '"',
 											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'DATA_SRV_2do' => '"http://2do.directory/helpers/register.php"',
 											'; DATA_SRV_OtherEngine' => '"http://example.org/register.php"',
 										),

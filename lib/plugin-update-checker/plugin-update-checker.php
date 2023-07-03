@@ -7,4 +7,4 @@
  * Released under the MIT license. See license.txt for details.
  */
 
-require dirname(__FILE__) . '/load-v4p9.php';
+require dirname( __FILE__ ) . '/load-v4p9.php';

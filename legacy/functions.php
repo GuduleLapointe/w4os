@@ -244,15 +244,15 @@ function w4os_asset_server_uri() {
 	} else {
 		$uri = get_option( 'w4os_external_asset_server_uri', false );
 	}
-	if($uri) {
-		return untrailingslashit($uri);
+	if ( $uri ) {
+		return untrailingslashit( $uri );
 	}
 	return $uri;
 }
 function w4os_get_asset_url( $uuid = W4OS_NULL_KEY, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
 	$asset_server_uri = w4os_asset_server_uri();
-	$format = (empty($format) ? '' : ".$format" );
-	return ($asset_server_uri) ? "$asset_server_uri/$uuid$format"  : false;
+	$format           = ( empty( $format ) ? '' : ".$format" );
+	return ( $asset_server_uri ) ? "$asset_server_uri/$uuid$format" : false;
 }
 
 function w4os_grid_status_text() {
@@ -556,7 +556,7 @@ function w4os_get_option( $option, $default = false ) {
 	if ( $settings && isset( $settings[ $option ] ) ) {
 		$result = $settings[ $option ];
 	} else {
-		$result = get_option($option, $default);
+		$result = get_option( $option, $default );
 	}
 
 	return $result;

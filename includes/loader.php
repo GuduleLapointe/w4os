@@ -46,24 +46,24 @@ class W4OS_Loader {
 	 * @since    0.1.0
 	 */
 	public function __construct() {
-    $this->load_dependencies();
+		$this->load_dependencies();
 
 		$this->actions = array(
 			array(
-				'hook' => 'wp_enqueue_scripts',
-				'callback' => 'enqueue_scripts'
+				'hook'     => 'wp_enqueue_scripts',
+				'callback' => 'enqueue_scripts',
 			),
 			array(
-				'hook' => 'admin_enqueue_scripts',
-				'callback' => 'enqueue_admin_scripts'
+				'hook'     => 'admin_enqueue_scripts',
+				'callback' => 'enqueue_admin_scripts',
 			),
 		);
 		$this->filters = array();
 
-    $this->init();
+		$this->init();
 	}
 
-  private function load_dependencies() {
+	private function load_dependencies() {
 
 		/**
 		 * External libraries.
@@ -100,7 +100,6 @@ class W4OS_Loader {
 		// require_once W4OS_DIR . '/includes/modules/class-woocommerce-payment.php';
 		// $this->loaders[] = new W4OS_WooCommerce_Payment();
 		// }
-
 	}
 
 	/**
@@ -166,12 +165,12 @@ class W4OS_Loader {
 	 */
 	public function init() {
 
-    if ( ! empty( $this->loaders ) && is_array( $this->loaders ) ) {
+		if ( ! empty( $this->loaders ) && is_array( $this->loaders ) ) {
 			foreach ( $this->loaders as $key => $loader ) {
-        if(method_exists($loader, 'init')) {
-          $loader->init();
-        }
-        $loader->register_hooks();
+				if ( method_exists( $loader, 'init' ) ) {
+					$loader->init();
+				}
+				$loader->register_hooks();
 			}
 		}
 

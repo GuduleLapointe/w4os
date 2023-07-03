@@ -18,10 +18,10 @@ define( 'W4OS_ASSETS_DEFAULT_FORMAT', 'jpg' );
 define( 'W4OS_NOTFOUND_IMG', '201ce950-aa38-46d8-a8f1-4396e9d6be00' );
 define( 'W4OS_NOTFOUND_PROFILEPIC', '201ce950-aa38-46d8-a8f1-4396e9d6be00' );
 
-define( 'W4OS_DIR', wp_normalize_path(dirname( dirname( __FILE__ ) ) ));
+define( 'W4OS_DIR', wp_normalize_path( dirname( dirname( __FILE__ ) ) ) );
 
 if ( ! defined( 'W4OS_SLUG' ) ) {
-	define( 'W4OS_SLUG', basename(W4OS_DIR) );
+	define( 'W4OS_SLUG', basename( W4OS_DIR ) );
 }
 
 if ( ! defined( 'W4OS_PLUGIN' ) ) {
