@@ -149,18 +149,20 @@ class W4OS_Model extends W4OS_Loader {
 		}
 		$display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $display_name );
 		$display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $display_name );
+		$alt_name = wp_strip_all_tags( $display_name );
 
 		$imgid = ( w4os_empty( $model->profileImage ) ) ? $placeholder : $model->profileImage;
-		if ($imgid) {
+		if ( $imgid ) {
 			$output = sprintf(
 				'<figure>
-				<img class="model-picture" alt="%1$s" src="%2$s">
+				<img class="model-picture" alt="%2$s" src="%3$s">
 				<figcaption>%1$s</figcaption>
 				</figure>',
 				$display_name,
+				$alt_name,
 				w4os_get_asset_url( $imgid ),
 			);
-		} else if (!empty($display_name)) {
+		} elseif ( ! empty( $display_name ) ) {
 			$output = sprintf(
 				'<span class="model-name">%s</span>',
 				$display_name,
