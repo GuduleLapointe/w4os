@@ -153,7 +153,7 @@ class W4OS_Model extends W4OS_Loader {
 		}
 		$display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $display_name );
 		$display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $display_name );
-		$alt_name = wp_strip_all_tags( $display_name );
+		$alt_name     = wp_strip_all_tags( $display_name );
 
 		$imgid = ( w4os_empty( $model->profileImage ) ) ? $placeholder : $model->profileImage;
 		if ( $imgid ) {
