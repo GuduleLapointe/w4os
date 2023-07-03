@@ -48,7 +48,16 @@ class W4OS_Loader {
 	public function __construct() {
     $this->load_dependencies();
 
-		$this->actions = array();
+		$this->actions = array(
+			array(
+				'hook' => 'wp_enqueue_scripts',
+				'callback' => 'enqueue_scripts'
+			),
+			array(
+				'hook' => 'admin_enqueue_scripts',
+				'callback' => 'enqueue_admin_scripts'
+			),
+		);
 		$this->filters = array();
 
     $this->init();
@@ -201,6 +210,19 @@ class W4OS_Loader {
 				$hook
 			);
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+		}
+	}
+
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'w4os-public', plugin_dir_url( __FILE__ ) . 'public/public.css', array(), W4OS_VERSION );
+		wp_enqueue_script( 'w4os-public', plugin_dir_url( __FILE__ ) . 'public/public.js', array( 'jquery' ), W4OS_VERSION );
+	}
+
+	public function enqueue_admin_scripts() {
+
+		if ( is_admin() ) {
+			wp_enqueue_style( 'w4os-admin', plugin_dir_url( __FILE__ ) . 'admin/admin.css', array(), W4OS_VERSION );
+			wp_enqueue_script( 'w4os-admin', plugin_dir_url( __FILE__ ) . 'admin/admin.js', array( 'jquery' ), W4OS_VERSION );
 		}
 	}
 

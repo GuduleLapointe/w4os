@@ -3,18 +3,12 @@
  * included in this file.
  */
 
-/* a[target="_blank"]:after {
-  font-family: 'Font Awesome 5 Pro';
-  content: " \f08e";
-} */
-
 a[href*="hop://"] {
   white-space: nowrap;
 }
 a[href*="hop://"]:after {
-  content: "";
-  display:inline-block;
-  content: url('../images/portal-enter-regular.svg');
+  display: inline-block;
+  content: url('portal-enter-regular.svg');
   width: 1em;
   height: 1em;
   margin-left: 0.15em;

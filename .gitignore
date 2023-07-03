@@ -7,3 +7,5 @@ sources/
 tmp/
 node_modules/
 vendor/magicoli/opensim-helpers/
+*.asset.php
+*.map

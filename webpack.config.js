@@ -6,7 +6,8 @@ const CopyPlugin    = require( "copy-webpack-plugin" );
 const config = {
 	...defaultConfig,
 	entry: {
-		// '../includes/admin/admin': 'src/admin/index.js',
+		'../includes/admin/admin': './src/admin/index.js',
+		'../includes/public/public': './src/public/index.js',
 		// '../blocks/popular-places/popular-places': './src/blocks/popular-places/index.js',
 		// '../blocks/events/index': './src/blocks/events/index.js',
 	},

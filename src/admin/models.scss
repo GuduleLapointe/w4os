@@ -1,0 +1,24 @@
+.models-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 10px;
+
+  .model {
+    list-style: none;
+  }
+
+  .model-picture {
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    text-align: center;
+  }
+
+  figure {
+    padding: 0;
+    margin:0;
+  }
+
+}

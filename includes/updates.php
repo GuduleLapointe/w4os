@@ -6,7 +6,6 @@ if ( ! defined( 'W4OS_UPDATES' ) ) {
 }
 
 $w4os_updated = get_option( 'w4os_updated', get_option( 'w4os_upated' ) );
-error_log("w4os_updated $w4os_updated");
 
 if ( $w4os_updated < W4OS_UPDATES ) {
 	w4os_updates();

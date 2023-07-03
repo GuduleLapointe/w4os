@@ -1,0 +1,24 @@
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/admin/models.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+.models-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 10px;
+}
+.models-list .model {
+  list-style: none;
+}
+.models-list .model-picture {
+  width: 100%;
+  height: auto;
+}
+.models-list figcaption {
+  text-align: center;
+}
+.models-list figure {
+  padding: 0;
+  margin: 0;
+}
+
+/*# sourceMappingURL=admin.css.map*/

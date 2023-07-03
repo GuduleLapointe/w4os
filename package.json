@@ -3,17 +3,15 @@
   "version": "2.3.15",
   "description": "WordPress interface for OpenSimulator (w4os)",
   "main": "webpack.config.js",
-  "directories": {
-    "lib": "lib"
-  },
   "scripts": {
     "build": "wp-scripts build",
+    "start": "wp-scripts start",
     "format": "wp-scripts format",
     "lint:css": "wp-scripts lint-style",
     "lint:js": "wp-scripts lint-js",
     "packages-update": "wp-scripts packages-update",
     "plugin-zip": "wp-scripts plugin-zip",
-    "start": "wp-scripts start"
+    "php-loader": "^0.2.0"
   },
   "devDependencies": {
     "@wordpress/scripts": "^26.6.0",
