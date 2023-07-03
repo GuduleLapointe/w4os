@@ -87,7 +87,7 @@ function w4os_is_email( string $address ): bool {
 		return false;
 	}
 
-  [$address, $localPart, $domain] = $matches;
+	list($address, $localPart, $domain) = $matches;
 
 	if ( \defined( 'INTL_IDNA_VARIANT_UTS46' ) ) {
 		$variant = INTL_IDNA_VARIANT_UTS46;
