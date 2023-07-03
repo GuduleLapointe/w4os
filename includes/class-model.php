@@ -17,8 +17,10 @@ class W4OS_Model extends W4OS_Loader {
 
 	protected $actions;
 	protected $filters;
+	public $models;
 
 	public function __construct() {
+		$this->models = $this->get_models();
 	}
 
 	public function init() {
@@ -63,7 +65,7 @@ class W4OS_Model extends W4OS_Loader {
 
 	function register_fields( $meta_boxes ) {
 		$prefix = '';
-		
+
 		$meta_boxes[] = [
 			'title'          => __( 'Avatar Models', 'w4os' ),
 			'id'             => 'w4os-models-fields',
@@ -90,12 +92,143 @@ class W4OS_Model extends W4OS_Loader {
 					'name'     => __( 'Current Models', 'w4os' ),
 					'id'       => $prefix . 'current_models',
 					'type'     => 'custom_html',
-					'callback' => 'w4os_current_models',
+					'callback' => [ $this , 'models_list' ],
 				],
 			],
 		];
 
 		return $meta_boxes;
+	}
+
+	static function get_models( $format = OBJECT ) {
+		global $w4osdb;
+		if(empty($w4osdb)) return false;
+
+		$models = [];
+
+		$match = w4os_get_option('w4os-models:match', 'any');
+		$name = w4os_get_option('w4os-models:name', false);
+		if( ! $name ) return [];
+
+		$select = "SELECT FirstName, LastName, profileImage, profileAboutText FROM
+		UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID WHERE active =
+		true AND ";
+		$order = " ORDER BY FirstName, LastName";
+
+		switch ($match) {
+			case 'first':
+			$conditions = "FirstName = '%1\$s'";
+			break;
+
+			case 'last':
+			$conditions = "LastName = '%1\$s'";
+			break;
+
+			default:
+			$conditions = "( FirstName = '%1\$s' OR LastName = '%1\$s' )";
+		}
+		$sql = $w4osdb->prepare(
+			"SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText FROM
+			UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID WHERE active =
+			true AND {$conditions} ORDER BY FirstName, LastName",
+			$name,
+		);
+		$models = $w4osdb->get_results( $sql, $format );
+
+		return $models;
+	}
+
+	public function model_thumb($model, $placeholder = W4OS_NOTFOUND_IMG ) {
+		$output = '';
+
+		$name         = $model->FirstName . ' ' . $model->LastName;
+		$display_name = $name;
+		$filter_name = w4os_get_option('w4os-models:name', false);
+		if(!empty($filter_name)) {
+			$display_name = preg_replace( '/ *' . $filter_name . ' */', '', $display_name );
+		}
+		$display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $display_name );
+		$display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $display_name );
+
+		$imgid = ( w4os_empty( $model->profileImage ) ) ? $placeholder : $model->profileImage;
+		if ($imgid) {
+			$output = sprintf(
+				'<figure>
+				<img class="model-picture" alt="%1$s" src="%2$s">
+				<figcaption>%1$s</figcaption>
+				</figure>',
+				$display_name,
+				w4os_get_asset_url( $imgid ),
+			);
+		} else if (!empty($display_name)) {
+			$output = sprintf(
+				'<span class="model-name">%s</span>',
+				$display_name,
+			);
+		}
+
+		return $output;
+	}
+
+	public function models_list() {
+		$content = '';
+
+		$models = $this->get_models();
+		foreach ($models as $model) {
+			$content .= '<li class=model>' . $this->model_thumb($model) . '</li>';
+		}
+		if(!empty($content)) {
+			$content = '<ul class="models-list">' . $content . '</ul>';
+		}
+
+		return $content;
+	}
+
+
+	static function models_field() {
+		$models = W4OS_Model::get_models();
+		if(empty($models)) return "No models";
+		if(!is_array($models)) return "Error, wrong data format received";
+
+		$content = "<div class='clear'></div>
+    <p class=form-row>
+      <label>" . __( 'Your initial appearance', 'w4os' ) . '</label>
+      <p class=description>' . __( 'You can change it as often as you want in the virtual world.', 'w4os' ) . "</p>
+      <p class='field-model'>";
+		$random_model = rand( 1, count( $models ) );
+		$m            = 0;
+		foreach ( $models as $model ) {
+			$m++;
+			// if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
+			$checked            = ( $m == $random_model ) ? 'checked' : '';
+			$model_name         = $model->FirstName . ' ' . $model->LastName;
+			$model_display_name = $model_name;
+			if ( get_option( 'w4os_model_firstname' ) != '' ) {
+				$model_display_name = preg_replace( '/ *' . get_option( 'w4os_model_firstname' ) . ' */', '', $model_display_name );
+			}
+			if ( get_option( 'w4os_model_lastname' ) != '' ) {
+				$model_display_name = preg_replace( '/ *' . get_option( 'w4os_model_lastname' ) . ' */', '', $model_display_name );
+			}
+			$model_display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $model_display_name );
+			$model_display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $model_display_name );
+
+			$model_imgid = ( w4os_empty( $model->profileImage ) ) ? W4OS_NOTFOUND_PROFILEPIC : $model->profileImage;
+			$model_img   = "<img class='model-picture' src='" . w4os_get_asset_url( $model_imgid ) . "'>";
+			if ( empty( $model_img ) ) {
+				$modelclass = 'no-picture';
+			} else {
+				$modelclass = 'with-picture';
+			}
+
+			$content .= "
+      <label class='model $modelclass'>
+      <input type='radio' name='w4os_model' value='$model_name' $checked>
+      <span class=model-name>$model_display_name</span>
+      $model_img
+      </label>";
+		}
+		return $content;
+
 	}
 
 }
