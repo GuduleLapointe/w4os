@@ -69,11 +69,11 @@ function w4os_asset_get( $asset_uuid, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
 	}
 
 	if ( w4os_cache_check( $asset_uuid . '.' . $format, W4OS_ASSETS_CACHE_IMG_PATH ) ) {
-		$h = fopen( W4OS_ASSETS_CACHE_IMG_PATH . $asset_uuid . '.' . $format, 'rb' );
-		if ( $h ) {
-			$data = fread( $h, filesize( W4OS_ASSETS_CACHE_IMG_PATH . $asset_uuid . '.' . $format ) );
-			fclose( $h );
-			return ( $data );
+		$cacheFilePath = W4OS_ASSETS_CACHE_IMG_PATH . $asset_uuid . '.' . $format;
+		if (file_exists($cacheFilePath)) {
+			error_log("found in cache");
+			$data = file_get_contents($cacheFilePath);
+			return $data;
 		}
 	}
 
