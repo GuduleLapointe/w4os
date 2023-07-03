@@ -746,54 +746,10 @@ function w4os_avatar_creation_form( $user ) {
   </p>
   ';
 
-	$models = $w4osdb->get_results(
-		"SELECT FirstName, LastName, profileImage, profileAboutText
-    FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
-    WHERE active = true
-    AND (FirstName = '" . get_option( 'w4os_model_firstname' ) . "'
-    OR LastName = '" . get_option( 'w4os_model_lastname' ) . "')
-    ORDER BY FirstName, LastName"
-	);
-	if ( $models ) {
-		$content     .= "<div class='clear'></div>
-    <p class=form-row>
-      <label>" . __( 'Your initial appearance', 'w4os' ) . '</label>
-      <p class=description>' . __( 'You can change it as often as you want in the virtual world.', 'w4os' ) . "</p>
-      <p class='field-model'>";
-		$random_model = rand( 1, count( $models ) );
-		$m            = 0;
-		foreach ( $models as $model ) {
-			$m++;
-			// if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
-			$checked            = ( $m == $random_model ) ? 'checked' : '';
-			$model_name         = $model->FirstName . ' ' . $model->LastName;
-			$model_display_name = $model_name;
-			if ( get_option( 'w4os_model_firstname' ) != '' ) {
-				$model_display_name = preg_replace( '/ *' . get_option( 'w4os_model_firstname' ) . ' */', '', $model_display_name );
-			}
-			if ( get_option( 'w4os_model_lastname' ) != '' ) {
-				$model_display_name = preg_replace( '/ *' . get_option( 'w4os_model_lastname' ) . ' */', '', $model_display_name );
-			}
-			$model_display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $model_display_name );
-			$model_display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $model_display_name );
-
-			$model_imgid = ( w4os_empty( $model->profileImage ) ) ? W4OS_NOTFOUND_PROFILEPIC : $model->profileImage;
-			$model_img   = "<img class='model-picture' src='" . w4os_get_asset_url( $model_imgid ) . "'>";
-			if ( empty( $model_img ) ) {
-				$modelclass = 'no-picture';
-			} else {
-				$modelclass = 'with-picture';
-			}
-
-			$content .= "
-      <label class='model $modelclass'>
-      <input type='radio' name='w4os_model' value='$model_name' $checked>
-      <span class=model-name>$model_display_name</span>
-      $model_img
-      </label>";
-		}
+	if ( W4OS_Model::get_models() ) {
+		$content .= (new W4OS_Model())->select_model_field();
 	}
-	$content .= '</p>';
+	// $content .= '</p>';
 
 	$content .= "
   <p>

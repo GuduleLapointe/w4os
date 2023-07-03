@@ -2,7 +2,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
+  li,
   .model {
     list-style: none;
   }
@@ -21,4 +25,25 @@
     margin:0;
   }
 
+  .model input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+
+  label.model [type=radio] + figure {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+
+  label.model [type=radio]  + figure:hover {
+    /* outline: 2px solid #f00; */
+    opacity: 0.75;
+  }
+
+  label.model [type=radio]:checked + figure {
+    outline: 2px solid black;
+    opacity: 1;
+  }
 }

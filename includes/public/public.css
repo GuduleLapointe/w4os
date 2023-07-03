@@ -74,59 +74,7 @@ td.gridval {
   padding: 6px 12px 0;
 }
 
-.field-model {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 15px;
-}
-
-.woocommerce form .form-row label.with-picture,
-.woocommerce-page form .form-row label.with-picture .field-model label.with-picture {
-  display: block;
-  box-sizing: border-box;
-  /* width: calc(100% / 3 - 15px); */
-  /* margin: 5px 5px; */
-  /* text-align: center; */
-  position: relative;
-}
-
-.field-model .with-picture .model-name {
-  display: block;
-}
-
-img.model-picture {
-  max-width: 100%;
-  opacity: 0.5;
-}
-
-.field-model .no-picture [type=radio] {
-  width: auto;
-}
-
-.field-model .with-picture [type=radio] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
 /* IMAGE STYLES */
-.field-model [type=radio] + span,
-.field-model [type=radio] + span + img {
-  cursor: pointer;
-}
-
-.field-model [type=radio] + span + img.model-picture:hover {
-  /* outline: 2px solid #f00; */
-  opacity: 0.75;
-}
-
-/* CHECKED STYLES */
-.field-model [type=radio]:checked + span + img {
-  outline: 2px solid black;
-  opacity: 1;
-}
-
 .form-wrap p, p.description, p.help, span.description {
   margin-top: 0;
   /* margin-bottom: 0; */
@@ -161,13 +109,6 @@ img.avatar {
 .profileImage > img {
   width: 512px;
   height: auto;
-}
-
-.edit-account label {
-  display: inline-block;
-  width: calc((100% - 20px) / 2);
-  min-width: 15em;
-  max-width: 100%;
 }
 
 .avatar.not-created,
@@ -245,6 +186,49 @@ body.w4os-welcome footer {
     font-weight: bold;
     margin-top: 0.5em;
   }
+}
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/admin/models.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+.models-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.models-list li,
+.models-list .model {
+  list-style: none;
+}
+.models-list .model-picture {
+  width: 100%;
+  height: auto;
+}
+.models-list figcaption {
+  text-align: center;
+}
+.models-list figure {
+  padding: 0;
+  margin: 0;
+}
+.models-list .model input[type=radio] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.models-list label.model [type=radio] + figure {
+  cursor: pointer;
+  opacity: 0.5;
+}
+.models-list label.model [type=radio] + figure:hover {
+  /* outline: 2px solid #f00; */
+  opacity: 0.75;
+}
+.models-list label.model [type=radio]:checked + figure {
+  outline: 2px solid black;
+  opacity: 1;
 }
 
 /*# sourceMappingURL=public.css.map*/

@@ -184,51 +184,49 @@ class W4OS_Model extends W4OS_Loader {
 		return $content;
 	}
 
-
-	static function models_field() {
+	function select_model_field() {
 		$models = W4OS_Model::get_models();
 		if(empty($models)) return "No models";
 		if(!is_array($models)) return "Error, wrong data format received";
 
-		$content = "<div class='clear'></div>
-    <p class=form-row>
-      <label>" . __( 'Your initial appearance', 'w4os' ) . '</label>
-      <p class=description>' . __( 'You can change it as often as you want in the virtual world.', 'w4os' ) . "</p>
-      <p class='field-model'>";
-		$random_model = rand( 1, count( $models ) );
+		$options = '';
 		$m            = 0;
+		$random_model = rand( 1, count( $models ) );
 		foreach ( $models as $model ) {
 			$m++;
-			// if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 			$checked            = ( $m == $random_model ) ? 'checked' : '';
-			$model_name         = $model->FirstName . ' ' . $model->LastName;
-			$model_display_name = $model_name;
-			if ( get_option( 'w4os_model_firstname' ) != '' ) {
-				$model_display_name = preg_replace( '/ *' . get_option( 'w4os_model_firstname' ) . ' */', '', $model_display_name );
-			}
-			if ( get_option( 'w4os_model_lastname' ) != '' ) {
-				$model_display_name = preg_replace( '/ *' . get_option( 'w4os_model_lastname' ) . ' */', '', $model_display_name );
-			}
-			$model_display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $model_display_name );
-			$model_display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $model_display_name );
-
-			$model_imgid = ( w4os_empty( $model->profileImage ) ) ? W4OS_NOTFOUND_PROFILEPIC : $model->profileImage;
-			$model_img   = "<img class='model-picture' src='" . w4os_get_asset_url( $model_imgid ) . "'>";
-			if ( empty( $model_img ) ) {
-				$modelclass = 'no-picture';
-			} else {
-				$modelclass = 'with-picture';
-			}
-
-			$content .= "
-      <label class='model $modelclass'>
-      <input type='radio' name='w4os_model' value='$model_name' $checked>
-      <span class=model-name>$model_display_name</span>
-      $model_img
-      </label>";
+			// if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
+			$model_name = $model->FirstName . ' ' . $model->LastName;
+			
+			$options .= sprintf(
+				'<li >
+					<label class="model">
+						<input type="radio" name="w4os_model" value="%s" %s>
+						%s
+					</label>
+				</li>',
+				$model_name,
+				$checked,
+				$this->model_thumb($model),
+			);
 		}
-		return $content;
+		if(!empty($options)) {
+			$content = sprintf(
+				'<div class="clear"></div>
+				<p class=form-row>
+					<label>%s</label>
+					<p class="description">%s</p>
+					<ul class="models-list">
+						%s
+					</ul>
+				</p>',
+				 __( "Your initial appearance", "w4os" ),
+				__( 'You can change it as often as you want in the virtual world.', 'w4os' ),
+				$options,
+			);
+		}
 
+		return $content;
 	}
 
 }

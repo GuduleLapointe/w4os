@@ -6,11 +6,6 @@ define( 'W4OS_ADMIN', true );
 // ini_set('display_startup_errors', '1');
 // error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-function w4os_enqueue_admin_script( $hook ) {
-	wp_enqueue_style( 'w4os-admin', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), W4OS_VERSION );
-}
-add_action( 'admin_enqueue_scripts', 'w4os_enqueue_admin_script' );
-
 function w4os_register_options_pages() {
 	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_settings_page');
 	add_menu_page(
