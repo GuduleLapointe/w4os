@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-03T05:27:47+00:00\n"
+"POT-Creation-Date: 2023-07-03T06:58:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.0\n"
 
@@ -69,14 +69,14 @@ msgid "Name"
 msgstr ""
 
 #: includes/class-model.php:92
-msgid "Current Models"
+msgid "Available Models"
 msgstr ""
 
-#: includes/class-model.php:223
+#: includes/class-model.php:233
 msgid "Your initial appearance"
 msgstr ""
 
-#: includes/class-model.php:224
+#: includes/class-model.php:234
 msgid "You can change it as often as you want in the virtual world."
 msgstr ""
 
@@ -128,7 +128,7 @@ msgid "OpenSimulator Settings"
 msgstr ""
 
 #: legacy/admin/admin-init.php:26
-#: legacy/admin/settings.php:678
+#: legacy/admin/settings.php:680
 msgid "Settings"
 msgstr ""
 
@@ -254,7 +254,7 @@ msgid "Web tab of viewer search windows. Relevant if you have a search page prov
 msgstr ""
 
 #: legacy/admin/admin-init.php:400
-#: legacy/admin/settings.php:318
+#: legacy/admin/settings.php:320
 msgid "Offline messages"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgid "Link to a help page on your website."
 msgstr ""
 
 #: legacy/admin/dashboard.php:16
-#: legacy/admin/settings.php:61
+#: legacy/admin/settings.php:63
 #: legacy/shortcodes.php:145
 #: legacy/widgets.php:49
 #: blocks/w4os-gridinfo-block/index.js:33
@@ -332,294 +332,294 @@ msgstr ""
 msgid "Recent users"
 msgstr ""
 
-#: legacy/admin/settings.php:74
+#: legacy/admin/settings.php:76
 #: legacy/shortcodes.php:150
 msgid "Grid Name"
 msgstr ""
 
-#: legacy/admin/settings.php:81
+#: legacy/admin/settings.php:83
 msgid "Robust server database"
 msgstr ""
 
-#: legacy/admin/settings.php:84
-#: legacy/admin/settings.php:236
-#: legacy/admin/settings.php:412
+#: legacy/admin/settings.php:86
+#: legacy/admin/settings.php:238
+#: legacy/admin/settings.php:414
 msgid "Hostname"
 msgstr ""
 
-#: legacy/admin/settings.php:87
-#: legacy/admin/settings.php:240
-#: legacy/admin/settings.php:416
+#: legacy/admin/settings.php:89
+#: legacy/admin/settings.php:242
+#: legacy/admin/settings.php:418
 msgid "Database Name"
 msgstr ""
 
-#: legacy/admin/settings.php:90
-#: legacy/admin/settings.php:244
-#: legacy/admin/settings.php:420
+#: legacy/admin/settings.php:92
+#: legacy/admin/settings.php:246
+#: legacy/admin/settings.php:422
 msgid "Username"
 msgstr ""
 
-#: legacy/admin/settings.php:94
-#: legacy/admin/settings.php:249
-#: legacy/admin/settings.php:425
+#: legacy/admin/settings.php:96
+#: legacy/admin/settings.php:251
+#: legacy/admin/settings.php:427
 #: tmp/class-avatar.php:277
 msgid "Password"
 msgstr ""
 
-#: legacy/admin/settings.php:101
+#: legacy/admin/settings.php:103
 msgid "Grid users"
-msgstr ""
-
-#: legacy/admin/settings.php:105
-#: legacy/admin/settings.php:122
-msgid "Profile Page"
 msgstr ""
 
 #: legacy/admin/settings.php:107
 #: legacy/admin/settings.php:124
-msgid "Provide web profile page for avatars"
+msgid "Profile Page"
 msgstr ""
 
 #: legacy/admin/settings.php:109
 #: legacy/admin/settings.php:126
+msgid "Provide web profile page for avatars"
+msgstr ""
+
+#: legacy/admin/settings.php:111
+#: legacy/admin/settings.php:128
 msgid "Defaults"
 msgstr ""
 
-#: legacy/admin/settings.php:114
-#: legacy/admin/settings.php:130
+#: legacy/admin/settings.php:116
+#: legacy/admin/settings.php:132
 msgid "The page %1$s must exist, as defined in %2$spermalinks settings%3$s."
 msgstr ""
 
-#: legacy/admin/settings.php:135
+#: legacy/admin/settings.php:137
 msgid "Table %s not found. User Profiles must be activated in Robust to enable profile page."
 msgstr ""
 
-#: legacy/admin/settings.php:142
+#: legacy/admin/settings.php:144
 msgid "Show configuration instructions to new users."
 msgstr ""
 
-#: legacy/admin/settings.php:147
+#: legacy/admin/settings.php:149
 msgid "Login Page"
 msgstr ""
 
-#: legacy/admin/settings.php:149
+#: legacy/admin/settings.php:151
 msgid "Use profile page as login page"
 msgstr ""
 
-#: legacy/admin/settings.php:151
+#: legacy/admin/settings.php:153
 msgid "Default"
 msgstr ""
 
-#: legacy/admin/settings.php:158
+#: legacy/admin/settings.php:160
 msgid "Replace user name"
 msgstr ""
 
-#: legacy/admin/settings.php:159
+#: legacy/admin/settings.php:161
 msgid "Show avatar name instead of user name in users list."
 msgstr ""
 
-#: legacy/admin/settings.php:163
+#: legacy/admin/settings.php:165
 msgid "Exclude from stats"
 msgstr ""
 
-#: legacy/admin/settings.php:165
+#: legacy/admin/settings.php:167
 msgid "Models"
 msgstr ""
 
-#: legacy/admin/settings.php:166
+#: legacy/admin/settings.php:168
 msgid "Accounts without mail address"
 msgstr ""
 
-#: legacy/admin/settings.php:167
+#: legacy/admin/settings.php:169
 msgid "Hypergrid visitors"
 msgstr ""
 
-#: legacy/admin/settings.php:169
+#: legacy/admin/settings.php:171
 msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr ""
 
-#: legacy/admin/settings.php:188
+#: legacy/admin/settings.php:190
 msgid "Web Assets Server"
 msgstr ""
 
-#: legacy/admin/settings.php:193
+#: legacy/admin/settings.php:195
 msgid "Provide Web Assets Server"
 msgstr ""
 
-#: legacy/admin/settings.php:196
+#: legacy/admin/settings.php:198
 msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
 msgstr ""
 
-#: legacy/admin/settings.php:199
+#: legacy/admin/settings.php:201
 msgid "Web asset server"
 msgstr ""
 
-#: legacy/admin/settings.php:203
+#: legacy/admin/settings.php:205
 msgid "You can set the asset slug in %1$spermalinks settings%2$s."
 msgstr ""
 
-#: legacy/admin/settings.php:209
+#: legacy/admin/settings.php:211
 msgid "External assets server URI"
 msgstr ""
 
-#: legacy/admin/settings.php:210
+#: legacy/admin/settings.php:212
 msgid "If W4OS web assets service is disabled, you need a third-party web application."
 msgstr ""
 
-#: legacy/admin/settings.php:216
+#: legacy/admin/settings.php:218
 msgid "Search"
 msgstr ""
 
-#: legacy/admin/settings.php:220
+#: legacy/admin/settings.php:222
 msgid "Provide In-world Search"
 msgstr ""
 
-#: legacy/admin/settings.php:224
+#: legacy/admin/settings.php:226
 msgid "Enable to use a local search engine, allowing only local results (recommended for private grids)."
 msgstr ""
 
-#: legacy/admin/settings.php:225
+#: legacy/admin/settings.php:227
 msgid "Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids."
 msgstr ""
 
-#: legacy/admin/settings.php:230
+#: legacy/admin/settings.php:232
 msgid "Search database"
 msgstr ""
 
-#: legacy/admin/settings.php:233
-#: legacy/admin/settings.php:397
+#: legacy/admin/settings.php:235
+#: legacy/admin/settings.php:399
 msgid "Use the same database as Robust"
 msgstr ""
 
-#: legacy/admin/settings.php:255
+#: legacy/admin/settings.php:257
 msgid "Search Engine URL"
 msgstr ""
 
-#: legacy/admin/settings.php:260
+#: legacy/admin/settings.php:262
 msgid "URL of the search engine used by the viewer to provide search results (without arguments)"
 msgstr ""
 
-#: legacy/admin/settings.php:261
+#: legacy/admin/settings.php:263
 msgid "In OpenSim.ini, only one can be set"
 msgstr ""
 
-#: legacy/admin/settings.php:262
+#: legacy/admin/settings.php:264
 msgid "Services using w4o engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines."
 msgstr ""
 
-#: legacy/admin/settings.php:275
+#: legacy/admin/settings.php:277
 msgid "Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names."
 msgstr ""
 
-#: legacy/admin/settings.php:290
+#: legacy/admin/settings.php:292
 msgid "Search register"
 msgstr ""
 
-#: legacy/admin/settings.php:293
+#: legacy/admin/settings.php:295
 msgid "Data service, used to register regions, objects or land for sale. You can resgister to several search engines."
 msgstr ""
 
-#: legacy/admin/settings.php:309
+#: legacy/admin/settings.php:311
 msgid "Events Server URL"
 msgstr ""
 
-#: legacy/admin/settings.php:311
+#: legacy/admin/settings.php:313
 msgid "HYPEvents Server URL, used to fetch upcoming events and make them available in search."
 msgstr ""
 
-#: legacy/admin/settings.php:312
+#: legacy/admin/settings.php:314
 msgid "Leave blank to ignore events or if you have an other events implementation."
 msgstr ""
 
-#: legacy/admin/settings.php:322
+#: legacy/admin/settings.php:324
 msgid "Provide offline helper"
 msgstr ""
 
-#: legacy/admin/settings.php:328
+#: legacy/admin/settings.php:330
 msgid "Offline helper URI"
 msgstr ""
 
-#: legacy/admin/settings.php:332
+#: legacy/admin/settings.php:334
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr ""
 
-#: legacy/admin/settings.php:350
+#: legacy/admin/settings.php:352
 msgid "Sender e-mail address"
 msgstr ""
 
-#: legacy/admin/settings.php:354
+#: legacy/admin/settings.php:356
 msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
 msgstr ""
 
-#: legacy/admin/settings.php:363
+#: legacy/admin/settings.php:365
 msgid "Provide Economy Helpers"
 msgstr ""
 
-#: legacy/admin/settings.php:366
+#: legacy/admin/settings.php:368
 msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
 msgstr ""
 
-#: legacy/admin/settings.php:367
+#: legacy/admin/settings.php:369
 msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
 msgstr ""
 
-#: legacy/admin/settings.php:369
+#: legacy/admin/settings.php:371
 msgid "Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s."
 msgstr ""
 
-#: legacy/admin/settings.php:377
+#: legacy/admin/settings.php:379
 msgid "Economy Base URI"
 msgstr ""
 
-#: legacy/admin/settings.php:381
+#: legacy/admin/settings.php:383
 msgid "The URL must be set in Robust configuration."
 msgstr ""
 
-#: legacy/admin/settings.php:394
+#: legacy/admin/settings.php:396
 msgid "Economy Database"
 msgstr ""
 
-#: legacy/admin/settings.php:431
+#: legacy/admin/settings.php:433
 msgid "Currency Provider"
 msgstr ""
 
-#: legacy/admin/settings.php:435
+#: legacy/admin/settings.php:437
 msgid "No provider, use fake money."
 msgstr ""
 
-#: legacy/admin/settings.php:442
+#: legacy/admin/settings.php:444
 msgid "Currency Conversion Rate"
 msgstr ""
 
-#: legacy/admin/settings.php:443
+#: legacy/admin/settings.php:445
 msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
 msgstr ""
 
-#: legacy/admin/settings.php:446
+#: legacy/admin/settings.php:448
 msgid "Podex redirect message"
 msgstr ""
 
-#: legacy/admin/settings.php:447
+#: legacy/admin/settings.php:449
 msgid "Please use our terminals in-world to proceed. Click OK to teleport to terminals region."
 msgstr ""
 
-#: legacy/admin/settings.php:450
+#: legacy/admin/settings.php:452
 msgid "Podex redirect URL"
 msgstr ""
 
-#: legacy/admin/settings.php:454
+#: legacy/admin/settings.php:456
 msgid "Money Script Access Key"
 msgstr ""
 
-#: legacy/admin/settings.php:654
+#: legacy/admin/settings.php:656
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 
-#: legacy/admin/settings.php:655
+#: legacy/admin/settings.php:657
 msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
 msgstr ""
 
-#: legacy/admin/settings.php:660
+#: legacy/admin/settings.php:662
 msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
 msgstr ""
 

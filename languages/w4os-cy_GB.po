@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-03T05:27:47+00:00\n"
+"POT-Creation-Date: 2023-07-03T06:58:48+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -75,15 +75,15 @@ msgstr "Enw grid"
 
 #: includes/class-model.php:92
 #, fuzzy
-#| msgid "Currency Provider"
-msgid "Current Models"
-msgstr "Darparwr Arian Parod"
+#| msgid "Available shortcodes"
+msgid "Available Models"
+msgstr "Codau byr sydd ar gael"
 
-#: includes/class-model.php:223
+#: includes/class-model.php:233
 msgid "Your initial appearance"
 msgstr "Eich ymddangosiad cychwynnol"
 
-#: includes/class-model.php:224
+#: includes/class-model.php:234
 msgid "You can change it as often as you want in the virtual world."
 msgstr "Gallwch ei newid mor aml ag y dymunwch yn y byd rhithwir."
 
@@ -139,7 +139,7 @@ msgstr "Statws"
 msgid "OpenSimulator Settings"
 msgstr "Gosodiadau OpenSimulator"
 
-#: legacy/admin/admin-init.php:26 legacy/admin/settings.php:678
+#: legacy/admin/admin-init.php:26 legacy/admin/settings.php:680
 msgid "Settings"
 msgstr "Gosodiadau"
 
@@ -267,7 +267,7 @@ msgstr ""
 "Tab gwe o ffenestri chwilio gwyliwr. Yn berthnasol os oes gennych dudalen "
 "chwilio sy'n darparu cynnwys o'r grid."
 
-#: legacy/admin/admin-init.php:400 legacy/admin/settings.php:318
+#: legacy/admin/admin-init.php:400 legacy/admin/settings.php:320
 msgid "Offline messages"
 msgstr "Negeseuon all-lein"
 
@@ -343,7 +343,7 @@ msgstr "Help"
 msgid "Link to a help page on your website."
 msgstr "Dolen i dudalen gymorth ar eich gwefan."
 
-#: legacy/admin/dashboard.php:16 legacy/admin/settings.php:61
+#: legacy/admin/dashboard.php:16 legacy/admin/settings.php:63
 #: legacy/shortcodes.php:145 legacy/widgets.php:49
 #: blocks/w4os-gridinfo-block/index.js:33
 #: blocks/w4os-gridinfo-block/index.js:85
@@ -361,51 +361,51 @@ msgstr "Statws grid"
 msgid "Recent users"
 msgstr "Defnyddwyr diweddar"
 
-#: legacy/admin/settings.php:74 legacy/shortcodes.php:150
+#: legacy/admin/settings.php:76 legacy/shortcodes.php:150
 msgid "Grid Name"
 msgstr "Enw grid"
 
-#: legacy/admin/settings.php:81
+#: legacy/admin/settings.php:83
 msgid "Robust server database"
 msgstr "Cronfa ddata gweinyddwr cadarn"
 
-#: legacy/admin/settings.php:84 legacy/admin/settings.php:236
-#: legacy/admin/settings.php:412
+#: legacy/admin/settings.php:86 legacy/admin/settings.php:238
+#: legacy/admin/settings.php:414
 msgid "Hostname"
 msgstr "Enw gwesteiwr"
 
-#: legacy/admin/settings.php:87 legacy/admin/settings.php:240
-#: legacy/admin/settings.php:416
+#: legacy/admin/settings.php:89 legacy/admin/settings.php:242
+#: legacy/admin/settings.php:418
 msgid "Database Name"
 msgstr "Enw cronfa ddata"
 
-#: legacy/admin/settings.php:90 legacy/admin/settings.php:244
-#: legacy/admin/settings.php:420
+#: legacy/admin/settings.php:92 legacy/admin/settings.php:246
+#: legacy/admin/settings.php:422
 msgid "Username"
 msgstr "Enw defnyddiwr"
 
-#: legacy/admin/settings.php:94 legacy/admin/settings.php:249
-#: legacy/admin/settings.php:425 tmp/class-avatar.php:277
+#: legacy/admin/settings.php:96 legacy/admin/settings.php:251
+#: legacy/admin/settings.php:427 tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Cyfrinair"
 
-#: legacy/admin/settings.php:101
+#: legacy/admin/settings.php:103
 msgid "Grid users"
 msgstr "Defnyddwyr grid"
 
-#: legacy/admin/settings.php:105 legacy/admin/settings.php:122
+#: legacy/admin/settings.php:107 legacy/admin/settings.php:124
 msgid "Profile Page"
 msgstr "Tudalen proffil"
 
-#: legacy/admin/settings.php:107 legacy/admin/settings.php:124
+#: legacy/admin/settings.php:109 legacy/admin/settings.php:126
 msgid "Provide web profile page for avatars"
 msgstr "Darparu tudalen proffil gwe ar gyfer avatars"
 
-#: legacy/admin/settings.php:109 legacy/admin/settings.php:126
+#: legacy/admin/settings.php:111 legacy/admin/settings.php:128
 msgid "Defaults"
 msgstr "Rhagosodiadau"
 
-#: legacy/admin/settings.php:114 legacy/admin/settings.php:130
+#: legacy/admin/settings.php:116 legacy/admin/settings.php:132
 #, fuzzy
 #| msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgid "The page %1$s must exist, as defined in %2$spermalinks settings%3$s."
@@ -413,53 +413,53 @@ msgstr ""
 "Rhaid i'r dudalen %s fodoli, fel y'i diffinnir yng ngosodiadau "
 "%spermalinks%s."
 
-#: legacy/admin/settings.php:135
+#: legacy/admin/settings.php:137
 msgid ""
 "Table %s not found. User Profiles must be activated in Robust to enable "
 "profile page."
 msgstr ""
 
-#: legacy/admin/settings.php:142
+#: legacy/admin/settings.php:144
 msgid "Show configuration instructions to new users."
 msgstr "Dangos cyfarwyddiadau ffurfweddu i ddefnyddwyr newydd."
 
-#: legacy/admin/settings.php:147
+#: legacy/admin/settings.php:149
 msgid "Login Page"
 msgstr "Tudalen mewngofnodi"
 
-#: legacy/admin/settings.php:149
+#: legacy/admin/settings.php:151
 msgid "Use profile page as login page"
 msgstr "Defnyddiwch dudalen proffil fel tudalen mewngofnodi"
 
-#: legacy/admin/settings.php:151
+#: legacy/admin/settings.php:153
 msgid "Default"
 msgstr "Diofyn"
 
-#: legacy/admin/settings.php:158
+#: legacy/admin/settings.php:160
 msgid "Replace user name"
 msgstr "Amnewid enw defnyddiwr"
 
-#: legacy/admin/settings.php:159
+#: legacy/admin/settings.php:161
 msgid "Show avatar name instead of user name in users list."
 msgstr "Dangos enw avatar yn lle enw defnyddiwr yn y rhestr defnyddwyr."
 
-#: legacy/admin/settings.php:163
+#: legacy/admin/settings.php:165
 msgid "Exclude from stats"
 msgstr "Eithrio o ystadegau"
 
-#: legacy/admin/settings.php:165
+#: legacy/admin/settings.php:167
 msgid "Models"
 msgstr "Modelau"
 
-#: legacy/admin/settings.php:166
+#: legacy/admin/settings.php:168
 msgid "Accounts without mail address"
 msgstr "Cyfrifon heb gyfeiriad post"
 
-#: legacy/admin/settings.php:167
+#: legacy/admin/settings.php:169
 msgid "Hypergrid visitors"
 msgstr "Ymwelwyr Hypergrid"
 
-#: legacy/admin/settings.php:169
+#: legacy/admin/settings.php:171
 msgid ""
 "Accounts without email address are usually test accounts created from the "
 "console. Uncheck only if you have real avatars without email address."
@@ -468,15 +468,15 @@ msgstr ""
 "creu o'r consol. Dad-diciwch dim ond os oes gennych avatars go iawn heb "
 "gyfeiriad e-bost."
 
-#: legacy/admin/settings.php:188
+#: legacy/admin/settings.php:190
 msgid "Web Assets Server"
 msgstr "Gweinydd Asedau Gwe"
 
-#: legacy/admin/settings.php:193
+#: legacy/admin/settings.php:195
 msgid "Provide Web Assets Server"
 msgstr "Darparu gweinydd asedau gwe"
 
-#: legacy/admin/settings.php:196
+#: legacy/admin/settings.php:198
 msgid ""
 "A web assets server is required to display in-world assets (from the grid) "
 "on the website (e.g. profile pictures)."
@@ -484,21 +484,21 @@ msgstr ""
 "Mae angen gweinydd asedau gwe i arddangos asedau yn y byd (o'r grid) ar y "
 "wefan (e.e. lluniau proffil)."
 
-#: legacy/admin/settings.php:199
+#: legacy/admin/settings.php:201
 msgid "Web asset server"
 msgstr "Gweinydd asedau gwe"
 
-#: legacy/admin/settings.php:203
+#: legacy/admin/settings.php:205
 #, fuzzy
 #| msgid "You can set the asset slug in %spermalinks settings%s."
 msgid "You can set the asset slug in %1$spermalinks settings%2$s."
 msgstr "Gallwch osod y wlithen ased yng ngosodiadau %spermalinks%s."
 
-#: legacy/admin/settings.php:209
+#: legacy/admin/settings.php:211
 msgid "External assets server URI"
 msgstr "URI gweinydd asedau allanol"
 
-#: legacy/admin/settings.php:210
+#: legacy/admin/settings.php:212
 msgid ""
 "If W4OS web assets service is disabled, you need a third-party web "
 "application."
@@ -506,39 +506,39 @@ msgstr ""
 "Os yw gwasanaeth asedau gwe W4OS yn anabl, mae angen cymhwysiad gwe trydydd "
 "parti arnoch chi."
 
-#: legacy/admin/settings.php:216
+#: legacy/admin/settings.php:218
 msgid "Search"
 msgstr "Chwiliwch"
 
-#: legacy/admin/settings.php:220
+#: legacy/admin/settings.php:222
 msgid "Provide In-world Search"
 msgstr "Darparu chwiliad yn y byd"
 
-#: legacy/admin/settings.php:224
+#: legacy/admin/settings.php:226
 msgid ""
 "Enable to use a local search engine, allowing only local results "
 "(recommended for private grids)."
 msgstr ""
 
-#: legacy/admin/settings.php:225
+#: legacy/admin/settings.php:227
 msgid ""
 "Disable to use an external search engine like 2do Directory, allowing "
 "results from both your grid and other public grids."
 msgstr ""
 
-#: legacy/admin/settings.php:230
+#: legacy/admin/settings.php:232
 msgid "Search database"
 msgstr "Chwilio cronfa ddata"
 
-#: legacy/admin/settings.php:233 legacy/admin/settings.php:397
+#: legacy/admin/settings.php:235 legacy/admin/settings.php:399
 msgid "Use the same database as Robust"
 msgstr "Defnyddiwch yr un gronfa ddata â Strong"
 
-#: legacy/admin/settings.php:255
+#: legacy/admin/settings.php:257
 msgid "Search Engine URL"
 msgstr "URL peiriant chwilio"
 
-#: legacy/admin/settings.php:260
+#: legacy/admin/settings.php:262
 #, fuzzy
 #| msgid ""
 #| "URL of the search engine used internally by the viewer (without "
@@ -549,17 +549,17 @@ msgid ""
 msgstr ""
 "URL y peiriant chwilio a ddefnyddir yn fewnol gan y gwyliwr (heb ddadleuon)."
 
-#: legacy/admin/settings.php:261
+#: legacy/admin/settings.php:263
 msgid "In OpenSim.ini, only one can be set"
 msgstr ""
 
-#: legacy/admin/settings.php:262
+#: legacy/admin/settings.php:264
 msgid ""
 "Services using w4o engine need the gatekeeper URI (usually the login URI) to "
 "be passed as gk argument. Requirements may vary for other engines."
 msgstr ""
 
-#: legacy/admin/settings.php:275
+#: legacy/admin/settings.php:277
 msgid ""
 "Please note that Search URL is different from Web search URL, which is not "
 "handled by W4OS currently. Web search is relevant if you have a web search "
@@ -573,11 +573,11 @@ msgstr ""
 "URLs yn y byd (hop: / neu secondlife://). Mae'n ddewisol a chyfeirir ato yma "
 "dim ond i ddadamwys gosodiadau sydd yn anffodus ag enwau tebyg."
 
-#: legacy/admin/settings.php:290
+#: legacy/admin/settings.php:292
 msgid "Search register"
 msgstr "Chwilio cofrestr"
 
-#: legacy/admin/settings.php:293
+#: legacy/admin/settings.php:295
 #, fuzzy
 #| msgid "Data service, used to register regions, objects or land for sale."
 msgid ""
@@ -587,11 +587,11 @@ msgstr ""
 "Gwasanaeth data, a ddefnyddir i gofrestru rhanbarthau, gwrthrychau neu dir "
 "ar werth."
 
-#: legacy/admin/settings.php:309
+#: legacy/admin/settings.php:311
 msgid "Events Server URL"
 msgstr "URL gweinydd digwyddiadau"
 
-#: legacy/admin/settings.php:311
+#: legacy/admin/settings.php:313
 msgid ""
 "HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
@@ -599,30 +599,30 @@ msgstr ""
 "URL gweinydd HYPEvents, a ddefnyddir i nôl digwyddiadau sydd ar ddod a "
 "sicrhau eu bod ar gael wrth chwilio."
 
-#: legacy/admin/settings.php:312
+#: legacy/admin/settings.php:314
 msgid ""
 "Leave blank to ignore events or if you have an other events implementation."
 msgstr ""
 "Gadewch yn wag i anwybyddu digwyddiadau neu os oes gennych weithrediad "
 "digwyddiadau eraill."
 
-#: legacy/admin/settings.php:322
+#: legacy/admin/settings.php:324
 msgid "Provide offline helper"
 msgstr "Darparu cynorthwyydd all-lein"
 
-#: legacy/admin/settings.php:328
+#: legacy/admin/settings.php:330
 msgid "Offline helper URI"
 msgstr "Cynorthwyydd URI all-lein"
 
-#: legacy/admin/settings.php:332
+#: legacy/admin/settings.php:334
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr "Gosodwch yr URL mewn ffurfweddiadau Cadarn ac OpenSimulator."
 
-#: legacy/admin/settings.php:350
+#: legacy/admin/settings.php:352
 msgid "Sender e-mail address"
 msgstr "Cyfeiriad e-bost yr anfonwr"
 
-#: legacy/admin/settings.php:354
+#: legacy/admin/settings.php:356
 msgid ""
 "A no-reply e-mail address used to forward messages for users enabling "
 "\"Email me IMs when I'm offline\" option."
@@ -630,11 +630,11 @@ msgstr ""
 "Cyfeiriad e-bost dim ateb a ddefnyddir i anfon negeseuon ymlaen ar gyfer "
 "defnyddwyr sy'n galluogi opsiwn \"E-bostiwch IMs ataf pan fyddaf all-lein\"."
 
-#: legacy/admin/settings.php:363
+#: legacy/admin/settings.php:365
 msgid "Provide Economy Helpers"
 msgstr "Darparu cynorthwywyr economi"
 
-#: legacy/admin/settings.php:366
+#: legacy/admin/settings.php:368
 msgid ""
 "Economy helpers are additional scripts needed if you implement economy on "
 "your grid (with real or fake currency)."
@@ -642,7 +642,7 @@ msgstr ""
 "Mae cynorthwywyr economi yn sgriptiau ychwanegol sydd eu hangen os ydych "
 "chi'n gweithredu economi ar eich grid (gydag arian cyfred go iawn neu ffug)."
 
-#: legacy/admin/settings.php:367
+#: legacy/admin/settings.php:369
 msgid ""
 "Helper scripts allow communication between the money server and the grid: "
 "current balance update, currency cost estimation, land and object sales, "
@@ -652,7 +652,7 @@ msgstr ""
 "grid: diweddariad balans cyfredol, amcangyfrif cost arian cyfred, gwerthu "
 "tir a gwrthrychau, taliadau ..."
 
-#: legacy/admin/settings.php:369
+#: legacy/admin/settings.php:371
 msgid ""
 "Money server is not included in OpenSimulator distribution and require a "
 "separate installation, e.g. from %s."
@@ -660,31 +660,31 @@ msgstr ""
 "Nid yw gweinydd arian wedi'i gynnwys yn nosbarthiad OpenSimulator ac mae "
 "angen gosodiad ar wahân, e.e. o %s."
 
-#: legacy/admin/settings.php:377
+#: legacy/admin/settings.php:379
 msgid "Economy Base URI"
 msgstr "Sylfaen economi URI"
 
-#: legacy/admin/settings.php:381
+#: legacy/admin/settings.php:383
 msgid "The URL must be set in Robust configuration."
 msgstr "Rhaid gosod yr URL mewn ffurfweddiad cadarn."
 
-#: legacy/admin/settings.php:394
+#: legacy/admin/settings.php:396
 msgid "Economy Database"
 msgstr "Cronfa ddata economi"
 
-#: legacy/admin/settings.php:431
+#: legacy/admin/settings.php:433
 msgid "Currency Provider"
 msgstr "Darparwr Arian Parod"
 
-#: legacy/admin/settings.php:435
+#: legacy/admin/settings.php:437
 msgid "No provider, use fake money."
 msgstr "Dim darparwr, defnyddiwch arian ffug."
 
-#: legacy/admin/settings.php:442
+#: legacy/admin/settings.php:444
 msgid "Currency Conversion Rate"
 msgstr "Cyfradd trosi arian cyfred"
 
-#: legacy/admin/settings.php:443
+#: legacy/admin/settings.php:445
 msgid ""
 "Amount to pay in US$ for 1000 in-world money units. Used for cost "
 "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
@@ -693,11 +693,11 @@ msgstr ""
 "amcangyfrif cost. Os na chaiff ei gosod, y gyfradd fydd 10/1000 (1 cant "
 "fesul uned arian)"
 
-#: legacy/admin/settings.php:446
+#: legacy/admin/settings.php:448
 msgid "Podex redirect message"
 msgstr "Neges ailgyfeirio Podex"
 
-#: legacy/admin/settings.php:447
+#: legacy/admin/settings.php:449
 msgid ""
 "Please use our terminals in-world to proceed. Click OK to teleport to "
 "terminals region."
@@ -705,21 +705,21 @@ msgstr ""
 "Defnyddiwch ein terfynellau yn y byd i symud ymlaen. Cliciwch OK i "
 "deleportio i ranbarth terfynellau."
 
-#: legacy/admin/settings.php:450
+#: legacy/admin/settings.php:452
 msgid "Podex redirect URL"
 msgstr "URL ailgyfeirio Podex"
 
-#: legacy/admin/settings.php:454
+#: legacy/admin/settings.php:456
 msgid "Money Script Access Key"
 msgstr "Allwedd Mynediad Sgript Arian"
 
-#: legacy/admin/settings.php:654
+#: legacy/admin/settings.php:656
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 "Rhaid i werthoedd gyd-fynd â ffeil ffurfweddu Robust.HG.ini (neu Robust.HG."
 "ini)."
 
-#: legacy/admin/settings.php:655
+#: legacy/admin/settings.php:657
 msgid ""
 "Robust server must be running. Values entered here will be checked against "
 "your Robust server and updated if needed."
@@ -727,7 +727,7 @@ msgstr ""
 "Rhaid i weinydd cadarn fod yn rhedeg. Bydd y gwerthoedd a nodir yma yn cael "
 "eu gwirio yn erbyn eich gweinydd Cadarn a'u diweddaru os oes angen."
 
-#: legacy/admin/settings.php:660
+#: legacy/admin/settings.php:662
 msgid ""
 "Grid accounts matching first name or last name set below are considered as "
 "avatar models. They will appear on the avatar registration form, with their "
@@ -1691,6 +1691,11 @@ msgstr ""
 #: blocks/popular-places/index.js:33 blocks/popular-places/index.js:90
 msgid "Popular Places"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Currency Provider"
+#~ msgid "Current Models"
+#~ msgstr "Darparwr Arian Parod"
 
 #~ msgid "First Name = "
 #~ msgstr "Enw Cyntaf = "
