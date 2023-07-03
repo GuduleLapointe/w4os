@@ -16,13 +16,13 @@
  * along with WebAssets for OpenSimulator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! $query_asset ) {
+if ( empty( $query_asset ) ) {
 	$query_asset = $wp_query->query_vars['asset_uuid'];
 }
-if ( ! $query_format ) {
+if ( empty( $query_format ) ) {
 	$query_format = $wp_query->query_vars['asset_format'];
 }
-if ( ! $query_asset ) {
+if ( empty( $query_asset ) ) {
 	die();
 }
 
