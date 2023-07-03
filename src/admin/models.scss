@@ -1,7 +1,7 @@
 .models-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-gap: 10px;
+  grid-gap: 20px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -9,6 +9,7 @@
   li,
   .model {
     list-style: none;
+    margin: 0;
   }
 
   .model-picture {
