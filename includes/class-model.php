@@ -89,10 +89,10 @@ class W4OS_Model extends W4OS_Loader {
 					'std'  => 'Model',
 				),
 				array(
-					'name'     => __( 'Current Models', 'w4os' ),
-					'id'       => $prefix . 'current_models',
+					'name'     => __( 'Available Models', 'w4os' ),
+					'id'       => $prefix . 'available_models',
 					'type'     => 'custom_html',
-					'callback' => array( $this, 'models_list' ),
+					'callback' => array( $this, 'available_models' ),
 				),
 			),
 		);
@@ -176,7 +176,7 @@ class W4OS_Model extends W4OS_Loader {
 		return $output;
 	}
 
-	public function models_list() {
+	public function available_models() {
 		$content = '';
 
 		$models = $this->get_models();
