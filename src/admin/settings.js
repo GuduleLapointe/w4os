@@ -42,7 +42,10 @@ function valueChanged() {
 	}
 }
 // force check on load
-valueChanged();
+window.onload = function() {
+  // Code that depends on external scripts being loaded goes here...
+  valueChanged(); // Call the function after all scripts have loaded
+};
 
 // /*
 // * Try to autofill grid info when login uri is updated.
