@@ -1,34 +1,18 @@
 ## Changelog
 
 ### 2.4
-- new Avatar Models settings page, including list of availabl avatars
-- optimized assets rendering from cache
-- fix typo in 'w4os_upated' option
-- fix profile and avatar models pictures broken
-
-### 2.3.19
-- fix regression arguments not accepted fro query.php
-
-### 2.3.18
-- added instructions for nginx users
-- fix invalid DATA_SRV_ example variable when gridname contains invalid characters
-- fix helpers nginx icompatibility (use REQUEST_URI instead of REDIRECT_URL which is specific to Apache)
-
-### 2.3.17
-- fixed helpers settings hints missing http:// protocol for gatekeeper
-- fixed no result if gatekeeper is passed without http:// protocol
-- merge changes from magicoli/opensim-helpers
-- hide Events Server URL if Provide In-world Search is disabled
-
-### 2.3.16
+- new Avatar Models settings page, including list of available avatars
 - added defaults for plugin-provider or external search engines
 - added troubleshooting guide
+- added instructions for nginx users
+- optimized assets rendering from cache
+- fix profile and avatar models pictures broken
+- fix regression arguments not accepted for query.php
+- fix invalid DATA_SRV_ example variable when gridname contains invalid characters
+- fix helpers nginx icompatibility (use REQUEST_URI instead of REDIRECT_URL)
+- fix helpers settings hints missing http:// protocol for gatekeeper
+- fix no result if gatekeeper is passed without http:// protocol
 - fix search and register url settings
-- fix a couple of deprecated code warnings
-- force default for plugin-provided search engine
-- use yourgrid.org:8002 instead of example.org:8002
-- make search engine url readonly if provide in-world search is enabled
-- normalized code
 
 ### 2.3.15
 - fix array_unique(): Argument #1 ($array) must be of type array, null given on plugin first activation
@@ -39,67 +23,39 @@
 - fix wrong event time in in-world search (UTC shown instead of grid time)
 
 ### 2.3.13
-- restored WooCommerce Account Dashboar avatar section
-- minor fixes (undefined constants and variables)
+- restored WooCommerce Account Dashboard avatar section
 
 ### 2.3.12
 - fix w4os_profile_sync() fatal error when profiles are disabled
-- fix minor PHP8 warnings
 - fix fatal error when wp object is passed as user_id
 
 ### 2.3.10
 - minor fixes (profile page title, profile image, profile text display)
-- tested up to WP 6.1, minimum php 7.3
 
 ### 2.3.9
-- updated translations
-
-### 2.3.8
-- fix userprofile table queried even if not present (issue #64) when User Profiles are not enabled on robust
-- fix fatal error Argument #2 ($haystack) must be of type array, bool given (issue #64)
-
-### 2.3.7
-- fix offline messages not forwarded by mail (opensim db not properly loaded by helpers)
-
-### 2.3.6
-- updated translations
-
-### 2.3.5
-- tested up to 6.0.1
-
-### 2.3.4
-- fix profile picture aspect ratio (4/3, as in viewer)
-
-### 2.3.3
-- added password reset link to profile page
-- fix fatal error in helpers for poorly encoded unicode text sources
-- fix fatal errors in helpers when database is not connected
-- fix #57 password not updated on grid when using password recovery in WordPdress
-
-### 2.3.2
-- fix regression in 2.3.1
-
-### 2.3.1
-- fix fatal error and warnings with popular-places shortcode
-- avoid fatal error if php xml-rpc is not installed, show error notice instead
-
-### 2.3
 - new search helper
 - new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)
 - new currency helpers
 - new Popular Places block and [popular-places] shortcode
 - new events parser (fetch events from 2do.pm or another HYPEvents server)
+- added password reset link to profile page
 - added prebuilt binaries for opensim 0.9.1 and 0.9.2
 - added currency conversion rate setting
-- dropped aurora and OpenSim 0.6 support
 - separate helpers settings page
+- updated translations
+- fix userprofile table queried even if not present (issue #64) when User Profiles are not enabled on robust
+- fix fatal error Argument #2 ($haystack) must be of type array, bool given (issue #64)
+- fix offline messages not forwarded by mail (opensim db not properly loaded by helpers)
+- fix profile picture aspect ratio (4/3, as in viewer)
+- fix fatal error in helpers for poorly encoded unicode text sources
+- fix fatal errors in helpers when database is not connected
+- fix #57 password not updated on grid when using password recovery in WordPdress
+- fix fatal error and warnings with popular-places shortcode
+- avoid fatal error if php xml-rpc is not installed, show error notice instead
 - helpers migrated from old mysqli db connection method to PDO
+- dropped aurora and OpenSim 0.6 support
 
 ### 2.2.10
-- tested up to wp 5.8.3
-- updated translations
-
-### 2.2.9
 - new web assets server
 - new profile page
 - new config instructions for new grid users
