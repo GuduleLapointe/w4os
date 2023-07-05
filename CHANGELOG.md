@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.4.1
+- fix fatal error when updating from WP directory ("MetaBoxUpdaterOption" not found)
+
 ### 2.4
 - new Avatar Models settings page, including list of available avatars
 - added defaults for plugin-provider or external search engines
