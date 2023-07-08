@@ -71,14 +71,27 @@ class W4OS_Model extends W4OS_Loader {
 			'id'             => 'w4os-models-fields',
 			'settings_pages' => array( 'w4os-models' ),
 			'fields'         => array(
+				[
+						// 'name' => __( 'Description', 'w4os' ),
+						'id'   => $prefix . 'description',
+						'type' => 'custom_html',
+				],
 				array(
 					'name'    => __( 'Match', 'w4os' ),
 					'id'      => $prefix . 'match',
 					'type'    => 'button_group',
+					'desc'  => '<ul class="description"><li>' . join('</li><li>', array(
+						__('If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar.', 'w4os'),
+						__('The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture.', 'w4os'),
+						__('The avatars used for the models should never be real user accounts.', 'w4os'),
+						__('The new avatar will wear the same outfit as the model at the time of registration.', 'w4os'),
+						__('If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list.', 'w4os'),
+					)) . '</li></ul>',
 					'options' => array(
 						'first' => __( 'First Name', 'w4os' ),
 						'any'   => __( 'Any', 'w4os' ),
 						'last'  => __( 'Last Name', 'w4os' ),
+						'uuid'  => __( 'Custom list', 'w4os' ),
 					),
 					'std'     => 'any',
 				),
@@ -87,7 +100,23 @@ class W4OS_Model extends W4OS_Loader {
 					'id'   => $prefix . 'name',
 					'type' => 'text',
 					'std'  => 'Model',
+					'visible' => [
+							'when'     => [['match', '!=', 'uuid']],
+							'relation' => 'or',
+					],
 				),
+				[
+					'name'        => __( 'UUID', 'w4os' ),
+					'id'          => $prefix . 'uuids',
+					'type'        => 'select_advanced',
+					'placeholder' => __( 'Select one or more existing avatars', 'w4os' ),
+					'multiple'    => true,
+					'options' => self::get_avatars(),
+					'visible'     => [
+						'when'     => [['match', '=', 'uuid']],
+						'relation' => 'or',
+					],
+				],
 				array(
 					'name'     => __( 'Available Models', 'w4os' ),
 					'id'       => $prefix . 'available_models',
@@ -100,6 +129,23 @@ class W4OS_Model extends W4OS_Loader {
 		return $meta_boxes;
 	}
 
+	static function get_avatars( $format = OBJECT ) {
+		global $w4osdb;
+		if ( empty( $w4osdb ) ) {
+			return false;
+		}
+
+		$avatars = array();
+
+		$sql = "SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE active = true";
+		$result = $w4osdb->get_results( $sql, $format );
+
+		foreach($result as $avatar) {
+			$avatars[$avatar->PrincipalID] = trim( "$avatar->FirstName $avatar->LastName" );
+		}
+		return $avatars;
+	}
+
 	static function get_models( $format = OBJECT ) {
 		global $w4osdb;
 		if ( empty( $w4osdb ) ) {
@@ -110,16 +156,16 @@ class W4OS_Model extends W4OS_Loader {
 
 		$match = w4os_get_option( 'w4os-models:match', 'any' );
 		$name  = w4os_get_option( 'w4os-models:name', false );
+		$uuids  = w4os_get_option( 'w4os-models:uuids', false );
 		if ( ! $name ) {
 			return array();
 		}
 
-		$select = 'SELECT FirstName, LastName, profileImage, profileAboutText FROM
-		UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID WHERE active =
-		true AND ';
-		$order  = ' ORDER BY FirstName, LastName';
-
 		switch ( $match ) {
+			case 'uuid':
+				$conditions = "PrincipalID IN ('" . implode("','", $uuids) . "')";
+				break;
+
 			case 'first':
 				$conditions = "FirstName = '%1\$s'";
 				break;
@@ -242,3 +288,22 @@ class W4OS_Model extends W4OS_Loader {
 }
 
 $this->loaders[] = new W4OS_Model();
+
+function custom_admin_sidebar_content() {
+    // Add a custom meta box to the sidebar
+    add_meta_box(
+        'custom_sidebar_content', // Unique ID
+        'Custom Sidebar Content', // Title
+        'custom_sidebar_callback', // Callback function to display content
+        'settings_page_slug', // Settings page slug where the sidebar appears
+        'side' // Position of the meta box (sidebar)
+    );
+}
+
+function custom_sidebar_callback() {
+    // Output the desired content for the sidebar
+    echo '<p>This is my custom sidebar content.</p>';
+}
+
+// Hook into the 'admin_menu' action to add content to the sidebar
+add_action('admin_menu', 'custom_admin_sidebar_content');
