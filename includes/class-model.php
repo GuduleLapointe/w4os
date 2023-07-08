@@ -197,9 +197,21 @@ class W4OS_Model extends W4OS_Loader {
 			$name = $atts['name'];
 			$uuids = $atts['uuids'];
 		} else {
-			$match = w4os_get_option( 'w4os-models:match', 'any' );
-			$name  = w4os_get_option( 'w4os-models:name', false );
-			$uuids  = w4os_get_option( 'w4os-models:uuids', array() );
+			if(
+				isset($_REQUEST['page'])
+				&& $_REQUEST['page'] == 'w4os-models'
+				&& isset($_POST['match'])
+				&& isset($_POST['name'])
+				&& isset($_POST['uuids'])
+			) {
+				$match = esc_attr($_POST['match']);
+				$name = esc_attr($_POST['name']);
+				$uuids = array_map('esc_attr', $_POST['uuids']);
+			} else {
+				$match = w4os_get_option( 'w4os-models:match', 'any' );
+				$name  = w4os_get_option( 'w4os-models:name', false );
+				$uuids  = w4os_get_option( 'w4os-models:uuids', array() );
+			}
 		}
 
 		switch ( $match ) {
@@ -336,10 +348,13 @@ class W4OS_Model extends W4OS_Loader {
 	function enqueue_custom_settings_script($hook) {
 	  // Enqueue the script only on the specific settings page
 	  if ($hook === 'opensimulator_page_w4os-models') {
-	    wp_enqueue_script('w4os-settings-models', plugin_dir_url( __DIR__ ) . 'includes/admin/settings-models.js', array('jquery'), '1.0', true);
-	    wp_localize_script('w4os-settings-models', 'w4osSettings', array(
-	      'nonce' => wp_create_nonce('update_available_models_content_nonce'), // Nonce for security
-	    ));
+			wp_enqueue_script('w4os-settings-models', plugin_dir_url( __DIR__ ) . 'includes/admin/settings-models.js', array('jquery'), '1.0', true);
+			wp_localize_script('w4os-settings-models', 'w4osSettings', array(
+			  'ajaxUrl' => admin_url('admin-ajax.php'),
+			  'nonce' => wp_create_nonce('update_available_models_content_nonce'), // Nonce for security
+				'loadingMessage' => __('Refreshing list...', 'w4os'),
+			  'updateAction' => 'update_available_models_content',
+			));
 	  }
 	}
 
@@ -353,9 +368,9 @@ class W4OS_Model extends W4OS_Loader {
 	  if (isset($_POST['action']) && $_POST['action'] === 'update_available_models_content') {
 			// Sanitize the input values
 			$atts = array(
-				'match' => isset($_POST['match']) ? esc_attr($_POST['match']) : null,
-				'name' => isset($_POST['name']) ? esc_attr($_POST['name']) : null,
-				'uuids' => isset($_POST['uuids']) ? array_map('esc_attr', $_POST['uuids']) : null
+				'match' => isset($_POST['preview_match']) ? esc_attr($_POST['preview_match']) : null,
+				'name' => isset($_POST['preview_name']) ? esc_attr($_POST['preview_name']) : null,
+				'uuids' => isset($_POST['preview_uuids']) ? array_map('esc_attr', $_POST['preview_uuids']) : null
 			);
 
 			// Generate the updated available models content

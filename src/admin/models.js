@@ -27,19 +27,19 @@ jQuery(document).ready(function($) {
     }
 
     if (hasFieldsChanged()) {
-      var loadingMessage = '<div class="loading-message">Reloading...</div>';
-      $('#w4os-available-models-container .available-models-container').html(loadingMessage);
+      var loadingMessage = w4osSettings.loadingMessage;
+      $('#w4os-available-models-container .available-models-container').text(loadingMessage);
 
       var data = {
-        action: 'update_available_models_content',
+        action: w4osSettings.updateAction,
         nonce: w4osSettings.nonce,
-        match: currentMatch,
-        name: currentName,
-        uuids: currentUuids
+        preview_match: currentMatch,
+        preview_name: currentName,
+        preview_uuids: currentUuids
       };
 
       // Perform the AJAX request
-      $.post(ajaxurl, data, function(response) {
+      $.post(w4osSettings.ajaxUrl, data, function(response) {
         $('#w4os-available-models-container .available-models-container').html(response);
       });
     }
