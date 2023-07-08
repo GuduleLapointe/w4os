@@ -43,8 +43,8 @@ function valueChanged() {
 }
 // force check on load
 window.onload = function() {
-  // Code that depends on external scripts being loaded goes here...
-  valueChanged(); // Call the function after all scripts have loaded
+	// Code that depends on external scripts being loaded goes here...
+	valueChanged(); // Call the function after all scripts have loaded
 };
 
 // /*

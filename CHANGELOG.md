@@ -1,5 +1,10 @@
 ## Changelog
 
+### 2.4.2
+- added option to define avatar models with a custom list in addition to name rule
+- update available models dynamically on models settings page
+- fix settings action link displayed in the wrong plugin row on plugin page
+
 ### 2.4.1
 - fix fatal error when updating from WP directory ("MetaBoxUpdaterOption" not found)
 
