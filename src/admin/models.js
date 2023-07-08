@@ -45,9 +45,6 @@ jQuery(document).ready(function($) {
     }
   }
 
-  // Trigger the update function on initial page load
-  updateAvailableModelsContent();
-
   // Trigger the update function when the 'match' field value changes
   $(document).on('change', 'input[name="match"]', function() {
     updateAvailableModelsContent();

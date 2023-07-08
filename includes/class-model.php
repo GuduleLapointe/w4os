@@ -138,7 +138,7 @@ class W4OS_Model extends W4OS_Loader {
 					'name'     => __( 'Available Models', 'w4os' ),
 	        'id' => $prefix . 'available_models_container',
 	        'type' => 'custom_html',
-	        'std' => '<div class="available-models-container">' . __('Not loaded yet', 'w4os' ) . '</div>',
+	        'std' => '<div class="available-models-container">' . $this->available_models() . '</div>',
 	      ),
 	    ),
 	  );
@@ -184,7 +184,7 @@ class W4OS_Model extends W4OS_Loader {
 		return $avatars;
 	}
 
-	static function get_models( $format = OBJECT ) {
+	static function get_models( $atts = [], $format = OBJECT ) {
 		global $w4osdb;
 		if ( empty( $w4osdb ) ) {
 			return false;
@@ -192,16 +192,23 @@ class W4OS_Model extends W4OS_Loader {
 
 		$models = array();
 
-		$match = w4os_get_option( 'w4os-models:match', 'any' );
-		$name  = w4os_get_option( 'w4os-models:name', false );
-		$uuids  = w4os_get_option( 'w4os-models:uuids', false );
-		if ( ! $name ) {
-			return array();
+		if(! empty($atts['match'])) {
+			$match = $atts['match'];
+			$name = $atts['name'];
+			$uuids = $atts['uuids'];
+		} else {
+			$match = w4os_get_option( 'w4os-models:match', 'any' );
+			$name  = w4os_get_option( 'w4os-models:name', false );
+			$uuids  = w4os_get_option( 'w4os-models:uuids', array() );
 		}
 
 		switch ( $match ) {
 			case 'uuid':
-				$conditions = "PrincipalID IN ('" . implode("','", $uuids) . "')";
+				if(!empty($uuids)) {
+					$conditions = "PrincipalID IN ('" . implode("','", $uuids) . "')";
+				} else {
+					$conditions = 'FALSE';
+				}
 				break;
 
 			case 'first':
@@ -260,14 +267,17 @@ class W4OS_Model extends W4OS_Loader {
 		return $output;
 	}
 
-	public function available_models() {
+	public function available_models( $atts = [] ) {
 		$content = '';
 
-		$models = $this->get_models();
-		foreach ( $models as $model ) {
-			$content .= '<li class=model>' . $this->model_thumb( $model ) . '</li>';
-		}
-		if ( ! empty( $content ) ) {
+		$models = $this->get_models( $atts );
+
+		if ( empty( $models ) ) {
+			$content = '<divclass="models-list">' . __('No models found.', 'w4os').'</div>';
+		} else {
+			foreach ( $models as $model ) {
+				$content .= '<li class=model>' . $this->model_thumb( $model ) . '</li>';
+			}
 			$content = '<ul class="models-list">' . $content . '</ul>';
 		}
 
@@ -277,7 +287,7 @@ class W4OS_Model extends W4OS_Loader {
 	function select_model_field() {
 		$models = self::get_models();
 		if ( empty( $models ) ) {
-			return 'No models';
+			return __('No models', 'w4os');
 		}
 		if ( ! is_array( $models ) ) {
 			return 'Error, wrong data format received';
@@ -325,28 +335,39 @@ class W4OS_Model extends W4OS_Loader {
 
 	function enqueue_custom_settings_script($hook) {
 	  // Enqueue the script only on the specific settings page
-	  if ($hook === 'settings_page_opensimulator_page_w4os-models') {
-	    wp_enqueue_script('custom-settings', plugin_dir_url(__FILE__) . 'custom-settings.js', array('jquery'), '1.0', true);
-	    wp_localize_script('custom-settings', 'w4osSettings', array(
+	  if ($hook === 'opensimulator_page_w4os-models') {
+	    wp_enqueue_script('w4os-settings-models', plugin_dir_url( __DIR__ ) . 'includes/admin/settings-models.js', array('jquery'), '1.0', true);
+	    wp_localize_script('w4os-settings-models', 'w4osSettings', array(
 	      'nonce' => wp_create_nonce('update_available_models_content_nonce'), // Nonce for security
 	    ));
 	  }
 	}
 
 	// AJAX handler to update the available models content
-	function update_available_models_content() {
+	// AJAX handler to update the available models content
+	public function update_available_models_content() {
 	  // Verify the AJAX request
 	  check_ajax_referer('update_available_models_content_nonce', 'nonce');
 
-	  // Generate the updated available models content
-	  ob_start();
-	  $this->available_models();
-	  $output = ob_get_clean();
+		// Check if the action parameter is set to 'update_available_models_content'
+	  if (isset($_POST['action']) && $_POST['action'] === 'update_available_models_content') {
+			// Sanitize the input values
+			$atts = array(
+				'match' => isset($_POST['match']) ? esc_attr($_POST['match']) : null,
+				'name' => isset($_POST['name']) ? esc_attr($_POST['name']) : null,
+				'uuids' => isset($_POST['uuids']) ? array_map('esc_attr', $_POST['uuids']) : null
+			);
 
-	  // Send the updated content as the AJAX response
-	  wp_send_json($output);
+			// Generate the updated available models content
+			$output = $this->available_models($atts);
+
+			// Send the updated content as the AJAX response
+			wp_send_json($output);
+		} else {
+			// Invalid action parameter
+			wp_send_json_error('Invalid action');
+		}
 	}
-
 }
 
 $this->loaders[] = new W4OS_Model();

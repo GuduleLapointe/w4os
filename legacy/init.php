@@ -52,7 +52,7 @@ if ( file_exists( plugin_dir_path( __DIR__ ) . '.git/refs/heads/master' ) ) {
 	$hash = trim( file_get_contents( plugin_dir_path( __DIR__ ) . '.git/refs/heads/master' ) );
 }
 if ( ! empty( $hash ) ) {
-	$plugin_data['Version'] .= '-dev #' . substr( $hash, 0, 8 );
+	$plugin_data['Version'] .= '-dev-' . substr( $hash, 0, 8 ) . '-' . time();
 }
 if ( ! defined( 'W4OS_VERSION' ) ) {
 	define( 'W4OS_VERSION', $plugin_data['Version'] );
