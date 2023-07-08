@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-03T06:58:48+00:00\n"
+"POT-Creation-Date: 2023-07-08T23:18:28+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - OpenSimulator Web-Schnittstelle"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - OpenSimulator Web-Schnittstelle (dev)"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
@@ -41,50 +41,107 @@ msgstr "Beliebte Orte"
 msgid "No result"
 msgstr "Kein Ergebnis"
 
-#: includes/class-model.php:54 includes/class-model.php:70
+#: includes/class-model.php:62 includes/class-model.php:78
 #: legacy/admin/status-page.php:85
 msgid "Avatar Models"
 msgstr "Avatar-Modelle"
 
-#: includes/class-model.php:75
+#: includes/class-model.php:88
 msgid "Match"
 msgstr ""
 
-#: includes/class-model.php:79
+#: includes/class-model.php:92
 #, fuzzy
 #| msgid "First Name = "
 msgid "First Name"
 msgstr "Vorname = "
 
-#: includes/class-model.php:80
+#: includes/class-model.php:93
 msgid "Any"
 msgstr ""
 
-#: includes/class-model.php:81
+#: includes/class-model.php:94
 #, fuzzy
 #| msgid "OR Last Name = "
 msgid "Last Name"
 msgstr "oder Nachname = "
 
-#: includes/class-model.php:86
+#: includes/class-model.php:95
+msgid "Custom list"
+msgstr ""
+
+#: includes/class-model.php:100
 #, fuzzy
 #| msgid "Grid Name"
 msgid "Name"
 msgstr "Grid Name"
 
-#: includes/class-model.php:92
+#: includes/class-model.php:110
+#, fuzzy
+#| msgid "Currency Provider"
+msgid "Select Models"
+msgstr "Währung Anbieter"
+
+#: includes/class-model.php:114
+msgid "Select one or more existing avatars"
+msgstr ""
+
+#: includes/class-model.php:137
 #, fuzzy
 #| msgid "Available shortcodes"
 msgid "Available Models"
 msgstr "Verfügbare Shortcodes"
 
-#: includes/class-model.php:233
+#: includes/class-model.php:161
+msgid ""
+"If avatar models are defined, new users will be presented with a choice on "
+"the avatar creation form, which will determine the initial outfit of the "
+"created avatar."
+msgstr ""
+
+#: includes/class-model.php:162
+msgid ""
+"The grid administrator needs to create each model from the ROBUST console, "
+"log in with the viewer, customize the outfit, and add a profile picture."
+msgstr ""
+
+#: includes/class-model.php:163
+msgid "The avatars used for the models should never be real user accounts."
+msgstr ""
+
+#: includes/class-model.php:164
+msgid ""
+"The new avatar will wear the same outfit as the model at the time of "
+"registration."
+msgstr ""
+
+#: includes/class-model.php:165
+msgid ""
+"If the model assignment rule is based on the name, each newly created avatar "
+"matching that rule will be automatically added to the list."
+msgstr ""
+
+#: includes/class-model.php:287
+msgid "No models found."
+msgstr ""
+
+#: includes/class-model.php:301
+#, fuzzy
+#| msgid "Models"
+msgid "No models"
+msgstr "Modelle"
+
+#: includes/class-model.php:338
 msgid "Your initial appearance"
 msgstr "Ihr erster Auftritt"
 
-#: includes/class-model.php:234
+#: includes/class-model.php:339
 msgid "You can change it as often as you want in the virtual world."
 msgstr "Sie können ihn in der virtuellen Welt so oft ändern, wie Sie wollen."
+
+#: includes/class-model.php:354
+msgid "Refreshing list..."
+msgstr ""
 
 #: includes/updates.php:35
 msgid "Update %s applied"
@@ -1673,18 +1730,18 @@ msgid "Popular Places"
 msgstr ""
 
 #, fuzzy
-#~| msgid "Currency Provider"
-#~ msgid "Current Models"
-#~ msgstr "Währung Anbieter"
+#~| msgid "Available shortcodes"
+#~ msgid "Available Models Container"
+#~ msgstr "Verfügbare Shortcodes"
+
+#~ msgid "w4os - OpenSimulator Web Interface"
+#~ msgstr "w4os - OpenSimulator Web-Schnittstelle"
 
 #~ msgid "First Name = "
 #~ msgstr "Vorname = "
 
 #~ msgid "OR Last Name = "
 #~ msgstr "oder Nachname = "
-
-#~ msgid "w4os - OpenSimulator Web Interface (dev)"
-#~ msgstr "w4os - OpenSimulator Web-Schnittstelle (dev)"
 
 #~ msgid ""
 #~ "Missing tables: %s. The ROBUST database is connected, but it does not "

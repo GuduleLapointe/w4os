@@ -2,19 +2,19 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface 2.3.19\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface (dev) 2.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-03T06:58:48+00:00\n"
+"POT-Creation-Date: 2023-07-08T23:18:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.0\n"
+"X-Generator: WP-CLI 2.8.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
+msgid "w4os - OpenSimulator Web Interface (dev)"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -42,42 +42,86 @@ msgstr ""
 msgid "No result"
 msgstr ""
 
-#: includes/class-model.php:54
-#: includes/class-model.php:70
+#: includes/class-model.php:62
+#: includes/class-model.php:78
 #: legacy/admin/status-page.php:85
 msgid "Avatar Models"
 msgstr ""
 
-#: includes/class-model.php:75
+#: includes/class-model.php:88
 msgid "Match"
 msgstr ""
 
-#: includes/class-model.php:79
+#: includes/class-model.php:92
 msgid "First Name"
 msgstr ""
 
-#: includes/class-model.php:80
+#: includes/class-model.php:93
 msgid "Any"
 msgstr ""
 
-#: includes/class-model.php:81
+#: includes/class-model.php:94
 msgid "Last Name"
 msgstr ""
 
-#: includes/class-model.php:86
+#: includes/class-model.php:95
+msgid "Custom list"
+msgstr ""
+
+#: includes/class-model.php:100
 msgid "Name"
 msgstr ""
 
-#: includes/class-model.php:92
+#: includes/class-model.php:110
+msgid "Select Models"
+msgstr ""
+
+#: includes/class-model.php:114
+msgid "Select one or more existing avatars"
+msgstr ""
+
+#: includes/class-model.php:137
 msgid "Available Models"
 msgstr ""
 
-#: includes/class-model.php:233
+#: includes/class-model.php:161
+msgid "If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar."
+msgstr ""
+
+#: includes/class-model.php:162
+msgid "The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture."
+msgstr ""
+
+#: includes/class-model.php:163
+msgid "The avatars used for the models should never be real user accounts."
+msgstr ""
+
+#: includes/class-model.php:164
+msgid "The new avatar will wear the same outfit as the model at the time of registration."
+msgstr ""
+
+#: includes/class-model.php:165
+msgid "If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list."
+msgstr ""
+
+#: includes/class-model.php:287
+msgid "No models found."
+msgstr ""
+
+#: includes/class-model.php:301
+msgid "No models"
+msgstr ""
+
+#: includes/class-model.php:338
 msgid "Your initial appearance"
 msgstr ""
 
-#: includes/class-model.php:234
+#: includes/class-model.php:339
 msgid "You can change it as often as you want in the virtual world."
+msgstr ""
+
+#: includes/class-model.php:354
+msgid "Refreshing list..."
 msgstr ""
 
 #: includes/updates.php:35

@@ -130,7 +130,6 @@ class W4OS_Model extends W4OS_Loader {
 		);
 
 		$meta_boxes[] = array(
-	    'title' => __('Available Models Container', 'w4os'),
 	    'id' => 'w4os-available-models-container',
 	    'settings_pages' => array('w4os-models'),
 	    'fields' => array(
@@ -358,7 +357,6 @@ class W4OS_Model extends W4OS_Loader {
 	  }
 	}
 
-	// AJAX handler to update the available models content
 	// AJAX handler to update the available models content
 	public function update_available_models_content() {
 	  // Verify the AJAX request

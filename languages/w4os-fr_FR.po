@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-03T06:58:48+00:00\n"
+"POT-Creation-Date: 2023-07-08T23:18:28+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - Interface web pour OpenSimulator"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - Interface web pour OpenSimulator (dev)"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
@@ -41,42 +41,108 @@ msgstr "Lieux populaires"
 msgid "No result"
 msgstr "Aucun résultat"
 
-#: includes/class-model.php:54 includes/class-model.php:70
+#: includes/class-model.php:62 includes/class-model.php:78
 #: legacy/admin/status-page.php:85
 msgid "Avatar Models"
 msgstr "Modèles d'avatar"
 
-#: includes/class-model.php:75
+#: includes/class-model.php:88
 msgid "Match"
 msgstr "Correspondance"
 
-#: includes/class-model.php:79
+#: includes/class-model.php:92
 msgid "First Name"
 msgstr "Prénom"
 
-#: includes/class-model.php:80
+#: includes/class-model.php:93
 msgid "Any"
 msgstr "N'importe lequel"
 
-#: includes/class-model.php:81
+#: includes/class-model.php:94
 msgid "Last Name"
 msgstr "Nom de famille"
 
-#: includes/class-model.php:86
+#: includes/class-model.php:95
+msgid "Custom list"
+msgstr "Liste personnalisée"
+
+#: includes/class-model.php:100
 msgid "Name"
 msgstr "Nom"
 
-#: includes/class-model.php:92
+#: includes/class-model.php:110
+msgid "Select Models"
+msgstr "Choisir les modèles"
+
+#: includes/class-model.php:114
+msgid "Select one or more existing avatars"
+msgstr "Sélectionnez un ou plusieurs avatars existants"
+
+#: includes/class-model.php:137
 msgid "Available Models"
 msgstr "Modèles disponibles"
 
-#: includes/class-model.php:233
+#: includes/class-model.php:161
+msgid ""
+"If avatar models are defined, new users will be presented with a choice on "
+"the avatar creation form, which will determine the initial outfit of the "
+"created avatar."
+msgstr ""
+"Si des modèles d'avatar sont définis, les nouveaux utilisateurs se verront "
+"proposer un choix lors du formulaire de création d'avatar, qui déterminera "
+"la tenue initiale de l'avatar créé."
+
+#: includes/class-model.php:162
+msgid ""
+"The grid administrator needs to create each model from the ROBUST console, "
+"log in with the viewer, customize the outfit, and add a profile picture."
+msgstr ""
+"L'administrateur de la grille doit créer chaque modèle depuis la console "
+"ROBUST, se connecter avec le visualiseur, personnaliser la tenue et ajouter "
+"une image de profil."
+
+#: includes/class-model.php:163
+msgid "The avatars used for the models should never be real user accounts."
+msgstr ""
+"Les avatars utilisés pour les modèles ne doivent jamais correspondre à des "
+"comptes d'utilisateurs réels."
+
+#: includes/class-model.php:164
+msgid ""
+"The new avatar will wear the same outfit as the model at the time of "
+"registration."
+msgstr ""
+"Le nouvel avatar portera la même tenue que le modèle au moment de "
+"l'inscription."
+
+#: includes/class-model.php:165
+msgid ""
+"If the model assignment rule is based on the name, each newly created avatar "
+"matching that rule will be automatically added to the list."
+msgstr ""
+"Si la règle d'attribution du modèle est basée sur le nom, chaque nouvel "
+"avatar créé qui correspond à cette règle sera automatiquement ajouté à la "
+"liste."
+
+#: includes/class-model.php:287
+msgid "No models found."
+msgstr "Aucun modèle trouvé."
+
+#: includes/class-model.php:301
+msgid "No models"
+msgstr "Aucun modèle"
+
+#: includes/class-model.php:338
 msgid "Your initial appearance"
 msgstr "Votre apparence initiale"
 
-#: includes/class-model.php:234
+#: includes/class-model.php:339
 msgid "You can change it as often as you want in the virtual world."
 msgstr "Vous pourrez changer votre apparence à votre guise en ligne."
+
+#: includes/class-model.php:354
+msgid "Refreshing list..."
+msgstr "Rafraîchissement de la liste en cours..."
 
 #: includes/updates.php:35
 msgid "Update %s applied"
@@ -1664,17 +1730,19 @@ msgstr ""
 msgid "Popular Places"
 msgstr "Lieux populaires"
 
-#~ msgid "Current Models"
-#~ msgstr "Modèles actuels"
+#, fuzzy
+#~| msgid "Available Models"
+#~ msgid "Available Models Container"
+#~ msgstr "Modèles disponibles"
+
+#~ msgid "w4os - OpenSimulator Web Interface"
+#~ msgstr "w4os - Interface web pour OpenSimulator"
 
 #~ msgid "First Name = "
 #~ msgstr "Prénom = "
 
 #~ msgid "OR Last Name = "
 #~ msgstr "OU Nom de famille = "
-
-#~ msgid "w4os - OpenSimulator Web Interface (dev)"
-#~ msgstr "w4os - Interface web pour OpenSimulator (dev)"
 
 #~ msgid ""
 #~ "Missing tables: %s. The ROBUST database is connected, but it does not "
