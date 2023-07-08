@@ -26,10 +26,18 @@ class W4OS_Model extends W4OS_Loader {
 	public function init() {
 
 		$this->actions = array(
-			// array(
-			// 'hook'     => 'init',
-			// 'callback' => 'register_post_types',
-			// ),
+			array(
+				'hook' => 'admin_menu',
+				'callback' => 'register_settings_sidebar',
+			),
+			array(
+				'hook' => 'admin_enqueue_scripts',
+				'callback' => 'enqueue_custom_settings_script'
+			),
+			array(
+				'hook' => 'wp_ajax_update_available_models_content',
+				'callback' => 'update_available_models_content'
+			),
 		);
 
 		$this->filters = array(
@@ -80,13 +88,6 @@ class W4OS_Model extends W4OS_Loader {
 					'name'    => __( 'Match', 'w4os' ),
 					'id'      => $prefix . 'match',
 					'type'    => 'button_group',
-					'desc'  => '<ul class="description"><li>' . join('</li><li>', array(
-						__('If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar.', 'w4os'),
-						__('The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture.', 'w4os'),
-						__('The avatars used for the models should never be real user accounts.', 'w4os'),
-						__('The new avatar will wear the same outfit as the model at the time of registration.', 'w4os'),
-						__('If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list.', 'w4os'),
-					)) . '</li></ul>',
 					'options' => array(
 						'first' => __( 'First Name', 'w4os' ),
 						'any'   => __( 'Any', 'w4os' ),
@@ -106,27 +107,64 @@ class W4OS_Model extends W4OS_Loader {
 					],
 				),
 				[
-					'name'        => __( 'UUID', 'w4os' ),
+					'name'        => __( 'Select Models', 'w4os' ),
 					'id'          => $prefix . 'uuids',
 					'type'        => 'select_advanced',
+					// 'type'        => 'autocomplete',
 					'placeholder' => __( 'Select one or more existing avatars', 'w4os' ),
 					'multiple'    => true,
+					// 'clone' => true,
 					'options' => self::get_avatars(),
 					'visible'     => [
 						'when'     => [['match', '=', 'uuid']],
 						'relation' => 'or',
 					],
 				],
-				array(
-					'name'     => __( 'Available Models', 'w4os' ),
-					'id'       => $prefix . 'available_models',
-					'type'     => 'custom_html',
-					'callback' => array( $this, 'available_models' ),
-				),
+				// array(
+				// 	'name'     => __( 'Available Models', 'w4os' ),
+				// 	'id'       => $prefix . 'available_models',
+				// 	'type'     => 'custom_html',
+				// 	'callback' => array( $this, 'available_models' ),
+				// ),
 			),
 		);
 
+		$meta_boxes[] = array(
+	    'title' => __('Available Models Container', 'w4os'),
+	    'id' => 'w4os-available-models-container',
+	    'settings_pages' => array('w4os-models'),
+	    'fields' => array(
+	      array(
+					'name'     => __( 'Available Models', 'w4os' ),
+	        'id' => $prefix . 'available_models_container',
+	        'type' => 'custom_html',
+	        'std' => '<div class="available-models-container">' . __('Not loaded yet', 'w4os' ) . '</div>',
+	      ),
+	    ),
+	  );
+
 		return $meta_boxes;
+	}
+
+	function register_settings_sidebar() {
+	    // Add a custom meta box to the sidebar
+	    add_meta_box(
+	        'sidebar-content', // Unique ID
+	        'Settings Sidebar', // Title
+	        array($this, 'sidebar_content'), // Callback function to display content
+	        'opensimulator_page_w4os-models', // Settings page slug where the sidebar appears
+	        'side' // Position of the meta box (sidebar)
+	    );
+	}
+
+	function sidebar_content() {
+			echo '<ul class="description"><li>' . join('</li><li>', array(
+				__('If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar.', 'w4os'),
+				__('The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture.', 'w4os'),
+				__('The avatars used for the models should never be real user accounts.', 'w4os'),
+				__('The new avatar will wear the same outfit as the model at the time of registration.', 'w4os'),
+				__('If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list.', 'w4os'),
+			)) . '</li></ul>';
 	}
 
 	static function get_avatars( $format = OBJECT ) {
@@ -285,25 +323,30 @@ class W4OS_Model extends W4OS_Loader {
 		return $content;
 	}
 
+	function enqueue_custom_settings_script($hook) {
+	  // Enqueue the script only on the specific settings page
+	  if ($hook === 'settings_page_opensimulator_page_w4os-models') {
+	    wp_enqueue_script('custom-settings', plugin_dir_url(__FILE__) . 'custom-settings.js', array('jquery'), '1.0', true);
+	    wp_localize_script('custom-settings', 'w4osSettings', array(
+	      'nonce' => wp_create_nonce('update_available_models_content_nonce'), // Nonce for security
+	    ));
+	  }
+	}
+
+	// AJAX handler to update the available models content
+	function update_available_models_content() {
+	  // Verify the AJAX request
+	  check_ajax_referer('update_available_models_content_nonce', 'nonce');
+
+	  // Generate the updated available models content
+	  ob_start();
+	  $this->available_models();
+	  $output = ob_get_clean();
+
+	  // Send the updated content as the AJAX response
+	  wp_send_json($output);
+	}
+
 }
 
 $this->loaders[] = new W4OS_Model();
-
-function custom_admin_sidebar_content() {
-    // Add a custom meta box to the sidebar
-    add_meta_box(
-        'custom_sidebar_content', // Unique ID
-        'Custom Sidebar Content', // Title
-        'custom_sidebar_callback', // Callback function to display content
-        'settings_page_slug', // Settings page slug where the sidebar appears
-        'side' // Position of the meta box (sidebar)
-    );
-}
-
-function custom_sidebar_callback() {
-    // Output the desired content for the sidebar
-    echo '<p>This is my custom sidebar content.</p>';
-}
-
-// Hook into the 'admin_menu' action to add content to the sidebar
-add_action('admin_menu', 'custom_admin_sidebar_content');
