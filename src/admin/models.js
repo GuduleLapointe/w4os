@@ -8,10 +8,11 @@ jQuery(document).ready(function($) {
   // Function to update the available models content
   function updateAvailableModelsContent() {
     // Function to check if the field values have changed
+    var currentMatch = $('input[name="match"]:checked').val();
+    var currentName = $('#name').val();
+    var currentUuids = $('#uuids').val();
+
     function hasFieldsChanged() {
-      var currentMatch = $('input[name="match"]:checked').val();
-      var currentName = $('#name').val();
-      var currentUuids = $('#uuids').val();
 
       // Compare the current values with the previous values
       if (currentMatch !== previousMatch || currentName !== previousName || currentUuids.join(',') !== previousUuids.join(',')) {
@@ -26,13 +27,15 @@ jQuery(document).ready(function($) {
     }
 
     if (hasFieldsChanged()) {
-      reloadCount++;
-      var loadingMessage = '<div class="loading-message">Reloading (' + reloadCount + ')...</div>';
+      var loadingMessage = '<div class="loading-message">Reloading...</div>';
       $('#w4os-available-models-container .available-models-container').html(loadingMessage);
 
       var data = {
         action: 'update_available_models_content',
-        nonce: $('#nonce_w4os-available-models-container').val() // Retrieve the nonce value from the existing field
+        nonce: w4osSettings.nonce,
+        match: currentMatch,
+        name: currentName,
+        uuids: currentUuids
       };
 
       // Perform the AJAX request
@@ -41,10 +44,6 @@ jQuery(document).ready(function($) {
       });
     }
   }
-
-  // Display the "Loading available models" message on page load
-  var loadingMessage = '<div class="loading-message">Loading available models...</div>';
-  $('#w4os-available-models-container .available-models-container').html(loadingMessage);
 
   // Trigger the update function on initial page load
   updateAvailableModelsContent();
