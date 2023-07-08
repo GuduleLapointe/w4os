@@ -682,4 +682,4 @@ function w4os_settings_link( $links ) {
 
 	return $links;
 }
-add_filter( 'plugin_action_links_w4os/w4os.php', 'w4os_settings_link' );
+add_filter( 'plugin_action_links_' . W4OS_PLUGIN, 'w4os_settings_link' );
