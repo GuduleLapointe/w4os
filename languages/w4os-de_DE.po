@@ -1,241 +1,48 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-09T19:11:30+00:00\n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: w4os\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
 
+#. wpml-name: 89e15c20b6fff50f9caa1f171381251d
 #. Plugin Name of the plugin
+#: 
 msgid "w4os - OpenSimulator Web Interface (dev)"
 msgstr "w4os - OpenSimulator Web-Schnittstelle (dev)"
 
+#. #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
+#. wpml-name: 8a556ddad981269d9764cbf640cfd337
+#. wpml-name: f279731266ee1b5ff0b7bd85e585dfef
 #. Plugin URI of the plugin
+#: 
 msgid "https://w4os.org/"
 msgstr "https://w4os.org/"
 
+#. wpml-name: 374124f21084c34d958491bf98d72af4
 #. Description of the plugin
+#: 
 msgid "WordPress interface for OpenSimulator (w4os)."
 msgstr "WordPress-Schnittstelle für OpenSimulator (w4os)."
 
+#. wpml-name: 6dfd7d212f1bf0f6121142f105f7c704
 #. Author of the plugin
+#: 
 msgid "Speculoos World"
 msgstr "Speculoos World"
 
+#. #-#-#-#-#  catalog.po (w4os)  #-#-#-#-#
+#. wpml-name: 8a556ddad981269d9764cbf640cfd337
+#. wpml-name: f279731266ee1b5ff0b7bd85e585dfef
 #. Author URI of the plugin
+#: 
 msgid "https://speculoos.world"
 msgstr "https://speculoos.world"
 
-#: blocks/popular-places.php:147
-msgid "Popular places"
-msgstr "Beliebte Orte"
-
-#: blocks/popular-places.php:153 legacy/shortcodes.php:183
-msgid "No result"
-msgstr "Kein Ergebnis"
-
-#: includes/class-assets.php:83
-#, fuzzy
-#| msgid "Web Assets Server"
-msgid "Assets Server"
-msgstr "Web Assets Server"
-
-#: includes/class-assets.php:84
-msgid "Web Assets Server"
-msgstr "Web Assets Server"
-
-#: includes/class-assets.php:99
-#, fuzzy
-#| msgid "Web Assets Server"
-msgid "Assets Server Fields"
-msgstr "Web Assets Server"
-
-#: includes/class-assets.php:104
-msgid "Provide Web Assets Server"
-msgstr "Server für Web-Assets bereitstellen"
-
-#: includes/class-assets.php:107
-msgid ""
-"A web assets server is required to display in-world assets (from the grid) "
-"on the website (e.g. profile pictures)."
-msgstr ""
-"Ein Web-Assets-Server wird benötigt, um In-World-Assets (aus dem Grid) auf "
-"der Website anzuzeigen (z. B. Profilbilder)."
-
-#: includes/class-assets.php:113 includes/class-assets.php:131
-#, fuzzy
-#| msgid "Web Assets Server"
-msgid "Web Assets Server URL"
-msgstr "Web Assets Server"
-
-#: includes/class-assets.php:119
-#, fuzzy
-#| msgid "You can set the asset slug in %spermalinks settings%s."
-msgid "You can set the assets slug in <permalinks settings page>"
-msgstr "Sie können den Asset-Slug in %spermalinks settings%s festlegen."
-
-#: includes/class-assets.php:134
-msgid ""
-"If 'Provide Web Assets Server' is disabled, it is necessary to install a "
-"third-party service and enter its URL here to ensure the proper functioning "
-"of the plugin."
-msgstr ""
-
-#: includes/class-assets.php:135
-msgid "http://example.org/assets/assets.php?id="
-msgstr ""
-
-#: includes/class-assets.php:192
-msgid "Assets base"
-msgstr "Base des Asset"
-
-#: includes/class-model.php:62 includes/class-model.php:78
-#: legacy/admin/status-page.php:85
-msgid "Avatar Models"
-msgstr "Avatar-Modelle"
-
-#: includes/class-model.php:88
-msgid "Match"
-msgstr ""
-
-#: includes/class-model.php:92
-#, fuzzy
-#| msgid "First Name = "
-msgid "First Name"
-msgstr "Vorname = "
-
-#: includes/class-model.php:93
-msgid "Any"
-msgstr ""
-
-#: includes/class-model.php:94
-#, fuzzy
-#| msgid "OR Last Name = "
-msgid "Last Name"
-msgstr "oder Nachname = "
-
-#: includes/class-model.php:95
-msgid "Custom list"
-msgstr ""
-
-#: includes/class-model.php:100
-#, fuzzy
-#| msgid "Grid Name"
-msgid "Name"
-msgstr "Grid Name"
-
-#: includes/class-model.php:110
-#, fuzzy
-#| msgid "Currency Provider"
-msgid "Select Models"
-msgstr "Währung Anbieter"
-
-#: includes/class-model.php:114
-msgid "Select one or more existing avatars"
-msgstr ""
-
-#: includes/class-model.php:137
-#, fuzzy
-#| msgid "Available shortcodes"
-msgid "Available Models"
-msgstr "Verfügbare Shortcodes"
-
-#: includes/class-model.php:163
-msgid ""
-"If avatar models are defined, new users will be presented with a choice on "
-"the avatar creation form, which will determine the initial outfit of the "
-"created avatar."
-msgstr ""
-
-#: includes/class-model.php:164
-msgid ""
-"The grid administrator needs to create each model from the ROBUST console, "
-"log in with the viewer, customize the outfit, and add a profile picture."
-msgstr ""
-
-#: includes/class-model.php:165
-msgid "The avatars used for the models should never be real user accounts."
-msgstr ""
-
-#: includes/class-model.php:166
-msgid ""
-"The new avatar will wear the same outfit as the model at the time of "
-"registration."
-msgstr ""
-
-#: includes/class-model.php:167
-msgid ""
-"If the model assignment rule is based on the name, each newly created avatar "
-"matching that rule will be automatically added to the list."
-msgstr ""
-
-#: includes/class-model.php:290
-msgid "No models found."
-msgstr ""
-
-#: includes/class-model.php:304
-#, fuzzy
-#| msgid "Models"
-msgid "No models"
-msgstr "Modelle"
-
-#: includes/class-model.php:341
-msgid "Your initial appearance"
-msgstr "Ihr erster Auftritt"
-
-#: includes/class-model.php:342
-msgid "You can change it as often as you want in the virtual world."
-msgstr "Sie können ihn in der virtuellen Welt so oft ändern, wie Sie wollen."
-
-#: includes/class-model.php:360
-msgid "Refreshing list..."
-msgstr ""
-
-#: includes/updates.php:35
-msgid "Update %s applied"
-msgstr "Aktualisierung %s angewendet"
-
-#: includes/updates.php:47
-msgid "Update %s applied sucessfully"
-msgid_plural "Updates %s applied sucessfully"
-msgstr[0] "Update %s erfolgreich durchgeführt"
-msgstr[1] "Updates %s erfolgreich angewendet"
-
-#: includes/updates.php:54
-msgid "Error processing update %s"
-msgstr "Fehler bei der Verarbeitung der Aktualisierung %s"
-
-#: includes/updates.php:61
-msgid "W4OS updated"
-msgstr "W4OS aktualisiert"
-
-#: includes/updates.php:88
-msgid "Grid user"
-msgstr "Benutzer des Grids"
-
-#: includes/updates.php:109
-msgid ""
-"Profiles service is not configured on your Robust server. It is required for "
-"full functionalities."
-msgstr ""
-"Der Profildienst ist auf Ihrem Robust-Server nicht konfiguriert. Er ist für "
-"den vollen Funktionsumfang erforderlich."
-
-#: includes/updates.php:128
-msgid "Grid and WordPress users synchronized."
-msgstr "Grid- und WordPress-Benutzer synchronisiert."
-
-#: includes/updates.php:146
-msgid "OpenSim Search tables updated."
-msgstr "OpenSim Search Tabellen aktualisiert."
-
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: legacy/admin/admin-init.php:22
 msgid "OpenSimulator Status"
 msgstr "OpenSimulator Status"
@@ -244,6 +51,7 @@ msgstr "OpenSimulator Status"
 msgid "Status"
 msgstr "Status"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: legacy/admin/admin-init.php:25
 msgid "OpenSimulator Settings"
 msgstr "OpenSimulator-Einstellungen"
@@ -252,6 +60,7 @@ msgstr "OpenSimulator-Einstellungen"
 msgid "Settings"
 msgstr "Einstellungen"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: legacy/admin/admin-init.php:34 legacy/admin/admin-init.php:78
 msgid "OpenSimulator Helpers"
 msgstr "OpenSimulator-Hilfsmittel"
@@ -260,6 +69,7 @@ msgstr "OpenSimulator-Hilfsmittel"
 msgid "Helpers"
 msgstr "Helfer"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: legacy/admin/admin-init.php:99 legacy/profile.php:135
 #: tmp/class-avatar.php:318
 msgid "Avatar Name"
@@ -274,6 +84,7 @@ msgstr "Geboren"
 msgid "Last Seen"
 msgstr "Zuletzt gesehen"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/admin/admin-init.php:132 legacy/shortcodes.php:125
 msgid "View profile"
 msgstr "Profil ansehen"
@@ -282,6 +93,7 @@ msgstr "Profil ansehen"
 msgid "With Avatar"
 msgstr "Mit Avatar"
 
+#. wpml-name: 847fcf17b5e3d8a6625d71c4dedd34a1
 #: legacy/admin/admin-init.php:198
 msgid "Without Avatar"
 msgstr "Ohne Avatar"
@@ -294,34 +106,42 @@ msgstr "Benutzer filtern..."
 msgid "Filter"
 msgstr "Filter"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: legacy/admin/admin-init.php:278
 msgid "OpenSimulator Profile"
 msgstr "OpenSimulator-Profil"
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: legacy/admin/admin-init.php:281
 msgid "OpenSimulator Splash"
 msgstr "OpenSimulator Splash"
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: legacy/admin/admin-init.php:284
 msgid "OpenSimulator Search"
 msgstr "OpenSimulator Suche"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: legacy/admin/admin-init.php:287
 msgid "OpenSimulator Economy"
 msgstr "OpenSimulator Wirtschaft"
 
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: legacy/admin/admin-init.php:290
 msgid "OpenSimulator About"
 msgstr "OpenSimulator Über"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: legacy/admin/admin-init.php:293
 msgid "OpenSimulator Register"
 msgstr "OpenSimulator Registrierung"
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: legacy/admin/admin-init.php:296
 msgid "OpenSimulator Password"
 msgstr "OpenSimulator Passwort"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: legacy/admin/admin-init.php:299
 msgid "OpenSimulator Offline Messages"
 msgstr "OpenSimulator Offline-Benachrichtigungen"
@@ -342,6 +162,7 @@ msgstr "Neue Seite %s erstellt."
 msgid "Error while creating page %s."
 msgstr "Fehler beim Erstellen der Seite %s."
 
+#. wpml-name: 317e8940a1b9f03b83ef85393bd49552
 #: legacy/admin/admin-init.php:374
 msgid "Avatar profile"
 msgstr "Avatar-Profil"
@@ -355,55 +176,32 @@ msgid "Search Service"
 msgstr "Suche"
 
 #: legacy/admin/admin-init.php:379
-msgid ""
-"Search service used by the viewer. Search can be provided by the simulator "
-"core (limited), or by an external service for additional functionalities "
-"(like events). Requires OpenSimSearch.Modules.dll."
-msgstr ""
-"Vom Viewer verwendeter Suchdienst. Die Suche kann vom Simulatorkern "
-"(eingeschränkt) oder von einem externen Dienst für zusätzliche "
-"Funktionalitäten (wie Ereignisse) bereitgestellt werden. Erfordert "
-"OpenSimSearch.Modules.dll."
+msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
+msgstr "Vom Viewer verwendeter Suchdienst. Die Suche kann vom Simulatorkern (eingeschränkt) oder von einem externen Dienst für zusätzliche Funktionalitäten (wie Ereignisse) bereitgestellt werden. Erfordert OpenSimSearch.Modules.dll."
 
 #: legacy/admin/admin-init.php:389
 msgid "Web Search"
 msgstr "Web-Suche"
 
 #: legacy/admin/admin-init.php:390
-msgid ""
-"Web tab of viewer search windows. Relevant if you have a search page "
-"providing content from the grid."
-msgstr ""
-"Web-Registerkarte der Viewer-Suchfenster. Relevant, wenn Sie eine Suchseite "
-"haben, die Inhalte aus dem Raster bereitstellt."
+msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
+msgstr "Web-Registerkarte der Viewer-Suchfenster. Relevant, wenn Sie eine Suchseite haben, die Inhalte aus dem Raster bereitstellt."
 
 #: legacy/admin/admin-init.php:400 legacy/admin/settings.php:292
 msgid "Offline messages"
 msgstr "Offline-Meldungen"
 
 #: legacy/admin/admin-init.php:401
-msgid ""
-"Needed by viewers to keep messages while user is offline and deliver them "
-"when they come back online. Internal service, not accessed directly by the "
-"user."
-msgstr ""
-"Wird von den Betrachtern benötigt, um Nachrichten aufzubewahren, während der "
-"Benutzer offline ist, und sie zuzustellen, wenn er wieder online ist. "
-"Interner Dienst, auf den der Benutzer nicht direkt zugreifen kann."
+msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
+msgstr "Wird von den Betrachtern benötigt, um Nachrichten aufzubewahren, während der Benutzer offline ist, und sie zuzustellen, wenn er wieder online ist. Interner Dienst, auf den der Benutzer nicht direkt zugreifen kann."
 
 #: legacy/admin/admin-init.php:409
 msgid "Splash"
 msgstr "Spash"
 
 #: legacy/admin/admin-init.php:410
-msgid ""
-"The welcome page displayed in the viewer with the login form. A short, no-"
-"scroll page, with only essential info. It is required, or at least highly "
-"recommended."
-msgstr ""
-"Die Willkommensseite, die im Viewer mit dem Anmeldeformular angezeigt wird. "
-"Eine kurze, nicht scrollbare Seite, die nur die wichtigsten Informationen "
-"enthält. Sie ist erforderlich oder zumindest sehr empfehlenswert."
+msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
+msgstr "Die Willkommensseite, die im Viewer mit dem Anmeldeformular angezeigt wird. Eine kurze, nicht scrollbare Seite, die nur die wichtigsten Informationen enthält. Sie ist erforderlich oder zumindest sehr empfehlenswert."
 
 #: legacy/admin/admin-init.php:435
 msgid "Registration page"
@@ -413,6 +211,7 @@ msgstr "Registrierungseite"
 msgid "Link to the user registration."
 msgstr "Link zur Benutzerregistrierung."
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: legacy/admin/admin-init.php:441
 msgid "Password revovery"
 msgstr "Passwort wiederherstellen"
@@ -426,24 +225,16 @@ msgid "Economy"
 msgstr "Wirtschaft"
 
 #: legacy/admin/admin-init.php:448
-msgid ""
-"Currencies and some other services queried by the viewer. They are not "
-"accessed directly by the user."
-msgstr ""
-"Währungen und einige andere Dienste, die vom Viewer abgefragt werden. Der "
-"Benutzer hat keinen direkten Zugriff auf sie."
+msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
+msgstr "Währungen und einige andere Dienste, die vom Viewer abgefragt werden. Der Benutzer hat keinen direkten Zugriff auf sie."
 
 #: legacy/admin/admin-init.php:454
 msgid "About this grid"
 msgstr "Über dieses Grid"
 
 #: legacy/admin/admin-init.php:455
-msgid ""
-"Detailed info page on your website, via a link displayed on the viewer login "
-"page."
-msgstr ""
-"Detaillierte Informationsseite auf Ihrer Website, über einen Link auf der "
-"Anmeldeseite des Viewers."
+msgid "Detailed info page on your website, via a link displayed on the viewer login page."
+msgstr "Detaillierte Informationsseite auf Ihrer Website, über einen Link auf der Anmeldeseite des Viewers."
 
 #: legacy/admin/admin-init.php:459
 msgid "Help"
@@ -453,6 +244,7 @@ msgstr "Hilfe"
 msgid "Link to a help page on your website."
 msgstr "Link zu einer Hilfeseite auf Ihrer Website."
 
+#. wpml-name: 6b8467e13ae11c479efa8843f1b95826
 #: legacy/admin/dashboard.php:16 legacy/admin/settings.php:63
 #: legacy/shortcodes.php:145 legacy/widgets.php:49
 #: blocks/w4os-gridinfo-block/index.js:33
@@ -460,6 +252,7 @@ msgstr "Link zu einer Hilfeseite auf Ihrer Website."
 msgid "Grid info"
 msgstr "Grid info"
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: legacy/admin/dashboard.php:23 legacy/shortcodes.php:174
 #: legacy/widgets.php:81 legacy/widgets.php:118
 #: blocks/w4os-gridstatus-block/index.js:33
@@ -471,10 +264,12 @@ msgstr "Grid status"
 msgid "Recent users"
 msgstr "Neue Benutzer"
 
-#: legacy/admin/settings.php:76 legacy/shortcodes.php:150
-msgid "Grid Name"
+#. wpml-name: 46eb01f349dc6c317e78cd1830545358
+#: admin/settings.php:56 includes/shortcodes.php:130
+msgid "Grid name"
 msgstr "Grid Name"
 
+#. wpml-name: 193fe27dd7fcd662652841a7b7e6c912
 #: legacy/admin/settings.php:83
 msgid "Robust server database"
 msgstr "Robust Server-Datenbank"
@@ -484,9 +279,9 @@ msgstr "Robust Server-Datenbank"
 msgid "Hostname"
 msgstr "Hostname"
 
-#: legacy/admin/settings.php:89 legacy/admin/settings.php:214
-#: legacy/admin/settings.php:390
-msgid "Database Name"
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
+#: admin/settings.php:69 admin/settings.php:229 admin/settings.php:386
+msgid "Database name"
 msgstr "Name der Datenbank"
 
 #: legacy/admin/settings.php:92 legacy/admin/settings.php:218
@@ -494,19 +289,37 @@ msgstr "Name der Datenbank"
 msgid "Username"
 msgstr "Benutzername"
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: legacy/admin/settings.php:96 legacy/admin/settings.php:223
 #: legacy/admin/settings.php:399 tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Passwort"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
+#: admin/settings.php:83 admin/status-page.php:74
+msgid "Avatar models"
+msgstr "Avatar-Modelle"
+
+#. wpml-name: b2d0fb30e09bf39693f6183c33455748
+#: admin/settings.php:87
+msgid "First Name = "
+msgstr "Vorname = "
+
+#. wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
+#: admin/settings.php:91
+msgid "OR Last Name = "
+msgstr "oder Nachname = "
+
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: legacy/admin/settings.php:103
 msgid "Grid users"
 msgstr "Benutzer des Grids"
 
-#: legacy/admin/settings.php:107 legacy/admin/settings.php:124
-msgid "Profile Page"
+#: admin/settings.php:101 admin/settings.php:117
+msgid "Profile page"
 msgstr "Profil-Seite"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/admin/settings.php:109 legacy/admin/settings.php:126
 msgid "Provide web profile page for avatars"
 msgstr "Web-Profilseite für Avatare bereitstellen"
@@ -515,25 +328,17 @@ msgstr "Web-Profilseite für Avatare bereitstellen"
 msgid "Defaults"
 msgstr "Standardeinstellungen"
 
-#: legacy/admin/settings.php:116 legacy/admin/settings.php:132
-#, fuzzy
-#| msgid "The page %s must exist, as defined in %spermalinks settings%s."
-msgid "The page %1$s must exist, as defined in %2$spermalinks settings%3$s."
-msgstr ""
-"Die Seite %s muss existieren, wie in %spermalinks settings%s definiert."
-
-#: legacy/admin/settings.php:137
-msgid ""
-"Table %s not found. User Profiles must be activated in Robust to enable "
-"profile page."
-msgstr ""
+#: admin/settings.php:110 admin/settings.php:125
+msgid "The page %s must exist, as defined in %spermalinks settings%s."
+msgstr "Die Seite %s muss existieren, wie in %spermalinks settings%s definiert."
 
 #: legacy/admin/settings.php:144
 msgid "Show configuration instructions to new users."
 msgstr "Konfigurationsanweisungen für neue Benutzer anzeigen."
 
-#: legacy/admin/settings.php:149
-msgid "Login Page"
+#. wpml-name: 751cfef8ad45902372601aeac58bdad7
+#: admin/settings.php:141
+msgid "Login page"
 msgstr "Login-Seite"
 
 #: legacy/admin/settings.php:151
@@ -550,8 +355,7 @@ msgstr "Ersetzen des Benutzernamens"
 
 #: legacy/admin/settings.php:161
 msgid "Show avatar name instead of user name in users list."
-msgstr ""
-"Anzeige des Avatarnamens anstelle des Benutzernamens in der Benutzerliste."
+msgstr "Anzeige des Avatarnamens anstelle des Benutzernamens in der Benutzerliste."
 
 #: legacy/admin/settings.php:165
 msgid "Exclude from stats"
@@ -570,33 +374,45 @@ msgid "Hypergrid visitors"
 msgstr "Hypergrid-Besucher"
 
 #: legacy/admin/settings.php:171
-msgid ""
-"Accounts without email address are usually test accounts created from the "
-"console. Uncheck only if you have real avatars without email address."
-msgstr ""
-"Konten ohne E-Mail-Adresse sind normalerweise Testkonten, die über die "
-"Konsole erstellt werden. Deaktivieren Sie diese Option nur, wenn Sie echte "
-"Avatare ohne E-Mail-Adresse haben."
+msgid "Accounts without email address are usually test accounts created from the console. Uncheck only if you have real avatars without email address."
+msgstr "Konten ohne E-Mail-Adresse sind normalerweise Testkonten, die über die Konsole erstellt werden. Deaktivieren Sie diese Option nur, wenn Sie echte Avatare ohne E-Mail-Adresse haben."
+
+#: includes/class-assets.php:84
+msgid "Web Assets Server"
+msgstr "Web Assets Server"
+
+#: admin/settings.php:187
+msgid "Provide web assets server"
+msgstr "Server für Web-Assets bereitstellen"
+
+#: includes/class-assets.php:107
+msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
+msgstr "Ein Web-Assets-Server wird benötigt, um In-World-Assets (aus dem Grid) auf der Website anzuzeigen (z. B. Profilbilder)."
+
+#. Found in description list item.
+#: admin/settings.php:193
+msgid "Web asset server"
+msgstr "Web Asset Server"
+
+#: admin/settings.php:197
+msgid "You can set the asset slug in %spermalinks settings%s."
+msgstr "Sie können den Asset-Slug in %spermalinks settings%s festlegen."
+
+#: admin/settings.php:202
+msgid "External assets server URI"
+msgstr "URI des externen Asset-Servers"
+
+#: admin/settings.php:203
+msgid "If W4OS web assets service is disabled, you need a third-party web application."
+msgstr "Wenn der W4OS-Web-Asset-Dienst deaktiviert ist, benötigen Sie eine Webanwendung eines Drittanbieters."
 
 #: legacy/admin/settings.php:190
 msgid "Search"
 msgstr "Suche"
 
-#: legacy/admin/settings.php:194
-msgid "Provide In-world Search"
+#: admin/settings.php:213
+msgid "Provide in-world search"
 msgstr "In-World-Suche bereitstellen"
-
-#: legacy/admin/settings.php:198
-msgid ""
-"Enable to use a local search engine, allowing only local results "
-"(recommended for private grids)."
-msgstr ""
-
-#: legacy/admin/settings.php:199
-msgid ""
-"Disable to use an external search engine like 2do Directory, allowing "
-"results from both your grid and other public grids."
-msgstr ""
 
 #: legacy/admin/settings.php:204
 msgid "Search database"
@@ -606,77 +422,37 @@ msgstr "Suche in der Datenbank"
 msgid "Use the same database as Robust"
 msgstr "Verwenden Sie die gleiche Datenbank wie Robust"
 
-#: legacy/admin/settings.php:229
-msgid "Search Engine URL"
+#: admin/settings.php:244
+msgid "Search engine URL"
 msgstr "URL der Suchmaschine"
 
-#: legacy/admin/settings.php:234
-#, fuzzy
-#| msgid ""
-#| "URL of the search engine used internally by the viewer (without "
-#| "arguments)."
-msgid ""
-"URL of the search engine used by the viewer to provide search results "
-"(without arguments)"
+#: admin/settings.php:247
+msgid "URL of the search engine used internally by the viewer (without arguments)."
 msgstr "URL der vom Viewer intern verwendeten Suchmaschine (ohne Argumente)."
 
-#: legacy/admin/settings.php:235
-msgid "In OpenSim.ini, only one can be set"
-msgstr ""
-
-#: legacy/admin/settings.php:236
-msgid ""
-"Services using w4o engine need the gatekeeper URI (usually the login URI) to "
-"be passed as gk argument. Requirements may vary for other engines."
-msgstr ""
-
 #: legacy/admin/settings.php:249
-msgid ""
-"Please note that Search URL is different from Web search URL, which is not "
-"handled by W4OS currently. Web search is relevant if you have a web search "
-"page dedicated to grid content, providing results with in-world URLs (hop:// "
-"or secondlife://). It is optional and is referenced here only to "
-"disambiguate settings which unfortunately have similar names."
-msgstr ""
-"Bitte beachten Sie, dass sich die Such-URL von der Web-Such-URL "
-"unterscheidet, die derzeit nicht von W4OS behandelt wird. Die Web-Suche ist "
-"relevant, wenn Sie eine Web-Suchseite für Grid-Inhalte haben, die Ergebnisse "
-"mit In-World-URLs liefert (hop:// oder secondlife://). Sie ist optional und "
-"wird hier nur erwähnt, um die Einstellungen, die leider ähnliche Namen "
-"haben, zu verdeutlichen."
+msgid "Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names."
+msgstr "Bitte beachten Sie, dass sich die Such-URL von der Web-Such-URL unterscheidet, die derzeit nicht von W4OS behandelt wird. Die Web-Suche ist relevant, wenn Sie eine Web-Suchseite für Grid-Inhalte haben, die Ergebnisse mit In-World-URLs liefert (hop:// oder secondlife://). Sie ist optional und wird hier nur erwähnt, um die Einstellungen, die leider ähnliche Namen haben, zu verdeutlichen."
 
 #: legacy/admin/settings.php:264
 msgid "Search register"
 msgstr "Suchregister"
 
-#: legacy/admin/settings.php:267
-#, fuzzy
-#| msgid "Data service, used to register regions, objects or land for sale."
-msgid ""
-"Data service, used to register regions, objects or land for sale. You can "
-"resgister to several search engines."
-msgstr ""
-"Datendienst, der dazu dient, Regionen, Objekte oder Grundstücke zum Verkauf "
-"zu registrieren."
+#: admin/settings.php:272
+msgid "Data service, used to register regions, objects or land for sale."
+msgstr "Datendienst, der dazu dient, Regionen, Objekte oder Grundstücke zum Verkauf zu registrieren."
 
-#: legacy/admin/settings.php:283
-msgid "Events Server URL"
+#: admin/settings.php:285
+msgid "Events server URL"
 msgstr "URL des Eventservers"
 
-#: legacy/admin/settings.php:285
-msgid ""
-"HYPEvents Server URL, used to fetch upcoming events and make them available "
-"in search."
-msgstr ""
-"HYPEvents-Server-URL, die verwendet wird, um bevorstehende Ereignisse "
-"abzurufen und sie in der Suche verfügbar zu machen."
+#: admin/settings.php:287
+msgid "HYPEvents server URL, used to fetch upcoming events and make them available in search."
+msgstr "HYPEvents-Server-URL, die verwendet wird, um bevorstehende Ereignisse abzurufen und sie in der Suche verfügbar zu machen."
 
 #: legacy/admin/settings.php:286
-msgid ""
-"Leave blank to ignore events or if you have an other events implementation."
-msgstr ""
-"Lassen Sie diese Option leer, um Ereignisse zu ignorieren oder wenn Sie "
-"andere Ereignisse implementiert haben."
+msgid "Leave blank to ignore events or if you have an other events implementation."
+msgstr "Lassen Sie diese Option leer, um Ereignisse zu ignorieren oder wenn Sie andere Ereignisse implementiert haben."
 
 #: legacy/admin/settings.php:296
 msgid "Provide offline helper"
@@ -695,54 +471,35 @@ msgid "Sender e-mail address"
 msgstr "E-Mail Adresse des Absenders"
 
 #: legacy/admin/settings.php:328
-msgid ""
-"A no-reply e-mail address used to forward messages for users enabling "
-"\"Email me IMs when I'm offline\" option."
-msgstr ""
-"Eine E-Mail-Adresse ohne Antwort, die zur Weiterleitung von Nachrichten für "
-"Benutzer verwendet wird, die die Option \"E-Mail an IMs senden, wenn ich "
-"offline bin\" aktivieren."
+msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
+msgstr "Eine E-Mail-Adresse ohne Antwort, die zur Weiterleitung von Nachrichten für Benutzer verwendet wird, die die Option \"E-Mail an IMs senden, wenn ich offline bin\" aktivieren."
 
-#: legacy/admin/settings.php:337
-msgid "Provide Economy Helpers"
+#: admin/settings.php:337
+msgid "Provide economy helpers"
 msgstr "Bereitstellung von Wirtschaftshelfern"
 
 #: legacy/admin/settings.php:340
-msgid ""
-"Economy helpers are additional scripts needed if you implement economy on "
-"your grid (with real or fake currency)."
-msgstr ""
-"Economy-Helfer sind zusätzliche Skripte, die benötigt werden, wenn Sie in "
-"Ihrem Grid Wirtschaft implementieren (mit echter oder gefälschter Währung)."
+msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
+msgstr "Economy-Helfer sind zusätzliche Skripte, die benötigt werden, wenn Sie in Ihrem Grid Wirtschaft implementieren (mit echter oder gefälschter Währung)."
 
 #: legacy/admin/settings.php:341
-msgid ""
-"Helper scripts allow communication between the money server and the grid: "
-"current balance update, currency cost estimation, land and object sales, "
-"payments..."
-msgstr ""
-"Hilfsskripte ermöglichen die Kommunikation zwischen dem Geldserver und dem "
-"Grid: Aktualisierung des aktuellen Kontostands, Schätzung der "
-"Währungskosten, Verkauf von Land und Objekten, Zahlungen..."
+msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
+msgstr "Hilfsskripte ermöglichen die Kommunikation zwischen dem Geldserver und dem Grid: Aktualisierung des aktuellen Kontostands, Schätzung der Währungskosten, Verkauf von Land und Objekten, Zahlungen..."
 
 #: legacy/admin/settings.php:343
-msgid ""
-"Money server is not included in OpenSimulator distribution and require a "
-"separate installation, e.g. from %s."
-msgstr ""
-"Der Geldserver ist nicht in der OpenSimulator-Distribution enthalten und "
-"erfordert eine separate Installation, z.B. von %s."
+msgid "Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s."
+msgstr "Der Geldserver ist nicht in der OpenSimulator-Distribution enthalten und erfordert eine separate Installation, z.B. von %s."
 
-#: legacy/admin/settings.php:351
-msgid "Economy Base URI"
+#: admin/settings.php:351
+msgid "Economy base URI"
 msgstr "Wirtschaft Basis URI"
 
 #: legacy/admin/settings.php:355
 msgid "The URL must be set in Robust configuration."
 msgstr "Die URL muss in der robusten Konfiguration festgelegt werden."
 
-#: legacy/admin/settings.php:368
-msgid "Economy Database"
+#: admin/settings.php:366
+msgid "Economy database"
 msgstr "Datenbank Wirtschaft"
 
 #: legacy/admin/settings.php:405
@@ -753,30 +510,21 @@ msgstr "Währung Anbieter"
 msgid "No provider, use fake money."
 msgstr "Kein Anbieter, verwenden Sie Spielgeld."
 
-#: legacy/admin/settings.php:416
-msgid "Currency Conversion Rate"
+#: admin/settings.php:412
+msgid "Currency conversion rate"
 msgstr "Währungsumrechnungskurs"
 
 #: legacy/admin/settings.php:417
-msgid ""
-"Amount to pay in US$ for 1000 in-world money units. Used for cost "
-"estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
-msgstr ""
-"Zu zahlender Betrag in US$ für 1000 in-world Geldeinheiten. Wird für "
-"Kostenschätzungen verwendet. Wenn nicht festgelegt, wird der Kurs 10/1000 (1 "
-"Cent pro Geldeinheit) sein."
+msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
+msgstr "Zu zahlender Betrag in US$ für 1000 in-world Geldeinheiten. Wird für Kostenschätzungen verwendet. Wenn nicht festgelegt, wird der Kurs 10/1000 (1 Cent pro Geldeinheit) sein."
 
 #: legacy/admin/settings.php:420
 msgid "Podex redirect message"
 msgstr "Podex-Weiterleitungsnachricht"
 
 #: legacy/admin/settings.php:421
-msgid ""
-"Please use our terminals in-world to proceed. Click OK to teleport to "
-"terminals region."
-msgstr ""
-"Bitte benutzen Sie unsere Terminals in der Welt, um fortzufahren. Klicken "
-"Sie auf OK, um sich in die Region der Terminals zu teleportieren."
+msgid "Please use our terminals in-world to proceed. Click OK to teleport to terminals region."
+msgstr "Bitte benutzen Sie unsere Terminals in der Welt, um fortzufahren. Klicken Sie auf OK, um sich in die Region der Terminals zu teleportieren."
 
 #: legacy/admin/settings.php:424
 msgid "Podex redirect URL"
@@ -788,51 +536,34 @@ msgstr "Money Script Zugangsschlüssel"
 
 #: legacy/admin/settings.php:628
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
-msgstr ""
-"Die Werte müssen mit der Konfigurationsdatei Robust.HG.ini (oder Robust.HG."
-"ini) übereinstimmen."
+msgstr "Die Werte müssen mit der Konfigurationsdatei Robust.HG.ini (oder Robust.HG.ini) übereinstimmen."
 
 #: legacy/admin/settings.php:629
-msgid ""
-"Robust server must be running. Values entered here will be checked against "
-"your Robust server and updated if needed."
-msgstr ""
-"Der Robust-Server muss laufen. Die hier eingegebenen Werte werden mit Ihrem "
-"Robust-Server abgeglichen und bei Bedarf aktualisiert."
+msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
+msgstr "Der Robust-Server muss laufen. Die hier eingegebenen Werte werden mit Ihrem Robust-Server abgeglichen und bei Bedarf aktualisiert."
 
 #: legacy/admin/settings.php:634
-msgid ""
-"Grid accounts matching first name or last name set below are considered as "
-"avatar models. They will appear on the avatar registration form, with their "
-"in-world profile picture."
-msgstr ""
-"Grid-Konten, die dem unten angegebenen Vor- oder Nachnamen entsprechen, "
-"gelten als Avatar-Modelle. Sie erscheinen auf dem Avatar-"
-"Registrierungsformular mit ihrem Profilbild in der Welt."
+msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
+msgstr "Grid-Konten, die dem unten angegebenen Vor- oder Nachnamen entsprechen, gelten als Avatar-Modelle. Sie erscheinen auf dem Avatar-Registrierungsformular mit ihrem Profilbild in der Welt."
 
-#: legacy/admin/status-page.php:16
-msgid "PHP xml-rpc is required but is not installed."
-msgstr ""
-
+#. wpml-name: 6bdda8124d6ca549428567dfc1c0532d
 #: legacy/admin/status-page.php:23
 msgid "Available shortcodes"
 msgstr "Verfügbare Shortcodes"
 
+#. wpml-name: 119154a6f7028c6f8ebe3e470e626296
 #: legacy/admin/status-page.php:28
 msgid "General information (grid name and login uri)"
 msgstr "Allgemeine Informationen (Gridname und Login-URI)"
 
+#. wpml-name: 9dd1ee1a9ac16e90a05dc54134ea1796
 #: legacy/admin/status-page.php:34
 msgid "Online users, regions, etc."
 msgstr "Online-Nutzer, Regionen, etc."
 
 #: legacy/admin/status-page.php:40
-msgid ""
-"Grid profile if user is connected and has an avatar, avatar registration "
-"form otherwise"
-msgstr ""
-"Rasterprofil, wenn der Benutzer verbunden ist und einen Avatar hat, "
-"ansonsten Avatar-Registrierungsformular"
+msgid "Grid profile if user is connected and has an avatar, avatar registration form otherwise"
+msgstr "Rasterprofil, wenn der Benutzer verbunden ist und einen Avatar hat, ansonsten Avatar-Registrierungsformular"
 
 #: legacy/admin/status-page.php:41
 msgid "(formerly %s)"
@@ -842,6 +573,7 @@ msgstr "(ehemals %s)"
 msgid "Users"
 msgstr "Benutzer"
 
+#. wpml-name: 6834699b2d08455d0475c76d54356191
 #: legacy/admin/status-page.php:56
 msgid "Total"
 msgstr "Insgesamt"
@@ -854,10 +586,12 @@ msgstr "Nur WP"
 msgid "Sync"
 msgstr "Sync"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/admin/status-page.php:67
 msgid "Grid only"
 msgstr "Nur Grid"
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: legacy/admin/status-page.php:73
 msgid "Grid accounts"
 msgstr "Grid-Konten"
@@ -871,108 +605,55 @@ msgid "Other service accounts"
 msgstr "Sonstige Dienstleistungskonten"
 
 #: legacy/admin/status-page.php:111
-msgid ""
-"%d grid account has no linked WP account. Syncing will create a new WP "
-"account."
-msgid_plural ""
-"%d grid accounts have no linked WP account. Syncing will create new WP "
-"accounts."
-msgstr[0] ""
-"%d Grid-Konto hat kein verknüpftes WP-Konto. Bei der Synchronisierung wird "
-"ein neues WP-Konto erstellt."
-msgstr[1] ""
-"%d Grid-Konten haben kein verknüpftes WP-Konto. Durch die Synchronisierung "
-"werden neue WP-Konten erstellt."
+msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
+msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
+msgstr[0] "%d Grid-Konto hat kein verknüpftes WP-Konto. Bei der Synchronisierung wird ein neues WP-Konto erstellt."
+msgstr[1] "%d Grid-Konten haben kein verknüpftes WP-Konto. Durch die Synchronisierung werden neue WP-Konten erstellt."
 
 #: legacy/admin/status-page.php:122
-msgid ""
-"%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing "
-"accounts will keep this WP account but remove the broken reference."
-msgid_plural ""
-"%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing "
-"accounts will keep these WP accounts but remove the broken reference."
-msgstr[0] ""
-"%d WordPress-Konto ist mit einem nicht existierenden Avatar verknüpft "
-"(falsche UUID). Bei der Kontensynchronisierung wird dieses WP-Konto "
-"beibehalten, aber der fehlerhafte Verweis wird entfernt."
-msgstr[1] ""
-"%d WordPress-Konten sind mit nicht existierenden Avataren verknüpft (falsche "
-"UUID). Durch das Synchronisieren von Konten werden diese WP-Konten "
-"beibehalten, aber die fehlerhafte Referenz entfernt."
+msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference."
+msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference."
+msgstr[0] "%d WordPress-Konto ist mit einem nicht existierenden Avatar verknüpft (falsche UUID). Bei der Kontensynchronisierung wird dieses WP-Konto beibehalten, aber der fehlerhafte Verweis wird entfernt."
+msgstr[1] "%d WordPress-Konten sind mit nicht existierenden Avataren verknüpft (falsche UUID). Durch das Synchronisieren von Konten werden diese WP-Konten beibehalten, aber die fehlerhafte Referenz entfernt."
 
 #: legacy/admin/status-page.php:133
-msgid ""
-"%d grid account (other than models) has no email address, which is fine as "
-"long as it is used only for maintenance or service tasks."
-msgid_plural ""
-"%d grid accounts (other than models) have no email address, which is fine as "
-"long as they are used only for maintenance or service tasks."
-msgstr[0] ""
-"%d Gridkonto (außer Modelle) hat keine E-Mail-Adresse, was in Ordnung ist, "
-"solange es nur für Wartungs- oder Serviceaufgaben verwendet wird."
-msgstr[1] ""
-"%d grid accounts (other than models) have no email address, which is fine as "
-"long as they are used only for maintenance or service tasks."
+msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
+msgid_plural "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
+msgstr[0] "%d Gridkonto (außer Modelle) hat keine E-Mail-Adresse, was in Ordnung ist, solange es nur für Wartungs- oder Serviceaufgaben verwendet wird."
+msgstr[1] "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
 
 #: legacy/admin/status-page.php:138
-msgid ""
-"Real accounts need a unique email address for W4OS to function properly."
-msgstr ""
-"Echte Konten benötigen eine eindeutige E-Mail-Adresse, damit W4OS "
-"ordnungsgemäß funktioniert."
+msgid "Real accounts need a unique email address for W4OS to function properly."
+msgstr "Echte Konten benötigen eine eindeutige E-Mail-Adresse, damit W4OS ordnungsgemäß funktioniert."
 
 #: legacy/admin/status-page.php:150
 msgid "Synchronize users now"
 msgstr "Benutzer jetzt synchronisieren"
 
 #: legacy/admin/status-page.php:152
-msgid ""
-"Synchronization is made at plugin activation and is handled automatically "
-"afterwards, but in certain circumstances it may be necessary to initiate it "
-"manually to get an immediate result, especially if users have been added or "
-"deleted directly from the grid administration console."
-msgstr ""
-"Die Synchronisierung erfolgt bei der Aktivierung des Plugins und wird danach "
-"automatisch durchgeführt. Unter bestimmten Umständen kann es jedoch "
-"notwendig sein, die Synchronisierung manuell einzuleiten, um ein sofortiges "
-"Ergebnis zu erhalten, insbesondere wenn Benutzer direkt über die Grid-"
-"Administrationskonsole hinzugefügt oder gelöscht wurden."
+msgid "Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console."
+msgstr "Die Synchronisierung erfolgt bei der Aktivierung des Plugins und wird danach automatisch durchgeführt. Unter bestimmten Umständen kann es jedoch notwendig sein, die Synchronisierung manuell einzuleiten, um ein sofortiges Ergebnis zu erhalten, insbesondere wenn Benutzer direkt über die Grid-Administrationskonsole hinzugefügt oder gelöscht wurden."
 
 #: legacy/admin/status-page.php:177
 msgid "Missing PHP modules"
 msgstr "Fehlende PHP-Module"
 
 #: legacy/admin/status-page.php:179
-msgid ""
-"These modules were not found: %s. Install them to get the most of this "
-"plugin."
-msgstr ""
-"Diese Module wurden nicht gefunden: %s. Installieren Sie sie, um dieses "
-"Plugin optimal nutzen zu können."
+msgid "These modules were not found: %s. Install them to get the most of this plugin."
+msgstr "Diese Module wurden nicht gefunden: %s. Installieren Sie sie, um dieses Plugin optimal nutzen zu können."
 
+#. wpml-name: 2e7502f81f2bff60e1170982af2e5ede
 #: legacy/admin/status-page.php:187
 msgid "OpenSimulator pages"
 msgstr "OpenSimulator-Seiten"
 
 #: legacy/admin/status-page.php:189
-msgid ""
-"The following page are needed by OpenSimulator and/or by W4OS plugin. Make "
-"sure they exist or adjust your simulator .ini file."
-msgstr ""
-"Die folgenden Seiten werden von OpenSimulator und/oder dem W4OS-Plugin "
-"benötigt. Stellen Sie sicher, dass sie vorhanden sind, oder passen Sie Ihre "
-"Simulator-.ini-Datei an."
+msgid "The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file."
+msgstr "Die folgenden Seiten werden von OpenSimulator und/oder dem W4OS-Plugin benötigt. Stellen Sie sicher, dass sie vorhanden sind, oder passen Sie Ihre Simulator-.ini-Datei an."
 
-#: legacy/admin/status-page.php:199
-#, fuzzy
-#| msgid ""
-#| "Grid not running, start Robust server or %scheck OpenSimulator settings%s."
-msgid ""
-"Grid not running, start Robust server or %1$scheck OpenSimulator "
-"settings%2$s."
-msgstr ""
-"Grid läuft nicht, Robust Server starten oder %scheck OpenSimulator "
-"Einstellungen%s."
+#: admin/status-page.php:166
+msgid "Grid not running, start Robust server or %scheck OpenSimulator settings%s."
+msgstr "Grid läuft nicht, Robust Server starten oder %scheck OpenSimulator Einstellungen%s."
 
 #: legacy/admin/status-page.php:223
 msgid "Check pages now"
@@ -983,38 +664,38 @@ msgid "Last checked %s ago."
 msgstr "Zuletzt geprüft vor %s."
 
 #: legacy/admin/status-page.php:228
-msgid ""
-"OpenSimulator pages are checked regularly in the background. Synchronize now "
-"only if you made changes and want an immediate status."
-msgstr ""
-"OpenSimulator-Seiten werden regelmäßig im Hintergrund überprüft. "
-"Synchronisieren Sie jetzt nur, wenn Sie Änderungen vorgenommen haben und "
-"einen sofortigen Status wünschen."
+msgid "OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status."
+msgstr "OpenSimulator-Seiten werden regelmäßig im Hintergrund überprüft. Synchronisieren Sie jetzt nur, wenn Sie Änderungen vorgenommen haben und einen sofortigen Status wünschen."
 
 #: legacy/admin/status-page.php:249
 msgid "Should be %s"
 msgstr "Sollte %s sein"
 
 #: legacy/admin/status-page.php:256
-msgid ""
-"This service requires a separate web application.<br>Try <a href=\"%1$s\" "
-"target=_blank>%1$s</a>."
-msgstr ""
-"Dieser Dienst erfordert eine separate Webanwendung.<br>Versuchen Sie <a "
-"href=\"%1$s\" target=_blank>%1$s</a>."
+msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
+msgstr "Dieser Dienst erfordert eine separate Webanwendung.<br>Versuchen Sie <a href=\"%1$s\" target=_blank>%1$s</a>."
+
+#: blocks/popular-places.php:147
+msgid "Popular places"
+msgstr "Beliebte Orte"
+
+#: blocks/popular-places.php:153 legacy/shortcodes.php:183
+msgid "No result"
+msgstr "Kein Ergebnis"
+
+#: includes/class-assets.php:192
+msgid "Assets base"
+msgstr "Base des Asset"
 
 #: legacy/cron.php:24
 msgid "every_five_minutes"
 msgstr "alle_fünf_Minuten"
 
-#: legacy/functions.php:193
-msgid ""
-"A local Robust server has been found. Please check Login URI and Grid Name "
-"configuration."
-msgstr ""
-"Es wurde ein lokaler Robust-Server gefunden. Bitte überprüfen Sie die "
-"Konfiguration von Login URI und Grid-Name."
+#: includes/functions.php:149
+msgid "A local Robust server has been found. Please check Login URI and Grid name configuration."
+msgstr "Es wurde ein lokaler Robust-Server gefunden. Bitte überprüfen Sie die Konfiguration von Login URI und Grid-Name."
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: legacy/functions.php:223
 msgid "OpenSimulator settings page"
 msgstr "OpenSimulator-Einstellungsseite"
@@ -1027,30 +708,37 @@ msgstr "Online"
 msgid "Offline"
 msgstr "Offline"
 
+#. wpml-name: ef53538ae41a651c7f72ab6cb1135d8c
 #: legacy/functions.php:292
 msgid "Members"
 msgstr "Mitglieder"
 
+#. wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
 #: legacy/functions.php:298
 msgid "Active members (30 days)"
 msgstr "Aktive Mitglieder (30 Tage)"
 
+#. wpml-name: 67ea4b3432b974a20b2c8ee6609e363c
 #: legacy/functions.php:305
 msgid "Members in world"
 msgstr "Avatare im Grid Online"
 
+#. wpml-name: fd9754e08c4e5151b83bc2abbf21ffb0
 #: legacy/functions.php:316
 msgid "Active users (30 days)"
 msgstr "Aktive Besucher (30 Tage)"
 
+#. wpml-name: 9143e8053fefd25ce03ae81136931586
 #: legacy/functions.php:322
 msgid "Total users in world"
 msgstr "Zurzeit Online gesamt"
 
+#. wpml-name: 5948f3347ebc02ebc690227c059661e1
 #: legacy/functions.php:330
 msgid "Regions"
 msgstr "Regionen"
 
+#. wpml-name: 6834699b2d08455d0475c76d54356191
 #: legacy/functions.php:336
 msgid "Total area"
 msgstr "Gesamtfläche"
@@ -1067,27 +755,25 @@ msgstr "Heute beigetreten"
 msgid "%s days old"
 msgstr "%s Tage alt"
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: legacy/profile-page.php:65
 msgid "Lost Password"
 msgstr "Verlorenes Passwort"
 
+#. wpml-name: 5948f3347ebc02ebc690227c059661e1
 #: legacy/profile-page.php:71
 msgid "Register"
 msgstr "Registrierung"
 
 #: legacy/profile-page.php:110
-msgid ""
-"Lost your password? Please enter your username or email address. You will "
-"receive a link to create a new password via email."
-msgstr ""
-"Haben Sie Ihr Passwort vergessen? Bitte geben Sie Ihren Benutzernamen oder "
-"Ihre E-Mail-Adresse ein. Sie erhalten dann per E-Mail einen Link zur "
-"Erstellung eines neuen Passworts."
+msgid "Lost your password? Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr "Haben Sie Ihr Passwort vergessen? Bitte geben Sie Ihren Benutzernamen oder Ihre E-Mail-Adresse ein. Sie erhalten dann per E-Mail einen Link zur Erstellung eines neuen Passworts."
 
 #: legacy/profile-page.php:112
 msgid "Email"
 msgstr "E-Mail"
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: legacy/profile-page.php:113
 msgid "Reset Password"
 msgstr "Passwort zurücksetzen"
@@ -1099,10 +785,9 @@ msgstr "Einloggen"
 
 #: legacy/profile-page.php:119
 msgid "Log in to create your avatar, view your profile or set your options."
-msgstr ""
-"Loggen Sie sich ein, um Ihren Avatar zu erstellen, Ihr Profil anzusehen oder "
-"Ihre Optionen einzustellen."
+msgstr "Loggen Sie sich ein, um Ihren Avatar zu erstellen, Ihr Profil anzusehen oder Ihre Optionen einzustellen."
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/profile-page.php:187
 msgid "My Profile"
 msgstr "Mein Profil"
@@ -1111,14 +796,17 @@ msgstr "Mein Profil"
 msgid "Create My Avatar"
 msgstr "Meinen Avatar erstellen"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/profile-page.php:205 templates/content-page-profile.php:54
 msgid "%s's profile"
 msgstr "Profil von %s"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: legacy/profile-page.php:208
 msgid "Avatar not found"
 msgstr "Avatar nicht gefunden"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/profile-page.php:280
 msgid "Profile base"
 msgstr "Profil Basis"
@@ -1207,30 +895,31 @@ msgstr "Sprachen"
 msgid "Real Life"
 msgstr "Reales Leben"
 
-#: legacy/profile.php:150 tmp/class-avatar.php:277
-msgid "Change password"
-msgstr ""
+#: legacy/users.php:385
+msgid "%s local users updated with avatar data"
+msgstr "%s lokale Benutzer mit Avatar-Daten aktualisiert"
 
-#: legacy/profile.php:150
-msgid "Password reset link"
-msgstr ""
-
+#. wpml-name: d0f651f1495d346088ae49450c620e9b
 #: legacy/profile.php:198 legacy/profile.php:1032
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
+#. wpml-name: 0d3e39fb622d9e6d7b389757aa651fff
 #: legacy/profile.php:386
 msgid "This user already has an avatar."
 msgstr "Dieser Benutzer hat bereits einen Avatar."
 
+#. wpml-name: b2d0fb30e09bf39693f6183c33455748
 #: legacy/profile.php:402
 msgid "First name required"
 msgstr "Vorname erforderlich"
 
+#. wpml-name: 14bcd8bac9d052de9f9aa0f685a6da73
 #: legacy/profile.php:405
 msgid "Last name required"
 msgstr "Nachname erforderlich"
 
+#. wpml-name: 8ffca1456a2308a5556a750be1ecbac0
 #: legacy/profile.php:409
 msgid "Password required"
 msgstr "Passwort erforderlich"
@@ -1239,6 +928,7 @@ msgstr "Passwort erforderlich"
 msgid "The password does not match."
 msgstr "Das Passwort stimmt nicht überein."
 
+#. wpml-name: 4eb86d524f30b9885871ed68c24b0f29
 #: legacy/profile.php:422 legacy/profile.php:426
 msgid "The name %s is not allowed"
 msgstr "Der Name %s ist nicht erlaubt"
@@ -1252,17 +942,14 @@ msgid "There is already a grid user named %s"
 msgstr "Es gibt bereits einen Grid-Benutzer namens %s"
 
 #: legacy/profile.php:442
-msgid ""
-"This should never happen! Generated a random UUID that already existed. "
-"Sorry. Try again."
-msgstr ""
-"Dies sollte niemals passieren! Es wurde eine zufällige UUID erzeugt, die "
-"bereits existierte. Entschuldigung. Versuchen Sie es erneut."
+msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
+msgstr "Dies sollte niemals passieren! Es wurde eine zufällige UUID erzeugt, die bereits existierte. Entschuldigung. Versuchen Sie es erneut."
 
 #: legacy/profile.php:468
 msgid "Error while creating user"
 msgstr "Fehler beim Anlegen eines Benutzers"
 
+#. wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
 #: legacy/profile.php:482
 msgid "Error while setting password"
 msgstr "Fehler beim Setzen des Passworts"
@@ -1291,6 +978,7 @@ msgstr "Fehler beim Hinzufügen eines Avatars"
 msgid "Errors occurred while creating the user"
 msgstr "Beim Anlegen des Benutzers sind Fehler aufgetreten"
 
+#. wpml-name: 02cb97a68e5137af44e882dbe2180485
 #: legacy/profile.php:693
 msgid "Avatar %s created successfully."
 msgstr "Avatar %s erfolgreich erstellt."
@@ -1299,37 +987,44 @@ msgstr "Avatar %s erfolgreich erstellt."
 msgid "You need an avatar to explore our virtual world."
 msgstr "Sie benötigen einen Avatar, um unsere virtuelle Welt zu erkunden."
 
+#. wpml-name: 1a87f41bc2db648685564cf6fa5b2903
 #: legacy/profile.php:711
-msgid ""
-"Choose a name below. This is how people will see you in-world. Once set, "
-"your avatar name cannot be changed."
-msgstr ""
-"Wählen Sie unten einen Namen. Unter diesem Namen wird man Sie in der Welt "
-"sehen. Einmal festgelegt, kann Ihr Avatar-Name nicht mehr geändert werden."
+msgid "Choose a name below. This is how people will see you in-world. Once set, your avatar name cannot be changed."
+msgstr "Wählen Sie unten einen Namen. Unter diesem Namen wird man Sie in der Welt sehen. Einmal festgelegt, kann Ihr Avatar-Name nicht mehr geändert werden."
 
+#. wpml-name: bfc045552fb736eb0e776baee784de42
 #: legacy/profile.php:734
 msgid "Avatar first name"
 msgstr "Vorname des Avatars"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: legacy/profile.php:738
 msgid "Avatar last name"
 msgstr "Nachname des Avatars"
 
+#. wpml-name: d9c2d86a66aa5a45326c3757f3a272cc
 #: legacy/profile.php:743
 msgid "Confirm your password"
 msgstr "Bestätigen Sie Ihr Passwort"
 
 #: legacy/profile.php:745
-msgid ""
-"Your in-world Avatar password is the same as your password on this website."
-msgstr ""
-"Ihr Avatar-Passwort in der Welt ist dasselbe wie Ihr Passwort auf dieser "
-"Website."
+msgid "Your in-world Avatar password is the same as your password on this website."
+msgstr "Ihr Avatar-Passwort in der Welt ist dasselbe wie Ihr Passwort auf dieser Website."
+
+#: includes/class-model.php:341
+msgid "Your initial appearance"
+msgstr "Ihr erster Auftritt"
+
+#. wpml-name: 90efd059f58183a99038e138b8fe17f0
+#: includes/class-model.php:342
+msgid "You can change it as often as you want in the virtual world."
+msgstr "Sie können ihn in der virtuellen Welt so oft ändern, wie Sie wollen."
 
 #: legacy/profile.php:758
 msgid "Save"
 msgstr "Speichern"
 
+#. wpml-name: 877a81d559efa8e5dac0cccac9f80a09
 #: legacy/profile.php:803
 msgid "leave blank to leave unchanged"
 msgstr "leer lassen, um unverändert zu bleiben"
@@ -1338,19 +1033,23 @@ msgstr "leer lassen, um unverändert zu bleiben"
 msgid "Create an avatar"
 msgstr "Einen Avatar erstellen"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/profile.php:920 blocks/w4os-gridprofile-block/index.js:33
 #: blocks/w4os-gridprofile-block/index.js:85
 msgid "Grid profile"
 msgstr "Grid Profil"
 
+#. wpml-name: bfc045552fb736eb0e776baee784de42
 #: legacy/profile.php:1042
 msgid "Avatar First Name"
 msgstr "Avatar Vorname"
 
+#. wpml-name: a2ac9ef42c9ebc25f8dbab799ac23565
 #: legacy/profile.php:1048
 msgid "Avatar Last Name"
 msgstr "Avatar Nachname"
 
+#. wpml-name: 69675902f4d4a3da44638540557562af
 #: legacy/profile.php:1054 tmp/class-avatar.php:366
 msgid "Profile Picture"
 msgstr "Profilbild"
@@ -1367,6 +1066,7 @@ msgstr "Webprofil-URL"
 msgid "Configure W4OS database "
 msgstr "W4OS-Datenbank konfigurieren "
 
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
 #: legacy/shortcodes.php:124
 msgid "Edit user"
 msgstr "Benutzer bearbeiten"
@@ -1375,10 +1075,12 @@ msgstr "Benutzer bearbeiten"
 msgid "Configure W4OS: "
 msgstr "Konfigurieren Sie W4OS: "
 
+#. wpml-name: 751cfef8ad45902372601aeac58bdad7
 #: legacy/shortcodes.php:151
 msgid "Login URI"
 msgstr "Login URL"
 
+#. wpml-name: 9c9ee66a189f06fb9e3cc58c0c352db8
 #: legacy/shortcodes.php:156
 msgid "OpenSimulator not configured"
 msgstr "OpenSimulator nicht konfiguriert"
@@ -1387,18 +1089,49 @@ msgstr "OpenSimulator nicht konfiguriert"
 msgid "Configure W4OS database: "
 msgstr "Konfigurieren Sie die W4OS-Datenbank: "
 
-#: legacy/users.php:187
-#, fuzzy
-#| msgid "Error while updating %s %s (%s) %s"
-msgid "Error while updating %1$s %2$s (%3$s) %4$s"
+#: includes/updates.php:35
+msgid "Update %s applied"
+msgstr "Aktualisierung %s angewendet"
+
+#. wpml-name: 02cb97a68e5137af44e882dbe2180485
+#: includes/updates.php:47
+msgid "Update %s applied sucessfully"
+msgid_plural "Updates %s applied sucessfully"
+msgstr[0] "Update %s erfolgreich durchgeführt"
+msgstr[1] "Updates %s erfolgreich angewendet"
+
+#: includes/updates.php:54
+msgid "Error processing update %s"
+msgstr "Fehler bei der Verarbeitung der Aktualisierung %s"
+
+#: includes/updates.php:61
+msgid "W4OS updated"
+msgstr "W4OS aktualisiert"
+
+#. wpml-name: 17db1cfe008f83e7d0181762eda3daab
+#: includes/updates.php:88
+msgid "Grid user"
+msgstr "Benutzer des Grids"
+
+#: includes/updates.php:109
+msgid "Profiles service is not configured on your Robust server. It is required for full functionalities."
+msgstr "Der Profildienst ist auf Ihrem Robust-Server nicht konfiguriert. Er ist für den vollen Funktionsumfang erforderlich."
+
+#: includes/updates.php:128
+msgid "Grid and WordPress users synchronized."
+msgstr "Grid- und WordPress-Benutzer synchronisiert."
+
+#: includes/updates.php:146
+msgid "OpenSim Search tables updated."
+msgstr "OpenSim Search Tabellen aktualisiert."
+
+#: includes/users.php:138
+msgid "Error while updating %s %s (%s) %s"
 msgstr "Fehler beim Aktualisieren von %s %s (%s) %s"
 
-#: legacy/users.php:207
-#, fuzzy
-#| msgid "Error while updating newly created user %s for %s %s (%s) %s"
-msgid "Error while updating newly created user %1$s for %2$s %3$s (%4$s) %5$s"
-msgstr ""
-"Fehler beim Aktualisieren des neu angelegten Benutzers %s für %s %s (%s) %s"
+#: includes/users.php:155
+msgid "Error while updating newly created user %s for %s %s (%s) %s"
+msgstr "Fehler beim Aktualisieren des neu angelegten Benutzers %s für %s %s (%s) %s"
 
 #: legacy/users.php:221
 msgid "%d reference updated"
@@ -1418,37 +1151,23 @@ msgid_plural "%d broken references removed"
 msgstr[0] "%d fehlerhafte Referenz entfernt"
 msgstr[1] "%d fehlerhafte Referenzen entfernt"
 
-#: legacy/users.php:385
-msgid "%s local users updated with avatar data"
-msgstr "%s lokale Benutzer mit Avatar-Daten aktualisiert"
-
 #: legacy/w4osdb.php:13
 msgid "ROBUST database is not configured. To finish configuration, go to "
-msgstr ""
-"Die ROBUST-Datenbank ist nicht konfiguriert. Um die Konfiguration "
-"abzuschließen, gehen Sie zu "
+msgstr "Die ROBUST-Datenbank ist nicht konfiguriert. Um die Konfiguration abzuschließen, gehen Sie zu "
 
 #: legacy/w4osdb.php:28
-msgid ""
-"Could not connect to the database server, please verify your credentials on "
-msgstr ""
-"Es konnte keine Verbindung zum Datenbankserver hergestellt werden, bitte "
-"überprüfen Sie Ihre Anmeldedaten auf "
+msgid "Could not connect to the database server, please verify your credentials on "
+msgstr "Es konnte keine Verbindung zum Datenbankserver hergestellt werden, bitte überprüfen Sie Ihre Anmeldedaten auf "
 
 #: legacy/w4osdb.php:35
-msgid ""
-"Could not connect to the ROBUST database, please verify database name and/or "
-"credentials on "
-msgstr ""
-"Es konnte keine Verbindung zur ROBUST-Datenbank hergestellt werden, bitte "
-"überprüfen Sie den Datenbanknamen und/oder die Anmeldedaten auf "
+msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
+msgstr "Es konnte keine Verbindung zur ROBUST-Datenbank hergestellt werden, bitte überprüfen Sie den Datenbanknamen und/oder die Anmeldedaten auf "
 
-#: legacy/w4osdb.php:104
-msgid ""
-"Missing tables: %s. The ROBUST database is connected, but some required "
-"tables are missing. "
-msgstr ""
+#: includes/w4osdb.php:69
+msgid "Missing tables: %s. The ROBUST database is connected, but it does not seem valid. "
+msgstr "Fehlende Tabellen: %s. Die ROBUST-Datenbank ist verbunden, aber sie scheint nicht gültig zu sein. "
 
+#. wpml-name: 6b8467e13ae11c479efa8843f1b95826
 #: legacy/widgets.php:11
 msgid "Grid info Widget"
 msgstr "Grid info-Widget"
@@ -1457,37 +1176,21 @@ msgstr "Grid info-Widget"
 msgid "Title:"
 msgstr "Titel:"
 
-#: legacy/woocommerce.php:53 tmp/class-avatar.php:131
-msgid "Avatar"
-msgstr ""
-
-#: legacy/woocommerce.php:99
-msgid "Your avatar: "
-msgstr ""
-
 #: templates/content-configuration.php:2
 msgid "this grid"
 msgstr "dieses Grid"
 
-#: templates/content-configuration.php:20
-#, fuzzy
-#| msgid "Configuration"
-msgid "Viewer configuration"
+#: templates/content-configuration.php:18
+msgid "Configuration"
 msgstr "Konfiguration"
 
-#: templates/content-configuration.php:23
-#, fuzzy
-#| msgid "Install the viewer"
-msgid "Install the viewer and open it."
+#: templates/content-configuration.php:21
+msgid "Install the viewer"
 msgstr "Installieren Sie den Viewer"
 
 #: templates/content-configuration.php:26
-msgid ""
-"You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to "
-"access %2$s."
-msgstr ""
-"Sie können <a href=\"%1$s\" target=_blank>jeden kompatiblen Viewer</a> für "
-"den Zugriff auf %2$s verwenden."
+msgid "You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to access %2$s."
+msgstr "Sie können <a href=\"%1$s\" target=_blank>jeden kompatiblen Viewer</a> für den Zugriff auf %2$s verwenden."
 
 #: templates/content-configuration.php:32
 msgid "Add %1$s to your viewer"
@@ -1499,9 +1202,7 @@ msgstr "Die Anweisungen können je nach Viewer variieren"
 
 #: templates/content-configuration.php:35
 msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
-msgstr ""
-"Wählen Sie \"Einstellungen\" unter dem Menü \"Viewer\" (oder geben Sie Strg-"
-"P ein)"
+msgstr "Wählen Sie \"Einstellungen\" unter dem Menü \"Viewer\" (oder geben Sie Strg-P ein)"
 
 #: templates/content-configuration.php:36
 msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
@@ -1520,12 +1221,8 @@ msgid "Make sure %1$s is selected in the Grid menu"
 msgstr "Vergewissern Sie sich, dass %1$s im Gridmenü ausgewählt ist"
 
 #: templates/content-configuration.php:45
-msgid ""
-"Enter your avatar’s first and last name in the \"Username\" box and your "
-"password in the \"Password\" box"
-msgstr ""
-"Geben Sie den Vor- und Nachnamen Ihres Avatars in das Feld \"Benutzername\" "
-"und Ihr Passwort in das Feld \"Passwort\" ein"
+msgid "Enter your avatar’s first and last name in the \"Username\" box and your password in the \"Password\" box"
+msgstr "Geben Sie den Vor- und Nachnamen Ihres Avatars in das Feld \"Benutzername\" und Ihr Passwort in das Feld \"Passwort\" ein"
 
 #: templates/content-configuration.php:46
 msgid "Click \"Log In\""
@@ -1535,8 +1232,945 @@ msgstr "Klicken Sie auf \"Anmelden\"."
 msgid "My Avatar"
 msgstr "Mein Avatar"
 
+#: w4os.php:46
+msgid "You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled."
+msgstr "Sie haben bereits die offizielle Version von <strong>W4OS - OpenSimulator Web Interface</strong> aus dem WordPress Plugins Verzeichnis installiert. Die Entwicklerversion ist deaktiviert worden und sollte deinstalliert werden."
+
+#: w4os.php:58
+msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
+msgstr "Eine andere Version von <strong>W4OS - OpenSimulator Web Interface</strong> ist installiert und aktiv. Duplikat deaktiviert."
+
+#. Plugin Name of the plugin
+#: 
+msgid "w4os - OpenSimulator Web Interface"
+msgstr "w4os - OpenSimulator Web-Schnittstelle"
+
+#. Short description.
+#: 
+msgid "WordPress interface for OpenSimulator (w4os)"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>Helpers</strong>: currency, search, offline messages"
+msgstr ""
+
+#. Found in faq paragraph.
+#: 
+msgid "This is an OpenSimulator design limitation. Regions rely on cached data to display avatar information, and once fetched, these are never updated. As a result, if an avatar's name (or grid URI btw) is changed, the change will not be reflected on regions already visited by this avatar (which will still show the old name), but new visited region will display the new one. This could be somewhat handled for a small standalone grid, but never in hypergrid context. There is no process to force a foreign grid to update its cache, and probably never will."
+msgstr ""
+
+#. Found in faq paragraph.
+#: 
+msgid "Yes, it works too. Use OpenSim database credentials when requested for Robust credentials."
+msgstr ""
+
+#. Found in faq paragraph.
+#: 
+msgid "No, if your web server has access to your OpenSimulator database."
+msgstr ""
+
+#. Found in faq header.
+#: 
+msgid "Why can't I change my avatar name?"
+msgstr ""
+
+#. Found in faq header.
+#: 
+msgid "Do I need to run the website on the same server?"
+msgstr ""
+
+#. Found in installation paragraph.
+#: 
+msgid "<strong>PHP Modules</strong>: w4os requires php imagemagick module. Also, while they are not required, WordPress recommends activating PHP <strong>curl</strong> and <strong>xml</strong> modules. They are also recommended by W4OS for full functionalties."
+msgstr ""
+
+#. Found in installation paragraph.
+#: 
+msgid "<strong>Web Asset Server</strong>: the project requires a web asset server to convert simulator assets (profile pictures, model avatars...) and display them on the website. W4OS provides a web assets service, or you can specify an external web assets service URL instead."
+msgstr ""
+
+#. Found in installation paragraph.
+#: 
+msgid "These accounts will be excluded from grid statistics."
+msgstr ""
+
+#. Found in installation paragraph.
+#: 
+msgid "The model will now appear in new avatar registration form, with its profile picture."
+msgstr ""
+
+#. Found in installation paragraph.
+#: 
+msgid "Avatar models are displayed on new avatar registration and allow new users to start with another appearance than Ruth."
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Make a snapshot and attach it to this account profile"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Connect in-world as this avatar and change outfit. Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items."
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Leave \"Model Name\" blank, you are creating a model, not using an existing model to create a user"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "You can leave \"Email\" and \"User ID\" blank"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "The rest of the name will be displayed in the form, so make it relevant"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "FirstName or LastName has to match your W4OS Avatar models settings"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "From robust console, create a user named accordingly (for example, \"Female Default\", Default John\", ...).\n"
+"    <code>R.O.B.U.S.T. # create user Default John\n"
+"Password: ************************\n"
+"Email []: (leave empty)\n"
+"User ID (enter for random) []:  (leave empty)\n"
+"Model name []: (leave empty)\n"
+"15:27:58 - [USER ACCOUNT SERVICE]: Account Default John xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx created successfully</code>\n"
+"\n"
+"<ul>\n"
+"<li>A password is needed as you need connect in-world to configure it.\n"
+"Choose a strong password, any hack could affect all new users."
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Check (or change) their naming convention in Admin &gt; OpenSimulator &gt; Settings &gt; Avatar models"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Create a page with the same slug as Profile permalink.\n"
+"(This will be handled in a more convenient way in the future)"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Set permalinks and profile page\n"
+"\n"
+"<ul>\n"
+"<li>Visit Settings &gt; Permalinks, confirm W4OS slugs (profile and assets) and save."
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Download and activate the latest stable release"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "You should have a working assets server (see Dependencies section below)"
+msgstr ""
+
+#. Found in installation header.
+#: 
+msgid "Dependencies"
+msgstr ""
+
+#. Found in installation header.
+#: 
+msgid "Create avatar models"
+msgstr ""
+
+#. Found in installation header.
+#: 
+msgid "WordPress configuration"
+msgstr ""
+
+#. Found in description paragraph.
+#: 
+msgid "See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog."
+msgstr ""
+
+#. Found in description paragraph.
+#: 
+msgid "The free version from WordPress plugins directory and the <a href=\"https://magiiic.com/wordpress/plugins/w4os/\">paid version</a> are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project."
+msgstr ""
+
+#. Found in description paragraph.
+#: 
+msgid "Ready to use WordPress interface for <a href=\"http://opensimulator.org/\">OpenSimulator</a>. Provides user registration, default avatar model choice, login info, statistics and a web assets server for grids or standalone simulators."
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "separate OpenSimulator libraries and WordPress specific code, to allow easy integration in other CMS"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Gudz Teleport Board project integration (based on user picks)"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "2do HYPEvents project integration <a href=\"https://2do.pm\">https://2do.pm</a>"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Deactivate (recommended) or delete (experimental) grid user when deleting wp account"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "[x] Helpers (search, currency, map...)"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Web edit profile"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Better basic layout"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Switch set in-world prefs for public profiles"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Improve avatar profile\n"
+"\n"
+"<ul>\n"
+"<li>Switch to allow web profile"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "[x] Web Assets server"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Auth with avatar credentials (if no matching wp account, create one)"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Manual and cron Grid/WP users sync"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Login page / Widget"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>Web assets server</strong>: the needed bridge to display in-world images on a website"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>Web profiles</strong>: excerpt of the avatar's profile"
+msgstr ""
+
+#. Found in description header.
+#: 
+msgid "Medium term"
+msgstr ""
+
+#. Found in description header.
+#: 
+msgid "Paid version"
+msgstr ""
+
+#. Screenshot description.
+#: 
+msgid "Web assets server settings"
+msgstr ""
+
+#. Screenshot description.
+#: 
+msgid "Settings page"
+msgstr ""
+
+#. Screenshot description.
+#: 
+msgid "Avatar registration form in WooCommerce My Account dashboard."
+msgstr ""
+
+#. Screenshot description.
+#: 
+msgid "Grid info and grid status examples"
+msgstr ""
+
+#. Found in faq header.
+#: 
+msgid "Can I use this plugin for my standalone simulator?"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Robust server must be installed before setting up W4OS."
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "insert <code>[gridinfo]</code> and <code>[gridstatus]</code> shortcodes in a page or in a sidebar widget"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Enter your robust database connection details and submit. If you get a\n"
+"database connection error, it might come from a case-sensitivity issue (see\n"
+"https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "Visit OpenSim settings (admin menu &gt; \"Opensim\" &gt; \"Settings\")\n"
+"\n"
+"<ul>\n"
+"<li>Enter your grid name and grid URI (like example.org:8002 without http://)"
+msgstr ""
+
+#. Found in installation list item.
+#: 
+msgid "To allow users to choose an avatar on registration, you must enable user\n"
+"profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and\n"
+"[UserProfiles] sections)"
+msgstr ""
+
+#. Found in description paragraph.
+#: 
+msgid "See Features and Roadmap sections for current and upcoming functionalties."
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "WooCommerce Subscriptions integration for user-owned Regions or other pay-for services"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "User's own regions control (create, start, stop, backup)"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Choice between Robust console or database connection"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Admin create models (from current appearance)"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Admin create users"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "[x] get grid info from http://login.uri:8002/get_grid_info"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Admin Use sim/grid configuration file to fetch settings if on the same host"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Admin Create region"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Admin Start / Stop regions"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Public avatar profile"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "exclude models from grid stats"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "naming scheme of default models"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>OpenSimulator settings page</strong>:\n"
+"\n"
+"<ul>\n"
+"<li>grid name, login uri and database connection settings"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>Reserved names</strong>: avatar whose first name or last name is \"Default\", \"Test\", \"Admin\" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Avatar and website passwords are synchronized"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Choose avatar look from default models"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "Avatar tab in account dashboard on WooCommerce websites"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<code>[gridprofile]</code> shortcode can be inserted in any custom page"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>Avatar creation</strong>:\n"
+"\n"
+"<ul>\n"
+"<li>Opensimulator section in standard wp account page"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>Grid status</strong>: <code>[gridstatus]</code> shortcode and admin dashboard widgets"
+msgstr ""
+
+#. Found in description list item.
+#: 
+msgid "<strong>Grid info</strong>: <code>[gridinfo]</code> shortcode and admin dashboard widgets"
+msgstr ""
+
+#. Found in description header.
+#: 
+msgid "Long term"
+msgstr ""
+
+#. Found in description header.
+#: 
+msgid "Roadmap"
+msgstr ""
+
+#. Found in description header.
+#: 
+msgid "Features"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix opensim db not loaded by helpers (not properly fixed in a6a3b5bbea1c9cfbd091a38b6ff33a79b2ddf9b3)"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix #57 password not updated on grid when using password recovery in WordPdress"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix fatal errors in helpers when database is not connected"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix fatal error in helpers for poorly encoded unicode text sources"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added password reset link to profile page"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix profile picture aspect ratio (4/3, as in viewer)"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "avoid fatal error if php xml-rpc is not installed, show error notice instead"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix fatal error and warnings with popular-places shortcode"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix regression in 2.3.1"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "helpers migrated from old mysqli db connection method to PDO"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "separate helpers settings page"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "dropped aurora and OpenSim 0.6 support"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added currency conversion rate setting"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added prebuilt binaries for opensim 0.9.1 and 0.9.2"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new events parser (fetch events from 2do.pm or another HYPEvents server)"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new Popular Places block and [popular-places] shortcode"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new currency helpers"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new search helper"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "updated translations"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "tested up to wp 5.8.3"
+msgstr ""
+
+#. Found in changelog paragraph.
+#: 
+msgid "show a link to profile page instead of the form in profile shortcode"
+msgstr ""
+
+#. Found in changelog paragraph.
+#: 
+msgid "fix Fatal error Call to undefined function each()"
+msgstr ""
+
+#. Found in changelog paragraph.
+#: 
+msgid "removed Avatar section from WooCommerce account page until fixed"
+msgstr ""
+
+#. Found in changelog paragraph.
+#: 
+msgid "added Partner, Wants, Skills and RL to web profile"
+msgstr ""
+
+#. Found in changelog paragraph.
+#: 
+msgid "added option to replace name by avatar name in users list"
+msgstr ""
+
+#. Found in changelog paragraph.
+#: 
+msgid "new check grid info url validity (cron and manual)"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "For full change history see <a href=\"https://github.com/GuduleLapointe/w4os/commits/master\">GitHub repository</a>"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "Official git repository changed to GitHub"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "Now distributed via WordPress plugins directory"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "shorter \"Avatar\" label, removed uuid in gridprofile shortcode"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "More comprehensive database connection error reporting"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "use version provided by .version if present"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "replace wp avatar picture with in-world profile picture if set"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "guess new avatar name from user_login if first name and last name not provided"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "lighter template for profiles when loaded from the viewer"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added imagick to the recommended php extensions"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "show image placeholder if profile picture not set"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "responsive profile display for smartphones"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix slow assets, store cached images in upload folder to serve them directly by the web server"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix a couple of fatal errors"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix user login broken if w4os_login_page is set to profile and OpenSim database is not connected"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix missing error messages on login page"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix avatar model not shown if default account never connected"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix errors not displayed on avatar creation page"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix inventory items not transferred to new avatars"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix avatar not created, or not created at first attempt"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix squished profile picture"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix duplicate admin notices"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "removed W4OS Grid Info and W4OS Grid Status widgets (now available as blocks)"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added in-world profile link to profile page"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added hop:// link to login uri"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added Born and Last Seen columns to users list"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added buttons to create missing pages on status dashboard"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added lost password and register links on login page"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added states in admin pages list for known urls (from grid_info)"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added assets permalink settings"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added profile image to gridprofile"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new grid info settings are fetched from Robust server if set or localhost:8002"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new admin can create avatars for existing users"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new grid and wordpress users sync"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new blocks support"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new config instructions for new grid users"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new profile page"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "new web assets server"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix localisation not loading"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix fatal error when trying to display  WooCommerce Avatar tab form in My Account"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added screenshots"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added w4os-shortcode classes"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added login form to gridprofile shortcode when not connected instead of login message"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "changed update server library to <a href=\"https://github.com/froger-me/wp-plugin-update-server\">frogerme's WP Plugin Update Server</a>"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fixed conflict with other extensions settings pages"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix typo in banners and icons urls, can't believe I didn't see this before..."
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix \"Yes\" and \"No\" translations"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added changelog, banners and icons to view details"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix #2 Database check fails if mysql is case insensitive"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix #4  Database connection error triggered if userprofile table is absent"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "tested up to 6.0.1"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "only check once if w4os db is connected"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix #10 invalid JSON response when adding [w4os_profile] shortcode element"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "more detailed error messages for avatar creation"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "added login page link to message displayed when trying to see profile while not connected"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix wrong letter cases in auth table name"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "better css loading"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix only show profile form for current user"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "use plugin dir to detect slug instead of hardcoded value"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix regression, automatic updates restored. Users with version 2.0 to 2.0.3 will need to reinstall the plugin from source. Sorry."
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix localizations not loading"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "renamed plugin as W4OS - OpenSimulator Web Interface"
+msgstr ""
+
+#. Found in changelog list item.
+#: 
+msgid "fix other WP plugins directory requirements"
+msgstr ""
+
+#: legacy/admin/settings.php:137
+msgid "Table %s not found. User Profiles must be activated in Robust to enable profile page."
+msgstr ""
+
+#: legacy/admin/status-page.php:16
+msgid "PHP xml-rpc is required but is not installed."
+msgstr ""
+
+#: legacy/profile.php:150 tmp/class-avatar.php:277
+msgid "Change password"
+msgstr ""
+
+#: legacy/profile.php:150
+msgid "Password reset link"
+msgstr ""
+
+#: legacy/w4osdb.php:104
+msgid "Missing tables: %s. The ROBUST database is connected, but some required tables are missing. "
+msgstr ""
+
 #: tmp/class-avatar.php:130 tmp/class-avatar.php:151 tmp/class-avatar.php:164
 msgid "Avatars"
+msgstr ""
+
+#: legacy/woocommerce.php:53 tmp/class-avatar.php:131
+msgid "Avatar"
 msgstr ""
 
 #: tmp/class-avatar.php:132
@@ -1656,9 +2290,7 @@ msgid "Profile"
 msgstr ""
 
 #: tmp/class-avatar.php:221
-msgid ""
-"Please provide first and last name, only letters and numbers, separated by a "
-"space."
+msgid "Please provide first and last name, only letters and numbers, separated by a space."
 msgstr ""
 
 #: tmp/class-avatar.php:234
@@ -1674,8 +2306,7 @@ msgid "E-mail"
 msgstr ""
 
 #: tmp/class-avatar.php:259
-msgid ""
-"Optional. If set, the avatar will be linked to any matching WP user account."
+msgid "Optional. If set, the avatar will be linked to any matching WP user account."
 msgstr ""
 
 #: tmp/class-avatar.php:266
@@ -1716,62 +2347,221 @@ msgstr ""
 msgid "Wil be set by the server"
 msgstr ""
 
-#: tmp/class-avatar.php:433
-msgid "%1$s contains invalid characters, replaced \"%2$s\" by \"%3$s\""
+#: tmp/class-avatar.php:420
+msgid "%s contains invalid characters, replaced \"%s\" by \"%s\""
 msgstr ""
-
-#: w4os.php:46
-msgid ""
-"You already installed the official release of <strong>W4OS - OpenSimulator "
-"Web Interface</strong> from WordPress plugins directory. The developer "
-"version has been deactivated and should be uninstalled."
-msgstr ""
-"Sie haben bereits die offizielle Version von <strong>W4OS - OpenSimulator "
-"Web Interface</strong> aus dem WordPress Plugins Verzeichnis installiert. "
-"Die Entwicklerversion ist deaktiviert worden und sollte deinstalliert werden."
-
-#: w4os.php:58
-msgid ""
-"Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is "
-"installed and active. Duplicate disabled."
-msgstr ""
-"Eine andere Version von <strong>W4OS - OpenSimulator Web Interface</strong> "
-"ist installiert und aktiv. Duplikat deaktiviert."
 
 #: blocks/popular-places/index.js:33 blocks/popular-places/index.js:90
 msgid "Popular Places"
 msgstr ""
 
-#~ msgid "Web asset server"
-#~ msgstr "Web Asset Server"
+#: includes/class-assets.php:83
+msgid "Assets Server"
+msgstr ""
 
-#~ msgid "External assets server URI"
-#~ msgstr "URI des externen Asset-Servers"
+#: includes/class-assets.php:99
+msgid "Assets Server Fields"
+msgstr ""
 
-#~ msgid ""
-#~ "If W4OS web assets service is disabled, you need a third-party web "
-#~ "application."
-#~ msgstr ""
-#~ "Wenn der W4OS-Web-Asset-Dienst deaktiviert ist, benötigen Sie eine "
-#~ "Webanwendung eines Drittanbieters."
+#: includes/class-assets.php:104
+msgid "Provide Web Assets Server"
+msgstr ""
 
-#, fuzzy
-#~| msgid "Available shortcodes"
-#~ msgid "Available Models Container"
-#~ msgstr "Verfügbare Shortcodes"
+#: includes/class-assets.php:113 includes/class-assets.php:131
+msgid "Web Assets Server URL"
+msgstr ""
 
-#~ msgid "w4os - OpenSimulator Web Interface"
-#~ msgstr "w4os - OpenSimulator Web-Schnittstelle"
+#: includes/class-assets.php:119
+msgid "You can set the assets slug in <permalinks settings page>"
+msgstr ""
 
-#~ msgid "First Name = "
-#~ msgstr "Vorname = "
+#: includes/class-assets.php:134
+msgid "If 'Provide Web Assets Server' is disabled, it is necessary to install a third-party service and enter its URL here to ensure the proper functioning of the plugin."
+msgstr ""
 
-#~ msgid "OR Last Name = "
-#~ msgstr "oder Nachname = "
+#: includes/class-assets.php:135
+msgid "http://example.org/assets/assets.php?id="
+msgstr ""
 
-#~ msgid ""
-#~ "Missing tables: %s. The ROBUST database is connected, but it does not "
-#~ "seem valid. "
-#~ msgstr ""
-#~ "Fehlende Tabellen: %s. Die ROBUST-Datenbank ist verbunden, aber sie "
-#~ "scheint nicht gültig zu sein. "
+#: includes/class-model.php:62 includes/class-model.php:78
+#: legacy/admin/status-page.php:85
+msgid "Avatar Models"
+msgstr ""
+
+#: includes/class-model.php:88
+msgid "Match"
+msgstr ""
+
+#: includes/class-model.php:92
+msgid "First Name"
+msgstr ""
+
+#: includes/class-model.php:93
+msgid "Any"
+msgstr ""
+
+#: includes/class-model.php:94
+msgid "Last Name"
+msgstr ""
+
+#: includes/class-model.php:95
+msgid "Custom list"
+msgstr ""
+
+#: includes/class-model.php:100
+msgid "Name"
+msgstr ""
+
+#: includes/class-model.php:110
+msgid "Select Models"
+msgstr ""
+
+#: includes/class-model.php:114
+msgid "Select one or more existing avatars"
+msgstr ""
+
+#: includes/class-model.php:137
+msgid "Available Models"
+msgstr ""
+
+#: includes/class-model.php:163
+msgid "If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar."
+msgstr ""
+
+#: includes/class-model.php:164
+msgid "The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture."
+msgstr ""
+
+#: includes/class-model.php:165
+msgid "The avatars used for the models should never be real user accounts."
+msgstr ""
+
+#: includes/class-model.php:166
+msgid "The new avatar will wear the same outfit as the model at the time of registration."
+msgstr ""
+
+#: includes/class-model.php:167
+msgid "If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list."
+msgstr ""
+
+#: includes/class-model.php:290
+msgid "No models found."
+msgstr ""
+
+#: includes/class-model.php:304
+msgid "No models"
+msgstr ""
+
+#: includes/class-model.php:360
+msgid "Refreshing list..."
+msgstr ""
+
+#: legacy/admin/settings.php:76 legacy/shortcodes.php:150
+msgid "Grid Name"
+msgstr ""
+
+#: legacy/admin/settings.php:89 legacy/admin/settings.php:214
+#: legacy/admin/settings.php:390
+msgid "Database Name"
+msgstr ""
+
+#: legacy/admin/settings.php:107 legacy/admin/settings.php:124
+msgid "Profile Page"
+msgstr ""
+
+#: legacy/admin/settings.php:116 legacy/admin/settings.php:132
+msgid "The page %1$s must exist, as defined in %2$spermalinks settings%3$s."
+msgstr ""
+
+#: legacy/admin/settings.php:149
+msgid "Login Page"
+msgstr ""
+
+#: legacy/admin/settings.php:194
+msgid "Provide In-world Search"
+msgstr ""
+
+#: legacy/admin/settings.php:198
+msgid "Enable to use a local search engine, allowing only local results (recommended for private grids)."
+msgstr ""
+
+#: legacy/admin/settings.php:199
+msgid "Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids."
+msgstr ""
+
+#: legacy/admin/settings.php:229
+msgid "Search Engine URL"
+msgstr ""
+
+#: legacy/admin/settings.php:234
+msgid "URL of the search engine used by the viewer to provide search results (without arguments)"
+msgstr ""
+
+#: legacy/admin/settings.php:235
+msgid "In OpenSim.ini, only one can be set"
+msgstr ""
+
+#: legacy/admin/settings.php:236
+msgid "Services using w4o engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines."
+msgstr ""
+
+#: legacy/admin/settings.php:267
+msgid "Data service, used to register regions, objects or land for sale. You can resgister to several search engines."
+msgstr ""
+
+#: legacy/admin/settings.php:283
+msgid "Events Server URL"
+msgstr ""
+
+#: legacy/admin/settings.php:285
+msgid "HYPEvents Server URL, used to fetch upcoming events and make them available in search."
+msgstr ""
+
+#: legacy/admin/settings.php:337
+msgid "Provide Economy Helpers"
+msgstr ""
+
+#: legacy/admin/settings.php:351
+msgid "Economy Base URI"
+msgstr ""
+
+#: legacy/admin/settings.php:368
+msgid "Economy Database"
+msgstr ""
+
+#: legacy/admin/settings.php:416
+msgid "Currency Conversion Rate"
+msgstr ""
+
+#: legacy/admin/status-page.php:199
+msgid "Grid not running, start Robust server or %1$scheck OpenSimulator settings%2$s."
+msgstr ""
+
+#: legacy/functions.php:193
+msgid "A local Robust server has been found. Please check Login URI and Grid Name configuration."
+msgstr ""
+
+#: legacy/users.php:187
+msgid "Error while updating %1$s %2$s (%3$s) %4$s"
+msgstr ""
+
+#: legacy/users.php:207
+msgid "Error while updating newly created user %1$s for %2$s %3$s (%4$s) %5$s"
+msgstr ""
+
+#: legacy/woocommerce.php:99
+msgid "Your avatar: "
+msgstr ""
+
+#: templates/content-configuration.php:20
+msgid "Viewer configuration"
+msgstr ""
+
+#: templates/content-configuration.php:23
+msgid "Install the viewer and open it."
+msgstr ""
+
+#: tmp/class-avatar.php:433
+msgid "%1$s contains invalid characters, replaced \"%2$s\" by \"%3$s\""
+msgstr ""
+
