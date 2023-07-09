@@ -167,7 +167,7 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 
 == Changelog ==
 
-= Unreleased (2.4.3-dev.980) =
+= Unreleased (2.4.3-dev.992) =
 * added separate web assets server settings page
 
 = 2.4.2 =
