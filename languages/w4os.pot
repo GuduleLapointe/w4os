@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface (dev) 2.4.1\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface (dev) 2.4.3-dev.980\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-08T23:18:28+00:00\n"
+"POT-Creation-Date: 2023-07-09T19:11:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
@@ -40,6 +40,47 @@ msgstr ""
 #: blocks/popular-places.php:153
 #: legacy/shortcodes.php:183
 msgid "No result"
+msgstr ""
+
+#: includes/class-assets.php:83
+msgid "Assets Server"
+msgstr ""
+
+#: includes/class-assets.php:84
+msgid "Web Assets Server"
+msgstr ""
+
+#: includes/class-assets.php:99
+msgid "Assets Server Fields"
+msgstr ""
+
+#: includes/class-assets.php:104
+msgid "Provide Web Assets Server"
+msgstr ""
+
+#: includes/class-assets.php:107
+msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
+msgstr ""
+
+#: includes/class-assets.php:113
+#: includes/class-assets.php:131
+msgid "Web Assets Server URL"
+msgstr ""
+
+#: includes/class-assets.php:119
+msgid "You can set the assets slug in <permalinks settings page>"
+msgstr ""
+
+#: includes/class-assets.php:134
+msgid "If 'Provide Web Assets Server' is disabled, it is necessary to install a third-party service and enter its URL here to ensure the proper functioning of the plugin."
+msgstr ""
+
+#: includes/class-assets.php:135
+msgid "http://example.org/assets/assets.php?id="
+msgstr ""
+
+#: includes/class-assets.php:192
+msgid "Assets base"
 msgstr ""
 
 #: includes/class-model.php:62
@@ -84,43 +125,43 @@ msgstr ""
 msgid "Available Models"
 msgstr ""
 
-#: includes/class-model.php:161
+#: includes/class-model.php:163
 msgid "If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar."
 msgstr ""
 
-#: includes/class-model.php:162
+#: includes/class-model.php:164
 msgid "The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture."
 msgstr ""
 
-#: includes/class-model.php:163
+#: includes/class-model.php:165
 msgid "The avatars used for the models should never be real user accounts."
 msgstr ""
 
-#: includes/class-model.php:164
+#: includes/class-model.php:166
 msgid "The new avatar will wear the same outfit as the model at the time of registration."
 msgstr ""
 
-#: includes/class-model.php:165
+#: includes/class-model.php:167
 msgid "If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list."
 msgstr ""
 
-#: includes/class-model.php:287
+#: includes/class-model.php:290
 msgid "No models found."
 msgstr ""
 
-#: includes/class-model.php:301
+#: includes/class-model.php:304
 msgid "No models"
 msgstr ""
 
-#: includes/class-model.php:338
+#: includes/class-model.php:341
 msgid "Your initial appearance"
 msgstr ""
 
-#: includes/class-model.php:339
+#: includes/class-model.php:342
 msgid "You can change it as often as you want in the virtual world."
 msgstr ""
 
-#: includes/class-model.php:354
+#: includes/class-model.php:360
 msgid "Refreshing list..."
 msgstr ""
 
@@ -172,7 +213,7 @@ msgid "OpenSimulator Settings"
 msgstr ""
 
 #: legacy/admin/admin-init.php:26
-#: legacy/admin/settings.php:680
+#: legacy/admin/settings.php:652
 msgid "Settings"
 msgstr ""
 
@@ -298,7 +339,7 @@ msgid "Web tab of viewer search windows. Relevant if you have a search page prov
 msgstr ""
 
 #: legacy/admin/admin-init.php:400
-#: legacy/admin/settings.php:320
+#: legacy/admin/settings.php:292
 msgid "Offline messages"
 msgstr ""
 
@@ -386,26 +427,26 @@ msgid "Robust server database"
 msgstr ""
 
 #: legacy/admin/settings.php:86
-#: legacy/admin/settings.php:238
-#: legacy/admin/settings.php:414
+#: legacy/admin/settings.php:210
+#: legacy/admin/settings.php:386
 msgid "Hostname"
 msgstr ""
 
 #: legacy/admin/settings.php:89
-#: legacy/admin/settings.php:242
-#: legacy/admin/settings.php:418
+#: legacy/admin/settings.php:214
+#: legacy/admin/settings.php:390
 msgid "Database Name"
 msgstr ""
 
 #: legacy/admin/settings.php:92
-#: legacy/admin/settings.php:246
-#: legacy/admin/settings.php:422
+#: legacy/admin/settings.php:218
+#: legacy/admin/settings.php:394
 msgid "Username"
 msgstr ""
 
 #: legacy/admin/settings.php:96
-#: legacy/admin/settings.php:251
-#: legacy/admin/settings.php:427
+#: legacy/admin/settings.php:223
+#: legacy/admin/settings.php:399
 #: tmp/class-avatar.php:277
 msgid "Password"
 msgstr ""
@@ -483,187 +524,159 @@ msgid "Accounts without email address are usually test accounts created from the
 msgstr ""
 
 #: legacy/admin/settings.php:190
-msgid "Web Assets Server"
-msgstr ""
-
-#: legacy/admin/settings.php:195
-msgid "Provide Web Assets Server"
-msgstr ""
-
-#: legacy/admin/settings.php:198
-msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
-msgstr ""
-
-#: legacy/admin/settings.php:201
-msgid "Web asset server"
-msgstr ""
-
-#: legacy/admin/settings.php:205
-msgid "You can set the asset slug in %1$spermalinks settings%2$s."
-msgstr ""
-
-#: legacy/admin/settings.php:211
-msgid "External assets server URI"
-msgstr ""
-
-#: legacy/admin/settings.php:212
-msgid "If W4OS web assets service is disabled, you need a third-party web application."
-msgstr ""
-
-#: legacy/admin/settings.php:218
 msgid "Search"
 msgstr ""
 
-#: legacy/admin/settings.php:222
+#: legacy/admin/settings.php:194
 msgid "Provide In-world Search"
 msgstr ""
 
-#: legacy/admin/settings.php:226
+#: legacy/admin/settings.php:198
 msgid "Enable to use a local search engine, allowing only local results (recommended for private grids)."
 msgstr ""
 
-#: legacy/admin/settings.php:227
+#: legacy/admin/settings.php:199
 msgid "Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids."
 msgstr ""
 
-#: legacy/admin/settings.php:232
+#: legacy/admin/settings.php:204
 msgid "Search database"
 msgstr ""
 
-#: legacy/admin/settings.php:235
-#: legacy/admin/settings.php:399
+#: legacy/admin/settings.php:207
+#: legacy/admin/settings.php:371
 msgid "Use the same database as Robust"
 msgstr ""
 
-#: legacy/admin/settings.php:257
+#: legacy/admin/settings.php:229
 msgid "Search Engine URL"
 msgstr ""
 
-#: legacy/admin/settings.php:262
+#: legacy/admin/settings.php:234
 msgid "URL of the search engine used by the viewer to provide search results (without arguments)"
 msgstr ""
 
-#: legacy/admin/settings.php:263
+#: legacy/admin/settings.php:235
 msgid "In OpenSim.ini, only one can be set"
 msgstr ""
 
-#: legacy/admin/settings.php:264
+#: legacy/admin/settings.php:236
 msgid "Services using w4o engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines."
 msgstr ""
 
-#: legacy/admin/settings.php:277
+#: legacy/admin/settings.php:249
 msgid "Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names."
 msgstr ""
 
-#: legacy/admin/settings.php:292
+#: legacy/admin/settings.php:264
 msgid "Search register"
 msgstr ""
 
-#: legacy/admin/settings.php:295
+#: legacy/admin/settings.php:267
 msgid "Data service, used to register regions, objects or land for sale. You can resgister to several search engines."
 msgstr ""
 
-#: legacy/admin/settings.php:311
+#: legacy/admin/settings.php:283
 msgid "Events Server URL"
 msgstr ""
 
-#: legacy/admin/settings.php:313
+#: legacy/admin/settings.php:285
 msgid "HYPEvents Server URL, used to fetch upcoming events and make them available in search."
 msgstr ""
 
-#: legacy/admin/settings.php:314
+#: legacy/admin/settings.php:286
 msgid "Leave blank to ignore events or if you have an other events implementation."
 msgstr ""
 
-#: legacy/admin/settings.php:324
+#: legacy/admin/settings.php:296
 msgid "Provide offline helper"
 msgstr ""
 
-#: legacy/admin/settings.php:330
+#: legacy/admin/settings.php:302
 msgid "Offline helper URI"
 msgstr ""
 
-#: legacy/admin/settings.php:334
+#: legacy/admin/settings.php:306
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr ""
 
-#: legacy/admin/settings.php:352
+#: legacy/admin/settings.php:324
 msgid "Sender e-mail address"
 msgstr ""
 
-#: legacy/admin/settings.php:356
+#: legacy/admin/settings.php:328
 msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
 msgstr ""
 
-#: legacy/admin/settings.php:365
+#: legacy/admin/settings.php:337
 msgid "Provide Economy Helpers"
 msgstr ""
 
-#: legacy/admin/settings.php:368
+#: legacy/admin/settings.php:340
 msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
 msgstr ""
 
-#: legacy/admin/settings.php:369
+#: legacy/admin/settings.php:341
 msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
 msgstr ""
 
-#: legacy/admin/settings.php:371
+#: legacy/admin/settings.php:343
 msgid "Money server is not included in OpenSimulator distribution and require a separate installation, e.g. from %s."
 msgstr ""
 
-#: legacy/admin/settings.php:379
+#: legacy/admin/settings.php:351
 msgid "Economy Base URI"
 msgstr ""
 
-#: legacy/admin/settings.php:383
+#: legacy/admin/settings.php:355
 msgid "The URL must be set in Robust configuration."
 msgstr ""
 
-#: legacy/admin/settings.php:396
+#: legacy/admin/settings.php:368
 msgid "Economy Database"
 msgstr ""
 
-#: legacy/admin/settings.php:433
+#: legacy/admin/settings.php:405
 msgid "Currency Provider"
 msgstr ""
 
-#: legacy/admin/settings.php:437
+#: legacy/admin/settings.php:409
 msgid "No provider, use fake money."
 msgstr ""
 
-#: legacy/admin/settings.php:444
+#: legacy/admin/settings.php:416
 msgid "Currency Conversion Rate"
 msgstr ""
 
-#: legacy/admin/settings.php:445
+#: legacy/admin/settings.php:417
 msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
 msgstr ""
 
-#: legacy/admin/settings.php:448
+#: legacy/admin/settings.php:420
 msgid "Podex redirect message"
 msgstr ""
 
-#: legacy/admin/settings.php:449
+#: legacy/admin/settings.php:421
 msgid "Please use our terminals in-world to proceed. Click OK to teleport to terminals region."
 msgstr ""
 
-#: legacy/admin/settings.php:452
+#: legacy/admin/settings.php:424
 msgid "Podex redirect URL"
 msgstr ""
 
-#: legacy/admin/settings.php:456
+#: legacy/admin/settings.php:428
 msgid "Money Script Access Key"
 msgstr ""
 
-#: legacy/admin/settings.php:656
+#: legacy/admin/settings.php:628
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 
-#: legacy/admin/settings.php:657
+#: legacy/admin/settings.php:629
 msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
 msgstr ""
 
-#: legacy/admin/settings.php:662
+#: legacy/admin/settings.php:634
 msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
 msgstr ""
 
@@ -791,10 +804,6 @@ msgstr ""
 
 #: legacy/admin/status-page.php:256
 msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
-msgstr ""
-
-#: legacy/assets.php:49
-msgid "Assets base"
 msgstr ""
 
 #: legacy/cron.php:24

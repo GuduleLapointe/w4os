@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-08T23:18:28+00:00\n"
+"POT-Creation-Date: 2023-07-09T19:11:30+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -40,6 +40,61 @@ msgstr "Populaire plaatsen"
 #: blocks/popular-places.php:153 legacy/shortcodes.php:183
 msgid "No result"
 msgstr "Geen resultaat"
+
+#: includes/class-assets.php:83
+#, fuzzy
+#| msgid "Web Assets Server"
+msgid "Assets Server"
+msgstr "Web assets-server"
+
+#: includes/class-assets.php:84
+msgid "Web Assets Server"
+msgstr "Web assets-server"
+
+#: includes/class-assets.php:99
+#, fuzzy
+#| msgid "Web Assets Server"
+msgid "Assets Server Fields"
+msgstr "Web assets-server"
+
+#: includes/class-assets.php:104
+msgid "Provide Web Assets Server"
+msgstr "Bied webassets-server"
+
+#: includes/class-assets.php:107
+msgid ""
+"A web assets server is required to display in-world assets (from the grid) "
+"on the website (e.g. profile pictures)."
+msgstr ""
+"Een web assets server is nodig om in-world assets (uit het grid) op de "
+"website te tonen (b.v. profielfoto's)."
+
+#: includes/class-assets.php:113 includes/class-assets.php:131
+#, fuzzy
+#| msgid "Web Assets Server"
+msgid "Web Assets Server URL"
+msgstr "Web assets-server"
+
+#: includes/class-assets.php:119
+#, fuzzy
+#| msgid "You can set the asset slug in %spermalinks settings%s."
+msgid "You can set the assets slug in <permalinks settings page>"
+msgstr "U kunt de asset slug instellen in %spermalinks settings%s."
+
+#: includes/class-assets.php:134
+msgid ""
+"If 'Provide Web Assets Server' is disabled, it is necessary to install a "
+"third-party service and enter its URL here to ensure the proper functioning "
+"of the plugin."
+msgstr ""
+
+#: includes/class-assets.php:135
+msgid "http://example.org/assets/assets.php?id="
+msgstr ""
+
+#: includes/class-assets.php:192
+msgid "Assets base"
+msgstr "Activa"
 
 #: includes/class-model.php:62 includes/class-model.php:78
 #: legacy/admin/status-page.php:85
@@ -92,54 +147,54 @@ msgstr ""
 msgid "Available Models"
 msgstr "Beschikbare shortcodes"
 
-#: includes/class-model.php:161
+#: includes/class-model.php:163
 msgid ""
 "If avatar models are defined, new users will be presented with a choice on "
 "the avatar creation form, which will determine the initial outfit of the "
 "created avatar."
 msgstr ""
 
-#: includes/class-model.php:162
+#: includes/class-model.php:164
 msgid ""
 "The grid administrator needs to create each model from the ROBUST console, "
 "log in with the viewer, customize the outfit, and add a profile picture."
 msgstr ""
 
-#: includes/class-model.php:163
+#: includes/class-model.php:165
 msgid "The avatars used for the models should never be real user accounts."
 msgstr ""
 
-#: includes/class-model.php:164
+#: includes/class-model.php:166
 msgid ""
 "The new avatar will wear the same outfit as the model at the time of "
 "registration."
 msgstr ""
 
-#: includes/class-model.php:165
+#: includes/class-model.php:167
 msgid ""
 "If the model assignment rule is based on the name, each newly created avatar "
 "matching that rule will be automatically added to the list."
 msgstr ""
 
-#: includes/class-model.php:287
+#: includes/class-model.php:290
 msgid "No models found."
 msgstr ""
 
-#: includes/class-model.php:301
+#: includes/class-model.php:304
 #, fuzzy
 #| msgid "Models"
 msgid "No models"
 msgstr "Modellen"
 
-#: includes/class-model.php:338
+#: includes/class-model.php:341
 msgid "Your initial appearance"
 msgstr "Uw eerste verschijning"
 
-#: includes/class-model.php:339
+#: includes/class-model.php:342
 msgid "You can change it as often as you want in the virtual world."
 msgstr "Je kunt het wijzigen en aanpassen in de wereld, zo vaak als je wilt."
 
-#: includes/class-model.php:354
+#: includes/class-model.php:360
 msgid "Refreshing list..."
 msgstr ""
 
@@ -193,7 +248,7 @@ msgstr "Status"
 msgid "OpenSimulator Settings"
 msgstr "OpenSimulator-instellingen"
 
-#: legacy/admin/admin-init.php:26 legacy/admin/settings.php:680
+#: legacy/admin/admin-init.php:26 legacy/admin/settings.php:652
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -321,7 +376,7 @@ msgstr ""
 "Web tabblad van viewer zoekvensters. Relevant als u een zoekpagina hebt met "
 "inhoud uit het raster."
 
-#: legacy/admin/admin-init.php:400 legacy/admin/settings.php:320
+#: legacy/admin/admin-init.php:400 legacy/admin/settings.php:292
 msgid "Offline messages"
 msgstr "Offline berichten"
 
@@ -423,23 +478,23 @@ msgstr "Grid naam"
 msgid "Robust server database"
 msgstr "Robust server database"
 
-#: legacy/admin/settings.php:86 legacy/admin/settings.php:238
-#: legacy/admin/settings.php:414
+#: legacy/admin/settings.php:86 legacy/admin/settings.php:210
+#: legacy/admin/settings.php:386
 msgid "Hostname"
 msgstr "Hostnaam"
 
-#: legacy/admin/settings.php:89 legacy/admin/settings.php:242
-#: legacy/admin/settings.php:418
+#: legacy/admin/settings.php:89 legacy/admin/settings.php:214
+#: legacy/admin/settings.php:390
 msgid "Database Name"
 msgstr "Database naam"
 
-#: legacy/admin/settings.php:92 legacy/admin/settings.php:246
-#: legacy/admin/settings.php:422
+#: legacy/admin/settings.php:92 legacy/admin/settings.php:218
+#: legacy/admin/settings.php:394
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: legacy/admin/settings.php:96 legacy/admin/settings.php:251
-#: legacy/admin/settings.php:427 tmp/class-avatar.php:277
+#: legacy/admin/settings.php:96 legacy/admin/settings.php:223
+#: legacy/admin/settings.php:399 tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -522,76 +577,38 @@ msgstr ""
 "e-mailadres."
 
 #: legacy/admin/settings.php:190
-msgid "Web Assets Server"
-msgstr "Web assets-server"
-
-#: legacy/admin/settings.php:195
-msgid "Provide Web Assets Server"
-msgstr "Bied webassets-server"
-
-#: legacy/admin/settings.php:198
-msgid ""
-"A web assets server is required to display in-world assets (from the grid) "
-"on the website (e.g. profile pictures)."
-msgstr ""
-"Een web assets server is nodig om in-world assets (uit het grid) op de "
-"website te tonen (b.v. profielfoto's)."
-
-#: legacy/admin/settings.php:201
-msgid "Web asset server"
-msgstr "Web asset-server"
-
-#: legacy/admin/settings.php:205
-#, fuzzy
-#| msgid "You can set the asset slug in %spermalinks settings%s."
-msgid "You can set the asset slug in %1$spermalinks settings%2$s."
-msgstr "U kunt de asset slug instellen in %spermalinks settings%s."
-
-#: legacy/admin/settings.php:211
-msgid "External assets server URI"
-msgstr "Externe activa server URI"
-
-#: legacy/admin/settings.php:212
-msgid ""
-"If W4OS web assets service is disabled, you need a third-party web "
-"application."
-msgstr ""
-"Als W4OS web assets service is uitgeschakeld, heeft u een webapplicatie van "
-"derden nodig."
-
-#: legacy/admin/settings.php:218
 msgid "Search"
 msgstr "Zoeken op"
 
-#: legacy/admin/settings.php:222
+#: legacy/admin/settings.php:194
 msgid "Provide In-world Search"
 msgstr "Zorg voor zoeken in de wereld"
 
-#: legacy/admin/settings.php:226
+#: legacy/admin/settings.php:198
 msgid ""
 "Enable to use a local search engine, allowing only local results "
 "(recommended for private grids)."
 msgstr ""
 
-#: legacy/admin/settings.php:227
+#: legacy/admin/settings.php:199
 msgid ""
 "Disable to use an external search engine like 2do Directory, allowing "
 "results from both your grid and other public grids."
 msgstr ""
 
-#: legacy/admin/settings.php:232
+#: legacy/admin/settings.php:204
 msgid "Search database"
 msgstr "Zoeken in databank"
 
-#: legacy/admin/settings.php:235 legacy/admin/settings.php:399
+#: legacy/admin/settings.php:207 legacy/admin/settings.php:371
 msgid "Use the same database as Robust"
 msgstr "Gebruik dezelfde database als Robuust"
 
-#: legacy/admin/settings.php:257
+#: legacy/admin/settings.php:229
 msgid "Search Engine URL"
 msgstr "Zoekmachine URL"
 
-#: legacy/admin/settings.php:262
+#: legacy/admin/settings.php:234
 #, fuzzy
 #| msgid ""
 #| "URL of the search engine used internally by the viewer (without "
@@ -603,17 +620,17 @@ msgstr ""
 "URL van de zoekmachine die intern door de viewer wordt gebruikt (zonder "
 "argumenten)."
 
-#: legacy/admin/settings.php:263
+#: legacy/admin/settings.php:235
 msgid "In OpenSim.ini, only one can be set"
 msgstr ""
 
-#: legacy/admin/settings.php:264
+#: legacy/admin/settings.php:236
 msgid ""
 "Services using w4o engine need the gatekeeper URI (usually the login URI) to "
 "be passed as gk argument. Requirements may vary for other engines."
 msgstr ""
 
-#: legacy/admin/settings.php:277
+#: legacy/admin/settings.php:249
 msgid ""
 "Please note that Search URL is different from Web search URL, which is not "
 "handled by W4OS currently. Web search is relevant if you have a web search "
@@ -628,11 +645,11 @@ msgstr ""
 "wordt hier alleen genoemd om instellingen uit elkaar te houden die helaas "
 "vergelijkbare namen hebben."
 
-#: legacy/admin/settings.php:292
+#: legacy/admin/settings.php:264
 msgid "Search register"
 msgstr "Zoekregister"
 
-#: legacy/admin/settings.php:295
+#: legacy/admin/settings.php:267
 #, fuzzy
 #| msgid "Data service, used to register regions, objects or land for sale."
 msgid ""
@@ -641,11 +658,11 @@ msgid ""
 msgstr ""
 "Gegevensdienst, gebruikt om regio's, objecten of grond te koop aan te melden."
 
-#: legacy/admin/settings.php:311
+#: legacy/admin/settings.php:283
 msgid "Events Server URL"
 msgstr "URL van de voorvallen server"
 
-#: legacy/admin/settings.php:313
+#: legacy/admin/settings.php:285
 msgid ""
 "HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
@@ -653,30 +670,30 @@ msgstr ""
 "HYPEvents Server URL, gebruikt om komende evenementen op te halen en ze "
 "beschikbaar te maken bij het zoeken."
 
-#: legacy/admin/settings.php:314
+#: legacy/admin/settings.php:286
 msgid ""
 "Leave blank to ignore events or if you have an other events implementation."
 msgstr ""
 "Laat leeg om gebeurtenissen te negeren of als u een andere gebeurtenissen "
 "implementatie hebt."
 
-#: legacy/admin/settings.php:324
+#: legacy/admin/settings.php:296
 msgid "Provide offline helper"
 msgstr "Zorg voor offline helper"
 
-#: legacy/admin/settings.php:330
+#: legacy/admin/settings.php:302
 msgid "Offline helper URI"
 msgstr "Offline helper URI"
 
-#: legacy/admin/settings.php:334
+#: legacy/admin/settings.php:306
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr "Stel de URL in Robust en OpenSimulator configuraties in."
 
-#: legacy/admin/settings.php:352
+#: legacy/admin/settings.php:324
 msgid "Sender e-mail address"
 msgstr "E-mailadres afzender"
 
-#: legacy/admin/settings.php:356
+#: legacy/admin/settings.php:328
 msgid ""
 "A no-reply e-mail address used to forward messages for users enabling "
 "\"Email me IMs when I'm offline\" option."
@@ -685,11 +702,11 @@ msgstr ""
 "sturen voor gebruikers die de optie \"E-mail mij IM's wanneer ik offline "
 "ben\" inschakelen."
 
-#: legacy/admin/settings.php:365
+#: legacy/admin/settings.php:337
 msgid "Provide Economy Helpers"
 msgstr "Zorg voor economische helpers"
 
-#: legacy/admin/settings.php:368
+#: legacy/admin/settings.php:340
 msgid ""
 "Economy helpers are additional scripts needed if you implement economy on "
 "your grid (with real or fake currency)."
@@ -697,7 +714,7 @@ msgstr ""
 "Economie helpers zijn extra scripts die nodig zijn als je economie op je "
 "grid implementeert (met echte of valse valuta)."
 
-#: legacy/admin/settings.php:369
+#: legacy/admin/settings.php:341
 msgid ""
 "Helper scripts allow communication between the money server and the grid: "
 "current balance update, currency cost estimation, land and object sales, "
@@ -707,7 +724,7 @@ msgstr ""
 "raster: bijwerken van de huidige balans, schatting van de muntkosten, "
 "verkoop van land en objecten, betalingen..."
 
-#: legacy/admin/settings.php:371
+#: legacy/admin/settings.php:343
 msgid ""
 "Money server is not included in OpenSimulator distribution and require a "
 "separate installation, e.g. from %s."
@@ -715,31 +732,31 @@ msgstr ""
 "Geldserver is niet inbegrepen in de OpenSimulator distributie en vereist een "
 "aparte installatie, b.v. van %s."
 
-#: legacy/admin/settings.php:379
+#: legacy/admin/settings.php:351
 msgid "Economy Base URI"
 msgstr "Economie basis URI"
 
-#: legacy/admin/settings.php:383
+#: legacy/admin/settings.php:355
 msgid "The URL must be set in Robust configuration."
 msgstr "De URL moet worden ingesteld in Robuuste configuratie."
 
-#: legacy/admin/settings.php:396
+#: legacy/admin/settings.php:368
 msgid "Economy Database"
 msgstr "Gegevensbank economie"
 
-#: legacy/admin/settings.php:433
+#: legacy/admin/settings.php:405
 msgid "Currency Provider"
 msgstr "Valuta Aanbieder"
 
-#: legacy/admin/settings.php:437
+#: legacy/admin/settings.php:409
 msgid "No provider, use fake money."
 msgstr "Geen provider, gebruik vals geld."
 
-#: legacy/admin/settings.php:444
+#: legacy/admin/settings.php:416
 msgid "Currency Conversion Rate"
 msgstr "Omrekeningskoers valuta"
 
-#: legacy/admin/settings.php:445
+#: legacy/admin/settings.php:417
 msgid ""
 "Amount to pay in US$ for 1000 in-world money units. Used for cost "
 "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
@@ -748,11 +765,11 @@ msgstr ""
 "om de kosten te schatten. Indien niet ingesteld, zal de koers 10/1000 zijn "
 "(1 cent per geldeenheid)"
 
-#: legacy/admin/settings.php:448
+#: legacy/admin/settings.php:420
 msgid "Podex redirect message"
 msgstr "Podex omleiding bericht"
 
-#: legacy/admin/settings.php:449
+#: legacy/admin/settings.php:421
 msgid ""
 "Please use our terminals in-world to proceed. Click OK to teleport to "
 "terminals region."
@@ -760,21 +777,21 @@ msgstr ""
 "Gebruik onze terminals in de wereld om verder te gaan. Klik op OK om naar "
 "het terminalgebied te teleporteren."
 
-#: legacy/admin/settings.php:452
+#: legacy/admin/settings.php:424
 msgid "Podex redirect URL"
 msgstr "Podex omleiding URL"
 
-#: legacy/admin/settings.php:456
+#: legacy/admin/settings.php:428
 msgid "Money Script Access Key"
 msgstr "Geld Script Toegangssleutel"
 
-#: legacy/admin/settings.php:656
+#: legacy/admin/settings.php:628
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 "De waarden moeten overeenkomen met het Robust.HG.ini (of Robust.HG.ini) "
 "configuratiebestand."
 
-#: legacy/admin/settings.php:657
+#: legacy/admin/settings.php:629
 msgid ""
 "Robust server must be running. Values entered here will be checked against "
 "your Robust server and updated if needed."
@@ -782,7 +799,7 @@ msgstr ""
 "Robust server moet draaien. De hier ingevoerde waarden zullen worden "
 "gecontroleerd met uw Robust server en indien nodig worden bijgewerkt."
 
-#: legacy/admin/settings.php:662
+#: legacy/admin/settings.php:634
 msgid ""
 "Grid accounts matching first name or last name set below are considered as "
 "avatar models. They will appear on the avatar registration form, with their "
@@ -981,10 +998,6 @@ msgid ""
 msgstr ""
 "Deze dienst vereist een aparte webapplicatie.<br>Probeer <a href=\"%1$s\" "
 "target=_blank>%1$s</a>."
-
-#: legacy/assets.php:49
-msgid "Assets base"
-msgstr "Activa"
 
 #: legacy/cron.php:24
 msgid "every_five_minutes"
@@ -1720,6 +1733,19 @@ msgstr ""
 #: blocks/popular-places/index.js:33 blocks/popular-places/index.js:90
 msgid "Popular Places"
 msgstr ""
+
+#~ msgid "Web asset server"
+#~ msgstr "Web asset-server"
+
+#~ msgid "External assets server URI"
+#~ msgstr "Externe activa server URI"
+
+#~ msgid ""
+#~ "If W4OS web assets service is disabled, you need a third-party web "
+#~ "application."
+#~ msgstr ""
+#~ "Als W4OS web assets service is uitgeschakeld, heeft u een webapplicatie "
+#~ "van derden nodig."
 
 #, fuzzy
 #~| msgid "Available shortcodes"
