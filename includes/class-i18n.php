@@ -50,9 +50,6 @@ class W4OS_I18n extends W4OS_Loader {
 	}
 
 	function w4os_load_textdomain() {
-		error_log( __CLASS__ . '::' . __METHOD__ );
-		// load_plugin_textdomain( W4OS_TXDOM, false, W4OS_SLUG . '/languages/' );
-
 		global $locale;
 		if ( is_textdomain_loaded( W4OS_TXDOM ) ) {
 			unload_textdomain( W4OS_TXDOM );
@@ -88,8 +85,6 @@ class W4OS_I18n extends W4OS_Loader {
 	 * @return string               Fixed html.
 	 */
 	public function fix_mb_show_option_all( $output, $parsed_args ) {
-		error_log( __CLASS__ . '::' . __METHOD__ );
-
 		$taxonomy = get_taxonomy( $parsed_args['taxonomy'] );
 		if ( ! $taxonomy ) {
 			return $output;
