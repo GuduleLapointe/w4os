@@ -78,7 +78,7 @@ class W4OS_Loader {
 		 * Template overrides
 		 */
 		// require_once W4OS_DIR . '/templates/templates.php';
-		require_once W4OS_DIR . '/includes/class-assets.php';
+		require_once W4OS_DIR . '/includes/class-helpers-assets.php';
 
 		/**
 		 * The standard plugin classes.
