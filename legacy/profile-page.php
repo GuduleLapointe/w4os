@@ -291,10 +291,6 @@ add_action(
 	}
 );
 
-function w4os_permalinks_output() {
-	return;
-}
-
 function w4os_profile_slug_output() {
 	?>
 	<input name="w4os_profile_slug" type="text" class="regular-text code" value="<?php echo esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ); ?>" placeholder="<?php echo 'profile'; ?>" />

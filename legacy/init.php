@@ -68,19 +68,6 @@ if ( ! defined( 'W4OS_TXDOM' ) ) {
 
 define( 'W4OS_LOGIN_PAGE', get_home_url( null, get_option( 'w4os_profile_slug' ) ) );
 
-define(
-	'W4OS_WEB_ASSETS_SERVER_URI',
-	( get_option( 'w4os_provide_asset_server' ) == 1 )
-	? get_home_url( null, '/' . get_option( 'w4os_assets_slug' ) . '/' )
-	: esc_attr( get_option( 'w4os_external_asset_server_uri' ) )
-);
-if ( get_option( 'w4os_provide_asset_server' ) == 1 ) {
-	update_option( 'w4os_internal_asset_server_uri', W4OS_WEB_ASSETS_SERVER_URI );
-}
-if ( ! get_option( 'w4os_login_page' ) ) {
-	update_option( 'w4os_login_page', 'profile' );
-}
-
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
 
@@ -116,9 +103,6 @@ if ( W4OS_DB_CONNECTED ) {
 }
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	require_once __DIR__ . '/woocommerce.php';
-}
-if ( get_option( 'w4os_provide_asset_server' ) == 1 ) {
-	require_once __DIR__ . '/assets.php';
 }
 
 add_filter( 'script_loader_tag', 'w4os_add_crossorigin', 10, 2 );

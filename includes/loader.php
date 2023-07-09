@@ -50,6 +50,10 @@ class W4OS_Loader {
 
 		$this->actions = array(
 			array(
+				'hook'     => 'init',
+				'callback' => 'add_shortcodes',
+			),
+			array(
 				'hook'     => 'wp_enqueue_scripts',
 				'callback' => 'enqueue_scripts',
 			),
@@ -74,6 +78,7 @@ class W4OS_Loader {
 		 * Template overrides
 		 */
 		// require_once W4OS_DIR . '/templates/templates.php';
+		require_once W4OS_DIR . '/includes/class-assets.php';
 
 		/**
 		 * The standard plugin classes.
@@ -225,6 +230,14 @@ class W4OS_Loader {
 		}
 	}
 
+	function add_shortcodes() {
+		add_shortcode( 'base_url', 'baseurl_shortcode' );
+		function baseurl_shortcode( $atts ) {
+
+			return site_url();
+
+		}
+	}
 }
 
 $w4os_loader = new W4OS_Loader();
