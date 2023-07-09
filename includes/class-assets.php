@@ -114,9 +114,9 @@ class W4OS_Assets extends W4OS_Loader {
 					'id'                => $prefix . 'internal_url',
 					'type'              => 'url',
 					'desc'              => preg_replace(
-						'/<(.*)>/',
+						'/%%(.*)%%/',
 						'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
-						__( 'You can set the assets slug in <permalinks settings page>', 'w4os' ),
+						__( 'You can set the assets slug in %%permalinks settings page%%', 'w4os' ),
 					),
 					'std'               => $this->internal_url,
 					'disabled'          => true,

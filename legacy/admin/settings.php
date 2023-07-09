@@ -186,34 +186,6 @@ function w4os_register_settings() {
 		),
 		'w4os_helpers'  => array(
 			'sections' => array(
-				'w4os_options_web_assets_server' => array(
-					'name'   => __( 'Web Assets Server', 'w4os' ),
-					// 'section_callback' => 'w4os_settings_callback_webassets',
-					'fields' => array(
-						'w4os_provide_asset_server'      => array(
-							'type'        => 'boolean',
-							'name'        => __( 'Provide Web Assets Server', 'w4os' ),
-							'default'     => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
-							'onchange'    => 'onchange="valueChanged(this)"',
-							'description' => '<p>' . __( 'A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os' ) . '</p>',
-						),
-						'w4os_internal_asset_server_uri' => array(
-							'name'        => __( 'Web asset server', 'w4os' ),
-							'default'     => get_home_url( null, '/' . get_option( 'w4os_assets_slug' ) . '/' ),
-							'readonly'    => true,
-							'description' => sprintf(
-								__( 'You can set the asset slug in %1$spermalinks settings%2$s.', 'w4os' ),
-								'<a href=' . get_admin_url( '', 'options-permalink.php' ) . '>',
-								'</a>',
-							),
-						),
-						'w4os_external_asset_server_uri' => array(
-							'name'        => __( 'External assets server URI', 'w4os' ),
-							'description' => __( 'If W4OS web assets service is disabled, you need a third-party web application.', 'w4os' ),
-							'default'     => W4OS_DEFAULT_ASSET_SERVER_URI,
-						),
-					),
-				),
 				'w4os_options_search'            => array(
 					'name'   => __( 'Search', 'w4os' ),
 					'fields' => array(
@@ -261,7 +233,7 @@ function w4os_register_settings() {
 								'<ul><li>%s</li><li>%s</li><li>%s</li></ul>',
 								__( 'URL of the search engine used by the viewer to provide search results (without arguments)', 'w4os' ),
 								__( 'In OpenSim.ini, only one can be set', 'w4os' ),
-								__( 'Services using w4o engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines.', 'w4os' ),
+								__( 'Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines.', 'w4os' ),
 							) . w4os_format_ini(
 								array(
 									'OpenSim.ini' => array(
