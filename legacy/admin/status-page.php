@@ -251,11 +251,16 @@ $count = w4os_count_users();
 					? sprintf( w4os_format_ini( $data['os_config'] ), ( ! empty( $data['recommended'] ) ) ? $data['recommended'] : $url )
 					: '',
 					( $success == false && ( ! empty( $data['third_party_url'] ) )
-					? '<p class=third_party>' .
-					sprintf(
-						__( 'This service requires a separate web application.<br>Try <a href="%1$s" target=_blank>%1$s</a>.', '<w4os>' ),
-						$data['third_party_url'],
-					) . '</p>'
+					? '<p class=third_party>'
+					. __( 'This service requires a separate web application.', '<w4os>' )
+					. (
+						empty($data['third_party_url']) ? null :
+						' ' . sprintf(
+							__( 'Try %s', '<w4os>' ),
+							preg_replace('/%url%/', $data['third_party_url'], '<a href="%url%" target=_blank>%url%</a>'),
+						)
+					)
+					. '</p>'
 					: ( ( $success == false && ( ! empty( $url ) ) )
 					? '<a class=button href="' . admin_url(
 						sprintf(

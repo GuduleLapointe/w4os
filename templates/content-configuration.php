@@ -22,13 +22,14 @@ $page_content .= '
   <li>
     ' . __( 'Install the viewer and open it.', 'w4os' ) . '
     <p class=description>
-    ' . sprintf(
-		__( 'You can use <a href="%1$s" target=_blank>any compatible viewer</a> to access %2$s.', 'w4os' ),
-		$compatibleviewers,
-		$gridname,
-	) . '
-    <p>
-    ' . $viewerslist . '
+    ' . preg_replace(
+			'/%+(.*)%+/',
+			'<a href="' . $compatibleviewers . '" target=_blank>$1</a>',
+			sprintf(
+				__( 'You can use %%any compatible viewer%% to access %s.', 'w4os' ),
+				$gridname,
+			),
+		) . $viewerslist . '
   </li><li>' . sprintf( __( 'Add %1$s to your viewer', 'w4os' ), $gridname, ) . '
     <p class=description>' . __( 'Instructions may vary depending on the viewer', 'w4os' ) . '</p>
     <ul>
