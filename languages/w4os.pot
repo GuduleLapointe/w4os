@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-09T19:11:30+00:00\n"
+"POT-Creation-Date: 2023-07-09T20:26:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
@@ -68,7 +68,7 @@ msgid "Web Assets Server URL"
 msgstr ""
 
 #: includes/class-assets.php:119
-msgid "You can set the assets slug in <permalinks settings page>"
+msgid "You can set the assets slug in %%permalinks settings page%%"
 msgstr ""
 
 #: includes/class-assets.php:134
@@ -561,7 +561,7 @@ msgid "In OpenSim.ini, only one can be set"
 msgstr ""
 
 #: legacy/admin/settings.php:236
-msgid "Services using w4o engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines."
+msgid "Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines."
 msgstr ""
 
 #: legacy/admin/settings.php:249
@@ -802,8 +802,12 @@ msgstr ""
 msgid "Should be %s"
 msgstr ""
 
-#: legacy/admin/status-page.php:256
-msgid "This service requires a separate web application.<br>Try <a href=\"%1$s\" target=_blank>%1$s</a>."
+#: legacy/admin/status-page.php:255
+msgid "This service requires a separate web application."
+msgstr ""
+
+#: legacy/admin/status-page.php:259
+msgid "Try %s"
 msgstr ""
 
 #: legacy/cron.php:24
@@ -888,7 +892,7 @@ msgstr ""
 
 #: legacy/profile-page.php:114
 #: legacy/profile-page.php:192
-#: templates/content-configuration.php:42
+#: templates/content-configuration.php:43
 #: templates/content-page-profile.php:26
 msgid "Log in"
 msgstr ""
@@ -1252,43 +1256,43 @@ msgstr ""
 msgid "Install the viewer and open it."
 msgstr ""
 
-#: templates/content-configuration.php:26
-msgid "You can use <a href=\"%1$s\" target=_blank>any compatible viewer</a> to access %2$s."
-msgstr ""
-
-#: templates/content-configuration.php:32
-msgid "Add %1$s to your viewer"
+#: templates/content-configuration.php:29
+msgid "You can use %%any compatible viewer%% to access %s."
 msgstr ""
 
 #: templates/content-configuration.php:33
+msgid "Add %1$s to your viewer"
+msgstr ""
+
+#: templates/content-configuration.php:34
 msgid "Instructions may vary depending on the viewer"
 msgstr ""
 
-#: templates/content-configuration.php:35
+#: templates/content-configuration.php:36
 msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
 msgstr ""
 
-#: templates/content-configuration.php:36
+#: templates/content-configuration.php:37
 msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
 msgstr ""
 
-#: templates/content-configuration.php:37
+#: templates/content-configuration.php:38
 msgid "Under \"Add new grid\", enter"
 msgstr ""
 
-#: templates/content-configuration.php:39
+#: templates/content-configuration.php:40
 msgid "Click the \"Apply\" button"
 msgstr ""
 
-#: templates/content-configuration.php:44
+#: templates/content-configuration.php:45
 msgid "Make sure %1$s is selected in the Grid menu"
 msgstr ""
 
-#: templates/content-configuration.php:45
+#: templates/content-configuration.php:46
 msgid "Enter your avatar’s first and last name in the \"Username\" box and your password in the \"Password\" box"
 msgstr ""
 
-#: templates/content-configuration.php:46
+#: templates/content-configuration.php:47
 msgid "Click \"Log In\""
 msgstr ""
 
