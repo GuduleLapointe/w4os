@@ -1,5 +1,8 @@
 ## Changelog
 
+### Unreleased (2.4.3-dev.980)
+- added separate web assets server settings page
+
 ### 2.4.2
 - added option to define avatar models with a custom list in addition to name rule
 - update available models dynamically on models settings page

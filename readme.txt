@@ -1,4 +1,4 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
@@ -166,6 +166,9 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.4.3-dev.980) =
+* added separate web assets server settings page
 
 = 2.4.2 =
 * added option to define avatar models with a custom list in addition to name rule
