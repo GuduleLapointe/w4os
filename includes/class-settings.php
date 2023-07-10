@@ -143,20 +143,20 @@ class W4OS_Settings extends W4OS_Loader {
 				'relation' => 'or',
 			],
 			'fields'         => [
-				[
-					'name'   => __( 'Database', 'w4os' ),
-					'id'     => $prefix . 'db',
-					'type'   => 'group',
-					'class'  => 'inline',
-					'save_field' => false,
-					'fields' => $this->db_fields(array(
-						'is_main' => true,
-						'host' => get_option( 'w4os_db_host' ),
-						'database' => get_option( 'w4os_db_database' ),
-						'user' => get_option( 'w4os_db_user' ),
-						'pass' => get_option( 'w4os_db_pass' ),
-					)),
-				],
+				// [
+				// 	'name'   => __( 'Database', 'w4os' ),
+				// 	'id'     => $prefix . 'db',
+				// 	'type'   => 'group',
+				// 	'class'  => 'inline',
+				// 	'save_field' => false,
+				// 	'fields' => $this->db_fields(array(
+				// 		'is_main' => true,
+				// 		'host' => get_option( 'w4os_db_host' ),
+				// 		'database' => get_option( 'w4os_db_database' ),
+				// 		'user' => get_option( 'w4os_db_user' ),
+				// 		'pass' => get_option( 'w4os_db_pass' ),
+				// 	)),
+				// ],
 				array(
 	        'name' => __('ROBUST Database', 'w4os'),
 	        'id' => $prefix . 'maindb',
@@ -167,27 +167,27 @@ class W4OS_Settings extends W4OS_Loader {
 						'use_default' => false,
 						'type' => get_option( 'w4os_db_type', 'mysql' ),
 						'port' => get_option( 'w4os_db_port', 3306 ),
-						'host' => get_option( 'w4os_db_host' ),
-						'database' => get_option( 'w4os_db_database' ),
-						'user' => get_option( 'w4os_db_user' ),
+						'host' => get_option( 'w4os_db_host', 'localhost' ),
+						'database' => get_option( 'w4os_db_database', 'robust' ),
+						'user' => get_option( 'w4os_db_user', 'opensim' ),
 						'pass' => get_option( 'w4os_db_pass' ),
 					),
 	      ),
-				array(
-	        'name' => __('OpenSim Database', 'w4os'),
-	        'id' => $prefix . 'maindb',
-	        'type' => 'w4osdb_field_type',
-					'save_field' => false,
-					'std' => array(
-						'use_default' => true,
-						'type' => get_option( 'w4os_db_type', 'mysql' ),
-						'port' => get_option( 'w4os_db_port', 3306 ),
-						'host' => get_option( 'w4os_db_host' ),
-						'database' => get_option( 'w4os_db_database' ),
-						'user' => get_option( 'w4os_db_user' ),
-						'pass' => get_option( 'w4os_db_pass' ),
-					),
-	      ),
+				// array(
+	      //   'name' => __('Search Database', 'w4os'),
+	      //   'id' => $prefix . 'searchdb',
+	      //   'type' => 'w4osdb_field_type',
+				// 	'save_field' => false,
+				// 	'std' => array(
+				// 		'use_default' => true,
+				// 		'type' => get_option( 'w4os_search_db_type', 'mysql' ),
+				// 		'port' => get_option( 'w4os_search_db_port', 3306 ),
+				// 		'host' => get_option( 'w4os_search_db_host', 'zlocalhost' ),
+				// 		'database' => get_option( 'w4os_search_db_database', 'zossearch' ),
+				// 		'user' => get_option( 'w4os_search_db_user', 'zopensim' ),
+				// 		'pass' => get_option( 'w4os_search_db_pass' ),
+				// 	),
+	      // ),
 			],
 		];
 
@@ -212,7 +212,8 @@ class W4OS_Settings extends W4OS_Loader {
 		}
 	}
 
-	private function db_fields( $values = [] ) {
+	private function db_fields( $values = [], $field=[] ) {
+		error_log(print_r($values, true));
 		$use_default = isset($values['use_default']) ? $values['use_default'] : true;
 		$is_main = isset($values['is_main']) ? $values['is_main'] : false;
 		$field = [];
@@ -282,6 +283,9 @@ class W4OS_Settings extends W4OS_Loader {
 				'visible' => $visible_condition,
 			],
 		];
+		if($is_main) {
+			unset($fields['use_default']);
+		}
 		return $fields;
 	}
 
@@ -302,6 +306,8 @@ class W4OS_Settings extends W4OS_Loader {
 
 		$classes[]='w4osdb-field';
 		$label_args = '';
+		$input_args = ( ! empty($field['disabled'])) ? 'disabled=' . $field['disabled'] : '';
+
 		switch($field['type']) {
 			case 'switch':
 				$field['type'] = 'checkbox';
@@ -341,6 +347,7 @@ class W4OS_Settings extends W4OS_Loader {
 		$classes[]='db-field-type-' . $field['type'];
 
 		$output = '<div class="%7$s">' . $output . '</div>';
+		$output = preg_replace('/<input +/', '<input ' . $input_args . ' ', $output);
 
 		$output = sprintf(
 			$output,
