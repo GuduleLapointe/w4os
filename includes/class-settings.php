@@ -210,7 +210,7 @@ class W4OS_Settings extends W4OS_Loader {
 		}
 		return [
 			[
-					'name'  => __( 'Use ROBUST', 'w4os' ),
+					'name'  => __( 'Default', 'w4os' ),
 					'id'    => 'use_robust',
 					'type'  => 'switch',
 					// 'disabled' => $is_main,
@@ -239,7 +239,6 @@ class W4OS_Settings extends W4OS_Loader {
 				'name' => __( 'Port', 'w4os' ),
 				'id'   => 'port',
 				'type' => 'number',
-				'step' => 'any',
 				'std' => empty($values['port']) ? 3306 : $values['port'],
 				'visible' => $visible_condition,
 			],
@@ -275,13 +274,14 @@ class W4OS_Settings extends W4OS_Loader {
 			case 'switch':
 			case 'checkbox':
 			// $type = 'checkbox';
-			$checked = checked($value);
+			$checked = checked($value, false);
 			break;
 
 			default:
 			$checked = null;
 		}
 
+		$classes[]='w4osdb-field';
 		$label_args = '';
 		switch($field['type']) {
 			case 'switch':
@@ -297,11 +297,11 @@ class W4OS_Settings extends W4OS_Loader {
 			break;
 
 			case 'select':
-			$input = '<select id="w4os_db_type" class="rwmb-select valid" name="%1$s" data-selected="%4$s">';
+			$input = '<select id="w4os_db_type" class="rwmb-select" name="%1$s" data-selected="%4$s">';
 			foreach($field['options'] as $option_key => $option_name) {
-				$selected = selected($option_key, $value);
+				$selected = selected($option_key, $value, false);
 				$input .= sprintf(
-					'<option value="%1$s" %2$s">%3$s</option>',
+					'<option value="%1$s" %2$s>%3$s</option>',
 					esc_attr($option_key),
 					$selected,
 					esc_attr($option_name),
@@ -317,9 +317,11 @@ class W4OS_Settings extends W4OS_Loader {
 			$input = '<input type="%3$s" name="%1$s" id="%1$s" value="%4$s" %5$s />';
 			$output = '<label for="%1$s" %6$s>%2$s' . $input . '</label>';
 		}
-
-
 		$field_id = (empty($field['parent_id'])) ? $field['id'] : $field['parent_id'] . '[' . $field['id'] . ']';
+		$classes[]='db-field-' . $field['id'];
+		$classes[]='db-field-type-' . $field['type'];
+
+		$output = '<div class="%7$s">' . $output . '</div>';
 
 		$output = sprintf(
 			$output,
@@ -329,6 +331,7 @@ class W4OS_Settings extends W4OS_Loader {
 			$value,
 			$checked,
 			$label_args,
+			join(' ', $classes),
 		);
 
 		return $output;
