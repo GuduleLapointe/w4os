@@ -244,7 +244,7 @@ class W4OS_Settings extends W4OS_Loader {
 				'visible' => $visible_condition,
 			],
 			[
-				'name' => __( 'Database Name', 'w4os' ),
+				'name' => __( 'DB Name', 'w4os' ),
 				'id'   => 'database',
 				'type' => 'text',
 				'std' => empty($values['database']) ? 'opensim' : $values['database'],
