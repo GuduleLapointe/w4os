@@ -343,7 +343,10 @@ class W4OS_Settings extends W4OS_Loader {
 		$output = '';
 		foreach($subfields as $subfield) {
 			$subfield['parent_id'] = $field['id'];
-			$output .= $this->render_field($values[$subfield['id']], $subfield);
+			$output .= $this->render_field(
+				(isset($values[$subfield['id']])) ? $values[$subfield['id']] : null,
+				$subfield
+			);
 		}
 		return $output;
 	}
