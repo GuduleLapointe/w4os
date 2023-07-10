@@ -213,7 +213,6 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	private function db_fields( $values = [], $field=[] ) {
-		error_log(print_r($values, true));
 		$use_default = isset($values['use_default']) ? $values['use_default'] : true;
 		$is_main = isset($values['is_main']) ? $values['is_main'] : false;
 		$field = [];
