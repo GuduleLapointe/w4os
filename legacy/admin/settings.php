@@ -59,26 +59,6 @@ function w4os_register_settings() {
 		),
 		'w4os_settings' => array(
 			'sections' => array(
-				'w4os_options_gridinfo' => array(
-					'name'             => __( 'Grid info', 'w4os' ),
-					'section_callback' => 'w4os_settings_callback_gridinfo',
-					'fields'           => array(
-						'w4os_login_uri' => array(
-							'name'        => 'Login URI',
-							'placeholder' => 'yourgrid.org:8002',
-							'default'     => $default_loginuri,
-							// 'type' => 'string',
-							// 'sanitize_callback' => 'w4os_settings_field',
-							// 'default' => 'Hippo',
-							// 'placeholder' => 'Grid Name',
-						),
-						'w4os_grid_name' => array(
-							'name'        => __( 'Grid Name', 'w4os' ),
-							'placeholder' => 'MyGrid',
-							'default'     => $default_gridname,
-						),
-					),
-				),
 				'w4os_options_database' => array(
 					'name'   => __( 'Robust server database', 'w4os' ),
 					'fields' => array(

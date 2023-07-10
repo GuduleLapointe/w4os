@@ -7,19 +7,10 @@ define( 'W4OS_ADMIN', true );
 // error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 function w4os_register_options_pages() {
-	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_settings_page');
-	add_menu_page(
-		'OpenSimulator', // page title
-		'OpenSimulator', // menu title
-		'manage_options', // capability
-		'w4os', // slug
-		'w4os_status_page', // callable function
-		// plugin_dir_path(__FILE__) . 'options.php', // slug
-		// null,	// callable function
-		plugin_dir_url( dirname( __DIR__ ) ) . 'images/opensimulator-logo-24x14.png', // icon url
-		2 // position
-	);
-	add_submenu_page( 'w4os', __( 'OpenSimulator Status', 'w4os' ), __( 'Status' ), 'manage_options', 'w4os', 'w4os_status_page' );
+	// Remove duplicate because we need to add the submenu both with core api an with metabox api
+	// Remove duplicate because we need to add the submenu both with core api an with metabox api
+	remove_submenu_page( 'w4os', 'w4os_settings' );
+
 	add_submenu_page(
 		'w4os', // parent
 		__( 'OpenSimulator Settings', 'w4os' ), // page title
@@ -28,6 +19,8 @@ function w4os_register_options_pages() {
 		'w4os_settings', // menu slug
 		'w4os_settings_page' // function
 	);
+
+	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_settings_page');
 	if ( function_exists( 'xmlrpc_encode_request' ) ) {
 		add_submenu_page(
 			'w4os', // parent
@@ -39,7 +32,7 @@ function w4os_register_options_pages() {
 		);
 	}
 }
-add_action( 'admin_menu', 'w4os_register_options_pages' );
+add_action( 'admin_menu', 'w4os_register_options_pages', 15 );
 
 function w4os_status_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
@@ -56,7 +49,13 @@ function w4os_settings_page() {
 	}
 	?>
 	<div class="wrap">
-		<h1>OpenSimulator</h1>
+		<h2><?php _e('Legacy Settings', 'w4os') ?></h2>
+		<p class="description"><?php
+			_e('We are currently in a migration process.', 'w4os');
+			_e('During the transition, settings will appear in two sections.', 'w4os');
+			?>
+			<br/><strong><?php _e('To ensure proper application of changes, please make modifications in one section at a time and use the corresponding submit button.', 'w4os') ?></strong>
+		</p>
 		<form method="post" action="options.php" autocomplete="off">
 			<?php
 			settings_fields( 'w4os_settings' );

@@ -255,6 +255,25 @@ function w4os_get_asset_url( $uuid = W4OS_NULL_KEY, $format = W4OS_ASSETS_DEFAUL
 	return ( $asset_server_uri ) ? "$asset_server_uri/$uuid$format" : false;
 }
 
+function w4os_grid_status() {
+	$status = wp_cache_get( 'grid_online_status', 'w4os' );
+	if ( false === $status ) {
+		$login_uri = w4os_grid_login_uri();
+		$parts = wp_parse_url(w4os_grid_login_uri());
+		if($parts['host']) {
+			$fp         = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
+			$status = ( $fp ) ? __( 'Online', 'w4os' ) : __( 'Offline', 'w4os' );
+		} else {
+			$status = sprintf(
+				__('Invalid Login URI', 'w4os'),
+				$login_uri,
+			);
+		}
+		wp_cache_add( 'grid_online_status', $status, 'w4os' );
+	}
+	return $status;
+}
+
 function w4os_grid_status_text() {
 	global $w4osdb;
 
@@ -264,11 +283,11 @@ function w4os_grid_status_text() {
 		if ( $w4osdb->check_connection() ) {
 			$lastmonth = time() - 30 * 86400;
 
-			$urlinfo    = explode( ':', get_option( 'w4os_login_uri' ) );
-			$host       = $urlinfo['0'];
-			$port       = $urlinfo['1'];
-			$fp         = @fsockopen( $host, $port, $errno, $errstr, 1.0 );
-			$gridonline = ( $fp ) ? __( 'Online', 'w4os' ) : __( 'Offline', 'w4os' );
+			// $urlinfo    = explode( ':', get_option( 'w4os_login_uri' ) );
+			// $host       = $urlinfo['0'];
+			// $port       = $urlinfo['1'];
+			// $fp         = @fsockopen( $host, $port, $errno, $errstr, 1.0 );
+			$gridonline = w4os_grid_status();
 
 			// if ($fp) {
 			// $gridonline = __("Yes", 'w4os' );
@@ -435,11 +454,29 @@ function register_w4os_get_urls_statuses_async_cron() {
 }
 add_action( 'init', 'register_w4os_get_urls_statuses_async_cron' );
 
+function w4os_sanitize_login_uri( $login_uri) {
+	if(empty($login_uri)) return;
+
+	$parts = array_merge(array(
+		'scheme' => 'http',
+		'port' => '8002',
+	), wp_parse_url($login_uri));
+
+	$login_uri = $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
+
+	return $login_uri;
+}
+
 function w4os_grid_login_uri() {
-	if ( defined( 'W4OS_GRID_LOGIN_URI' ) ) {
-		return W4OS_GRID_LOGIN_URI;
-	}
-	return 'http://' . esc_attr( get_option( 'w4os_login_uri' ) );
+	// if ( defined( 'W4OS_GRID_LOGIN_URI' ) ) {
+	// 	return W4OS_GRID_LOGIN_URI;
+	// }
+
+	return w4os_sanitize_login_uri( get_option( 'w4os_login_uri' ) );
+}
+
+function w4os_grid_name() {
+	return get_option('w4os_grid_name');
 }
 
 function w4os_grid_running() {
