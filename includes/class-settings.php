@@ -282,17 +282,34 @@ class W4OS_Settings extends W4OS_Loader {
 			$checked = null;
 		}
 
+		$label_args = '';
 		switch($field['type']) {
 			case 'switch':
 				$field['type'] = 'checkbox';
 				$label_args = 'class="rwmb-switch-label rwmb-switch-label--rounded"';
-				$input = '<input type="%3$s" class="rwmb-switch" name="%1$s" id="%1$s" value="%4$s" %5$s />';
+				$input = '<input id="%1$s" value="%4$s" type="%3$s" class="rwmb-switch" name="%1$s" %5$s />';
 				$input .= '<div class="rwmb-switch-status">
 					<span class="rwmb-switch-slider"></span>
 					<span class="rwmb-switch-on"></span>
 					<span class="rwmb-switch-off"></span>
 				</div>';
 				$output = '<div>%2$s<br/><label %6$s>' . $input . '</label></div>';
+			break;
+
+			case 'select':
+			$input = '<select id="w4os_db_type" class="rwmb-select valid" name="%1$s" data-selected="%4$s">';
+			foreach($field['options'] as $option_key => $option_name) {
+				$selected = selected($option_key, $value);
+				$input .= sprintf(
+					'<option value="%1$s" %2$s">%3$s</option>',
+					esc_attr($option_key),
+					$selected,
+					esc_attr($option_name),
+				);
+			}
+			$input .= '</select>';
+			$output = '<label for="%1$s" %6$s>%2$s' . $input . '</label>';
+
 			break;
 
 			default:
