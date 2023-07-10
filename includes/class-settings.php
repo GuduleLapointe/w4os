@@ -312,53 +312,51 @@ class W4OS_Settings extends W4OS_Loader {
 			case 'switch':
 				$field['type'] = 'checkbox';
 				$label_args = 'class="rwmb-switch-label rwmb-switch-label--rounded"';
-				$input = '<input id="%1$s" value="%4$s" type="%3$s" class="rwmb-switch" name="%1$s" %5$s />';
+				$input = '<input id="[field_id]" value="[value]" type="[field_type]" class="rwmb-switch" name="[field_id]" [input_args] />';
 				$input .= '<div class="rwmb-switch-status">
 					<span class="rwmb-switch-slider"></span>
 					<span class="rwmb-switch-on"></span>
 					<span class="rwmb-switch-off"></span>
 				</div>';
-				$output = '<div>%2$s<br/><label %6$s>' . $input . '</label></div>';
+				$output = '<div>[field_label]<br/><label [label_args]>' . $input . '</label></div>';
 			break;
 
 			case 'select':
-			$input = '<select id="w4os_db_type" class="rwmb-select" name="%1$s" data-selected="%4$s">';
+			$input = '<select id="w4os_db_type" class="rwmb-select" name="[field_id]" data-selected="[value]">';
 			foreach($field['options'] as $option_key => $option_name) {
 				$selected = selected($option_key, $value, false);
-				$input .= sprintf(
-					'<option value="%1$s" %2$s>%3$s</option>',
-					esc_attr($option_key),
-					$selected,
-					esc_attr($option_name),
-				);
+				$input .= w4os_replace( '<option value="[value]" [selected]>[label]</option>', array(
+					'value' => esc_attr($option_key),
+					'selected' => $selected,
+					'label' => esc_attr($option_name),
+				));
 			}
 			$input .= '</select>';
-			$output = '<label for="%1$s" %6$s>%2$s' . $input . '</label>';
+			$output = '<label for="[field_id]" [label_args]>[field_label]' . $input . '</label>';
 
 			break;
 
 			default:
 			$label_args = '';
-			$input = '<input type="%3$s" name="%1$s" id="%1$s" value="%4$s" %5$s />';
-			$output = '<label for="%1$s" %6$s>%2$s' . $input . '</label>';
+			$input = '<input type="[field_type]" name="[field_id]" id="[field_id]" value="[value]" [input_args] />';
+			$output = '<label for="[field_id]" [label_args]>[field_label]' . $input . '</label>';
 		}
 		$field_id = (empty($field['parent_id'])) ? $field['id'] : $field['parent_id'] . '[' . $field['id'] . ']';
 		$classes[]='db-field-' . $field['id'];
 		$classes[]='db-field-type-' . $field['type'];
 
-		$output = '<div class="%7$s">' . $output . '</div>';
+		$output = '<div class="[classes]">' . $output . '</div>';
 		$output = preg_replace('/<input +/', '<input ' . $input_args . ' ', $output);
 
-		$output = sprintf(
-			$output,
-			$field_id,
-			$field['name'],
-			$field['type'],
-			$value,
-			$checked,
-			$label_args,
-			join(' ', $classes),
-		);
+		$output = w4os_replace($output, array(
+			'field_id' => $field_id,
+			'field_label' => $field['name'],
+			'field_type' => $field['type'],
+			'value' => $value,
+			'input_args' => $checked,
+			'label_args' => $label_args,
+			'classes' => join(' ', $classes),
+		));
 
 		return $output;
 	}

@@ -614,12 +614,14 @@ function w4os_update_option( $option, $value, $autoload = null ) {
 }
 
 function w4os_replace( $content, $args ) {
+	if(!is_array($args)) {
+		error_log('args ' . $args . ' is not an array');
+		return $content;
+	}
   $keys = array_map(function($key) {
     return "/\[$key\]/";
   }, array_keys( $args ) );
   $values = array_values( $args );
-
-  print_r($keys);
 
   $result = $content = preg_replace( $keys, $values, $content );
   return $result;
