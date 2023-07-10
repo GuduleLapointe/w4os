@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26187a6e9809536d8a35fe26dde39dca",
+    "content-hash": "cff7b111f2e8d327af9ad190972d59e6",
     "packages": [
         {
             "name": "composer/installers",
@@ -251,6 +251,18 @@
             "type": "wordpress-plugin"
         },
         {
+            "name": "meta-box/meta-box-group",
+            "version": "master",
+            "dist": {
+                "type": "zip",
+                "url": "https://metabox.io/?action=download&product=meta-box-group&api_key=42ecdf32b0e76fe7766bc340ad82046b"
+            },
+            "require": {
+                "composer/installers": "~1.0 || ~2.0"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "woocommerce/action-scheduler",
             "version": "3.6.1",
             "source": {
@@ -380,7 +392,8 @@
         "meta-box/mb-admin-columns": 20,
         "meta-box/mb-settings-page": 20,
         "meta-box/meta-box-columns": 20,
-        "meta-box/meta-box-conditional-logic": 20
+        "meta-box/meta-box-conditional-logic": 20,
+        "meta-box/meta-box-group": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
