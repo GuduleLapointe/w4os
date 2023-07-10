@@ -158,12 +158,28 @@ class W4OS_Settings extends W4OS_Loader {
 					)),
 				],
 				array(
-	        'name' => 'Custom Field',
-	        'id' => $prefix . 'customdb',
+	        'name' => __('ROBUST Database', 'w4os'),
+	        'id' => $prefix . 'maindb',
 	        'type' => 'w4osdb_field_type',
 					'save_field' => false,
 					'std' => array(
 						'is_main' => true,
+						'use_default' => false,
+						'type' => get_option( 'w4os_db_type', 'mysql' ),
+						'port' => get_option( 'w4os_db_port', 3306 ),
+						'host' => get_option( 'w4os_db_host' ),
+						'database' => get_option( 'w4os_db_database' ),
+						'user' => get_option( 'w4os_db_user' ),
+						'pass' => get_option( 'w4os_db_pass' ),
+					),
+	      ),
+				array(
+	        'name' => __('OpenSim Database', 'w4os'),
+	        'id' => $prefix . 'maindb',
+	        'type' => 'w4osdb_field_type',
+					'save_field' => false,
+					'std' => array(
+						'use_default' => true,
 						'type' => get_option( 'w4os_db_type', 'mysql' ),
 						'port' => get_option( 'w4os_db_port', 3306 ),
 						'host' => get_option( 'w4os_db_host' ),
@@ -197,26 +213,28 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	private function db_fields( $values = [] ) {
-		$use_robust = isset($values['use_robust']) ? $values['use_robust'] : true;
+		$use_default = isset($values['use_default']) ? $values['use_default'] : true;
 		$is_main = isset($values['is_main']) ? $values['is_main'] : false;
+		$field = [];
 		if($is_main) {
 			$visible_condition = true;
-			$use_robust = false;
+			$use_default = false;
 		} else {
+			$fields[] =
 			$visible_condition = [
-				'when'     => [['use_robust', '!=', 1]],
+				'when'     => [['use_default', '!=', 1]],
 				'relation' => 'or',
 			];
 		}
-		return [
-			[
+		$fields = [
+			'use_default' => [
 					'name'  => __( 'Default', 'w4os' ),
-					'id'    => 'use_robust',
-					'type'  => 'switch',
-					// 'disabled' => $is_main,
-					'hidden' => $is_main,
+					'id'    => 'use_default',
+					'type'  => 'switch', // ($is_main) ? 'hidden' : 'switch',
+					'disabled' => $is_main,
+					// 'hidden' => $is_main,
 					'style' => 'rounded',
-					'std' => $use_robust,
+					'std' => $use_default,
 			],
 			[
 				'name'    => __( 'Type', 'w4os' ),
@@ -264,6 +282,7 @@ class W4OS_Settings extends W4OS_Loader {
 				'visible' => $visible_condition,
 			],
 		];
+		return $fields;
 	}
 
 	public function render_field($value, $field ) {
@@ -274,7 +293,7 @@ class W4OS_Settings extends W4OS_Loader {
 			case 'switch':
 			case 'checkbox':
 			// $type = 'checkbox';
-			$checked = checked($value, false);
+			// $checked = checked($value, false);
 			break;
 
 			default:
@@ -340,7 +359,7 @@ class W4OS_Settings extends W4OS_Loader {
 	public function db_field_html( $html, $field = null, $values = [] ) {
 		// Render the HTML output for the w4os db field type
 		// Use $field and $meta to access field settings and saved values
-		// $fields = array('use_robust', 'type', 'host', 'port', 'database', 'user', 'pass');
+		// $fields = array('use_default', 'type', 'host', 'port', 'database', 'user', 'pass');
 		$subfields = $this->db_fields($values);
 
 		$output = '';

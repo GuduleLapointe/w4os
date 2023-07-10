@@ -31,7 +31,7 @@ function w4os_register_settings() {
 		update_option( 'w4os_hypevents_url', 'http://2do.pm/events/' );
 	}
 
-	if ( get_option( 'w4os_search_use_robust_db' ) ) {
+	if ( get_option( 'w4os_search_use_default_db' ) ) {
 		update_option( 'w4os_search_db_host', get_option( 'w4os_db_host' ) );
 		update_option( 'w4os_search_db_database', get_option( 'w4os_db_database' ) );
 		update_option( 'w4os_search_db_user', get_option( 'w4os_db_user' ) );
@@ -179,7 +179,7 @@ function w4os_register_settings() {
 								__( 'Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids.', 'w4os' ),
 							),
 						),
-						'w4os_search_use_robust_db' => array(
+						'w4os_search_use_default_db' => array(
 							'type'     => 'boolean',
 							'name'     => __( 'Search database', 'w4os' ),
 							'default'  => false,
@@ -343,7 +343,7 @@ function w4os_register_settings() {
 								)
 							),
 						),
-						'w4os_economy_use_robust_db'   => array(
+						'w4os_economy_use_default_db'   => array(
 							'type'        => 'boolean',
 							'name'        => __( 'Economy Database', 'w4os' ),
 							'default'     => true,
