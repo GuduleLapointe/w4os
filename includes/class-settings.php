@@ -293,7 +293,7 @@ class W4OS_Settings extends W4OS_Loader {
 			case 'switch':
 			case 'checkbox':
 			// $type = 'checkbox';
-			// $checked = checked($value, false);
+			$checked = checked($value, true, false);
 			break;
 
 			default:
