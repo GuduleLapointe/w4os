@@ -271,37 +271,47 @@ class W4OS_Settings extends W4OS_Loader {
 		// switch ($field['type']) {
 		// }
 
-		$output = '<label for="%1$s">%2$s';
 		switch($field['type']) {
 			case 'switch':
-			$field['type'] = 'checkbox';
+			case 'checkbox':
+			// $type = 'checkbox';
 			$checked = checked($value);
+			break;
 
 			default:
-			$type = $field['type'];
 			$checked = null;
 		}
-		$output .= '<input type="%3$s" name="%1$s" id="%1$s" value="%4$s" %5$s />';
-		$output .= '</label>';
+
+		switch($field['type']) {
+			case 'switch':
+				$field['type'] = 'checkbox';
+				$label_args = 'class="rwmb-switch-label rwmb-switch-label--rounded"';
+				$input = '<input type="%3$s" class="rwmb-switch" name="%1$s" id="%1$s" value="%4$s" %5$s />';
+				$input .= '<div class="rwmb-switch-status">
+					<span class="rwmb-switch-slider"></span>
+					<span class="rwmb-switch-on"></span>
+					<span class="rwmb-switch-off"></span>
+				</div>';
+				$output = '<div>%2$s<br/><label %6$s>' . $input . '</label></div>';
+			break;
+
+			default:
+			$label_args = '';
+			$input = '<input type="%3$s" name="%1$s" id="%1$s" value="%4$s" %5$s />';
+			$output = '<label for="%1$s" %6$s>%2$s' . $input . '</label>';
+		}
+
 
 		$field_id = (empty($field['parent_id'])) ? $field['id'] : $field['parent_id'] . '[' . $field['id'] . ']';
-		error_log(
- 			"args " . print_r(array(
-				$field_id,
-				$field['name'],
-				$type,
-				$value,
-				$checked,
-			), true)
-			. "field_id $field_id = $value"
-		);
+
 		$output = sprintf(
 			$output,
 			$field_id,
 			$field['name'],
-			$type,
+			$field['type'],
 			$value,
 			$checked,
+			$label_args,
 		);
 
 		return $output;
