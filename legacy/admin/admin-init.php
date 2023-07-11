@@ -8,17 +8,7 @@ define( 'W4OS_ADMIN', true );
 
 function w4os_register_options_pages() {
 	// Remove duplicate because we need to add the submenu both with core api an with metabox api
-	// Remove duplicate because we need to add the submenu both with core api an with metabox api
-	remove_submenu_page( 'w4os', 'w4os_settings' );
-
-	add_submenu_page(
-		'w4os', // parent
-		__( 'OpenSimulator Settings', 'w4os' ), // page title
-		__( 'Settings' ), // menu title
-		'manage_options', // capability
-		'w4os_settings', // menu slug
-		'w4os_settings_page' // function
-	);
+	remove_submenu_page( 'w4os', 'w4os_helpers' );
 
 	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_settings_page');
 	if ( function_exists( 'xmlrpc_encode_request' ) ) {
@@ -41,32 +31,6 @@ function w4os_status_page() {
 	global $wpdb, $w4osdb;
 
 	require plugin_dir_path( __FILE__ ) . 'status-page.php';
-}
-
-function w4os_settings_page() {
-	if ( ! current_user_can( 'manage_options' ) ) {
-		   return;
-	}
-	?>
-	<div class="wrap">
-		<h2><?php _e( 'Legacy Settings', 'w4os' ); ?></h2>
-		<p class="description">
-		<?php
-			_e( 'We are currently in a migration process.', 'w4os' );
-			_e( 'During the transition, settings will appear in two sections.', 'w4os' );
-		?>
-			<br/><strong><?php _e( 'To ensure proper application of changes, please make modifications in one section at a time and use the corresponding submit button.', 'w4os' ); ?></strong>
-		</p>
-		<form method="post" action="options.php" autocomplete="off">
-			<?php
-			settings_fields( 'w4os_settings' );
-			do_settings_sections( 'w4os_settings' );
-			submit_button();
-			?>
-		</form>
-	</div>
-	<?php
-	// wp_enqueue_script( 'w4os-admin-settings-forms', plugins_url( 'js/settings.js', __FILE__ ), array(), W4OS_VERSION );
 }
 
 function w4os_helpers_page() {

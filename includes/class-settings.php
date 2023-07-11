@@ -76,7 +76,6 @@ class W4OS_Settings extends W4OS_Loader {
 		$settings_pages[] = array(
 			'menu_title' => __( 'Settings', 'w4os' ),
 			'id'         => 'w4os_settings',
-			'position'   => 0,
 			'parent'     => 'w4os',
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
