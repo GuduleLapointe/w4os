@@ -185,7 +185,7 @@ class W4OS_Settings extends W4OS_Loader {
 					'fields'     => [
 						[
 							'name'       => __( 'Instructions', 'w4os' ),
-							'id'         => $prefix . 'configuration_instructions',
+							'id'         => 'instructions',
 							'type'       => 'switch',
 							'desc'       => __( 'Show configuration instructions to new users on their profile page.', 'w4os' ),
 							'style'      => 'rounded',
@@ -194,7 +194,7 @@ class W4OS_Settings extends W4OS_Loader {
 						],
 						[
 							'name'       => __( 'Login Page', 'w4os' ),
-							'id'         => $prefix . 'login_page',
+							'id'         => 'login_page',
 							'type'       => 'switch',
 							'desc'       => __( 'Use profile page as login page.', 'w4os' ),
 							'style'      => 'rounded',
@@ -231,7 +231,6 @@ class W4OS_Settings extends W4OS_Loader {
 
 		$this->get_exclude_options();
 
-		// error_log('w4os_exclude ' . print_r(w4os_get_option( 'w4os_exclude' ), true));
 		return $meta_boxes;
 	}
 
@@ -272,8 +271,30 @@ class W4OS_Settings extends W4OS_Loader {
 				update_option( 'w4os_db_host', $credentials['host'] );
 				update_option( 'w4os_db_database', $credentials['database'] );
 				update_option( 'w4os_db_user', $credentials['user'] );
-				update_option( 'w4os_db_pass', $credentials['pass'] );
 				update_option( 'w4os_db_port', $credentials['port'] );
+				update_option( 'w4os_db_pass', $credentials['pass'] );
+			}
+		}
+
+		error_log(print_r($_POST, true));
+		if ( isset( $_POST['nonce_grid-users'] ) && wp_verify_nonce( $_POST['nonce_grid-users'], 'rwmb-save-grid-users' ) ) {
+			update_option( 'w4os_profile_page', ( ( isset($_POST['w4os_profile_page']) && $_POST['w4os_profile_page'] ) ? 'provide' : 'default' ) );
+
+			$options = $_POST['w4os_profile_page_options'];
+			update_option( 'w4os_configuration_instructions', (isset($options['instructions']) ? $options['instructions'] : false ) );
+			update_option( 'w4os_login_page', ( ( isset($options['login_page']) && $options['login_page'] ) ? 'profile' : 'default' ) );
+			update_option( 'w4os_userlist_replace_name', (isset($_POST['w4os_userlist_replace_name']) ? $_POST['w4os_userlist_replace_name'] : false ) );
+
+			$excludes = wp_parse_args(
+				array_fill_keys( isset($_POST['w4os_exclude']) ? $_POST['w4os_exclude'] : array() , 1 ),
+				array(
+					'models' => false,
+					'nomail' => false,
+					'hypergrid' => false,
+				)
+			);
+			foreach ($excludes as $key => $value) {
+				update_option( 'w4os_exclude_' . $key, $value );
 			}
 		}
 	}
