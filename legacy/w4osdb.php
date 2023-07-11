@@ -14,23 +14,41 @@ if ( get_option( 'w4os_db_user' ) && get_option( 'w4os_db_pass' ) && get_option(
 	);
 }
 
-function w4os_check_db() {
-	if ( defined( 'W4OS_DB_CONNECTED' ) ) {
-		return W4OS_DB_CONNECTED;
-	}
-	global $w4osdb;
-	if ( empty( $w4osdb ) ) {
-		return false; // Might happen when using wp-cli
+function w4os_check_db( $cred = [] ) {
+	if( empty($cred)) {
+		if ( defined( 'W4OS_DB_CONNECTED' ) ) {
+			return W4OS_DB_CONNECTED;
+		}
+		global $w4osdb;
+		if ( empty( $w4osdb ) ) {
+			return false; // Might happen when using wp-cli
+		}
+		$checkdb = $w4osdb;
+	} else {
+		$cred = array_merge(array(
+			'user' => null,
+			'pass' => null,
+			'database' => null,
+			'host' => null,
+			'port' => null,
+		), $cred);
+		$checkdb = new WPDB(
+			$cred['user'],
+			$cred['pass'],
+			$cred['database'],
+			$cred['host'] . ( empty($cred['port']) ? '' : ':' . $cred['port'] ),
+		);
+
 	}
 
-	if ( ! empty( $w4osdb ) & ! $w4osdb->check_connection( false ) ) {
+	if ( ! empty( $checkdb ) & ! $checkdb->check_connection( false ) ) {
 		w4os_admin_notice(
 			w4os_give_settings_url( __( 'Could not connect to the database server, please verify your credentials on ', 'w4os' ) ),
 			'error',
 		);
 		return false;
 	}
-	if ( ! $w4osdb->get_var( "SHOW DATABASES LIKE '" . get_option( 'w4os_db_database' ) . "'" ) ) {
+	if ( ! $checkdb->get_var( "SHOW DATABASES LIKE '" . get_option( 'w4os_db_database' ) . "'" ) ) {
 		w4os_admin_notice(
 			w4os_give_settings_url( __( 'Could not connect to the ROBUST database, please verify database name and/or credentials on ', 'w4os' ) ),
 			'error',
@@ -38,7 +56,7 @@ function w4os_check_db() {
 		return false;
 	}
 
-	if ( ! $w4osdb ) {
+	if ( ! $checkdb ) {
 		define( 'W4OS_DB_CONNECTED', false );
 		return false;
 	}

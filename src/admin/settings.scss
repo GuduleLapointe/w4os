@@ -4,38 +4,57 @@
 //   grid-gap: 20px;
 // }
 
+.rwmb-group-wrapper.inline,
+.rwmb-w4osdb_field_type-wrapper {
+  .rwmb-input {
+    > * {
+      max-width: 30em;
+    }
+
+    > .db-field-use_default {
+      max-width: 3em;
+    }
+    > .db-field-type {
+      max-width: 12em;
+    }
+    > .db-field-port {
+      max-width: 6em;
+    }
+  }
+}
+
 @media (min-width: 768px) {
-    .rwmb-group-wrapper.inline,
-    .rwmb-w4osdb_field_type-wrapper {
-      .rwmb-field {
-        display: block;
+  .rwmb-group-wrapper.inline,
+  .rwmb-w4osdb_field_type-wrapper {
+    .rwmb-field {
+      display: block;
 
-        > * {
-          width: auto;
-        }
-      }
-
-      .rwmb-input {
-        display: flex;
-        flex-flow: row wrap;
-        flex: 1;
-        align-content: flex-start;
-        justify-content: space-between;
-        gap: 10px;
-
-        > * {
-          width: 10em;
-        }
-
-        > .db-field-use_default {
-          width: 3em;
-        }
-        > .db-field-type {
-          width: 12em;
-        }
-        > .db-field-port {
-          width: 6em;
-        }
+      > * {
+        width: auto;
       }
     }
+
+    .rwmb-input {
+      display: flex;
+      flex-flow: row wrap;
+      flex: 1;
+      align-content: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+
+      > * {
+        width: 15em;
+      }
+
+      > .db-field-use_default {
+        width: 3em;
+      }
+      > .db-field-type {
+        width: 12em;
+      }
+      > .db-field-port {
+        width: 6em;
+      }
+    }
+  }
 }
