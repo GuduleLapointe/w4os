@@ -133,6 +133,11 @@ class W4OS_Settings extends W4OS_Loader {
 			),
 			'fields'         => array(
 				array(
+					'id' => $prefix . 'db_connected',
+					'type' => 'hidden',
+					'std' => W4OS_DB_CONNECTED,
+				),
+				array(
 					'name'       => __( 'ROBUST Database', 'w4os' ),
 					'id'         => $prefix . 'robust-db',
 					'type'       => 'w4osdb_field_type',
@@ -156,6 +161,10 @@ class W4OS_Settings extends W4OS_Loader {
 			'title'          => __( 'Grid Users', 'w4os' ),
 			'id'             => 'grid-users',
 			'settings_pages' => ['w4os_settings'],
+			'visible'        => array(
+				'when'     => array( array( 'w4os_db_connected', '=', '1' ) ),
+				'relation' => 'or',
+			),
 			'fields'         => [
 				[
 					'name'       => __( 'Profile Page', 'w4os' ),
@@ -276,7 +285,6 @@ class W4OS_Settings extends W4OS_Loader {
 			}
 		}
 
-		error_log(print_r($_POST, true));
 		if ( isset( $_POST['nonce_grid-users'] ) && wp_verify_nonce( $_POST['nonce_grid-users'], 'rwmb-save-grid-users' ) ) {
 			update_option( 'w4os_profile_page', ( ( isset($_POST['w4os_profile_page']) && $_POST['w4os_profile_page'] ) ? 'provide' : 'default' ) );
 
