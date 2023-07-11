@@ -8,6 +8,9 @@ if ( get_option( 'w4os_db_user' ) && get_option( 'w4os_db_pass' ) && get_option(
 		get_option( 'w4os_db_database' ),
 		get_option( 'w4os_db_host' )
 	);
+	// if(isset($w4osdb->error)) {
+	// 	w4os_admin_notice( $w4osdb->error->get_error_message(), 'error' );
+	// }
 } else {
 	w4os_admin_notice(
 		w4os_give_settings_url( __( 'ROBUST database is not configured. To finish configuration, go to ', 'w4os' ) )
