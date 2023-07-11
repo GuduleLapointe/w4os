@@ -1,6 +1,6 @@
 ## Changelog
 
-### Unreleased (2.4.3-dev.1022)
+### Unreleased (2.4.3-dev.1028)
 - added separate web assets server settings page
 - prettier and more efficient db credentials options in settings page (getting ready for optimized use in the future)
 
