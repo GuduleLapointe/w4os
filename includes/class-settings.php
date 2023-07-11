@@ -132,9 +132,9 @@ class W4OS_Settings extends W4OS_Loader {
 			),
 			'fields'         => array(
 				array(
-					'id' => $prefix . 'db_connected',
+					'id'   => $prefix . 'db_connected',
 					'type' => 'hidden',
-					'std' => W4OS_DB_CONNECTED,
+					'std'  => W4OS_DB_CONNECTED,
 				),
 				array(
 					'name'       => __( 'ROBUST Database', 'w4os' ),
@@ -156,20 +156,20 @@ class W4OS_Settings extends W4OS_Loader {
 		);
 
 		// Users
-		$meta_boxes[] = [
+		$meta_boxes[] = array(
 			'title'          => __( 'Grid Users', 'w4os' ),
 			'id'             => 'grid-users',
-			'settings_pages' => ['w4os_settings'],
+			'settings_pages' => array( 'w4os_settings' ),
 			'visible'        => array(
 				'when'     => array( array( 'w4os_db_connected', '=', '1' ) ),
 				'relation' => 'or',
 			),
-			'fields'         => [
-				[
+			'fields'         => array(
+				array(
 					'name'       => __( 'Profile Page', 'w4os' ),
 					'id'         => $prefix . 'profile_page',
 					'type'       => 'switch',
-					'desc'       =>  __( 'Enable to provide avatars a public web profile page.', 'w4os' )
+					'desc'       => __( 'Enable to provide avatars a public web profile page.', 'w4os' )
 					. ' ' . sprintf(
 						preg_replace(
 							'/%%(.*)%%/',
@@ -179,19 +179,19 @@ class W4OS_Settings extends W4OS_Loader {
 						'<code>' . get_home_url( null, get_option( 'w4os_profile_slug', 'profile' ) ) . '</code>',
 					),
 					'style'      => 'rounded',
-					'std'        => empty(get_option('w4os_profile_page') ) ? 'provide' : ( get_option('w4os_profile_page') == 'provide' ),
+					'std'        => empty( get_option( 'w4os_profile_page' ) ) ? 'provide' : ( get_option( 'w4os_profile_page' ) == 'provide' ),
 					'save_field' => false,
-				],
-				[
+				),
+				array(
 					'id'         => $prefix . 'profile_page_options',
 					'type'       => 'group',
 					'save_field' => false,
-					'visible'    => [
-						'when'     => [['w4os_profile_page', '=', 1]],
+					'visible'    => array(
+						'when'     => array( array( 'w4os_profile_page', '=', 1 ) ),
 						'relation' => 'or',
-					],
-					'fields'     => [
-						[
+					),
+					'fields'     => array(
+						array(
 							'name'       => __( 'Instructions', 'w4os' ),
 							'id'         => 'instructions',
 							'type'       => 'switch',
@@ -199,19 +199,19 @@ class W4OS_Settings extends W4OS_Loader {
 							'style'      => 'rounded',
 							'std'        => w4os_option_exists( 'w4os_configuration_instructions' ) ? get_option( 'w4os_configuration_instructions' ) : true,
 							'save_field' => false,
-						],
-						[
+						),
+						array(
 							'name'       => __( 'Login Page', 'w4os' ),
 							'id'         => 'login_page',
 							'type'       => 'switch',
 							'desc'       => __( 'Use profile page as login page.', 'w4os' ),
 							'style'      => 'rounded',
 							'save_field' => false,
-							'std' => empty(get_option('w4os_login_page') ) ? 'profile' : ( get_option('w4os_login_page') == 'profile' ),
-						],
-					],
-				],
-				[
+							'std'        => empty( get_option( 'w4os_login_page' ) ) ? 'profile' : ( get_option( 'w4os_login_page' ) == 'profile' ),
+						),
+					),
+				),
+				array(
 					'name'       => __( 'Replace User Names', 'w4os' ),
 					'id'         => $prefix . 'userlist_replace_name',
 					'type'       => 'switch',
@@ -219,23 +219,23 @@ class W4OS_Settings extends W4OS_Loader {
 					'style'      => 'rounded',
 					'std'        => w4os_option_exists( 'w4os_userlist_replace_name' ) ? get_option( 'w4os_userlist_replace_name' ) : true,
 					'save_field' => false,
-				],
-				[
+				),
+				array(
 					'name'       => __( 'Exclude from stats', 'w4os' ),
 					'id'         => $prefix . 'exclude',
 					'type'       => 'checkbox_list',
 					'desc'       => __( 'Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os' ),
-					'options'    => [
+					'options'    => array(
 						'models'    => __( 'Models', 'w4os' ),
 						'nomail'    => __( 'Accounts without mail address', 'w4os' ),
 						'hypergrid' => __( 'Hypergrid visitors', 'w4os' ),
-					],
+					),
 					'std'        => $this->get_exclude_options(),
 					'inline'     => true,
 					'save_field' => false,
-				],
-			],
-		];
+				),
+			),
+		);
 
 		$this->get_exclude_options();
 
@@ -243,14 +243,18 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	function get_exclude_options() {
-		if( w4os_option_exists( 'w4os_exclude' ) ) {
-			return array_keys(array_filter(array(
-				'models' => get_option('w4os_exclude_models', false),
-				'nomail' => get_option('w4os_exclude_nomail', false),
-				'hypergrid' => get_option('w4os_exclude_hypergrid', false),
-			)));
+		if ( w4os_option_exists( 'w4os_exclude' ) ) {
+			return array_keys(
+				array_filter(
+					array(
+						'models'    => get_option( 'w4os_exclude_models', false ),
+						'nomail'    => get_option( 'w4os_exclude_nomail', false ),
+						'hypergrid' => get_option( 'w4os_exclude_hypergrid', false ),
+					)
+				)
+			);
 		} else {
-			return [ 'models', 'nomail' ];
+			return array( 'models', 'nomail' );
 		}
 	}
 
@@ -285,22 +289,22 @@ class W4OS_Settings extends W4OS_Loader {
 		}
 
 		if ( isset( $_POST['nonce_grid-users'] ) && wp_verify_nonce( $_POST['nonce_grid-users'], 'rwmb-save-grid-users' ) ) {
-			update_option( 'w4os_profile_page', ( ( isset($_POST['w4os_profile_page']) && $_POST['w4os_profile_page'] ) ? 'provide' : 'default' ) );
+			update_option( 'w4os_profile_page', ( ( isset( $_POST['w4os_profile_page'] ) && $_POST['w4os_profile_page'] ) ? 'provide' : 'default' ) );
 
 			$options = $_POST['w4os_profile_page_options'];
-			update_option( 'w4os_configuration_instructions', (isset($options['instructions']) ? $options['instructions'] : false ) );
-			update_option( 'w4os_login_page', ( ( isset($options['login_page']) && $options['login_page'] ) ? 'profile' : 'default' ) );
-			update_option( 'w4os_userlist_replace_name', (isset($_POST['w4os_userlist_replace_name']) ? $_POST['w4os_userlist_replace_name'] : false ) );
+			update_option( 'w4os_configuration_instructions', ( isset( $options['instructions'] ) ? $options['instructions'] : false ) );
+			update_option( 'w4os_login_page', ( ( isset( $options['login_page'] ) && $options['login_page'] ) ? 'profile' : 'default' ) );
+			update_option( 'w4os_userlist_replace_name', ( isset( $_POST['w4os_userlist_replace_name'] ) ? $_POST['w4os_userlist_replace_name'] : false ) );
 
 			$excludes = wp_parse_args(
-				array_fill_keys( isset($_POST['w4os_exclude']) ? $_POST['w4os_exclude'] : array() , 1 ),
+				array_fill_keys( isset( $_POST['w4os_exclude'] ) ? $_POST['w4os_exclude'] : array(), 1 ),
 				array(
-					'models' => false,
-					'nomail' => false,
+					'models'    => false,
+					'nomail'    => false,
 					'hypergrid' => false,
 				)
 			);
-			foreach ($excludes as $key => $value) {
+			foreach ( $excludes as $key => $value ) {
 				update_option( 'w4os_exclude_' . $key, $value );
 			}
 		}

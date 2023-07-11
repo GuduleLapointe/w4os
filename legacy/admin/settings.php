@@ -39,7 +39,7 @@ function w4os_register_settings() {
 	}
 
 	$settings_pages = array(
-		'w4os_status'   => array(
+		'w4os_status'  => array(
 			'sections' => array(
 				'default' => array(
 					'fields' => array(
@@ -57,7 +57,7 @@ function w4os_register_settings() {
 				),
 			),
 		),
-		'w4os_helpers'  => array(
+		'w4os_helpers' => array(
 			'sections' => array(
 				'w4os_options_search'  => array(
 					'name'   => __( 'Search', 'w4os' ),
