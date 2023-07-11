@@ -49,11 +49,6 @@ class W4OS_Settings extends W4OS_Loader {
 				'callback' => 'db_field_html',
 				'accepted_args' => 3,
 			),
-			array(
-				'hook' => 'rwmb_w4osdb_field_type_value',
-				'callback' => 'db_field_value',
-				'accepted_args' => 4,
-			),
 
 			// array(
 			// 	'hook' => 'query_vars',
@@ -103,14 +98,6 @@ class W4OS_Settings extends W4OS_Loader {
 			'settings_pages' => ['w4os_settings'],
 			'fields'         => [
 				[
-						// 'name'       => ,
-						'id'         => $prefix . 'grid_info_section',
-						'type'       => 'custom_html',
-						'std'        => '<h2>' . __( 'Grid Info', 'w4os' ) . '</h2>',
-						'std'        => __( 'Grid Info', 'w4os' ),
-						'save_field' => false,
-				],
-				[
 					'name'       => __( 'Login URI', 'w4os' ),
 					'id'         => $prefix . 'login_uri',
 					'type'       => 'url',
@@ -143,23 +130,9 @@ class W4OS_Settings extends W4OS_Loader {
 				'relation' => 'or',
 			],
 			'fields'         => [
-				// [
-				// 	'name'   => __( 'Database', 'w4os' ),
-				// 	'id'     => $prefix . 'db',
-				// 	'type'   => 'group',
-				// 	'class'  => 'inline',
-				// 	'save_field' => false,
-				// 	'fields' => $this->db_fields(array(
-				// 		'is_main' => true,
-				// 		'host' => get_option( 'w4os_db_host' ),
-				// 		'database' => get_option( 'w4os_db_database' ),
-				// 		'user' => get_option( 'w4os_db_user' ),
-				// 		'pass' => get_option( 'w4os_db_pass' ),
-				// 	)),
-				// ],
 				array(
 	        'name' => __('ROBUST Database', 'w4os'),
-	        'id' => $prefix . 'maindb',
+	        'id' => $prefix . 'robust-db',
 	        'type' => 'w4osdb_field_type',
 					'save_field' => false,
 					'std' => array(
@@ -173,21 +146,6 @@ class W4OS_Settings extends W4OS_Loader {
 						'pass' => get_option( 'w4os_db_pass' ),
 					),
 	      ),
-				// array(
-	      //   'name' => __('Search Database', 'w4os'),
-	      //   'id' => $prefix . 'searchdb',
-	      //   'type' => 'w4osdb_field_type',
-				// 	'save_field' => false,
-				// 	'std' => array(
-				// 		'use_default' => true,
-				// 		'type' => get_option( 'w4os_search_db_type', 'mysql' ),
-				// 		'port' => get_option( 'w4os_search_db_port', 3306 ),
-				// 		'host' => get_option( 'w4os_search_db_host', 'zlocalhost' ),
-				// 		'database' => get_option( 'w4os_search_db_database', 'zossearch' ),
-				// 		'user' => get_option( 'w4os_search_db_user', 'zopensim' ),
-				// 		'pass' => get_option( 'w4os_search_db_pass' ),
-				// 	),
-	      // ),
 			],
 		];
 
@@ -207,9 +165,22 @@ class W4OS_Settings extends W4OS_Loader {
 			}
 		}
 
-		if( isset($_POST['nonce_robust-db']) && wp_verify_nonce( $_POST['nonce_robust-db'], 'rwmb-save-robust-db' ) ) {
-			// error_log(print_r($_POST, true));
+		if( isset($_POST['nonce_robust-db']) && isset($_POST['w4os_robust-db']) && wp_verify_nonce( $_POST['nonce_robust-db'], 'rwmb-save-robust-db' ) ) {
+			global $w4osdb;
+			$credentials = array_map('esc_attr', $_POST['w4os_robust-db']);
+			$credentials['use_default'] = isset($credentials['use_default']) ? $credentials['use_default'] : false;
+
+			update_option( 'w4os_db_use_default', $credentials['use_default'] );
+			if(!$credentials['use_default']) {
+				update_option( 'w4os_db_host', $credentials['host'] );
+				update_option( 'w4os_db_database', $credentials['database'] );
+				update_option( 'w4os_db_user', $credentials['user'] );
+				update_option( 'w4os_db_pass', $credentials['pass'] );
+				update_option( 'w4os_db_port', $credentials['port'] );
+			}
+
 		}
+
 	}
 
 	private function db_fields( $values = [], $field=[] ) {
@@ -236,16 +207,20 @@ class W4OS_Settings extends W4OS_Loader {
 					'style' => 'rounded',
 					'std' => $use_default,
 			],
-			[
-				'name'    => __( 'Type', 'w4os' ),
-				'id'      => 'type',
-				'type'    => 'select',
-				'options' => [
-					'mysql' => __( 'MySQL', 'w4os' ),
-				],
-				'std' => empty($values['type']) ? 'mysql' : $values['type'],
-				'visible' => $visible_condition,
-			],
+			/**
+			 * WPDB only supports MySQL, if we want to support other databases
+			 * supported by OpenSimulator we will to migrate to PDO instead.
+			 */
+			// [
+			// 	'name'    => __( 'Type', 'w4os' ),
+			// 	'id'      => 'type',
+			// 	'type'    => 'select',
+			// 	'options' => [
+			// 		'mysql' => __( 'MySQL', 'w4os' ),
+			// 	],
+			// 	'std' => empty($values['type']) ? 'mysql' : $values['type'],
+			// 	'visible' => $visible_condition,
+			// ],
 			[
 				'name' => __( 'Hostname', 'w4os' ),
 				'id'   => 'host',
@@ -311,7 +286,7 @@ class W4OS_Settings extends W4OS_Loader {
 			case 'switch':
 				$field['type'] = 'checkbox';
 				$label_args = 'class="rwmb-switch-label rwmb-switch-label--rounded"';
-				$input = '<input id="[field_id]" value="[value]" type="[field_type]" class="rwmb-switch" name="[field_id]" [input_args] />';
+				$input = '<input id="[field_id]" name="[field_name]" value="[value]" type="[field_type]" class="rwmb-switch" [input_args] />';
 				$input .= '<div class="rwmb-switch-status">
 					<span class="rwmb-switch-slider"></span>
 					<span class="rwmb-switch-on"></span>
@@ -321,7 +296,7 @@ class W4OS_Settings extends W4OS_Loader {
 			break;
 
 			case 'select':
-			$input = '<select id="w4os_db_type" class="rwmb-select" name="[field_id]" data-selected="[value]">';
+			$input = '<select id="w4os_db_type" name="[field_name]" class="rwmb-select" data-selected="[value]">';
 			foreach($field['options'] as $option_key => $option_name) {
 				$selected = selected($option_key, $value, false);
 				$input .= w4os_replace( '<option value="[value]" [selected]>[label]</option>', array(
@@ -337,10 +312,11 @@ class W4OS_Settings extends W4OS_Loader {
 
 			default:
 			$label_args = '';
-			$input = '<input type="[field_type]" name="[field_id]" id="[field_id]" value="[value]" [input_args] />';
+			$input = '<input type="[field_type]" name="[field_name]" id="[field_id]" value="[value]" [input_args] />';
 			$output = '<label for="[field_id]" [label_args]>[field_label]' . $input . '</label>';
 		}
-		$field_id = (empty($field['parent_id'])) ? $field['id'] : $field['parent_id'] . '[' . $field['id'] . ']';
+		$field_id = (empty($field['parent_id'])) ? $field['id'] : $field['parent_id'] . '_' . $field['id'];
+		$field_name = (empty($field['parent_id'])) ? $field['id'] : $field['parent_id'] . '[' . $field['id'] . ']';
 		$classes[]='db-field-' . $field['id'];
 		$classes[]='db-field-type-' . $field['type'];
 
@@ -349,6 +325,7 @@ class W4OS_Settings extends W4OS_Loader {
 
 		$output = w4os_replace($output, array(
 			'field_id' => $field_id,
+			'field_name' => $field_name,
 			'field_label' => $field['name'],
 			'field_type' => $field['type'],
 			'value' => $value,

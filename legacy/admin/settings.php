@@ -59,26 +59,6 @@ function w4os_register_settings() {
 		),
 		'w4os_settings' => array(
 			'sections' => array(
-				'w4os_options_database' => array(
-					'name'   => __( 'Robust server database', 'w4os' ),
-					'fields' => array(
-						'w4os_db_host'     => array(
-							'name' => __( 'Hostname', 'w4os' ),
-						),
-						'w4os_db_database' => array(
-							'name' => __( 'Database Name', 'w4os' ),
-						),
-						'w4os_db_user'     => array(
-							'name'         => __( 'Username', 'w4os' ),
-							'autocomplete' => 'off',
-						),
-						'w4os_db_pass'     => array(
-							'name'         => __( 'Password', 'w4os' ),
-							'type'         => 'password',
-							'autocomplete' => 'off',
-						),
-					),
-				),
 				'w4os_options_users'    => array(
 					'name'   => __( 'Grid users', 'w4os' ),
 					'fields' => array(
