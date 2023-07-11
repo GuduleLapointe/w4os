@@ -89,7 +89,7 @@ function w4os_register_settings() {
 							),
 							'default'     => 'provide',
 							'description' => ( w4os_check_db_tables( 'userprofile' ) ) ? sprintf(
-								__( 'The page %1$s must exist, as defined in %2$spermalinks settings%3$s.', 'w4os' ),
+								__( 'The page [profile_slug] must exist, as defined in %2$spermalinks settings%3$s.', 'w4os' ),
 								'<code>' . get_home_url( null, get_option( 'w4os_profile_slug', 'profile' ) ) . '</code>',
 								'<a href=' . get_admin_url( '', 'options-permalink.php' ) . '>',
 								'</a>',
@@ -117,7 +117,7 @@ function w4os_register_settings() {
 						),
 						'w4os_userlist_replace_name'      => array(
 							'type'  => 'boolean',
-							'name'  => __( 'Replace user name', 'w4os' ),
+							'name'  => __( 'Replace User Names', 'w4os' ),
 							'label' => __( 'Show avatar name instead of user name in users list.', 'w4os' ),
 						),
 						'w4os_exclude'                    => array(

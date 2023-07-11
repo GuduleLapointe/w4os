@@ -89,6 +89,7 @@ class W4OS_Settings extends W4OS_Loader {
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
+		// Grid Info
 		$meta_boxes[] = array(
 			'title'          => __( 'Grid Info', 'w4os' ),
 			'name'           => __( 'Grid Info', 'w4os' ),
@@ -122,6 +123,7 @@ class W4OS_Settings extends W4OS_Loader {
 			),
 		);
 
+		// Database
 		$meta_boxes[] = array(
 			'id'             => 'robust-db',
 			'settings_pages' => array( 'w4os_settings' ),
@@ -148,6 +150,83 @@ class W4OS_Settings extends W4OS_Loader {
 				),
 			),
 		);
+
+		// Users
+		$meta_boxes[] = [
+			'title'          => __( 'Grid Users', 'w4os' ),
+			'id'             => 'grid-users',
+			'settings_pages' => ['w4os_settings'],
+			'fields'         => [
+				[
+					'name'       => __( 'Profile Page', 'w4os' ),
+					'id'         => $prefix . 'profile_page',
+					'type'       => 'switch',
+					'desc'       =>  __( 'Enable to provide avatars a public web profile page.', 'w4os' )
+					. ' ' . sprintf(
+						preg_replace(
+							'/%%(.*)%%/',
+							'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
+							__( 'The page %1$s must exist, as defined in %%permalinks settings%%.', 'w4os' ),
+						),
+						'<code>' . get_home_url( null, get_option( 'w4os_profile_slug', 'profile' ) ) . '</code>',
+					),
+					'style'      => 'rounded',
+					'std'        => true,
+					'save_field' => false,
+				],
+				[
+					'id'         => $prefix . 'profile_page_options',
+					'type'       => 'group',
+					'fields'     => [
+						[
+							'name'       => __( 'Instructions', 'w4os' ),
+							'id'         => $prefix . 'configuration_instructions',
+							'type'       => 'switch',
+							'desc'       => __( 'Show configuration instructions to new users on their profile page.', 'w4os' ),
+							'style'      => 'rounded',
+							'std'        => true,
+							'save_field' => false,
+						],
+						[
+							'name'       => __( 'Login Page', 'w4os' ),
+							'id'         => $prefix . 'login_page',
+							'type'       => 'switch',
+							'desc'       => __( 'Use profile page as login page.', 'w4os' ),
+							'style'      => 'rounded',
+							'save_field' => false,
+						],
+					],
+					'save_field' => false,
+					'visible'    => [
+						'when'     => [['w4os_profile_page', '=', 1]],
+						'relation' => 'or',
+					],
+				],
+				[
+					'name'       => __( 'Replace User Names', 'w4os' ),
+					'id'         => $prefix . 'userlist_replace_name',
+					'type'       => 'switch',
+					'desc'       => __( 'Show avatar name instead of user name in users list.', 'w4os' ),
+					'style'      => 'rounded',
+					'std'        => true,
+					'save_field' => false,
+					],
+					[
+					'name'       => __( 'Exclude from stats', 'w4os' ),
+					'id'         => $prefix . 'exclude',
+					'type'       => 'checkbox_list',
+					'desc'       => __( 'Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os' ),
+					'options'    => [
+					'models'    => __( 'Models', 'w4os' ),
+					'nomail'    => __( 'Accounts without mail address', 'w4os' ),
+					'hypergrid' => __( 'Hypergrid visitors', 'w4os' ),
+					],
+					'std'        => ['models', 'nomail'],
+					'inline'     => true,
+					'save_field' => false,
+					],
+					],
+					];
 
 		return $meta_boxes;
 	}
