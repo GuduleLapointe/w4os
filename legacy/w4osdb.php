@@ -9,7 +9,7 @@ if ( get_option( 'w4os_db_user' ) && get_option( 'w4os_db_pass' ) && get_option(
 		get_option( 'w4os_db_host' )
 	);
 	// if(isset($w4osdb->error)) {
-	// 	w4os_admin_notice( $w4osdb->error->get_error_message(), 'error' );
+	// w4os_admin_notice( $w4osdb->error->get_error_message(), 'error' );
 	// }
 } else {
 	w4os_admin_notice(
@@ -17,8 +17,8 @@ if ( get_option( 'w4os_db_user' ) && get_option( 'w4os_db_pass' ) && get_option(
 	);
 }
 
-function w4os_check_db( $cred = [] ) {
-	if( empty($cred)) {
+function w4os_check_db( $cred = array() ) {
+	if ( empty( $cred ) ) {
 		if ( defined( 'W4OS_DB_CONNECTED' ) ) {
 			return W4OS_DB_CONNECTED;
 		}
@@ -28,18 +28,21 @@ function w4os_check_db( $cred = [] ) {
 		}
 		$checkdb = $w4osdb;
 	} else {
-		$cred = array_merge(array(
-			'user' => null,
-			'pass' => null,
-			'database' => null,
-			'host' => null,
-			'port' => null,
-		), $cred);
+		$cred    = array_merge(
+			array(
+				'user'     => null,
+				'pass'     => null,
+				'database' => null,
+				'host'     => null,
+				'port'     => null,
+			),
+			$cred
+		);
 		$checkdb = new WPDB(
 			$cred['user'],
 			$cred['pass'],
 			$cred['database'],
-			$cred['host'] . ( empty($cred['port']) ? '' : ':' . $cred['port'] ),
+			$cred['host'] . ( empty( $cred['port'] ) ? '' : ':' . $cred['port'] ),
 		);
 
 	}

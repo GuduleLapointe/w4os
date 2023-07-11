@@ -16,41 +16,41 @@ class W4OS_Assets extends W4OS_Loader {
 	}
 
 	public function init() {
-		$this->provide =  get_option( 'w4os_provide_asset_server', false);
+		$this->provide      = get_option( 'w4os_provide_asset_server', false );
 		$this->internal_url = get_option( 'w4os_internal_asset_server_uri', false );
 		$this->external_url = get_option( 'w4os_external_asset_server_uri', false );
-		$this->url = w4os_asset_server_uri();
+		$this->url          = w4os_asset_server_uri();
 
 		$this->actions = array(
 			array(
-				'hook' => 'init',
+				'hook'     => 'init',
 				'callback' => 'sanitize_options',
 			),
 			array(
-				'hook' => 'init',
+				'hook'     => 'init',
 				'callback' => 'rewrite_rules',
 			),
 			array(
-				'hook' => 'admin_init',
+				'hook'     => 'admin_init',
 				'callback' => 'register_permalinks_options',
 			),
 			array(
-				'hook' => 'template_include',
+				'hook'     => 'template_include',
 				'callback' => 'template_include',
 			),
 		);
 
 		$this->filters = array(
 			array(
-				'hook' => 'mb_settings_pages',
+				'hook'     => 'mb_settings_pages',
 				'callback' => 'register_settings_pages',
 			),
 			array(
-				'hook' => 'rwmb_meta_boxes',
+				'hook'     => 'rwmb_meta_boxes',
 				'callback' => 'register_settings_fields',
 			),
 			array(
-				'hook' => 'query_vars',
+				'hook'     => 'query_vars',
 				'callback' => 'register_query_vars',
 			),
 		);
@@ -79,15 +79,15 @@ class W4OS_Assets extends W4OS_Loader {
 	}
 
 	function register_settings_pages( $settings_pages ) {
-		$settings_pages[] = [
-	        'menu_title' => __( 'Assets Server', 'w4os' ),
-	        'page_title' => __( 'Web Assets Server', 'w4os' ),
-	        'id'         => 'assets-server',
-	        'position'   => 0,
-	        'parent'     => 'w4os',
-	        'style'      => 'no-boxes',
-	        'icon_url'   => 'dashicons-admin-generic',
-	    ];
+		$settings_pages[] = array(
+			'menu_title' => __( 'Assets Server', 'w4os' ),
+			'page_title' => __( 'Web Assets Server', 'w4os' ),
+			'id'         => 'assets-server',
+			'position'   => 0,
+			'parent'     => 'w4os',
+			'style'      => 'no-boxes',
+			'icon_url'   => 'dashicons-admin-generic',
+		);
 
 		return $settings_pages;
 	}
@@ -95,54 +95,54 @@ class W4OS_Assets extends W4OS_Loader {
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
-		$meta_boxes[] = [
+		$meta_boxes[] = array(
 			'title'          => __( 'Assets Server Fields', 'w4os' ),
 			'id'             => 'assets-server',
-			'settings_pages' => ['assets-server'],
-			'fields'         => [
-				[
-					'name'              => __( 'Provide Web Assets Server', 'w4os' ),
-					'id'                => $prefix . 'provide',
-					'type'              => 'switch',
-					'desc'              => __( 'A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os' ),
-					'style'             => 'rounded',
-					'std'               => $this->provide,
-					'save_field'        => false,
-				],
-				[
-					'name'              => __( 'Web Assets Server URL', 'w4os' ),
-					'id'                => $prefix . 'internal_url',
-					'type'              => 'url',
-					'desc'              => preg_replace(
+			'settings_pages' => array( 'assets-server' ),
+			'fields'         => array(
+				array(
+					'name'       => __( 'Provide Web Assets Server', 'w4os' ),
+					'id'         => $prefix . 'provide',
+					'type'       => 'switch',
+					'desc'       => __( 'A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures).', 'w4os' ),
+					'style'      => 'rounded',
+					'std'        => $this->provide,
+					'save_field' => false,
+				),
+				array(
+					'name'       => __( 'Web Assets Server URL', 'w4os' ),
+					'id'         => $prefix . 'internal_url',
+					'type'       => 'url',
+					'desc'       => preg_replace(
 						'/%%(.*)%%/',
 						'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
 						__( 'You can set the assets slug in %%permalinks settings page%%', 'w4os' ),
 					),
-					'std'               => $this->internal_url,
-					'disabled'          => true,
-					'readonly'          => true,
-					'save_field'        => false,
-					'visible'           => [
-						'when'     => [['provide', '=', 1]],
+					'std'        => $this->internal_url,
+					'disabled'   => true,
+					'readonly'   => true,
+					'save_field' => false,
+					'visible'    => array(
+						'when'     => array( array( 'provide', '=', 1 ) ),
 						'relation' => 'or',
-					],
-				],
-				[
-					'name'              => __( 'Web Assets Server URL', 'w4os' ),
-					'id'                => $prefix . 'external_url',
-					'type'              => 'url',
-					'desc'              => __( 'If \'Provide Web Assets Server\' is disabled, it is necessary to install a third-party service and enter its URL here to ensure the proper functioning of the plugin.', 'w4os' ),
-					'placeholder'       => __( 'http://example.org/assets/assets.php?id=', 'w4os' ),
-					'std' => $this->external_url,
-					'required' => true,
-					'save_field'        => false,
-					'visible'           => [
-						'when'     => [['provide', '!=', 1]],
+					),
+				),
+				array(
+					'name'        => __( 'Web Assets Server URL', 'w4os' ),
+					'id'          => $prefix . 'external_url',
+					'type'        => 'url',
+					'desc'        => __( 'If \'Provide Web Assets Server\' is disabled, it is necessary to install a third-party service and enter its URL here to ensure the proper functioning of the plugin.', 'w4os' ),
+					'placeholder' => __( 'http://example.org/assets/assets.php?id=', 'w4os' ),
+					'std'         => $this->external_url,
+					'required'    => true,
+					'save_field'  => false,
+					'visible'     => array(
+						'when'     => array( array( 'provide', '!=', 1 ) ),
 						'relation' => 'or',
-					],
-				],
-			],
-		];
+					),
+				),
+			),
+		);
 
 		return $meta_boxes;
 	}
@@ -150,26 +150,28 @@ class W4OS_Assets extends W4OS_Loader {
 	// $this->internal_url = get_option( 'w4os_internal_asset_server_uri', false );
 	// $this->external_url = get_option( 'w4os_external_asset_server_uri', false );
 	function sanitize_options() {
-		if (empty($_POST)) return;
+		if ( empty( $_POST ) ) {
+			return;
+		}
 
-		if(isset($_POST['nonce_assets-server'])) {
-			$this->provide = isset($_POST['w4os_provide'] ) ? $_POST['w4os_provide'] : false;
-			if($this->provide != get_option('w4os_provide_asset_server') ) {
+		if ( isset( $_POST['nonce_assets-server'] ) ) {
+			$this->provide = isset( $_POST['w4os_provide'] ) ? $_POST['w4os_provide'] : false;
+			if ( $this->provide != get_option( 'w4os_provide_asset_server' ) ) {
 				update_option( 'w4os_rewrite_rules', true );
 			}
-			update_option('w4os_provide_asset_server', $this->provide );
-			$this->external_url =  isset($_POST['w4os_external_url'] ) ? $_POST['w4os_external_url'] : null;
-			update_option('w4os_external_asset_server_uri', $this->external_url );
+			update_option( 'w4os_provide_asset_server', $this->provide );
+			$this->external_url = isset( $_POST['w4os_external_url'] ) ? $_POST['w4os_external_url'] : null;
+			update_option( 'w4os_external_asset_server_uri', $this->external_url );
 			$this->internal_url = trailingslashit( get_home_url( null, '/' . get_option( 'w4os_assets_slug' ) ) );
 			// update_option('w4os_internal_asset_server_uri', $this->internal_url );
 			return;
 		}
 
-		if(isset($_POST['w4os-permalinks-assets-nonce'])) {
-			$nonce = isset($_REQUEST['w4os-permalinks-assets-nonce']) ? $_REQUEST['w4os-permalinks-assets-nonce'] : false;
-			if( wp_verify_nonce( $nonce, 'w4os-permalinks-assets' ) ) {
-				$this->slug = empty($_POST['w4os_assets_slug']) ? 'assets' : sanitize_title($_POST['w4os_assets_slug']);
-				if($this->slug !== get_option('w4os_assets_slug')) {
+		if ( isset( $_POST['w4os-permalinks-assets-nonce'] ) ) {
+			$nonce = isset( $_REQUEST['w4os-permalinks-assets-nonce'] ) ? $_REQUEST['w4os-permalinks-assets-nonce'] : false;
+			if ( wp_verify_nonce( $nonce, 'w4os-permalinks-assets' ) ) {
+				$this->slug = empty( $_POST['w4os_assets_slug'] ) ? 'assets' : sanitize_title( $_POST['w4os_assets_slug'] );
+				if ( $this->slug !== get_option( 'w4os_assets_slug' ) ) {
 					update_option( 'w4os_rewrite_rules', true );
 				}
 				update_option( 'w4os_assets_slug', $this->slug );
@@ -184,13 +186,13 @@ class W4OS_Assets extends W4OS_Loader {
 		add_settings_section(
 			'w4os_permalinks',
 			'W4OS',
-			array($this, 'w4os_permalinks_output'),
+			array( $this, 'w4os_permalinks_output' ),
 			'permalink',
 		);
 		add_settings_field(
 			'w4os_assets_slug',
 			__( 'Assets base', 'w4os' ),
-			array($this, 'w4os_assets_slug_output'),
+			array( $this, 'w4os_assets_slug_output' ),
 			'permalink',
 			'w4os_permalinks'
 		);
@@ -227,36 +229,36 @@ class W4OS_Assets extends W4OS_Loader {
 	 * template_include
 	 */
 	// function w4os_redirect_if_asset() {
-	// 	$url          = getenv( 'REDIRECT_URL' );
-	// 	$uuid_pattern = '[a-fA-F0-9-]{8}-[a-fA-F0-9-]{4}-[a-fA-F0-9-]{4}-[a-fA-F0-9-]{4}-[a-fA-F0-9-]{12}';
-	// 	$ext_pattern  = '[a-zA-Z0-9]{3}[a-zA-Z0-9]?';
-	// 	if ( ! preg_match(
-	// 		'#' . preg_replace( ':^/:', '', esc_attr( parse_url( wp_upload_dir()['baseurl'], PHP_URL_PATH ) ) ) . '/w4os/assets/images/' . $uuid_pattern . '\.' . $ext_pattern . '$' . '#',
-	// 		$url,
-	// 	) ) {
-	// 		return false;
-	// 	}
+	// $url          = getenv( 'REDIRECT_URL' );
+	// $uuid_pattern = '[a-fA-F0-9-]{8}-[a-fA-F0-9-]{4}-[a-fA-F0-9-]{4}-[a-fA-F0-9-]{4}-[a-fA-F0-9-]{12}';
+	// $ext_pattern  = '[a-zA-Z0-9]{3}[a-zA-Z0-9]?';
+	// if ( ! preg_match(
+	// '#' . preg_replace( ':^/:', '', esc_attr( parse_url( wp_upload_dir()['baseurl'], PHP_URL_PATH ) ) ) . '/w4os/assets/images/' . $uuid_pattern . '\.' . $ext_pattern . '$' . '#',
+	// $url,
+	// ) ) {
+	// return false;
+	// }
 	//
-	// 	$image = explode( '.', basename( $url ) );
-	// 	if ( count( $image ) != 2 ) {
-	// 		return false;
-	// 	}
-	// 	$query_asset  = $image[0];
-	// 	$query_format = $image[1];
-	// 	if ( ! preg_match( '/^(jpg|png)$/i', $query_format ) ) {
-	// 		return false;
-	// 	}
+	// $image = explode( '.', basename( $url ) );
+	// if ( count( $image ) != 2 ) {
+	// return false;
+	// }
+	// $query_asset  = $image[0];
+	// $query_format = $image[1];
+	// if ( ! preg_match( '/^(jpg|png)$/i', $query_format ) ) {
+	// return false;
+	// }
 	//
-	// 	require W4OS_DIR . '/templates/assets-render.php';
-	// 	die();
+	// require W4OS_DIR . '/templates/assets-render.php';
+	// die();
 	// }
 
 	function template_include( $template ) {
-		if ( empty(get_query_var( 'asset_uuid' )) ) {
+		if ( empty( get_query_var( 'asset_uuid' ) ) ) {
 			return $template;
 		}
 		return W4OS_DIR . '/templates/assets-render.php';
 	}
 }
 
-$this->loaders[]=new W4OS_Assets();
+$this->loaders[] = new W4OS_Assets();

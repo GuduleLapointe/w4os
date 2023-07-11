@@ -49,12 +49,13 @@ function w4os_settings_page() {
 	}
 	?>
 	<div class="wrap">
-		<h2><?php _e('Legacy Settings', 'w4os') ?></h2>
-		<p class="description"><?php
-			_e('We are currently in a migration process.', 'w4os');
-			_e('During the transition, settings will appear in two sections.', 'w4os');
-			?>
-			<br/><strong><?php _e('To ensure proper application of changes, please make modifications in one section at a time and use the corresponding submit button.', 'w4os') ?></strong>
+		<h2><?php _e( 'Legacy Settings', 'w4os' ); ?></h2>
+		<p class="description">
+		<?php
+			_e( 'We are currently in a migration process.', 'w4os' );
+			_e( 'During the transition, settings will appear in two sections.', 'w4os' );
+		?>
+			<br/><strong><?php _e( 'To ensure proper application of changes, please make modifications in one section at a time and use the corresponding submit button.', 'w4os' ); ?></strong>
 		</p>
 		<form method="post" action="options.php" autocomplete="off">
 			<?php

@@ -59,7 +59,7 @@ function w4os_register_settings() {
 		),
 		'w4os_settings' => array(
 			'sections' => array(
-				'w4os_options_users'    => array(
+				'w4os_options_users' => array(
 					'name'   => __( 'Grid users', 'w4os' ),
 					'fields' => array(
 						'w4os_profile_page'               => array(
@@ -146,10 +146,10 @@ function w4os_register_settings() {
 		),
 		'w4os_helpers'  => array(
 			'sections' => array(
-				'w4os_options_search'            => array(
+				'w4os_options_search'  => array(
 					'name'   => __( 'Search', 'w4os' ),
 					'fields' => array(
-						'w4os_provide_search'       => array(
+						'w4os_provide_search'        => array(
 							'type'        => 'boolean',
 							'name'        => __( 'Provide In-world Search', 'w4os' ),
 							'onchange'    => 'onchange="valueChanged(this)"',
@@ -166,26 +166,26 @@ function w4os_register_settings() {
 							'onchange' => 'onchange="valueChanged(this)"',
 							'label'    => __( 'Use the same database as Robust' ),
 						),
-						'w4os_search_db_host'       => array(
+						'w4os_search_db_host'        => array(
 							'name'    => __( 'Hostname', 'w4os' ),
 							'default' => esc_attr( get_option( 'w4os_db_host', 'localhost' ) ),
 						),
-						'w4os_search_db_database'   => array(
+						'w4os_search_db_database'    => array(
 							'name'    => __( 'Database Name', 'w4os' ),
 							'default' => esc_attr( get_option( 'w4os_db_database', 'currency' ) ),
 						),
-						'w4os_search_db_user'       => array(
+						'w4os_search_db_user'        => array(
 							'name'         => __( 'Username', 'w4os' ),
 							'autocomplete' => 'off',
 							'default'      => esc_attr( get_option( 'w4os_db_user', 'opensim' ) ),
 						),
-						'w4os_search_db_pass'       => array(
+						'w4os_search_db_pass'        => array(
 							'name'         => __( 'Password', 'w4os' ),
 							'type'         => 'password',
 							'autocomplete' => 'off',
 							'default'      => esc_attr( get_option( 'w4os_db_pass' ) ),
 						),
-						'w4os_search_url'           => array(
+						'w4os_search_url'            => array(
 							'name'        => __( 'Search Engine URL', 'w4os' ),
 							'placeholder' => $default_search_url,
 							'default'     => $default_search_url,
@@ -220,7 +220,7 @@ function w4os_register_settings() {
 									)
 								),
 						),
-						'w4os_search_register'      => array(
+						'w4os_search_register'       => array(
 							'name'        => __( 'Search register', 'w4os' ),
 							'placeholder' => 'http://2do.directory/helpers/register.php',
 							'description' =>
@@ -239,7 +239,7 @@ function w4os_register_settings() {
 								)
 							),
 						),
-						'w4os_hypevents_url'        => array(
+						'w4os_hypevents_url'         => array(
 							'name'        => __( 'Events Server URL', 'w4os' ),
 							'placeholder' => 'https://2do.pm/events/',
 							'description' => __( 'HYPEvents Server URL, used to fetch upcoming events and make them available in search.', 'w4os' )
@@ -248,7 +248,7 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_offline'           => array(
+				'w4os_options_offline' => array(
 					'name'   => __( 'Offline messages', 'w4os' ),
 					'fields' => array(
 						'w4os_provide_offline_messages' => array(
@@ -289,7 +289,7 @@ function w4os_register_settings() {
 						),
 					),
 				),
-				'w4os_options_economy'           => array(
+				'w4os_options_economy' => array(
 					'name'   => 'Economy',
 					'fields' => array(
 						'w4os_provide_economy_helpers' => array(
@@ -323,7 +323,7 @@ function w4os_register_settings() {
 								)
 							),
 						),
-						'w4os_economy_use_default_db'   => array(
+						'w4os_economy_use_default_db'  => array(
 							'type'        => 'boolean',
 							'name'        => __( 'Economy Database', 'w4os' ),
 							'default'     => true,

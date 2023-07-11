@@ -3,22 +3,25 @@
 
 class W4OS_WPDB extends WPDB {
 	public function __construct( $dbuser, $dbpassword = null, $dbname = null, $dbhost = null ) {
-    if ( WP_DEBUG && WP_DEBUG_DISPLAY ) {
-      $this->show_errors();
-    }
+		if ( WP_DEBUG && WP_DEBUG_DISPLAY ) {
+			$this->show_errors();
+		}
 
-		if(is_array($dbuser)) {
-			$credentials = array_merge(array(
-				'user' => null,
-				'pass' => null,
-				'database' => null,
-				'hostname' => null,
-				'port' => null,
-			), $dbuser);
-			$dbuser     = $credentials['user'];
-			$dbpassword = $credentials['pass'];
-			$dbname     = $credentials['database'];
-			$dbhost     = $credentials['host'] . ( empty($credentials['port']) ? '' : ':' . $credentials['port'] );
+		if ( is_array( $dbuser ) ) {
+			$credentials = array_merge(
+				array(
+					'user'     => null,
+					'pass'     => null,
+					'database' => null,
+					'hostname' => null,
+					'port'     => null,
+				),
+				$dbuser
+			);
+			$dbuser      = $credentials['user'];
+			$dbpassword  = $credentials['pass'];
+			$dbname      = $credentials['database'];
+			$dbhost      = $credentials['host'] . ( empty( $credentials['port'] ) ? '' : ':' . $credentials['port'] );
 		}
 
 		// Use the `mysqli` extension if it exists unless `WP_USE_EXT_MYSQL` is defined as true.

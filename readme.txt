@@ -167,8 +167,9 @@ On the opposite, if there was an actual helpers/ folder in your website root, it
 
 == Changelog ==
 
-= Unreleased (2.4.3-dev.1001) =
+= Unreleased (2.4.3-dev.1022) =
 * added separate web assets server settings page
+* prettier and more efficient db credentials options in settings page (getting ready for optimized use in the future)
 
 = 2.4.2 =
 * added option to define avatar models with a custom list in addition to name rule

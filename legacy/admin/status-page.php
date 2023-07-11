@@ -254,10 +254,10 @@ $count = w4os_count_users();
 					? '<p class=third_party>'
 					. __( 'This service requires a separate web application.', '<w4os>' )
 					. (
-						empty($data['third_party_url']) ? null :
+						empty( $data['third_party_url'] ) ? null :
 						' ' . sprintf(
 							__( 'Try %s', '<w4os>' ),
-							preg_replace('/%url%/', $data['third_party_url'], '<a href="%url%" target=_blank>%url%</a>'),
+							preg_replace( '/%url%/', $data['third_party_url'], '<a href="%url%" target=_blank>%url%</a>' ),
 						)
 					)
 					. '</p>'

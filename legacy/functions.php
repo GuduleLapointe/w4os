@@ -259,13 +259,13 @@ function w4os_grid_status() {
 	$status = wp_cache_get( 'grid_online_status', 'w4os' );
 	if ( false === $status ) {
 		$login_uri = w4os_grid_login_uri();
-		$parts = wp_parse_url(w4os_grid_login_uri());
-		if($parts['host']) {
-			$fp         = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
+		$parts     = wp_parse_url( w4os_grid_login_uri() );
+		if ( $parts['host'] ) {
+			$fp     = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
 			$status = ( $fp ) ? __( 'Online', 'w4os' ) : __( 'Offline', 'w4os' );
 		} else {
 			$status = sprintf(
-				__('Invalid Login URI', 'w4os'),
+				__( 'Invalid Login URI', 'w4os' ),
 				$login_uri,
 			);
 		}
@@ -454,13 +454,18 @@ function register_w4os_get_urls_statuses_async_cron() {
 }
 add_action( 'init', 'register_w4os_get_urls_statuses_async_cron' );
 
-function w4os_sanitize_login_uri( $login_uri) {
-	if(empty($login_uri)) return;
+function w4os_sanitize_login_uri( $login_uri ) {
+	if ( empty( $login_uri ) ) {
+		return;
+	}
 
-	$parts = array_merge(array(
-		'scheme' => 'http',
-		'port' => '8002',
-	), wp_parse_url($login_uri));
+	$parts = array_merge(
+		array(
+			'scheme' => 'http',
+			'port'   => '8002',
+		),
+		wp_parse_url( $login_uri )
+	);
 
 	$login_uri = $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
 
@@ -469,14 +474,14 @@ function w4os_sanitize_login_uri( $login_uri) {
 
 function w4os_grid_login_uri() {
 	// if ( defined( 'W4OS_GRID_LOGIN_URI' ) ) {
-	// 	return W4OS_GRID_LOGIN_URI;
+	// return W4OS_GRID_LOGIN_URI;
 	// }
 
 	return w4os_sanitize_login_uri( get_option( 'w4os_login_uri' ) );
 }
 
 function w4os_grid_name() {
-	return get_option('w4os_grid_name');
+	return get_option( 'w4os_grid_name' );
 }
 
 function w4os_grid_running() {
@@ -614,15 +619,18 @@ function w4os_update_option( $option, $value, $autoload = null ) {
 }
 
 function w4os_replace( $content, $args ) {
-	if(!is_array($args)) {
-		error_log('args ' . $args . ' is not an array');
+	if ( ! is_array( $args ) ) {
+		error_log( 'args ' . $args . ' is not an array' );
 		return $content;
 	}
-  $keys = array_map(function($key) {
-    return "/\[$key\]/";
-  }, array_keys( $args ) );
-  $values = array_values( $args );
+	$keys   = array_map(
+		function( $key ) {
+			return "/\[$key\]/";
+		},
+		array_keys( $args )
+	);
+	$values = array_values( $args );
 
-  $result = $content = preg_replace( $keys, $values, $content );
-  return $result;
+	$result = $content = preg_replace( $keys, $values, $content );
+	return $result;
 }

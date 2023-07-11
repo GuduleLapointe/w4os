@@ -1,26 +1,34 @@
-jQuery(document).ready(function($) {
-  // Function to toggle subfield visibility based on "use_robot" checkbox
-  function toggleSubfields($checkbox) {
-    var $fieldset = $checkbox.closest('.rwmb-field.rwmb-w4osdb_field_type-wrapper');
-    var $subfields = $fieldset.find('.rwmb-input > .w4osdb-field:not(.db-field-use_default)');
+jQuery( document ).ready(
+	function($) {
+		// Function to toggle subfield visibility based on "use_robot" checkbox
+		function toggleSubfields($checkbox) {
+			var $fieldset  = $checkbox.closest( '.rwmb-field.rwmb-w4osdb_field_type-wrapper' );
+			var $subfields = $fieldset.find( '.rwmb-input > .w4osdb-field:not(.db-field-use_default)' );
 
-    if ($checkbox.prop('checked')) {
-      $subfields.hide();
-    } else {
-      $subfields.show();
-    }
-  }
+			if ($checkbox.prop( 'checked' )) {
+				$subfields.hide();
+			} else {
+				$subfields.show();
+			}
+		}
 
-  // Initial toggle when page loads
-  $('.rwmb-field.rwmb-w4osdb_field_type-wrapper').each(function() {
-    toggleSubfields($(this).find('.db-field-use_default input[type="checkbox"]'));
-  });
+		// Initial toggle when page loads
+		$( '.rwmb-field.rwmb-w4osdb_field_type-wrapper' ).each(
+			function() {
+				toggleSubfields( $( this ).find( '.db-field-use_default input[type="checkbox"]' ) );
+			}
+		);
 
-  // Toggle subfields whenever "use_robot" checkbox changes within the same fieldset
-  $(document).on('change', '.rwmb-field.rwmb-w4osdb_field_type-wrapper .db-field-use_default input[type="checkbox"]', function() {
-    toggleSubfields($(this));
-  });
-});
+		// Toggle subfields whenever "use_robot" checkbox changes within the same fieldset
+		$( document ).on(
+			'change',
+			'.rwmb-field.rwmb-w4osdb_field_type-wrapper .db-field-use_default input[type="checkbox"]',
+			function() {
+				toggleSubfields( $( this ) );
+			}
+		);
+	}
+);
 
 
 function valueChanged() {
@@ -33,24 +41,24 @@ function valueChanged() {
 	document.getElementById( "w4os_offline_helper_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_offline_messages' ).checked ? "table-row" : "none";
 
 	// show internal economy helper uri according to provide checkbox
-	document.getElementById( "w4os_economy_helper_uri" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_economy_helper_uri" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_economy_use_default_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_economy_db_host" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_economy_db_database" ).parentNode.parentNode.style.display   = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_economy_db_user" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_economy_db_pass" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_podex_redirect_url" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_podex_error_message" ).parentNode.parentNode.style.display   = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_currency_provider_" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_economy_db_host" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_economy_db_database" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_economy_db_user" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_economy_db_pass" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_podex_redirect_url" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_podex_error_message" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_currency_provider_" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
 
 	document.getElementById( "w4os_money_script_access_key" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_' ).checked ? "table-row" : "none";
 	document.getElementById( "w4os_currency_rate" ).parentNode.parentNode.style.display           = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_currency_provider_gloebit' ).checked ? "table-row" : "none";
 
 	document.getElementById( "w4os_search_use_default_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_search_db_host" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_search_db_database" ).parentNode.parentNode.style.display   = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_search_db_user" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
-	document.getElementById( "w4os_search_db_pass" ).parentNode.parentNode.style.display       = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_search_db_host" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_search_db_database" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_search_db_user" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+	document.getElementById( "w4os_search_db_pass" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
 
 	document.getElementById( "w4os_hypevents_url" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
 

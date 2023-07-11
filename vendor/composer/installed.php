@@ -3,11 +3,11 @@
         'name' => 'speculoos/w4os',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '71b64139e443f509cb17d822df7a9e169514950a',
+        'reference' => 'dbfc4cdab9de78a675b291af8628e0ebcd6a3dd4',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'composer/installers' => array(
@@ -27,15 +27,6 @@
             'install_path' => __DIR__ . '/../jelix/inifile',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'magicoli/opensim-helpers' => array(
-            'pretty_version' => 'v2.1.9',
-            'version' => '2.1.9.0',
-            'reference' => '829c940615b8b41432f511b895c3966396649933',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../magicoli/opensim-helpers',
-            'aliases' => array(),
-            'dev_requirement' => true,
         ),
         'meta-box/mb-admin-columns' => array(
             'pretty_version' => 'master',
@@ -85,7 +76,7 @@
         'speculoos/w4os' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '71b64139e443f509cb17d822df7a9e169514950a',
+            'reference' => 'dbfc4cdab9de78a675b291af8628e0ebcd6a3dd4',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

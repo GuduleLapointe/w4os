@@ -179,7 +179,7 @@ class W4OS_Model extends W4OS_Loader {
 
 		$sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE active = true';
 		$result = $w4osdb->get_results( $sql, $format );
-		if(is_array($result)) {
+		if ( is_array( $result ) ) {
 			foreach ( $result as $avatar ) {
 				$avatars[ $avatar->PrincipalID ] = trim( "$avatar->FirstName $avatar->LastName" );
 			}
