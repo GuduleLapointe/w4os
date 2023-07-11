@@ -171,12 +171,17 @@ class W4OS_Settings extends W4OS_Loader {
 						'<code>' . get_home_url( null, get_option( 'w4os_profile_slug', 'profile' ) ) . '</code>',
 					),
 					'style'      => 'rounded',
-					'std'        => true,
+					'std'        => empty(get_option('w4os_profile_page') ) ? 'provide' : ( get_option('w4os_profile_page') == 'provide' ),
 					'save_field' => false,
 				],
 				[
 					'id'         => $prefix . 'profile_page_options',
 					'type'       => 'group',
+					'save_field' => false,
+					'visible'    => [
+						'when'     => [['w4os_profile_page', '=', 1]],
+						'relation' => 'or',
+					],
 					'fields'     => [
 						[
 							'name'       => __( 'Instructions', 'w4os' ),
@@ -184,7 +189,7 @@ class W4OS_Settings extends W4OS_Loader {
 							'type'       => 'switch',
 							'desc'       => __( 'Show configuration instructions to new users on their profile page.', 'w4os' ),
 							'style'      => 'rounded',
-							'std'        => true,
+							'std'        => w4os_option_exists( 'w4os_configuration_instructions' ) ? get_option( 'w4os_configuration_instructions' ) : true,
 							'save_field' => false,
 						],
 						[
@@ -194,12 +199,8 @@ class W4OS_Settings extends W4OS_Loader {
 							'desc'       => __( 'Use profile page as login page.', 'w4os' ),
 							'style'      => 'rounded',
 							'save_field' => false,
+							'std' => empty(get_option('w4os_login_page') ) ? 'profile' : ( get_option('w4os_login_page') == 'profile' ),
 						],
-					],
-					'save_field' => false,
-					'visible'    => [
-						'when'     => [['w4os_profile_page', '=', 1]],
-						'relation' => 'or',
 					],
 				],
 				[
@@ -208,27 +209,42 @@ class W4OS_Settings extends W4OS_Loader {
 					'type'       => 'switch',
 					'desc'       => __( 'Show avatar name instead of user name in users list.', 'w4os' ),
 					'style'      => 'rounded',
-					'std'        => true,
+					'std'        => w4os_option_exists( 'w4os_userlist_replace_name' ) ? get_option( 'w4os_userlist_replace_name' ) : true,
 					'save_field' => false,
-					],
-					[
+				],
+				[
 					'name'       => __( 'Exclude from stats', 'w4os' ),
 					'id'         => $prefix . 'exclude',
 					'type'       => 'checkbox_list',
 					'desc'       => __( 'Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os' ),
 					'options'    => [
-					'models'    => __( 'Models', 'w4os' ),
-					'nomail'    => __( 'Accounts without mail address', 'w4os' ),
-					'hypergrid' => __( 'Hypergrid visitors', 'w4os' ),
+						'models'    => __( 'Models', 'w4os' ),
+						'nomail'    => __( 'Accounts without mail address', 'w4os' ),
+						'hypergrid' => __( 'Hypergrid visitors', 'w4os' ),
 					],
-					'std'        => ['models', 'nomail'],
+					'std'        => $this->get_exclude_options(),
 					'inline'     => true,
 					'save_field' => false,
-					],
-					],
-					];
+				],
+			],
+		];
 
+		$this->get_exclude_options();
+
+		// error_log('w4os_exclude ' . print_r(w4os_get_option( 'w4os_exclude' ), true));
 		return $meta_boxes;
+	}
+
+	function get_exclude_options() {
+		if( w4os_option_exists( 'w4os_exclude' ) ) {
+			return array_keys(array_filter(array(
+				'models' => get_option('w4os_exclude_models', false),
+				'nomail' => get_option('w4os_exclude_nomail', false),
+				'hypergrid' => get_option('w4os_exclude_hypergrid', false),
+			)));
+		} else {
+			return [ 'models', 'nomail' ];
+		}
 	}
 
 	function sanitize_options() {
@@ -260,7 +276,6 @@ class W4OS_Settings extends W4OS_Loader {
 				update_option( 'w4os_db_port', $credentials['port'] );
 			}
 		}
-
 	}
 
 	private function db_fields( $values = array(), $field = array() ) {
