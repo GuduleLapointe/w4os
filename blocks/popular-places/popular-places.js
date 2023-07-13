@@ -4,51 +4,74 @@ var __webpack_exports__ = {};
   !*** ./src/blocks/popular-places/index.js ***!
   \********************************************/
 var ServerSideRender = wp.serverSideRender;
-(function (wp) {
-  var registerBlockType = wp.blocks.registerBlockType;
-  var __ = wp.i18n.__;
-  var el = wp.element.createElement;
-  var TextControl = wp.components.TextControl;
-  registerBlockType('w4os/popular-places', {
-    title: __('Popular Places', 'w4os'),
-    icon: 'location',
-    category: 'widgets',
-    supports: {
-      html: false
+var registerBlockType = wp.blocks.registerBlockType;
+var __ = wp.i18n.__;
+var el = wp.element.createElement;
+var TextControl = wp.components.TextControl;
+var InspectorControls = wp.blockEditor.InspectorControls;
+var PanelBody = wp.components.PanelBody;
+registerBlockType('w4os/popular-places', {
+  title: __('Popular Places', 'w4os'),
+  icon: 'location',
+  category: 'widgets',
+  supports: {
+    html: false
+  },
+  attributes: {
+    title: {
+      type: 'string',
+      default: __('Popular Places')
     },
-    attributes: {
-      title: {
-        type: 'string',
-        default: __('Popular Places')
-      }
-    },
-    edit: function (props) {
-      var title = props.attributes.title;
-      var setAttributes = props.setAttributes;
-      function onChangeTitle(newTitle) {
-        setAttributes({
-          title: newTitle
-        });
-      }
-      return el('div', {
-        className: props.className
-      }, el(TextControl, {
-        label: __('Title', 'w4os'),
-        value: title,
-        onChange: onChangeTitle
-      }), el(ServerSideRender, {
-        block: 'w4os/popular-places',
-        attributes: {
-          title: title
-        }
-      }));
-    },
-    save: function () {
-      // Empty save function as it's not used in this example
-      return null;
+    max: {
+      type: 'number',
+      default: 5
     }
-  });
-})(window.wp);
+  },
+  edit: function (props) {
+    var title = props.attributes.title;
+    var max = props.attributes.max || 5; // Set a default value of 5 if max attribute is empty or less than zero
+    var setAttributes = props.setAttributes;
+    function onChangeTitle(newTitle) {
+      setAttributes({
+        title: newTitle
+      });
+    }
+    function onChangemax(newmax) {
+      // Treat empty or less than zero value as 0
+      var updatedmax = parseInt(newmax) < 0 ? 0 : parseInt(newmax);
+      setAttributes({
+        max: updatedmax
+      });
+    }
+    return el('div', {
+      className: props.className
+    }, el(InspectorControls, null, el(PanelBody, {
+      title: __('Block Settings', 'w4os'),
+      initialOpen: true
+    }, el(TextControl, {
+      label: __('Max Results', 'w4os'),
+      type: 'number',
+      value: max.toString(),
+      onChange: onChangemax
+    }))), el('div', {
+      className: 'block-content'
+    }, el(TextControl, {
+      label: __('Title', 'w4os'),
+      value: title,
+      onChange: onChangeTitle
+    }), el(ServerSideRender, {
+      block: 'w4os/popular-places',
+      attributes: {
+        title: title,
+        max: max
+      }
+    })));
+  },
+  save: function () {
+    // Empty save function as it's not used in this example
+    return null;
+  }
+});
 /******/ })()
 ;
 //# sourceMappingURL=popular-places.js.map

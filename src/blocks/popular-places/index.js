@@ -1,35 +1,66 @@
 var ServerSideRender = wp.serverSideRender;
+var registerBlockType = wp.blocks.registerBlockType;
+var __ = wp.i18n.__;
+var el = wp.element.createElement;
+var TextControl = wp.components.TextControl;
+var InspectorControls = wp.blockEditor.InspectorControls;
+var PanelBody = wp.components.PanelBody;
 
-(function(wp) {
-  var registerBlockType = wp.blocks.registerBlockType;
-  var __ = wp.i18n.__;
-  var el = wp.element.createElement;
-  var TextControl = wp.components.TextControl;
-
-  registerBlockType('w4os/popular-places', {
-    title: __('Popular Places', 'w4os'),
-    icon: 'location',
-    category: 'widgets',
-    supports: {
-      html: false,
+registerBlockType('w4os/popular-places', {
+  title: __('Popular Places', 'w4os'),
+  icon: 'location',
+  category: 'widgets',
+  supports: {
+    html: false,
+  },
+  attributes: {
+    title: {
+      type: 'string',
+      default: __('Popular Places'),
     },
-    attributes: {
-      title: {
-        type: 'string',
-				default: __('Popular Places'),
-      },
+    max: {
+      type: 'number',
+      default: 5,
     },
-    edit: function(props) {
-      var title = props.attributes.title;
-      var setAttributes = props.setAttributes;
+  },
+  edit: function(props) {
+    var title = props.attributes.title;
+    var max = props.attributes.max || 5; // Set a default value of 5 if max attribute is empty or less than zero
+    var setAttributes = props.setAttributes;
 
-      function onChangeTitle(newTitle) {
-        setAttributes({ title: newTitle });
-      }
+    function onChangeTitle(newTitle) {
+      setAttributes({ title: newTitle });
+    }
 
-      return el(
+    function onChangemax(newmax) {
+      // Treat empty or less than zero value as 0
+      var updatedmax = parseInt(newmax) < 0 ? 0 : parseInt(newmax);
+      setAttributes({ max: updatedmax });
+    }
+
+    return el(
+      'div',
+      { className: props.className },
+      el(
+        InspectorControls,
+        null,
+        el(
+          PanelBody,
+          { title: __('Block Settings', 'w4os'), initialOpen: true },
+          el(
+            TextControl,
+            {
+              label: __('Max Results', 'w4os'),
+              type: 'number',
+              value: max.toString(),
+              onChange: onChangemax,
+            }
+          )
+        )
+      ),
+      el(
         'div',
-        { className: props.className },
+        { className: 'block-content' },
         el(
           TextControl,
           {
@@ -42,13 +73,14 @@ var ServerSideRender = wp.serverSideRender;
           block: 'w4os/popular-places',
           attributes: {
             title: title,
+            max: max,
           },
         })
-      );
-    },
-    save: function() {
-      // Empty save function as it's not used in this example
-      return null;
-    },
-  });
-})(window.wp);
+      )
+    );
+  },
+  save: function() {
+    // Empty save function as it's not used in this example
+    return null;
+  },
+});

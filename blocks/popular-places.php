@@ -53,12 +53,16 @@ function popular_places_block_init() {
         'editor_script' => 'popular-places-block-editor',
         'editor_style' => 'popular-places-block-editor',
         'style' => 'popular-places-block',
-        'attributes' => array(
-            'title' => array(
-                'type' => 'string',
-                'default' => '',
-            ),
-        ),
+				'attributes' => array(
+					'title' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'max' => array(
+						'type' => 'number',
+						'default' => 5,
+					),
+				),
         'render_callback' => 'w4os_popular_places_block_render',
     ));
 }
@@ -151,6 +155,7 @@ function w4os_popular_places( $atts = array() ) {
 function w4os_popular_places_html( $atts = array(), $args = array() ) {
 	$atts = wp_parse_args($atts, array(
 		'title' => null,
+		'max' => null,
 	));
 	$args = wp_parse_args($args, array(
 		'before_title' => '<h4>',
@@ -159,6 +164,7 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 	$before_title = $args['before_title'];
 	$after_title = $args['after_title'];
 	$title = $atts['title'];
+	$max   = empty( $atts['max'] ) ? get_option( 'w4os_popular_places_max', 5 ) : $atts['max'];
 	$content = (empty($title)) ? '' : $before_title . $title . $after_title;
 
 	$places = w4os_popular_places( $atts );
@@ -170,7 +176,6 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 		}
 	}
 
-	$max      = ( isset( $atts['max'] ) ) ? $atts['max'] : get_option( 'w4os_popular_places_max', 5 );
 	$i        = 0;
 	$content .= '<div class=places>';
 	foreach ( $places as $place ) {
