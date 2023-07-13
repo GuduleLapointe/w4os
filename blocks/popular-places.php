@@ -1,81 +1,86 @@
 <?php
 /**
- * Functions to register client-side assets (scripts and stylesheets) for the
- * Gutenberg block.
+ * Functions to register client-side assets (scripts and stylesheets) for the Gutenberg block.
  *
  * @package w4os
  */
 
 /**
- * Registers all block assets so that they can be enqueued through Gutenberg in
- * the corresponding context.
+ * Registers all block assets so that they can be enqueued through Gutenberg in the corresponding context.
  *
  * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
 function popular_places_block_init() {
-	// Skip block registration if Gutenberg is not enabled/merged.
-	if ( ! function_exists( 'register_block_type' ) ) {
-		return;
-	}
-	$dir = dirname( __FILE__ );
-
-	$index_js = 'popular-places/popular-places.js';
-	wp_register_script(
-		'popular-places-block-editor',
-		plugins_url( $index_js, __FILE__ ),
-		array(
-			'wp-blocks',
-			'wp-i18n',
-			'wp-element',
-			// 'wp-server-side-render',
-		),
-		filemtime( "{$dir}/{$index_js}" )
-	);
-
-	$editor_css = 'popular-places/editor.css';
-	wp_register_style(
-		'popular-places-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(),
-		filemtime( "{$dir}/{$editor_css}" )
-	);
-
-	$style_css = 'popular-places/style.css';
-	wp_register_style(
-		'popular-places-block',
-		plugins_url( $style_css, __FILE__ ),
-		array(),
-		filemtime( "{$dir}/{$style_css}" )
-	);
-
-	register_block_type(
-		'w4os/popular-places',
-		array(
-			'render_callback' => 'w4os_popular_places_block_render',
-			'editor_script'   => 'popular-places-block-editor',
-			'editor_style'    => 'popular-places-block-editor',
-			'style'           => 'popular-places-block',
-		)
-	);
-
 	add_shortcode( 'popular-places', 'w4os_popular_places_shortcode' );
+
+    // Skip block registration if Gutenberg is not enabled/merged.
+    if (!function_exists('register_block_type')) {
+        return;
+    }
+    $dir = dirname(__FILE__);
+
+    $index_js = 'popular-places/popular-places.js';
+    wp_register_script(
+        'popular-places-block-editor',
+        plugins_url($index_js, __FILE__),
+        array(
+            'wp-blocks',
+            'wp-i18n',
+            'wp-element',
+            'wp-components',
+            'wp-server-side-render',
+        ),
+        filemtime("{$dir}/{$index_js}")
+    );
+
+    $editor_css = 'popular-places/editor.css';
+    wp_register_style(
+        'popular-places-block-editor',
+        plugins_url($editor_css, __FILE__),
+        array(),
+        filemtime("{$dir}/{$editor_css}")
+    );
+
+    $style_css = 'popular-places/style.css';
+    wp_register_style(
+        'popular-places-block',
+        plugins_url($style_css, __FILE__),
+        array(),
+        filemtime("{$dir}/{$style_css}")
+    );
+
+    register_block_type('w4os/popular-places', array(
+        'editor_script' => 'popular-places-block-editor',
+        'editor_style' => 'popular-places-block-editor',
+        'style' => 'popular-places-block',
+        'attributes' => array(
+            'title' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+        ),
+        'render_callback' => 'w4os_popular_places_block_render',
+    ));
 }
-add_action( 'init', 'popular_places_block_init' );
+add_action('init', 'popular_places_block_init');
 
-function w4os_popular_places_block_render( $args = array(), $dumb = '', $block_object = array() ) {
-	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
-	$block                 = (array) $block_object;
-	$block['before_title'] = '<h4>';
-	$block['after_title']  = '</h4>';
-	$atts                  = $block_object->block_type->attributes;
+function w4os_popular_places_block_render($attributes, $void, $block = true) {
+	$atts = wp_parse_args($attributes, array(
+		'title' => null,
+	));
 
-	$content = w4os_popular_places_html( $atts, $block );
+	$content = w4os_popular_places_html( $atts );
 	if ( empty( $content ) ) {
 		return '';
 	}
-	$class = preg_replace( ':/:', '-', $block_object->name );
+
+	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
+	// $atts                  = $block_object->block_type->attributes;
+
+	$class = preg_replace( ':/:', '-', $block->name );
+
 	return sprintf(
-		'<div class="w4os-block %s">%s</div>',
+		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
 		$content,
 	);
@@ -84,10 +89,11 @@ function w4os_popular_places_block_render( $args = array(), $dumb = '', $block_o
 function w4os_popular_places_shortcode( $atts = array(), $content = null ) {
 	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
 	empty( $content ) ? $content = '' : $content = "<div>$content</div>";
-	$args                        = array(
-		'before_title' => '<h4>',
-		'after_title'  => '</h4>',
-	);
+	$atts = wp_parse_args($atts, array(
+		'title' => __('Popular Places', 'w4os'),
+	));
+	$args = array();
+
 	$result                      = w4os_popular_places_html( $atts, $args );
 	if ( empty( $result ) ) {
 		return '';
@@ -143,9 +149,17 @@ function w4os_popular_places( $atts = array() ) {
 }
 
 function w4os_popular_places_html( $atts = array(), $args = array() ) {
-	extract( $args );
-	isset( $atts['title'] ) ? $title = $atts['title'] : $title = __( 'Popular places', 'w4os' );
-	$content                         = $before_title . $title . $after_title;
+	$atts = wp_parse_args($atts, array(
+		'title' => null,
+	));
+	$args = wp_parse_args($args, array(
+		'before_title' => '<h4>',
+		'after_title' => '</h4>',
+	));
+	$before_title = $args['before_title'];
+	$after_title = $args['after_title'];
+	$title = $atts['title'];
+	$content = (empty($title)) ? '' : $before_title . $title . $after_title;
 
 	$places = w4os_popular_places( $atts );
 	if ( empty( $places ) ) {
