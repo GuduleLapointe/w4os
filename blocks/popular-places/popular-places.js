@@ -20,7 +20,7 @@ registerBlockType('w4os/popular-places', {
   attributes: {
     title: {
       type: 'string',
-      default: __('Popular Places')
+      default: ''
     },
     max: {
       type: 'number',
@@ -29,11 +29,12 @@ registerBlockType('w4os/popular-places', {
   },
   edit: function (props) {
     var title = props.attributes.title;
-    var max = props.attributes.max || 5; // Set a default value of 5 if max attribute is empty or less than zero
+    var max = props.attributes.max || 0;
     var setAttributes = props.setAttributes;
     function onChangeTitle(newTitle) {
+      // setAttributes({ title: newTitle });
       setAttributes({
-        title: newTitle
+        title: newTitle || undefined
       });
     }
     function onChangemax(newmax) {
