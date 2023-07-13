@@ -203,3 +203,67 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 	$content .= '</div>';
 	return $content;
 }
+
+add_action('et_builder_ready', function () {
+	// Check if Divi Builder is active
+	if (class_exists('ET_Builder_Module')) {
+		class ET_Builder_Module_W4OS_Popular_Places extends ET_Builder_Module {
+			function init() {
+				$this->name = __('W4OS Popular Places', 'w4os');
+				$this->slug = 'et_pb_w4os_popular_places';
+
+				$this->whitelisted_fields = array(
+					'title',
+					'max',
+				);
+
+				$this->fields_defaults = array(
+					'title' => '',
+					'max' => array(5),
+				);
+
+				$this->main_css_element = '%%order_class%%';
+			}
+
+			function get_fields() {
+				$fields = parent::get_fields();
+
+				$fields = array(
+					'title' => array(
+						'label'       => __('Title', 'w4os'),
+						'type'        => 'text',
+						'description' => __('Enter the title for the Popular Places module.', 'w4os'),
+						// 'default'     => __('Popular Places', 'w4os'), // Set the default value here
+						// 'value'     => __('Popular Places', 'w4os'), // Set the default value here
+					),
+					'max'   => array(
+						'label'       => __('Max Results', 'w4os'),
+						'type'        => 'text',
+						'description' => __('Enter the maximum number of results to display.', 'w4os'),
+					),
+				);
+
+				// $fields = parent::get_fields();
+
+				return $fields;
+			}
+
+
+			function shortcode_callback($atts, $content = null, $function_name) {
+				$atts = wp_parse_args($atts, array(
+					'title' => '',
+					'max' => 5,
+				));
+
+				$output = w4os_popular_places_html($atts);
+
+				return sprintf(
+					'<div class="et_pb_module et_pb_w4os_popular_places w4os-popular-places">%s</div>',
+					$output
+				);
+			}
+		}
+
+		new ET_Builder_Module_W4OS_Popular_Places;
+	}
+});
