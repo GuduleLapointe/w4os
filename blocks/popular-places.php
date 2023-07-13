@@ -13,65 +13,71 @@
 function popular_places_block_init() {
 	add_shortcode( 'popular-places', 'w4os_popular_places_shortcode' );
 
-    // Skip block registration if Gutenberg is not enabled/merged.
-    if (!function_exists('register_block_type')) {
-        return;
-    }
-    $dir = dirname(__FILE__);
+	// Skip block registration if Gutenberg is not enabled/merged.
+	if ( ! function_exists( 'register_block_type' ) ) {
+		return;
+	}
+	$dir = dirname( __FILE__ );
 
-    $index_js = 'popular-places/popular-places.js';
-    wp_register_script(
-        'popular-places-block-editor',
-        plugins_url($index_js, __FILE__),
-        array(
-            'wp-blocks',
-            'wp-i18n',
-            'wp-element',
-            'wp-components',
-            'wp-server-side-render',
-        ),
-        filemtime("{$dir}/{$index_js}")
-    );
+	$index_js = 'popular-places/popular-places.js';
+	wp_register_script(
+		'popular-places-block-editor',
+		plugins_url( $index_js, __FILE__ ),
+		array(
+			'wp-blocks',
+			'wp-i18n',
+			'wp-element',
+			'wp-components',
+			'wp-server-side-render',
+		),
+		filemtime( "{$dir}/{$index_js}" )
+	);
 
-    $editor_css = 'popular-places/editor.css';
-    wp_register_style(
-        'popular-places-block-editor',
-        plugins_url($editor_css, __FILE__),
-        array(),
-        filemtime("{$dir}/{$editor_css}")
-    );
+	$editor_css = 'popular-places/editor.css';
+	wp_register_style(
+		'popular-places-block-editor',
+		plugins_url( $editor_css, __FILE__ ),
+		array(),
+		filemtime( "{$dir}/{$editor_css}" )
+	);
 
-    $style_css = 'popular-places/style.css';
-    wp_register_style(
-        'popular-places-block',
-        plugins_url($style_css, __FILE__),
-        array(),
-        filemtime("{$dir}/{$style_css}")
-    );
+	$style_css = 'popular-places/style.css';
+	wp_register_style(
+		'popular-places-block',
+		plugins_url( $style_css, __FILE__ ),
+		array(),
+		filemtime( "{$dir}/{$style_css}" )
+	);
 
-    register_block_type('w4os/popular-places', array(
-        'editor_script' => 'popular-places-block-editor',
-        'editor_style' => 'popular-places-block-editor',
-        'style' => 'popular-places-block',
-				'attributes' => array(
-					'title' => array(
-						'type' => 'string',
-						'default' => '',
-					),
-					'max' => array(
-						'type' => 'number',
-						'default' => 5,
-					),
+	register_block_type(
+		'w4os/popular-places',
+		array(
+			'editor_script'   => 'popular-places-block-editor',
+			'editor_style'    => 'popular-places-block-editor',
+			'style'           => 'popular-places-block',
+			'attributes'      => array(
+				'title' => array(
+					'type'    => 'string',
+					'default' => '',
 				),
-        'render_callback' => 'w4os_popular_places_block_render',
-    ));
+				'max'   => array(
+					'type'    => 'number',
+					'default' => 5,
+				),
+			),
+			'render_callback' => 'w4os_popular_places_block_render',
+		)
+	);
 }
-add_action('init', 'popular_places_block_init');
+add_action( 'init', 'popular_places_block_init' );
 
-function w4os_popular_places_block_render($attributes, $void, $block = true) {
-	$atts = wp_parse_args($attributes, array(
-		'title' => null,
-	));
+function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
+	$atts = wp_parse_args(
+		$attributes,
+		array(
+			'title' => null,
+		)
+	);
 
 	$content = w4os_popular_places_html( $atts );
 	if ( empty( $content ) ) {
@@ -93,12 +99,15 @@ function w4os_popular_places_block_render($attributes, $void, $block = true) {
 function w4os_popular_places_shortcode( $atts = array(), $content = null ) {
 	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
 	empty( $content ) ? $content = '' : $content = "<div>$content</div>";
-	$atts = wp_parse_args($atts, array(
-		'title' => __('Popular Places', 'w4os'),
-	));
-	$args = array();
+	$atts                        = wp_parse_args(
+		$atts,
+		array(
+			'title' => __( 'Popular Places', 'w4os' ),
+		)
+	);
+	$args                        = array();
 
-	$result                      = w4os_popular_places_html( $atts, $args );
+	$result = w4os_popular_places_html( $atts, $args );
 	if ( empty( $result ) ) {
 		return '';
 	}
@@ -153,19 +162,25 @@ function w4os_popular_places( $atts = array() ) {
 }
 
 function w4os_popular_places_html( $atts = array(), $args = array() ) {
-	$atts = wp_parse_args($atts, array(
-		'title' => null,
-		'max' => null,
-	));
-	$args = wp_parse_args($args, array(
-		'before_title' => '<h4>',
-		'after_title' => '</h4>',
-	));
+	$atts         = wp_parse_args(
+		$atts,
+		array(
+			'title' => null,
+			'max'   => null,
+		)
+	);
+	$args         = wp_parse_args(
+		$args,
+		array(
+			'before_title' => '<h4>',
+			'after_title'  => '</h4>',
+		)
+	);
 	$before_title = $args['before_title'];
-	$after_title = $args['after_title'];
-	$title = $atts['title'];
-	$max   = empty( $atts['max'] ) ? get_option( 'w4os_popular_places_max', 5 ) : $atts['max'];
-	$content = (empty($title)) ? '' : $before_title . $title . $after_title;
+	$after_title  = $args['after_title'];
+	$title        = $atts['title'];
+	$max          = empty( $atts['max'] ) ? get_option( 'w4os_popular_places_max', 5 ) : $atts['max'];
+	$content      = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
 
 	$places = w4os_popular_places( $atts );
 	if ( empty( $places ) ) {
@@ -204,12 +219,15 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 	return $content;
 }
 
-add_action('et_builder_ready', function () {
+add_action( 'et_builder_ready', 'et_builder_module_w4os_popular_places_init' );
+
+function et_builder_module_w4os_popular_places_init() {
 	// Check if Divi Builder is active
-	if (class_exists('ET_Builder_Module')) {
+	if ( class_exists( 'ET_Builder_Module' ) ) {
 		class ET_Builder_Module_W4OS_Popular_Places extends ET_Builder_Module {
+			// ...
 			function init() {
-				$this->name = __('W4OS Popular Places', 'w4os');
+				$this->name = __( 'W4OS Popular Places', 'w4os' );
 				$this->slug = 'et_pb_w4os_popular_places';
 
 				$this->whitelisted_fields = array(
@@ -219,7 +237,7 @@ add_action('et_builder_ready', function () {
 
 				$this->fields_defaults = array(
 					'title' => '',
-					'max' => array(5),
+					'max'   => 5,
 				);
 
 				$this->main_css_element = '%%order_class%%';
@@ -228,42 +246,43 @@ add_action('et_builder_ready', function () {
 			function get_fields() {
 				$fields = parent::get_fields();
 
-				$fields = array(
-					'title' => array(
-						'label'       => __('Title', 'w4os'),
-						'type'        => 'text',
-						'description' => __('Enter the title for the Popular Places module.', 'w4os'),
-						// 'default'     => __('Popular Places', 'w4os'), // Set the default value here
-						// 'value'     => __('Popular Places', 'w4os'), // Set the default value here
-					),
-					'max'   => array(
-						'label'       => __('Max Results', 'w4os'),
-						'type'        => 'text',
-						'description' => __('Enter the maximum number of results to display.', 'w4os'),
-					),
+				$fields['title'] = array(
+					'label'       => __( 'Title', 'w4os' ),
+					'type'        => 'text',
+					'description' => __( 'Enter the title for the Popular Places module.', 'w4os' ),
+					'toggle_slug' => 'main_content',
+					'default'     => __( 'Popular Places', 'w4os' ),
 				);
 
-				// $fields = parent::get_fields();
+				$fields['max'] = array(
+					'label'       => __( 'Max Results', 'w4os' ),
+					'type'        => 'text',
+					'description' => __( 'Enter the maximum number of results to display.', 'w4os' ),
+					'toggle_slug' => 'main_content',
+				);
 
 				return $fields;
 			}
 
+			function shortcode_callback( $atts, $content = null, $function_name ) {
+				$atts = wp_parse_args(
+					$atts,
+					array(
+						'title' => '',
+						'max'   => 5,
+					)
+				);
 
-			function shortcode_callback($atts, $content = null, $function_name) {
-				$atts = wp_parse_args($atts, array(
-					'title' => '',
-					'max' => 5,
-				));
-
-				$output = w4os_popular_places_html($atts);
+				$output = w4os_popular_places_html( $atts );
 
 				return sprintf(
 					'<div class="et_pb_module et_pb_w4os_popular_places w4os-popular-places">%s</div>',
 					$output
 				);
 			}
+			// ...
 		}
 
-		new ET_Builder_Module_W4OS_Popular_Places;
+		new ET_Builder_Module_W4OS_Popular_Places();
 	}
-});
+}
