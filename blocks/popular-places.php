@@ -19,7 +19,7 @@ function popular_places_block_init() {
 	}
 	$dir = dirname( __FILE__ );
 
-	$index_js = 'popular-places/index.js';
+	$index_js = 'popular-places/popular-places.js';
 	wp_register_script(
 		'popular-places-block-editor',
 		plugins_url( $index_js, __FILE__ ),
