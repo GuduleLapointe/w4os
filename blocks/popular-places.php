@@ -41,7 +41,7 @@ function popular_places_block_init() {
 		filemtime( "{$dir}/{$editor_css}" )
 	);
 
-	$style_css = 'popular-places/style.css';
+	$style_css = 'popular-places/popular-places.css';
 	wp_register_style(
 		'popular-places-block',
 		plugins_url( $style_css, __FILE__ ),

@@ -1,3 +1,4 @@
+import "./index.scss";
 
 var ServerSideRender  = wp.serverSideRender;
 var registerBlockType = wp.blocks.registerBlockType;
