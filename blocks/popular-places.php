@@ -58,11 +58,15 @@ function popular_places_block_init() {
 			'attributes'      => array(
 				'title' => array(
 					'type'    => 'string',
-					'default' => '',
+					// 'default' => '',
+				),
+				'titleLevel' => array(
+					'type'    => 'string',
+					// 'default' => '',
 				),
 				'max'   => array(
 					'type'    => 'number',
-					'default' => 5,
+					// 'default' => 5,
 				),
 			),
 			'render_callback' => 'w4os_popular_places_block_render',
@@ -75,7 +79,9 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 	$atts = wp_parse_args(
 		$attributes,
 		array(
-			'title' => null,
+			'title'      => null,
+			'titleLevel' => null,
+			'max'        => null,
 		)
 	);
 
@@ -84,15 +90,12 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 		return '';
 	}
 
-	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
-	// $atts                  = $block_object->block_type->attributes;
-
 	$class = preg_replace( ':/:', '-', $block->name );
 
 	return sprintf(
 		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
-		$content,
+		$content
 	);
 }
 
@@ -163,23 +166,19 @@ function w4os_popular_places( $atts = array() ) {
 
 function w4os_popular_places_html( $atts = array(), $args = array() ) {
 	$atts         = wp_parse_args(
-		$atts,
+		array_filter($atts),
 		array(
-			'title' => null,
-			'max'   => null,
+			'title'       => null,
+			'titleLevel'  => 'h4',
+			'max'         => null,
 		)
 	);
-	$args         = wp_parse_args(
-		$args,
-		array(
-			'before_title' => '<h4>',
-			'after_title'  => '</h4>',
-		)
-	);
-	$before_title = $args['before_title'];
-	$after_title  = $args['after_title'];
+	$titleLevel   = $atts['titleLevel'];
 	$title        = $atts['title'];
 	$max          = empty( $atts['max'] ) ? get_option( 'w4os_popular_places_max', 5 ) : $atts['max'];
+	$before_title = empty($titleLevel) ? '' : "<{$titleLevel}>";
+	$after_title  = empty($titleLevel) ? '' : "</{$titleLevel}>";
+
 	$content      = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
 
 	$places = w4os_popular_places( $atts );
@@ -192,7 +191,7 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 	}
 
 	$i        = 0;
-	$content .= '<div class=places>';
+	$content .= '<div class="places">';
 	foreach ( $places as $place ) {
 		if ( w4os_empty( $place['imageUUID'] ) ) {
 			continue;
@@ -200,16 +199,15 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 		if ( $i++ >= $max ) {
 			break;
 		}
-		// if (!empty($place['imageUUID']) && $place['imageUUID']!=W4OS_NULL_KEY) {
-		$image = sprintf(
+
+		$image   = sprintf(
 			'<img src="%1$s" alt="%2$s">',
 			w4os_get_asset_url( $place['imageUUID'] ),
 			$place['name'],
 		);
-		// }
 		$tplink   = preg_replace( '#.*://#', 'secondlife://', $place['gatekeeperURL'] . ':' . $place['regionname'] . '/' . $place['landingpoint'] . '/' );
 		$content .= sprintf(
-			'<div class=place><a href="%1$s"><h5>%2$s</h5>%3$s</a></div>',
+			'<div class="place"><a href="%1$s">%2$s%3$s</a></div>',
 			$tplink,
 			$place['name'],
 			$image,
@@ -232,11 +230,13 @@ function et_builder_module_w4os_popular_places_init() {
 
 				$this->whitelisted_fields = array(
 					'title',
+					'titleLevel',
 					'max',
 				);
 
 				$this->fields_defaults = array(
 					'title' => '',
+					'titleLevel' => '',
 					'max'   => 5,
 				);
 
@@ -269,6 +269,7 @@ function et_builder_module_w4os_popular_places_init() {
 					$atts,
 					array(
 						'title' => '',
+						'titleLevel' => '',
 						'max'   => 5,
 					)
 				);
