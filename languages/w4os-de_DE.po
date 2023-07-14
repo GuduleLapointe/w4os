@@ -1416,8 +1416,8 @@ msgstr "leer lassen, um unverändert zu bleiben"
 msgid "Create an avatar"
 msgstr "Einen Avatar erstellen"
 
-#: legacy/profile.php:921 blocks/w4os-avatar-profile-block/index.js:33
-#: blocks/w4os-avatar-profile-block/index.js:85
+#: legacy/profile.php:921 blocks/avatar-profile/index.js:33
+#: blocks/avatar-profile/index.js:85
 msgid "Grid profile"
 msgstr "Grid Profil"
 
