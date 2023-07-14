@@ -18,33 +18,6 @@ $count = w4os_count_users();
 	}
 	?>
 	<div class=content>
-		<div class=shortcodes>
-			<h2>
-				<?php _e( 'Available shortcodes', 'w4os' ); ?>
-			</h2>
-			<table class="w4os-table shortcodes">
-				<tr><th>
-					<code>[gridinfo]</code>
-					<p><?php _e( 'General information (grid name and login uri)', 'w4os' ); ?></p>
-				</th><td>
-					<?php echo w4os_gridinfo_shortcode(); ?>
-				</td></tr>
-				<tr><th>
-					<code>[gridstatus]</code>
-					<p><?php _e( 'Online users, regions, etc.', 'w4os' ); ?></p>
-				</th><td>
-					<?php echo w4os_gridstatus_shortcode(); ?>
-				</td></tr>
-				<tr><th>
-					<code>[gridprofile]</code>
-					<p><?php _e( 'Grid profile if user is connected and has an avatar, avatar registration form otherwise', 'w4os' ); ?>
-						<?php echo sprintf( __( '(formerly %s)', 'w4os' ), '<code>[w4os_profile]</code>' ); ?>
-					</p>
-				</th><td>
-					<?php echo do_shortcode( '[gridprofile]' ); ?>
-				</td></tr>
-			</table>
-		</div>
 	<?php if ( W4OS_DB_CONNECTED ) { ?>
 		<div class=column>
 		<div class=sync>
@@ -285,7 +258,7 @@ $count = w4os_count_users();
 						)
 					) . '">'
 						. sprintf(
-							'Create %s page',
+							__('Create %s page', 'w4os'),
 							$data['name'],
 						) . '</a>'
 					: ''

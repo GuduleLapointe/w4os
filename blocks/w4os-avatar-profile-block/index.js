@@ -24,7 +24,7 @@
 	 * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/block-api/#registering-a-block
 	 */
 	registerBlockType(
-		'w4os/w4os-gridprofile-block',
+		'w4os/w4os-avatar-profile-block',
 		{
 			/**
 			 * This is the display title for your block, which can be translated with `i18n` functions.
@@ -63,7 +63,7 @@
 					el(
 						ServerSideRender,
 						{
-							block: 'w4os/w4os-gridprofile-block',
+							block: 'w4os/w4os-avatar-profile-block',
 							attributes: props.attributes,
 							}
 					)

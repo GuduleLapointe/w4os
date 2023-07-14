@@ -836,8 +836,9 @@ function w4os_profile_shortcodes_init() {
 		return "<div class='w4os-shortcode w4os-shortcode-profile'>" . $content . '</div>';
 		return $content;
 	}
-	add_shortcode( 'w4os_profile', 'w4os_profile_shortcode' );
-	add_shortcode( 'gridprofile', 'w4os_profile_shortcode' );
+	add_shortcode( 'avatar-profile', 'w4os_profile_shortcode' );
+	add_shortcode( 'w4os_profile', 'w4os_profile_shortcode' ); // Backwards compatibility
+	add_shortcode( 'gridprofile', 'w4os_profile_shortcode' ); // Backwards compatibility
 }
 add_action( 'init', 'w4os_profile_shortcodes_init' );
 
@@ -907,7 +908,7 @@ if ( W4OS_DB_CONNECTED ) {
 	add_action( 'init', 'w4os_gridprofile_block_init' );
 }
 function w4os_gridprofile_block_init() {
-	w4os_block_init( 'gridprofile', 'Grid profile' );
+	w4os_block_init( 'avatar-profile', 'Grid profile' );
 }
 
 function w4os_gridprofile_block_render( $args = array(), $dumb = '', $block_object = array() ) {

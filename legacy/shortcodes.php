@@ -34,7 +34,8 @@ function w4os_shortcodes_init() {
 			return "<div class='w4os-shortcode w4os-shortcode-gridinfo'>$content</div>";
 		}
 	}
-	add_shortcode( 'gridinfo', 'w4os_gridinfo_shortcode' );
+	add_shortcode( 'grid-info', 'w4os_gridinfo_shortcode' );
+	add_shortcode( 'gridinfo', 'w4os_gridinfo_shortcode' ); // Backwards compatibility
 
 	/**
 	 * Grid status shortcode
@@ -61,19 +62,20 @@ function w4os_shortcodes_init() {
 			return "<div class='w4os-shortcode w4os-shortcode-gridstatus'>$content</div>";
 		}
 	}
-	add_shortcode( 'gridstatus', 'w4os_gridstatus_shortcode' );
+	add_shortcode( 'grid-status', 'w4os_gridstatus_shortcode' );
+	add_shortcode( 'gridstatus', 'w4os_gridstatus_shortcode' ); // Backwards compatibility
 
-	function w4os_newusers_shortcode( $atts = array(), $content = null ) {
-		if ( ! current_user_can( 'list_users' ) ) {
-			return '';
-		}
-
-		$content = w4os_newusers_html();
-		if ( ! empty( $content ) ) {
-			return "<div class='w4os-shortcode w4os-shortcode-newusers'>" . w4os_newusers_html() . '</div>';
-		}
-	}
-	add_shortcode( 'w4os_newusers_shortcode', 'w4os_newusers' );
+	// function w4os_newusers_shortcode( $atts = array(), $content = null ) {
+	// 	if ( ! current_user_can( 'list_users' ) ) {
+	// 		return '';
+	// 	}
+	//
+	// 	$content = w4os_newusers_html();
+	// 	if ( ! empty( $content ) ) {
+	// 		return "<div class='w4os-shortcode w4os-shortcode-newusers'>" . w4os_newusers_html() . '</div>';
+	// 	}
+	// }
+	// add_shortcode( 'w4os_newusers_shortcode', 'w4os_newusers' );
 }
 add_action( 'init', 'w4os_shortcodes_init' );
 

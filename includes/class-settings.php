@@ -19,6 +19,11 @@ class W4OS_Settings extends W4OS_Loader {
 				'callback' => 'register_admin_menu',
 				'priority' => 5,
 			),
+			array(
+				'hook'     => 'admin_menu',
+				'callback' => 'register_admin_submenus',
+				'priority' => 20,
+			),
 			// array(
 			// 'hook' => 'init',
 			// 'callback' => 'rewrite_rules',
@@ -69,7 +74,19 @@ class W4OS_Settings extends W4OS_Loader {
 			plugin_dir_url( W4OS_PLUGIN ) . 'images/opensimulator-logo-24x14.png', // icon url
 			2 // position
 		);
-		add_submenu_page( 'w4os', __( 'OpenSimulator Status', 'w4os' ), __( 'Status' ), 'manage_options', 'w4os', 'w4os_status_page' );
+		add_submenu_page( 'w4os', __( 'OpenSimulator Status', 'w4os' ), __( 'Status', 'w4os' ), 'manage_options', 'w4os', 'w4os_status_page' );
+	}
+
+	function register_admin_submenus() {
+		add_submenu_page( 'w4os', __( 'Available Shortcodes', 'w4os' ), __( 'Shortcodes', 'w4os' ), 'manage_options', 'w4os-shortcodes', array($this, 'w4os_shortcodes_page') );
+	}
+
+	function w4os_shortcodes_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+		}
+
+		require_once(W4OS_DIR . '/admin/templates/shortcodes.php');
 	}
 
 	function register_settings_pages( $settings_pages ) {
