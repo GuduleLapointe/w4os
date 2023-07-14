@@ -31,8 +31,8 @@
 	</td><td>
 	  <?php
 		$parameters = array(
-			'title' => __( 'Bloc title', 'w4os' ),
-			'max=n' => __( 'Show maximum n results', 'w4os' ),
+			'title'    => __( 'Bloc title', 'w4os' ),
+			'max=n'    => __( 'Show maximum n results', 'w4os' ),
 			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
 		);
 		$options    = '<p>' . __( 'Options', 'w4os' ) . '</p>';
