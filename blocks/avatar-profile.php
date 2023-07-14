@@ -10,8 +10,12 @@
  *
  * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
-function popular_places_block_init() {
-	add_shortcode( 'popular-places', 'w4os_popular_places_shortcode' );
+function avatar_profile_block_init() {
+
+	add_shortcode( 'avatar-profile', 'w4os_avatar_profile_shortcode' );
+	add_shortcode( 'w4os_profile', 'w4os_avatar_profile_shortcode' ); // Backwards compatibility
+	add_shortcode( 'gridprofile', 'w4os_avatar_profile_shortcode' ); // Backwards compatibility
+	add_shortcode( 'avatar-profile', 'w4os_avatar_profile_shortcode' );
 
 	// Skip block registration if Gutenberg is not enabled/merged.
 	if ( ! function_exists( 'register_block_type' ) ) {
@@ -19,9 +23,9 @@ function popular_places_block_init() {
 	}
 	$dir = dirname( __FILE__ );
 
-	$index_js = 'popular-places/popular-places.js';
+	$index_js = 'avatar-profile/avatar-profile.js';
 	wp_register_script(
-		'popular-places-block-editor',
+		'avatar-profile-block-editor',
 		plugins_url( $index_js, __FILE__ ),
 		array(
 			'wp-blocks',
@@ -33,28 +37,28 @@ function popular_places_block_init() {
 		filemtime( "{$dir}/{$index_js}" )
 	);
 
-	// $editor_css = 'popular-places/editor.css';
+	// $editor_css = 'avatar-profile/editor.css';
 	// wp_register_style(
-	// 'popular-places-block-editor',
+	// 'avatar-profile-block-editor',
 	// plugins_url( $editor_css, __FILE__ ),
 	// array(),
 	// filemtime( "{$dir}/{$editor_css}" )
 	// );
 
-	$style_css = 'popular-places/popular-places.css';
+	$style_css = 'avatar-profile/avatar-profile.css';
 	wp_register_style(
-		'popular-places-block',
+		'avatar-profile-block',
 		plugins_url( $style_css, __FILE__ ),
 		array(),
 		filemtime( "{$dir}/{$style_css}" )
 	);
 
 	register_block_type(
-		'w4os/popular-places',
+		'w4os/avatar-profile',
 		array(
-			'editor_script'   => 'popular-places-block-editor',
-			'editor_style'    => 'popular-places-block-editor',
-			'style'           => 'popular-places-block',
+			'editor_script'   => 'avatar-profile-block-editor',
+			'editor_style'    => 'avatar-profile-block-editor',
+			'style'           => 'avatar-profile-block',
 			'attributes'      => array(
 				'title' => array(
 					'type' => 'string',
@@ -64,28 +68,23 @@ function popular_places_block_init() {
 					'type' => 'string',
 					// 'default' => '',
 				),
-				'max'   => array(
-					'type' => 'number',
-					// 'default' => 5,
-				),
 			),
-			'render_callback' => 'w4os_popular_places_block_render',
+			'render_callback' => 'w4os_avatar_profile_block_render',
 		)
 	);
 }
-add_action( 'init', 'popular_places_block_init' );
+add_action( 'init', 'avatar_profile_block_init' );
 
-function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
+function w4os_avatar_profile_block_render( $attributes, $void, $block = true ) {
 	$atts = wp_parse_args(
 		$attributes,
 		array(
 			'title' => null,
 			'level' => null,
-			'max'   => null,
 		)
 	);
 
-	$content = w4os_popular_places_html( $atts );
+	$content = w4os_avatar_profile_html( $atts );
 	if ( empty( $content ) ) {
 		return '';
 	}
@@ -99,27 +98,27 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 	);
 }
 
-function w4os_popular_places_shortcode( $atts = array(), $content = null ) {
+function w4os_avatar_profile_shortcode( $atts = array(), $content = null ) {
 	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
 	empty( $content ) ? $content = '' : $content = "<div>$content</div>";
 	$atts                        = wp_parse_args(
 		$atts,
 		array(
-			'title' => __( 'Popular Places', 'w4os' ),
+			'title' => __( 'Avatar Profile', 'w4os' ),
 		)
 	);
 	$args                        = array();
 
-	$result = w4os_popular_places_html( $atts, $args );
+	$result = w4os_avatar_profile_html( $atts, $args );
 	if ( empty( $result ) ) {
 		return '';
 	}
 
 	$content .= $result;
-	return "<div class='w4os-shortcode w4os-popular-places'>$result</div>";
+	return "<div class='w4os-shortcode w4os-avatar-profile'>$result</div>";
 }
 
-function w4os_popular_places( $atts = array() ) {
+function w4os_avatar_profile( $atts = array() ) {
 	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
 		return array();
 	}
@@ -164,80 +163,44 @@ function w4os_popular_places( $atts = array() ) {
 	}
 }
 
-function w4os_popular_places_html( $atts = array(), $args = array() ) {
+function w4os_avatar_profile_html( $atts = array(), $args = array() ) {
 	$atts         = wp_parse_args(
 		array_filter( $atts ),
 		array(
 			'title' => null,
 			'level' => 'h3',
-			'max'   => null,
 		)
 	);
 	$level        = $atts['level'];
 	$title        = $atts['title'];
-	$max          = empty( $atts['max'] ) ? get_option( 'w4os_popular_places_max', 5 ) : $atts['max'];
 	$before_title = empty( $level ) ? '' : "<{$level}>";
 	$after_title  = empty( $level ) ? '' : "</{$level}>";
 
 	$content = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
+	$content .= w4os_profile_display( wp_get_current_user(), $args );
 
-	$places = w4os_popular_places( $atts );
-	if ( empty( $places ) ) {
-		if ( isset( $_REQUEST['context'] ) && $_REQUEST['context'] == 'edit' ) {
-			return $content . __( 'No result', 'w4os' );
-		} else {
-			return;
-		}
-	}
-
-	$i        = 0;
-	$content .= '<div class="places">';
-	foreach ( $places as $place ) {
-		if ( w4os_empty( $place['imageUUID'] ) ) {
-			continue;
-		}
-		if ( $i++ >= $max ) {
-			break;
-		}
-
-		$image    = sprintf(
-			'<img class="place-image" src="%1$s" alt="%2$s">',
-			w4os_get_asset_url( $place['imageUUID'] ),
-			$place['name'],
-		);
-		$tplink   = preg_replace( '#.*://#', 'secondlife://', $place['gatekeeperURL'] . ':' . $place['regionname'] . '/' . $place['landingpoint'] . '/' );
-		$content .= sprintf(
-			'<div class="place"><a href="%1$s"><div class=place-name>%2$s</div>%3$s</a></div>',
-			$tplink,
-			$place['name'],
-			$image,
-		);
-	}
-	$content .= '</div>';
 	return $content;
 }
 
-add_action( 'et_builder_ready', 'et_builder_module_w4os_popular_places_init' );
+add_action( 'et_builder_ready', 'et_builder_module_w4os_avatar_profile_init' );
 
-function et_builder_module_w4os_popular_places_init() {
+function et_builder_module_w4os_avatar_profile_init() {
 	// Check if Divi Builder is active
 	if ( class_exists( 'ET_Builder_Module' ) ) {
-		class ET_Builder_Module_W4OS_Popular_Places extends ET_Builder_Module {
+		class ET_Builder_Module_W4OS_avatar_profile extends ET_Builder_Module {
 			// ...
 			function init() {
-				$this->name = __( 'W4OS Popular Places', 'w4os' );
-				$this->slug = 'et_pb_w4os_popular_places';
+				$this->name = __( 'W4OS Avatar Profile', 'w4os' );
+				$this->slug = 'et_pb_w4os_avatar_profile';
 
 				$this->whitelisted_fields = array(
 					'title',
 					'level',
-					'max',
 				);
 
 				$this->fields_defaults = array(
 					'title' => '',
 					// 'level' => 'h3',
-					'max'   => 5,
 				);
 
 				$this->main_css_element = '%%order_class%%';
@@ -249,9 +212,9 @@ function et_builder_module_w4os_popular_places_init() {
 				$fields['title'] = array(
 					'label'       => __( 'Title', 'w4os' ),
 					'type'        => 'text',
-					'description' => __( 'Enter the title for the Popular Places module.', 'w4os' ),
+					'description' => __( 'Enter the title for the Avatar Profile module.', 'w4os' ),
 					'toggle_slug' => 'main_content',
-					'default'     => __( 'Popular Places', 'w4os' ),
+					'default'     => __( 'Avatar Profile', 'w4os' ),
 				);
 
 				$fields['level'] = array(
@@ -271,13 +234,6 @@ function et_builder_module_w4os_popular_places_init() {
 					'default'     => 'h3',
 				);
 
-				$fields['max'] = array(
-					'label'       => __( 'Max Results', 'w4os' ),
-					'type'        => 'text',
-					'description' => __( 'Enter the maximum number of results to display.', 'w4os' ),
-					'toggle_slug' => 'main_content',
-				);
-
 				return $fields;
 			}
 
@@ -287,19 +243,18 @@ function et_builder_module_w4os_popular_places_init() {
 					array(
 						'title' => '',
 						'level' => '',
-						'max'   => 5,
 					)
 				);
 
-				$output = w4os_popular_places_html( $atts );
+				$output = w4os_avatar_profile_html( $atts );
 
 				return sprintf(
-					'<div class="et_pb_module et_pb_w4os_popular_places w4os-popular-places">%s</div>',
+					'<div class="et_pb_module et_pb_w4os_avatar_profile w4os-avatar-profile">%s</div>',
 					$output
 				);
 			}
 		}
 
-		new ET_Builder_Module_W4OS_Popular_Places();
+		new ET_Builder_Module_W4OS_avatar_profile();
 	}
 }

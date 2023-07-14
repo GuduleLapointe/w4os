@@ -819,28 +819,28 @@ function w4os_profile_display( $user, $args = array() ) {
 }
 
 
-function w4os_profile_shortcodes_init() {
-	if ( ! W4OS_DB_CONNECTED ) {
-		return;
-	}
-	global $pagenow;
-	if ( in_array( $pagenow, array( 'post.php', 'post-new.php', 'admin-ajax.php', '' ) ) || get_post_type() == 'post' ) {
-		return;
-	}
-	if ( wp_is_json_request() ) {
-		return;
-	}
-
-	function w4os_profile_shortcode( $atts = array(), $content = null ) {
-		$content .= w4os_profile_display( wp_get_current_user() );
-		return "<div class='w4os-shortcode w4os-shortcode-profile'>" . $content . '</div>';
-		return $content;
-	}
-	add_shortcode( 'avatar-profile', 'w4os_profile_shortcode' );
-	add_shortcode( 'w4os_profile', 'w4os_profile_shortcode' ); // Backwards compatibility
-	add_shortcode( 'gridprofile', 'w4os_profile_shortcode' ); // Backwards compatibility
-}
-add_action( 'init', 'w4os_profile_shortcodes_init' );
+// function w4os_profile_shortcodes_init() {
+// 	if ( ! W4OS_DB_CONNECTED ) {
+// 		return;
+// 	}
+// 	global $pagenow;
+// 	if ( in_array( $pagenow, array( 'post.php', 'post-new.php', 'admin-ajax.php', '' ) ) || get_post_type() == 'post' ) {
+// 		return;
+// 	}
+// 	if ( wp_is_json_request() ) {
+// 		return;
+// 	}
+//
+// 	function w4os_profile_shortcode( $atts = array(), $content = null ) {
+// 		$content .= w4os_profile_display( wp_get_current_user() );
+// 		return "<div class='w4os-shortcode w4os-shortcode-profile'>" . $content . '</div>';
+// 		return $content;
+// 	}
+// 	// add_shortcode( 'avatar-profile', 'w4os_profile_shortcode' );
+// 	// add_shortcode( 'w4os_profile', 'w4os_profile_shortcode' ); // Backwards compatibility
+// 	// add_shortcode( 'gridprofile', 'w4os_profile_shortcode' ); // Backwards compatibility
+// }
+// add_action( 'init', 'w4os_profile_shortcodes_init' );
 
 function w4os_render_asset( $image_uuid, $size = 256, $default = '', $alt = '', $args = null ) {
 	if ( w4os_empty( $image_uuid ) ) {
@@ -904,12 +904,12 @@ function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt, $args
 	return $avatar;
 }
 
-if ( W4OS_DB_CONNECTED ) {
-	add_action( 'init', 'w4os_gridprofile_block_init' );
-}
-function w4os_gridprofile_block_init() {
-	w4os_block_init( 'avatar-profile', 'Grid profile' );
-}
+// if ( W4OS_DB_CONNECTED ) {
+// 	add_action( 'init', 'w4os_gridprofile_block_init' );
+// }
+// function w4os_gridprofile_block_init() {
+// 	w4os_block_init( 'avatar-profile', 'Avatar Profile' );
+// }
 
 function w4os_gridprofile_block_render( $args = array(), $dumb = '', $block_object = array() ) {
 	if ( ! W4OS_DB_CONNECTED ) {
@@ -918,7 +918,7 @@ function w4os_gridprofile_block_render( $args = array(), $dumb = '', $block_obje
 	$args                 = (array) $block_object;
 	$args['before_title'] = '<h4>';
 	$args['after_title']  = '</h4>';
-	$args['title']        = __( 'Grid profile', 'w4os' );
+	$args['title']        = __( 'Avatar Profile', 'w4os' );
 	return sprintf(
 		'<div>%s</div>',
 		w4os_gridprofile_html( null, $args )

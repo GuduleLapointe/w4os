@@ -15,18 +15,32 @@
 	</td></tr>
 	<tr><th>
 	  <code>[avatar-profile]</code>
-	  <p><?php _e( 'Grid profile if user is connected and has an avatar, avatar registration form otherwise', 'w4os' ); ?>
+	  <p><?php _e( 'Avatar Profile if user is connected and has an avatar, avatar registration form otherwise', 'w4os' ); ?>
 		<?php echo sprintf( __( '(formerly %s)', 'w4os' ), '<code>[gridprofile]</code>' ); ?>
 	  </p>
 	</th><td>
 	  <?php echo do_shortcode( '[avatar-profile]' ); ?>
+  </td><td>
+	  <?php
+		$parameters = array(
+			'title'    => __( 'Bloc title', 'w4os' ),
+			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
+		);
+		$options    = '<p>' . __( 'Options', 'w4os' ) . '</p>';
+		$options   .= '<table>';
+		foreach ( $parameters as $key => $value ) {
+			$options .= '<tr><th>' . $key . '</th><td>' . $value . '</td></tr>';
+		}
+		$options .= '</table>';
+		echo $options;
+		?>
 	</td></tr>
 	<tr><th>
 	  <code>[popular-places]</code>
 	  <p>
 		<?php _e( 'Most visited regions in your grid.', 'w4os' ); ?>
 	  </p>
-	</th><td colspan="2">
+	</th><td>
 	  <?php echo do_shortcode( '[popular-places]' ); ?>
 	</td><td>
 	  <?php
@@ -43,6 +57,7 @@
 		$options .= '</table>';
 		echo $options;
 		?>
+    </td>
 	</tr>
   </table>
 </div>

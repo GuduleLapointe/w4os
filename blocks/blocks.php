@@ -89,4 +89,5 @@ function w4os_gridstatus_block_render( $args = array(), $dumb = '', $block_objec
 	);
 }
 
+require_once __DIR__ . '/avatar-profile.php';
 require_once __DIR__ . '/popular-places.php';

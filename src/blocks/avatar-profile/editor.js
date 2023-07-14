@@ -8,12 +8,13 @@ var PanelBody         = wp.components.PanelBody;
 var SelectControl = wp.components.SelectControl;
 
 registerBlockType(
-	'w4os/popular-places',
+	'w4os/avatar-profile',
 	{
-		title: __( 'Popular Places', 'w4os' ),
-		icon: 'location',
+		title: __( 'Avatar Profile', 'w4os' ),
+		icon: 'user',
 		category: 'widgets',
 		supports: {
+			// html: true,
 			html: false,
 		},
 		attributes: {
@@ -25,15 +26,11 @@ registerBlockType(
 					type: 'string',
 					default: 'h3',
 			},
-			max: {
-				type: 'number',
-				default: 5,
-			},
 		},
+
 		edit: function(props) {
 			var title         = props.attributes.title;
 			var level         = props.attributes.level;
-			var max           = props.attributes.max || 0;
 			var setAttributes = props.setAttributes;
 
 			function onChangeTitle(newTitle) {
@@ -44,12 +41,6 @@ registerBlockType(
 			function onChangelevel(newLevel) {
 			    // const level = newLevel || 'h4';
 			    setAttributes({ level: newLevel });
-			}
-
-			function onChangemax(newmax) {
-				// Treat empty or less than zero value as 0
-				var updatedmax = parseInt( newmax ) < 0 ? 0 : parseInt( newmax );
-				setAttributes( { max: updatedmax } );
 			}
 
 			return el(
@@ -86,15 +77,6 @@ registerBlockType(
 						        onChange: onChangelevel,
 						    }
 						),
-						el(
-							TextControl,
-							{
-								label: __( 'Max Results', 'w4os' ),
-								type: 'number',
-								value: max.toString(),
-								onChange: onChangemax,
-							}
-						)
 					)
 				),
 				el(
@@ -103,15 +85,8 @@ registerBlockType(
 					el(
 						ServerSideRender,
 						{
-							block: 'w4os/popular-places',
+							block: 'w4os/avatar-profile',
 							attributes: props.attributes,
-							// LoadingResponsePlaceholder: function() {
-							// 	return el(
-							// 		'p',
-							// 		{ className: 'loading-message' },
-							// 		__('Building Popular Places block preview, please wait...', 'w4os'),
-							// 	);
-							// },
 						}
 					)
 				)
