@@ -258,7 +258,7 @@ $count = w4os_count_users();
 						)
 					) . '">'
 						. sprintf(
-							__('Create %s page', 'w4os'),
+							__( 'Create %s page', 'w4os' ),
 							$data['name'],
 						) . '</a>'
 					: ''

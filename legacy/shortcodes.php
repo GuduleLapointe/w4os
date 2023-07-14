@@ -66,14 +66,14 @@ function w4os_shortcodes_init() {
 	add_shortcode( 'gridstatus', 'w4os_gridstatus_shortcode' ); // Backwards compatibility
 
 	// function w4os_newusers_shortcode( $atts = array(), $content = null ) {
-	// 	if ( ! current_user_can( 'list_users' ) ) {
-	// 		return '';
-	// 	}
+	// if ( ! current_user_can( 'list_users' ) ) {
+	// return '';
+	// }
 	//
-	// 	$content = w4os_newusers_html();
-	// 	if ( ! empty( $content ) ) {
-	// 		return "<div class='w4os-shortcode w4os-shortcode-newusers'>" . w4os_newusers_html() . '</div>';
-	// 	}
+	// $content = w4os_newusers_html();
+	// if ( ! empty( $content ) ) {
+	// return "<div class='w4os-shortcode w4os-shortcode-newusers'>" . w4os_newusers_html() . '</div>';
+	// }
 	// }
 	// add_shortcode( 'w4os_newusers_shortcode', 'w4os_newusers' );
 }

@@ -78,7 +78,7 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	function register_admin_submenus() {
-		add_submenu_page( 'w4os', __( 'Available Shortcodes', 'w4os' ), __( 'Shortcodes', 'w4os' ), 'manage_options', 'w4os-shortcodes', array($this, 'w4os_shortcodes_page') );
+		add_submenu_page( 'w4os', __( 'Available Shortcodes', 'w4os' ), __( 'Shortcodes', 'w4os' ), 'manage_options', 'w4os-shortcodes', array( $this, 'w4os_shortcodes_page' ) );
 	}
 
 	function w4os_shortcodes_page() {
@@ -86,7 +86,7 @@ class W4OS_Settings extends W4OS_Loader {
 				return;
 		}
 
-		require_once(W4OS_DIR . '/admin/templates/shortcodes.php');
+		require_once W4OS_DIR . '/admin/templates/shortcodes.php';
 	}
 
 	function register_settings_pages( $settings_pages ) {
