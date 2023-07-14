@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.4.4
+- added title level option to Popular Places block, shortcode and Divi module
+
 ### 2.4.3
 - added Popular Places Divi Builder module
 - added separate web assets server settings page
