@@ -201,13 +201,13 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 		}
 
 		$image   = sprintf(
-			'<img src="%1$s" alt="%2$s">',
+			'<img class="place-image" src="%1$s" alt="%2$s">',
 			w4os_get_asset_url( $place['imageUUID'] ),
 			$place['name'],
 		);
 		$tplink   = preg_replace( '#.*://#', 'secondlife://', $place['gatekeeperURL'] . ':' . $place['regionname'] . '/' . $place['landingpoint'] . '/' );
 		$content .= sprintf(
-			'<div class="place"><a href="%1$s">%2$s%3$s</a></div>',
+			'<div class="place"><a href="%1$s"><div class=place-name>%2$s</div>%3$s</a></div>',
 			$tplink,
 			$place['name'],
 			$image,
