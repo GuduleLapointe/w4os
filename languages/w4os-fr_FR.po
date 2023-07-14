@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-14T18:00:40+00:00\n"
+"POT-Creation-Date: 2023-07-14T18:42:31+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -77,9 +77,10 @@ msgstr "Niveau de titre (de h1 à h6)"
 msgid "Options"
 msgstr "Options"
 
-#: blocks/popular-places.php:108 blocks/popular-places.php:255
+#: blocks/popular-places.php:108 blocks/popular-places.php:254
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:15
+#: src/blocks/popular-places/editor.js:13
+#: blocks/popular-places/popular-places.js:13
 msgid "Popular Places"
 msgstr "Lieux populaires"
 
@@ -91,33 +92,33 @@ msgstr "Aucun résultat"
 msgid "W4OS Popular Places"
 msgstr "W4OS Lieux populaires"
 
-#: blocks/popular-places.php:251 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:71
-#: blocks/popular-places/popular-places.js:105
+#: blocks/popular-places.php:250 blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:69
+#: blocks/popular-places/popular-places.js:69
 msgid "Title"
 msgstr "Titre"
 
-#: blocks/popular-places.php:253
+#: blocks/popular-places.php:252
 msgid "Enter the title for the Popular Places module."
 msgstr "Entrez le titre du module Lieux Populaires."
 
-#: blocks/popular-places.php:259 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:79
-#: blocks/popular-places/popular-places.js:113
+#: blocks/popular-places.php:258 blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:77
+#: blocks/popular-places/popular-places.js:77
 msgid "Title Level"
 msgstr "Niveau de titre"
 
-#: blocks/popular-places.php:261
+#: blocks/popular-places.php:260
 msgid "Select the HTML heading level for the title."
 msgstr "Selectionnez le niveau de titre."
 
-#: blocks/popular-places.php:276 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:96
-#: blocks/popular-places/popular-places.js:130
+#: blocks/popular-places.php:275 blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:94
+#: blocks/popular-places/popular-places.js:94
 msgid "Max Results"
 msgstr "Maximum résultats"
 
-#: blocks/popular-places.php:278
+#: blocks/popular-places.php:277
 msgid "Enter the maximum number of results to display."
 msgstr "Entrez le nombre maximum de résultats à afficher."
 
@@ -1823,14 +1824,19 @@ msgstr ""
 "strong> est installée et active. Le doublon a été désactivé."
 
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:67
-#: blocks/popular-places/popular-places.js:101
+#: src/blocks/popular-places/editor.js:65
+#: blocks/popular-places/popular-places.js:65
 msgid "Block Settings"
 msgstr "Réglages du bloc"
 
-#: blocks/popular-places/popular-places.js:49
-msgid "Popular Places Block"
-msgstr "Lieux populaires"
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:114
+#: blocks/popular-places/popular-places.js:114
+msgid "Building Popular Places block preview, please wait..."
+msgstr "Construction du bloc Lieux Populaires, merci de patienter..."
+
+#~ msgid "Popular Places Block"
+#~ msgstr "Lieux populaires"
 
 #~ msgid "w4os - OpenSimulator Web Interface (dev)"
 #~ msgstr "w4os - Interface web pour OpenSimulator (dev)"

@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface 2.4.3\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.4.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-14T18:00:40+00:00\n"
+"POT-Creation-Date: 2023-07-14T18:42:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
@@ -75,9 +75,10 @@ msgid "Options"
 msgstr ""
 
 #: blocks/popular-places.php:108
-#: blocks/popular-places.php:255
+#: blocks/popular-places.php:254
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:15
+#: src/blocks/popular-places/editor.js:13
+#: blocks/popular-places/popular-places.js:13
 msgid "Popular Places"
 msgstr ""
 
@@ -90,36 +91,36 @@ msgstr ""
 msgid "W4OS Popular Places"
 msgstr ""
 
-#: blocks/popular-places.php:251
+#: blocks/popular-places.php:250
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:71
-#: blocks/popular-places/popular-places.js:105
+#: src/blocks/popular-places/editor.js:69
+#: blocks/popular-places/popular-places.js:69
 msgid "Title"
 msgstr ""
 
-#: blocks/popular-places.php:253
+#: blocks/popular-places.php:252
 msgid "Enter the title for the Popular Places module."
 msgstr ""
 
-#: blocks/popular-places.php:259
+#: blocks/popular-places.php:258
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:79
-#: blocks/popular-places/popular-places.js:113
+#: src/blocks/popular-places/editor.js:77
+#: blocks/popular-places/popular-places.js:77
 msgid "Title Level"
 msgstr ""
 
-#: blocks/popular-places.php:261
+#: blocks/popular-places.php:260
 msgid "Select the HTML heading level for the title."
 msgstr ""
 
-#: blocks/popular-places.php:276
+#: blocks/popular-places.php:275
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:96
-#: blocks/popular-places/popular-places.js:130
+#: src/blocks/popular-places/editor.js:94
+#: blocks/popular-places/popular-places.js:94
 msgid "Max Results"
 msgstr ""
 
-#: blocks/popular-places.php:278
+#: blocks/popular-places.php:277
 msgid "Enter the maximum number of results to display."
 msgstr ""
 
@@ -1581,11 +1582,13 @@ msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is
 msgstr ""
 
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/index.js:67
-#: blocks/popular-places/popular-places.js:101
+#: src/blocks/popular-places/editor.js:65
+#: blocks/popular-places/popular-places.js:65
 msgid "Block Settings"
 msgstr ""
 
-#: blocks/popular-places/popular-places.js:49
-msgid "Popular Places Block"
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:114
+#: blocks/popular-places/popular-places.js:114
+msgid "Building Popular Places block preview, please wait..."
 msgstr ""
