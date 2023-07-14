@@ -60,7 +60,7 @@ function popular_places_block_init() {
 					'type'    => 'string',
 					// 'default' => '',
 				),
-				'titleLevel' => array(
+				'level' => array(
 					'type'    => 'string',
 					// 'default' => '',
 				),
@@ -80,7 +80,7 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 		$attributes,
 		array(
 			'title'      => null,
-			'titleLevel' => null,
+			'level' => null,
 			'max'        => null,
 		)
 	);
@@ -169,15 +169,15 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 		array_filter($atts),
 		array(
 			'title'       => null,
-			'titleLevel'  => 'h4',
+			'level'  => 'h4',
 			'max'         => null,
 		)
 	);
-	$titleLevel   = $atts['titleLevel'];
+	$level   = $atts['level'];
 	$title        = $atts['title'];
 	$max          = empty( $atts['max'] ) ? get_option( 'w4os_popular_places_max', 5 ) : $atts['max'];
-	$before_title = empty($titleLevel) ? '' : "<{$titleLevel}>";
-	$after_title  = empty($titleLevel) ? '' : "</{$titleLevel}>";
+	$before_title = empty($level) ? '' : "<{$level}>";
+	$after_title  = empty($level) ? '' : "</{$level}>";
 
 	$content      = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
 
@@ -230,15 +230,16 @@ function et_builder_module_w4os_popular_places_init() {
 
 				$this->whitelisted_fields = array(
 					'title',
-					'titleLevel',
+					'level',
 					'max',
 				);
 
 				$this->fields_defaults = array(
 					'title' => '',
-					'titleLevel' => '',
+					// 'level' => 'h3',
 					'max'   => 5,
 				);
+				error_log(__METHOD__ . ' ' . print_r($this, true));
 
 				$this->main_css_element = '%%order_class%%';
 			}
@@ -254,25 +255,45 @@ function et_builder_module_w4os_popular_places_init() {
 					'default'     => __( 'Popular Places', 'w4os' ),
 				);
 
+				$fields['level'] = array(
+					'label'       => __( 'Title Level', 'w4os' ),
+					'type'        => 'select',
+					'description' => __( 'Select the HTML heading level for the title.', 'w4os' ),
+					'toggle_slug' => 'main_content',
+					'options'     => array(
+						'h1' => 'H1',
+						'h2' => 'H2',
+						'h3' => 'H3',
+						'h4' => 'H4',
+						'h5' => 'H5',
+						'h6' => 'H6',
+						'p' => 'P',
+					),
+					'default'     => 'h3',
+				);
+
 				$fields['max'] = array(
 					'label'       => __( 'Max Results', 'w4os' ),
 					'type'        => 'text',
 					'description' => __( 'Enter the maximum number of results to display.', 'w4os' ),
 					'toggle_slug' => 'main_content',
 				);
+				error_log(__METHOD__ . ' ' . print_r($fields, true));
 
 				return $fields;
 			}
 
 			function shortcode_callback( $atts, $content = null, $function_name ) {
+				error_log(__METHOD__ . ' ' . print_r($atts, true));
 				$atts = wp_parse_args(
 					$atts,
 					array(
-						'title' => '',
-						'titleLevel' => '',
-						'max'   => 5,
+						'title'      => '',
+						'level' => '',
+						'max'        => 5,
 					)
 				);
+				error_log(__METHOD__ . ' ' . print_r($atts, true));
 
 				$output = w4os_popular_places_html( $atts );
 
@@ -281,7 +302,6 @@ function et_builder_module_w4os_popular_places_init() {
 					$output
 				);
 			}
-			// ...
 		}
 
 		new ET_Builder_Module_W4OS_Popular_Places();

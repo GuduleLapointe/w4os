@@ -23,8 +23,8 @@ registerBlockType('w4os/popular-places', {
       type: 'string',
       default: ''
     },
-    // Error is triggered when titleLevel is added to attributes
-    titleLevel: {
+    // Error is triggered when level is added to attributes
+    level: {
       type: 'string',
       default: 'h3'
     },
@@ -36,7 +36,7 @@ registerBlockType('w4os/popular-places', {
   },
   edit: function (props) {
     var title = props.attributes.title;
-    var titleLevel = props.attributes.titleLevel;
+    var level = props.attributes.level;
     var max = props.attributes.max || 0;
     var setAttributes = props.setAttributes;
     function onChangeTitle(newTitle) {
@@ -45,10 +45,10 @@ registerBlockType('w4os/popular-places', {
         title: newTitle || undefined
       });
     }
-    function onChangeTitleLevel(newLevel) {
+    function onChangelevel(newLevel) {
       // const level = newLevel || 'h4';
       setAttributes({
-        titleLevel: newLevel
+        level: newLevel
       });
     }
     function onChangemax(newmax) {
@@ -69,7 +69,7 @@ registerBlockType('w4os/popular-places', {
       onChange: onChangeTitle
     }), el(SelectControl, {
       label: __('Title Level', 'w4os'),
-      value: titleLevel,
+      value: level,
       options: [{
         label: 'H1',
         value: 'h1'
@@ -88,8 +88,11 @@ registerBlockType('w4os/popular-places', {
       }, {
         label: 'H6',
         value: 'h6'
+      }, {
+        label: 'P',
+        value: 'p'
       }],
-      onChange: onChangeTitleLevel
+      onChange: onChangelevel
     }), el(TextControl, {
       label: __('Max Results', 'w4os'),
       type: 'number',

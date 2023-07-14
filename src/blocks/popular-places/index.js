@@ -22,8 +22,8 @@ registerBlockType(
 				type: 'string',
 				default: '',
 			},
-			// Error is triggered when titleLevel is added to attributes
-			titleLevel: {
+			// Error is triggered when level is added to attributes
+			level: {
 					type: 'string',
 					default: 'h3',
 			},
@@ -35,7 +35,7 @@ registerBlockType(
 		},
 		edit: function(props) {
 			var title         = props.attributes.title;
-			var titleLevel         = props.attributes.titleLevel;
+			var level         = props.attributes.level;
 			var max           = props.attributes.max || 0;
 			var setAttributes = props.setAttributes;
 
@@ -44,9 +44,9 @@ registerBlockType(
 				setAttributes( { title: newTitle || undefined } );
 			}
 
-			function onChangeTitleLevel(newLevel) {
+			function onChangelevel(newLevel) {
 			    // const level = newLevel || 'h4';
-			    setAttributes({ titleLevel: newLevel });
+			    setAttributes({ level: newLevel });
 			}
 
 			function onChangemax(newmax) {
@@ -76,7 +76,7 @@ registerBlockType(
 						    SelectControl,
 						    {
 						        label: __('Title Level', 'w4os'),
-						        value: titleLevel,
+						        value: level,
 						        options: [
 						            { label: 'H1', value: 'h1' },
 						            { label: 'H2', value: 'h2' },
@@ -84,8 +84,9 @@ registerBlockType(
 						            { label: 'H4', value: 'h4' },
 						            { label: 'H5', value: 'h5' },
 						            { label: 'H6', value: 'h6' },
+						            { label: 'P', value: 'p' },
 						        ],
-						        onChange: onChangeTitleLevel,
+						        onChange: onChangelevel,
 						    }
 						),
 						el(
