@@ -239,7 +239,6 @@ function et_builder_module_w4os_popular_places_init() {
 					// 'level' => 'h3',
 					'max'   => 5,
 				);
-				error_log( __METHOD__ . ' ' . print_r( $this, true ) );
 
 				$this->main_css_element = '%%order_class%%';
 			}
@@ -278,13 +277,11 @@ function et_builder_module_w4os_popular_places_init() {
 					'description' => __( 'Enter the maximum number of results to display.', 'w4os' ),
 					'toggle_slug' => 'main_content',
 				);
-				error_log( __METHOD__ . ' ' . print_r( $fields, true ) );
 
 				return $fields;
 			}
 
 			function shortcode_callback( $atts, $content = null, $function_name ) {
-				error_log( __METHOD__ . ' ' . print_r( $atts, true ) );
 				$atts = wp_parse_args(
 					$atts,
 					array(
@@ -293,7 +290,6 @@ function et_builder_module_w4os_popular_places_init() {
 						'max'   => 5,
 					)
 				);
-				error_log( __METHOD__ . ' ' . print_r( $atts, true ) );
 
 				$output = w4os_popular_places_html( $atts );
 
