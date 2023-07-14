@@ -35,10 +35,10 @@ function popular_places_block_init() {
 
 	// $editor_css = 'popular-places/editor.css';
 	// wp_register_style(
-	// 	'popular-places-block-editor',
-	// 	plugins_url( $editor_css, __FILE__ ),
-	// 	array(),
-	// 	filemtime( "{$dir}/{$editor_css}" )
+	// 'popular-places-block-editor',
+	// plugins_url( $editor_css, __FILE__ ),
+	// array(),
+	// filemtime( "{$dir}/{$editor_css}" )
 	// );
 
 	$style_css = 'popular-places/popular-places.css';
