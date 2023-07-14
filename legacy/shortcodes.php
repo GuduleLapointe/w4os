@@ -20,22 +20,22 @@ function w4os_shortcodes_init() {
 	 * @param  string $content html
 	 * @return string          html
 	 */
-	function w4os_gridinfo_shortcode( $atts = array(), $content = null ) {
-		if ( ! W4OS_DB_CONNECTED ) {
-			return;
-		}
-		empty( $content ) ? $content = '' : $content = "<div>$content</div>";
-		$args                        = array(
-			'before_title' => '<h4>',
-			'after_title'  => '</h4>',
-		);
-		$content                    .= w4os_gridinfo_html( $atts, $args );
-		if ( ! empty( $content ) ) {
-			return "<div class='w4os-shortcode w4os-shortcode-gridinfo'>$content</div>";
-		}
-	}
-	add_shortcode( 'grid-info', 'w4os_gridinfo_shortcode' );
-	add_shortcode( 'gridinfo', 'w4os_gridinfo_shortcode' ); // Backwards compatibility
+	// function w4os_gridinfo_shortcode( $atts = array(), $content = null ) {
+	// 	if ( ! W4OS_DB_CONNECTED ) {
+	// 		return;
+	// 	}
+	// 	empty( $content ) ? $content = '' : $content = "<div>$content</div>";
+	// 	$args                        = array(
+	// 		'before_title' => '<h4>',
+	// 		'after_title'  => '</h4>',
+	// 	);
+	// 	$content                    .= w4os_grid_info_html( $atts, $args );
+	// 	if ( ! empty( $content ) ) {
+	// 		return "<div class='w4os-shortcode w4os-shortcode-gridinfo'>$content</div>";
+	// 	}
+	// }
+	// add_shortcode( 'grid-info', 'w4os_gridinfo_shortcode' );
+	// add_shortcode( 'gridinfo', 'w4os_gridinfo_shortcode' ); // Backwards compatibility
 
 	/**
 	 * Grid status shortcode
@@ -134,30 +134,6 @@ function w4os_newusers_html( $atts = array(), $args = array() ) {
 	}
 	$recentusers .= '</ul>';
 	return $recentusers;
-}
-
-function w4os_gridinfo_html( $atts = array(), $args = array() ) {
-	if ( ( empty( get_option( 'w4os_login_uri' ) ) || empty( get_option( 'w4os_grid_name' ) ) ) && $args['args']['error-messages'] ) {
-		echo w4os_give_settings_url( __( 'Configure W4OS: ', 'w4os' ) );
-		return;
-	}
-
-	extract( $args );
-
-	isset( $atts['title'] ) ? $title = $atts['title'] : $title = __( 'Grid info', 'w4os' );
-	$before_title                    = ( isset( $before_title ) ) ? $before_title : '';
-	$after_title                     = ( isset( $after_title ) ) ? $after_title : '';
-	$content                         = $before_title . $title . $after_title;
-	$info                            = array(
-		__( 'Grid Name', 'w4os' ) => esc_attr( get_option( 'w4os_grid_name' ) ),
-		__( 'Login URI', 'w4os' ) => w4os_hop( get_option( 'w4os_login_uri' ) ),
-	);
-	if ( ! empty( $info ) ) {
-		$content .= w4os_array2table( $info, 'gridinfo' );
-	} else {
-		$content .= __( 'OpenSimulator not configured', 'w4os' );
-	}
-	return $content;
 }
 
 function w4os_gridstatus_html( $atts = array(), $args = array() ) {

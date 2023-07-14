@@ -59,20 +59,20 @@ function w4os_block_init( $slug, $title ) {
 	);
 }
 
-add_action( 'init', 'w4os_gridinfo_block_init' );
-function w4os_gridinfo_block_init() {
-	w4os_block_init( 'gridinfo', 'Grid info' );
-}
-function w4os_gridinfo_block_render( $args = array(), $dumb = '', $block_object = array() ) {
-	$args                 = (array) $block_object;
-	$args['before_title'] = '<h4>';
-	$args['after_title']  = '</h4>';
-
-	return sprintf(
-		'<div>%s</div>',
-		w4os_gridinfo_html( null, $args )
-	);
-}
+// add_action( 'init', 'w4os_gridinfo_block_init' );
+// function w4os_gridinfo_block_init() {
+// 	w4os_block_init( 'gridinfo', 'Grid info' );
+// }
+// function w4os_gridinfo_block_render( $args = array(), $dumb = '', $block_object = array() ) {
+// 	$args                 = (array) $block_object;
+// 	$args['before_title'] = '<h4>';
+// 	$args['after_title']  = '</h4>';
+//
+// 	return sprintf(
+// 		'<div>%s</div>',
+// 		w4os_grid_info_html( null, $args )
+// 	);
+// }
 
 add_action( 'init', 'w4os_gridstatus_block_init' );
 function w4os_gridstatus_block_init() {
@@ -89,5 +89,6 @@ function w4os_gridstatus_block_render( $args = array(), $dumb = '', $block_objec
 	);
 }
 
+require_once __DIR__ . '/grid-info.php';
 require_once __DIR__ . '/avatar-profile.php';
 require_once __DIR__ . '/popular-places.php';

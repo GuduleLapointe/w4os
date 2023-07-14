@@ -11,6 +11,7 @@ const config = {
 		'../includes/public/public': './src/public/index.js',
 		'../blocks/popular-places/popular-places': './src/blocks/popular-places/index.js',
 		'../blocks/avatar-profile/avatar-profile': './src/blocks/avatar-profile/index.js',
+		'../blocks/grid-info/grid-info': './src/blocks/grid-info/index.js',
 		// '../blocks/events/index': './src/blocks/events/index.js',
 	},
 	output: {

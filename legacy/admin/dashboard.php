@@ -40,7 +40,7 @@ function w4os_dashboard_widget_gridstatus_handler( $atts, $args ) {
 	print( w4os_gridstatus_html( array( 'title' => '' ), $args ) );
 }
 function w4os_dashboard_widget_gridinfo_handler( $atts, $args ) {
-	print( w4os_gridinfo_html( array( 'title' => '' ), $args ) );
+	print( w4os_grid_info_html( array( 'title' => '' ), $args ) );
 }
 function w4os_dashboard_widget_newusers_handler( $atts, $args ) {
 	print( w4os_newusers_html( array( 'title' => '' ), $args ) );
