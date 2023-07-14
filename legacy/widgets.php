@@ -98,11 +98,11 @@ class W4OS_GridStatus_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		extract( $args );
 		$instance['title'] = apply_filters( 'widget_title', $instance['title'] );
-		$content           = w4os_gridstatus_html( $instance, $args );
+		$content           = w4os_grid_status_html( $instance, $args );
 		if ( empty( $content ) ) {
 			return;
 		}
-		echo $before_widget . w4os_gridstatus_html( $instance, $args ) . $after_widget;
+		echo $before_widget . w4os_grid_status_html( $instance, $args ) . $after_widget;
 	}
 	/**
 	 * Back-end widget form.

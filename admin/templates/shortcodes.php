@@ -11,7 +11,7 @@
 	  <code>[grid-status]</code>
 	  <p><?php _e( 'Online users, regions, etc.', 'w4os' ); ?></p>
 	</th><td>
-	  <?php echo w4os_gridstatus_shortcode(); ?>
+	  <?php echo w4os_grid_status_shortcode(); ?>
 	</td></tr>
 	<tr><th>
 	  <code>[avatar-profile]</code>

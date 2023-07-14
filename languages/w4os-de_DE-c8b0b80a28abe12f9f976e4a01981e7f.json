@@ -1,1 +1,1 @@
-{"translation-revision-date":"","generator":"WP-CLI\/2.6.0","source":"blocks\/w4os-gridstatus-block\/index.js","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","lang":"de","plural-forms":"nplurals=2; plural=(n != 1);"},"Grid status":["Grid status"]}}}
+{"translation-revision-date":"","generator":"WP-CLI\/2.6.0","source":"blocks\/grid-status\/index.js","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","lang":"de","plural-forms":"nplurals=2; plural=(n != 1);"},"Grid status":["Grid status"]}}}

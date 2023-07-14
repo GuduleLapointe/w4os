@@ -381,9 +381,9 @@ add_action(
       <div class="wp-block-w4os-w4os-gridinfo-block">Grid info</div>
       <!-- /wp:w4os/w4os-gridinfo-block -->
 
-      <!-- wp:w4os/w4os-gridstatus-block -->
-      <div class="wp-block-w4os-w4os-gridstatus-block">Grid status</div>
-      <!-- /wp:w4os/w4os-gridstatus-block --></div>
+      <!-- wp:w4os/grid-status -->
+      <div class="wp-block-w4os-grid-status">Grid status</div>
+      <!-- /wp:w4os/grid-status --></div>
       <!-- /wp:column -->
 
       <!-- wp:column {"verticalAlignment":"top","width":"50%"} -->

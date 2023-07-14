@@ -677,8 +677,8 @@ msgstr "Gwybodaeth grid"
 
 #: legacy/admin/dashboard.php:23 legacy/shortcodes.php:176
 #: legacy/widgets.php:81 legacy/widgets.php:118
-#: blocks/w4os-gridstatus-block/index.js:33
-#: blocks/w4os-gridstatus-block/index.js:85
+#: blocks/grid-status/index.js:33
+#: blocks/grid-status/index.js:85
 msgid "Grid status"
 msgstr "Statws grid"
 

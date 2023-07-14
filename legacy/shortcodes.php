@@ -44,26 +44,26 @@ function w4os_shortcodes_init() {
 	 * @param  string $content html
 	 * @return string          html
 	 */
-	function w4os_gridstatus_shortcode( $atts = array(), $content = null ) {
-		if ( ! W4OS_DB_CONNECTED ) {
-			return;
-		}
-
-		global $w4osdb;
-		global $wp_locale;
-
-		$args = array(
-			'before_title' => '<h4>',
-			'after_title'  => '</h4>',
-		);
-
-		$content .= w4os_gridstatus_html( $atts, $args );
-		if ( ! empty( $content ) ) {
-			return "<div class='w4os-shortcode w4os-shortcode-gridstatus'>$content</div>";
-		}
-	}
-	add_shortcode( 'grid-status', 'w4os_gridstatus_shortcode' );
-	add_shortcode( 'gridstatus', 'w4os_gridstatus_shortcode' ); // Backwards compatibility
+	// function w4os_gridstatus_shortcode( $atts = array(), $content = null ) {
+	// 	if ( ! W4OS_DB_CONNECTED ) {
+	// 		return;
+	// 	}
+	//
+	// 	global $w4osdb;
+	// 	global $wp_locale;
+	//
+	// 	$args = array(
+	// 		'before_title' => '<h4>',
+	// 		'after_title'  => '</h4>',
+	// 	);
+	//
+	// 	$content .= w4os_grid_status_html( $atts, $args );
+	// 	if ( ! empty( $content ) ) {
+	// 		return "<div class='w4os-shortcode w4os-shortcode-gridstatus'>$content</div>";
+	// 	}
+	// }
+	// add_shortcode( 'grid-status', 'w4os_gridstatus_shortcode' );
+	// add_shortcode( 'gridstatus', 'w4os_gridstatus_shortcode' ); // Backwards compatibility
 
 	// function w4os_newusers_shortcode( $atts = array(), $content = null ) {
 	// if ( ! current_user_can( 'list_users' ) ) {
@@ -136,29 +136,29 @@ function w4os_newusers_html( $atts = array(), $args = array() ) {
 	return $recentusers;
 }
 
-function w4os_gridstatus_html( $atts = array(), $args = array() ) {
-	if ( ! W4OS_DB_CONNECTED ) {
-		if ( $args['args']['error-messages'] ) {
-			echo w4os_give_settings_url( __( 'Configure W4OS database: ', 'w4os' ) );
-		}
-		return;
-	};
-
-	global $w4osdb;
-	global $wp_locale;
-	extract( $args );
-	$filter = '';
-
-	isset( $atts['title'] ) ? $title = $atts['title'] : $title = __( 'Grid status', 'w4os' );
-	$before_title                    = ( isset( $before_title ) ) ? $before_title : '';
-	$after_title                     = ( isset( $after_title ) ) ? $after_title : '';
-	$content                         = $before_title . $title . $after_title;
-
-	$status = w4os_grid_status_text();
-	$result = w4os_array2table( $status, 'gridstatus' );
-
-	if ( empty( $result ) ) {
-		$result = __( 'No result', 'w4os' );
-	}
-	return $content . $result;
-}
+// function w4os_grid_status_html( $atts = array(), $args = array() ) {
+// 	if ( ! W4OS_DB_CONNECTED ) {
+// 		if ( $args['args']['error-messages'] ) {
+// 			echo w4os_give_settings_url( __( 'Configure W4OS database: ', 'w4os' ) );
+// 		}
+// 		return;
+// 	};
+//
+// 	global $w4osdb;
+// 	global $wp_locale;
+// 	extract( $args );
+// 	$filter = '';
+//
+// 	isset( $atts['title'] ) ? $title = $atts['title'] : $title = __( 'Grid status', 'w4os' );
+// 	$before_title                    = ( isset( $before_title ) ) ? $before_title : '';
+// 	$after_title                     = ( isset( $after_title ) ) ? $after_title : '';
+// 	$content                         = $before_title . $title . $after_title;
+//
+// 	$status = w4os_grid_status_text();
+// 	$result = w4os_array2table( $status, 'gridstatus' );
+//
+// 	if ( empty( $result ) ) {
+// 		$result = __( 'No result', 'w4os' );
+// 	}
+// 	return $content . $result;
+// }
