@@ -107,6 +107,13 @@ registerBlockType(
 						{
 							block: 'w4os/popular-places',
 							attributes: props.attributes,
+							LoadingResponsePlaceholder: function() {
+								return el(
+									'p',
+									{ className: 'loading-message' },
+									__('Building Popular Places block preview, please wait...', 'w4os'),
+								);
+							},
 						}
 					)
 				)
