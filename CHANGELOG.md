@@ -1,6 +1,7 @@
 ## Changelog
 
-### Unreleased (2.4.5-dev.1061)
+### Unreleased (2.4.5-dev.1064)
+- added "mini profile" option to avatar block
 - added Grid Status Divi module
 - added Grid Info Divi module
 - added Avatar Profile Divi module

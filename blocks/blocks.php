@@ -61,32 +61,32 @@ function w4os_block_init( $slug, $title ) {
 
 // add_action( 'init', 'w4os_gridinfo_block_init' );
 // function w4os_gridinfo_block_init() {
-// 	w4os_block_init( 'gridinfo', 'Grid info' );
+// w4os_block_init( 'gridinfo', 'Grid info' );
 // }
 // function w4os_gridinfo_block_render( $args = array(), $dumb = '', $block_object = array() ) {
-// 	$args                 = (array) $block_object;
-// 	$args['before_title'] = '<h4>';
-// 	$args['after_title']  = '</h4>';
+// $args                 = (array) $block_object;
+// $args['before_title'] = '<h4>';
+// $args['after_title']  = '</h4>';
 //
-// 	return sprintf(
-// 		'<div>%s</div>',
-// 		w4os_grid_info_html( null, $args )
-// 	);
+// return sprintf(
+// '<div>%s</div>',
+// w4os_grid_info_html( null, $args )
+// );
 // }
 
 // add_action( 'init', 'w4os_gridstatus_block_init' );
 // function w4os_gridstatus_block_init() {
-// 	w4os_block_init( 'gridstatus', 'Grid status' );
+// w4os_block_init( 'gridstatus', 'Grid status' );
 // }
 // function w4os_gridstatus_block_render( $args = array(), $dumb = '', $block_object = array() ) {
-// 	$args                 = (array) $block_object;
-// 	$args['before_title'] = '<h4>';
-// 	$args['after_title']  = '</h4>';
+// $args                 = (array) $block_object;
+// $args['before_title'] = '<h4>';
+// $args['after_title']  = '</h4>';
 //
-// 	return sprintf(
-// 		'<div>%s</div>',
-// 		w4os_grid_status_html( null, $args )
-// 	);
+// return sprintf(
+// '<div>%s</div>',
+// w4os_grid_status_html( null, $args )
+// );
 // }
 
 require_once __DIR__ . '/grid-info.php';

@@ -57,7 +57,7 @@ function grid_info_block_init() {
 			'editor_script'   => 'grid-info-block-editor',
 			'editor_style'    => 'grid-info-block-editor',
 			'style'           => 'grid-info-block',
-			'icon'						=> 'info',
+			'icon'            => 'info',
 			'attributes'      => array(
 				'title' => array(
 					'type' => 'string',
@@ -178,7 +178,7 @@ function w4os_grid_info_html( $atts = array(), $args = array() ) {
 
 	$content = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
 
-	$info         = array(
+	$info = array(
 		__( 'Grid Name', 'w4os' ) => esc_attr( get_option( 'w4os_grid_name' ) ),
 		__( 'Login URI', 'w4os' ) => w4os_hop( get_option( 'w4os_login_uri' ) ),
 	);

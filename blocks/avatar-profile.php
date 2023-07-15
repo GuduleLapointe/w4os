@@ -12,21 +12,21 @@ function w4os_avatar_profile_attributes() {
 			// 'default' => '',
 		),
 		'level' => array(
-			'type' => 'string',
+			'type'    => 'string',
 			'default' => 'h3',
 		),
-		'mini' => array(
-			'type' => 'boolean',
+		'mini'  => array(
+			'type'    => 'boolean',
 			'default' => false,
 		),
 	);
 }
 
 function w4os_avatar_profile_defaults() {
-	$defaults = array();
+	$defaults   = array();
 	$attributes = w4os_avatar_profile_attributes();
-	foreach ($attributes as $key => $options) {
-		$defaults[$key] = isset($options['default']) ? $options['default'] : null;
+	foreach ( $attributes as $key => $options ) {
+		$defaults[ $key ] = isset( $options['default'] ) ? $options['default'] : null;
 	}
 	return $defaults;
 }
@@ -85,7 +85,7 @@ function avatar_profile_block_init() {
 			'editor_script'   => 'avatar-profile-block-editor',
 			'editor_style'    => 'avatar-profile-block-editor',
 			'style'           => 'avatar-profile-block',
-			'icon'						=> 'users',
+			'icon'            => 'users',
 			'attributes'      => w4os_avatar_profile_attributes(),
 			'render_callback' => 'w4os_avatar_profile_block_render',
 		)
@@ -189,7 +189,7 @@ function w4os_avatar_profile_html( $atts = array(), $args = array() ) {
 	$content = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
 
 	$args['mini'] = $atts['mini'];
-	$content .= w4os_profile_display( wp_get_current_user(), $args );
+	$content     .= w4os_profile_display( wp_get_current_user(), $args );
 
 	return $content;
 }
@@ -205,7 +205,7 @@ function et_builder_module_w4os_avatar_profile_init() {
 				$this->name = __( 'OpenSimulator Avatar Profile', 'w4os' );
 				$this->slug = 'et_pb_w4os_avatar_profile';
 
-				$this->whitelisted_fields = array_keys(w4os_avatar_profile_defaults());
+				$this->whitelisted_fields = array_keys( w4os_avatar_profile_defaults() );
 
 				$this->fields_defaults = w4os_avatar_profile_defaults();
 
@@ -222,7 +222,7 @@ function et_builder_module_w4os_avatar_profile_init() {
 					'toggle_slug' => 'main_content',
 					'default'     => __( 'Avatar Profile', 'w4os' ),
 					// 'show_if'         => array(
-					// 	'mini' => 'off',
+					// 'mini' => 'off',
 					// ),
 				);
 
@@ -242,21 +242,21 @@ function et_builder_module_w4os_avatar_profile_init() {
 					),
 					'default'     => 'h3',
 					// 'show_if'         => array(
-					// 	'mini' => 'off',
+					// 'mini' => 'off',
 					// ),
 				);
 
 				$fields['mini'] = array(
-					'label'           => __( 'Mini Profile', 'w4os' ),
-					'type'            => 'yes_no_button',
-					'option_category' => 'configuration',
-					'options'         => array(
+					'label'            => __( 'Mini Profile', 'w4os' ),
+					'type'             => 'yes_no_button',
+					'option_category'  => 'configuration',
+					'options'          => array(
 						'on'  => __( 'Yes', 'w4os' ),
 						'off' => __( 'No', 'w4os' ),
 					),
-					'toggle_slug'     => 'main_content',
-					'description'     => __( 'Enable mini profile display.', 'w4os' ),
-					'default_on_front'=> 'off',
+					'toggle_slug'      => 'main_content',
+					'description'      => __( 'Enable mini profile display.', 'w4os' ),
+					'default_on_front' => 'off',
 				);
 
 				return $fields;

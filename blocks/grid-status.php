@@ -9,7 +9,7 @@
  * Registers all block assets so that they can be enqueued through Gutenberg in the corresponding context.
  *
  * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/applying-styles-with-stylesheets/
-**/
+ **/
 
 add_action( 'init', 'grid_status_block_init' );
 function grid_status_block_init() {
@@ -59,7 +59,7 @@ function grid_status_block_init() {
 			'editor_script'   => 'grid-status-block-editor',
 			'editor_style'    => 'grid-status-block-editor',
 			'style'           => 'grid-status-block',
-			'icon'						=> 'status',
+			'icon'            => 'status',
 			'attributes'      => array(
 				'title' => array(
 					'type' => 'string',

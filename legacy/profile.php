@@ -802,11 +802,11 @@ function w4os_profile_display( $user, $args = array() ) {
 	if ( $avatar->UUID ) {
 		$action     = 'w4os_update_avatar';
 		$leaveblank = ' (' . __( 'leave blank to leave unchanged', 'w4os' ) . ')';
-		if($mini) {
+		if ( $mini ) {
 			$content .= '<div class=avatar-name>' . w4os_hop( w4os_grid_profile_url( $avatar ), $avatar->AvatarName ) . '</div>';
-			$content .= '<div class=profileImage>' .$avatar->profile_picture() . '</div>';
+			$content .= '<div class=profileImage>' . $avatar->profile_picture() . '</div>';
 		} else {
-			$content   .= $avatar->profile_page();
+			$content .= $avatar->profile_page();
 		}
 		// $content.= sprintf(
 		// '<div class=profile><div class=profile-pic>%1$s</div><div class=profile-details>%2$s</div></div>',
@@ -826,25 +826,25 @@ function w4os_profile_display( $user, $args = array() ) {
 
 
 // function w4os_profile_shortcodes_init() {
-// 	if ( ! W4OS_DB_CONNECTED ) {
-// 		return;
-// 	}
-// 	global $pagenow;
-// 	if ( in_array( $pagenow, array( 'post.php', 'post-new.php', 'admin-ajax.php', '' ) ) || get_post_type() == 'post' ) {
-// 		return;
-// 	}
-// 	if ( wp_is_json_request() ) {
-// 		return;
-// 	}
+// if ( ! W4OS_DB_CONNECTED ) {
+// return;
+// }
+// global $pagenow;
+// if ( in_array( $pagenow, array( 'post.php', 'post-new.php', 'admin-ajax.php', '' ) ) || get_post_type() == 'post' ) {
+// return;
+// }
+// if ( wp_is_json_request() ) {
+// return;
+// }
 //
-// 	function w4os_profile_shortcode( $atts = array(), $content = null ) {
-// 		$content .= w4os_profile_display( wp_get_current_user() );
-// 		return "<div class='w4os-shortcode w4os-shortcode-profile'>" . $content . '</div>';
-// 		return $content;
-// 	}
-// 	// add_shortcode( 'avatar-profile', 'w4os_profile_shortcode' );
-// 	// add_shortcode( 'w4os_profile', 'w4os_profile_shortcode' ); // Backwards compatibility
-// 	// add_shortcode( 'gridprofile', 'w4os_profile_shortcode' ); // Backwards compatibility
+// function w4os_profile_shortcode( $atts = array(), $content = null ) {
+// $content .= w4os_profile_display( wp_get_current_user() );
+// return "<div class='w4os-shortcode w4os-shortcode-profile'>" . $content . '</div>';
+// return $content;
+// }
+// add_shortcode( 'avatar-profile', 'w4os_profile_shortcode' );
+// add_shortcode( 'w4os_profile', 'w4os_profile_shortcode' ); // Backwards compatibility
+// add_shortcode( 'gridprofile', 'w4os_profile_shortcode' ); // Backwards compatibility
 // }
 // add_action( 'init', 'w4os_profile_shortcodes_init' );
 
@@ -911,10 +911,10 @@ function w4os_get_avatar_filter( $avatar, $user_id, $size, $default, $alt, $args
 }
 
 // if ( W4OS_DB_CONNECTED ) {
-// 	add_action( 'init', 'w4os_gridprofile_block_init' );
+// add_action( 'init', 'w4os_gridprofile_block_init' );
 // }
 // function w4os_gridprofile_block_init() {
-// 	w4os_block_init( 'avatar-profile', 'Avatar Profile' );
+// w4os_block_init( 'avatar-profile', 'Avatar Profile' );
 // }
 
 function w4os_gridprofile_block_render( $args = array(), $dumb = '', $block_object = array() ) {

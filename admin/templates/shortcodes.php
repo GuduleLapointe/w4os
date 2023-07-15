@@ -1,8 +1,8 @@
 <h1><?php _e( 'Available Shortcodes', 'w4os' ); ?></h1>
 
 <p class="description">
-  <?php _e('Shortcodes can be included in any page or articles.'); ?>
-  <?php _e('They are also available as configurable Gutenberg blocks and Divi modules.'); ?>
+  <?php _e( 'Shortcodes can be included in any page or articles.' ); ?>
+  <?php _e( 'They are also available as configurable Gutenberg blocks and Divi modules.' ); ?>
 </p>
 
 <div class=shortcodes>
@@ -91,7 +91,7 @@
 		$options .= '</table>';
 		echo $options;
 		?>
-    </td>
+	</td>
 	</tr>
   </table>
 </div>
