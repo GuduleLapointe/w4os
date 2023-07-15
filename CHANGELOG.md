@@ -1,5 +1,13 @@
 ## Changelog
 
+### Unreleased (2.4.5-dev.1061)
+- added Grid Status Divi module
+- added Grid Info Divi module
+- added Avatar Profile Divi module
+- fixed Grid Status block
+- fixed Grid Info block
+- fixed Avatar Profile block
+
 ### 2.4.4
 - added title level option to Popular Places block, shortcode and Divi module
 
