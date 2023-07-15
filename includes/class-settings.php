@@ -183,7 +183,7 @@ class W4OS_Settings extends W4OS_Loader {
 			),
 			'fields'         => array(
 				array(
-					'name'       => __( 'Profile Page', 'w4os' ),
+					'name'       => __( 'Public Profile Page', 'w4os' ),
 					'id'         => $prefix . 'profile_page',
 					'type'       => 'switch',
 					'desc'       => __( 'Enable to provide avatars a public web profile page.', 'w4os' )
@@ -203,10 +203,6 @@ class W4OS_Settings extends W4OS_Loader {
 					'id'         => $prefix . 'profile_page_options',
 					'type'       => 'group',
 					'save_field' => false,
-					'visible'    => array(
-						'when'     => array( array( 'w4os_profile_page', '=', 1 ) ),
-						'relation' => 'or',
-					),
 					'fields'     => array(
 						array(
 							'name'       => __( 'Instructions', 'w4os' ),
@@ -225,6 +221,10 @@ class W4OS_Settings extends W4OS_Loader {
 							'style'      => 'rounded',
 							'save_field' => false,
 							'std'        => empty( get_option( 'w4os_login_page' ) ) ? 'profile' : ( get_option( 'w4os_login_page' ) == 'profile' ),
+							'visible'    => array(
+								'when'     => array( array( 'w4os_profile_page', '=', 1 ) ),
+								'relation' => 'or',
+							),
 						),
 					),
 				),
