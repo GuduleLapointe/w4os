@@ -183,34 +183,41 @@ class W4OS_Settings extends W4OS_Loader {
 			),
 			'fields'         => array(
 				array(
-					'name'       => __( 'Public Profile Page', 'w4os' ),
-					'id'         => $prefix . 'profile_page',
-					'type'       => 'switch',
-					'desc'       => __( 'Enable to provide avatars a public web profile page.', 'w4os' )
-					. ' ' . sprintf(
-						preg_replace(
-							'/%%(.*)%%/',
-							'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
-							__( 'The page %1$s must exist, as defined in %%permalinks settings%%.', 'w4os' ),
-						),
-						'<code>' . get_home_url( null, get_option( 'w4os_profile_slug', 'profile' ) ) . '</code>',
-					),
-					'style'      => 'rounded',
-					'std'        => empty( get_option( 'w4os_profile_page' ) ) ? 'provide' : ( get_option( 'w4os_profile_page' ) == 'provide' ),
-					'save_field' => false,
-				),
-				array(
+					'name'       => __( 'Profile Page', 'w4os' ),
 					'id'         => $prefix . 'profile_page_options',
 					'type'       => 'group',
 					'save_field' => false,
 					'fields'     => array(
 						array(
-							'name'       => __( 'Instructions', 'w4os' ),
-							'id'         => 'instructions',
+							'name'       => __( 'URL', 'w4os' ),
+							'id'         => 'url',
+							'type'       => 'custom_html',
+							'callback' => 'W4OS_Profile::url',
+							'class' => get_page_by_path(W4OS_Profile::slug()) ? '' : 'field-error',
+							'desc'       => sprintf(
+								preg_replace(
+									'/%%(.*)%%/',
+									'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
+									(
+										get_page_by_path(W4OS_Profile::slug())
+										? __( 'A profile page exists with permalink set as %1$s, as defined in %%permalinks settings%%.', 'w4os' )
+										: __( 'A profile page must be created with permalink set as %1$s, as defined in %%permalinks settings%%.', 'w4os' )
+									),
+								),
+								'<code>' . W4OS_Profile::slug() . '</code>',
+							),
+							'save_field' => false,
+						),
+						array(
+							'name'       => __( 'Public Profile Page', 'w4os' ),
+							'id'         => 'provide',
 							'type'       => 'switch',
-							'desc'       => __( 'Show configuration instructions to new users on their profile page.', 'w4os' ),
+							'desc'       => sprintf(
+								__( 'Provide avatars with a public web profile page in the following format: %1$s.', 'w4os' ),
+								'<code>' . W4OS_Profile::url('John', 'Smith') . '</code>',
+							),
 							'style'      => 'rounded',
-							'std'        => w4os_option_exists( 'w4os_configuration_instructions' ) ? get_option( 'w4os_configuration_instructions' ) : true,
+							'std'        => empty( get_option( 'w4os_profile_page' ) ) ? 'provide' : ( get_option( 'w4os_profile_page' ) == 'provide' ),
 							'save_field' => false,
 						),
 						array(
@@ -222,9 +229,18 @@ class W4OS_Settings extends W4OS_Loader {
 							'save_field' => false,
 							'std'        => empty( get_option( 'w4os_login_page' ) ) ? 'profile' : ( get_option( 'w4os_login_page' ) == 'profile' ),
 							'visible'    => array(
-								'when'     => array( array( 'w4os_profile_page', '=', 1 ) ),
+								'when'     => array( array( 'provide', '=', 1 ) ),
 								'relation' => 'or',
 							),
+						),
+						array(
+							'name'       => __( 'Instructions', 'w4os' ),
+							'id'         => 'instructions',
+							'type'       => 'switch',
+							'desc'       => __( 'Show configuration instructions to new users on their profile page.', 'w4os' ),
+							'style'      => 'rounded',
+							'std'        => w4os_option_exists( 'w4os_configuration_instructions' ) ? get_option( 'w4os_configuration_instructions' ) : true,
+							'save_field' => false,
 						),
 					),
 				),
@@ -306,9 +322,11 @@ class W4OS_Settings extends W4OS_Loader {
 		}
 
 		if ( isset( $_POST['nonce_grid-users'] ) && wp_verify_nonce( $_POST['nonce_grid-users'], 'rwmb-save-grid-users' ) ) {
-			update_option( 'w4os_profile_page', ( ( isset( $_POST['w4os_profile_page'] ) && $_POST['w4os_profile_page'] ) ? 'provide' : 'default' ) );
+			// update_option( 'w4os_profile_page', ( ( isset( $_POST['w4os_profile_page'] ) && $_POST['w4os_profile_page'] ) ? 'provide' : 'default' ) );
 
 			$options = $_POST['w4os_profile_page_options'];
+			error_log(print_r($options, true));
+			update_option( 'w4os_profile_page', ( ( isset( $options['provide'] ) && $options['provide'] ) ? 'provide' : 'default' ) );
 			update_option( 'w4os_configuration_instructions', ( isset( $options['instructions'] ) ? $options['instructions'] : false ) );
 			update_option( 'w4os_login_page', ( ( isset( $options['login_page'] ) && $options['login_page'] ) ? 'profile' : 'default' ) );
 			update_option( 'w4os_userlist_replace_name', ( isset( $_POST['w4os_userlist_replace_name'] ) ? $_POST['w4os_userlist_replace_name'] : false ) );

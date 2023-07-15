@@ -325,7 +325,7 @@ msgstr "Page de profil"
 
 #: includes/class-settings.php:189
 msgid "Enable to provide avatars a public web profile page."
-msgstr "Activer pour fournir aux avatars une page publique de profil."
+msgstr "Activer pour fournir aux avatars une page de profil publique."
 
 #: includes/class-settings.php:194
 msgid "The page %1$s must exist, as defined in %%permalinks settings%%."
@@ -1848,7 +1848,7 @@ msgstr "Construction du bloc Lieux Populaires, merci de patienter..."
 #~ "Enable to provide avatars a public web profile page. The page "
 #~ "[profile_slug] must exist, as defined in %%spermalinks settings%%."
 #~ msgstr ""
-#~ "Activer pour fournir aux avatar une page publique de profil. La page "
+#~ "Activer pour fournir aux avatar une page de profil publique. La page "
 #~ "[profile_slug] doit exister, comme définie dans les %%réglages de "
 #~ "permaliens%%."
 

@@ -92,6 +92,7 @@ class W4OS_Loader {
 		/**
 		 * Specific plugin classes.
 		 */
+		require_once W4OS_DIR . '/includes/class-profile.php';
 		require_once W4OS_DIR . '/includes/class-model.php';
 
 		/**
