@@ -798,10 +798,16 @@ function w4os_profile_display( $user, $args = array() ) {
 	extract( $args );
 	$avatar = new W4OS_Avatar( $user->ID );
 
+	$content = '';
 	if ( $avatar->UUID ) {
 		$action     = 'w4os_update_avatar';
 		$leaveblank = ' (' . __( 'leave blank to leave unchanged', 'w4os' ) . ')';
-		$content   .= $avatar->profile_page();
+		if($mini) {
+			$content .= '<div class=avatar-name>' . w4os_hop( w4os_grid_profile_url( $avatar ), $avatar->AvatarName ) . '</div>';
+			$content .= '<div class=profileImage>' .$avatar->profile_picture() . '</div>';
+		} else {
+			$content   .= $avatar->profile_page();
+		}
 		// $content.= sprintf(
 		// '<div class=profile><div class=profile-pic>%1$s</div><div class=profile-details>%2$s</div></div>',
 		// $avatar->profile_picture(),

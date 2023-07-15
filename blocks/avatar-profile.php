@@ -5,6 +5,32 @@
  * @package w4os
  */
 
+function w4os_avatar_profile_attributes() {
+	return array(
+		'title' => array(
+			'type' => 'string',
+			// 'default' => '',
+		),
+		'level' => array(
+			'type' => 'string',
+			'default' => 'h3',
+		),
+		'mini' => array(
+			'type' => 'boolean',
+			'default' => false,
+		),
+	);
+}
+
+function w4os_avatar_profile_defaults() {
+	$defaults = array();
+	$attributes = w4os_avatar_profile_attributes();
+	foreach ($attributes as $key => $options) {
+		$defaults[$key] = isset($options['default']) ? $options['default'] : null;
+	}
+	return $defaults;
+}
+
 /**
  * Registers all block assets so that they can be enqueued through Gutenberg in the corresponding context.
  *
@@ -60,16 +86,7 @@ function avatar_profile_block_init() {
 			'editor_style'    => 'avatar-profile-block-editor',
 			'style'           => 'avatar-profile-block',
 			'icon'						=> 'users',
-			'attributes'      => array(
-				'title' => array(
-					'type' => 'string',
-					// 'default' => '',
-				),
-				'level' => array(
-					'type' => 'string',
-					// 'default' => '',
-				),
-			),
+			'attributes'      => w4os_avatar_profile_attributes(),
 			'render_callback' => 'w4os_avatar_profile_block_render',
 		)
 	);
@@ -79,10 +96,7 @@ add_action( 'init', 'avatar_profile_block_init' );
 function w4os_avatar_profile_block_render( $attributes, $void, $block = true ) {
 	$atts = wp_parse_args(
 		$attributes,
-		array(
-			'title' => null,
-			'level' => null,
-		)
+		w4os_avatar_profile_defaults(),
 	);
 
 	$content = w4os_avatar_profile_html( $atts );
@@ -104,9 +118,7 @@ function w4os_avatar_profile_shortcode( $atts = array(), $content = null ) {
 	empty( $content ) ? $content = '' : $content = "<div>$content</div>";
 	$atts                        = wp_parse_args(
 		$atts,
-		array(
-			'title' => __( 'Avatar Profile', 'w4os' ),
-		)
+		w4os_avatar_profile_defaults(),
 	);
 	$args                        = array();
 
@@ -167,10 +179,7 @@ function w4os_avatar_profile( $atts = array() ) {
 function w4os_avatar_profile_html( $atts = array(), $args = array() ) {
 	$atts         = wp_parse_args(
 		array_filter( $atts ),
-		array(
-			'title' => null,
-			'level' => 'h3',
-		)
+		w4os_avatar_profile_defaults(),
 	);
 	$level        = $atts['level'];
 	$title        = $atts['title'];
@@ -178,6 +187,8 @@ function w4os_avatar_profile_html( $atts = array(), $args = array() ) {
 	$after_title  = empty( $level ) ? '' : "</{$level}>";
 
 	$content = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
+
+	$args['mini'] = $atts['mini'];
 	$content .= w4os_profile_display( wp_get_current_user(), $args );
 
 	return $content;
@@ -194,15 +205,9 @@ function et_builder_module_w4os_avatar_profile_init() {
 				$this->name = __( 'OpenSimulator Avatar Profile', 'w4os' );
 				$this->slug = 'et_pb_w4os_avatar_profile';
 
-				$this->whitelisted_fields = array(
-					'title',
-					'level',
-				);
+				$this->whitelisted_fields = array_keys(w4os_avatar_profile_defaults());
 
-				$this->fields_defaults = array(
-					'title' => '',
-					// 'level' => 'h3',
-				);
+				$this->fields_defaults = w4os_avatar_profile_defaults();
 
 				$this->main_css_element = '%%order_class%%';
 			}
@@ -216,6 +221,9 @@ function et_builder_module_w4os_avatar_profile_init() {
 					'description' => __( 'Enter the title for the Avatar Profile module.', 'w4os' ),
 					'toggle_slug' => 'main_content',
 					'default'     => __( 'Avatar Profile', 'w4os' ),
+					// 'show_if'         => array(
+					// 	'mini' => 'off',
+					// ),
 				);
 
 				$fields['level'] = array(
@@ -233,6 +241,22 @@ function et_builder_module_w4os_avatar_profile_init() {
 						'p'  => 'P',
 					),
 					'default'     => 'h3',
+					// 'show_if'         => array(
+					// 	'mini' => 'off',
+					// ),
+				);
+
+				$fields['mini'] = array(
+					'label'           => __( 'Mini Profile', 'w4os' ),
+					'type'            => 'yes_no_button',
+					'option_category' => 'configuration',
+					'options'         => array(
+						'on'  => __( 'Yes', 'w4os' ),
+						'off' => __( 'No', 'w4os' ),
+					),
+					'toggle_slug'     => 'main_content',
+					'description'     => __( 'Enable mini profile display.', 'w4os' ),
+					'default_on_front'=> 'off',
 				);
 
 				return $fields;
@@ -241,10 +265,7 @@ function et_builder_module_w4os_avatar_profile_init() {
 			function shortcode_callback( $atts, $content = null, $function_name ) {
 				$atts = wp_parse_args(
 					$atts,
-					array(
-						'title' => '',
-						'level' => '',
-					)
+					w4os_avatar_profile_defaults(),
 				);
 
 				$output = w4os_avatar_profile_html( $atts );

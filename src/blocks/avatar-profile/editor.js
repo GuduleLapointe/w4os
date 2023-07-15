@@ -6,6 +6,7 @@ var TextControl       = wp.components.TextControl;
 var InspectorControls = wp.blockEditor.InspectorControls;
 var PanelBody         = wp.components.PanelBody;
 var SelectControl = wp.components.SelectControl;
+var ToggleControl = wp.components.ToggleControl;
 
 registerBlockType(
 	'w4os/avatar-profile',
@@ -26,11 +27,16 @@ registerBlockType(
 					type: 'string',
 					default: 'h3',
 			},
+			mini: {
+	        type: 'boolean',
+	        default: false,
+	    },
 		},
 
 		edit: function(props) {
 			var title         = props.attributes.title;
 			var level         = props.attributes.level;
+			var mini         = props.attributes.mini;
 			var setAttributes = props.setAttributes;
 
 			function onChangeTitle(newTitle) {
@@ -39,8 +45,12 @@ registerBlockType(
 			}
 
 			function onChangelevel(newLevel) {
-			    // const level = newLevel || 'h4';
-			    setAttributes({ level: newLevel });
+				// const level = newLevel || 'h4';
+				setAttributes({ level: newLevel });
+			}
+
+			function onChangeMini(newMini) {
+				setAttributes({ mini: newMini });
 			}
 
 			return el(
@@ -76,6 +86,14 @@ registerBlockType(
 						        ],
 						        onChange: onChangelevel,
 						    }
+						),
+						el(
+							ToggleControl,
+							{
+								label: __('Mini Profile', 'w4os'),
+								checked: mini,
+								onChange: onChangeMini,
+							}
 						),
 					)
 				),
