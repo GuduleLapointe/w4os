@@ -1,17 +1,51 @@
 <h1><?php _e( 'Available Shortcodes', 'w4os' ); ?></h1>
+
+<p class="description">
+  <?php _e('Shortcodes can be included in any page or articles.'); ?>
+  <?php _e('They are also available as configurable Gutenberg blocks and Divi modules.'); ?>
+</p>
+
 <div class=shortcodes>
   <table class="w4os-table shortcodes">
 	<tr><th>
 	  <code>[grid-info]</code>
 	  <p><?php _e( 'General information (grid name and login uri)', 'w4os' ); ?></p>
 	</th><td>
-	  <?php echo w4os_gridinfo_shortcode(); ?>
+	  <?php echo w4os_grid_info_shortcode(); ?>
+  </td><td>
+	  <?php
+		$parameters = array(
+			'title'    => __( 'Bloc title', 'w4os' ),
+			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
+		);
+		$options    = '<p>' . __( 'Options', 'w4os' ) . '</p>';
+		$options   .= '<table>';
+		foreach ( $parameters as $key => $value ) {
+			$options .= '<tr><th>' . $key . '</th><td>' . $value . '</td></tr>';
+		}
+		$options .= '</table>';
+		echo $options;
+		?>
 	</td></tr>
 	<tr><th>
 	  <code>[grid-status]</code>
 	  <p><?php _e( 'Online users, regions, etc.', 'w4os' ); ?></p>
 	</th><td>
 	  <?php echo w4os_grid_status_shortcode(); ?>
+  </td><td>
+	  <?php
+		$parameters = array(
+			'title'    => __( 'Bloc title', 'w4os' ),
+			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
+		);
+		$options    = '<p>' . __( 'Options', 'w4os' ) . '</p>';
+		$options   .= '<table>';
+		foreach ( $parameters as $key => $value ) {
+			$options .= '<tr><th>' . $key . '</th><td>' . $value . '</td></tr>';
+		}
+		$options .= '</table>';
+		echo $options;
+		?>
 	</td></tr>
 	<tr><th>
 	  <code>[avatar-profile]</code>
@@ -41,7 +75,7 @@
 		<?php _e( 'Most visited regions in your grid.', 'w4os' ); ?>
 	  </p>
 	</th><td>
-	  <?php echo do_shortcode( '[popular-places]' ); ?>
+	  <?php echo do_shortcode( '[popular-places max=3]' ); ?>
 	</td><td>
 	  <?php
 		$parameters = array(

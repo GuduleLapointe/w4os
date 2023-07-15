@@ -20,7 +20,7 @@ function w4os_shortcodes_init() {
 	 * @param  string $content html
 	 * @return string          html
 	 */
-	// function w4os_gridinfo_shortcode( $atts = array(), $content = null ) {
+	// function w4os_grid_info_shortcode( $atts = array(), $content = null ) {
 	// 	if ( ! W4OS_DB_CONNECTED ) {
 	// 		return;
 	// 	}
@@ -34,8 +34,8 @@ function w4os_shortcodes_init() {
 	// 		return "<div class='w4os-shortcode w4os-shortcode-gridinfo'>$content</div>";
 	// 	}
 	// }
-	// add_shortcode( 'grid-info', 'w4os_gridinfo_shortcode' );
-	// add_shortcode( 'gridinfo', 'w4os_gridinfo_shortcode' ); // Backwards compatibility
+	// add_shortcode( 'grid-info', 'w4os_grid_info_shortcode' );
+	// add_shortcode( 'gridinfo', 'w4os_grid_info_shortcode' ); // Backwards compatibility
 
 	/**
 	 * Grid status shortcode
