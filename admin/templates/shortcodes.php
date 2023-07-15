@@ -82,6 +82,7 @@
 			'title'    => __( 'Bloc title', 'w4os' ),
 			'max=n'    => __( 'Show maximum n results', 'w4os' ),
 			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
+			'mini=1' => __( 'Only show name and picture', 'w4os' ),
 		);
 		$options    = '<p>' . __( 'Options', 'w4os' ) . '</p>';
 		$options   .= '<table>';
