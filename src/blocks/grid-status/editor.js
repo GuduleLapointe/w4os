@@ -10,8 +10,8 @@ var SelectControl = wp.components.SelectControl;
 registerBlockType(
 	'w4os/grid-status',
 	{
-		title: __( 'Grid Status', 'w4os' ),
-		icon: 'user',
+		title: __( 'OpenSimulator Grid Status', 'w4os' ),
+		icon: 'visibility',
 		category: 'widgets',
 		supports: {
 			// html: true,

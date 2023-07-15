@@ -57,6 +57,7 @@ function grid_info_block_init() {
 			'editor_script'   => 'grid-info-block-editor',
 			'editor_style'    => 'grid-info-block-editor',
 			'style'           => 'grid-info-block',
+			'icon'						=> 'info',
 			'attributes'      => array(
 				'title' => array(
 					'type' => 'string',
@@ -199,7 +200,7 @@ function et_builder_module_w4os_grid_info_init() {
 		class ET_Builder_Module_W4OS_grid_info extends ET_Builder_Module {
 			// ...
 			function init() {
-				$this->name = __( 'W4OS Grid Info', 'w4os' );
+				$this->name = __( 'OpenSimulator Grid Info', 'w4os' );
 				$this->slug = 'et_pb_w4os_grid_info';
 
 				$this->whitelisted_fields = array(

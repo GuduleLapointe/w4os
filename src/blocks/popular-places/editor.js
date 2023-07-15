@@ -10,7 +10,7 @@ var SelectControl = wp.components.SelectControl;
 registerBlockType(
 	'w4os/popular-places',
 	{
-		title: __( 'Popular Places', 'w4os' ),
+		title: __( 'OpenSimulator Popular Places', 'w4os' ),
 		icon: 'location',
 		category: 'widgets',
 		supports: {

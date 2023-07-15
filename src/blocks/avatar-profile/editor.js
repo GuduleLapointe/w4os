@@ -10,8 +10,8 @@ var SelectControl = wp.components.SelectControl;
 registerBlockType(
 	'w4os/avatar-profile',
 	{
-		title: __( 'Avatar Profile', 'w4os' ),
-		icon: 'user',
+		title: __( 'OpenSimulator Avatar Profile', 'w4os' ),
+		icon: 'admin-users',
 		category: 'widgets',
 		supports: {
 			// html: true,

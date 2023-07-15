@@ -59,6 +59,7 @@ function grid_status_block_init() {
 			'editor_script'   => 'grid-status-block-editor',
 			'editor_style'    => 'grid-status-block-editor',
 			'style'           => 'grid-status-block',
+			'icon'						=> 'status',
 			'attributes'      => array(
 				'title' => array(
 					'type' => 'string',
@@ -151,7 +152,7 @@ function et_builder_module_w4os_grid_status_init() {
 		class ET_Builder_Module_W4OS_grid_status extends ET_Builder_Module {
 			// ...
 			function init() {
-				$this->name = __( 'W4OS Grid Status', 'w4os' );
+				$this->name = __( 'OpenSimulator Grid Status', 'w4os' );
 				$this->slug = 'et_pb_w4os_grid_status';
 
 				$this->whitelisted_fields = array(

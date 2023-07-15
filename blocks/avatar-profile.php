@@ -59,6 +59,7 @@ function avatar_profile_block_init() {
 			'editor_script'   => 'avatar-profile-block-editor',
 			'editor_style'    => 'avatar-profile-block-editor',
 			'style'           => 'avatar-profile-block',
+			'icon'						=> 'users',
 			'attributes'      => array(
 				'title' => array(
 					'type' => 'string',
@@ -190,7 +191,7 @@ function et_builder_module_w4os_avatar_profile_init() {
 		class ET_Builder_Module_W4OS_avatar_profile extends ET_Builder_Module {
 			// ...
 			function init() {
-				$this->name = __( 'W4OS Avatar Profile', 'w4os' );
+				$this->name = __( 'OpenSimulator Avatar Profile', 'w4os' );
 				$this->slug = 'et_pb_w4os_avatar_profile';
 
 				$this->whitelisted_fields = array(

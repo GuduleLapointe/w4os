@@ -225,7 +225,7 @@ function et_builder_module_w4os_popular_places_init() {
 		class ET_Builder_Module_W4OS_Popular_Places extends ET_Builder_Module {
 			// ...
 			function init() {
-				$this->name = __( 'W4OS Popular Places', 'w4os' );
+				$this->name = __( 'OpenSimulator Popular Places', 'w4os' );
 				$this->slug = 'et_pb_w4os_popular_places';
 
 				$this->whitelisted_fields = array(
