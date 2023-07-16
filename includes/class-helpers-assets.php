@@ -99,7 +99,7 @@ class W4OS_Assets extends W4OS_Loader {
 			'title'          => __( 'Assets Server Fields', 'w4os' ),
 			'id'             => 'assets-server',
 			'settings_pages' => array( 'assets-server' ),
-			'class' => 'w4os-settings',
+			'class'          => 'w4os-settings',
 			'fields'         => array(
 				array(
 					'name'       => __( 'Provide Web Assets Server', 'w4os' ),

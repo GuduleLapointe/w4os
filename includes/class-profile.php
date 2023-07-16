@@ -21,7 +21,7 @@ class W4OS_Profile extends W4OS_Loader {
 	// private $base_url;
 
 	public function __construct() {
-		self::$slug = get_option( 'w4os_profile_slug', 'profile' );
+		self::$slug     = get_option( 'w4os_profile_slug', 'profile' );
 		self::$base_url = get_home_url( null, self::$slug );
 	}
 
@@ -29,23 +29,21 @@ class W4OS_Profile extends W4OS_Loader {
 		return self::$slug;
 	}
 
-	public static function url($firstname = null, $lastname = null) {
-		if(empty($firstname) || empty($lastname)) {
+	public static function url( $firstname = null, $lastname = null ) {
+		if ( empty( $firstname ) || empty( $lastname ) ) {
 			return self::$base_url;
 		} else {
-			$firstname = sanitize_title($firstname);
-			$lastname = sanitize_title($lastname);
+			$firstname = sanitize_title( $firstname );
+			$lastname  = sanitize_title( $lastname );
 			return self::$base_url . '/' . $firstname . '.' . $lastname;
 		}
 	}
 
 	public function init() {
 
-		$this->actions = array(
-		);
+		$this->actions = array();
 
-		$this->filters = array(
-		);
+		$this->filters = array();
 
 	}
 }

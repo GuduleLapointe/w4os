@@ -1,6 +1,7 @@
 ## Changelog
 
-### Unreleased (2.4.5-dev.1064)
+### Unreleased (2.4.5-dev.1071)
+- added separate settings page for Search Engine
 - added "mini profile" option to avatar block
 - added Grid Status Divi module
 - added Grid Info Divi module
@@ -8,6 +9,7 @@
 - fixed Grid Status block
 - fixed Grid Info block
 - fixed Avatar Profile block
+- clarified profile page settings
 
 ### 2.4.4
 - added title level option to Popular Places block, shortcode and Divi module
