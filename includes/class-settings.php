@@ -144,6 +144,7 @@ class W4OS_Settings extends W4OS_Loader {
 		$meta_boxes[] = array(
 			'id'             => 'robust-db',
 			'settings_pages' => array( 'w4os_settings' ),
+			'class' => 'w4os-settings',
 			'visible'        => array(
 				'when'     => array( array( 'w4os_login_uri', '!=', '' ) ),
 				'relation' => 'or',
@@ -178,6 +179,7 @@ class W4OS_Settings extends W4OS_Loader {
 			'title'          => __( 'Grid Users', 'w4os' ),
 			'id'             => 'grid-users',
 			'settings_pages' => array( 'w4os_settings' ),
+			'class' => 'w4os-settings',
 			'visible'        => array(
 				'when'     => array( array( 'w4os_db_connected', '=', '1' ) ),
 				'relation' => 'or',

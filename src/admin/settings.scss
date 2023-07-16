@@ -1,28 +1,24 @@
-.w4os-settings .rwmb-label {
-  width: 20em;
-}
+@media (min-width: 1200px) {
+  .w4os-settings .columns-1 {
+    .rwmb-field:not(.rwmb-w4osdb_field_type-wrapper) {
+      .rwmb-input {
+        display: grid;
+        grid-template-columns: 30em 1fr;
+        grid-gap: 20px;
+        box-sizing: border-box;
+        grid-auto-flow: row;
 
-.w4os-settings .columns-1 .rwmb-field:not(.rwmb-w4osdb_field_type-wrapper) .rwmb-input {
-  display: grid;
-  grid-template-columns: 30em 1fr;
-  grid-gap: 20px;
-  box-sizing: border-box;
-  grid-auto-flow: row;
-}
-
-.w4os-settings .columns-1 .rwmb-field.rwmb-w4osdb_field_type-wrapper {
-  width: inherit;
-}
-.w4os-settings .columns-1 .rwmb-input .rwmb-switch-label {
-  width: 2em;
-}
-
-@media (max-width: 1200px) {
-  .w4os-settings .columns-1 .rwmb-input {
-    grid-template-columns: 1fr;
+        .rwmb-switch-label {
+          width: 2em;
+        }
+      }
+    }
   }
 }
 
+.w4os-settings .rwmb-label {
+  width: 20em;
+}
 
 .rwmb-group-wrapper.inline,
 .rwmb-w4osdb_field_type-wrapper {
