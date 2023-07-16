@@ -1,0 +1,18 @@
+.w4os-settings .copyable {
+  .rwmb-input {
+    position: relative;
+
+    input.form-control {
+      padding-left: 30px; /* Adjust the value as needed to create space for the copy icon */
+    }
+
+    .copy-icon {
+      position: absolute;
+      left: 0.4em; /* Adjust the value as needed to position the copy icon */
+      top: 0.8em;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #999;
+    }
+  }
+}

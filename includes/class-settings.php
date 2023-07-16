@@ -112,6 +112,7 @@ class W4OS_Settings extends W4OS_Loader {
 			'desc'           => __( 'Grid Info', 'w4os' ),
 			'description'    => __( 'Grid Info', 'w4os' ),
 			'id'             => 'grid-info',
+			'class' => 'w4os-settings',
 			'settings_pages' => array( 'w4os_settings' ),
 			'fields'         => array(
 				array(

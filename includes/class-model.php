@@ -78,6 +78,7 @@ class W4OS_Model extends W4OS_Loader {
 			'title'          => __( 'Avatar Models', 'w4os' ),
 			'id'             => 'w4os-models-fields',
 			'settings_pages' => array( 'w4os-models' ),
+			'class' => 'w4os-settings',
 			'fields'         => array(
 				array(
 					// 'name' => __( 'Description', 'w4os' ),
@@ -132,6 +133,7 @@ class W4OS_Model extends W4OS_Loader {
 		$meta_boxes[] = array(
 			'id'             => 'w4os-available-models-container',
 			'settings_pages' => array( 'w4os-models' ),
+			'class' => 'w4os-settings',
 			'fields'         => array(
 				array(
 					'name' => __( 'Available Models', 'w4os' ),

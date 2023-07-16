@@ -634,3 +634,10 @@ function w4os_replace( $content, $args ) {
 	$result = $content = preg_replace( $keys, $values, $content );
 	return $result;
 }
+
+function w4os_camelcase( $string ) {
+	if ( ! is_string( $string ) ) {
+		return $string;
+	}
+	return str_replace( ' ', '', ucwords( str_replace( '-', ' ', sanitize_title( $string ) ) ) );
+}

@@ -1,3 +1,34 @@
+jQuery(document).ready(function($) {
+  var provideSearch = $('#w4os_provide_search');
+  var searchURLField = $('#w4os_search_url');
+  var registerURLField = $('#w4os_search_register');
+  var helpersInternal = provideSearch.data('helpers-internal');
+  var helpersExternal = provideSearch.data('helpers-external');
+
+  // Get the current values of searchURLField and registerURLField
+  var searchURLValue = searchURLField.val();
+  if (searchURLValue === '') {
+    searchURLValue = helpersExternal + 'query.php';
+  }
+  var registerURLValue = registerURLField.val();
+  if (registerURLValue === '') {
+    registerURLValue = helpersExternal + 'register.php';
+  }
+
+  provideSearch.on('change', function() {
+    var isProvideChecked = provideSearch.prop('checked');
+    var readonly = false;
+
+    if (isProvideChecked) {
+      searchURLField.prop('readonly', true).val(helpersInternal + 'query.php');
+      registerURLField.prop('readonly', true).val(helpersInternal + 'register.php');
+    } else {
+      searchURLField.prop('readonly', false).val(searchURLValue);
+      registerURLField.prop('readonly', false).val(registerURLValue);
+    }
+  }).trigger('change'); // Trigger the change event on page load
+});
+
 jQuery( document ).ready(
 	function($) {
 		// Function to toggle subfield visibility based on "use_robot" checkbox

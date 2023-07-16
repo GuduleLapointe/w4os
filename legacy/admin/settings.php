@@ -1,12 +1,6 @@
 <?php if ( ! defined( 'W4OS_ADMIN' ) ) {
 	die;}
 
-function w4os_camelcase( $string ) {
-	if ( ! is_string( $string ) ) {
-		return $string;
-	}
-	return str_replace( ' ', '', ucwords( str_replace( '-', ' ', sanitize_title( $string ) ) ) );
-}
 function w4os_register_settings() {
 	$grid_info = w4os_update_grid_info();
 	// $check_login_uri = 'http://' . (!empty(get_option('w4os_login_uri'))) ? esc_attr(get_option('w4os_login_uri')) : 'http://localhost:8002';
@@ -59,108 +53,6 @@ function w4os_register_settings() {
 		),
 		'w4os_helpers' => array(
 			'sections' => array(
-				'w4os_options_search'  => array(
-					'name'   => __( 'Search', 'w4os' ),
-					'fields' => array(
-						'w4os_provide_search'        => array(
-							'type'        => 'boolean',
-							'name'        => __( 'Provide In-world Search', 'w4os' ),
-							'onchange'    => 'onchange="valueChanged(this)"',
-							'description' => sprintf(
-								'<ul><li>%s</li><li>%s</li></ul>',
-								__( 'Enable to use a local search engine, allowing only local results (recommended for private grids).', 'w4os' ),
-								__( 'Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids.', 'w4os' ),
-							),
-						),
-						'w4os_search_use_default_db' => array(
-							'type'     => 'boolean',
-							'name'     => __( 'Search database', 'w4os' ),
-							'default'  => false,
-							'onchange' => 'onchange="valueChanged(this)"',
-							'label'    => __( 'Use the same database as Robust' ),
-						),
-						'w4os_search_db_host'        => array(
-							'name'    => __( 'Hostname', 'w4os' ),
-							'default' => esc_attr( get_option( 'w4os_db_host', 'localhost' ) ),
-						),
-						'w4os_search_db_database'    => array(
-							'name'    => __( 'Database Name', 'w4os' ),
-							'default' => esc_attr( get_option( 'w4os_db_database', 'currency' ) ),
-						),
-						'w4os_search_db_user'        => array(
-							'name'         => __( 'Username', 'w4os' ),
-							'autocomplete' => 'off',
-							'default'      => esc_attr( get_option( 'w4os_db_user', 'opensim' ) ),
-						),
-						'w4os_search_db_pass'        => array(
-							'name'         => __( 'Password', 'w4os' ),
-							'type'         => 'password',
-							'autocomplete' => 'off',
-							'default'      => esc_attr( get_option( 'w4os_db_pass' ) ),
-						),
-						'w4os_search_url'            => array(
-							'name'        => __( 'Search Engine URL', 'w4os' ),
-							'placeholder' => $default_search_url,
-							'default'     => $default_search_url,
-							'description' => sprintf(
-								'<ul><li>%s</li><li>%s</li><li>%s</li></ul>',
-								__( 'URL of the search engine used by the viewer to provide search results (without arguments)', 'w4os' ),
-								__( 'In OpenSim.ini, only one can be set', 'w4os' ),
-								__( 'Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines.', 'w4os' ),
-							) . w4os_format_ini(
-								array(
-									'OpenSim.ini' => array(
-										'[Search]' => array(
-											'Module'       => 'OpenSimSearch',
-											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'SearchURL' => '"' . ( empty( get_option( 'w4os_search_url' ) ) ? $default_search_url : get_option( 'w4os_search_url' ) ) . '?gk=' . $gatekeeperURL . '"',
-											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'SearchURL' => '"' . 'http://2do.directory/helpers/query.php?gk=' . $gatekeeperURL . '"',
-											'; SearchURL ' => '"http://example.org/query.php"',
-										),
-									),
-								)
-							)
-							. '<p>' . __( 'Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names.', 'w4os' ) . '</p>'
-								. w4os_format_ini(
-									array(
-										'Robust.HG.ini' => array(
-											'[LoginService]' => array(
-												'SearchURL' => ( ! empty( get_option( 'w4os_websearch_url' ) ) ) ? get_option( 'w4os_websearch_url' ) : 'https://example.org/search/',
-											),
-											'[GridInfoService]' => array(
-												'search' => ( ! empty( get_option( 'w4os_websearch_url' ) ) ) ? get_option( 'w4os_websearch_url' ) : 'https://example.org/search/',
-											),
-										),
-									)
-								),
-						),
-						'w4os_search_register'       => array(
-							'name'        => __( 'Search register', 'w4os' ),
-							'placeholder' => 'http://2do.directory/helpers/register.php',
-							'description' =>
-							__( 'Data service, used to register regions, objects or land for sale. You can resgister to several search engines.', 'w4os' )
-							. w4os_format_ini(
-								array(
-									'OpenSim.ini' => array(
-										'[DataSnapshot]' => array(
-											'index_sims' => 'true',
-											'gridname'   => '"' . get_option( 'w4os_grid_name' ) . '"',
-											( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'DATA_SRV_' . w4os_camelcase( get_option( 'w4os_grid_name', 'Your Grid' ) ) => '"' . ( ! empty( get_option( 'w4os_search_register' ) ) ? get_option( 'w4os_search_register' ) : 'http://yourgrid.org/helpers/register.php' ) . '"',
-											( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'DATA_SRV_2do' => '"http://2do.directory/helpers/register.php"',
-											'; DATA_SRV_OtherEngine' => '"http://example.org/register.php"',
-										),
-									),
-								)
-							),
-						),
-						'w4os_hypevents_url'         => array(
-							'name'        => __( 'Events Server URL', 'w4os' ),
-							'placeholder' => 'https://2do.pm/events/',
-							'description' => __( 'HYPEvents Server URL, used to fetch upcoming events and make them available in search.', 'w4os' )
-							. ' ' . __( 'Leave blank to ignore events or if you have an other events implementation.', 'w4os' )
-							. ' <a href=https://2do.pm/ target=_blank>2do HYPEvents project</a>',
-						),
-					),
-				),
 				'w4os_options_offline' => array(
 					'name'   => __( 'Offline messages', 'w4os' ),
 					'fields' => array(
