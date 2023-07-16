@@ -187,6 +187,10 @@ class W4OS_Search extends W4OS_Loader {
 					'std' => get_option( 'w4os_hypevents_url', 'http://2do.directory/events/' ),
 					'placeholder' => 'http://2do.directory/events/',
 					'save_field'  => false,
+					'visible'     => array(
+						'when'     => array( array( 'provide_search', '=', 1 ) ),
+						'relation' => 'or',
+					),
 					'desc' => '<p>' .__( 'HYPEvents Server URL, used to fetch upcoming events and make them available in search.', 'w4os' )
 					. ' ' . __( 'Leave blank to ignore events or if you have an other events implementation.', 'w4os' )
 					. ' <a href=https://2do.pm/ target=_blank>2do HYPEvents project</a></p>',
