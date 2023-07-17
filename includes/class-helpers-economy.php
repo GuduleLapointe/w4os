@@ -178,8 +178,8 @@ class W4OS_Economy extends W4OS_Loader {
 					),
 					'options' => array(
 						'none' => __( 'No provider, use fake money.', 'w4os' ),
-						'podex'   => __( 'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)', 'w4os' ),
-						'gloebit' => __( 'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>www.gloebit.com</a>)', 'w4os' ),
+						'podex'   => 'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)',
+						'gloebit' => 'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>www.gloebit.com</a>)',
 					),
 					'inline'  => false,
 				),
@@ -219,7 +219,7 @@ class W4OS_Economy extends W4OS_Loader {
 							'id'          => $prefix . 'podex_error_message',
 							'type'        => 'text',
 							'std'         => get_option('w4os_podex_error_message'),
-							'placeholder' => __( 'Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange.', 'w4os' ),
+							'placeholder' => __( 'Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange area.', 'w4os' ),
 						),
 						array(
 							'name'        => __( 'Exchange Teleport URL', 'w4os' ),

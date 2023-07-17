@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-17T13:47:53+00:00\n"
+"POT-Creation-Date: 2023-07-17T22:51:17+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -228,6 +228,109 @@ msgstr "Maximum résultats"
 msgid "Enter the maximum number of results to display."
 msgstr "Entrez le nombre maximum de résultats à afficher."
 
+#: includes/class-avatar-model.php:62 includes/class-avatar-model.php:78
+#: legacy/admin/status-page.php:58
+msgid "Avatar Models"
+msgstr "Modèles d'avatars"
+
+#: includes/class-avatar-model.php:89
+msgid "Match"
+msgstr "Correspondance"
+
+#: includes/class-avatar-model.php:93
+msgid "First Name"
+msgstr "Prénom"
+
+#: includes/class-avatar-model.php:94
+msgid "Any"
+msgstr "Tous"
+
+#: includes/class-avatar-model.php:95
+msgid "Last Name"
+msgstr "Nom de famille"
+
+#: includes/class-avatar-model.php:96
+msgid "Custom list"
+msgstr "Liste personnalisée"
+
+#: includes/class-avatar-model.php:101
+msgid "Name"
+msgstr "Nom"
+
+#: includes/class-avatar-model.php:111
+msgid "Select Models"
+msgstr "Sélectionner les modèles"
+
+#: includes/class-avatar-model.php:115
+msgid "Select one or more existing avatars"
+msgstr "Sélectionner un ou plusieurs avatars existants"
+
+#: includes/class-avatar-model.php:139
+msgid "Available Models"
+msgstr "Modèles disponibles"
+
+#: includes/class-avatar-model.php:165
+msgid ""
+"If avatar models are defined, new users will be presented with a choice on "
+"the avatar creation form, which will determine the initial outfit of the "
+"created avatar."
+msgstr ""
+"Si des modèles d'avatar sont définis, les nouveaux utilisateurs se verront "
+"proposer un choix dans le formulaire de création d'avatar, qui déterminera "
+"la tenue initiale de l'avatar créé."
+
+#: includes/class-avatar-model.php:166
+msgid ""
+"The grid administrator needs to create each model from the ROBUST console, "
+"log in with the viewer, customize the outfit, and add a profile picture."
+msgstr ""
+"L'administrateur de la grille doit créer chaque modèle à partir de la "
+"console ROBUST, se connecter avec le visualiseur, personnaliser la tenue et "
+"ajouter une photo de profil."
+
+#: includes/class-avatar-model.php:167
+msgid "The avatars used for the models should never be real user accounts."
+msgstr ""
+"Les avatars utilisés pour les modèles ne doivent jamais être de véritables "
+"comptes d'utilisateur."
+
+#: includes/class-avatar-model.php:168
+msgid ""
+"The new avatar will wear the same outfit as the model at the time of "
+"registration."
+msgstr ""
+"Le nouvel avatar portera la même tenue que le modèle au moment de "
+"l'enregistrement."
+
+#: includes/class-avatar-model.php:169
+msgid ""
+"If the model assignment rule is based on the name, each newly created avatar "
+"matching that rule will be automatically added to the list."
+msgstr ""
+"Si la règle d'affectation du modèle est basée sur le nom, chaque avatar "
+"nouvellement créé correspondant à cette règle sera automatiquement ajouté à "
+"la liste."
+
+#: includes/class-avatar-model.php:293
+msgid "No models found."
+msgstr "Aucun modèle trouvé."
+
+#: includes/class-avatar-model.php:307
+msgid "No models"
+msgstr "Aucun modèle"
+
+#: includes/class-avatar-model.php:344
+msgid "Your initial appearance"
+msgstr "Votre apparence initiale"
+
+#: includes/class-avatar-model.php:345
+msgid "You can change it as often as you want in the virtual world."
+msgstr "Vous pourrez changer votre apparence à votre guise en ligne."
+
+#: includes/class-avatar-model.php:363
+msgid "Refreshing list..."
+msgstr "Liste actualisée..."
+
 #: includes/class-helpers-assets.php:83
 msgid "Assets Server"
 msgstr "Serveur de ressources"
@@ -281,128 +384,133 @@ msgstr "http://example.org/assets/assets.php?id="
 msgid "Assets base"
 msgstr "Base des assets"
 
-#: includes/class-model.php:62 includes/class-model.php:78
-#: legacy/admin/status-page.php:58
-msgid "Avatar Models"
-msgstr "Modèles d'avatars"
+#: includes/class-helpers-economy.php:46 legacy/admin/admin-init.php:411
+msgid "Economy"
+msgstr "Économie"
 
-#: includes/class-model.php:89
-msgid "Match"
-msgstr "Correspondance"
+#: includes/class-helpers-economy.php:47 includes/class-helpers-economy.php:71
+msgid "Economy Settings"
+msgstr "Réglages de l'économie"
 
-#: includes/class-model.php:93
-msgid "First Name"
-msgstr "Prénom"
+#: includes/class-helpers-economy.php:77
+msgid "Provide Economy Helper"
+msgstr "Fournir l'assistant d'économie"
 
-#: includes/class-model.php:94
-msgid "Any"
-msgstr "Tous"
-
-#: includes/class-model.php:95
-msgid "Last Name"
-msgstr "Nom de famille"
-
-#: includes/class-model.php:96
-msgid "Custom list"
-msgstr "Liste personnalisée"
-
-#: includes/class-model.php:101
-msgid "Name"
-msgstr "Nom"
-
-#: includes/class-model.php:111
-msgid "Select Models"
-msgstr "Sélectionner les modèles"
-
-#: includes/class-model.php:115
-msgid "Select one or more existing avatars"
-msgstr "Sélectionner un ou plusieurs avatars existants"
-
-#: includes/class-model.php:139
-msgid "Available Models"
-msgstr "Modèles disponibles"
-
-#: includes/class-model.php:165
+#: includes/class-helpers-economy.php:86
 msgid ""
-"If avatar models are defined, new users will be presented with a choice on "
-"the avatar creation form, which will determine the initial outfit of the "
-"created avatar."
+"Economy helpers are additional scripts needed if you implement economy on "
+"your grid (with real or fake currency)."
 msgstr ""
-"Si des modèles d'avatar sont définis, les nouveaux utilisateurs se verront "
-"proposer un choix dans le formulaire de création d'avatar, qui déterminera "
-"la tenue initiale de l'avatar créé."
+"Les assistants d'économie sont des scripts additionnels, nécessaires si vous "
+"implémentez une économie dans votre grille (avec une monnaie réelle ou "
+"factice)."
 
-#: includes/class-model.php:166
+#: includes/class-helpers-economy.php:87
 msgid ""
-"The grid administrator needs to create each model from the ROBUST console, "
-"log in with the viewer, customize the outfit, and add a profile picture."
+"Helper scripts allow communication between the money server and the grid: "
+"current balance update, currency cost estimation, land and object sales, "
+"payments..."
 msgstr ""
-"L'administrateur de la grille doit créer chaque modèle à partir de la "
-"console ROBUST, se connecter avec le visualiseur, personnaliser la tenue et "
-"ajouter une photo de profil."
+"Les scripts permettent la communication entre le serveur de monnaie et la "
+"grille: mise à jour de la balance, estimation du coût d'achat de maonnaie, "
+"vente d'objets et de terrains, paiements..."
 
-#: includes/class-model.php:167
-msgid "The avatars used for the models should never be real user accounts."
-msgstr ""
-"Les avatars utilisés pour les modèles ne doivent jamais être de véritables "
-"comptes d'utilisateur."
-
-#: includes/class-model.php:168
+#: includes/class-helpers-economy.php:88
 msgid ""
-"The new avatar will wear the same outfit as the model at the time of "
-"registration."
+"This plugin only provides the web helpers required by the money server "
+"module. A third-party module must be installed and configured on the "
+"simulator, for example:"
 msgstr ""
-"Le nouvel avatar portera la même tenue que le modèle au moment de "
-"l'enregistrement."
+"Cette extension fournit uniquement les assistants web requis par le module "
+"du serveur de devises. Un module tiers doit être installé et configuré sur "
+"le simulateur, par exemple :"
 
-#: includes/class-model.php:169
+#: includes/class-helpers-economy.php:96
+msgid "Economy Helper URI"
+msgstr "URI de l'assistant d'économie"
+
+#: includes/class-helpers-economy.php:109
+msgid "The URL must be set in Robust configuration."
+msgstr "Réglez l'URL dans la configuration de  Robust."
+
+#: includes/class-helpers-economy.php:121
+msgid "Economy Database"
+msgstr "Base de données sur l'économie"
+
+#: includes/class-helpers-economy.php:140
+msgid "Set the same credentials here and in MoneyServer.ini"
+msgstr "Définissez les mêmes identifiants ici et dans MoneyServer.ini"
+
+#: includes/class-helpers-economy.php:155
+msgid "Currency Conversion Rate"
+msgstr "Taux de conversion des devises"
+
+#: includes/class-helpers-economy.php:158
 msgid ""
-"If the model assignment rule is based on the name, each newly created avatar "
-"matching that rule will be automatically added to the list."
+"Amount to pay in US$ for 1000 in-world money units. Used for cost "
+"estimation. If not set, the rate will be 10/1000 (1 cent per money unit)."
 msgstr ""
-"Si la règle d'affectation du modèle est basée sur le nom, chaque avatar "
-"nouvellement créé correspondant à cette règle sera automatiquement ajouté à "
-"la liste."
+"Montant à payer en dollars américains pour 1000 unités de monnaie virtuelle. "
+"Utilisé pour l'estimation des coûts. Si non défini, le taux sera de 10/1000 "
+"(1 centime par unité de monnaie)."
 
-#: includes/class-model.php:293
-msgid "No models found."
-msgstr "Aucun modèle trouvé."
+#: includes/class-helpers-economy.php:170
+msgid "Currency Provider"
+msgstr "Fournisseur de devises"
 
-#: includes/class-model.php:307
-msgid "No models"
-msgstr "Aucun modèle"
+#: includes/class-helpers-economy.php:180
+msgid "No provider, use fake money."
+msgstr "Pas de fournisseur, utiliser une monnaie factice."
 
-#: includes/class-model.php:344
-msgid "Your initial appearance"
-msgstr "Votre apparence initiale"
+#: includes/class-helpers-economy.php:187
+msgid "Money Script Access Key"
+msgstr "Clé d'accès des scripts de devise"
 
-#: includes/class-model.php:345
-msgid "You can change it as often as you want in the virtual world."
-msgstr "Vous pourrez changer votre apparence à votre guise en ligne."
+#: includes/class-helpers-economy.php:197
+msgid "Choose a unique access key and set it in MoneyServer.ini"
+msgstr ""
+"Choisissez une clé d'accès unique et définissez-la dans le fichier "
+"MoneyServer.ini"
 
-#: includes/class-model.php:363
-msgid "Refreshing list..."
-msgstr "Liste actualisée..."
+#: includes/class-helpers-economy.php:208
+msgid "Podex Options"
+msgstr "Options de Podex"
 
-#: includes/class-offline.php:46
+#: includes/class-helpers-economy.php:218
+msgid "Podex Redirect Message"
+msgstr "Message de redirection de Podex"
+
+#: includes/class-helpers-economy.php:222
+msgid ""
+"Please use our terminals in-world to proceed. Click OK to teleport to Podex "
+"Exchange area."
+msgstr ""
+"Veuillez utiliser nos terminaux dans le monde virtuel pour procéder. Cliquez "
+"sur OK pour être téléporté vers la zone d'échange Podex."
+
+#: includes/class-helpers-economy.php:225
+msgid "Exchange Teleport URL"
+msgstr "URL de téléportation vers l'échange"
+
+#: includes/class-helpers-offline.php:46
 msgid "Offline Messages"
 msgstr "Messages hors-ligne"
 
-#: includes/class-offline.php:47 includes/class-offline.php:70
+#: includes/class-helpers-offline.php:47 includes/class-helpers-offline.php:71
 msgid "Offline Messages Settings"
 msgstr "Réglages des Messages hors-ligne"
 
-#: includes/class-offline.php:76
+#: includes/class-helpers-offline.php:77
 msgid "Provide Offline Messages Service"
 msgstr "Fournir le service Messages hors-ligne"
 
-#: includes/class-offline.php:85
+#: includes/class-helpers-offline.php:86
 msgid "Honor \"Email me IMs when I'm offline\" viewer option."
 msgstr ""
 "Honorer l'option \"M'envoyer les IM par e-mail quand je suis hors ligne\" du "
 "visualiseur."
 
-#: includes/class-offline.php:86
+#: includes/class-helpers-offline.php:87
 msgid ""
 "OpenSimulator core offline messages module delivers messages sent to an "
 "offline user when they come back online but don't handle e-mail forwarding "
@@ -413,11 +521,11 @@ msgstr ""
 "mais ne gère pas l'option de transfert par e-mail disponible dans le "
 "visualiseur."
 
-#: includes/class-offline.php:91
+#: includes/class-helpers-offline.php:92
 msgid "Sender E-mail Address"
 msgstr "Adresse e-mail de l'expéditeur"
 
-#: includes/class-offline.php:102
+#: includes/class-helpers-offline.php:103
 msgid ""
 "A no-reply e-mail address used to forward messages for users enabling "
 "\"Email me IMs when I'm offline\" option."
@@ -426,27 +534,27 @@ msgstr ""
 "utilisateurs ayant activé l'option \"Envoyer les IMs par email si je suis "
 "déconnecté\"."
 
-#: includes/class-offline.php:105
+#: includes/class-helpers-offline.php:106
 msgid "Offline Messages Helper"
 msgstr "Assistant Messages hors-ligne"
 
-#: includes/class-offline.php:118
+#: includes/class-helpers-offline.php:119
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr "Réglez l'URL dans la configuration de  Robust et d'OpenSimulator."
 
-#: includes/class-search.php:58
+#: includes/class-helpers-search.php:58
 msgid "Search Engine"
 msgstr "Moteur de recherche"
 
-#: includes/class-search.php:59 includes/class-search.php:77
+#: includes/class-helpers-search.php:59 includes/class-helpers-search.php:77
 msgid "Search Engine Settings"
 msgstr "Réglages du moteur de recherche"
 
-#: includes/class-search.php:84
+#: includes/class-helpers-search.php:84
 msgid "Provide Search"
 msgstr "Fournir la recherche dans le monde virtuel"
 
-#: includes/class-search.php:87
+#: includes/class-helpers-search.php:87
 msgid ""
 "Enable to use a local search engine, allowing only local results "
 "(recommended for private grids). Disable to use an external search engine "
@@ -458,15 +566,15 @@ msgstr ""
 "utiliser un moteur de recherche externe tel que 2do Directory, permettant "
 "des résultats à la fois de votre grille et d'autres grilles publiques."
 
-#: includes/class-search.php:97
+#: includes/class-helpers-search.php:97
 msgid "OS Search Database"
 msgstr "Base de données du moteur de recherche"
 
-#: includes/class-search.php:118
+#: includes/class-helpers-search.php:118
 msgid "Search Engine URL"
 msgstr "URL du moteur de recherche"
 
-#: includes/class-search.php:127
+#: includes/class-helpers-search.php:127
 msgid ""
 "URL of the search engine used by the viewer to provide search results "
 "(without arguments)."
@@ -474,13 +582,13 @@ msgstr ""
 "URL du moteur de recherche utilisé par le viewer pour fournir des résultats "
 "de recherche (sans arguments)"
 
-#: includes/class-search.php:128
+#: includes/class-helpers-search.php:128
 msgid "Only one can be set, other lines are alternative examples."
 msgstr ""
 "Seule une option peut être sélectionnée, les autres lignes sont des exemples "
 "alternatifs."
 
-#: includes/class-search.php:129
+#: includes/class-helpers-search.php:129
 msgid ""
 "Services using w4os engine need the gatekeeper URI (usually the login URI) "
 "to be passed as gk argument. Requirements may vary for other engines."
@@ -489,7 +597,7 @@ msgstr ""
 "(\"Gatekeeper URI\", généralement l'URI de connexion) soit transmis avec "
 "l'argument \"gk\". Les spécifications peuvent varier pour d'autres moteurs."
 
-#: includes/class-search.php:142
+#: includes/class-helpers-search.php:142
 msgid ""
 "Please note that Search URL is different from Web search URL, which is not "
 "handled by W4OS currently. Web search is relevant if you have a web search "
@@ -504,30 +612,30 @@ msgstr ""
 "et documentée ici uniquement pour marquer la différence deux réglages qui "
 "ont malheureusement le même nom."
 
-#: includes/class-search.php:157
+#: includes/class-helpers-search.php:157
 msgid "Search Register URL"
 msgstr "URL d'inscription au moteur de recherche"
 
-#: includes/class-search.php:165
+#: includes/class-helpers-search.php:165
 msgid "Data service, used to register regions, objects or land for sale."
 msgstr ""
 "Service de données, utilisé pour enregistrer les régions, objets ou "
 "parcelles disponibles à la recherche ou en vente."
 
-#: includes/class-search.php:166
+#: includes/class-helpers-search.php:166
 msgid "You can register to several search engines."
 msgstr "Vous pouvez vous inscrire sur plusieurs moteurs de recherche."
 
-#: includes/class-search.php:167
+#: includes/class-helpers-search.php:167
 msgid "Each line must have a unique identifier beginning with \"DATA_SRV_\""
 msgstr ""
 "Chaque ligne doit avoir un identifiant unique commençant par \"DATA_SRV_\"."
 
-#: includes/class-search.php:186
+#: includes/class-helpers-search.php:186
 msgid "Events Server URL"
 msgstr "URL du serveur d'événements"
 
-#: includes/class-search.php:197
+#: includes/class-helpers-search.php:197
 msgid ""
 "HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
@@ -535,7 +643,7 @@ msgstr ""
 "URL du serveur HYPEvents, utilisé pour récupérer les événements à venir et "
 "les rendre disponibles dans la recherche."
 
-#: includes/class-search.php:198
+#: includes/class-helpers-search.php:198
 msgid ""
 "Leave blank to ignore events or if you have an other events implementation."
 msgstr ""
@@ -554,7 +662,7 @@ msgstr "Statut"
 msgid "Shortcodes"
 msgstr "Code courts"
 
-#: includes/class-settings.php:94 legacy/admin/settings.php:376
+#: includes/class-settings.php:94 legacy/admin/settings.php:261
 msgid "Settings"
 msgstr "Réglages"
 
@@ -659,7 +767,7 @@ msgstr "URI de connexion invalide"
 msgid "Default"
 msgstr "Défaut"
 
-#: includes/class-settings.php:390 legacy/admin/settings.php:110
+#: includes/class-settings.php:390
 msgid "Hostname"
 msgstr "Nom d'hôte"
 
@@ -671,12 +779,11 @@ msgstr "Port"
 msgid "DB Name"
 msgstr "Nom DB"
 
-#: includes/class-settings.php:411 legacy/admin/settings.php:118
+#: includes/class-settings.php:411
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: includes/class-settings.php:418 legacy/admin/settings.php:123
-#: tmp/class-avatar.php:277
+#: includes/class-settings.php:418 tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -718,13 +825,9 @@ msgstr "Utilisateurs de WordPress et de la grille synchronisés."
 msgid "OpenSim Search tables updated."
 msgstr "Base de données de recherche mise à jour."
 
-#: legacy/admin/admin-init.php:17 legacy/admin/admin-init.php:42
+#: legacy/admin/admin-init.php:42
 msgid "OpenSimulator Helpers"
 msgstr "Assistants OpenSimulator"
-
-#: legacy/admin/admin-init.php:18
-msgid "Helpers"
-msgstr "Assistants"
 
 #: legacy/admin/admin-init.php:63 legacy/profile.php:135
 #: tmp/class-avatar.php:318
@@ -887,10 +990,6 @@ msgstr "Récupération du mot de passe"
 msgid "Link to lost password page."
 msgstr "Lien vers la page de récupération de mot de passe."
 
-#: legacy/admin/admin-init.php:411
-msgid "Economy"
-msgstr "Économie"
-
 #: legacy/admin/admin-init.php:412
 msgid ""
 "Currencies and some other services queried by the viewer. They are not "
@@ -931,105 +1030,13 @@ msgstr "Statut de la grille"
 msgid "Recent users"
 msgstr "Utilisateurs récents"
 
-#: legacy/admin/settings.php:61
-msgid "Provide Economy Helpers"
-msgstr "Fournir les assistants financiers"
-
-#: legacy/admin/settings.php:64
-msgid ""
-"Economy helpers are additional scripts needed if you implement economy on "
-"your grid (with real or fake currency)."
-msgstr ""
-"Les assistants d'économie sont des scripts additionnels, nécessaires si vous "
-"implémentez une économie dans votre grille (avec une monnaie réelle ou "
-"factice)."
-
-#: legacy/admin/settings.php:65
-msgid ""
-"Helper scripts allow communication between the money server and the grid: "
-"current balance update, currency cost estimation, land and object sales, "
-"payments..."
-msgstr ""
-"Les scripts permettent la communication entre le serveur de monnaie et la "
-"grille: mise à jour de la balance, estimation du coût d'achat de maonnaie, "
-"vente d'objets et de terrains, paiements..."
-
-#: legacy/admin/settings.php:67
-msgid ""
-"Money server is not included in OpenSimulator distribution and require a "
-"separate installation, e.g. from %s."
-msgstr ""
-"Le serveur de monnaie n'est pas inclus dans la distribution d'OpenSimulator "
-"et nécessite une installation séparée, par exemple %s."
-
-#: legacy/admin/settings.php:75
-msgid "Economy Base URI"
-msgstr "URI de base de l'économie"
-
-#: legacy/admin/settings.php:79
-msgid "The URL must be set in Robust configuration."
-msgstr "Réglez l'URL dans la configuration de  Robust."
-
-#: legacy/admin/settings.php:92
-msgid "Economy Database"
-msgstr "Base de données sur l'économie"
-
-#: legacy/admin/settings.php:95
-msgid "Use the same database as Robust"
-msgstr "Utiliser la base de données de Robust"
-
-#: legacy/admin/settings.php:114
-msgid "Database Name"
-msgstr "Nom de la base de données"
-
-#: legacy/admin/settings.php:129
-msgid "Currency Provider"
-msgstr "Fournisseur de devises"
-
-#: legacy/admin/settings.php:133
-msgid "No provider, use fake money."
-msgstr "Pas de fournisseur, utiliser une monnaie factice."
-
-#: legacy/admin/settings.php:140
-msgid "Currency Conversion Rate"
-msgstr "Taux de conversion des devises"
-
-#: legacy/admin/settings.php:141
-msgid ""
-"Amount to pay in US$ for 1000 in-world money units. Used for cost "
-"estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
-msgstr ""
-"Montant à payer en US$ pour 1000 unités de monnaie virtuelle. Utilisé pour "
-"estimer le coût. Si non spécifié, le rapport sera 10/1000 (1 cent par unité "
-"de monnaie)"
-
-#: legacy/admin/settings.php:144
-msgid "Podex redirect message"
-msgstr "Message de redirection de Podex"
-
-#: legacy/admin/settings.php:145
-msgid ""
-"Please use our terminals in-world to proceed. Click OK to teleport to "
-"terminals region."
-msgstr ""
-"Merci d'utiliser les terminals dans le simulateur. Cliquez sur OK pour être "
-"téléporté dans la région des terminaux."
-
-#: legacy/admin/settings.php:148
-msgid "Podex redirect URL"
-msgstr "URL de redirection de Podex"
-
-#: legacy/admin/settings.php:152
-msgid "Money Script Access Key"
-msgstr "Clé d'accès des scripts de devise"
-
-#: legacy/admin/settings.php:352
+#: legacy/admin/settings.php:237
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 "Les valeurs doivent correspondre à celles du fichier Robust.HG.ini (ou "
 "Robust.HG.ini)."
 
-#: legacy/admin/settings.php:353
+#: legacy/admin/settings.php:238
 msgid ""
 "Robust server must be running. Values entered here will be checked against "
 "your Robust server and updated if needed."
@@ -1037,7 +1044,7 @@ msgstr ""
 "Le serveur Robust doit être actif. Les valeurs entrées ici seront vérifiées "
 "depuis le serveur Robust et corrigées si nécessaires."
 
-#: legacy/admin/settings.php:358
+#: legacy/admin/settings.php:243
 msgid ""
 "Grid accounts matching first name or last name set below are considered as "
 "avatar models. They will appear on the avatar registration form, with their "
@@ -1940,6 +1947,25 @@ msgstr ""
 msgid "Block Settings"
 msgstr "Réglages du bloc"
 
+#~ msgid "Helpers"
+#~ msgstr "Assistants"
+
+#~ msgid ""
+#~ "Money server is not included in OpenSimulator distribution and require a "
+#~ "separate installation, e.g. from %s."
+#~ msgstr ""
+#~ "Le serveur de monnaie n'est pas inclus dans la distribution "
+#~ "d'OpenSimulator et nécessite une installation séparée, par exemple %s."
+
+#~ msgid "Use the same database as Robust"
+#~ msgstr "Utiliser la base de données de Robust"
+
+#~ msgid "Database Name"
+#~ msgstr "Nom de la base de données"
+
+#~ msgid "Podex redirect URL"
+#~ msgstr "URL de redirection de Podex"
+
 #~ msgid "w4os - OpenSimulator Web Interface"
 #~ msgstr "w4os - Interface web pour OpenSimulator"
 
@@ -2015,9 +2041,6 @@ msgstr "Réglages du bloc"
 
 #~ msgid "OpenSimulator Settings"
 #~ msgstr "Réglages OpenSimulator"
-
-#~ msgid "Legacy Settings"
-#~ msgstr "Réglages originaux"
 
 #~ msgid "Grid users"
 #~ msgstr "Utilisateurs de la grille"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-17T13:47:53+00:00\n"
+"POT-Creation-Date: 2023-07-17T22:51:17+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -254,6 +254,96 @@ msgstr "Dim canlyniad"
 msgid "Enter the maximum number of results to display."
 msgstr ""
 
+#: includes/class-avatar-model.php:62 includes/class-avatar-model.php:78
+#: legacy/admin/status-page.php:58
+msgid "Avatar Models"
+msgstr ""
+
+#: includes/class-avatar-model.php:89
+msgid "Match"
+msgstr ""
+
+#: includes/class-avatar-model.php:93
+msgid "First Name"
+msgstr ""
+
+#: includes/class-avatar-model.php:94
+msgid "Any"
+msgstr ""
+
+#: includes/class-avatar-model.php:95
+msgid "Last Name"
+msgstr ""
+
+#: includes/class-avatar-model.php:96
+msgid "Custom list"
+msgstr ""
+
+#: includes/class-avatar-model.php:101
+msgid "Name"
+msgstr ""
+
+#: includes/class-avatar-model.php:111
+msgid "Select Models"
+msgstr ""
+
+#: includes/class-avatar-model.php:115
+msgid "Select one or more existing avatars"
+msgstr ""
+
+#: includes/class-avatar-model.php:139
+msgid "Available Models"
+msgstr ""
+
+#: includes/class-avatar-model.php:165
+msgid ""
+"If avatar models are defined, new users will be presented with a choice on "
+"the avatar creation form, which will determine the initial outfit of the "
+"created avatar."
+msgstr ""
+
+#: includes/class-avatar-model.php:166
+msgid ""
+"The grid administrator needs to create each model from the ROBUST console, "
+"log in with the viewer, customize the outfit, and add a profile picture."
+msgstr ""
+
+#: includes/class-avatar-model.php:167
+msgid "The avatars used for the models should never be real user accounts."
+msgstr ""
+
+#: includes/class-avatar-model.php:168
+msgid ""
+"The new avatar will wear the same outfit as the model at the time of "
+"registration."
+msgstr ""
+
+#: includes/class-avatar-model.php:169
+msgid ""
+"If the model assignment rule is based on the name, each newly created avatar "
+"matching that rule will be automatically added to the list."
+msgstr ""
+
+#: includes/class-avatar-model.php:293
+msgid "No models found."
+msgstr ""
+
+#: includes/class-avatar-model.php:307
+msgid "No models"
+msgstr ""
+
+#: includes/class-avatar-model.php:344
+msgid "Your initial appearance"
+msgstr "Eich ymddangosiad cychwynnol"
+
+#: includes/class-avatar-model.php:345
+msgid "You can change it as often as you want in the virtual world."
+msgstr "Gallwch ei newid mor aml ag y dymunwch yn y byd rhithwir."
+
+#: includes/class-avatar-model.php:363
+msgid "Refreshing list..."
+msgstr ""
+
 #: includes/class-helpers-assets.php:83
 msgid "Assets Server"
 msgstr ""
@@ -302,132 +392,160 @@ msgstr ""
 msgid "Assets base"
 msgstr "Sylfaen asedau"
 
-#: includes/class-model.php:62 includes/class-model.php:78
-#: legacy/admin/status-page.php:58
-msgid "Avatar Models"
-msgstr ""
+#: includes/class-helpers-economy.php:46 legacy/admin/admin-init.php:411
+msgid "Economy"
+msgstr "Economi"
 
-#: includes/class-model.php:89
-msgid "Match"
-msgstr ""
+#: includes/class-helpers-economy.php:47 includes/class-helpers-economy.php:71
+#, fuzzy
+#| msgid "Settings"
+msgid "Economy Settings"
+msgstr "Gosodiadau"
 
-#: includes/class-model.php:93
-msgid "First Name"
-msgstr ""
+#: includes/class-helpers-economy.php:77
+#, fuzzy
+#| msgid "Provide economy helpers"
+msgid "Provide Economy Helper"
+msgstr "Darparu cynorthwywyr economi"
 
-#: includes/class-model.php:94
-msgid "Any"
-msgstr ""
-
-#: includes/class-model.php:95
-msgid "Last Name"
-msgstr ""
-
-#: includes/class-model.php:96
-msgid "Custom list"
-msgstr ""
-
-#: includes/class-model.php:101
-msgid "Name"
-msgstr ""
-
-#: includes/class-model.php:111
-msgid "Select Models"
-msgstr ""
-
-#: includes/class-model.php:115
-msgid "Select one or more existing avatars"
-msgstr ""
-
-#: includes/class-model.php:139
-msgid "Available Models"
-msgstr ""
-
-#: includes/class-model.php:165
+#: includes/class-helpers-economy.php:86
 msgid ""
-"If avatar models are defined, new users will be presented with a choice on "
-"the avatar creation form, which will determine the initial outfit of the "
-"created avatar."
+"Economy helpers are additional scripts needed if you implement economy on "
+"your grid (with real or fake currency)."
 msgstr ""
+"Mae cynorthwywyr economi yn sgriptiau ychwanegol sydd eu hangen os ydych "
+"chi'n gweithredu economi ar eich grid (gydag arian cyfred go iawn neu ffug)."
 
-#: includes/class-model.php:166
+#: includes/class-helpers-economy.php:87
 msgid ""
-"The grid administrator needs to create each model from the ROBUST console, "
-"log in with the viewer, customize the outfit, and add a profile picture."
+"Helper scripts allow communication between the money server and the grid: "
+"current balance update, currency cost estimation, land and object sales, "
+"payments..."
 msgstr ""
+"Mae sgriptiau cynorthwywyr yn caniatáu cyfathrebu rhwng y gweinydd arian a'r "
+"grid: diweddariad balans cyfredol, amcangyfrif cost arian cyfred, gwerthu "
+"tir a gwrthrychau, taliadau ..."
 
-#: includes/class-model.php:167
-msgid "The avatars used for the models should never be real user accounts."
-msgstr ""
-
-#: includes/class-model.php:168
+#: includes/class-helpers-economy.php:88
 msgid ""
-"The new avatar will wear the same outfit as the model at the time of "
-"registration."
+"This plugin only provides the web helpers required by the money server "
+"module. A third-party module must be installed and configured on the "
+"simulator, for example:"
 msgstr ""
 
-#: includes/class-model.php:169
+#: includes/class-helpers-economy.php:96
+#, fuzzy
+#| msgid "Economy base URI"
+msgid "Economy Helper URI"
+msgstr "Sylfaen economi URI"
+
+#: includes/class-helpers-economy.php:109
+msgid "The URL must be set in Robust configuration."
+msgstr "Rhaid gosod yr URL mewn ffurfweddiad cadarn."
+
+#: includes/class-helpers-economy.php:121
+msgid "Economy Database"
+msgstr ""
+
+#: includes/class-helpers-economy.php:140
+msgid "Set the same credentials here and in MoneyServer.ini"
+msgstr ""
+
+#: includes/class-helpers-economy.php:155
+msgid "Currency Conversion Rate"
+msgstr ""
+
+#: includes/class-helpers-economy.php:158
+#, fuzzy
+#| msgid ""
+#| "Amount to pay in US$ for 1000 in-world money units. Used for cost "
+#| "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
 msgid ""
-"If the model assignment rule is based on the name, each newly created avatar "
-"matching that rule will be automatically added to the list."
+"Amount to pay in US$ for 1000 in-world money units. Used for cost "
+"estimation. If not set, the rate will be 10/1000 (1 cent per money unit)."
+msgstr ""
+"Swm i'w dalu mewn US$ am 1000 o unedau arian yn y byd. Defnyddir ar gyfer "
+"amcangyfrif cost. Os na chaiff ei gosod, y gyfradd fydd 10/1000 (1 cant "
+"fesul uned arian)"
+
+#: includes/class-helpers-economy.php:170
+msgid "Currency Provider"
+msgstr "Darparwr Arian Parod"
+
+#: includes/class-helpers-economy.php:180
+msgid "No provider, use fake money."
+msgstr "Dim darparwr, defnyddiwch arian ffug."
+
+#: includes/class-helpers-economy.php:187
+msgid "Money Script Access Key"
+msgstr "Allwedd Mynediad Sgript Arian"
+
+#: includes/class-helpers-economy.php:197
+msgid "Choose a unique access key and set it in MoneyServer.ini"
 msgstr ""
 
-#: includes/class-model.php:293
-msgid "No models found."
+#: includes/class-helpers-economy.php:208
+msgid "Podex Options"
 msgstr ""
 
-#: includes/class-model.php:307
-msgid "No models"
+#: includes/class-helpers-economy.php:218
+#, fuzzy
+#| msgid "Podex redirect message"
+msgid "Podex Redirect Message"
+msgstr "Neges ailgyfeirio Podex"
+
+#: includes/class-helpers-economy.php:222
+#, fuzzy
+#| msgid ""
+#| "Please use our terminals in-world to proceed. Click OK to teleport to "
+#| "terminals region."
+msgid ""
+"Please use our terminals in-world to proceed. Click OK to teleport to Podex "
+"Exchange area."
+msgstr ""
+"Defnyddiwch ein terfynellau yn y byd i symud ymlaen. Cliciwch OK i "
+"deleportio i ranbarth terfynellau."
+
+#: includes/class-helpers-economy.php:225
+msgid "Exchange Teleport URL"
 msgstr ""
 
-#: includes/class-model.php:344
-msgid "Your initial appearance"
-msgstr "Eich ymddangosiad cychwynnol"
-
-#: includes/class-model.php:345
-msgid "You can change it as often as you want in the virtual world."
-msgstr "Gallwch ei newid mor aml ag y dymunwch yn y byd rhithwir."
-
-#: includes/class-model.php:363
-msgid "Refreshing list..."
-msgstr ""
-
-#: includes/class-offline.php:46
+#: includes/class-helpers-offline.php:46
 #, fuzzy
 #| msgid "Offline messages"
 msgid "Offline Messages"
 msgstr "Negeseuon all-lein"
 
-#: includes/class-offline.php:47 includes/class-offline.php:70
+#: includes/class-helpers-offline.php:47 includes/class-helpers-offline.php:71
 #, fuzzy
 #| msgid "Offline messages"
 msgid "Offline Messages Settings"
 msgstr "Negeseuon all-lein"
 
-#: includes/class-offline.php:76
+#: includes/class-helpers-offline.php:77
 #, fuzzy
 #| msgid "Provide offline helper"
 msgid "Provide Offline Messages Service"
 msgstr "Darparu cynorthwyydd all-lein"
 
-#: includes/class-offline.php:85
+#: includes/class-helpers-offline.php:86
 msgid "Honor \"Email me IMs when I'm offline\" viewer option."
 msgstr ""
 
-#: includes/class-offline.php:86
+#: includes/class-helpers-offline.php:87
 msgid ""
 "OpenSimulator core offline messages module delivers messages sent to an "
 "offline user when they come back online but don't handle e-mail forwarding "
 "option available in the viewer."
 msgstr ""
 
-#: includes/class-offline.php:91
+#: includes/class-helpers-offline.php:92
 #, fuzzy
 #| msgid "Sender e-mail address"
 msgid "Sender E-mail Address"
 msgstr "Cyfeiriad e-bost yr anfonwr"
 
-#: includes/class-offline.php:102
+#: includes/class-helpers-offline.php:103
 msgid ""
 "A no-reply e-mail address used to forward messages for users enabling "
 "\"Email me IMs when I'm offline\" option."
@@ -435,35 +553,35 @@ msgstr ""
 "Cyfeiriad e-bost dim ateb a ddefnyddir i anfon negeseuon ymlaen ar gyfer "
 "defnyddwyr sy'n galluogi opsiwn \"E-bostiwch IMs ataf pan fyddaf all-lein\"."
 
-#: includes/class-offline.php:105
+#: includes/class-helpers-offline.php:106
 #, fuzzy
 #| msgid "Offline messages"
 msgid "Offline Messages Helper"
 msgstr "Negeseuon all-lein"
 
-#: includes/class-offline.php:118
+#: includes/class-helpers-offline.php:119
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr "Gosodwch yr URL mewn ffurfweddiadau Cadarn ac OpenSimulator."
 
-#: includes/class-search.php:58
+#: includes/class-helpers-search.php:58
 #, fuzzy
 #| msgid "Search engine URL"
 msgid "Search Engine"
 msgstr "URL peiriant chwilio"
 
-#: includes/class-search.php:59 includes/class-search.php:77
+#: includes/class-helpers-search.php:59 includes/class-helpers-search.php:77
 #, fuzzy
 #| msgid "Search engine URL"
 msgid "Search Engine Settings"
 msgstr "URL peiriant chwilio"
 
-#: includes/class-search.php:84
+#: includes/class-helpers-search.php:84
 #, fuzzy
 #| msgid "Provide in-world search"
 msgid "Provide Search"
 msgstr "Darparu chwiliad yn y byd"
 
-#: includes/class-search.php:87
+#: includes/class-helpers-search.php:87
 msgid ""
 "Enable to use a local search engine, allowing only local results "
 "(recommended for private grids). Disable to use an external search engine "
@@ -471,17 +589,17 @@ msgid ""
 "grids."
 msgstr ""
 
-#: includes/class-search.php:97
+#: includes/class-helpers-search.php:97
 #, fuzzy
 #| msgid "Search database"
 msgid "OS Search Database"
 msgstr "Chwilio cronfa ddata"
 
-#: includes/class-search.php:118
+#: includes/class-helpers-search.php:118
 msgid "Search Engine URL"
 msgstr ""
 
-#: includes/class-search.php:127
+#: includes/class-helpers-search.php:127
 #, fuzzy
 #| msgid ""
 #| "URL of the search engine used internally by the viewer (without "
@@ -492,17 +610,17 @@ msgid ""
 msgstr ""
 "URL y peiriant chwilio a ddefnyddir yn fewnol gan y gwyliwr (heb ddadleuon)."
 
-#: includes/class-search.php:128
+#: includes/class-helpers-search.php:128
 msgid "Only one can be set, other lines are alternative examples."
 msgstr ""
 
-#: includes/class-search.php:129
+#: includes/class-helpers-search.php:129
 msgid ""
 "Services using w4os engine need the gatekeeper URI (usually the login URI) "
 "to be passed as gk argument. Requirements may vary for other engines."
 msgstr ""
 
-#: includes/class-search.php:142
+#: includes/class-helpers-search.php:142
 msgid ""
 "Please note that Search URL is different from Web search URL, which is not "
 "handled by W4OS currently. Web search is relevant if you have a web search "
@@ -516,37 +634,37 @@ msgstr ""
 "URLs yn y byd (hop: / neu secondlife://). Mae'n ddewisol a chyfeirir ato yma "
 "dim ond i ddadamwys gosodiadau sydd yn anffodus ag enwau tebyg."
 
-#: includes/class-search.php:157
+#: includes/class-helpers-search.php:157
 #, fuzzy
 #| msgid "Search engine URL"
 msgid "Search Register URL"
 msgstr "URL peiriant chwilio"
 
-#: includes/class-search.php:165
+#: includes/class-helpers-search.php:165
 msgid "Data service, used to register regions, objects or land for sale."
 msgstr ""
 "Gwasanaeth data, a ddefnyddir i gofrestru rhanbarthau, gwrthrychau neu dir "
 "ar werth."
 
-#: includes/class-search.php:166
+#: includes/class-helpers-search.php:166
 msgid "You can register to several search engines."
 msgstr ""
 
-#: includes/class-search.php:167
+#: includes/class-helpers-search.php:167
 msgid "Each line must have a unique identifier beginning with \"DATA_SRV_\""
 msgstr ""
 
-#: includes/class-search.php:186
+#: includes/class-helpers-search.php:186
 msgid "Events Server URL"
 msgstr ""
 
-#: includes/class-search.php:197
+#: includes/class-helpers-search.php:197
 msgid ""
 "HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
 msgstr ""
 
-#: includes/class-search.php:198
+#: includes/class-helpers-search.php:198
 msgid ""
 "Leave blank to ignore events or if you have an other events implementation."
 msgstr ""
@@ -567,7 +685,7 @@ msgstr "Statws"
 msgid "Shortcodes"
 msgstr "Codau byr sydd ar gael"
 
-#: includes/class-settings.php:94 legacy/admin/settings.php:376
+#: includes/class-settings.php:94 legacy/admin/settings.php:261
 msgid "Settings"
 msgstr "Gosodiadau"
 
@@ -690,7 +808,7 @@ msgstr "Mewngofnodi URI"
 msgid "Default"
 msgstr "Diofyn"
 
-#: includes/class-settings.php:390 legacy/admin/settings.php:110
+#: includes/class-settings.php:390
 msgid "Hostname"
 msgstr "Enw gwesteiwr"
 
@@ -702,12 +820,11 @@ msgstr ""
 msgid "DB Name"
 msgstr ""
 
-#: includes/class-settings.php:411 legacy/admin/settings.php:118
+#: includes/class-settings.php:411
 msgid "Username"
 msgstr "Enw defnyddiwr"
 
-#: includes/class-settings.php:418 legacy/admin/settings.php:123
-#: tmp/class-avatar.php:277
+#: includes/class-settings.php:418 tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Cyfrinair"
 
@@ -751,13 +868,9 @@ msgstr "Defnyddwyr grid a WordPress wedi'u cysoni."
 msgid "OpenSim Search tables updated."
 msgstr "Mae tablau OpenSim Search wedi'u diweddaru."
 
-#: legacy/admin/admin-init.php:17 legacy/admin/admin-init.php:42
+#: legacy/admin/admin-init.php:42
 msgid "OpenSimulator Helpers"
 msgstr "Cynorthwywyr OpenSimulator"
-
-#: legacy/admin/admin-init.php:18
-msgid "Helpers"
-msgstr "Cynorthwywyr"
 
 #: legacy/admin/admin-init.php:63 legacy/profile.php:135
 #: tmp/class-avatar.php:318
@@ -919,10 +1032,6 @@ msgstr "Dirymiad cyfrinair"
 msgid "Link to lost password page."
 msgstr "Dolen i dudalen cyfrinair coll."
 
-#: legacy/admin/admin-init.php:411
-msgid "Economy"
-msgstr "Economi"
-
 #: legacy/admin/admin-init.php:412
 msgid ""
 "Currencies and some other services queried by the viewer. They are not "
@@ -963,104 +1072,13 @@ msgstr "Statws grid"
 msgid "Recent users"
 msgstr "Defnyddwyr diweddar"
 
-#: legacy/admin/settings.php:61
-msgid "Provide Economy Helpers"
-msgstr ""
-
-#: legacy/admin/settings.php:64
-msgid ""
-"Economy helpers are additional scripts needed if you implement economy on "
-"your grid (with real or fake currency)."
-msgstr ""
-"Mae cynorthwywyr economi yn sgriptiau ychwanegol sydd eu hangen os ydych "
-"chi'n gweithredu economi ar eich grid (gydag arian cyfred go iawn neu ffug)."
-
-#: legacy/admin/settings.php:65
-msgid ""
-"Helper scripts allow communication between the money server and the grid: "
-"current balance update, currency cost estimation, land and object sales, "
-"payments..."
-msgstr ""
-"Mae sgriptiau cynorthwywyr yn caniatáu cyfathrebu rhwng y gweinydd arian a'r "
-"grid: diweddariad balans cyfredol, amcangyfrif cost arian cyfred, gwerthu "
-"tir a gwrthrychau, taliadau ..."
-
-#: legacy/admin/settings.php:67
-msgid ""
-"Money server is not included in OpenSimulator distribution and require a "
-"separate installation, e.g. from %s."
-msgstr ""
-"Nid yw gweinydd arian wedi'i gynnwys yn nosbarthiad OpenSimulator ac mae "
-"angen gosodiad ar wahân, e.e. o %s."
-
-#: legacy/admin/settings.php:75
-msgid "Economy Base URI"
-msgstr ""
-
-#: legacy/admin/settings.php:79
-msgid "The URL must be set in Robust configuration."
-msgstr "Rhaid gosod yr URL mewn ffurfweddiad cadarn."
-
-#: legacy/admin/settings.php:92
-msgid "Economy Database"
-msgstr ""
-
-#: legacy/admin/settings.php:95
-msgid "Use the same database as Robust"
-msgstr "Defnyddiwch yr un gronfa ddata â Strong"
-
-#: legacy/admin/settings.php:114
-msgid "Database Name"
-msgstr ""
-
-#: legacy/admin/settings.php:129
-msgid "Currency Provider"
-msgstr "Darparwr Arian Parod"
-
-#: legacy/admin/settings.php:133
-msgid "No provider, use fake money."
-msgstr "Dim darparwr, defnyddiwch arian ffug."
-
-#: legacy/admin/settings.php:140
-msgid "Currency Conversion Rate"
-msgstr ""
-
-#: legacy/admin/settings.php:141
-msgid ""
-"Amount to pay in US$ for 1000 in-world money units. Used for cost "
-"estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
-msgstr ""
-"Swm i'w dalu mewn US$ am 1000 o unedau arian yn y byd. Defnyddir ar gyfer "
-"amcangyfrif cost. Os na chaiff ei gosod, y gyfradd fydd 10/1000 (1 cant "
-"fesul uned arian)"
-
-#: legacy/admin/settings.php:144
-msgid "Podex redirect message"
-msgstr "Neges ailgyfeirio Podex"
-
-#: legacy/admin/settings.php:145
-msgid ""
-"Please use our terminals in-world to proceed. Click OK to teleport to "
-"terminals region."
-msgstr ""
-"Defnyddiwch ein terfynellau yn y byd i symud ymlaen. Cliciwch OK i "
-"deleportio i ranbarth terfynellau."
-
-#: legacy/admin/settings.php:148
-msgid "Podex redirect URL"
-msgstr "URL ailgyfeirio Podex"
-
-#: legacy/admin/settings.php:152
-msgid "Money Script Access Key"
-msgstr "Allwedd Mynediad Sgript Arian"
-
-#: legacy/admin/settings.php:352
+#: legacy/admin/settings.php:237
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 "Rhaid i werthoedd gyd-fynd â ffeil ffurfweddu Robust.HG.ini (neu Robust.HG."
 "ini)."
 
-#: legacy/admin/settings.php:353
+#: legacy/admin/settings.php:238
 msgid ""
 "Robust server must be running. Values entered here will be checked against "
 "your Robust server and updated if needed."
@@ -1068,7 +1086,7 @@ msgstr ""
 "Rhaid i weinydd cadarn fod yn rhedeg. Bydd y gwerthoedd a nodir yma yn cael "
 "eu gwirio yn erbyn eich gweinydd Cadarn a'u diweddaru os oes angen."
 
-#: legacy/admin/settings.php:358
+#: legacy/admin/settings.php:243
 msgid ""
 "Grid accounts matching first name or last name set below are considered as "
 "avatar models. They will appear on the avatar registration form, with their "
@@ -1989,6 +2007,22 @@ msgstr ""
 msgid "Block Settings"
 msgstr "Gosodiadau"
 
+#~ msgid "Helpers"
+#~ msgstr "Cynorthwywyr"
+
+#~ msgid ""
+#~ "Money server is not included in OpenSimulator distribution and require a "
+#~ "separate installation, e.g. from %s."
+#~ msgstr ""
+#~ "Nid yw gweinydd arian wedi'i gynnwys yn nosbarthiad OpenSimulator ac mae "
+#~ "angen gosodiad ar wahân, e.e. o %s."
+
+#~ msgid "Use the same database as Robust"
+#~ msgstr "Defnyddiwch yr un gronfa ddata â Strong"
+
+#~ msgid "Podex redirect URL"
+#~ msgstr "URL ailgyfeirio Podex"
+
 #~ msgid "w4os - OpenSimulator Web Interface"
 #~ msgstr "w4os - Rhyngwyneb Gwe OpenSimulator"
 
@@ -2022,11 +2056,6 @@ msgstr "Gosodiadau"
 
 #~ msgid "OpenSimulator Settings"
 #~ msgstr "Gosodiadau OpenSimulator"
-
-#, fuzzy
-#~| msgid "Settings"
-#~ msgid "Legacy Settings"
-#~ msgstr "Gosodiadau"
 
 #~ msgid "Grid users"
 #~ msgstr "Defnyddwyr grid"
@@ -2100,12 +2129,6 @@ msgstr "Gosodiadau"
 #~ msgstr ""
 #~ "URL gweinydd HYPEvents, a ddefnyddir i nôl digwyddiadau sydd ar ddod a "
 #~ "sicrhau eu bod ar gael wrth chwilio."
-
-#~ msgid "Provide economy helpers"
-#~ msgstr "Darparu cynorthwywyr economi"
-
-#~ msgid "Economy base URI"
-#~ msgstr "Sylfaen economi URI"
 
 #~ msgid "Economy database"
 #~ msgstr "Cronfa ddata economi"
