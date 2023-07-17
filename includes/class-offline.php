@@ -95,7 +95,7 @@ class W4OS_Offline extends W4OS_Loader {
 					'placeholder' => 'no-reply@example.org',
 					'required'    => true,
 					'save_field'  => false,
-					'std'         => get_option( 'w4os_offline_sender' ),
+					'std'         => get_option( 'w4os_offline_sender', 'no-reply@' . $_SERVER['SERVER_NAME'] ),
 					'visible'     => array(
 						'when'     => array( array( 'provide_offline_messages', '=', 1 ) ),
 						'relation' => 'or',
