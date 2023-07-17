@@ -19,26 +19,28 @@ See Features and Roadmap sections for current and upcoming functionalties.
 
 = Features =
 
-- **Grid info**: `[gridinfo]` shortcode and admin dashboard widgets
-- **Grid status**: `[gridstatus]` shortcode and admin dashboard widgets
 - **Avatar creation**:
   - Opensimulator section in standard wp account page
-  - `[gridprofile]` shortcode can be inserted in any custom page
   - Avatar tab in account dashboard on WooCommerce websites
-- Choose avatar look from default models
-- Avatar and website passwords are synchronized
-- **Web profiles**: excerpt of the avatar's profile
-- **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
+  - Avatar and website passwords are synchronized
+  - Configuration instructions for new avatars
+  - **Public avatar profile**: excerpt of the avatar's profile
+  - **Avatar Models**: default outfits to choose from on registration
+  - **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
+- **Search Engine**: enable in-world search
+  - **places**
+  - **land for sale**
+  - **classifieds**
+  - **events** (2do.directory integration)
+- Shortcodes
+  - **Grid info**: `[grid-info]` shortcode, Gutenberg block and Divi module
+  - **Grid status**: `[grid-status]` shortcode, Gutenberg block and Divi module
+  - **Grid status**: `[popular-places]` shortcode, Gutenberg block and Divi module
+  - **Profile page**: `[avatar-profile]`  shortcode, Gutenberg block and Divi module
 - **Web assets server**: the needed bridge to display in-world images on a website
-- **Helpers**: currency, search, offline messages
-- **OpenSimulator settings page**:
-  - grid name, login uri and database connection settings
-  - naming scheme of default models
-  - exclude models from grid stats
-- Web asset server
-- Login Page / Widget
+- **Currency helpers**: integration with Podex, Gloebit and core money module
+- **Offline messages e-mail forwarding**
 - Manual and cron Grid/WP users sync
-- Public avatar profile
 - Auth with avatar credentials (if no matching wp account, create one)
 
 = Paid version =
@@ -114,29 +116,31 @@ See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
 
 = Medium term =
 
-- [x] get grid info from http://login.uri:8002/get_grid_info
-- [x] Web Assets server
-- [x] Helpers (search, currency, map...)
+- Destinations guide
+- Web search
+- Multiple avatars for same WordPress user
 - Improve avatar profile
   - Switch to allow web profile
-  - Switch set in-world prefs for public profiles
   - Better basic layout
   - Web edit profile
-- Admin Start / Stop regions
-- Admin Create region
+- 2do HYPEvents project integration <https://2do.pm>
+- Gudz Teleport Board project integration (based on user picks)
 - Admin Use sim/grid configuration file to fetch settings if on the same host
+- Admin create users
+- Admin create models (from current own avatar appearance)
 
 = Long term =
 
-- Admin create users
-- Admin create models (from current appearance)
+- Robust console connection
+  - Admin Start / Stop regions
+  - Admin Create region
+  - User's own regions control (create, start, stop, backup)
+- WooCommerce integration
+  - paid accounts
+  - regions orders
+  - other pay-for services
 - Deactivate (recommended) or delete (experimental) grid user when deleting wp account
-- Choice between Robust console or database connection
-- User's own regions control (create, start, stop, backup)
-- WooCommerce Subscriptions integration for user-owned Regions or other pay-for services
-- 2do HYPEvents project integration <https://2do.pm>
-- Gudz Teleport Board project integration (based on user picks)
-- separate OpenSimulator libraries and WordPress specific code, to allow easy integration in other CMS
+- Split code between OpenSimulator and WordPress specific codes
 
 == Frequently Asked Questions ==
 
@@ -150,21 +154,34 @@ Yes, it works too. Use OpenSim database credentials when requested for Robust cr
 
 = Why can't I change my avatar name? =
 
-This is an OpenSimulator design limitation. Regions rely on cached data to display avatar information, and once fetched, these are never updated. As a result, if an avatar's name (or grid URI btw) is changed, the change will not be reflected on regions already visited by this avatar (which will still show the old name), but new visited region will display the new one. This could be somewhat handled for a small standalone grid, but never in hypergrid context. There is no process to force a foreign grid to update its cache, and probably never will.
+This is an OpenSimulator design limitation. Regions rely on cached data to
+display avatar information, and once fetched, these are never updated. As a
+result, if an avatar's name (or grid URI btw) is changed, the change would not
+be reflected on regions already visited by this avatar (which will still show
+the old name), but new visited regions would display the new name. This could be
+somewhat handled for a small standalone grid, but never in hypergrid context.
+There is no process to force a foreign grid to update its cache, and probably
+never will.
 
 = Shouldn't I copy the helpers/ directory in the root of my webiste ? =
 
-No, you don't need to and you shouldn't. The /helpers/ is virtual, it is served as any other page of your website. Like there the /about/ URL website doesn't match a /about/ folder your webste directory.
-Even if there is a helpers/ directory in w4os plugin, it has the same name for convenience, but he could have been named anything. It's content is not accessed directly, it is used by the plugin to generate the answers.
-On the opposite, if there was an actual helpers/ folder in your website root, it would interfer with w4os.
+No, you don't need to and you shouldn't. The /helpers/ is virtual, it is served
+as any other page of your website. Like there the /about/ URL website doesn't
+match a /about/ folder your webste directory. Even if there is a helpers/
+directory in w4os plugin, it has the same name for convenience, but he could
+have been named anything. It's content is not accessed directly, it is used by
+the plugin to generate the answers. On the opposite, if there was an actual
+helpers/ folder in your website root, it would interfer with w4os.
 
 = Should I create assets/ directory in the root of my webiste ? =
 
-Yes or No. It can improve a lot the images delivery speed, but you won't benefit of the cache expiry, which would eventually correct any wrong or corruped image.
+Yes and No. It can improve a lot the images delivery speed, but you won't
+benefit of the cache expiry, which would eventually correct any wrong or
+corrupted image.
 
 = I use Divi theme, I can't customize profile page =
 
-The pages generated by w4os plugin are currently not compatible with Divi Builder. Please use standard WordPress editor instead for profile page. This should be addressed in a future release.
+Divi Theme support is fixed in versions 2.4.5 and above.
 
 == Screenshots ==
 
@@ -198,7 +215,7 @@ The pages generated by w4os plugin are currently not compatible with Divi Builde
   - [grid-info] instead of [gridinfo]
   - [grid-status] instead of [gridstatus]
   - [avatar-profile] instead of [gridprofile]
-  - Old shortcodes are kept for backwards compatibility
+  - Legacy shortcodes kept for backwards compatibility
 * added warning when attempting to edit profile page (or any page generated by w4os) with Divi Builder.
 * prettier and more efficient db credentials options in settings page (getting ready for optimized use in the future)
 
@@ -224,22 +241,13 @@ The pages generated by w4os plugin are currently not compatible with Divi Builde
 * fix no result if gatekeeper is passed without http:// protocol
 * fix search and register url settings
 
-= 2.3.15 =
+= 2.3.10 > 2.3.15 =
+* restored WooCommerce Account Dashboard avatar section
 * fix array_unique(): Argument #1 ($array) must be of type array, null given on plugin first activation
 * fix Undefined constant "W4OS_PROFILE_URL" fatal error
-* prepare 3.x transision
-
-= 2.3.14 =
 * fix wrong event time in in-world search (UTC shown instead of grid time)
-
-= 2.3.13 =
-* restored WooCommerce Account Dashboard avatar section
-
-= 2.3.12 =
 * fix w4os_profile_sync() fatal error when profiles are disabled
 * fix fatal error when wp object is passed as user_id
-
-= 2.3.10 =
 - minor fixes (profile page title, profile image, profile text display)
 
 = 2.3.9 =
