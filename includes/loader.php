@@ -94,9 +94,12 @@ class W4OS_Loader {
 		 */
 		require_once W4OS_DIR . '/includes/class-avatar-model.php';
 		require_once W4OS_DIR . '/includes/class-avatar-profile.php';
-		require_once W4OS_DIR . '/includes/class-helpers-economy.php';
+		if ( function_exists( 'xmlrpc_encode_request' ) ) {
+			// TODO: more accurate dependencies checking and warnings on general settings page
+			require_once W4OS_DIR . '/includes/class-helpers-economy.php';
+			require_once W4OS_DIR . '/includes/class-helpers-search.php';
+		}
 		require_once W4OS_DIR . '/includes/class-helpers-offline.php';
-		require_once W4OS_DIR . '/includes/class-helpers-search.php';
 
 		/**
 		 * Database updates
