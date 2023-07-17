@@ -61,7 +61,7 @@ class W4OS_Economy extends W4OS_Loader {
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
-		$economy_url = ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' );
+		$economy_url    = ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' );
 		$use_default_db = get_option( 'w4os_economy_use_default_db', true );
 		// $example_url = 'http://example.org/helpers/economy.php';
 		// $economy_url = get_option( 'w4os_economy_helper_uri' );
@@ -159,74 +159,76 @@ class W4OS_Economy extends W4OS_Loader {
 					'step'        => 'any',
 					'placeholder' => 10,
 					'size'        => 5,
-					'std' => get_option('w4os_currency_rate'),
-					'save_field' => false,
+					'std'         => get_option( 'w4os_currency_rate' ),
+					'save_field'  => false,
 					'visible'     => array(
 						'when'     => array( array( 'provide_economy', '=', 1 ) ),
 						'relation' => 'or',
 					),
 				),
 				array(
-					'name'    => __( 'Currency Provider', 'w4os' ),
-					'id'      => $prefix . 'currency_provider',
-					'type'    => 'radio',
-					'std' => empty(get_option('w4os_currency_provider')) ? 'none' : get_option('w4os_currency_provider'),
+					'name'       => __( 'Currency Provider', 'w4os' ),
+					'id'         => $prefix . 'currency_provider',
+					'type'       => 'radio',
+					'std'        => empty( get_option( 'w4os_currency_provider' ) ) ? 'none' : get_option( 'w4os_currency_provider' ),
 					'save_field' => false,
-					'visible'     => array(
+					'visible'    => array(
 						'when'     => array( array( 'provide_economy', '=', 1 ) ),
 						'relation' => 'or',
 					),
-					'options' => array(
-						'none' => __( 'No provider, use fake money.', 'w4os' ),
+					'options'    => array(
+						'none'    => __( 'No provider, use fake money.', 'w4os' ),
 						'podex'   => 'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)',
 						'gloebit' => 'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>www.gloebit.com</a>)',
 					),
-					'inline'  => false,
+					'inline'     => false,
 				),
 				array(
-					'name' => __( 'Money Script Access Key', 'w4os' ),
-					'id'   => $prefix . 'money_script_access_key',
-					'type' => 'text',
-					'std' => get_option('w4os_money_script_access_key'),
+					'name'       => __( 'Money Script Access Key', 'w4os' ),
+					'id'         => $prefix . 'money_script_access_key',
+					'type'       => 'text',
+					'std'        => get_option( 'w4os_money_script_access_key' ),
 					'save_field' => false,
-					'visible' => array(
+					'visible'    => array(
 						'when'     => array( array( 'currency_provider', '=', 'none' ) ),
 						'relation' => 'or',
 					),
-					'desc' => '<p>'
-					. __('Choose a unique access key and set it in MoneyServer.ini', 'w4os')
-					. w4os_format_ini( array(
-						'MoneyServer.ini' => array(
-							'[MoneyServer]' => array(
-								'EnableScriptSendMoney' => 'true',
-								'MoneyScriptAccessKey' => esc_attr( get_option( 'w4os_money_script_access_key' ) ),
+					'desc'       => '<p>'
+					. __( 'Choose a unique access key and set it in MoneyServer.ini', 'w4os' )
+					. w4os_format_ini(
+						array(
+							'MoneyServer.ini' => array(
+								'[MoneyServer]' => array(
+									'EnableScriptSendMoney' => 'true',
+									'MoneyScriptAccessKey' => esc_attr( get_option( 'w4os_money_script_access_key' ) ),
+								),
 							),
-						),
-					)) . '</p>',
+						)
+					) . '</p>',
 				),
 				array(
-					'name'    => __( 'Podex Options', 'w4os' ),
-					'id'      => $prefix . 'podex_options',
-					'type'    => 'group',
-					'visible' => array(
+					'name'       => __( 'Podex Options', 'w4os' ),
+					'id'         => $prefix . 'podex_options',
+					'type'       => 'group',
+					'visible'    => array(
 						'when'     => array( array( 'currency_provider', '=', 'podex' ) ),
 						'relation' => 'or',
 					),
 					'save_field' => false,
-					'fields'  => array(
+					'fields'     => array(
 						array(
 							'name'        => __( 'Podex Redirect Message', 'w4os' ),
 							'id'          => $prefix . 'podex_error_message',
 							'type'        => 'text',
-							'std'         => get_option('w4os_podex_error_message'),
+							'std'         => get_option( 'w4os_podex_error_message' ),
 							'placeholder' => __( 'Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange area.', 'w4os' ),
 						),
 						array(
 							'name'        => __( 'Exchange Teleport URL', 'w4os' ),
 							'id'          => $prefix . 'podex_teleport_url',
 							'type'        => 'text',
-							'required' => true,
-							'std' => get_option('w4os_podex_redirect_url'),
+							'required'    => true,
+							'std'         => get_option( 'w4os_podex_redirect_url' ),
 							'placeholder' => 'secondlife://Podex Exchange/128/128/21',
 						),
 					),
@@ -245,21 +247,24 @@ class W4OS_Economy extends W4OS_Loader {
 
 		if ( isset( $_POST['nonce_economy-settings'] ) && wp_verify_nonce( $_POST['nonce_economy-settings'], 'rwmb-save-economy-settings' ) ) {
 			error_log( print_r( $_POST, true ) );
-			$options = array_merge(array(
-				// 'w4os_provide_economy' => false,
-				'w4os_economy_helper_uri' => null,
-				'w4os_currency_rate' => null,
-				'w4os_money_script_access_key' => null,
-				'w4os_currency_provider' => null,
-				'w4os_podex_options' => array(),
-			), $_POST);
+			$options = array_merge(
+				array(
+					// 'w4os_provide_economy' => false,
+					'w4os_economy_helper_uri'      => null,
+					'w4os_currency_rate'           => null,
+					'w4os_money_script_access_key' => null,
+					'w4os_currency_provider'       => null,
+					'w4os_podex_options'           => array(),
+				),
+				$_POST
+			);
 			$provide = isset( $_POST['w4os_provide_economy'] ) ? true : false;
 			update_option( 'w4os_provide_economy_helpers', $provide );
 
 			if ( $provide ) {
-				update_option( 'w4os_economy_helper_uri', $options['w4os_economy_helper_uri']);
-				update_option( 'w4os_currency_rate', $options['w4os_currency_rate']);
-				update_option( 'w4os_money_script_access_key', $options['w4os_money_script_access_key']);
+				update_option( 'w4os_economy_helper_uri', $options['w4os_economy_helper_uri'] );
+				update_option( 'w4os_currency_rate', $options['w4os_currency_rate'] );
+				update_option( 'w4os_money_script_access_key', $options['w4os_money_script_access_key'] );
 
 				$use_default_db = isset( $_POST['w4os_economy-db']['use_default'] );
 				update_option( 'w4os_economy_use_default_db', $use_default_db );
@@ -272,24 +277,26 @@ class W4OS_Economy extends W4OS_Loader {
 					update_option( 'w4os_economy_db_pass', $credentials['pass'] );
 				}
 
-				$provider = ($options['w4os_currency_provider'] == 'none' ) ? null : $options['w4os_currency_provider'];
-				update_option( 'w4os_currency_provider', $provider);
+				$provider = ( $options['w4os_currency_provider'] == 'none' ) ? null : $options['w4os_currency_provider'];
+				update_option( 'w4os_currency_provider', $provider );
 
-				switch ($provider) {
+				switch ( $provider ) {
 					case 'podex':
-					$podex = array_merge(array(
-						'w4os_podex_error_message' => null,
-						'w4os_podex_teleport_url' => null,
-					), $_POST['w4os_podex_options']);
-					update_option( 'w4os_podex_error_message', $podex['w4os_podex_error_message'] );
-					update_option( 'w4os_podex_redirect_url', $podex['w4os_podex_teleport_url'] );
-					break;
+						$podex = array_merge(
+							array(
+								'w4os_podex_error_message' => null,
+								'w4os_podex_teleport_url'  => null,
+							),
+							$_POST['w4os_podex_options']
+						);
+						update_option( 'w4os_podex_error_message', $podex['w4os_podex_error_message'] );
+						update_option( 'w4os_podex_redirect_url', $podex['w4os_podex_teleport_url'] );
+						break;
 
 					case null:
-					update_option( 'w4os_money_script_access_key', $options['w4os_money_script_access_key'] );
-					break;
+						update_option( 'w4os_money_script_access_key', $options['w4os_money_script_access_key'] );
+						break;
 				}
-
 			}
 		}
 	}

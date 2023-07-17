@@ -33,7 +33,7 @@ function w4os_register_settings() {
 	}
 
 	$settings_pages = array(
-		'w4os_status'  => array(
+		'w4os_status' => array(
 			'sections' => array(
 				'default' => array(
 					'fields' => array(
