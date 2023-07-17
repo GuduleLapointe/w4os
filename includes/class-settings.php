@@ -522,6 +522,9 @@ class W4OS_Settings extends W4OS_Loader {
 				$subfield
 			);
 		}
+		if ( ! empty( $output ) ) {
+			$output = '<div class="w4osdb-field-group w4osdb-field-input">' . $output . '</div>';
+		}
 		return $output;
 	}
 

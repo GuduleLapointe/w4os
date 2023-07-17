@@ -92,8 +92,9 @@ class W4OS_Loader {
 		/**
 		 * Specific plugin classes.
 		 */
-	 	require_once W4OS_DIR . '/includes/class-avatar-model.php';
+		require_once W4OS_DIR . '/includes/class-avatar-model.php';
 		require_once W4OS_DIR . '/includes/class-avatar-profile.php';
+		require_once W4OS_DIR . '/includes/class-helpers-economy.php';
 		require_once W4OS_DIR . '/includes/class-helpers-offline.php';
 		require_once W4OS_DIR . '/includes/class-helpers-search.php';
 
