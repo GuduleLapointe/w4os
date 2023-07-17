@@ -48,3 +48,19 @@
     opacity: 1;
   }
 }
+
+.opensimulator_page_w4os-shortcodes {
+  .places {
+    display: flex;
+    gap: 10px;
+
+    .place {
+      max-width:32%;
+    }
+
+    img {
+      width: 256px;
+      max-width: 100%;
+    }
+  }
+}
