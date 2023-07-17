@@ -38,51 +38,51 @@ jQuery( document ).ready(
 
 // function valueChanged() {
 //
-// 	// show internal or external assets server uri according to provide checkbox
-// 	document.getElementById( "w4os_internal_asset_server_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_asset_server' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_external_asset_server_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_asset_server' ).checked ? "none" : "table-row";
+// show internal or external assets server uri according to provide checkbox
+// document.getElementById( "w4os_internal_asset_server_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_asset_server' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_external_asset_server_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_asset_server' ).checked ? "none" : "table-row";
 //
-// 	// show internal offline helper uri according to provide checkbox
-// 	document.getElementById( "w4os_offline_helper_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_offline_messages' ).checked ? "table-row" : "none";
+// show internal offline helper uri according to provide checkbox
+// document.getElementById( "w4os_offline_helper_uri" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_offline_messages' ).checked ? "table-row" : "none";
 //
-// 	// show internal economy helper uri according to provide checkbox
-// 	document.getElementById( "w4os_economy_helper_uri" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_economy_use_default_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_economy_db_host" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_economy_db_database" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_economy_db_user" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_economy_db_pass" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_podex_redirect_url" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_podex_error_message" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_currency_provider_" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
+// show internal economy helper uri according to provide checkbox
+// document.getElementById( "w4os_economy_helper_uri" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_economy_use_default_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_economy_db_host" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_economy_db_database" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_economy_db_user" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_economy_db_pass" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_economy_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_podex_redirect_url" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_podex_error_message" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_podex' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_currency_provider_" ).parentNode.parentNode.style.display     = document.getElementById( 'w4os_provide_economy_helpers' ).checked ? "table-row" : "none";
 //
-// 	document.getElementById( "w4os_money_script_access_key" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_currency_rate" ).parentNode.parentNode.style.display           = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_currency_provider_gloebit' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_money_script_access_key" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_economy_helpers' ).checked && document.getElementById( 'w4os_currency_provider_' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_currency_rate" ).parentNode.parentNode.style.display           = document.getElementById( 'w4os_provide_economy_helpers' ).checked & ! document.getElementById( 'w4os_currency_provider_gloebit' ).checked ? "table-row" : "none";
 //
-// 	document.getElementById( "w4os_search_use_default_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_search_db_host" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_search_db_database" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_search_db_user" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
-// 	document.getElementById( "w4os_search_db_pass" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_search_use_default_db" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_search_db_host" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_search_db_database" ).parentNode.parentNode.style.display    = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_search_db_user" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_search_db_pass" ).parentNode.parentNode.style.display        = document.getElementById( 'w4os_provide_search' ).checked & ! document.getElementById( 'w4os_search_use_default_db' ).checked ? "table-row" : "none";
 //
-// 	document.getElementById( "w4os_hypevents_url" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
+// document.getElementById( "w4os_hypevents_url" ).parentNode.parentNode.style.display = document.getElementById( 'w4os_provide_search' ).checked ? "table-row" : "none";
 //
-// 	// document.getElementById("w4os_search_url").readonly = document.getElementById('w4os_provide_search').checked;
-// 	// document.getElementById("w4os_search_url").setAttribute("readonly", document.getElementById('w4os_provide_search').checked);
-// 	// document.getElementById("w4os_search_url").disabled = document.getElementById('w4os_provide_search').checked;
+// document.getElementById("w4os_search_url").readonly = document.getElementById('w4os_provide_search').checked;
+// document.getElementById("w4os_search_url").setAttribute("readonly", document.getElementById('w4os_provide_search').checked);
+// document.getElementById("w4os_search_url").disabled = document.getElementById('w4os_provide_search').checked;
 //
-// 	if (document.getElementById( 'w4os_provide_search' ).checked) {
-// 		document.getElementById( "w4os_search_url" ).setAttribute( "readonly", "readonly" );
-// 		document.getElementById( "w4os_search_register" ).setAttribute( "readonly", "readonly" );
-// 	} else {
-// 		document.getElementById( "w4os_search_url" ).removeAttribute( "readonly" );
-// 		document.getElementById( "w4os_search_register" ).removeAttribute( "readonly" );
-// 	}
+// if (document.getElementById( 'w4os_provide_search' ).checked) {
+// document.getElementById( "w4os_search_url" ).setAttribute( "readonly", "readonly" );
+// document.getElementById( "w4os_search_register" ).setAttribute( "readonly", "readonly" );
+// } else {
+// document.getElementById( "w4os_search_url" ).removeAttribute( "readonly" );
+// document.getElementById( "w4os_search_register" ).removeAttribute( "readonly" );
+// }
 // }
 // // force check on load
 // window.onload = function() {
-// 	// Code that depends on external scripts being loaded goes here...
-// 	valueChanged(); // Call the function after all scripts have loaded
+// Code that depends on external scripts being loaded goes here...
+// valueChanged(); // Call the function after all scripts have loaded
 // };
 //
 // // /*
