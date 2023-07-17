@@ -53,47 +53,6 @@ function w4os_register_settings() {
 		),
 		'w4os_helpers' => array(
 			'sections' => array(
-				'w4os_options_offline' => array(
-					'name'   => __( 'Offline messages', 'w4os' ),
-					'fields' => array(
-						'w4os_provide_offline_messages' => array(
-							'type'     => 'boolean',
-							'name'     => __( 'Provide offline helper', 'w4os' ),
-							'default'  => W4OS_DEFAULT_PROVIDE_ASSET_SERVER,
-							'onchange' => 'onchange="valueChanged(this)"',
-							// 'description' => __('Using ')
-						),
-						'w4os_offline_helper_uri'       => array(
-							'name'        => __( 'Offline helper URI', 'w4os' ),
-							'default'     => ( ! empty( W4OS_GRID_INFO['message'] ) ) ? W4OS_GRID_INFO['message'] : get_home_url( null, '/helpers/offline/' ),
-							'readonly'    => true,
-							'description' =>
-							__( 'Set the URL in Robust and OpenSimulator configurations.', 'w4os' )
-							. w4os_format_ini(
-								array(
-									'Robust.HG.ini' => array(
-										'[GridInfoService]' => array(
-											'message' => get_option( 'w4os_offline_helper_uri', get_home_url( null, '/helpers/offline/' ) ),
-										),
-									),
-									'OpenSim.ini'   => array(
-										'[Messaging]' => array(
-											'OfflineMessageModule' => 'OfflineMessageModule',
-											'OfflineMessageURL' => get_option( 'w4os_offline_helper_uri', get_home_url( null, '/helpers/offline/' ) ),
-										),
-									),
-								)
-							),
-						),
-						'w4os_offline_sender'           => array(
-							'name'        => __( 'Sender e-mail address', 'w4os' ),
-							'placeholder' => 'no-reply@example.com',
-							// 'default' => 'no-reply@' . parse_url(W4OS_GRID_LOGIN_URI)['host'],
-							'default'     => 'no-reply@' . $_SERVER['SERVER_NAME'],
-							'description' => __( 'A no-reply e-mail address used to forward messages for users enabling "Email me IMs when I\'m offline" option.', 'w4os' ),
-						),
-					),
-				),
 				'w4os_options_economy' => array(
 					'name'   => 'Economy',
 					'fields' => array(

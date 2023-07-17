@@ -95,6 +95,7 @@ class W4OS_Loader {
 		require_once W4OS_DIR . '/includes/class-search.php';
 		require_once W4OS_DIR . '/includes/class-profile.php';
 		require_once W4OS_DIR . '/includes/class-model.php';
+		require_once W4OS_DIR . '/includes/class-offline.php';
 
 		/**
 		 * Database updates
