@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-14T18:42:31+00:00\n"
+"POT-Creation-Date: 2023-07-17T13:47:53+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,8 +15,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - Rhyngwyneb Gwe OpenSimulator"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - Rhyngwyneb Gwe OpenSimulator (dev)"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
@@ -40,90 +40,211 @@ msgstr "https://speculoos.world"
 msgid "Available Shortcodes"
 msgstr "Codau byr sydd ar gael"
 
-#: admin/templates/shortcodes.php:6
+#: admin/templates/shortcodes.php:4
+msgid "Shortcodes can be included in any page or articles."
+msgstr ""
+
+#: admin/templates/shortcodes.php:5
+msgid ""
+"They are also available as configurable Gutenberg blocks and Divi modules."
+msgstr ""
+
+#: admin/templates/shortcodes.php:12
 msgid "General information (grid name and login uri)"
 msgstr "Gwybodaeth gyffredinol (enw grid a uri mewngofnodi)"
 
-#: admin/templates/shortcodes.php:12
+#: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38
+#: admin/templates/shortcodes.php:60 admin/templates/shortcodes.php:82
+msgid "Bloc title"
+msgstr ""
+
+#: admin/templates/shortcodes.php:19 admin/templates/shortcodes.php:39
+#: admin/templates/shortcodes.php:61 admin/templates/shortcodes.php:84
+msgid "Title level (h1 to h6)"
+msgstr ""
+
+#: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41
+#: admin/templates/shortcodes.php:63 admin/templates/shortcodes.php:87
+msgid "Options"
+msgstr ""
+
+#: admin/templates/shortcodes.php:32
 msgid "Online users, regions, etc."
 msgstr "Defnyddwyr ar-lein, rhanbarthau, ac ati."
 
-#: admin/templates/shortcodes.php:18
+#: admin/templates/shortcodes.php:52
+#, fuzzy
+#| msgid ""
+#| "Grid profile if user is connected and has an avatar, avatar registration "
+#| "form otherwise"
 msgid ""
-"Grid profile if user is connected and has an avatar, avatar registration "
+"Avatar Profile if user is connected and has an avatar, avatar registration "
 "form otherwise"
 msgstr ""
 "Proffil grid os yw'r defnyddiwr wedi'i gysylltu a bod ganddo avatar, "
 "ffurflen gofrestru avatar fel arall"
 
-#: admin/templates/shortcodes.php:19
+#: admin/templates/shortcodes.php:53
 msgid "(formerly %s)"
 msgstr "(%s yn flaenorol)"
 
-#: admin/templates/shortcodes.php:27
+#: admin/templates/shortcodes.php:75
 msgid "Most visited regions in your grid."
 msgstr ""
 
-#: admin/templates/shortcodes.php:34
-msgid "Bloc title"
-msgstr ""
-
-#: admin/templates/shortcodes.php:35
+#: admin/templates/shortcodes.php:83
 msgid "Show maximum n results"
 msgstr ""
 
-#: admin/templates/shortcodes.php:36
-msgid "Title level (h1 to h6)"
+#: admin/templates/shortcodes.php:85
+msgid "Only show name and picture"
 msgstr ""
 
-#: admin/templates/shortcodes.php:38
-msgid "Options"
-msgstr ""
-
-#: blocks/popular-places.php:108 blocks/popular-places.php:254
-#: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:13
-#: blocks/popular-places/popular-places.js:13
-msgid "Popular Places"
-msgstr ""
-
-#: blocks/popular-places.php:187 legacy/shortcodes.php:185
-msgid "No result"
-msgstr "Dim canlyniad"
-
-#: blocks/popular-places.php:228
+#: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
+#: src/blocks/avatar-profile/editor.js:14
+#: blocks/avatar-profile/avatar-profile.js:14
 #, fuzzy
-#| msgid "Popular places"
-msgid "W4OS Popular Places"
-msgstr "Lleoedd poblogaidd"
+#| msgid "OpenSimulator Profile"
+msgid "OpenSimulator Avatar Profile"
+msgstr "Proffil OpenSimulator"
 
-#: blocks/popular-places.php:250 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:69
-#: blocks/popular-places/popular-places.js:69
+#: blocks/avatar-profile.php:219 blocks/grid-info.php:223
+#: blocks/grid-status.php:175 blocks/popular-places.php:250
+#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
+#: blocks/grid-status/grid-status.js:1
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/avatar-profile/editor.js:68 src/blocks/grid-info/editor.js:58
+#: src/blocks/grid-status/editor.js:58 src/blocks/popular-places/editor.js:67
+#: blocks/avatar-profile/avatar-profile.js:68 blocks/grid-info/grid-info.js:58
+#: blocks/grid-status/grid-status.js:58
+#: blocks/popular-places/popular-places.js:67
 #, fuzzy
 #| msgid "Title:"
 msgid "Title"
 msgstr "Teitl:"
 
-#: blocks/popular-places.php:252
-msgid "Enter the title for the Popular Places module."
+#: blocks/avatar-profile.php:221
+msgid "Enter the title for the Avatar Profile module."
 msgstr ""
 
-#: blocks/popular-places.php:258 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:77
-#: blocks/popular-places/popular-places.js:77
+#: blocks/avatar-profile.php:223 legacy/profile.php:927
+#, fuzzy
+#| msgid "Avatar profile"
+msgid "Avatar Profile"
+msgstr "Proffil avatar"
+
+#: blocks/avatar-profile.php:230 blocks/grid-info.php:231
+#: blocks/grid-status.php:183 blocks/popular-places.php:258
+#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
+#: blocks/grid-status/grid-status.js:1
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/avatar-profile/editor.js:76 src/blocks/grid-info/editor.js:66
+#: src/blocks/grid-status/editor.js:66 src/blocks/popular-places/editor.js:75
+#: blocks/avatar-profile/avatar-profile.js:76 blocks/grid-info/grid-info.js:66
+#: blocks/grid-status/grid-status.js:66
+#: blocks/popular-places/popular-places.js:75
 #, fuzzy
 #| msgid "Title:"
 msgid "Title Level"
 msgstr "Teitl:"
 
-#: blocks/popular-places.php:260
+#: blocks/avatar-profile.php:232 blocks/grid-info.php:233
+#: blocks/grid-status.php:185 blocks/popular-places.php:260
 msgid "Select the HTML heading level for the title."
 msgstr ""
 
+#: blocks/avatar-profile.php:250 blocks/avatar-profile/avatar-profile.js:1
+#: src/blocks/avatar-profile/editor.js:93
+#: blocks/avatar-profile/avatar-profile.js:93
+#, fuzzy
+#| msgid "My Profile"
+msgid "Mini Profile"
+msgstr "Fy mhroffil"
+
+#: blocks/avatar-profile.php:254
+msgid "Yes"
+msgstr ""
+
+#: blocks/avatar-profile.php:255
+msgid "No"
+msgstr ""
+
+#: blocks/avatar-profile.php:258
+msgid "Enable mini profile display."
+msgstr ""
+
+#: blocks/grid-info.php:106 blocks/grid-info.php:227
+#: includes/class-settings.php:110 includes/class-settings.php:111
+#: includes/class-settings.php:112 includes/class-settings.php:113
+#, fuzzy
+#| msgid "Grid info"
+msgid "Grid Info"
+msgstr "Gwybodaeth grid"
+
+#: blocks/grid-info.php:182 includes/class-settings.php:128
+msgid "Grid Name"
+msgstr ""
+
+#: blocks/grid-info.php:183 includes/class-settings.php:119
+msgid "Login URI"
+msgstr "Mewngofnodi URI"
+
+#: blocks/grid-info.php:189
+msgid "OpenSimulator not configured"
+msgstr "OpenSimulator heb ei ffurfweddu"
+
+#: blocks/grid-info.php:203 blocks/grid-info/grid-info.js:1
+#: src/blocks/grid-info/editor.js:13 blocks/grid-info/grid-info.js:13
+#, fuzzy
+#| msgid "OpenSimulator Profile"
+msgid "OpenSimulator Grid Info"
+msgstr "Proffil OpenSimulator"
+
+#: blocks/grid-info.php:225
+msgid "Enter the title for the Grid Info module."
+msgstr ""
+
+#: blocks/grid-status.php:108 blocks/grid-status.php:179
+#: includes/class-settings.php:134
+#, fuzzy
+#| msgid "Grid status"
+msgid "Grid Status"
+msgstr "Statws grid"
+
+#: blocks/grid-status.php:142 blocks/popular-places.php:187
+msgid "No result"
+msgstr "Dim canlyniad"
+
+#: blocks/grid-status.php:155 blocks/grid-status/grid-status.js:1
+#: src/blocks/grid-status/editor.js:13 blocks/grid-status/grid-status.js:13
+#, fuzzy
+#| msgid "OpenSimulator Status"
+msgid "OpenSimulator Grid Status"
+msgstr "Statws OpenSimulator"
+
+#: blocks/grid-status.php:177
+msgid "Enter the title for the Grid Status module."
+msgstr ""
+
+#: blocks/popular-places.php:108 blocks/popular-places.php:254
+msgid "Popular Places"
+msgstr ""
+
+#: blocks/popular-places.php:228 blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:13
+#: blocks/popular-places/popular-places.js:13
+#, fuzzy
+#| msgid "OpenSimulator pages"
+msgid "OpenSimulator Popular Places"
+msgstr "Tudalennau OpenSimulator"
+
+#: blocks/popular-places.php:252
+msgid "Enter the title for the Popular Places module."
+msgstr ""
+
 #: blocks/popular-places.php:275 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:94
-#: blocks/popular-places/popular-places.js:94
+#: src/blocks/popular-places/editor.js:92
+#: blocks/popular-places/popular-places.js:92
 #, fuzzy
 #| msgid "No result"
 msgid "Max Results"
@@ -145,11 +266,11 @@ msgstr "Gweinydd Asedau Gwe"
 msgid "Assets Server Fields"
 msgstr ""
 
-#: includes/class-helpers-assets.php:104
+#: includes/class-helpers-assets.php:105
 msgid "Provide Web Assets Server"
 msgstr ""
 
-#: includes/class-helpers-assets.php:107
+#: includes/class-helpers-assets.php:108
 msgid ""
 "A web assets server is required to display in-world assets (from the grid) "
 "on the website (e.g. profile pictures)."
@@ -157,27 +278,27 @@ msgstr ""
 "Mae angen gweinydd asedau gwe i arddangos asedau yn y byd (o'r grid) ar y "
 "wefan (e.e. lluniau proffil)."
 
-#: includes/class-helpers-assets.php:113 includes/class-helpers-assets.php:131
+#: includes/class-helpers-assets.php:114 includes/class-helpers-assets.php:132
 msgid "Web Assets Server URL"
 msgstr ""
 
-#: includes/class-helpers-assets.php:119
+#: includes/class-helpers-assets.php:120
 #, fuzzy
 msgid "You can set the assets slug in %%permalinks settings page%%"
 msgstr "Gallwch osod y wlithen ased yng ngosodiadau %spermalinks%s."
 
-#: includes/class-helpers-assets.php:134
+#: includes/class-helpers-assets.php:135
 msgid ""
 "If 'Provide Web Assets Server' is disabled, it is necessary to install a "
 "third-party service and enter its URL here to ensure the proper functioning "
 "of the plugin."
 msgstr ""
 
-#: includes/class-helpers-assets.php:135
+#: includes/class-helpers-assets.php:136
 msgid "http://example.org/assets/assets.php?id="
 msgstr ""
 
-#: includes/class-helpers-assets.php:194
+#: includes/class-helpers-assets.php:195
 msgid "Assets base"
 msgstr "Sylfaen asedau"
 
@@ -186,90 +307,251 @@ msgstr "Sylfaen asedau"
 msgid "Avatar Models"
 msgstr ""
 
-#: includes/class-model.php:88
+#: includes/class-model.php:89
 msgid "Match"
 msgstr ""
 
-#: includes/class-model.php:92
+#: includes/class-model.php:93
 msgid "First Name"
 msgstr ""
 
-#: includes/class-model.php:93
+#: includes/class-model.php:94
 msgid "Any"
 msgstr ""
 
-#: includes/class-model.php:94
+#: includes/class-model.php:95
 msgid "Last Name"
 msgstr ""
 
-#: includes/class-model.php:95
+#: includes/class-model.php:96
 msgid "Custom list"
 msgstr ""
 
-#: includes/class-model.php:100
+#: includes/class-model.php:101
 msgid "Name"
 msgstr ""
 
-#: includes/class-model.php:110
+#: includes/class-model.php:111
 msgid "Select Models"
 msgstr ""
 
-#: includes/class-model.php:114
+#: includes/class-model.php:115
 msgid "Select one or more existing avatars"
 msgstr ""
 
-#: includes/class-model.php:137
+#: includes/class-model.php:139
 msgid "Available Models"
 msgstr ""
 
-#: includes/class-model.php:163
+#: includes/class-model.php:165
 msgid ""
 "If avatar models are defined, new users will be presented with a choice on "
 "the avatar creation form, which will determine the initial outfit of the "
 "created avatar."
 msgstr ""
 
-#: includes/class-model.php:164
+#: includes/class-model.php:166
 msgid ""
 "The grid administrator needs to create each model from the ROBUST console, "
 "log in with the viewer, customize the outfit, and add a profile picture."
 msgstr ""
 
-#: includes/class-model.php:165
+#: includes/class-model.php:167
 msgid "The avatars used for the models should never be real user accounts."
 msgstr ""
 
-#: includes/class-model.php:166
+#: includes/class-model.php:168
 msgid ""
 "The new avatar will wear the same outfit as the model at the time of "
 "registration."
 msgstr ""
 
-#: includes/class-model.php:167
+#: includes/class-model.php:169
 msgid ""
 "If the model assignment rule is based on the name, each newly created avatar "
 "matching that rule will be automatically added to the list."
 msgstr ""
 
-#: includes/class-model.php:291
+#: includes/class-model.php:293
 msgid "No models found."
 msgstr ""
 
-#: includes/class-model.php:305
+#: includes/class-model.php:307
 msgid "No models"
 msgstr ""
 
-#: includes/class-model.php:342
+#: includes/class-model.php:344
 msgid "Your initial appearance"
 msgstr "Eich ymddangosiad cychwynnol"
 
-#: includes/class-model.php:343
+#: includes/class-model.php:345
 msgid "You can change it as often as you want in the virtual world."
 msgstr "Gallwch ei newid mor aml ag y dymunwch yn y byd rhithwir."
 
-#: includes/class-model.php:361
+#: includes/class-model.php:363
 msgid "Refreshing list..."
 msgstr ""
+
+#: includes/class-offline.php:46
+#, fuzzy
+#| msgid "Offline messages"
+msgid "Offline Messages"
+msgstr "Negeseuon all-lein"
+
+#: includes/class-offline.php:47 includes/class-offline.php:70
+#, fuzzy
+#| msgid "Offline messages"
+msgid "Offline Messages Settings"
+msgstr "Negeseuon all-lein"
+
+#: includes/class-offline.php:76
+#, fuzzy
+#| msgid "Provide offline helper"
+msgid "Provide Offline Messages Service"
+msgstr "Darparu cynorthwyydd all-lein"
+
+#: includes/class-offline.php:85
+msgid "Honor \"Email me IMs when I'm offline\" viewer option."
+msgstr ""
+
+#: includes/class-offline.php:86
+msgid ""
+"OpenSimulator core offline messages module delivers messages sent to an "
+"offline user when they come back online but don't handle e-mail forwarding "
+"option available in the viewer."
+msgstr ""
+
+#: includes/class-offline.php:91
+#, fuzzy
+#| msgid "Sender e-mail address"
+msgid "Sender E-mail Address"
+msgstr "Cyfeiriad e-bost yr anfonwr"
+
+#: includes/class-offline.php:102
+msgid ""
+"A no-reply e-mail address used to forward messages for users enabling "
+"\"Email me IMs when I'm offline\" option."
+msgstr ""
+"Cyfeiriad e-bost dim ateb a ddefnyddir i anfon negeseuon ymlaen ar gyfer "
+"defnyddwyr sy'n galluogi opsiwn \"E-bostiwch IMs ataf pan fyddaf all-lein\"."
+
+#: includes/class-offline.php:105
+#, fuzzy
+#| msgid "Offline messages"
+msgid "Offline Messages Helper"
+msgstr "Negeseuon all-lein"
+
+#: includes/class-offline.php:118
+msgid "Set the URL in Robust and OpenSimulator configurations."
+msgstr "Gosodwch yr URL mewn ffurfweddiadau Cadarn ac OpenSimulator."
+
+#: includes/class-search.php:58
+#, fuzzy
+#| msgid "Search engine URL"
+msgid "Search Engine"
+msgstr "URL peiriant chwilio"
+
+#: includes/class-search.php:59 includes/class-search.php:77
+#, fuzzy
+#| msgid "Search engine URL"
+msgid "Search Engine Settings"
+msgstr "URL peiriant chwilio"
+
+#: includes/class-search.php:84
+#, fuzzy
+#| msgid "Provide in-world search"
+msgid "Provide Search"
+msgstr "Darparu chwiliad yn y byd"
+
+#: includes/class-search.php:87
+msgid ""
+"Enable to use a local search engine, allowing only local results "
+"(recommended for private grids). Disable to use an external search engine "
+"like 2do Directory, allowing results from both your grid and other public "
+"grids."
+msgstr ""
+
+#: includes/class-search.php:97
+#, fuzzy
+#| msgid "Search database"
+msgid "OS Search Database"
+msgstr "Chwilio cronfa ddata"
+
+#: includes/class-search.php:118
+msgid "Search Engine URL"
+msgstr ""
+
+#: includes/class-search.php:127
+#, fuzzy
+#| msgid ""
+#| "URL of the search engine used internally by the viewer (without "
+#| "arguments)."
+msgid ""
+"URL of the search engine used by the viewer to provide search results "
+"(without arguments)."
+msgstr ""
+"URL y peiriant chwilio a ddefnyddir yn fewnol gan y gwyliwr (heb ddadleuon)."
+
+#: includes/class-search.php:128
+msgid "Only one can be set, other lines are alternative examples."
+msgstr ""
+
+#: includes/class-search.php:129
+msgid ""
+"Services using w4os engine need the gatekeeper URI (usually the login URI) "
+"to be passed as gk argument. Requirements may vary for other engines."
+msgstr ""
+
+#: includes/class-search.php:142
+msgid ""
+"Please note that Search URL is different from Web search URL, which is not "
+"handled by W4OS currently. Web search is relevant if you have a web search "
+"page dedicated to grid content, providing results with in-world URLs (hop:// "
+"or secondlife://). It is optional and is referenced here only to "
+"disambiguate settings which unfortunately have similar names."
+msgstr ""
+"Sylwch fod URL Chwilio yn wahanol i URL chwilio Gwe, nad yw W4OS yn ei drin "
+"ar hyn o bryd. Mae chwiliad gwe yn berthnasol os oes gennych chi dudalen "
+"chwilio gwe sy'n ymroddedig i gynnwys grid, sy'n darparu canlyniadau gydag "
+"URLs yn y byd (hop: / neu secondlife://). Mae'n ddewisol a chyfeirir ato yma "
+"dim ond i ddadamwys gosodiadau sydd yn anffodus ag enwau tebyg."
+
+#: includes/class-search.php:157
+#, fuzzy
+#| msgid "Search engine URL"
+msgid "Search Register URL"
+msgstr "URL peiriant chwilio"
+
+#: includes/class-search.php:165
+msgid "Data service, used to register regions, objects or land for sale."
+msgstr ""
+"Gwasanaeth data, a ddefnyddir i gofrestru rhanbarthau, gwrthrychau neu dir "
+"ar werth."
+
+#: includes/class-search.php:166
+msgid "You can register to several search engines."
+msgstr ""
+
+#: includes/class-search.php:167
+msgid "Each line must have a unique identifier beginning with \"DATA_SRV_\""
+msgstr ""
+
+#: includes/class-search.php:186
+msgid "Events Server URL"
+msgstr ""
+
+#: includes/class-search.php:197
+msgid ""
+"HYPEvents Server URL, used to fetch upcoming events and make them available "
+"in search."
+msgstr ""
+
+#: includes/class-search.php:198
+msgid ""
+"Leave blank to ignore events or if you have an other events implementation."
+msgstr ""
+"Gadewch yn wag i anwybyddu digwyddiadau neu os oes gennych weithrediad "
+"digwyddiadau eraill."
 
 #: includes/class-settings.php:77
 msgid "OpenSimulator Status"
@@ -285,92 +567,94 @@ msgstr "Statws"
 msgid "Shortcodes"
 msgstr "Codau byr sydd ar gael"
 
-#: includes/class-settings.php:94 legacy/admin/settings.php:525
+#: includes/class-settings.php:94 legacy/admin/settings.php:376
 msgid "Settings"
 msgstr "Gosodiadau"
 
-#: includes/class-settings.php:110 includes/class-settings.php:111
-#: includes/class-settings.php:112 includes/class-settings.php:113
-#, fuzzy
-#| msgid "Grid info"
-msgid "Grid Info"
-msgstr "Gwybodaeth grid"
-
-#: includes/class-settings.php:118 legacy/shortcodes.php:153
-msgid "Login URI"
-msgstr "Mewngofnodi URI"
-
-#: includes/class-settings.php:127 legacy/shortcodes.php:152
-msgid "Grid Name"
-msgstr ""
-
-#: includes/class-settings.php:133
-#, fuzzy
-#| msgid "Grid status"
-msgid "Grid Status"
-msgstr "Statws grid"
-
-#: includes/class-settings.php:157
+#: includes/class-settings.php:159
 #, fuzzy
 #| msgid "Search database"
 msgid "ROBUST Database"
 msgstr "Chwilio cronfa ddata"
 
-#: includes/class-settings.php:177
+#: includes/class-settings.php:179
 #, fuzzy
 #| msgid "Grid users"
 msgid "Grid Users"
 msgstr "Defnyddwyr grid"
 
-#: includes/class-settings.php:186
+#: includes/class-settings.php:189
 msgid "Profile Page"
 msgstr ""
 
-#: includes/class-settings.php:189
-msgid "Enable to provide avatars a public web profile page."
+#: includes/class-settings.php:195
+msgid "URL"
 msgstr ""
 
-#: includes/class-settings.php:194
+#: includes/class-settings.php:206
 #, fuzzy
 #| msgid "The page %s must exist, as defined in %spermalinks settings%s."
-msgid "The page %1$s must exist, as defined in %%permalinks settings%%."
+msgid ""
+"A profile page exists with permalink set as %1$s, as defined in %%permalinks "
+"settings%%."
 msgstr ""
 "Rhaid i'r dudalen %s fodoli, fel y'i diffinnir yng ngosodiadau "
 "%spermalinks%s."
 
-#: includes/class-settings.php:212
-msgid "Instructions"
+#: includes/class-settings.php:207
+#, fuzzy
+#| msgid "The page %s must exist, as defined in %spermalinks settings%s."
+msgid ""
+"A profile page must be created with permalink set as %1$s, as defined in %"
+"%permalinks settings%%."
 msgstr ""
+"Rhaid i'r dudalen %s fodoli, fel y'i diffinnir yng ngosodiadau "
+"%spermalinks%s."
 
 #: includes/class-settings.php:215
 #, fuzzy
-#| msgid "Show configuration instructions to new users."
-msgid "Show configuration instructions to new users on their profile page."
-msgstr "Dangos cyfarwyddiadau ffurfweddu i ddefnyddwyr newydd."
+#| msgid "Profile page"
+msgid "Public Profile Page"
+msgstr "Tudalen proffil"
 
-#: includes/class-settings.php:221
+#: includes/class-settings.php:219
+msgid ""
+"Provide avatars with a public web profile page in the following format: %1$s."
+msgstr ""
+
+#: includes/class-settings.php:227
 msgid "Login Page"
 msgstr ""
 
-#: includes/class-settings.php:224
+#: includes/class-settings.php:230
 #, fuzzy
 #| msgid "Use profile page as login page"
 msgid "Use profile page as login page."
 msgstr "Defnyddiwch dudalen proffil fel tudalen mewngofnodi"
 
-#: includes/class-settings.php:232
+#: includes/class-settings.php:240
+msgid "Instructions"
+msgstr ""
+
+#: includes/class-settings.php:243
+#, fuzzy
+#| msgid "Show configuration instructions to new users."
+msgid "Show configuration instructions to new users on their profile page."
+msgstr "Dangos cyfarwyddiadau ffurfweddu i ddefnyddwyr newydd."
+
+#: includes/class-settings.php:251
 msgid "Replace User Names"
 msgstr "Amnewid enw defnyddiwr"
 
-#: includes/class-settings.php:235
+#: includes/class-settings.php:254
 msgid "Show avatar name instead of user name in users list."
 msgstr "Dangos enw avatar yn lle enw defnyddiwr yn y rhestr defnyddwyr."
 
-#: includes/class-settings.php:241
+#: includes/class-settings.php:260
 msgid "Exclude from stats"
 msgstr "Eithrio o ystadegau"
 
-#: includes/class-settings.php:244
+#: includes/class-settings.php:263
 #, fuzzy
 #| msgid ""
 #| "Accounts without email address are usually test accounts created from the "
@@ -384,48 +668,46 @@ msgstr ""
 "creu o'r consol. Dad-diciwch dim ond os oes gennych avatars go iawn heb "
 "gyfeiriad e-bost."
 
-#: includes/class-settings.php:246
+#: includes/class-settings.php:265
 msgid "Models"
 msgstr "Modelau"
 
-#: includes/class-settings.php:247
+#: includes/class-settings.php:266
 msgid "Accounts without mail address"
 msgstr "Cyfrifon heb gyfeiriad post"
 
-#: includes/class-settings.php:248
+#: includes/class-settings.php:267
 msgid "Hypergrid visitors"
 msgstr "Ymwelwyr Hypergrid"
 
-#: includes/class-settings.php:287 legacy/functions.php:268
+#: includes/class-settings.php:306 legacy/functions.php:268
 #, fuzzy
 #| msgid "Login URI"
 msgid "Invalid Login URI"
 msgstr "Mewngofnodi URI"
 
-#: includes/class-settings.php:346
+#: includes/class-settings.php:367
 msgid "Default"
 msgstr "Diofyn"
 
-#: includes/class-settings.php:369 legacy/admin/settings.php:83
-#: legacy/admin/settings.php:259
+#: includes/class-settings.php:390 legacy/admin/settings.php:110
 msgid "Hostname"
 msgstr "Enw gwesteiwr"
 
-#: includes/class-settings.php:376
+#: includes/class-settings.php:397
 msgid "Port"
 msgstr ""
 
-#: includes/class-settings.php:383
+#: includes/class-settings.php:404
 msgid "DB Name"
 msgstr ""
 
-#: includes/class-settings.php:390 legacy/admin/settings.php:91
-#: legacy/admin/settings.php:267
+#: includes/class-settings.php:411 legacy/admin/settings.php:118
 msgid "Username"
 msgstr "Enw defnyddiwr"
 
-#: includes/class-settings.php:397 legacy/admin/settings.php:96
-#: legacy/admin/settings.php:272 tmp/class-avatar.php:277
+#: includes/class-settings.php:418 legacy/admin/settings.php:123
+#: tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Cyfrinair"
 
@@ -593,7 +875,7 @@ msgstr ""
 "Tab gwe o ffenestri chwilio gwyliwr. Yn berthnasol os oes gennych dudalen "
 "chwilio sy'n darparu cynnwys o'r grid."
 
-#: legacy/admin/admin-init.php:364 legacy/admin/settings.php:165
+#: legacy/admin/admin-init.php:364
 msgid "Offline messages"
 msgstr "Negeseuon all-lein"
 
@@ -669,16 +951,11 @@ msgstr "Help"
 msgid "Link to a help page on your website."
 msgstr "Dolen i dudalen gymorth ar eich gwefan."
 
-#: legacy/admin/dashboard.php:16 legacy/shortcodes.php:147
-#: legacy/widgets.php:49 blocks/w4os-gridinfo-block/index.js:33
-#: blocks/w4os-gridinfo-block/index.js:85
+#: legacy/admin/dashboard.php:16 legacy/widgets.php:49
 msgid "Grid info"
 msgstr "Gwybodaeth grid"
 
-#: legacy/admin/dashboard.php:23 legacy/shortcodes.php:176
-#: legacy/widgets.php:81 legacy/widgets.php:118
-#: blocks/grid-status/index.js:33
-#: blocks/grid-status/index.js:85
+#: legacy/admin/dashboard.php:23 legacy/widgets.php:81 legacy/widgets.php:118
 msgid "Grid status"
 msgstr "Statws grid"
 
@@ -686,128 +963,11 @@ msgstr "Statws grid"
 msgid "Recent users"
 msgstr "Defnyddwyr diweddar"
 
-#: legacy/admin/settings.php:63
-msgid "Search"
-msgstr "Chwiliwch"
-
-#: legacy/admin/settings.php:67
-msgid "Provide In-world Search"
-msgstr ""
-
-#: legacy/admin/settings.php:71
-msgid ""
-"Enable to use a local search engine, allowing only local results "
-"(recommended for private grids)."
-msgstr ""
-
-#: legacy/admin/settings.php:72
-msgid ""
-"Disable to use an external search engine like 2do Directory, allowing "
-"results from both your grid and other public grids."
-msgstr ""
-
-#: legacy/admin/settings.php:77
-msgid "Search database"
-msgstr "Chwilio cronfa ddata"
-
-#: legacy/admin/settings.php:80 legacy/admin/settings.php:244
-msgid "Use the same database as Robust"
-msgstr "Defnyddiwch yr un gronfa ddata â Strong"
-
-#: legacy/admin/settings.php:87 legacy/admin/settings.php:263
-msgid "Database Name"
-msgstr ""
-
-#: legacy/admin/settings.php:102
-msgid "Search Engine URL"
-msgstr ""
-
-#: legacy/admin/settings.php:107
-msgid ""
-"URL of the search engine used by the viewer to provide search results "
-"(without arguments)"
-msgstr ""
-
-#: legacy/admin/settings.php:108
-msgid "In OpenSim.ini, only one can be set"
-msgstr ""
-
-#: legacy/admin/settings.php:109
-msgid ""
-"Services using w4os engine need the gatekeeper URI (usually the login URI) "
-"to be passed as gk argument. Requirements may vary for other engines."
-msgstr ""
-
-#: legacy/admin/settings.php:122
-msgid ""
-"Please note that Search URL is different from Web search URL, which is not "
-"handled by W4OS currently. Web search is relevant if you have a web search "
-"page dedicated to grid content, providing results with in-world URLs (hop:// "
-"or secondlife://). It is optional and is referenced here only to "
-"disambiguate settings which unfortunately have similar names."
-msgstr ""
-"Sylwch fod URL Chwilio yn wahanol i URL chwilio Gwe, nad yw W4OS yn ei drin "
-"ar hyn o bryd. Mae chwiliad gwe yn berthnasol os oes gennych chi dudalen "
-"chwilio gwe sy'n ymroddedig i gynnwys grid, sy'n darparu canlyniadau gydag "
-"URLs yn y byd (hop: / neu secondlife://). Mae'n ddewisol a chyfeirir ato yma "
-"dim ond i ddadamwys gosodiadau sydd yn anffodus ag enwau tebyg."
-
-#: legacy/admin/settings.php:137
-msgid "Search register"
-msgstr "Chwilio cofrestr"
-
-#: legacy/admin/settings.php:140
-msgid ""
-"Data service, used to register regions, objects or land for sale. You can "
-"resgister to several search engines."
-msgstr ""
-
-#: legacy/admin/settings.php:156
-msgid "Events Server URL"
-msgstr ""
-
-#: legacy/admin/settings.php:158
-msgid ""
-"HYPEvents Server URL, used to fetch upcoming events and make them available "
-"in search."
-msgstr ""
-
-#: legacy/admin/settings.php:159
-msgid ""
-"Leave blank to ignore events or if you have an other events implementation."
-msgstr ""
-"Gadewch yn wag i anwybyddu digwyddiadau neu os oes gennych weithrediad "
-"digwyddiadau eraill."
-
-#: legacy/admin/settings.php:169
-msgid "Provide offline helper"
-msgstr "Darparu cynorthwyydd all-lein"
-
-#: legacy/admin/settings.php:175
-msgid "Offline helper URI"
-msgstr "Cynorthwyydd URI all-lein"
-
-#: legacy/admin/settings.php:179
-msgid "Set the URL in Robust and OpenSimulator configurations."
-msgstr "Gosodwch yr URL mewn ffurfweddiadau Cadarn ac OpenSimulator."
-
-#: legacy/admin/settings.php:197
-msgid "Sender e-mail address"
-msgstr "Cyfeiriad e-bost yr anfonwr"
-
-#: legacy/admin/settings.php:201
-msgid ""
-"A no-reply e-mail address used to forward messages for users enabling "
-"\"Email me IMs when I'm offline\" option."
-msgstr ""
-"Cyfeiriad e-bost dim ateb a ddefnyddir i anfon negeseuon ymlaen ar gyfer "
-"defnyddwyr sy'n galluogi opsiwn \"E-bostiwch IMs ataf pan fyddaf all-lein\"."
-
-#: legacy/admin/settings.php:210
+#: legacy/admin/settings.php:61
 msgid "Provide Economy Helpers"
 msgstr ""
 
-#: legacy/admin/settings.php:213
+#: legacy/admin/settings.php:64
 msgid ""
 "Economy helpers are additional scripts needed if you implement economy on "
 "your grid (with real or fake currency)."
@@ -815,7 +975,7 @@ msgstr ""
 "Mae cynorthwywyr economi yn sgriptiau ychwanegol sydd eu hangen os ydych "
 "chi'n gweithredu economi ar eich grid (gydag arian cyfred go iawn neu ffug)."
 
-#: legacy/admin/settings.php:214
+#: legacy/admin/settings.php:65
 msgid ""
 "Helper scripts allow communication between the money server and the grid: "
 "current balance update, currency cost estimation, land and object sales, "
@@ -825,7 +985,7 @@ msgstr ""
 "grid: diweddariad balans cyfredol, amcangyfrif cost arian cyfred, gwerthu "
 "tir a gwrthrychau, taliadau ..."
 
-#: legacy/admin/settings.php:216
+#: legacy/admin/settings.php:67
 msgid ""
 "Money server is not included in OpenSimulator distribution and require a "
 "separate installation, e.g. from %s."
@@ -833,31 +993,39 @@ msgstr ""
 "Nid yw gweinydd arian wedi'i gynnwys yn nosbarthiad OpenSimulator ac mae "
 "angen gosodiad ar wahân, e.e. o %s."
 
-#: legacy/admin/settings.php:224
+#: legacy/admin/settings.php:75
 msgid "Economy Base URI"
 msgstr ""
 
-#: legacy/admin/settings.php:228
+#: legacy/admin/settings.php:79
 msgid "The URL must be set in Robust configuration."
 msgstr "Rhaid gosod yr URL mewn ffurfweddiad cadarn."
 
-#: legacy/admin/settings.php:241
+#: legacy/admin/settings.php:92
 msgid "Economy Database"
 msgstr ""
 
-#: legacy/admin/settings.php:278
+#: legacy/admin/settings.php:95
+msgid "Use the same database as Robust"
+msgstr "Defnyddiwch yr un gronfa ddata â Strong"
+
+#: legacy/admin/settings.php:114
+msgid "Database Name"
+msgstr ""
+
+#: legacy/admin/settings.php:129
 msgid "Currency Provider"
 msgstr "Darparwr Arian Parod"
 
-#: legacy/admin/settings.php:282
+#: legacy/admin/settings.php:133
 msgid "No provider, use fake money."
 msgstr "Dim darparwr, defnyddiwch arian ffug."
 
-#: legacy/admin/settings.php:289
+#: legacy/admin/settings.php:140
 msgid "Currency Conversion Rate"
 msgstr ""
 
-#: legacy/admin/settings.php:290
+#: legacy/admin/settings.php:141
 msgid ""
 "Amount to pay in US$ for 1000 in-world money units. Used for cost "
 "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
@@ -866,11 +1034,11 @@ msgstr ""
 "amcangyfrif cost. Os na chaiff ei gosod, y gyfradd fydd 10/1000 (1 cant "
 "fesul uned arian)"
 
-#: legacy/admin/settings.php:293
+#: legacy/admin/settings.php:144
 msgid "Podex redirect message"
 msgstr "Neges ailgyfeirio Podex"
 
-#: legacy/admin/settings.php:294
+#: legacy/admin/settings.php:145
 msgid ""
 "Please use our terminals in-world to proceed. Click OK to teleport to "
 "terminals region."
@@ -878,21 +1046,21 @@ msgstr ""
 "Defnyddiwch ein terfynellau yn y byd i symud ymlaen. Cliciwch OK i "
 "deleportio i ranbarth terfynellau."
 
-#: legacy/admin/settings.php:297
+#: legacy/admin/settings.php:148
 msgid "Podex redirect URL"
 msgstr "URL ailgyfeirio Podex"
 
-#: legacy/admin/settings.php:301
+#: legacy/admin/settings.php:152
 msgid "Money Script Access Key"
 msgstr "Allwedd Mynediad Sgript Arian"
 
-#: legacy/admin/settings.php:501
+#: legacy/admin/settings.php:352
 msgid "Values must match Robust.HG.ini (or Robust.HG.ini) config file."
 msgstr ""
 "Rhaid i werthoedd gyd-fynd â ffeil ffurfweddu Robust.HG.ini (neu Robust.HG."
 "ini)."
 
-#: legacy/admin/settings.php:502
+#: legacy/admin/settings.php:353
 msgid ""
 "Robust server must be running. Values entered here will be checked against "
 "your Robust server and updated if needed."
@@ -900,7 +1068,7 @@ msgstr ""
 "Rhaid i weinydd cadarn fod yn rhedeg. Bydd y gwerthoedd a nodir yma yn cael "
 "eu gwirio yn erbyn eich gweinydd Cadarn a'u diweddaru os oes angen."
 
-#: legacy/admin/settings.php:507
+#: legacy/admin/settings.php:358
 msgid ""
 "Grid accounts matching first name or last name set below are considered as "
 "avatar models. They will appear on the avatar registration form, with their "
@@ -1313,7 +1481,7 @@ msgstr ""
 msgid "Password reset link"
 msgstr ""
 
-#: legacy/profile.php:198 legacy/profile.php:1033
+#: legacy/profile.php:198 legacy/profile.php:1039
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
@@ -1427,36 +1595,31 @@ msgstr ""
 msgid "Save"
 msgstr "Arbed"
 
-#: legacy/profile.php:803
+#: legacy/profile.php:804
 msgid "leave blank to leave unchanged"
 msgstr "gadael yn wag i adael heb ei newid"
 
-#: legacy/profile.php:812
+#: legacy/profile.php:818
 msgid "Create an avatar"
 msgstr "Creu avatar"
 
-#: legacy/profile.php:921 blocks/avatar-profile/index.js:33
-#: blocks/avatar-profile/index.js:85
-msgid "Grid profile"
-msgstr "Proffil grid"
-
-#: legacy/profile.php:1043
+#: legacy/profile.php:1049
 msgid "Avatar First Name"
 msgstr "Enw Cyntaf Avatar"
 
-#: legacy/profile.php:1049
+#: legacy/profile.php:1055
 msgid "Avatar Last Name"
 msgstr "Enw olaf Avatar"
 
-#: legacy/profile.php:1055 tmp/class-avatar.php:366
+#: legacy/profile.php:1061 tmp/class-avatar.php:366
 msgid "Profile Picture"
 msgstr "Llun Proffil"
 
-#: legacy/profile.php:1057
+#: legacy/profile.php:1063
 msgid "Must be set in the viewer."
 msgstr "Rhaid ei osod yn y gwyliwr."
 
-#: legacy/profile.php:1062
+#: legacy/profile.php:1068
 msgid "Web Profile URL"
 msgstr "URL Proffil Gwe"
 
@@ -1467,18 +1630,6 @@ msgstr "Ffurfweddu cronfa ddata W4OS "
 #: legacy/shortcodes.php:126
 msgid "Edit user"
 msgstr "Golygu defnyddiwr"
-
-#: legacy/shortcodes.php:141
-msgid "Configure W4OS: "
-msgstr "Ffurfweddu W4OS: "
-
-#: legacy/shortcodes.php:158
-msgid "OpenSimulator not configured"
-msgstr "OpenSimulator heb ei ffurfweddu"
-
-#: legacy/shortcodes.php:166
-msgid "Configure W4OS database: "
-msgstr "Ffurfweddu cronfa ddata W4OS: "
 
 #: legacy/users.php:187
 msgid "Error while updating %1$s %2$s (%3$s) %4$s"
@@ -1621,16 +1772,6 @@ msgstr "Cliciwch \"Mewngofnodi\""
 #: templates/content-page-profile.php:15
 msgid "My Avatar"
 msgstr "Fy Avatar"
-
-#: templates/templates.php:34
-msgid "Format errorr"
-msgstr ""
-
-#: templates/templates.php:35
-msgid ""
-"The pages generated by w4os plugin are not compatible with Divi Builder. "
-"Please quit Visual Builder and use standard WordPress editor instead."
-msgstr ""
 
 #: tmp/class-avatar.php:130 tmp/class-avatar.php:151 tmp/class-avatar.php:164
 msgid "Avatars"
@@ -1835,27 +1976,49 @@ msgstr ""
 "Mae fersiwn arall o <strong>W4OS - OpenSimulator Web Interface</strong> "
 "wedi'i osod ac yn weithredol. Analluogwyd dyblyg."
 
+#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
+#: blocks/grid-status/grid-status.js:1
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:65
-#: blocks/popular-places/popular-places.js:65
+#: src/blocks/avatar-profile/editor.js:64 src/blocks/grid-info/editor.js:54
+#: src/blocks/grid-status/editor.js:54 src/blocks/popular-places/editor.js:63
+#: blocks/avatar-profile/avatar-profile.js:64 blocks/grid-info/grid-info.js:54
+#: blocks/grid-status/grid-status.js:54
+#: blocks/popular-places/popular-places.js:63
 #, fuzzy
 #| msgid "Settings"
 msgid "Block Settings"
 msgstr "Gosodiadau"
 
-#: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:114
-#: blocks/popular-places/popular-places.js:114
-msgid "Building Popular Places block preview, please wait..."
-msgstr ""
+#~ msgid "w4os - OpenSimulator Web Interface"
+#~ msgstr "w4os - Rhyngwyneb Gwe OpenSimulator"
+
+#, fuzzy
+#~| msgid "Popular places"
+#~ msgid "W4OS Popular Places"
+#~ msgstr "Lleoedd poblogaidd"
+
+#~ msgid "Search"
+#~ msgstr "Chwiliwch"
+
+#~ msgid "Search register"
+#~ msgstr "Chwilio cofrestr"
+
+#~ msgid "Offline helper URI"
+#~ msgstr "Cynorthwyydd URI all-lein"
+
+#~ msgid "Grid profile"
+#~ msgstr "Proffil grid"
+
+#~ msgid "Configure W4OS: "
+#~ msgstr "Ffurfweddu W4OS: "
+
+#~ msgid "Configure W4OS database: "
+#~ msgstr "Ffurfweddu cronfa ddata W4OS: "
 
 #, fuzzy
 #~| msgid "Popular places"
 #~ msgid "Popular Places Block"
 #~ msgstr "Lleoedd poblogaidd"
-
-#~ msgid "w4os - OpenSimulator Web Interface (dev)"
-#~ msgstr "w4os - Rhyngwyneb Gwe OpenSimulator (dev)"
 
 #~ msgid "OpenSimulator Settings"
 #~ msgstr "Gosodiadau OpenSimulator"
@@ -1906,9 +2069,6 @@ msgstr ""
 #~ msgid "OR Last Name = "
 #~ msgstr "NEU Cyfenw = "
 
-#~ msgid "Profile page"
-#~ msgstr "Tudalen proffil"
-
 #~ msgid "Login page"
 #~ msgstr "Tudalen mewngofnodi"
 
@@ -1930,24 +2090,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Os yw gwasanaeth asedau gwe W4OS yn anabl, mae angen cymhwysiad gwe "
 #~ "trydydd parti arnoch chi."
-
-#~ msgid "Provide in-world search"
-#~ msgstr "Darparu chwiliad yn y byd"
-
-#~ msgid "Search engine URL"
-#~ msgstr "URL peiriant chwilio"
-
-#~ msgid ""
-#~ "URL of the search engine used internally by the viewer (without "
-#~ "arguments)."
-#~ msgstr ""
-#~ "URL y peiriant chwilio a ddefnyddir yn fewnol gan y gwyliwr (heb "
-#~ "ddadleuon)."
-
-#~ msgid "Data service, used to register regions, objects or land for sale."
-#~ msgstr ""
-#~ "Gwasanaeth data, a ddefnyddir i gofrestru rhanbarthau, gwrthrychau neu "
-#~ "dir ar werth."
 
 #~ msgid "Events server URL"
 #~ msgstr "URL gweinydd digwyddiadau"
