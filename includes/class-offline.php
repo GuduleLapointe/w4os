@@ -61,7 +61,8 @@ class W4OS_Offline extends W4OS_Loader {
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
-		$offline_url = get_option( 'w4os_offline_helper_uri', get_home_url( null, '/helpers/offline.php' ) );
+		$offline_url = ( ! empty( W4OS_GRID_INFO['message'] ) ) ? W4OS_GRID_INFO['message'] : get_home_url( null, '/helpers/offline/' );
+
 		// $example_url = 'http://example.org/helpers/offline.php';
 		// $offline_url = get_option( 'w4os_offline_helper_uri' );
 		// $offline_url = get_home_url( null, '/helpers/offline.php' );
