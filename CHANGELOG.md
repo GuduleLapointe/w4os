@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.4.6
+- added Gloebit configuration instructions
+- added link to economy binaries download
+
 ### 2.4.5
 - added "mini profile" option to avatar block
 - added Grid Status, Grid Info and Avatar Profile Divi module
