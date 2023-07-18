@@ -97,6 +97,18 @@ define( 'CURRENCY_PROVIDER', get_option( 'w4os_currency_provider' ) );
 if ( ! defined( 'CURRENCY_HELPER_URL' ) ) {
 	define( 'CURRENCY_HELPER_URL', ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ) );
 }
+switch(CURRENCY_PROVIDER) {
+	case 'podex':
+	if ( ! empty( get_option('w4os_podex_error_message') ) ) {
+		define( 'PODEX_ERROR_MESSAGE', get_option('w4os_podex_error_message') );
+	}
+	if ( ! empty( get_option('w4os_podex_redirect_url') ) ) {
+		define( 'PODEX_REDIRECT_URL', get_option('w4os_podex_redirect_url') );
+	}
+	break;
+
+}
+
 // if (!defined('CURRENCY_HELPER_PATH')) define('CURRENCY_HELPER_PATH', dirname(__DIR__));
 
 /**
@@ -152,7 +164,7 @@ define( 'TPLINK_DEFAULT', TPLINK_HOP ); // default
 require_once 'databases.php';
 require_once 'functions.php';
 
-$currency_addon = dirname( __DIR__ ) . '/addons/currency-' . CURRENCY_PROVIDER . '.php';
+$currency_addon = dirname( __DIR__ ) . '/addons/' . CURRENCY_PROVIDER . '.php';
 if ( file_exists( $currency_addon ) ) {
 	require_once $currency_addon;
 }
