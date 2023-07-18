@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-17T22:51:17+00:00\n"
+"POT-Creation-Date: 2023-07-18T01:19:00+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -472,15 +472,15 @@ msgstr ""
 "Choisissez une clé d'accès unique et définissez-la dans le fichier "
 "MoneyServer.ini"
 
-#: includes/class-helpers-economy.php:208
+#: includes/class-helpers-economy.php:210
 msgid "Podex Options"
 msgstr "Options de Podex"
 
-#: includes/class-helpers-economy.php:218
+#: includes/class-helpers-economy.php:220
 msgid "Podex Redirect Message"
 msgstr "Message de redirection de Podex"
 
-#: includes/class-helpers-economy.php:222
+#: includes/class-helpers-economy.php:224
 msgid ""
 "Please use our terminals in-world to proceed. Click OK to teleport to Podex "
 "Exchange area."
@@ -488,7 +488,7 @@ msgstr ""
 "Veuillez utiliser nos terminaux dans le monde virtuel pour procéder. Cliquez "
 "sur OK pour être téléporté vers la zone d'échange Podex."
 
-#: includes/class-helpers-economy.php:225
+#: includes/class-helpers-economy.php:227
 msgid "Exchange Teleport URL"
 msgstr "URL de téléportation vers l'échange"
 

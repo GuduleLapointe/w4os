@@ -35,19 +35,19 @@ msgid "https://speculoos.world"
 msgstr "https://speculoos.world"
 
 #: admin/templates/shortcodes.php:1 includes/class-settings.php:81
-#, fuzzy
-#| msgid "Available shortcodes"
 msgid "Available Shortcodes"
-msgstr "Codau byr sydd ar gael"
+msgstr "Codau Byr Sydd Ar Gael"
 
 #: admin/templates/shortcodes.php:4
 msgid "Shortcodes can be included in any page or articles."
-msgstr ""
+msgstr "Gellir cynnwys codau byr yn unrhyw dudalen neu erthygl."
 
 #: admin/templates/shortcodes.php:5
 msgid ""
 "They are also available as configurable Gutenberg blocks and Divi modules."
 msgstr ""
+"Maent hefyd ar gael fel blociau Gutenberg a modiwlau Divi a gellir eu "
+"ffurfweddu."
 
 #: admin/templates/shortcodes.php:12
 msgid "General information (grid name and login uri)"
@@ -56,33 +56,29 @@ msgstr "Gwybodaeth gyffredinol (enw grid a uri mewngofnodi)"
 #: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38
 #: admin/templates/shortcodes.php:60 admin/templates/shortcodes.php:82
 msgid "Bloc title"
-msgstr ""
+msgstr "Teitl y Bloc"
 
 #: admin/templates/shortcodes.php:19 admin/templates/shortcodes.php:39
 #: admin/templates/shortcodes.php:61 admin/templates/shortcodes.php:84
 msgid "Title level (h1 to h6)"
-msgstr ""
+msgstr "Lefel y Teitl (h1 i h6)"
 
 #: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41
 #: admin/templates/shortcodes.php:63 admin/templates/shortcodes.php:87
 msgid "Options"
-msgstr ""
+msgstr "Opsiynau"
 
 #: admin/templates/shortcodes.php:32
 msgid "Online users, regions, etc."
 msgstr "Defnyddwyr ar-lein, rhanbarthau, ac ati."
 
 #: admin/templates/shortcodes.php:52
-#, fuzzy
-#| msgid ""
-#| "Grid profile if user is connected and has an avatar, avatar registration "
-#| "form otherwise"
 msgid ""
 "Avatar Profile if user is connected and has an avatar, avatar registration "
 "form otherwise"
 msgstr ""
-"Proffil grid os yw'r defnyddiwr wedi'i gysylltu a bod ganddo avatar, "
-"ffurflen gofrestru avatar fel arall"
+"Proffil Afatar os yw'r defnyddiwr wedi cysylltu ac mae ganddo afatar, "
+"ffurflen cofrestru afatar fel arall"
 
 #: admin/templates/shortcodes.php:53
 msgid "(formerly %s)"
@@ -90,23 +86,21 @@ msgstr "(%s yn flaenorol)"
 
 #: admin/templates/shortcodes.php:75
 msgid "Most visited regions in your grid."
-msgstr ""
+msgstr "Y rhanbarthau mwyaf poblogaidd yn eich grid."
 
 #: admin/templates/shortcodes.php:83
 msgid "Show maximum n results"
-msgstr ""
+msgstr "Dangos uchafswm o n canlyniad"
 
 #: admin/templates/shortcodes.php:85
 msgid "Only show name and picture"
-msgstr ""
+msgstr "Dangos enw a llun proffil yn unig"
 
 #: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:14
 #: blocks/avatar-profile/avatar-profile.js:14
-#, fuzzy
-#| msgid "OpenSimulator Profile"
 msgid "OpenSimulator Avatar Profile"
-msgstr "Proffil OpenSimulator"
+msgstr "Proffil Afatar OpenSimulator"
 
 #: blocks/avatar-profile.php:219 blocks/grid-info.php:223
 #: blocks/grid-status.php:175 blocks/popular-places.php:250
@@ -118,18 +112,14 @@ msgstr "Proffil OpenSimulator"
 #: blocks/avatar-profile/avatar-profile.js:68 blocks/grid-info/grid-info.js:58
 #: blocks/grid-status/grid-status.js:58
 #: blocks/popular-places/popular-places.js:67
-#, fuzzy
-#| msgid "Title:"
 msgid "Title"
-msgstr "Teitl:"
+msgstr "Teitl"
 
 #: blocks/avatar-profile.php:221
 msgid "Enter the title for the Avatar Profile module."
-msgstr ""
+msgstr "Rhowch y teitl ar gyfer modiwl Proffil Afatar."
 
 #: blocks/avatar-profile.php:223 legacy/profile.php:927
-#, fuzzy
-#| msgid "Avatar profile"
 msgid "Avatar Profile"
 msgstr "Proffil avatar"
 
@@ -143,47 +133,41 @@ msgstr "Proffil avatar"
 #: blocks/avatar-profile/avatar-profile.js:76 blocks/grid-info/grid-info.js:66
 #: blocks/grid-status/grid-status.js:66
 #: blocks/popular-places/popular-places.js:75
-#, fuzzy
-#| msgid "Title:"
 msgid "Title Level"
-msgstr "Teitl:"
+msgstr "Lefel y Teitl"
 
 #: blocks/avatar-profile.php:232 blocks/grid-info.php:233
 #: blocks/grid-status.php:185 blocks/popular-places.php:260
 msgid "Select the HTML heading level for the title."
-msgstr ""
+msgstr "Dewiswch lefel pennawd HTML ar gyfer y teitl."
 
 #: blocks/avatar-profile.php:250 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:93
 #: blocks/avatar-profile/avatar-profile.js:93
-#, fuzzy
-#| msgid "My Profile"
 msgid "Mini Profile"
-msgstr "Fy mhroffil"
+msgstr "Proffil Bach"
 
 #: blocks/avatar-profile.php:254
 msgid "Yes"
-msgstr ""
+msgstr "Iawn"
 
 #: blocks/avatar-profile.php:255
 msgid "No"
-msgstr ""
+msgstr "Na"
 
 #: blocks/avatar-profile.php:258
 msgid "Enable mini profile display."
-msgstr ""
+msgstr "Galluogi dangos proffil bach."
 
 #: blocks/grid-info.php:106 blocks/grid-info.php:227
 #: includes/class-settings.php:110 includes/class-settings.php:111
 #: includes/class-settings.php:112 includes/class-settings.php:113
-#, fuzzy
-#| msgid "Grid info"
 msgid "Grid Info"
-msgstr "Gwybodaeth grid"
+msgstr "Gwybodaeth y Grid"
 
 #: blocks/grid-info.php:182 includes/class-settings.php:128
 msgid "Grid Name"
-msgstr ""
+msgstr "Enw'r Grid"
 
 #: blocks/grid-info.php:183 includes/class-settings.php:119
 msgid "Login URI"
@@ -195,19 +179,15 @@ msgstr "OpenSimulator heb ei ffurfweddu"
 
 #: blocks/grid-info.php:203 blocks/grid-info/grid-info.js:1
 #: src/blocks/grid-info/editor.js:13 blocks/grid-info/grid-info.js:13
-#, fuzzy
-#| msgid "OpenSimulator Profile"
 msgid "OpenSimulator Grid Info"
-msgstr "Proffil OpenSimulator"
+msgstr "OpenSimulator Gwybodaeth y Grid"
 
 #: blocks/grid-info.php:225
 msgid "Enter the title for the Grid Info module."
-msgstr ""
+msgstr "Rhowch y teitl ar gyfer modiwl Gwybodaeth y Grid."
 
 #: blocks/grid-status.php:108 blocks/grid-status.php:179
 #: includes/class-settings.php:134
-#, fuzzy
-#| msgid "Grid status"
 msgid "Grid Status"
 msgstr "Statws grid"
 
@@ -217,83 +197,77 @@ msgstr "Dim canlyniad"
 
 #: blocks/grid-status.php:155 blocks/grid-status/grid-status.js:1
 #: src/blocks/grid-status/editor.js:13 blocks/grid-status/grid-status.js:13
-#, fuzzy
-#| msgid "OpenSimulator Status"
 msgid "OpenSimulator Grid Status"
-msgstr "Statws OpenSimulator"
+msgstr "OpenSimulator Statws y Grid"
 
 #: blocks/grid-status.php:177
 msgid "Enter the title for the Grid Status module."
-msgstr ""
+msgstr "Rhowch y teitl ar gyfer modiwl Statws y Grid."
 
 #: blocks/popular-places.php:108 blocks/popular-places.php:254
 msgid "Popular Places"
-msgstr ""
+msgstr "Lleoedd poblogaidd"
 
 #: blocks/popular-places.php:228 blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:13
 #: blocks/popular-places/popular-places.js:13
-#, fuzzy
-#| msgid "OpenSimulator pages"
 msgid "OpenSimulator Popular Places"
-msgstr "Tudalennau OpenSimulator"
+msgstr "OpenSimulator Lleoedd poblogaidd"
 
 #: blocks/popular-places.php:252
 msgid "Enter the title for the Popular Places module."
-msgstr ""
+msgstr "Rhowch y teitl ar gyfer modiwl Lleoedd poblogaidd."
 
 #: blocks/popular-places.php:275 blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:92
 #: blocks/popular-places/popular-places.js:92
-#, fuzzy
-#| msgid "No result"
 msgid "Max Results"
-msgstr "Dim canlyniad"
+msgstr "Nifer Mwyaf o Ganlyniadau"
 
 #: blocks/popular-places.php:277
 msgid "Enter the maximum number of results to display."
-msgstr ""
+msgstr "Rhowch y nifer uchaf o ganlyniadau i'w dangos."
 
 #: includes/class-avatar-model.php:62 includes/class-avatar-model.php:78
 #: legacy/admin/status-page.php:58
 msgid "Avatar Models"
-msgstr ""
+msgstr "Modelau Afatar"
 
 #: includes/class-avatar-model.php:89
 msgid "Match"
-msgstr ""
+msgstr "Cyfateb"
 
 #: includes/class-avatar-model.php:93
 msgid "First Name"
-msgstr ""
+msgstr "Enw Cyntaf"
 
 #: includes/class-avatar-model.php:94
 msgid "Any"
-msgstr ""
+msgstr "Unrhyw"
 
 #: includes/class-avatar-model.php:95
 msgid "Last Name"
-msgstr ""
+msgstr "Enw Olaf"
 
 #: includes/class-avatar-model.php:96
 msgid "Custom list"
-msgstr ""
+msgstr "Rhestr Benodol"
 
 #: includes/class-avatar-model.php:101
 msgid "Name"
-msgstr ""
+msgstr "Enw"
 
 #: includes/class-avatar-model.php:111
 msgid "Select Models"
-msgstr ""
+msgstr "Dewis Modelau"
 
 #: includes/class-avatar-model.php:115
 msgid "Select one or more existing avatars"
-msgstr ""
+msgstr "Dewiswch un neu fwy o afatars presennol"
 
 #: includes/class-avatar-model.php:139
 msgid "Available Models"
-msgstr ""
+msgstr "Modelau Ar Gael"
 
 #: includes/class-avatar-model.php:165
 msgid ""
@@ -301,36 +275,47 @@ msgid ""
 "the avatar creation form, which will determine the initial outfit of the "
 "created avatar."
 msgstr ""
+"Os yw modelau afatar wedi'u diffinio, bydd defnyddwyr newydd yn cael dewis "
+"ar ffurf creu afatar, a fydd yn pennu'r dillad cychwynnol i'r afatar a "
+"grëwyd."
 
 #: includes/class-avatar-model.php:166
 msgid ""
 "The grid administrator needs to create each model from the ROBUST console, "
 "log in with the viewer, customize the outfit, and add a profile picture."
 msgstr ""
+"Mae angen i weinyddwr y grid greu pob model o gonsôl ROBUST, mewngofnodi "
+"gyda'r golygydd, cyfaddasu'r dillad, a thynnu llun proffil."
 
 #: includes/class-avatar-model.php:167
 msgid "The avatars used for the models should never be real user accounts."
 msgstr ""
+"Dylai'r afatars a ddefnyddir ar gyfer y modelau beidio â bod yn gyfrifon "
+"defnyddwyr go iawn."
 
 #: includes/class-avatar-model.php:168
 msgid ""
 "The new avatar will wear the same outfit as the model at the time of "
 "registration."
 msgstr ""
+"Bydd yr afatar newydd yn gwisgo'r un dillad â'r model ar adeg y cofrestru."
 
 #: includes/class-avatar-model.php:169
 msgid ""
 "If the model assignment rule is based on the name, each newly created avatar "
 "matching that rule will be automatically added to the list."
 msgstr ""
+"Os yw'r rheol cyfrif model yn seiliedig ar yr enw, bydd unrhyw afatar newydd "
+"a grëwyd sy'n cyd-fynd â'r rheol hwnnw yn cael ei ychwanegu'n awtomatig i'r "
+"rhestr."
 
 #: includes/class-avatar-model.php:293
 msgid "No models found."
-msgstr ""
+msgstr "Ni chafwyd darganfod modelau."
 
 #: includes/class-avatar-model.php:307
 msgid "No models"
-msgstr ""
+msgstr "Dim modelau"
 
 #: includes/class-avatar-model.php:344
 msgid "Your initial appearance"
@@ -342,7 +327,7 @@ msgstr "Gallwch ei newid mor aml ag y dymunwch yn y byd rhithwir."
 
 #: includes/class-avatar-model.php:363
 msgid "Refreshing list..."
-msgstr ""
+msgstr "Yn adnewyddu'r rhestr..."
 
 #: includes/class-helpers-assets.php:83
 msgid "Assets Server"
@@ -373,9 +358,8 @@ msgid "Web Assets Server URL"
 msgstr ""
 
 #: includes/class-helpers-assets.php:120
-#, fuzzy
 msgid "You can set the assets slug in %%permalinks settings page%%"
-msgstr "Gallwch osod y wlithen ased yng ngosodiadau %spermalinks%s."
+msgstr "Gallwch osod yr assets slug yn y %%dudalen gosodiadau permaenwau%%"
 
 #: includes/class-helpers-assets.php:135
 msgid ""
@@ -397,14 +381,10 @@ msgid "Economy"
 msgstr "Economi"
 
 #: includes/class-helpers-economy.php:47 includes/class-helpers-economy.php:71
-#, fuzzy
-#| msgid "Settings"
 msgid "Economy Settings"
 msgstr "Gosodiadau"
 
 #: includes/class-helpers-economy.php:77
-#, fuzzy
-#| msgid "Provide economy helpers"
 msgid "Provide Economy Helper"
 msgstr "Darparu cynorthwywyr economi"
 
@@ -434,8 +414,6 @@ msgid ""
 msgstr ""
 
 #: includes/class-helpers-economy.php:96
-#, fuzzy
-#| msgid "Economy base URI"
 msgid "Economy Helper URI"
 msgstr "Sylfaen economi URI"
 
@@ -456,17 +434,13 @@ msgid "Currency Conversion Rate"
 msgstr ""
 
 #: includes/class-helpers-economy.php:158
-#, fuzzy
-#| msgid ""
-#| "Amount to pay in US$ for 1000 in-world money units. Used for cost "
-#| "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
 msgid ""
 "Amount to pay in US$ for 1000 in-world money units. Used for cost "
 "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)."
 msgstr ""
-"Swm i'w dalu mewn US$ am 1000 o unedau arian yn y byd. Defnyddir ar gyfer "
-"amcangyfrif cost. Os na chaiff ei gosod, y gyfradd fydd 10/1000 (1 cant "
-"fesul uned arian)"
+"Y swm i'w dalu yn US$ am 1000 uned arian yn y byd ffuglenol. Defnyddir ar "
+"gyfer amcangyfrif costau. Os nad yw'n cael ei osod, bydd y gyfradd yn "
+"10/1000 (1 sent am bob uned arian)."
 
 #: includes/class-helpers-economy.php:170
 msgid "Currency Provider"
@@ -489,44 +463,32 @@ msgid "Podex Options"
 msgstr ""
 
 #: includes/class-helpers-economy.php:218
-#, fuzzy
-#| msgid "Podex redirect message"
 msgid "Podex Redirect Message"
 msgstr "Neges ailgyfeirio Podex"
 
 #: includes/class-helpers-economy.php:222
-#, fuzzy
-#| msgid ""
-#| "Please use our terminals in-world to proceed. Click OK to teleport to "
-#| "terminals region."
 msgid ""
 "Please use our terminals in-world to proceed. Click OK to teleport to Podex "
 "Exchange area."
 msgstr ""
-"Defnyddiwch ein terfynellau yn y byd i symud ymlaen. Cliciwch OK i "
-"deleportio i ranbarth terfynellau."
+"Defnyddiwch ein teminalau yn y byd fflyd i symud ymlaen. Cliciwch OK i "
+"dylynu i ardal Cyfnewid Podex."
 
 #: includes/class-helpers-economy.php:225
 msgid "Exchange Teleport URL"
 msgstr ""
 
 #: includes/class-helpers-offline.php:46
-#, fuzzy
-#| msgid "Offline messages"
 msgid "Offline Messages"
-msgstr "Negeseuon all-lein"
+msgstr "Negeseuon All-lein"
 
 #: includes/class-helpers-offline.php:47 includes/class-helpers-offline.php:71
-#, fuzzy
-#| msgid "Offline messages"
 msgid "Offline Messages Settings"
-msgstr "Negeseuon all-lein"
+msgstr "Gosodiadau Negeseuon All-lein"
 
 #: includes/class-helpers-offline.php:77
-#, fuzzy
-#| msgid "Provide offline helper"
 msgid "Provide Offline Messages Service"
-msgstr "Darparu cynorthwyydd all-lein"
+msgstr "Darparu Gwasanaeth Negeseuon All-lein"
 
 #: includes/class-helpers-offline.php:86
 msgid "Honor \"Email me IMs when I'm offline\" viewer option."
@@ -710,24 +672,20 @@ msgid "URL"
 msgstr ""
 
 #: includes/class-settings.php:206
-#, fuzzy
-#| msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgid ""
 "A profile page exists with permalink set as %1$s, as defined in %%permalinks "
 "settings%%."
 msgstr ""
-"Rhaid i'r dudalen %s fodoli, fel y'i diffinnir yng ngosodiadau "
-"%spermalinks%s."
+"Mae tudalen proffil yn bodoli gyda phermalink wedi'i osod fel %1$s, fel y "
+"diffinir yn y gosodiadau %%gosodiadau permaenwau%%."
 
 #: includes/class-settings.php:207
-#, fuzzy
-#| msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgid ""
 "A profile page must be created with permalink set as %1$s, as defined in %"
 "%permalinks settings%%."
 msgstr ""
-"Rhaid i'r dudalen %s fodoli, fel y'i diffinnir yng ngosodiadau "
-"%spermalinks%s."
+"Rhaid creu tudalen proffil gyda phermalink wedi'i osod fel %1$s, fel y "
+"diffinir yn y gosodiadau %%gosodiadau permaenwau%%."
 
 #: includes/class-settings.php:215
 #, fuzzy
@@ -745,10 +703,8 @@ msgid "Login Page"
 msgstr ""
 
 #: includes/class-settings.php:230
-#, fuzzy
-#| msgid "Use profile page as login page"
 msgid "Use profile page as login page."
-msgstr "Defnyddiwch dudalen proffil fel tudalen mewngofnodi"
+msgstr "Defnyddio'r dudalen proffil fel dudalen mewngofnodi."
 
 #: includes/class-settings.php:240
 msgid "Instructions"
@@ -1286,10 +1242,8 @@ msgid "Try %s"
 msgstr ""
 
 #: legacy/admin/status-page.php:261
-#, fuzzy
-#| msgid "Create My Avatar"
 msgid "Create %s page"
-msgstr "Creu Fy Avatar"
+msgstr "Creu tudalen %s"
 
 #: legacy/cron.php:24
 msgid "every_five_minutes"
@@ -1740,11 +1694,8 @@ msgid "Install the viewer and open it."
 msgstr ""
 
 #: templates/content-configuration.php:29
-#, fuzzy
 msgid "You can use %%any compatible viewer%% to access %s."
-msgstr ""
-"Gallwch ddefnyddio <a href=\"%1$s\" target=_blank>unrhyw wyliwr cydnaws</a> "
-"i gael mynediad i %2$s."
+msgstr "Gallwch ddefnyddio %%unrhyw golygydd cydnaws%% i gael mynediad i %s."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"
@@ -2002,10 +1953,8 @@ msgstr ""
 #: blocks/avatar-profile/avatar-profile.js:64 blocks/grid-info/grid-info.js:54
 #: blocks/grid-status/grid-status.js:54
 #: blocks/popular-places/popular-places.js:63
-#, fuzzy
-#| msgid "Settings"
 msgid "Block Settings"
-msgstr "Gosodiadau"
+msgstr "Gosodiadau'r Bloc"
 
 #~ msgid "Helpers"
 #~ msgstr "Cynorthwywyr"

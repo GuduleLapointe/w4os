@@ -133,7 +133,7 @@ class W4OS_Assets extends W4OS_Loader {
 					'id'          => $prefix . 'external_url',
 					'type'        => 'url',
 					'desc'        => __( 'If \'Provide Web Assets Server\' is disabled, it is necessary to install a third-party service and enter its URL here to ensure the proper functioning of the plugin.', 'w4os' ),
-					'placeholder' => __( 'http://example.org/assets/assets.php?id=', 'w4os' ),
+					'placeholder' => 'http://example.org/assets/assets.php?id=',
 					'std'         => $this->external_url,
 					'required'    => true,
 					'save_field'  => false,

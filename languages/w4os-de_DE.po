@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-17T22:51:17+00:00\n"
+"POT-Creation-Date: 2023-07-18T01:19:00+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -483,17 +483,17 @@ msgstr "Money Script Zugangsschlüssel"
 msgid "Choose a unique access key and set it in MoneyServer.ini"
 msgstr ""
 
-#: includes/class-helpers-economy.php:208
+#: includes/class-helpers-economy.php:210
 msgid "Podex Options"
 msgstr ""
 
-#: includes/class-helpers-economy.php:218
+#: includes/class-helpers-economy.php:220
 #, fuzzy
 #| msgid "Podex redirect message"
 msgid "Podex Redirect Message"
 msgstr "Podex-Weiterleitungsnachricht"
 
-#: includes/class-helpers-economy.php:222
+#: includes/class-helpers-economy.php:224
 #, fuzzy
 #| msgid ""
 #| "Please use our terminals in-world to proceed. Click OK to teleport to "
@@ -505,7 +505,7 @@ msgstr ""
 "Bitte benutzen Sie unsere Terminals in der Welt, um fortzufahren. Klicken "
 "Sie auf OK, um sich in die Region der Terminals zu teleportieren."
 
-#: includes/class-helpers-economy.php:225
+#: includes/class-helpers-economy.php:227
 msgid "Exchange Teleport URL"
 msgstr ""
 
