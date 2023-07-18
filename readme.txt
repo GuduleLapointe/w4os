@@ -192,7 +192,7 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 
 == Changelog ==
 
-= Unreleased (2.4.5-dev.1085) =
+= Unreleased (2.4.5-dev.1090) =
 * added separate settings page for Search Engine
 * added "mini profile" option to avatar block
 * added Grid Status Divi module

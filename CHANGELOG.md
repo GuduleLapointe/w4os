@@ -1,6 +1,6 @@
 ## Changelog
 
-### Unreleased (2.4.5-dev.1085)
+### Unreleased (2.4.5-dev.1090)
 - added separate settings page for Search Engine
 - added "mini profile" option to avatar block
 - added Grid Status Divi module
