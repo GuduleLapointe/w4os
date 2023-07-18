@@ -1,11 +1,11 @@
-=== w4os - OpenSimulator Web Interface (dev) ===
+=== w4os - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.4.4
+Stable tag: 2.4.5
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -192,18 +192,13 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 
 == Changelog ==
 
-= Unreleased (2.4.5-dev.1096) =
-* added separate settings page for Search Engine
+= 2.4.5 =
 * added "mini profile" option to avatar block
-* added Grid Status Divi module
-* added Grid Info Divi module
-* added Avatar Profile Divi module
-* fixed Grid Status block
-* fixed Grid Info block
-* fixed Avatar Profile block
-* moved Economy settings to its own page
-* moved Offline Messages settings to its own page
+* added Grid Status, Grid Info and Avatar Profile Divi module
+* fixed Grid Status, Grid Info and Avatar Profile Gutenberg block
+* reorganized Search Engine, Economy and Offline Messages settings
 * clarified profile page settings
+* fixed Podex redirect message broken
 
 = 2.4.4 =
 * added title level option to Popular Places block, shortcode and Divi module

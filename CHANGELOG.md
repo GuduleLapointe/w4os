@@ -1,17 +1,12 @@
 ## Changelog
 
-### Unreleased (2.4.5-dev.1096)
-- added separate settings page for Search Engine
+### 2.4.5
 - added "mini profile" option to avatar block
-- added Grid Status Divi module
-- added Grid Info Divi module
-- added Avatar Profile Divi module
-- fixed Grid Status block
-- fixed Grid Info block
-- fixed Avatar Profile block
-- moved Economy settings to its own page
-- moved Offline Messages settings to its own page
+- added Grid Status, Grid Info and Avatar Profile Divi module
+- fixed Grid Status, Grid Info and Avatar Profile Gutenberg block
+- reorganized Search Engine, Economy and Offline Messages settings
 - clarified profile page settings
+- fixed Podex redirect message broken
 
 ### 2.4.4
 - added title level option to Popular Places block, shortcode and Divi module
