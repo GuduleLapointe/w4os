@@ -146,8 +146,8 @@ function currency_xmlrpc_buy( $method_name, $params, $app_data ) {
 	} else {
 		switch ( CURRENCY_PROVIDER ) {
 			case 'podex':
-				$errorMessage = PODEX_ERROR_MESSAGE;
-				$errorURI     = PODEX_REDIRECT_URL;
+				$errorURI     = null; // opensim_format_tp(PODEX_REDIRECT_URL, TPLINK_HOP);
+				$errorMessage = PODEX_ERROR_MESSAGE . ' ' . PODEX_REDIRECT_URL;
 				break;
 
 			case 'gloebit':
