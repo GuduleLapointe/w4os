@@ -60,12 +60,14 @@ class W4OS_Model extends W4OS_Loader {
 	function register_settings_pages( $settings_pages ) {
 		$settings_pages[] = array(
 			'menu_title' => __( 'Avatar Models', 'w4os' ),
+			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
 			'id'         => 'w4os-models',
 			'position'   => 0,
 			'parent'     => 'w4os',
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-users',
+			// 'class' => 'no-hints',
 		);
 
 		return $settings_pages;
@@ -133,7 +135,7 @@ class W4OS_Model extends W4OS_Loader {
 		$meta_boxes[] = array(
 			'id'             => 'w4os-available-models-container',
 			'settings_pages' => array( 'w4os-models' ),
-			'class'          => 'w4os-settings',
+			'class'          => 'w4os-settings no-hints',
 			'fields'         => array(
 				array(
 					'name' => __( 'Available Models', 'w4os' ),

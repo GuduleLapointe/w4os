@@ -27,6 +27,10 @@ class W4OS_Economy extends W4OS_Loader {
 				'hook'     => 'init',
 				'callback' => 'sanitize_options',
 			),
+			array(
+				'hook'     => 'admin_menu',
+				'callback' => 'register_settings_sidebar',
+			),
 		);
 
 		$this->filters = array(
@@ -51,7 +55,7 @@ class W4OS_Economy extends W4OS_Loader {
 			'capability' => 'manage_options',
 			'class'      => 'w4os-settings',
 			'style'      => 'no-boxes',
-			'columns'    => 1,
+			'columns'    => 2,
 			'icon_url'   => 'dashicons-admin-generic',
 		);
 
@@ -80,17 +84,7 @@ class W4OS_Economy extends W4OS_Loader {
 					'style'      => 'rounded',
 					'std'        => get_option( 'w4os_provide_economy_helpers', true ),
 					'save_field' => false,
-					'desc'       => '<p></p><ul><li>' . join(
-						'</li><li>',
-						array(
-							__( 'Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os' ),
-							__( 'Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments...', 'w4os' ),
-							'<strong>' . __( 'This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:', 'w4os' ) . '</strong>',
-							'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>www.gloebit.com</a>)',
-							'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)',
-							'<a href=http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer>DTL/NSL Money Server</a>',
-						)
-					) . '<ul>',
+					// 'desc'       => '',
 				),
 				array(
 					'name'        => __( 'Economy Helper URI', 'w4os' ),
@@ -238,6 +232,33 @@ class W4OS_Economy extends W4OS_Loader {
 		);
 
 		return $meta_boxes;
+	}
+
+	function register_settings_sidebar() {
+		// Add a custom meta box to the sidebar
+		add_meta_box(
+			'sidebar-content', // Unique ID
+			'Settings Sidebar', // Title
+			array( $this, 'sidebar_content' ), // Callback function to display content
+			'opensimulator_page_w4os-economy', // Settings page slug where the sidebar appears
+			'side' // Position of the meta box (sidebar)
+		);
+	}
+
+	function sidebar_content() {
+		echo '<ul><li>' . join( '</li><li>', array(
+			__( 'Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os' ),
+			__( 'Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments...', 'w4os' ),
+			'<strong>' . __( 'This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:', 'w4os' ) . '</strong>',
+			'<ul><li>' . join( '</li><li>', array(
+				'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>gloebit.com</a>)',
+				'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>podex.info</a>)',
+				'DTL/NSL Money Server (<a href=http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer>nsl.tuis.ac.jp</a>)',
+			)) . '</li></ul>',
+			'&nbsp;',
+			__('Ready to use binaries and example config files can be downloaded here:', 'w4os')
+			. '<br><a href="https://github.com/magicoli/opensim-helpers/tree/master/bin">github.com/magicoli/opensim-helpers</a>'
+		)) . '</li></ul>';
 	}
 
 	function sanitize_options() {

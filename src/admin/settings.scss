@@ -1,3 +1,7 @@
+.w4os-settings .inside ul ul {
+  padding-left: 1em;
+}
+
 .rwmb-input {
   input[type="checkbox"],
   input[type="radio"] {
@@ -10,7 +14,7 @@
 }
 
 @media (min-width: 1200px) {
-  .w4os-settings .columns-1 .rwmb-field:not(.rwmb-group-wrapper) .rwmb-input {
+  .w4os-settings:not(.no-hints) .rwmb-field:not(.rwmb-group-wrapper) .rwmb-input {
     display: grid;
     grid-template-columns: 30em 1fr;
     grid-gap: 20px;
