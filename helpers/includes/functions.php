@@ -63,6 +63,7 @@ function opensim_sanitize_uri( $url, $gatekeeperURL = null, $array_outout = fals
 	}
 	// $pos = preg_replace('+[^0-9/]+e', '', $pos);
 	$split = explode( ':', $uri );
+
 	if ( count( $split ) == 1 ) {
 		$region = $split[0];
 	} elseif ( count( $split ) == 2 && preg_match( '/ /', $split[1] ) ) {
@@ -72,9 +73,21 @@ function opensim_sanitize_uri( $url, $gatekeeperURL = null, $array_outout = fals
 		$port   = $split[0];
 		$region = $split[1];
 	} else {
-		$host   = $split[0];
-		$port   = @$split[1];
-		$region = @$split[2];
+		if(preg_match('/[a-z].*\.[a-z]/', $split[0] )) {
+			$host   = array_shift( $split );
+			if(preg_match('/^[0-9]+$/', $split[0] )) {
+				$port = array_shift($split);
+			} else {
+				$port = 8002;
+			}
+		} else {
+			$host = parse_url( w4os_grid_login_uri(), PHP_URL_HOST );
+			$port = parse_url( w4os_grid_login_uri(), PHP_URL_HOST );
+			if(preg_match('/^[0-9]+$/', $split[0] )) {
+				array_shift($split);
+			}
+		}
+		$region = preg_replace(':^/*:', '', @$split[0]);
 	}
 	if ( empty( $host ) & ! empty( $gatekeeperURL ) ) {
 		$split = explode( ':', preg_replace( '#.*://([^/]+)/?.*#', '$1', $gatekeeperURL ) );
@@ -134,6 +147,8 @@ function opensim_format_tp( $uri, $format = TPLINK, $sep = "\n" ) {
 	if ( empty( $uri ) ) {
 		return;
 	}
+	$parts = parse_url($uri);
+
 	// $uri = preg_replace('#!#', '', $uri);
 	// $uri = preg_replace('#.*://+#', '', $uri);
 	// $uri = preg_replace('#[\|:]#', '/', $uri);
