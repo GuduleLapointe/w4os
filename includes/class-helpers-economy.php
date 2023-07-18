@@ -129,7 +129,7 @@ class W4OS_Economy extends W4OS_Loader {
 					),
 					'std'        => array(
 						// 'is_main'     => true,
-						'use_default' => get_option( 'w4os_economy_use_default_db', true ),
+						'use_default' => $use_default_db,
 						'type'        => get_option( 'w4os_economy_db_type', 'mysql' ),
 						'port'        => get_option( 'w4os_economy_db_port', 3306 ),
 						'host'        => get_option( 'w4os_economy_db_host', 'localhost' ),

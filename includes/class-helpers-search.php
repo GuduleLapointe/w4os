@@ -105,7 +105,7 @@ class W4OS_Search extends W4OS_Loader {
 					),
 					'std'        => array(
 						// 'is_main'     => true,
-						'use_default' => get_option( 'w4os_search_use_default_db', true ),
+						'use_default' => get_option( 'w4os_search_use_robust_db', true ),
 						'type'        => get_option( 'w4os_search_db_type', 'mysql' ),
 						'port'        => get_option( 'w4os_search_db_port', 3306 ),
 						'host'        => get_option( 'w4os_search_db_host', 'localhost' ),
