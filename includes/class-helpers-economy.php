@@ -246,7 +246,6 @@ class W4OS_Economy extends W4OS_Loader {
 		}
 
 		if ( isset( $_POST['nonce_economy-settings'] ) && wp_verify_nonce( $_POST['nonce_economy-settings'], 'rwmb-save-economy-settings' ) ) {
-			error_log( print_r( $_POST, true ) );
 			$options = array_merge(
 				array(
 					// 'w4os_provide_economy' => false,
