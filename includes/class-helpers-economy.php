@@ -18,6 +18,7 @@ class W4OS_Economy extends W4OS_Loader {
 	protected $filters;
 
 	public function __construct() {
+		$this->gloebit_url = '<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>gloebit.com</a>';
 	}
 
 	public function init() {
@@ -107,6 +108,9 @@ class W4OS_Economy extends W4OS_Loader {
 								'[GridInfoService]' => array(
 									'economy' => ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ),
 								),
+								'[LoginService]' => array(
+									'; Currency' => 'YC$ ;; Your Currency symbol, optional',
+								),
 							),
 						)
 					) . '</p>',
@@ -146,21 +150,6 @@ class W4OS_Economy extends W4OS_Loader {
 					),
 				),
 				array(
-					'name'        => __( 'Currency Conversion Rate', 'w4os' ),
-					'id'          => $prefix . 'currency_rate',
-					'type'        => 'number',
-					'desc'        => __( 'Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit).', 'w4os' ),
-					'step'        => 'any',
-					'placeholder' => 10,
-					'size'        => 5,
-					'std'         => get_option( 'w4os_currency_rate' ),
-					'save_field'  => false,
-					'visible'     => array(
-						'when'     => array( array( 'provide_economy', '=', 1 ) ),
-						'relation' => 'or',
-					),
-				),
-				array(
 					'name'       => __( 'Currency Provider', 'w4os' ),
 					'id'         => $prefix . 'currency_provider',
 					'type'       => 'radio',
@@ -171,11 +160,73 @@ class W4OS_Economy extends W4OS_Loader {
 						'relation' => 'or',
 					),
 					'options'    => array(
-						'none'    => __( 'No provider, use fake money.', 'w4os' ),
-						'podex'   => 'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)',
 						'gloebit' => 'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>www.gloebit.com</a>)',
+						'podex'   => 'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)',
+						'none'    => __( 'Generic MoneyServer, for fake money or altenate providers.', 'w4os' ),
 					),
 					'inline'     => false,
+				),
+				array(
+					'name'        => __( 'Currency Conversion Rate', 'w4os' ),
+					'id'          => $prefix . 'currency_rate',
+					'type'        => 'number',
+					'desc'        => __( 'Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit).', 'w4os' ),
+					'step'        => 'any',
+					'placeholder' => 10,
+					'size'        => 5,
+					'std'         => get_option( 'w4os_currency_rate' ),
+					'save_field'  => false,
+					'visible'     => array(
+						'when'     => array(
+							array( 'provide_economy', '=', 1 ),
+							array( 'currency_provider', '!=', 'gloebit' ),
+						),
+						'relation' => 'and',
+					),
+				),
+				array(
+					'name'       => __( 'Gloebit Configuration', 'w4os' ),
+					'id'         => $prefix . 'money_script_access_key',
+					'type'       => 'custom_html',
+					'desc'				 => '<p><ol><li>' . join( '</li><li>', array(
+						sprintf(
+							__( 'Register an account or connect on %s and Follow instructions on %s to setup an app for your grid/simulator.', 'w4os' ),
+							'<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>',
+							'<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>dev.gloebit.com</a>',
+						),
+						__( 'Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll).', 'w4os' ),
+						__( 'Add Gloebit configuration in OpenSim.ini.', 'w4os' ),
+						sprintf(
+							__( 'If you get certificate-related errors, see %s.', 'w4os' ),
+							'<a href=https://github.com/magicoli/opensim-helpers/blob/master/README-Gloebit.md target=_blank>README-Gloebit.md</a>',
+						),
+					)) . '</li></ol>'
+					. w4os_format_ini(
+						array(
+							'OpenSim.ini' => array(
+								'[Economy]' => array(
+									'economymodule' => 'Gloebit',
+									'economy' => ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ),
+									'SellEnabled' => 'true',
+									'; PriceUpload' => '0',
+									'; PriceGroupCreate' => '0',
+								),
+								'[Gloebit]' => array(
+									'Enabled' => 'true',
+									'GLBEnvironment' => 'production',
+									'GLBKey' => '(your Gloebit app key)',
+									'GLBSecret' => '(your Gloebit app secret)',
+									'GLBOwnerName' => 'Banker Name',
+									'GLBOwnerEmail' => 'banker@example.org',
+								),
+							),
+						)
+					) . '</p>',
+					'save_field' => false,
+					'visible'    => array(
+						'when'     => array( array( 'currency_provider', '=', 'gloebit' ) ),
+						'relation' => 'or',
+					),
 				),
 				array(
 					'name'       => __( 'Money Script Access Key', 'w4os' ),
@@ -251,7 +302,7 @@ class W4OS_Economy extends W4OS_Loader {
 			__( 'Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments...', 'w4os' ),
 			'<strong>' . __( 'This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:', 'w4os' ) . '</strong>',
 			'<ul><li>' . join( '</li><li>', array(
-				'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>gloebit.com</a>)',
+				'Gloebit (<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>)',
 				'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>podex.info</a>)',
 				'DTL/NSL Money Server (<a href=http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer>nsl.tuis.ac.jp</a>)',
 			)) . '</li></ul>',
