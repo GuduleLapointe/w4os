@@ -404,7 +404,7 @@ function currency_get_balance( $agentID, $secureID = null ) {
 function currency_get_confirm_value( $ipAddress ) {
 	// TODO:
 	// Option to force key to be something else than default
-	$key          = ( $key == '' ) ? '1234567883789' : CURRENCY_SCRIPT_KEY;
+	$key          = empty(CURRENCY_SCRIPT_KEY) ? '1234567883789' : CURRENCY_SCRIPT_KEY;
 	$confirmvalue = md5( $key . '_' . $ipAddress );
 
 	return $confirmvalue;
