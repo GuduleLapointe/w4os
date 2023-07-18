@@ -3,11 +3,11 @@
         'name' => 'speculoos/w4os',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '80a784e7931b008e3d014ee8e234488f5cc7a58f',
+        'reference' => '4d10199b947c9cc5c95510ac082d175d1df14816',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => false,
+        'dev' => true,
     ),
     'versions' => array(
         'composer/installers' => array(
@@ -27,6 +27,15 @@
             'install_path' => __DIR__ . '/../jelix/inifile',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'magicoli/opensim-helpers' => array(
+            'pretty_version' => 'v2.1.10',
+            'version' => '2.1.10.0',
+            'reference' => 'f5ba230e5c840b53f1e80f52b83b90c2581935b5',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../magicoli/opensim-helpers',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'meta-box/mb-admin-columns' => array(
             'pretty_version' => 'master',
@@ -76,7 +85,7 @@
         'speculoos/w4os' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '80a784e7931b008e3d014ee8e234488f5cc7a58f',
+            'reference' => '4d10199b947c9cc5c95510ac082d175d1df14816',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -92,9 +101,9 @@
             'dev_requirement' => false,
         ),
         'wpmetabox/meta-box' => array(
-            'pretty_version' => '5.7.3',
-            'version' => '5.7.3.0',
-            'reference' => '969beb0a5d3a4a6ca2e32b0665303e9ff183537b',
+            'pretty_version' => '5.7.4',
+            'version' => '5.7.4.0',
+            'reference' => 'cd17d25946b2c48568cef5ca996dde4eb2736a38',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../meta-box/meta-box',
             'aliases' => array(),

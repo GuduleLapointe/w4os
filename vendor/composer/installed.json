@@ -203,6 +203,41 @@
             "install-path": "../jelix/inifile"
         },
         {
+            "name": "magicoli/opensim-helpers",
+            "version": "v2.1.10",
+            "version_normalized": "2.1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magicoli/opensim-helpers.git",
+                "reference": "f5ba230e5c840b53f1e80f52b83b90c2581935b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/f5ba230e5c840b53f1e80f52b83b90c2581935b5",
+                "reference": "f5ba230e5c840b53f1e80f52b83b90c2581935b5",
+                "shasum": ""
+            },
+            "time": "2023-07-18T16:43:38+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Gudule Lapointe",
+                    "email": "gudule@speculoos.world"
+                }
+            ],
+            "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
+            "support": {
+                "issues": "https://github.com/magicoli/opensim-helpers/issues",
+                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.10"
+            },
+            "install-path": "../magicoli/opensim-helpers"
+        },
+        {
             "name": "meta-box/mb-admin-columns",
             "version": "master",
             "version_normalized": "dev-master",
@@ -322,20 +357,20 @@
         },
         {
             "name": "wpmetabox/meta-box",
-            "version": "5.7.3",
-            "version_normalized": "5.7.3.0",
+            "version": "5.7.4",
+            "version_normalized": "5.7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmetabox/meta-box.git",
-                "reference": "969beb0a5d3a4a6ca2e32b0665303e9ff183537b"
+                "reference": "cd17d25946b2c48568cef5ca996dde4eb2736a38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/969beb0a5d3a4a6ca2e32b0665303e9ff183537b",
-                "reference": "969beb0a5d3a4a6ca2e32b0665303e9ff183537b",
+                "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/cd17d25946b2c48568cef5ca996dde4eb2736a38",
+                "reference": "cd17d25946b2c48568cef5ca996dde4eb2736a38",
                 "shasum": ""
             },
-            "time": "2023-06-23T02:07:35+00:00",
+            "time": "2023-07-18T02:40:31+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -368,11 +403,13 @@
             ],
             "support": {
                 "issues": "https://github.com/wpmetabox/meta-box/issues",
-                "source": "https://github.com/wpmetabox/meta-box/tree/5.7.3"
+                "source": "https://github.com/wpmetabox/meta-box/tree/5.7.4"
             },
             "install-path": "../meta-box/meta-box"
         }
     ],
-    "dev": false,
-    "dev-package-names": []
+    "dev": true,
+    "dev-package-names": [
+        "magicoli/opensim-helpers"
+    ]
 }

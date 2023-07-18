@@ -12,7 +12,7 @@
  * Requires OpenSimulator Search module
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  * Events are fetched from 2do HYPEvents or any other HYPEvents implementation
- *   [2do HYPEvents](https://2do.pm)
+ *   [2do HYPEvents](https://2do.directory)
  *
  * Includes portions of code from
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)

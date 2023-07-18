@@ -1,6 +1,6 @@
 # OpenSimulator Helpers
 
-- Version: 2.1.9
+- Version: 2.1.10
 - Project URL: <https://github.com/magicoli/opensim-helpers>
 - Donate: <https://w4os.org/donate/>
 - Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, helpers
@@ -9,17 +9,17 @@
 
 ## Description
 
-Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.
+Helpers required to enable common functionalties like search, currency, events in OpenSimulator grids.
 
 They were initially based on a collection of different projects (see Credits below), but were entirely rewritten to use an unified code and set of parameters, as well as for integration in larger projects like [w4os OpenSim WordPress Interface](https://w4os.org/).
 
-Also known as Flexible Helper Scripts.
+Formerly known as Flexible Helper Scripts.
 
 ### Features
 
 - **In-world Search**: enable standard search in the viewer for places, land for sale, events and classifieds.
 - **Events**: sync events from HYPEvents server
-- **Currency**: provide helpers for currency
+- **Currency**: provide helpers for currency (MoneyServer, Gloebit and Podex)
 - **Offline messaging**: add mail forwarding option to offline IM (according to user viewer settings)
 - **Multi-grid**: can be used for standalone or closed grid as well as to provide a cross-grid search engine
 - **Unified library**: rewritten to allow easier integration in bigger projects
@@ -99,7 +99,7 @@ While most of the code is new or rewritten from scratch, portions of code may re
 - [OpenSimMaps](https://github.com/hawddamor/opensimmaps)
 - [Offline Messaging](http://opensimulator.org/wiki/Offline_Messaging)
 - [w4os OpenSim Web Interface](https://w4os.org/)
-- [2do HYPEvents](https://2do.pm)
+- [2do HYPEvents](https://2do.directory)
 - [Speculoos' Flexible helper scripts](https://github.com/GuduleLapointe/flexible_helper_scripts)
 
 Unless otherwise specified, code is distributed as part of Flexible Helper Scripts package, under Affero GPL v3 license.
