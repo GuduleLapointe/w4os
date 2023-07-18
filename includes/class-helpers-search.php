@@ -39,6 +39,10 @@ class W4OS_Search extends W4OS_Loader {
 				'hook'     => 'init',
 				'callback' => 'sanitize_options',
 			),
+			array(
+				'hook'     => 'admin_menu',
+				'callback' => 'register_settings_sidebar',
+			),
 		);
 
 		$this->filters = array(
@@ -63,7 +67,7 @@ class W4OS_Search extends W4OS_Loader {
 			'capability' => 'manage_options',
 			'class'      => 'w4os-settings',
 			'style'      => 'no-boxes',
-			'columns'    => 1,
+			// 'columns'    => 1,
 			'icon_url'   => 'dashicons-admin-generic',
 		);
 
@@ -84,7 +88,7 @@ class W4OS_Search extends W4OS_Loader {
 					'name'       => __( 'Provide Search', 'w4os' ),
 					'id'         => $prefix . 'provide_search',
 					'type'       => 'switch',
-					'desc'       => __( 'Enable to use a local search engine, allowing only local results (recommended for private grids). Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids.', 'w4os' ),
+					// 'desc'       => __( 'Enable to use a local search engine, allowing only local results (recommended for private grids). Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids.', 'w4os' ),
 					'style'      => 'rounded',
 					'std'        => get_option( 'w4os_provide_search' ),
 					'save_field' => false,
@@ -202,6 +206,27 @@ class W4OS_Search extends W4OS_Loader {
 		);
 
 		return $meta_boxes;
+	}
+
+	function register_settings_sidebar() {
+		// Add a custom meta box to the sidebar
+		add_meta_box(
+			'sidebar-content', // Unique ID
+			'Settings Sidebar', // Title
+			array( $this, 'sidebar_content' ), // Callback function to display content
+			'opensimulator_page_w4os-search', // Settings page slug where the sidebar appears
+			'side' // Position of the meta box (sidebar)
+		);
+	}
+
+	function sidebar_content() {
+		echo '<ul><li>' . join( '</li><li>', array(
+			__( 'Enable to use a local search engine, allowing only local results (recommended for private grids).', 'w4os'),
+			__( 'Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids.', 'w4os' ),
+			'<strong>' . __( 'Search features require the installation of OpenSimSearch Module on OpenSimulator.', 'w4os' ) . '</strong>',
+			__( 'Ready to use OpenSimSearch.Modules.dll binary can be found here:', 'w4os')
+			. '<br><a href="https://github.com/magicoli/opensim-helpers/tree/master/bin">github.com/magicoli/opensim-helpers</a>'
+		)) . '</li></ul>';
 	}
 
 	function sanitize_options() {
