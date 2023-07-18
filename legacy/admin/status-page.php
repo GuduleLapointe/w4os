@@ -124,7 +124,7 @@ $count = w4os_count_users();
 							echo '</form>';
 							echo '<p class=description>' . __( 'Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console.', 'w4os' ) . '<p>';
 						}
-						if ( $sync_result ) {
+						if ( ! empty( $sync_result ) ) {
 							echo '<p class=info>' . $sync_result . '<p>';
 						}
 						?>
