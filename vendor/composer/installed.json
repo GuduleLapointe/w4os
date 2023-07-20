@@ -204,22 +204,22 @@
         },
         {
             "name": "magicoli/opensim-helpers",
-            "version": "v2.1.10",
-            "version_normalized": "2.1.10.0",
+            "version": "v2.1.11",
+            "version_normalized": "2.1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magicoli/opensim-helpers.git",
-                "reference": "f5ba230e5c840b53f1e80f52b83b90c2581935b5"
+                "reference": "480a8feaf006b992affa077ab17baf4cdece4e29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/f5ba230e5c840b53f1e80f52b83b90c2581935b5",
-                "reference": "f5ba230e5c840b53f1e80f52b83b90c2581935b5",
+                "url": "https://api.github.com/repos/magicoli/opensim-helpers/zipball/480a8feaf006b992affa077ab17baf4cdece4e29",
+                "reference": "480a8feaf006b992affa077ab17baf4cdece4e29",
                 "shasum": ""
             },
-            "time": "2023-07-18T16:43:38+00:00",
+            "time": "2023-07-18T22:12:01+00:00",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "AGPL-3.0-or-later"
@@ -233,9 +233,48 @@
             "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
             "support": {
                 "issues": "https://github.com/magicoli/opensim-helpers/issues",
-                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.10"
+                "source": "https://github.com/magicoli/opensim-helpers/tree/v2.1.11"
             },
             "install-path": "../magicoli/opensim-helpers"
+        },
+        {
+            "name": "magicoli/opensim-rest-php",
+            "version": "v1.0.4",
+            "version_normalized": "1.0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magicoli/opensim-rest-php.git",
+                "reference": "67fa523754669ef44b836e9713a4a4ccdb6baa4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magicoli/opensim-rest-php/zipball/67fa523754669ef44b836e9713a4a4ccdb6baa4c",
+                "reference": "67fa523754669ef44b836e9713a4a4ccdb6baa4c",
+                "shasum": ""
+            },
+            "require-dev": {
+                "clue/phar-composer": "^1.4",
+                "robo/tasks": "^4.0"
+            },
+            "time": "2023-07-20T08:59:05+00:00",
+            "type": "library",
+            "installation-source": "source",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Olivier van Helden",
+                    "email": "olivier@van-helden.net"
+                }
+            ],
+            "description": "OpenSimulator REST PHP library and command-line client",
+            "support": {
+                "issues": "https://github.com/magicoli/opensim-rest-php/issues",
+                "source": "https://github.com/magicoli/opensim-rest-php/tree/v1.0.4"
+            },
+            "install-path": "../magicoli/opensim-rest-php"
         },
         {
             "name": "meta-box/mb-admin-columns",
@@ -410,6 +449,7 @@
     ],
     "dev": true,
     "dev-package-names": [
-        "magicoli/opensim-helpers"
+        "magicoli/opensim-helpers",
+        "magicoli/opensim-rest-php"
     ]
 }

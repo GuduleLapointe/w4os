@@ -1,6 +1,6 @@
 # OpenSimulator Helpers
 
-- Version: 2.1.10
+- Version: 2.1.11
 - Project URL: <https://github.com/magicoli/opensim-helpers>
 - Donate: <https://w4os.org/donate/>
 - Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, helpers
@@ -79,6 +79,8 @@ DATA_SRV_YourGrid = http://yourgrid.org/helpers/register.php
 ```
 
 (you can add several DATA_SRV_* lines if you want to register on multiple search engines)
+
+If you have trust issues with Gloebit (I mean seriously, if your console shows errors about Trust Failures), see README-Gloebit.md for instructions.
 
 Use a task scheduler to parse data regularly. It's useless to parse data too often, as they don't change that fast, it's better to keep both search and opensim servers load low and avoid triggering spam reject. With cron, it could be something like this.
 
