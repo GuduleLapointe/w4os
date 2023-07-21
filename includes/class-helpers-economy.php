@@ -108,7 +108,7 @@ class W4OS_Economy extends W4OS_Loader {
 								'[GridInfoService]' => array(
 									'economy' => ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ),
 								),
-								'[LoginService]' => array(
+								'[LoginService]'    => array(
 									'; Currency' => 'YC$ ;; Your Currency symbol, optional',
 								),
 							),
@@ -188,36 +188,48 @@ class W4OS_Economy extends W4OS_Loader {
 					'name'       => __( 'Gloebit Configuration', 'w4os' ),
 					'id'         => $prefix . 'money_script_access_key',
 					'type'       => 'custom_html',
-					'desc'				 => '<p><ol><li>' . join( '</li><li>', array(
-						sprintf(
-							__( 'Register an account or connect on %s and Follow instructions on %s to setup an app for your grid/simulator.', 'w4os' ),
-							'<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>',
-							'<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>dev.gloebit.com</a>',
-						),
-						__( 'Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll).', 'w4os' ),
-						__( 'Add Gloebit configuration in OpenSim.ini.', 'w4os' ),
-						sprintf(
-							__( 'If you get certificate-related errors, see %s.', 'w4os' ),
-							'<a href=https://github.com/magicoli/opensim-helpers/blob/master/README-Gloebit.md target=_blank>README-Gloebit.md</a>',
-						),
-					)) . '</li></ol>'
+					'std'        => '<ol><li>' . join(
+						'</li><li>',
+						array(
+							'<strong>' . __( 'Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator.', 'w4os' ) . '</strong>',
+							'<strong>' . sprintf(
+								__( 'For Linux, see %s to avoid certificate-related errors.', 'w4os' ),
+								'<a href=https://github.com/magicoli/opensim-helpers/blob/master/README-Gloebit.md target=_blank>README-Gloebit.md</a>',
+							) . '</strong>',
+							sprintf(
+								__( 'Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator.', 'w4os' ),
+								'<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>',
+								'<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>dev.gloebit.com</a>',
+							),
+							__( 'Add Gloebit configuration in OpenSim.ini.', 'w4os' ),
+							__( 'Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll).', 'w4os' ),
+						)
+					) . '</li></ol>'
 					. w4os_format_ini(
 						array(
 							'OpenSim.ini' => array(
 								'[Economy]' => array(
-									'economymodule' => 'Gloebit',
-									'economy' => ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ),
-									'SellEnabled' => 'true',
-									'; PriceUpload' => '0',
+									'economymodule'      => 'Gloebit',
+									'economy'            => ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ),
+									'SellEnabled'        => 'true',
+									'; PriceUpload'      => '0',
 									'; PriceGroupCreate' => '0',
 								),
 								'[Gloebit]' => array(
-									'Enabled' => 'true',
+									'Enabled'        => 'true',
 									'GLBEnvironment' => 'production',
-									'GLBKey' => '(your Gloebit app key)',
-									'GLBSecret' => '(your Gloebit app secret)',
-									'GLBOwnerName' => 'Banker Name',
-									'GLBOwnerEmail' => 'banker@example.org',
+									'GLBKey'         => '(your Gloebit app key)',
+									'GLBSecret'      => '(your Gloebit app secret)',
+									'GLBOwnerName'   => 'Banker Name',
+									'GLBOwnerEmail'  => 'banker@example.org',
+								),
+							),
+							'Robust.HG.ini (optional, for grid-wide support)' => array(
+								'[GridInfoService]' => array(
+									'economy' => ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' ),
+								),
+								'[LoginService]'    => array(
+									'Currency' => 'G$',
 								),
 							),
 						)
@@ -297,19 +309,25 @@ class W4OS_Economy extends W4OS_Loader {
 	}
 
 	function sidebar_content() {
-		echo '<ul><li>' . join( '</li><li>', array(
-			__( 'Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os' ),
-			__( 'Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments...', 'w4os' ),
-			'<strong>' . __( 'This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:', 'w4os' ) . '</strong>',
-			'<ul><li>' . join( '</li><li>', array(
-				'Gloebit (<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>)',
-				'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>podex.info</a>)',
-				'DTL/NSL Money Server (<a href=http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer>nsl.tuis.ac.jp</a>)',
-			)) . '</li></ul>',
-			'&nbsp;',
-			__('Ready to use binaries and example config files can be downloaded here:', 'w4os')
-			. '<br><a href="https://github.com/magicoli/opensim-helpers/tree/master/bin">github.com/magicoli/opensim-helpers</a>'
-		)) . '</li></ul>';
+		echo '<ul><li>' . join(
+			'</li><li>',
+			array(
+				__( 'Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency).', 'w4os' ),
+				__( 'Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments...', 'w4os' ),
+				'<strong>' . __( 'This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:', 'w4os' ) . '</strong>',
+				'<ul><li>' . join(
+					'</li><li>',
+					array(
+						'Gloebit (<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>)',
+						'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>podex.info</a>)',
+						'DTL/NSL Money Server (<a href=http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer>nsl.tuis.ac.jp</a>)',
+					)
+				) . '</li></ul>',
+				'&nbsp;',
+				__( 'Ready to use binaries and example config files can be downloaded here:', 'w4os' )
+				. '<br><a href="https://github.com/magicoli/opensim-helpers/tree/master/bin">github.com/magicoli/opensim-helpers</a>',
+			)
+		) . '</li></ul>';
 	}
 
 	function sanitize_options() {
