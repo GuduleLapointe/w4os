@@ -8,7 +8,7 @@
  *
  * @package opensim-rest-php
  * @category Libraries
- * @version 1.0.4
+ * @version 1.0.5
  * @license AGPLv3
  * @link https://github.com/magicoli/opensim-rest-php
  *

@@ -41,7 +41,8 @@
     "post-update-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/magicoli/opensim-helpers/tools/install-library.sh",
       "[ $COMPOSER_DEV_MODE -eq 0 ] || cp vendor/magicoli/opensim-rest-php/class-rest.php admin/"
-    ]
+    ],
+    "bump-version": "robo --load-from=vendor/magicoli/php-bump-library/RoboFile.php bump:version"
   },
   "require-dev": {
     "magicoli/opensim-helpers": "^2.1",

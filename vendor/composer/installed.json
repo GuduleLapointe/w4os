@@ -239,24 +239,24 @@
         },
         {
             "name": "magicoli/opensim-rest-php",
-            "version": "v1.0.4",
-            "version_normalized": "1.0.4.0",
+            "version": "v1.0.5",
+            "version_normalized": "1.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magicoli/opensim-rest-php.git",
-                "reference": "67fa523754669ef44b836e9713a4a4ccdb6baa4c"
+                "reference": "3b421170322f8a8b59248ac0d32ded9afc96cb3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magicoli/opensim-rest-php/zipball/67fa523754669ef44b836e9713a4a4ccdb6baa4c",
-                "reference": "67fa523754669ef44b836e9713a4a4ccdb6baa4c",
+                "url": "https://api.github.com/repos/magicoli/opensim-rest-php/zipball/3b421170322f8a8b59248ac0d32ded9afc96cb3d",
+                "reference": "3b421170322f8a8b59248ac0d32ded9afc96cb3d",
                 "shasum": ""
             },
             "require-dev": {
                 "clue/phar-composer": "^1.4",
-                "robo/tasks": "^4.0"
+                "magicoli/php-bump-library": "^1.0"
             },
-            "time": "2023-07-20T08:59:05+00:00",
+            "time": "2023-07-21T02:01:36+00:00",
             "type": "library",
             "installation-source": "source",
             "notification-url": "https://packagist.org/downloads/",
@@ -272,7 +272,7 @@
             "description": "OpenSimulator REST PHP library and command-line client",
             "support": {
                 "issues": "https://github.com/magicoli/opensim-rest-php/issues",
-                "source": "https://github.com/magicoli/opensim-rest-php/tree/v1.0.4"
+                "source": "https://github.com/magicoli/opensim-rest-php/tree/v1.0.5"
             },
             "install-path": "../magicoli/opensim-rest-php"
         },
