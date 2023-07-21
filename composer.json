@@ -42,11 +42,12 @@
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/magicoli/opensim-helpers/tools/install-library.sh",
       "[ $COMPOSER_DEV_MODE -eq 0 ] || cp vendor/magicoli/opensim-rest-php/class-rest.php admin/"
     ],
-    "bump-version": "robo --load-from=vendor/magicoli/php-bump-library/RoboFile.php bump:version"
+    "bump-version": "vendor/magicoli/php-bump-library/vendor/bin/robo --load-from=vendor/magicoli/php-bump-library/RoboFile.php bump:version"
   },
   "require-dev": {
     "magicoli/opensim-helpers": "^2.1",
-    "magicoli/opensim-rest-php": "^1.0"
+    "magicoli/opensim-rest-php": "^1.0",
+    "magicoli/php-bump-library": "^1.0"
   },
   "config": {
     "allow-plugins": {
