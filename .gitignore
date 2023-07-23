@@ -9,3 +9,6 @@ node_modules/
 vendor/magicoli/opensim-helpers/
 *.asset.php
 *.map
+vendor/magicoli/opensim-rest-php/opensim-rest-cli
+vendor/magicoli/opensim-rest-php/opensim-rest-cli.php
+vendor/magicoli/opensim-rest-php/src/
