@@ -2,19 +2,19 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface (dev) 2.4.5-dev.1085\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.4.7-dev-2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-18T01:19:00+00:00\n"
+"POT-Creation-Date: 2023-07-24T12:30:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface (dev)"
+msgid "w4os - OpenSimulator Web Interface"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -105,7 +105,7 @@ msgstr ""
 #: blocks/avatar-profile.php:219
 #: blocks/grid-info.php:223
 #: blocks/grid-status.php:175
-#: blocks/popular-places.php:250
+#: blocks/popular-places.php:249
 #: blocks/avatar-profile/avatar-profile.js:1
 #: blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
@@ -133,7 +133,7 @@ msgstr ""
 #: blocks/avatar-profile.php:230
 #: blocks/grid-info.php:231
 #: blocks/grid-status.php:183
-#: blocks/popular-places.php:258
+#: blocks/popular-places.php:257
 #: blocks/avatar-profile/avatar-profile.js:1
 #: blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
@@ -152,7 +152,7 @@ msgstr ""
 #: blocks/avatar-profile.php:232
 #: blocks/grid-info.php:233
 #: blocks/grid-status.php:185
-#: blocks/popular-places.php:260
+#: blocks/popular-places.php:259
 msgid "Select the HTML heading level for the title."
 msgstr ""
 
@@ -216,7 +216,7 @@ msgid "Grid Status"
 msgstr ""
 
 #: blocks/grid-status.php:142
-#: blocks/popular-places.php:187
+#: blocks/popular-places.php:186
 msgid "No result"
 msgstr ""
 
@@ -232,111 +232,115 @@ msgid "Enter the title for the Grid Status module."
 msgstr ""
 
 #: blocks/popular-places.php:108
-#: blocks/popular-places.php:254
+#: blocks/popular-places.php:253
 msgid "Popular Places"
 msgstr ""
 
-#: blocks/popular-places.php:228
+#: blocks/popular-places.php:227
 #: blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:13
 #: blocks/popular-places/popular-places.js:13
 msgid "OpenSimulator Popular Places"
 msgstr ""
 
-#: blocks/popular-places.php:252
+#: blocks/popular-places.php:251
 msgid "Enter the title for the Popular Places module."
 msgstr ""
 
-#: blocks/popular-places.php:275
+#: blocks/popular-places.php:274
 #: blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:92
 #: blocks/popular-places/popular-places.js:92
 msgid "Max Results"
 msgstr ""
 
-#: blocks/popular-places.php:277
+#: blocks/popular-places.php:276
 msgid "Enter the maximum number of results to display."
 msgstr ""
 
 #: includes/class-avatar-model.php:62
-#: includes/class-avatar-model.php:78
+#: includes/class-avatar-model.php:80
 #: legacy/admin/status-page.php:58
 msgid "Avatar Models"
 msgstr ""
 
-#: includes/class-avatar-model.php:89
+#: includes/class-avatar-model.php:63
+msgid "Avatar Models Settings"
+msgstr ""
+
+#: includes/class-avatar-model.php:91
 msgid "Match"
 msgstr ""
 
-#: includes/class-avatar-model.php:93
+#: includes/class-avatar-model.php:95
 msgid "First Name"
 msgstr ""
 
-#: includes/class-avatar-model.php:94
+#: includes/class-avatar-model.php:96
 msgid "Any"
 msgstr ""
 
-#: includes/class-avatar-model.php:95
+#: includes/class-avatar-model.php:97
 msgid "Last Name"
 msgstr ""
 
-#: includes/class-avatar-model.php:96
+#: includes/class-avatar-model.php:98
 msgid "Custom list"
 msgstr ""
 
-#: includes/class-avatar-model.php:101
+#: includes/class-avatar-model.php:103
 msgid "Name"
 msgstr ""
 
-#: includes/class-avatar-model.php:111
+#: includes/class-avatar-model.php:113
 msgid "Select Models"
 msgstr ""
 
-#: includes/class-avatar-model.php:115
+#: includes/class-avatar-model.php:117
 msgid "Select one or more existing avatars"
 msgstr ""
 
-#: includes/class-avatar-model.php:139
+#: includes/class-avatar-model.php:141
 msgid "Available Models"
 msgstr ""
 
-#: includes/class-avatar-model.php:165
+#: includes/class-avatar-model.php:167
 msgid "If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar."
 msgstr ""
 
-#: includes/class-avatar-model.php:166
+#: includes/class-avatar-model.php:168
 msgid "The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture."
 msgstr ""
 
-#: includes/class-avatar-model.php:167
+#: includes/class-avatar-model.php:169
 msgid "The avatars used for the models should never be real user accounts."
 msgstr ""
 
-#: includes/class-avatar-model.php:168
+#: includes/class-avatar-model.php:170
 msgid "The new avatar will wear the same outfit as the model at the time of registration."
 msgstr ""
 
-#: includes/class-avatar-model.php:169
+#: includes/class-avatar-model.php:171
 msgid "If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list."
 msgstr ""
 
-#: includes/class-avatar-model.php:293
+#: includes/class-avatar-model.php:295
 msgid "No models found."
 msgstr ""
 
-#: includes/class-avatar-model.php:307
+#: includes/class-avatar-model.php:309
 msgid "No models"
 msgstr ""
 
-#: includes/class-avatar-model.php:344
+#: includes/class-avatar-model.php:346
 msgid "Your initial appearance"
 msgstr ""
 
-#: includes/class-avatar-model.php:345
+#: includes/class-avatar-model.php:347
 msgid "You can change it as often as you want in the virtual world."
 msgstr ""
 
-#: includes/class-avatar-model.php:363
+#: includes/class-avatar-model.php:365
 msgid "Refreshing list..."
 msgstr ""
 
@@ -373,94 +377,118 @@ msgstr ""
 msgid "If 'Provide Web Assets Server' is disabled, it is necessary to install a third-party service and enter its URL here to ensure the proper functioning of the plugin."
 msgstr ""
 
-#: includes/class-helpers-assets.php:136
-msgid "http://example.org/assets/assets.php?id="
-msgstr ""
-
 #: includes/class-helpers-assets.php:195
 msgid "Assets base"
 msgstr ""
 
-#: includes/class-helpers-economy.php:46
+#: includes/class-helpers-economy.php:51
 #: legacy/admin/admin-init.php:411
 msgid "Economy"
 msgstr ""
 
-#: includes/class-helpers-economy.php:47
-#: includes/class-helpers-economy.php:71
+#: includes/class-helpers-economy.php:52
+#: includes/class-helpers-economy.php:76
 msgid "Economy Settings"
 msgstr ""
 
-#: includes/class-helpers-economy.php:77
+#: includes/class-helpers-economy.php:82
 msgid "Provide Economy Helper"
 msgstr ""
 
-#: includes/class-helpers-economy.php:86
-msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
-msgstr ""
-
-#: includes/class-helpers-economy.php:87
-msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
-msgstr ""
-
-#: includes/class-helpers-economy.php:88
-msgid "This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:"
-msgstr ""
-
-#: includes/class-helpers-economy.php:96
+#: includes/class-helpers-economy.php:91
 msgid "Economy Helper URI"
 msgstr ""
 
-#: includes/class-helpers-economy.php:109
+#: includes/class-helpers-economy.php:104
 msgid "The URL must be set in Robust configuration."
 msgstr ""
 
-#: includes/class-helpers-economy.php:121
+#: includes/class-helpers-economy.php:119
 msgid "Economy Database"
 msgstr ""
 
-#: includes/class-helpers-economy.php:140
+#: includes/class-helpers-economy.php:138
 msgid "Set the same credentials here and in MoneyServer.ini"
 msgstr ""
 
-#: includes/class-helpers-economy.php:155
-msgid "Currency Conversion Rate"
-msgstr ""
-
-#: includes/class-helpers-economy.php:158
-msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)."
-msgstr ""
-
-#: includes/class-helpers-economy.php:170
+#: includes/class-helpers-economy.php:153
 msgid "Currency Provider"
 msgstr ""
 
-#: includes/class-helpers-economy.php:180
-msgid "No provider, use fake money."
+#: includes/class-helpers-economy.php:165
+msgid "Generic MoneyServer, for fake money or altenate providers."
 msgstr ""
 
-#: includes/class-helpers-economy.php:187
+#: includes/class-helpers-economy.php:170
+msgid "Currency Conversion Rate"
+msgstr ""
+
+#: includes/class-helpers-economy.php:173
+msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)."
+msgstr ""
+
+#: includes/class-helpers-economy.php:188
+msgid "Gloebit Configuration"
+msgstr ""
+
+#: includes/class-helpers-economy.php:194
+msgid "Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator."
+msgstr ""
+
+#: includes/class-helpers-economy.php:196
+msgid "For Linux, see %s to avoid certificate-related errors."
+msgstr ""
+
+#: includes/class-helpers-economy.php:200
+msgid "Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator."
+msgstr ""
+
+#: includes/class-helpers-economy.php:204
+msgid "Add Gloebit configuration in OpenSim.ini."
+msgstr ""
+
+#: includes/class-helpers-economy.php:205
+msgid "Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll)."
+msgstr ""
+
+#: includes/class-helpers-economy.php:244
 msgid "Money Script Access Key"
 msgstr ""
 
-#: includes/class-helpers-economy.php:197
+#: includes/class-helpers-economy.php:254
 msgid "Choose a unique access key and set it in MoneyServer.ini"
 msgstr ""
 
-#: includes/class-helpers-economy.php:210
+#: includes/class-helpers-economy.php:267
 msgid "Podex Options"
 msgstr ""
 
-#: includes/class-helpers-economy.php:220
+#: includes/class-helpers-economy.php:277
 msgid "Podex Redirect Message"
 msgstr ""
 
-#: includes/class-helpers-economy.php:224
+#: includes/class-helpers-economy.php:281
 msgid "Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange area."
 msgstr ""
 
-#: includes/class-helpers-economy.php:227
+#: includes/class-helpers-economy.php:284
 msgid "Exchange Teleport URL"
+msgstr ""
+
+#: includes/class-helpers-economy.php:315
+msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
+msgstr ""
+
+#: includes/class-helpers-economy.php:316
+msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
+msgstr ""
+
+#: includes/class-helpers-economy.php:317
+msgid "This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:"
+msgstr ""
+
+#: includes/class-helpers-economy.php:327
+msgid "Ready to use binaries and example config files can be downloaded here:"
 msgstr ""
 
 #: includes/class-helpers-offline.php:46
@@ -500,73 +528,85 @@ msgstr ""
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr ""
 
-#: includes/class-helpers-search.php:58
+#: includes/class-helpers-search.php:62
 msgid "Search Engine"
 msgstr ""
 
-#: includes/class-helpers-search.php:59
-#: includes/class-helpers-search.php:77
+#: includes/class-helpers-search.php:63
+#: includes/class-helpers-search.php:81
 msgid "Search Engine Settings"
 msgstr ""
 
-#: includes/class-helpers-search.php:84
+#: includes/class-helpers-search.php:88
 msgid "Provide Search"
 msgstr ""
 
-#: includes/class-helpers-search.php:87
-msgid "Enable to use a local search engine, allowing only local results (recommended for private grids). Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids."
-msgstr ""
-
-#: includes/class-helpers-search.php:97
+#: includes/class-helpers-search.php:101
 msgid "OS Search Database"
 msgstr ""
 
-#: includes/class-helpers-search.php:118
+#: includes/class-helpers-search.php:122
 msgid "Search Engine URL"
 msgstr ""
 
-#: includes/class-helpers-search.php:127
+#: includes/class-helpers-search.php:131
 msgid "URL of the search engine used by the viewer to provide search results (without arguments)."
 msgstr ""
 
-#: includes/class-helpers-search.php:128
+#: includes/class-helpers-search.php:132
 msgid "Only one can be set, other lines are alternative examples."
 msgstr ""
 
-#: includes/class-helpers-search.php:129
+#: includes/class-helpers-search.php:133
 msgid "Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary for other engines."
 msgstr ""
 
-#: includes/class-helpers-search.php:142
+#: includes/class-helpers-search.php:146
 msgid "Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar names."
 msgstr ""
 
-#: includes/class-helpers-search.php:157
+#: includes/class-helpers-search.php:161
 msgid "Search Register URL"
 msgstr ""
 
-#: includes/class-helpers-search.php:165
+#: includes/class-helpers-search.php:169
 msgid "Data service, used to register regions, objects or land for sale."
 msgstr ""
 
-#: includes/class-helpers-search.php:166
+#: includes/class-helpers-search.php:170
 msgid "You can register to several search engines."
 msgstr ""
 
-#: includes/class-helpers-search.php:167
+#: includes/class-helpers-search.php:171
 msgid "Each line must have a unique identifier beginning with \"DATA_SRV_\""
 msgstr ""
 
-#: includes/class-helpers-search.php:186
+#: includes/class-helpers-search.php:190
 msgid "Events Server URL"
 msgstr ""
 
-#: includes/class-helpers-search.php:197
+#: includes/class-helpers-search.php:201
 msgid "HYPEvents Server URL, used to fetch upcoming events and make them available in search."
 msgstr ""
 
-#: includes/class-helpers-search.php:198
+#: includes/class-helpers-search.php:202
 msgid "Leave blank to ignore events or if you have an other events implementation."
+msgstr ""
+
+#: includes/class-helpers-search.php:226
+msgid "Enable to use a local search engine, allowing only local results (recommended for private grids)."
+msgstr ""
+
+#: includes/class-helpers-search.php:227
+msgid "Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids."
+msgstr ""
+
+#: includes/class-helpers-search.php:228
+msgid "Search features require the installation of OpenSimSearch Module on OpenSimulator."
+msgstr ""
+
+#: includes/class-helpers-search.php:229
+msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr ""
 
 #: includes/class-settings.php:77
