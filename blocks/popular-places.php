@@ -156,8 +156,7 @@ function w4os_popular_places( $atts = array() ) {
 		)
 	);
 	$response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );
-
-	if ( is_array( $response ) & ! xmlrpc_is_fault( $response ) & ! empty( $response ) && isset( $response['data'] ) ) {
+	if ( is_array( $response ) && ! xmlrpc_is_fault( $response ) && ! empty( $response ) && isset( $response['data'] ) ) {
 		return $response['data'];
 	} else {
 		return array();
