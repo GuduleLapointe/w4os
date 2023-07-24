@@ -1,4 +1,4 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
@@ -191,6 +191,11 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.5-dev.1113) =
+* new OpenSim Rest class to communicate with Robusst Rest Console
+* fix crash caused by translation on nl and de pages
+* fix popular-place page would crash if mpty answer given by the helper
 
 = 2.4.6 =
 * added Gloebit configuration instructions

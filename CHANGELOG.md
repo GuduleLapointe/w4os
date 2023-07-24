@@ -1,5 +1,10 @@
 ## Changelog
 
+### Unreleased (2.5-dev.1113)
+- new OpenSim Rest class to communicate with Robusst Rest Console
+- fix crash caused by translation on nl and de pages
+- fix popular-place page would crash if mpty answer given by the helper
+
 ### 2.4.6
 - added Gloebit configuration instructions
 - added link to economy binaries download
