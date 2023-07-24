@@ -1,7 +1,6 @@
 ## Changelog
 
-### Unreleased (2.5-dev.1113)
-- new OpenSim Rest class to communicate with Robusst Rest Console
+### 2.4.7
 - fix crash caused by translation on nl and de pages
 - fix popular-place page would crash if mpty answer given by the helper
 
