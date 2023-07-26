@@ -80,7 +80,7 @@ class W4OS_Loader {
 		// require_once W4OS_DIR . '/templates/templates.php';
 		require_once W4OS_DIR . '/includes/class-helpers-assets.php';
 
-		if(is_admin()) {
+		if ( is_admin() ) {
 			require_once W4OS_DIR . '/admin/admin-loader.php';
 		}
 		/**
