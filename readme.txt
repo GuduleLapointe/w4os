@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.4.7
+Stable tag: 2.5
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -191,6 +191,18 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.5 =
+
+Stable release, includes updates from 2.4.2 to 2.4.7, mainly:
+* optimized Grid Status, Grid Info, Popular Places and Avatar Profile Gutenberg block
+* added "mini profile" option to avatar profile
+* added Divi modules for Grid Status, Grid Info, Popular Places and Avatar Profile
+* added option to define avatar models by a custom list in addition to name rules
+* added Gloebit configuration instructions
+* reorganized settings in several page
+* fix potential crash due to incorrectly formatted translations
+* and a bunch of other fixes and enhancements detailed below
 
 = 2.4.7 =
 * fix crash caused by translation on nl and de pages
