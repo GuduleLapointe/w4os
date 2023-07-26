@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-26T02:21:03+00:00\n"
+"POT-Creation-Date: 2023-07-26T03:45:43+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,46 +31,52 @@ msgstr "Speculoos World"
 
 #. Author URI of the plugin
 msgid "https://speculoos.world"
-msgstr "https://speculoos.world"
+msgstr "https://speculoos.world/nl"
 
 #: admin/templates/shortcodes.php:1 includes/class-settings.php:81
 msgid "Available Shortcodes"
-msgstr "Beschikbare korte codes"
+msgstr "Beschikbare shortcodes"
 
 #: admin/templates/shortcodes.php:4
 msgid "Shortcodes can be included in any page or articles."
-msgstr "Korte codes kunnen worden opgenomen in elke pagina of artikel."
+msgstr ""
 
 #: admin/templates/shortcodes.php:5
-msgid "They are also available as configurable Gutenberg blocks and Divi modules."
-msgstr "Ze zijn ook beschikbaar als configureerbare Gutenberg-blokken en Divi-modules."
+msgid ""
+"They are also available as configurable Gutenberg blocks and Divi modules."
+msgstr ""
 
 #: admin/templates/shortcodes.php:12
-msgid "General information (grid name and login URI)"
-msgstr "Algemene informatie (gridnaam en inlog URI)"
+msgid "General information (grid name and login uri)"
+msgstr "Algemene informatie (gridnaam en login-uri)"
 
 #: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38
 #: admin/templates/shortcodes.php:60 admin/templates/shortcodes.php:82
-msgid "Block title"
-msgstr "Blok titel"
+msgid "Bloc title"
+msgstr ""
 
 #: admin/templates/shortcodes.php:19 admin/templates/shortcodes.php:39
 #: admin/templates/shortcodes.php:61 admin/templates/shortcodes.php:84
 msgid "Title level (h1 to h6)"
-msgstr "Titel niveau (h1 tot h6)"
+msgstr ""
 
 #: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41
 #: admin/templates/shortcodes.php:63 admin/templates/shortcodes.php:87
 msgid "Options"
-msgstr "Opties"
+msgstr ""
 
 #: admin/templates/shortcodes.php:32
 msgid "Online users, regions, etc."
 msgstr "Online gebruikers, regio's, enz."
 
 #: admin/templates/shortcodes.php:52
-msgid "Avatar Profile if user is connected and has an avatar, avatar registration form otherwise"
-msgstr "Avatarprofiel als de gebruiker is verbonden en een avatar heeft, anders het avatarregistratieformulier"
+#, fuzzy
+msgid ""
+"Avatar Profile if user is connected and has an avatar, avatar registration "
+"form otherwise"
+msgstr ""
+"Grid-profiel als de gebruiker is verbonden en heeft een avatar, anders "
+"avatarregistratieformulier"
 
 #: admin/templates/shortcodes.php:53
 msgid "(formerly %s)"
@@ -78,21 +84,22 @@ msgstr "(voorheen %s)"
 
 #: admin/templates/shortcodes.php:75
 msgid "Most visited regions in your grid."
-msgstr "Meest bezochte regio's in uw grid."
+msgstr ""
 
 #: admin/templates/shortcodes.php:83
 msgid "Show maximum n results"
-msgstr "Toon maximaal n resultaten"
+msgstr ""
 
 #: admin/templates/shortcodes.php:85
 msgid "Only show name and picture"
-msgstr "Toon alleen naam en afbeelding"
+msgstr ""
 
 #: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:14
 #: blocks/avatar-profile/avatar-profile.js:14
+#, fuzzy
 msgid "OpenSimulator Avatar Profile"
-msgstr "OpenSimulator Avatarprofiel"
+msgstr "OpenSimulator profiel"
 
 #: blocks/avatar-profile.php:219 blocks/grid-info.php:223
 #: blocks/grid-status.php:175 blocks/popular-places.php:249
@@ -104,16 +111,18 @@ msgstr "OpenSimulator Avatarprofiel"
 #: blocks/avatar-profile/avatar-profile.js:68 blocks/grid-info/grid-info.js:58
 #: blocks/grid-status/grid-status.js:58
 #: blocks/popular-places/popular-places.js:67
+#, fuzzy
 msgid "Title"
-msgstr "Titel"
+msgstr "Titel:"
 
 #: blocks/avatar-profile.php:221
 msgid "Enter the title for the Avatar Profile module."
-msgstr "Voer de titel in voor het Avatarprofielmodule."
+msgstr ""
 
 #: blocks/avatar-profile.php:223 legacy/profile.php:927
+#, fuzzy
 msgid "Avatar Profile"
-msgstr "Avatarprofiel"
+msgstr "Avatar profiel"
 
 #: blocks/avatar-profile.php:230 blocks/grid-info.php:231
 #: blocks/grid-status.php:183 blocks/popular-places.php:257
@@ -125,45 +134,48 @@ msgstr "Avatarprofiel"
 #: blocks/avatar-profile/avatar-profile.js:76 blocks/grid-info/grid-info.js:66
 #: blocks/grid-status/grid-status.js:66
 #: blocks/popular-places/popular-places.js:75
+#, fuzzy
 msgid "Title Level"
-msgstr "Titel niveau"
+msgstr "Titel:"
 
 #: blocks/avatar-profile.php:232 blocks/grid-info.php:233
 #: blocks/grid-status.php:185 blocks/popular-places.php:259
 msgid "Select the HTML heading level for the title."
-msgstr "Selecteer het HTML-koptekstniveau voor de titel."
+msgstr ""
 
 #: blocks/avatar-profile.php:250 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:93
 #: blocks/avatar-profile/avatar-profile.js:93
+#, fuzzy
 msgid "Mini Profile"
-msgstr "Mini profiel"
+msgstr "Mijn Profiel"
 
 #: blocks/avatar-profile.php:254
 msgid "Yes"
-msgstr "Ja"
+msgstr ""
 
 #: blocks/avatar-profile.php:255
 msgid "No"
-msgstr "Nee"
+msgstr ""
 
 #: blocks/avatar-profile.php:258
 msgid "Enable mini profile display."
-msgstr "Schakel mini-profielweergave in."
+msgstr ""
 
 #: blocks/grid-info.php:106 blocks/grid-info.php:227
 #: includes/class-settings.php:110 includes/class-settings.php:111
 #: includes/class-settings.php:112 includes/class-settings.php:113
+#, fuzzy
 msgid "Grid Info"
-msgstr "Gridinfo"
+msgstr "Grid info"
 
 #: blocks/grid-info.php:182 includes/class-settings.php:128
 msgid "Grid Name"
-msgstr "Gridnaam"
+msgstr ""
 
 #: blocks/grid-info.php:183 includes/class-settings.php:119
 msgid "Login URI"
-msgstr "Inlog URI"
+msgstr "Inloggen URI"
 
 #: blocks/grid-info.php:189
 msgid "OpenSimulator not configured"
@@ -173,17 +185,17 @@ msgstr "OpenSimulator niet geconfigureerd"
 #: src/blocks/grid-info/editor.js:13 blocks/grid-info/grid-info.js:13
 #, fuzzy
 msgid "OpenSimulator Grid Info"
-msgstr "OpenSimulator Rasterinformatie"
+msgstr "OpenSimulator profiel"
 
 #: blocks/grid-info.php:225
 msgid "Enter the title for the Grid Info module."
-msgstr "Voer de titel in voor het Grid Info module."
+msgstr ""
 
 #: blocks/grid-status.php:108 blocks/grid-status.php:179
 #: includes/class-settings.php:134
 #, fuzzy
 msgid "Grid Status"
-msgstr "Gridstatus"
+msgstr "Grid status"
 
 #: blocks/grid-status.php:142 blocks/popular-places.php:186
 msgid "No result"
@@ -197,11 +209,11 @@ msgstr "OpenSimulator-status"
 
 #: blocks/grid-status.php:177
 msgid "Enter the title for the Grid Status module."
-msgstr "Voer de titel in voor het Grid Status module."
+msgstr ""
 
 #: blocks/popular-places.php:108 blocks/popular-places.php:253
 msgid "Popular Places"
-msgstr "Populaire plaatsen"
+msgstr ""
 
 #: blocks/popular-places.php:227 blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:13
@@ -212,7 +224,7 @@ msgstr "OpenSimulator pagina's"
 
 #: blocks/popular-places.php:251
 msgid "Enter the title for the Popular Places module."
-msgstr "Voer de titel in voor het Popular Places module."
+msgstr ""
 
 #: blocks/popular-places.php:274 blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:92
@@ -223,310 +235,318 @@ msgstr "Geen resultaat"
 
 #: blocks/popular-places.php:276
 msgid "Enter the maximum number of results to display."
-msgstr "Voer het maximale aantal resultaten in dat moet worden weergegeven."
+msgstr ""
 
 #: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80
 #: legacy/admin/status-page.php:58
 msgid "Avatar Models"
-msgstr "Avatarmodellen"
+msgstr ""
 
 #: includes/class-avatar-model.php:63
 #, fuzzy
 msgid "Avatar Models Settings"
-msgstr "Instellingen"
+msgstr "Avatar modellen"
 
 #: includes/class-avatar-model.php:91
 msgid "Match"
-msgstr "Overeenkomst"
+msgstr ""
 
 #: includes/class-avatar-model.php:95
 msgid "First Name"
-msgstr "Voornaam"
+msgstr ""
 
 #: includes/class-avatar-model.php:96
 msgid "Any"
-msgstr "Ieder"
+msgstr ""
 
 #: includes/class-avatar-model.php:97
 msgid "Last Name"
-msgstr "Achternaam"
+msgstr ""
 
 #: includes/class-avatar-model.php:98
 msgid "Custom list"
-msgstr "Aangepaste lijst"
+msgstr ""
 
 #: includes/class-avatar-model.php:103
 msgid "Name"
-msgstr "Naam"
+msgstr ""
 
 #: includes/class-avatar-model.php:113
 msgid "Select Models"
-msgstr "Modellen selecteren"
+msgstr ""
 
 #: includes/class-avatar-model.php:117
 msgid "Select one or more existing avatars"
-msgstr "Selecteer één of meer bestaande avatars"
+msgstr ""
 
 #: includes/class-avatar-model.php:141
 msgid "Available Models"
-msgstr "Beschikbare modellen"
+msgstr ""
 
 #: includes/class-avatar-model.php:167
 msgid ""
 "If avatar models are defined, new users will be presented with a choice on "
 "the avatar creation form, which will determine the initial outfit of the "
 "created avatar."
-msgstr "Als avatarmodellen zijn gedefinieerd, krijgen nieuwe gebruikers een keuze te zien op het avatar aanmaakformulier, die de initiële outfit van de gemaakte avatar zal bepalen."
+msgstr ""
 
 #: includes/class-avatar-model.php:168
 msgid ""
 "The grid administrator needs to create each model from the ROBUST console, "
 "log in with the viewer, customize the outfit, and add a profile picture."
 msgstr ""
-msgstr "De gridbeheerder moet elk model aanmaken vanuit de ROBUST-console, inloggen met de viewer, de outfit aanpassen en een profielfoto toevoegen."
 
 #: includes/class-avatar-model.php:169
 msgid "The avatars used for the models should never be real user accounts."
-msgstr "De avatars die voor de modellen worden gebruikt, mogen nooit echte gebruikersaccounts zijn."
+msgstr ""
 
 #: includes/class-avatar-model.php:170
 msgid ""
 "The new avatar will wear the same outfit as the model at the time of "
 "registration."
-msgstr "De nieuwe avatar draagt dezelfde outfit als het model op het moment van registratie."
+msgstr ""
 
 #: includes/class-avatar-model.php:171
 msgid ""
 "If the model assignment rule is based on the name, each newly created avatar "
 "matching that rule will be automatically added to the list."
 msgstr ""
-msgstr "Als de modeltoewijzingsregel is gebaseerd op de naam, wordt elke nieuw gemaakte avatar die aan die regel voldoet automatisch aan de lijst toegevoegd."
 
 #: includes/class-avatar-model.php:295
 msgid "No models found."
-msgstr "Geen modellen gevonden."
+msgstr ""
 
 #: includes/class-avatar-model.php:309
 msgid "No models"
-msgstr "Geen modellen"
+msgstr ""
 
 #: includes/class-avatar-model.php:346
 msgid "Your initial appearance"
-msgstr "Je initiële uiterlijk"
+msgstr "Uw eerste verschijning"
 
 #: includes/class-avatar-model.php:347
 msgid "You can change it as often as you want in the virtual world."
-msgstr "Je kunt het zo vaak wijzigen als je wilt in de virtuele wereld."
+msgstr "Je kunt het wijzigen en aanpassen in de wereld, zo vaak als je wilt."
 
 #: includes/class-avatar-model.php:365
 msgid "Refreshing list..."
-msgstr "Lijst wordt ververst..."
+msgstr ""
 
 #: includes/class-helpers-assets.php:83
 msgid "Assets Server"
-msgstr "Activaserver"
+msgstr ""
 
 #: includes/class-helpers-assets.php:84
 msgid "Web Assets Server"
-msgstr "Webactivaserver"
+msgstr "Web assets-server"
 
 #: includes/class-helpers-assets.php:99
 msgid "Assets Server Fields"
-msgstr "Activaservervelden"
+msgstr ""
 
 #: includes/class-helpers-assets.php:105
 msgid "Provide Web Assets Server"
-msgstr "Webactivaserver verstrekken"
+msgstr ""
 
 #: includes/class-helpers-assets.php:108
 msgid ""
 "A web assets server is required to display in-world assets (from the grid) "
 "on the website (e.g. profile pictures)."
-msgstr "Een webactivaserver is vereist om activa in de wereld (van het grid) op de website weer te geven (bijv. profielfoto's)."
+msgstr ""
+"Een web assets server is nodig om in-world assets (uit het grid) op de "
+"website te tonen (b.v. profielfoto's)."
 
 #: includes/class-helpers-assets.php:114 includes/class-helpers-assets.php:132
 msgid "Web Assets Server URL"
-msgstr "URL van de webactivaserver"
+msgstr ""
 
 #: includes/class-helpers-assets.php:120
 #, fuzzy
 msgid "You can set the assets slug in [permalinks settings page]"
-msgstr "U kunt de activaslug instellen in [permalinks settings]."
+msgstr "U kunt de asset slug instellen in [permalinks settings]."
 
 #: includes/class-helpers-assets.php:135
 msgid ""
 "If 'Provide Web Assets Server' is disabled, it is necessary to install a "
 "third-party service and enter its URL here to ensure the proper functioning "
 "of the plugin."
-msgstr "Als 'Webactivaserver verstrekken' is uitgeschakeld, moet u een externe dienst installeren en de URL hier invoeren om ervoor te zorgen dat de plugin correct functioneert."
+msgstr ""
 
 #: includes/class-helpers-assets.php:195
 msgid "Assets base"
-msgstr "Basis van activa"
+msgstr "Activa"
 
 #: includes/class-helpers-economy.php:51 legacy/admin/admin-init.php:411
 msgid "Economy"
 msgstr "Economie"
 
 #: includes/class-helpers-economy.php:52 includes/class-helpers-economy.php:76
+#, fuzzy
 msgid "Economy Settings"
-msgstr "Economie-instellingen"
+msgstr "Instellingen"
 
 #: includes/class-helpers-economy.php:82
 #, fuzzy
 msgid "Provide Economy Helper"
-msgstr "Economische helper inschakelen"
+msgstr "Zorg voor economische helpers"
 
 #: includes/class-helpers-economy.php:91
 #, fuzzy
-#| msgid "Economy base URI"
 msgid "Economy Helper URI"
-msgstr "Economiebasis URI"
+msgstr "Economie basis URI"
 
 #: includes/class-helpers-economy.php:104
 msgid "The URL must be set in Robust configuration."
-msgstr "De URL moet worden ingesteld in de Robuuste configuratie."
+msgstr "De URL moet worden ingesteld in Robuuste configuratie."
 
 #: includes/class-helpers-economy.php:119
 msgid "Economy Database"
-msgstr "Economiedatabase"
+msgstr ""
 
 #: includes/class-helpers-economy.php:138
 msgid "Set the same credentials here and in MoneyServer.ini"
-msgstr "Stel hier dezelfde inloggegevens in als in MoneyServer.ini"
+msgstr ""
 
 #: includes/class-helpers-economy.php:153
 msgid "Currency Provider"
-msgstr "Valuta-aanbieder"
+msgstr "Valuta Aanbieder"
 
 #: includes/class-helpers-economy.php:165
-#, fuzzy
-#| msgid "Generic MoneyServer, for fake money or alternate providers."
 msgid "Generic MoneyServer, for fake money or alternate providers."
-msgstr "Algemene MoneyServer, voor nepgeld of alternatieve aanbieders."
+msgstr ""
 
 #: includes/class-helpers-economy.php:170
 msgid "Currency Conversion Rate"
-msgstr "Valuta-wisselkoers"
+msgstr ""
 
 #: includes/class-helpers-economy.php:173
 #, fuzzy
-#| msgid ""
-#| "Amount to pay in US$ for 1000 in-world money units. Used for cost "
-#| "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)"
 msgid ""
 "Amount to pay in US$ for 1000 in-world money units. Used for cost "
 "estimation. If not set, the rate will be 10/1000 (1 cent per money unit)."
 msgstr ""
-"Bedrag te betalen in US$ voor 1000 inwereldse geldeenheden. Wordt gebruikt om de kosten te schatten. Indien niet ingesteld, zal de koers 10/1000 zijn (1 cent per geldeenheid)"
+"Bedrag te betalen in US$ voor 1000 inwereldse geldeenheden. Wordt gebruikt "
+"om de kosten te schatten. Indien niet ingesteld, zal de koers 10/1000 zijn "
+"(1 cent per geldeenheid)"
 
 #: includes/class-helpers-economy.php:188
+#, fuzzy
 msgid "Gloebit Configuration"
-msgstr "Gloebit-configuratie"
+msgstr "Configuratie"
 
 #: includes/class-helpers-economy.php:194
 msgid ""
 "Gloebit module needs to be configured before restarting the region, "
 "otherwise it could crash the simulator."
-msgstr "De Gloebit-module moet worden geconfigureerd voordat de regio wordt herstart, anders kan het de simulator laten crashen."
+msgstr ""
 
 #: includes/class-helpers-economy.php:196
 msgid "For Linux, see %s to avoid certificate-related errors."
-msgstr "Voor Linux, zie %s om certificaatgerelateerde fouten te voorkomen."
+msgstr ""
 
 #: includes/class-helpers-economy.php:200
 msgid ""
 "Register an account or connect on %1$s and Follow instructions on %2$s to "
 "setup an app for your grid/simulator."
-msgstr "Registreer een account of verbind op %1$s en volg de instructies op %2$s om een app in te stellen voor uw grid/simulator."
+msgstr ""
 
 #: includes/class-helpers-economy.php:204
 msgid "Add Gloebit configuration in OpenSim.ini."
-msgstr "Voeg de Gloebit-configuratie toe aan OpenSim.ini."
+msgstr ""
 
 #: includes/class-helpers-economy.php:205
 msgid ""
 "Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit."
 "dll)."
-msgstr "Download de nieuwste dll in uw OpenSimulator bin/ map (hernoem het naar Gloebit.dll)."
+msgstr ""
 
 #: includes/class-helpers-economy.php:244
 msgid "Money Script Access Key"
-msgstr "Toegangssleutel voor geldscripts"
+msgstr "Geld Script Toegangssleutel"
 
 #: includes/class-helpers-economy.php:254
 msgid "Choose a unique access key and set it in MoneyServer.ini"
-msgstr "Kies een unieke toegangssleutel en stel deze in in MoneyServer.ini"
+msgstr ""
 
 #: includes/class-helpers-economy.php:267
 msgid "Podex Options"
-msgstr "Podex-opties"
+msgstr ""
 
 #: includes/class-helpers-economy.php:277
 #, fuzzy
-#| msgid "Podex redirect message"
 msgid "Podex Redirect Message"
-msgstr "Podex-omleidingsbericht"
+msgstr "Podex omleiding bericht"
 
 #: includes/class-helpers-economy.php:281
+#, fuzzy
 msgid ""
 "Please use our terminals in-world to proceed. Click OK to teleport to Podex "
 "Exchange area."
-msgstr "Gebruik onze terminals in de wereld om verder te gaan. Klik op OK om naar het terminalgebied te teleporteren."
+msgstr ""
+"Gebruik onze terminals in de wereld om verder te gaan. Klik op OK om naar "
+"het terminalgebied te teleporteren."
 
 #: includes/class-helpers-economy.php:284
 msgid "Exchange Teleport URL"
-msgstr "URL voor Teleporteren naar Uitwisseling"
+msgstr ""
 
 #: includes/class-helpers-economy.php:315
 msgid ""
 "Economy helpers are additional scripts needed if you implement economy on "
 "your grid (with real or fake currency)."
 msgstr ""
-msgstr "Economie helpers zijn extra scripts die nodig zijn als je economie op je grid implementeert (met echte of valse valuta)."
+"Economie helpers zijn extra scripts die nodig zijn als je economie op je "
+"grid implementeert (met echte of valse valuta)."
 
 #: includes/class-helpers-economy.php:316
 msgid ""
 "Helper scripts allow communication between the money server and the grid: "
 "current balance update, currency cost estimation, land and object sales, "
 "payments..."
-msgstr "Helper-scripts maken communicatie mogelijk tussen de geldserver en het raster: bijwerken van de huidige balans, schatting van de muntkosten, verkoop van land en objecten, betalingen..."
+msgstr ""
+"Helperscripts maken communicatie mogelijk tussen de geldserver en het "
+"raster: bijwerken van de huidige balans, schatting van de muntkosten, "
+"verkoop van land en objecten, betalingen..."
 
 #: includes/class-helpers-economy.php:317
 msgid ""
 "This plugin only provides the web helpers required by the money server "
 "module. A third-party module must be installed and configured on the "
 "simulator, for example:"
-msgstr "Deze plugin biedt alleen de webhelpers die vereist zijn door de geldservermodule. Een externe module moet worden geïnstalleerd en geconfigureerd op de simulator, bijvoorbeeld:"
+msgstr ""
 
 #: includes/class-helpers-economy.php:327
 msgid "Ready to use binaries and example config files can be downloaded here:"
-msgstr "Kant-en-klare binair bestanden en voorbeeld configuratiebestanden kunnen hier worden gedownload:"
+msgstr ""
 
 #: includes/class-helpers-offline.php:46
+#, fuzzy
 msgid "Offline Messages"
 msgstr "Offline berichten"
 
 #: includes/class-helpers-offline.php:47 includes/class-helpers-offline.php:71
+#, fuzzy
 msgid "Offline Messages Settings"
-msgstr "Offline berichten-instellingen"
+msgstr "Offline berichten"
 
 #: includes/class-helpers-offline.php:77
+#, fuzzy
 msgid "Provide Offline Messages Service"
-msgstr "Bied offline berichtendienst aan"
+msgstr "Zorg voor offline helper"
 
 #: includes/class-helpers-offline.php:86
 msgid "Honor \"Email me IMs when I'm offline\" viewer option."
-msgstr "Eer de \"Stuur mij e-mails wanneer ik offline ben\"-optie van de viewer."
+msgstr ""
 
 #: includes/class-helpers-offline.php:87
 msgid ""
 "OpenSimulator core offline messages module delivers messages sent to an "
 "offline user when they come back online but don't handle e-mail forwarding "
 "option available in the viewer."
-msgstr "De kernmodule voor offline berichten van OpenSimulator levert berichten af die naar een offline gebruiker zijn gestuurd wanneer ze weer online komen, maar behandelt de optie voor e-mail doorsturen die beschikbaar is in de viewer niet."
+msgstr ""
 
 #: includes/class-helpers-offline.php:92
+#, fuzzy
 msgid "Sender e-mail address"
 msgstr "E-mailadres afzender"
 
@@ -534,37 +554,46 @@ msgstr "E-mailadres afzender"
 msgid ""
 "A no-reply e-mail address used to forward messages for users enabling "
 "\"Email me IMs when I'm offline\" option."
-msgstr "Een no-reply e-mailadres dat wordt gebruikt om berichten door te sturen voor gebruikers die de optie \"Stuur mij IM's per e-mail wanneer ik offline ben\" inschakelen."
+msgstr ""
+"Een e-mailadres zonder antwoord dat wordt gebruikt om berichten door te "
+"sturen voor gebruikers die de optie \"E-mail mij IM's wanneer ik offline "
+"ben\" inschakelen."
 
 #: includes/class-helpers-offline.php:106
+#, fuzzy
 msgid "Offline Messages Helper"
-msgstr "Offline Berichten Helper"
+msgstr "Offline berichten"
 
 #: includes/class-helpers-offline.php:119
 msgid "Set the URL in Robust and OpenSimulator configurations."
-msgstr "Stel de URL in in Robuuste en OpenSimulator configuraties."
+msgstr "Stel de URL in Robust en OpenSimulator configuraties in."
 
 #: includes/class-helpers-search.php:62
+#, fuzzy
 msgid "Search Engine"
-msgstr "Zoekmachine"
+msgstr "Zoekmachine URL"
 
 #: includes/class-helpers-search.php:63 includes/class-helpers-search.php:81
+#, fuzzy
 msgid "Search Engine Settings"
-msgstr "Zoekmachine Instellingen"
+msgstr "Zoekmachine URL"
 
 #: includes/class-helpers-search.php:88
+#, fuzzy
 msgid "Provide Search"
-msgstr "Bied zoekfunctie aan"
+msgstr "Zorg voor zoeken in de wereld"
 
 #: includes/class-helpers-search.php:101
+#, fuzzy
 msgid "OS Search Database"
-msgstr "OS Zoekdatabank"
+msgstr "Zoeken in databank"
 
 #: includes/class-helpers-search.php:122
 msgid "Search Engine URL"
-msgstr "Zoekmachine URL"
+msgstr ""
 
 #: includes/class-helpers-search.php:131
+#, fuzzy
 msgid ""
 "URL of the search engine used by the viewer to provide search results "
 "(without arguments)."
@@ -572,14 +601,15 @@ msgstr ""
 "URL van de zoekmachine die intern door de viewer wordt gebruikt (zonder "
 "argumenten)."
 
+#: includes/class-helpers-search.php:132
 msgid "Only one can be set, other lines are alternative examples."
-msgstr "Slechts één kan worden ingesteld, andere regels zijn alternatieve voorbeelden."
+msgstr ""
 
 #: includes/class-helpers-search.php:133
 msgid ""
 "Services using w4os engine need the gatekeeper URI (usually the login URI) "
 "to be passed as gk argument. Requirements may vary for other engines."
-msgstr "Services die de w4os-engine gebruiken, hebben de gatekeeper URI (meestal de aanmeldings-URI) nodig die als gk-argument moet worden doorgegeven. De vereisten kunnen variëren voor andere engines."
+msgstr ""
 
 #: includes/class-helpers-search.php:146
 msgid ""
@@ -588,62 +618,70 @@ msgid ""
 "page dedicated to grid content, providing results with in-world URLs (hop:// "
 "or secondlife://). It is optional and is referenced here only to "
 "disambiguate settings which unfortunately have similar names."
-msgstr "Houd er rekening mee dat de Zoek-URL verschilt van de Web-URL, die momenteel niet wordt verwerkt door W4OS. Zoeken op het web is relevant als u een zoekpagina op het web heeft die gewijd is aan grid-inhoud en die resultaten geeft met in-wereld URLs (hop:// of secondlife://). Het is optioneel en wordt hier alleen genoemd om instellingen te onderscheiden die helaas vergelijkbare namen hebben."
+msgstr ""
+"Merk op dat Zoek URL verschillend is van Web-zoek URL, welke momenteel niet "
+"door W4OS wordt behandeld. Zoeken op het web is relevant als je een "
+"zoekpagina op het web hebt die gewijd is aan raster-inhoud en die resultaten "
+"geeft met in-wereld URLs (hop:// of secondlife://). Het is optioneel en "
+"wordt hier alleen genoemd om instellingen uit elkaar te houden die helaas "
+"vergelijkbare namen hebben."
 
 #: includes/class-helpers-search.php:161
+#, fuzzy
 msgid "Search Register URL"
-msgstr "Zoek Registratie URL"
+msgstr "Zoekmachine URL"
 
 #: includes/class-helpers-search.php:169
 msgid "Data service, used to register regions, objects or land for sale."
 msgstr ""
-msgstr "Gegevensdienst, gebruikt om regio's, objecten of land te registreren voor verkoop."
+"Gegevensdienst, gebruikt om regio's, objecten of grond te koop aan te melden."
 
 #: includes/class-helpers-search.php:170
 msgid "You can register to several search engines."
-msgstr "U kunt zich registreren bij verschillende zoekmachines."
+msgstr ""
 
 #: includes/class-helpers-search.php:171
 msgid "Each line must have a unique identifier beginning with \"DATA_SRV_\""
-msgstr "Elke regel moet een unieke identificatie hebben die begint met \"DATA_SRV_\""
+msgstr ""
 
 #: includes/class-helpers-search.php:190
 msgid "Events Server URL"
-msgstr "Evenementen Server URL"
+msgstr ""
 
 #: includes/class-helpers-search.php:201
 msgid ""
 "HYPEvents Server URL, used to fetch upcoming events and make them available "
 "in search."
-msgstr "HYPEvents Server URL, gebruikt om aankomende evenementen op te halen en ze beschikbaar te maken in zoekresultaten."
+msgstr ""
 
 #: includes/class-helpers-search.php:202
 msgid ""
 "Leave blank to ignore events or if you have an other events implementation."
 msgstr ""
-msgstr "Laat leeg om evenementen te negeren of als u een andere evenementen implementatie hebt."
+"Laat leeg om gebeurtenissen te negeren of als u een andere gebeurtenissen "
+"implementatie hebt."
 
 #: includes/class-helpers-search.php:226
 msgid ""
 "Enable to use a local search engine, allowing only local results "
 "(recommended for private grids)."
-msgstr "Inschakelen om een lokale zoekmachine te gebruiken, met alleen lokale resultaten (aanbevolen voor private grids)."
+msgstr ""
 
 #: includes/class-helpers-search.php:227
 msgid ""
 "Disable to use an external search engine like 2do Directory, allowing "
 "results from both your grid and other public grids."
 msgstr ""
-msgid "Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids."
-msgstr "Uitschakelen om een externe zoekmachine te gebruiken zoals 2do Directory, met resultaten van zowel uw grid als andere openbare grids."
 
 #: includes/class-helpers-search.php:228
-msgid "Search features require the installation of OpenSimSearch Module on OpenSimulator."
-msgstr "Zoekfunctionaliteit vereist de installatie van de OpenSimSearch-module op OpenSimulator."
+msgid ""
+"Search features require the installation of OpenSimSearch Module on "
+"OpenSimulator."
+msgstr ""
 
 #: includes/class-helpers-search.php:229
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
-msgstr "Kant-en-klare OpenSimSearch.Modules.dll-binaries zijn hier te vinden:"
+msgstr ""
 
 #: includes/class-settings.php:77
 msgid "OpenSimulator Status"
@@ -655,7 +693,6 @@ msgstr "Status"
 
 #: includes/class-settings.php:81
 #, fuzzy
-#| msgid "Available shortcodes"
 msgid "Shortcodes"
 msgstr "Beschikbare shortcodes"
 
@@ -665,27 +702,24 @@ msgstr "Instellingen"
 
 #: includes/class-settings.php:159
 #, fuzzy
-#| msgid "Search database"
 msgid "ROBUST Database"
 msgstr "Zoeken in databank"
 
 #: includes/class-settings.php:179
 #, fuzzy
-#| msgid "Grid users"
 msgid "Grid Users"
 msgstr "Grid gebruikers"
 
 #: includes/class-settings.php:189
 msgid "Profile Page"
-msgstr "Profielpagina"
+msgstr ""
 
 #: includes/class-settings.php:195
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #: includes/class-settings.php:206
 #, fuzzy
-#| msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgid ""
 "A profile page exists with permalink set as %1$s, as defined in [permalinks "
 "settings]."
@@ -694,7 +728,6 @@ msgstr ""
 
 #: includes/class-settings.php:207
 #, fuzzy
-#| msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgid ""
 "A profile page must be created with permalink set as %1$s, as defined in "
 "[permalinks settings]."
@@ -703,7 +736,6 @@ msgstr ""
 
 #: includes/class-settings.php:215
 #, fuzzy
-#| msgid "Profile page"
 msgid "Public Profile Page"
 msgstr "Profiel pagina"
 
@@ -711,36 +743,32 @@ msgstr "Profiel pagina"
 msgid ""
 "Provide avatars with a public web profile page in the following format: %1$s."
 msgstr ""
-"Geef avatars een openbare webprofielpagina in het volgende formaat: %1$s."
 
 #: includes/class-settings.php:227
 msgid "Login Page"
-msgstr "Aanmeldpagina"
+msgstr ""
 
 #: includes/class-settings.php:230
 #, fuzzy
-#| msgid "Use profile page as login page"
 msgid "Use profile page as login page."
 msgstr "Gebruik profielpagina als login pagina"
 
 #: includes/class-settings.php:240
 msgid "Instructions"
-msgstr "Instructies"
+msgstr ""
 
 #: includes/class-settings.php:243
 #, fuzzy
-#| msgid "Show configuration instructions to new users."
 msgid "Show configuration instructions to new users on their profile page."
 msgstr "Toon configuratie-instructies aan nieuwe gebruikers."
 
 #: includes/class-settings.php:251
 msgid "Replace User Names"
-msgstr "Gebruikersnamen vervangen"
+msgstr "Vervang gebruikersnaam"
 
 #: includes/class-settings.php:254
 msgid "Show avatar name instead of user name in users list."
-msgstr ""
-"Toon de avatar naam in plaats van de gebruikersnaam in de gebruikerslijst."
+msgstr "Toon avatarnaam in plaats van gebruikersnaam in gebruikerslijst."
 
 #: includes/class-settings.php:260
 msgid "Exclude from stats"
@@ -748,37 +776,31 @@ msgstr "Uitsluiten van statistieken"
 
 #: includes/class-settings.php:263
 #, fuzzy
-#| msgid ""
-#| "Accounts without email address are usually test accounts created from the "
-#| "console. Uncheck only if you have real avatars without email address."
 msgid ""
 "Accounts without email address are usually test or technical accounts "
 "created from the console. Uncheck only if you have real avatars without "
 "email address."
 msgstr ""
 "Accounts zonder e-mailadres zijn meestal testaccounts die vanaf de console "
-"zijn aangemaakt. Schakel het alleen uit als je echte avatars hebt zonder e-"
-"mailadres."
+"zijn gemaakt. Schakel het vinkje alleen uit als je echte avatars hebt zonder "
+"e-mailadres."
 
 #: includes/class-settings.php:265
 msgid "Models"
 msgstr "Modellen"
 
 #: includes/class-settings.php:266
-#, fuzzy
-#| msgid "Accounts without email address"
 msgid "Accounts without mail address"
 msgstr "Accounts zonder e-mailadres"
 
 #: includes/class-settings.php:267
 msgid "Hypergrid visitors"
-msgstr "Hypergrid-bezoekers"
+msgstr "Hypergrid bezoekers"
 
 #: includes/class-settings.php:306 legacy/functions.php:268
 #, fuzzy
-#| msgid "Login URI"
 msgid "Invalid Login URI"
-msgstr "Ongeldige inlog-URI"
+msgstr "Inloggen URI"
 
 #: includes/class-settings.php:367
 msgid "Default"
@@ -790,11 +812,11 @@ msgstr "Hostnaam"
 
 #: includes/class-settings.php:397
 msgid "Port"
-msgstr "Poort"
+msgstr ""
 
 #: includes/class-settings.php:404
 msgid "DB Name"
-msgstr "DB-naam"
+msgstr ""
 
 #: includes/class-settings.php:411
 msgid "Username"
@@ -810,10 +832,10 @@ msgstr "Update %s toegepast"
 
 #: includes/updates.php:47
 #, fuzzy
-#| msgid "Update %s applied successfully"
-#| msgid_plural "Updates %s applied successfully"
-msgid "Update %s applied sucessfully"
-msgid_plural "Updates %s applied sucessfully"
+#| msgid "Update %s applied sucessfully"
+#| msgid_plural "Updates %s applied sucessfully"
+msgid "Update %s applied successfully"
+msgid_plural "Updates %s applied successfully"
 msgstr[0] "Update %s succesvol toegepast"
 msgstr[1] "Updates %s succesvol toegepast"
 
@@ -827,32 +849,32 @@ msgstr "W4OS bijgewerkt"
 
 #: includes/updates.php:88
 msgid "Grid user"
-msgstr "Rastargebruiker"
+msgstr "Netgebruiker"
 
 #: includes/updates.php:109
 msgid ""
 "Profiles service is not configured on your Robust server. It is required for "
 "full functionalities."
 msgstr ""
-"Het profielen-dienst is niet geconfigureerd op uw Robust server. Het is "
-"vereist voor volledige functionaliteiten."
+"Profiles service is niet geconfigureerd op uw Robust server. Het is vereist "
+"voor volledige functionaliteiten."
 
 #: includes/updates.php:128
 msgid "Grid and WordPress users synchronized."
-msgstr "Rastar en WordPress-gebruikers zijn gesynchroniseerd."
+msgstr "Rooster en WordPress gebruikers gesynchroniseerd."
 
 #: includes/updates.php:146
 msgid "OpenSim Search tables updated."
-msgstr "OpenSim Zoeken-tabellen zijn bijgewerkt."
+msgstr "OpenSim Zoek tabellen bijgewerkt."
 
 #: legacy/admin/admin-init.php:42
 msgid "OpenSimulator Helpers"
-msgstr "OpenSimulator-hulpprogramma's"
+msgstr "OpenSimulator Helpers"
 
 #: legacy/admin/admin-init.php:63 legacy/profile.php:135
 #: tmp/class-avatar.php:318
 msgid "Avatar Name"
-msgstr "Avatar-naam"
+msgstr "Avatar naam"
 
 #: legacy/admin/admin-init.php:69 legacy/admin/admin-init.php:75
 #: legacy/profile.php:141 tmp/class-avatar.php:355
@@ -877,19 +899,19 @@ msgstr "Zonder avatar"
 
 #: legacy/admin/admin-init.php:182
 msgid "Filter users..."
-msgstr "Gebruikers filteren..."
+msgstr "Filter gebruikers..."
 
 #: legacy/admin/admin-init.php:188
 msgid "Filter"
-msgstr "Filteren"
+msgstr "Filter"
 
 #: legacy/admin/admin-init.php:242
 msgid "OpenSimulator Profile"
-msgstr "OpenSimulator-profiel"
+msgstr "OpenSimulator profiel"
 
 #: legacy/admin/admin-init.php:245
 msgid "OpenSimulator Splash"
-msgstr "OpenSimulator-splash"
+msgstr "OpenSimulator Splash"
 
 #: legacy/admin/admin-init.php:248
 msgid "OpenSimulator Search"
@@ -901,19 +923,19 @@ msgstr "OpenSimulator economie"
 
 #: legacy/admin/admin-init.php:254
 msgid "OpenSimulator About"
-msgstr "OpenSimulator over"
+msgstr "OpenSimulator"
 
 #: legacy/admin/admin-init.php:257
 msgid "OpenSimulator Register"
-msgstr "OpenSimulator-register"
+msgstr "OpenSimulator Register"
 
 #: legacy/admin/admin-init.php:260
 msgid "OpenSimulator Password"
-msgstr "OpenSimulator-wachtwoord"
+msgstr "OpenSimulator wachtwoord"
 
 #: legacy/admin/admin-init.php:263
 msgid "OpenSimulator Offline Messages"
-msgstr "OpenSimulator offline berichten"
+msgstr "OpenSimulator Offline Berichten"
 
 #: legacy/admin/admin-init.php:278 legacy/admin/admin-init.php:292
 msgid "The followed link has expired, please try again"
@@ -933,11 +955,11 @@ msgstr "Fout bij het aanmaken van pagina %s."
 
 #: legacy/admin/admin-init.php:338
 msgid "Avatar profile"
-msgstr "Avatarprofiel"
+msgstr "Avatar profiel"
 
 #: legacy/admin/admin-init.php:339
 msgid "The base URL for avatar web profiles."
-msgstr "De basis-URL voor webprofielen van avatars."
+msgstr "De basis URL voor avatar web profielen."
 
 #: legacy/admin/admin-init.php:342
 msgid "Search Service"
@@ -949,39 +971,34 @@ msgid ""
 "core (limited), or by an external service for additional functionalities "
 "(like events). Requires OpenSimSearch.Modules.dll."
 msgstr ""
-"Zoekdienst die door de viewer wordt gebruikt. Zoeken kan worden geleverd "
-"door de simulator-kern (beperkt) of door een externe service voor extra "
-"functionaliteiten (zoals evenementen). Vereist OpenSimSearch.Modules.dll."
+"Zoekdienst gebruikt door de viewer. Zoeken kan worden geleverd door de "
+"simulator kern (beperkt), of door een externe service voor extra "
+"functionaliteiten (zoals gebeurtenissen). Vereist OpenSimSearch.Modules.dll."
 
 #: legacy/admin/admin-init.php:353
 msgid "Web Search"
-msgstr "Webzoeken"
+msgstr "Zoeken op het web"
 
 #: legacy/admin/admin-init.php:354
 msgid ""
 "Web tab of viewer search windows. Relevant if you have a search page "
 "providing content from the grid."
 msgstr ""
-"Webtabblad van zoekvensters van de viewer. Relevant als je een zoekpagina "
-"hebt die inhoud van het grid levert."
+"Web tabblad van viewer zoekvensters. Relevant als u een zoekpagina hebt met "
+"inhoud uit het raster."
 
 #: legacy/admin/admin-init.php:364
 msgid "Offline messages"
 msgstr "Offline berichten"
 
 #: legacy/admin/admin-init.php:365
-#, fuzzy
-#| msgid ""
-#| "Needed by viewers to keep messages while the user is offline and deliver "
-#| "them when they come back online. Internal service, not accessed directly "
-#| "by the user."
 msgid ""
 "Needed by viewers to keep messages while user is offline and deliver them "
 "when they come back online. Internal service, not accessed directly by the "
 "user."
 msgstr ""
 "Nodig voor viewers om berichten te bewaren terwijl de gebruiker offline is "
-"en deze af te leveren wanneer hij weer online komt. Interne dienst, niet "
+"en ze af te leveren wanneer hij weer online komt. Interne dienst, niet "
 "rechtstreeks toegankelijk voor de gebruiker."
 
 #: legacy/admin/admin-init.php:373
@@ -995,46 +1012,44 @@ msgid ""
 "recommended."
 msgstr ""
 "De welkomstpagina die in de viewer wordt getoond met het inlogformulier. Een "
-"korte, niet-scrollende pagina met alleen essentiële informatie. Het is "
-"verplicht of op zijn minst sterk aanbevolen."
+"korte, niet scrollende pagina, met alleen essentiële info. Het is verplicht, "
+"of op zijn minst sterk aanbevolen."
 
 #: legacy/admin/admin-init.php:399
 msgid "Registration page"
-msgstr "Registratiepagina"
+msgstr "Registratie pagina"
 
 #: legacy/admin/admin-init.php:400
 msgid "Link to the user registration."
 msgstr "Link naar de gebruikersregistratie."
 
 #: legacy/admin/admin-init.php:405
-#, fuzzy
-#| msgid "Password recovery"
 msgid "Password revovery"
-msgstr "Wachtwoordherstel"
+msgstr "Wachtwoord herontdekking"
 
 #: legacy/admin/admin-init.php:406
 msgid "Link to lost password page."
-msgstr "Link naar de verloren wachtwoordpagina."
+msgstr "Link naar de verloren wachtwoord pagina."
 
 #: legacy/admin/admin-init.php:412
 msgid ""
 "Currencies and some other services queried by the viewer. They are not "
 "accessed directly by the user."
 msgstr ""
-"Valuta's en enkele andere diensten die door de kijker worden opgevraagd. Ze "
+"Valuta's en enkele andere diensten die door de kijker worden opgevraagd. Zij "
 "zijn niet rechtstreeks toegankelijk voor de gebruiker."
 
 #: legacy/admin/admin-init.php:418
 msgid "About this grid"
-msgstr "Over dit grid"
+msgstr "Over dit rooster"
 
 #: legacy/admin/admin-init.php:419
 msgid ""
 "Detailed info page on your website, via a link displayed on the viewer login "
 "page."
 msgstr ""
-"Gedetailleerde infopagina op uw website, via een link weergegeven op de "
-"inlogpagina van de viewer."
+"Gedetailleerde informatiepagina op uw website, via een link op de "
+"inlogpagina van de kijker."
 
 #: legacy/admin/admin-init.php:423
 msgid "Help"
@@ -1042,15 +1057,15 @@ msgstr "Help"
 
 #: legacy/admin/admin-init.php:424
 msgid "Link to a help page on your website."
-msgstr "Link naar een helppagina op uw website."
+msgstr "Link naar een hulppagina op uw website."
 
 #: legacy/admin/dashboard.php:16 legacy/widgets.php:49
 msgid "Grid info"
-msgstr "Grid-informatie"
+msgstr "Grid info"
 
 #: legacy/admin/dashboard.php:23 legacy/widgets.php:81 legacy/widgets.php:118
 msgid "Grid status"
-msgstr "Grid-status"
+msgstr "Grid status"
 
 #: legacy/admin/dashboard.php:31
 msgid "Recent users"
@@ -1067,31 +1082,26 @@ msgid ""
 "Robust server must be running. Values entered here will be checked against "
 "your Robust server and updated if needed."
 msgstr ""
-"De Robust-server moet actief zijn. Hier ingevoerde waarden worden "
-"gecontroleerd op uw Robust-server en indien nodig bijgewerkt."
+"Robust server moet draaien. De hier ingevoerde waarden zullen worden "
+"gecontroleerd met uw Robust server en indien nodig worden bijgewerkt."
 
 #: legacy/admin/settings.php:243
-#, fuzzy
-#| msgid ""
-#| "Grid accounts matching the first name or last name set below are "
-#| "considered as avatar models. They will appear on the avatar registration "
-#| "form, with their in-world profile picture."
 msgid ""
 "Grid accounts matching first name or last name set below are considered as "
 "avatar models. They will appear on the avatar registration form, with their "
 "in-world profile picture."
 msgstr ""
 "Grid-accounts die overeenkomen met de hieronder ingestelde voornaam of "
-"achternaam, worden beschouwd als avatar-modellen. Ze verschijnen op het "
-"avatar-registratieformulier, samen met hun profielfoto van in de wereld."
+"achternaam, verschijnen als avatar-modellen, met hun profielfoto, indien "
+"ingesteld, op het avatar-registratieformulier."
 
 #: legacy/admin/status-page.php:16
 msgid "PHP xml-rpc is required but is not installed."
-msgstr "PHP xml-rpc is vereist, maar niet geïnstalleerd."
+msgstr ""
 
 #: legacy/admin/status-page.php:24
 msgid "Users"
-msgstr "Gebruikers"
+msgstr "Gebruikersnaam"
 
 #: legacy/admin/status-page.php:29
 msgid "Total"
@@ -1103,23 +1113,23 @@ msgstr "Alleen WP"
 
 #: legacy/admin/status-page.php:36
 msgid "Sync"
-msgstr "Synchronisatie"
+msgstr "Sync"
 
 #: legacy/admin/status-page.php:40
 msgid "Grid only"
-msgstr "Alleen grid"
+msgstr "Alleen rooster"
 
 #: legacy/admin/status-page.php:46
 msgid "Grid accounts"
-msgstr "Grid-accounts"
+msgstr "Grid status"
 
 #: legacy/admin/status-page.php:53
 msgid "Linked WordPress accounts"
-msgstr "Gekoppelde WordPress-accounts"
+msgstr "Gekoppelde WordPress accounts"
 
 #: legacy/admin/status-page.php:67
 msgid "Other service accounts"
-msgstr "Andere dienstaccounts"
+msgstr "Andere dienstenrekeningen"
 
 #: legacy/admin/status-page.php:84
 msgid ""
@@ -1252,7 +1262,6 @@ msgstr ""
 
 #: legacy/admin/status-page.php:261
 #, fuzzy
-#| msgid "Create My Avatar"
 msgid "Create %s page"
 msgstr "Mijn Avatar aanmaken"
 
@@ -1961,6 +1970,5 @@ msgstr ""
 #: blocks/grid-status/grid-status.js:54
 #: blocks/popular-places/popular-places.js:63
 #, fuzzy
-#| msgid "Settings"
 msgid "Block Settings"
 msgstr "Instellingen"

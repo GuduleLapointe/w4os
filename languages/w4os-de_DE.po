@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-26T02:21:03+00:00\n"
+"POT-Creation-Date: 2023-07-26T03:45:43+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -432,7 +432,7 @@ msgid "Currency Provider"
 msgstr "Währung Anbieter"
 
 #: includes/class-helpers-economy.php:165
-msgid "Generic MoneyServer, for fake money or altenate providers."
+msgid "Generic MoneyServer, for fake money or alternate providers."
 msgstr ""
 
 #: includes/class-helpers-economy.php:170
@@ -579,7 +579,7 @@ msgstr ""
 #: includes/class-helpers-offline.php:92
 #, fuzzy
 #| msgid "Sender e-mail address"
-msgid "Sender E-mail Address"
+msgid "Sender e-mail address"
 msgstr "E-Mail Adresse des Absenders"
 
 #: includes/class-helpers-offline.php:103
@@ -884,8 +884,8 @@ msgid "Update %s applied"
 msgstr "Aktualisierung %s angewendet"
 
 #: includes/updates.php:47
-msgid "Update %s applied sucessfully"
-msgid_plural "Updates %s applied sucessfully"
+msgid "Update %s applied successfully"
+msgid_plural "Updates %s applied successfully"
 msgstr[0] "Update %s erfolgreich durchgeführt"
 msgstr[1] "Updates %s erfolgreich angewendet"
 

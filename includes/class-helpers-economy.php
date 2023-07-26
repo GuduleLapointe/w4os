@@ -162,7 +162,7 @@ class W4OS_Economy extends W4OS_Loader {
 					'options'    => array(
 						'gloebit' => 'Gloebit (<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>www.gloebit.com</a>)',
 						'podex'   => 'Podex (<a href=http://www.podex.info/p/info-for-grid-owners.html target=_blank>www.podex.info</a>)',
-						'none'    => __( 'Generic MoneyServer, for fake money or altenate providers.', 'w4os' ),
+						'none'    => __( 'Generic MoneyServer, for fake money or alternate providers.', 'w4os' ),
 					),
 					'inline'     => false,
 				),

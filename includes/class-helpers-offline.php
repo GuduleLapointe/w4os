@@ -89,7 +89,7 @@ class W4OS_Offline extends W4OS_Loader {
 					),
 				),
 				array(
-					'name'        => __( 'Sender E-mail Address', 'w4os' ),
+					'name'        => __( 'Sender e-mail address', 'w4os' ),
 					'id'          => $prefix . 'offline_sender',
 					'type'        => 'email',
 					'placeholder' => 'no-reply@example.org',

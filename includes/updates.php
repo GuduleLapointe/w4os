@@ -44,7 +44,7 @@ function w4os_updates( $args = array() ) {
 	}
 	if ( @$success ) {
 		if ( empty( $messages ) ) {
-			$messages[] = sprintf( _n( 'Update %s applied sucessfully', 'Updates %s applied sucessfully', count( $success ), 'band-tools' ), join( ', ', $success ) );
+			$messages[] = sprintf( _n( 'Update %s applied successfully', 'Updates %s applied successfully', count( $success ), 'band-tools' ), join( ', ', $success ) );
 		}
 		$class  = 'success';
 		$return = true;
