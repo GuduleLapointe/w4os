@@ -23,10 +23,10 @@ $page_content .= '
     ' . __( 'Install the viewer and open it.', 'w4os' ) . '
     <p class=description>
     ' . preg_replace(
-		'/%+(.*)%+/',
+		'/\[(.*)\]/',
 		'<a href="' . $compatibleviewers . '" target=_blank>$1</a>',
 		sprintf(
-			__( 'You can use %%any compatible viewer%% to access %s.', 'w4os' ),
+			__( 'You can use [any compatible viewer] to access %s.', 'w4os' ),
 			$gridname,
 		),
 	) . $viewerslist . '

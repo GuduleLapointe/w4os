@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface 2.4.7-dev-2\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-24T12:30:54+00:00\n"
+"POT-Creation-Date: 2023-07-26T01:33:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
@@ -370,7 +370,7 @@ msgid "Web Assets Server URL"
 msgstr ""
 
 #: includes/class-helpers-assets.php:120
-msgid "You can set the assets slug in %%permalinks settings page%%"
+msgid "You can set the assets slug in [permalinks settings page]"
 msgstr ""
 
 #: includes/class-helpers-assets.php:135
@@ -644,11 +644,11 @@ msgid "URL"
 msgstr ""
 
 #: includes/class-settings.php:206
-msgid "A profile page exists with permalink set as %1$s, as defined in %%permalinks settings%%."
+msgid "A profile page exists with permalink set as %1$s, as defined in [permalinks settings]."
 msgstr ""
 
 #: includes/class-settings.php:207
-msgid "A profile page must be created with permalink set as %1$s, as defined in %%permalinks settings%%."
+msgid "A profile page must be created with permalink set as %1$s, as defined in [permalinks settings]."
 msgstr ""
 
 #: includes/class-settings.php:215
@@ -1501,7 +1501,7 @@ msgid "Install the viewer and open it."
 msgstr ""
 
 #: templates/content-configuration.php:29
-msgid "You can use %%any compatible viewer%% to access %s."
+msgid "You can use [any compatible viewer] to access %s."
 msgstr ""
 
 #: templates/content-configuration.php:33

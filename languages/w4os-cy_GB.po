@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-24T12:30:54+00:00\n"
+"POT-Creation-Date: 2023-07-26T01:33:57+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -364,8 +364,8 @@ msgid "Web Assets Server URL"
 msgstr ""
 
 #: includes/class-helpers-assets.php:120
-msgid "You can set the assets slug in %%permalinks settings page%%"
-msgstr "Gallwch osod yr assets slug yn y %%dudalen gosodiadau permaenwau%%"
+msgid "You can set the assets slug in [permalinks settings page]"
+msgstr "Gallwch osod yr assets slug yn y [dudalen gosodiadau permaenwau]"
 
 #: includes/class-helpers-assets.php:135
 msgid ""
@@ -724,20 +724,28 @@ msgid "URL"
 msgstr ""
 
 #: includes/class-settings.php:206
+#, fuzzy
+#| msgid ""
+#| "A profile page exists with permalink set as %1$s, as defined in %"
+#| "%permalinks settings%%."
 msgid ""
-"A profile page exists with permalink set as %1$s, as defined in %%permalinks "
-"settings%%."
+"A profile page exists with permalink set as %1$s, as defined in [permalinks "
+"settings]."
 msgstr ""
 "Mae tudalen proffil yn bodoli gyda phermalink wedi'i osod fel %1$s, fel y "
-"diffinir yn y gosodiadau %%gosodiadau permaenwau%%."
+"diffinir yn y gosodiadau [gosodiadau permaenwau]."
 
 #: includes/class-settings.php:207
+#, fuzzy
+#| msgid ""
+#| "A profile page must be created with permalink set as %1$s, as defined in %"
+#| "%permalinks settings%%."
 msgid ""
-"A profile page must be created with permalink set as %1$s, as defined in %"
-"%permalinks settings%%."
+"A profile page must be created with permalink set as %1$s, as defined in "
+"[permalinks settings]."
 msgstr ""
 "Rhaid creu tudalen proffil gyda phermalink wedi'i osod fel %1$s, fel y "
-"diffinir yn y gosodiadau %%gosodiadau permaenwau%%."
+"diffinir yn y gosodiadau [gosodiadau permaenwau]."
 
 #: includes/class-settings.php:215
 #, fuzzy
@@ -1746,8 +1754,8 @@ msgid "Install the viewer and open it."
 msgstr ""
 
 #: templates/content-configuration.php:29
-msgid "You can use %%any compatible viewer%% to access %s."
-msgstr "Gallwch ddefnyddio %%unrhyw golygydd cydnaws%% i gael mynediad i %s."
+msgid "You can use [any compatible viewer] to access %s."
+msgstr "Gallwch ddefnyddio [unrhyw golygydd cydnaws] i gael mynediad i %s."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"

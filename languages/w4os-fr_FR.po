@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-24T12:30:54+00:00\n"
+"POT-Creation-Date: 2023-07-26T01:33:57+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -365,7 +365,7 @@ msgid "Web Assets Server URL"
 msgstr "URL du serveur de ressources web"
 
 #: includes/class-helpers-assets.php:120
-msgid "You can set the assets slug in %%permalinks settings page%%"
+msgid "You can set the assets slug in [permalinks settings page]"
 msgstr ""
 "Vous pouvez définir le slug des ressources sur la %%page de réglage des "
 "permaliens%%"
@@ -746,19 +746,19 @@ msgstr "URL"
 
 #: includes/class-settings.php:206
 msgid ""
-"A profile page exists with permalink set as %1$s, as defined in %%permalinks "
-"settings%%."
+"A profile page exists with permalink set as %1$s, as defined in [permalinks "
+"settings]."
 msgstr ""
 "Une page de profil existe avec un permalien défini comme %1$s, tel que "
-"spécifié dans les %%réglages des permaliens%%."
+"spécifié dans les [réglages des permaliens]."
 
 #: includes/class-settings.php:207
 msgid ""
-"A profile page must be created with permalink set as %1$s, as defined in %"
-"%permalinks settings%%."
+"A profile page must be created with permalink set as %1$s, as defined in "
+"[permalinks settings]."
 msgstr ""
 "Une page de profil doit être créée avec le permalien défini comme %1$s, tel "
-"que spécifié dans les %%réglages des permaliens%%."
+"que spécifié dans les [réglages des permaliens]."
 
 #: includes/class-settings.php:215
 msgid "Public Profile Page"
@@ -1739,10 +1739,10 @@ msgid "Install the viewer and open it."
 msgstr "Installez le visualiseur et ouvrez-le."
 
 #: templates/content-configuration.php:29
-msgid "You can use %%any compatible viewer%% to access %s."
+msgid "You can use [any compatible viewer] to access %s."
 msgstr ""
-"Vous pouvez utiliser %%n'importe quel visualiseur compatible%% pour accéder "
-"à %2$s."
+"Vous pouvez utiliser [n'importe quel visualiseur compatible] pour accéder à "
+"%2$s."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"
@@ -2094,7 +2094,7 @@ msgstr "Réglages du bloc"
 
 #~ msgid ""
 #~ "Enable to provide avatars a public web profile page. The page "
-#~ "[profile_slug] must exist, as defined in %%spermalinks settings%%."
+#~ "[profile_slug] must exist, as defined in [spermalinks settings]."
 #~ msgstr ""
 #~ "Activer pour fournir aux avatar une page de profil publique. La page "
 #~ "[profile_slug] doit exister, comme définie dans les %%réglages de "

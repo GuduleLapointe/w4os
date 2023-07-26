@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-24T12:30:54+00:00\n"
+"POT-Creation-Date: 2023-07-26T01:33:57+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -377,8 +377,8 @@ msgstr ""
 
 #: includes/class-helpers-assets.php:120
 #, fuzzy
-msgid "You can set the assets slug in %%permalinks settings page%%"
-msgstr "U kunt de asset slug instellen in %%permalinks settings%%."
+msgid "You can set the assets slug in [permalinks settings page]"
+msgstr "U kunt de asset slug instellen in [permalinks settings]."
 
 #: includes/class-helpers-assets.php:135
 msgid ""
@@ -764,17 +764,17 @@ msgstr ""
 #, fuzzy
 #| msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgid ""
-"A profile page exists with permalink set as %1$s, as defined in %%permalinks "
-"settings%%."
+"A profile page exists with permalink set as %1$s, as defined in [permalinks "
+"settings]."
 msgstr ""
-"De pagina %1$s moet bestaan, zoals gedefinieerd in %%permalinks settings%%."
+"De pagina %1$s moet bestaan, zoals gedefinieerd in [permalinks settings]."
 
 #: includes/class-settings.php:207
 #, fuzzy
 #| msgid "The page %s must exist, as defined in %spermalinks settings%s."
 msgid ""
-"A profile page must be created with permalink set as %1$s, as defined in %"
-"%permalinks settings%%."
+"A profile page must be created with permalink set as %1$s, as defined in "
+"[permalinks settings]."
 msgstr ""
 "De pagina %s moet bestaan, zoals gedefinieerd in %spermalinks settings%s."
 
@@ -1760,8 +1760,8 @@ msgstr ""
 
 #: templates/content-configuration.php:29
 #, fuzzy
-msgid "You can use %%any compatible viewer%% to access %s."
-msgstr "U kunt %%elke compatibele viewer%% gebruiken om %1$s te openen."
+msgid "You can use [any compatible viewer] to access %s."
+msgstr "U kunt [elke compatibele viewer] gebruiken om %1$s te openen."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"

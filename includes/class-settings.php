@@ -199,12 +199,12 @@ class W4OS_Settings extends W4OS_Loader {
 							'class'      => get_page_by_path( W4OS_Profile::slug() ) ? '' : 'field-error',
 							'desc'       => sprintf(
 								preg_replace(
-									'/%%(.*)%%/',
+									'/\[(.*)\]/',
 									'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
 									(
 										get_page_by_path( W4OS_Profile::slug() )
-										? __( 'A profile page exists with permalink set as %1$s, as defined in %%permalinks settings%%.', 'w4os' )
-										: __( 'A profile page must be created with permalink set as %1$s, as defined in %%permalinks settings%%.', 'w4os' )
+										? __( 'A profile page exists with permalink set as %1$s, as defined in [permalinks settings].', 'w4os' )
+										: __( 'A profile page must be created with permalink set as %1$s, as defined in [permalinks settings].', 'w4os' )
 									),
 								),
 								'<code>' . W4OS_Profile::slug() . '</code>',
