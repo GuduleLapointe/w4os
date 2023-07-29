@@ -19,14 +19,21 @@
 require_once 'includes/config.php';
 require_once 'includes/search.php';
 
-function ossearch_get_gatekeeperURL() {
-	if ( isset( $_REQUEST['gk'] ) && ! empty( $_REQUEST['gk'] ) ) {
+function ossearch_get_gatekeeperURL( $args = [] ) {
+	$gatekeeperURL = false;
+	if ( ! empty( $args['gatekeeper_url'] ) ) {
+		$gatekeeperURL = $args['gatekeeper_url'];
+	} else
+	 if ( ! empty( $_REQUEST['gk'] ) ) {
 		$gatekeeperURL = $_REQUEST['gk'];
-		$gatekeeperURL = preg_match( '#https?://#', $gatekeeperURL ) ? $gatekeeperURL : 'http://' . $gatekeeperURL;
-		return $gatekeeperURL;
 	} else {
 		return false;
 	}
+
+	if ( ! empty( $gatekeeperURL ) ) {
+		$gatekeeperURL = preg_match( '#https?://#', $gatekeeperURL ) ? $gatekeeperURL : 'http://' . $gatekeeperURL;
+	}
+	return $gatekeeperURL;
 }
 
 //
@@ -128,6 +135,7 @@ function dir_popular_query( $method_name, $params, $app_data ) {
 
 	if ( $flags & pow( 2, 12 ) ) {
 		$terms[] = 'has_picture = 1';
+		$terms[] = 'has_picture = 1';
 	}
 	// if ($flags & pow(2,11)) $terms[] = "pop.mature = 0";     //PgSimsOnly (1 << 11)
 	$typeCondition = ossearch_terms_build_rating( $flags, 'pop' );
@@ -139,8 +147,9 @@ function dir_popular_query( $method_name, $params, $app_data ) {
 		$terms[]         = '(name LIKE :text)';
 		$sqldata['text'] = "%$text%";
 	}
-	$gatekeeperURL = ossearch_get_gatekeeperURL();
-	if ( $gatekeeperURL ) {
+
+	$gatekeeperURL = ossearch_get_gatekeeperURL( $req );
+	if ( !empty($gatekeeperURL) ) {
 		$terms[]                  = 'pop.gatekeeperURL = :gatekeeperURL';
 		$sqldata['gatekeeperURL'] = $gatekeeperURL;
 	}
