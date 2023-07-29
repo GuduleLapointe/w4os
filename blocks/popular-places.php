@@ -33,14 +33,6 @@ function popular_places_block_init() {
 		filemtime( "{$dir}/{$index_js}" )
 	);
 
-	// $editor_css = 'popular-places/editor.css';
-	// wp_register_style(
-	// 'popular-places-block-editor',
-	// plugins_url( $editor_css, __FILE__ ),
-	// array(),
-	// filemtime( "{$dir}/{$editor_css}" )
-	// );
-
 	$style_css = 'popular-places/popular-places.css';
 	wp_register_style(
 		'popular-places-block',
@@ -58,15 +50,20 @@ function popular_places_block_init() {
 			'attributes'      => array(
 				'title' => array(
 					'type' => 'string',
-					// 'default' => '',
 				),
 				'level' => array(
 					'type' => 'string',
-					// 'default' => '',
 				),
 				'max'   => array(
 					'type' => 'number',
-					// 'default' => 5,
+				),
+				'include_hypergrid' => array(
+					'type' => 'boolean',
+					'default' => false,
+				),
+				'include_landsales' => array(
+					'type' => 'boolean',
+					'default' => false,
 				),
 			),
 			'render_callback' => 'w4os_popular_places_block_render',
@@ -82,6 +79,8 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 			'title' => null,
 			'level' => null,
 			'max'   => null,
+			'include_hypergrid' => false,
+			'include_landsales' => false,
 		)
 	);
 
@@ -100,16 +99,17 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 }
 
 function w4os_popular_places_shortcode( $atts = array(), $content = null ) {
-	// if(! W4OS_DB_CONNECTED) return; // not sure it's mandatory here
 	empty( $content ) ? $content = '' : $content = "<div>$content</div>";
 	$atts                        = wp_parse_args(
 		$atts,
 		array(
 			'title' => __( 'Popular Places', 'w4os' ),
+			'include_hypergrid' => in_array('include-hypergrid', $atts) ? true : ( isset($atts['include-hypergrid']) ? $atts['include-hypergrid'] : false),
+			'include_landsales' => in_array('include-landsales', $atts) ? true : ( isset($atts['include-landsales']) ? $atts['include-landsales'] : false),
 		)
 	);
+	error_log(__FUNCTION__ .  " " . print_r($atts, true));
 	$args                        = array();
-
 	$result = w4os_popular_places_html( $atts, $args );
 	if ( empty( $result ) ) {
 		return '';
@@ -143,6 +143,10 @@ function w4os_popular_places( $atts = array() ) {
 
 	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
 	$req['sim_name']       = '';
+	// $req = array_merge($atts, $req);
+	$req['include_hypergrid'] = ! empty($atts['include_hypergrid']) ? empty($atts['include_hypergrid']) : 'false';
+	$req['include_landsales'] = ! empty($atts['include_landsales']) ? 'true' : 'false';
+
 	$request               = xmlrpc_encode_request( 'dir_popular_query', $req );
 
 	$post_data = array( 'xml' => $request );
@@ -170,6 +174,8 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 			'title' => null,
 			'level' => 'h3',
 			'max'   => null,
+			'include_hypergrid' => false,
+			'include_landsales' => false,
 		)
 	);
 	$level        = $atts['level'];
@@ -204,7 +210,9 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 			w4os_get_asset_url( $place['imageUUID'] ),
 			$place['name'],
 		);
-		$tplink   = preg_replace( '#.*://#', 'secondlife://', $place['gatekeeperURL'] . ':' . $place['regionname'] . '/' . $place['landingpoint'] . '/' );
+
+		$tplink       = opensim_format_tp( $place['gatekeeperURL'] . '/' . $place['regionname'] . '/' . $place['landingpoint'], TPLINK_HG );
+
 		$content .= sprintf(
 			'<div class="place"><a href="%1$s"><div class=place-name>%2$s</div>%3$s</a></div>',
 			$tplink,
@@ -231,12 +239,15 @@ function et_builder_module_w4os_popular_places_init() {
 					'title',
 					'level',
 					'max',
+					'include_hypergrid',
+					'include_landsales',
 				);
 
 				$this->fields_defaults = array(
 					'title' => '',
-					// 'level' => 'h3',
 					'max'   => 5,
+					'include_hypergrid' => 'off',
+					'include_landsales' => 'off',
 				);
 
 				$this->main_css_element = '%%order_class%%';
@@ -277,6 +288,30 @@ function et_builder_module_w4os_popular_places_init() {
 					'toggle_slug' => 'main_content',
 				);
 
+				$fields['include_hypergrid'] = array(
+					'label'       => __( 'Include Hypergrid', 'w4os' ),
+					'type'        => 'yes_no_button',
+					'description' => __( 'Enable to restrict results to the grid.', 'w4os' ),
+					'options'     => array(
+						'off' => __( 'No', 'w4os' ),
+						'on'  => __( 'Yes', 'w4os' ),
+					),
+					'toggle_slug' => 'main_content',
+					'default'     => 'off',
+				);
+
+				$fields['include_landsales'] = array(
+					'label'       => __( 'Include Land for Sale', 'w4os' ),
+					'type'        => 'yes_no_button',
+					'description' => __( 'Enable to include land for sale in results.', 'w4os' ),
+					'options'     => array(
+						'off' => __( 'No', 'w4os' ),
+						'on'  => __( 'Yes', 'w4os' ),
+					),
+					'toggle_slug' => 'main_content',
+					'default'     => 'off',
+				);
+
 				return $fields;
 			}
 
@@ -287,6 +322,8 @@ function et_builder_module_w4os_popular_places_init() {
 						'title' => '',
 						'level' => '',
 						'max'   => 5,
+						'include_hypergrid' => false,
+						'include_landsales' => false,
 					)
 				);
 
