@@ -59,7 +59,7 @@
 		$parameters = array(
 			'title'    => __( 'Bloc title', 'w4os' ),
 			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
-      'mini=1'   => __( 'Only show name and picture', 'w4os' ),
+			'mini=1'   => __( 'Only show name and picture', 'w4os' ),
 		);
 		$options    = '<p>' . __( 'Options', 'w4os' ) . '</p>';
 		$options   .= '<table>';
@@ -80,11 +80,11 @@
 	</td><td>
 	  <?php
 		$parameters = array(
-			'title'    => __( 'Bloc title', 'w4os' ),
-			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
-      'max=n'    => __( 'Show maximum n results', 'w4os' ),
-      'include-hypergrid'    => __( 'Include results from other grids', 'w4os' ),
-      'include-landsales'    => __( 'Include land for sale', 'w4os' ),
+			'title'             => __( 'Bloc title', 'w4os' ),
+			'level=h3'          => __( 'Title level (h1 to h6)', 'w4os' ),
+			'max=n'             => __( 'Show maximum n results', 'w4os' ),
+			'include-hypergrid' => __( 'Include results from other grids', 'w4os' ),
+			'include-landsales' => __( 'Include land for sale', 'w4os' ),
 		);
 		$options    = '<p>' . __( 'Options', 'w4os' ) . '</p>';
 		$options   .= '<table>';
@@ -92,15 +92,18 @@
 			$options .= '<tr><th>' . $key . '</th><td>' . $value . '</td></tr>';
 		}
 		$options .= '</table>';
-    $options .= '<ul class="description"><li>' . join('</li><li>', array(
-      sprintf(
-        __('The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not be enabled.', 'w4os'),
-        '<code>include-hypergrid</code>',
-        '<code>include-landsales</code>',
-      ),
-      __('Popular places are essentially intended for splash pages, where hypergrid links would not work.', 'w4os')
-      __('Land sales usually generate additional traffic, which could make the search engine ranking irrelevant for these regions.', 'w4os')
-    )) . '</li></ul>';
+		$options .= '<ul class="description"><li>' . join(
+			'</li><li>',
+			array(
+				sprintf(
+					__( 'The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not be enabled.', 'w4os' ),
+					'<code>include-hypergrid</code>',
+					'<code>include-landsales</code>',
+				),
+				__( 'Popular places are essentially intended for splash pages, where hypergrid links would not work.', 'w4os' )
+				__( 'Land sales usually generate additional traffic, which could make the search engine ranking irrelevant for these regions.', 'w4os' ),
+			)
+		) . '</li></ul>';
 		echo $options;
 		?>
 	</td>

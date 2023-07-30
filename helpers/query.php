@@ -19,12 +19,11 @@
 require_once 'includes/config.php';
 require_once 'includes/search.php';
 
-function ossearch_get_gatekeeperURL( $args = [] ) {
+function ossearch_get_gatekeeperURL( $args = array() ) {
 	$gatekeeperURL = false;
 	if ( ! empty( $args['gatekeeper_url'] ) ) {
 		$gatekeeperURL = $args['gatekeeper_url'];
-	} else
-	 if ( ! empty( $_REQUEST['gk'] ) ) {
+	} elseif ( ! empty( $_REQUEST['gk'] ) ) {
 		$gatekeeperURL = $_REQUEST['gk'];
 	} else {
 		return false;
@@ -124,12 +123,12 @@ xmlrpc_server_register_method( $xmlrpc_server, 'dir_popular_query', 'dir_popular
 function dir_popular_query( $method_name, $params, $app_data ) {
 	global $SearchDB;
 
-	$req = $params[0];
-	$text        = $req['text'];
-	$flags       = $req['flags'];
-	$query_start = $req['query_start'];
-	$include_hypergrid = (isset($req['include_hypergrid']) && $req['include_hypergrid'] == 'false' ) ? false : true;
-	$include_landsales = (isset($req['include_landsales'] ) && $req['include_landsales'] == 'true') ? true : false;
+	$req               = $params[0];
+	$text              = $req['text'];
+	$flags             = $req['flags'];
+	$query_start       = $req['query_start'];
+	$include_hypergrid = ( isset( $req['include_hypergrid'] ) && $req['include_hypergrid'] == 'false' ) ? false : true;
+	$include_landsales = ( isset( $req['include_landsales'] ) && $req['include_landsales'] == 'true' ) ? true : false;
 
 	$terms   = array();
 	$sqldata = array();
@@ -149,14 +148,14 @@ function dir_popular_query( $method_name, $params, $app_data ) {
 	}
 
 	$gatekeeperURL = ossearch_get_gatekeeperURL( $req );
-	if ( ! $include_hypergrid && !empty($gatekeeperURL) ) {
+	if ( ! $include_hypergrid && ! empty( $gatekeeperURL ) ) {
 		$terms[]                  = 'pop.gatekeeperURL = :gatekeeperURL';
 		$sqldata['gatekeeperURL'] = $gatekeeperURL;
 	}
 	$left_join = null;
-	if( ! $include_landsales ) {
-		$left_join = "LEFT JOIN parcelsales AS sales ON sales.parcelUUID = pop.parcelUUID";
-		$terms[] = "sales.regionUUID IS NULL";
+	if ( ! $include_landsales ) {
+		$left_join = 'LEFT JOIN parcelsales AS sales ON sales.parcelUUID = pop.parcelUUID';
+		$terms[]   = 'sales.regionUUID IS NULL';
 	}
 	if ( count( $terms ) > 0 ) {
 		$where = ' WHERE ' . join( ' AND ', $terms );
@@ -169,13 +168,13 @@ function dir_popular_query( $method_name, $params, $app_data ) {
 		$query_start = 0;
 	}
 
-	$sql = 'SELECT pop.infoUUID, pop.name, pop.dwell, pop.gatekeeperURL, r.regionname, r.regionUUID, par.landingpoint, par.imageUUID FROM popularplaces as pop
+	$sql    = 'SELECT pop.infoUUID, pop.name, pop.dwell, pop.gatekeeperURL, r.regionname, r.regionUUID, par.landingpoint, par.imageUUID FROM popularplaces as pop
 	INNER JOIN parcels as par ON pop.parcelUUID = par.parcelUUID
 	INNER JOIN ' . SEARCH_REGION_TABLE . ' as r ON par.regionUUID = r.regionUUID
 	' . $left_join . '
-	' . $where  . "
+	' . $where . "
 	ORDER BY pop.dwell DESC, par.parcelname LIMIT $query_start,100";
-	$query  = $SearchDB->prepare($sql);
+	$query  = $SearchDB->prepare( $sql );
 	$result = $query->execute( $sqldata );
 
 	$data = array();

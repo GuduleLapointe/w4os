@@ -48,21 +48,21 @@ function popular_places_block_init() {
 			'editor_style'    => 'popular-places-block-editor',
 			'style'           => 'popular-places-block',
 			'attributes'      => array(
-				'title' => array(
+				'title'             => array(
 					'type' => 'string',
 				),
-				'level' => array(
+				'level'             => array(
 					'type' => 'string',
 				),
-				'max'   => array(
+				'max'               => array(
 					'type' => 'number',
 				),
 				'include_hypergrid' => array(
-					'type' => 'boolean',
+					'type'    => 'boolean',
 					'default' => false,
 				),
 				'include_landsales' => array(
-					'type' => 'boolean',
+					'type'    => 'boolean',
 					'default' => false,
 				),
 			),
@@ -76,9 +76,9 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 	$atts = wp_parse_args(
 		$attributes,
 		array(
-			'title' => null,
-			'level' => null,
-			'max'   => null,
+			'title'             => null,
+			'level'             => null,
+			'max'               => null,
 			'include_hypergrid' => false,
 			'include_landsales' => false,
 		)
@@ -103,13 +103,13 @@ function w4os_popular_places_shortcode( $atts = array(), $content = null ) {
 	$atts                        = wp_parse_args(
 		$atts,
 		array(
-			'title' => __( 'Popular Places', 'w4os' ),
-			'include_hypergrid' => in_array('include-hypergrid', $atts) ? true : ( isset($atts['include-hypergrid']) ? $atts['include-hypergrid'] : false),
-			'include_landsales' => in_array('include-landsales', $atts) ? true : ( isset($atts['include-landsales']) ? $atts['include-landsales'] : false),
+			'title'             => __( 'Popular Places', 'w4os' ),
+			'include_hypergrid' => in_array( 'include-hypergrid', $atts ) ? true : ( isset( $atts['include-hypergrid'] ) ? $atts['include-hypergrid'] : false ),
+			'include_landsales' => in_array( 'include-landsales', $atts ) ? true : ( isset( $atts['include-landsales'] ) ? $atts['include-landsales'] : false ),
 		)
 	);
-	error_log(__FUNCTION__ .  " " . print_r($atts, true));
-	$args                        = array();
+
+	$args   = array();
 	$result = w4os_popular_places_html( $atts, $args );
 	if ( empty( $result ) ) {
 		return '';
@@ -144,10 +144,10 @@ function w4os_popular_places( $atts = array() ) {
 	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
 	$req['sim_name']       = '';
 	// $req = array_merge($atts, $req);
-	$req['include_hypergrid'] = ! empty($atts['include_hypergrid']) ? empty($atts['include_hypergrid']) : 'false';
-	$req['include_landsales'] = ! empty($atts['include_landsales']) ? 'true' : 'false';
+	$req['include_hypergrid'] = ! empty( $atts['include_hypergrid'] ) ? empty( $atts['include_hypergrid'] ) : 'false';
+	$req['include_landsales'] = ! empty( $atts['include_landsales'] ) ? 'true' : 'false';
 
-	$request               = xmlrpc_encode_request( 'dir_popular_query', $req );
+	$request = xmlrpc_encode_request( 'dir_popular_query', $req );
 
 	$post_data = array( 'xml' => $request );
 	$context   = stream_context_create(
@@ -171,9 +171,9 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 	$atts         = wp_parse_args(
 		array_filter( $atts ),
 		array(
-			'title' => null,
-			'level' => 'h3',
-			'max'   => null,
+			'title'             => null,
+			'level'             => 'h3',
+			'max'               => null,
 			'include_hypergrid' => false,
 			'include_landsales' => false,
 		)
@@ -205,13 +205,13 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 			break;
 		}
 
-		$image    = sprintf(
+		$image = sprintf(
 			'<img class="place-image" src="%1$s" alt="%2$s">',
 			w4os_get_asset_url( $place['imageUUID'] ),
 			$place['name'],
 		);
 
-		$tplink       = opensim_format_tp( $place['gatekeeperURL'] . '/' . $place['regionname'] . '/' . $place['landingpoint'], TPLINK_HG );
+		$tplink = opensim_format_tp( $place['gatekeeperURL'] . '/' . $place['regionname'] . '/' . $place['landingpoint'], TPLINK_HG );
 
 		$content .= sprintf(
 			'<div class="place"><a href="%1$s"><div class=place-name>%2$s</div>%3$s</a></div>',
@@ -244,8 +244,8 @@ function et_builder_module_w4os_popular_places_init() {
 				);
 
 				$this->fields_defaults = array(
-					'title' => '',
-					'max'   => 5,
+					'title'             => '',
+					'max'               => 5,
 					'include_hypergrid' => 'off',
 					'include_landsales' => 'off',
 				);
@@ -319,9 +319,9 @@ function et_builder_module_w4os_popular_places_init() {
 				$atts = wp_parse_args(
 					$atts,
 					array(
-						'title' => '',
-						'level' => '',
-						'max'   => 5,
+						'title'             => '',
+						'level'             => '',
+						'max'               => 5,
 						'include_hypergrid' => false,
 						'include_landsales' => false,
 					)

@@ -1,4 +1,4 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
@@ -191,6 +191,9 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.5.1-dev.1126) =
+* Popular Places block now only displays local results and excludes land for sale by default, added options to override
 
 = 2.5 =
 
