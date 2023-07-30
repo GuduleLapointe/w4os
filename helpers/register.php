@@ -1,18 +1,19 @@
 <?php
-/*
+/**
  * register.php
  *
  * Script called by the simulator to register on the search engine. Actual data
  * fetch is processed by parser.php.
  *
- * Part of "flexible_helpers_scripts" collection
- *   https://github.com/GuduleLapointe/flexible_helper_scripts
- *   by Gudule Lapointe <gudule@speculoos.world>
- *
  * Requires OpenSimulator Search module
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  * Events are fetched from 2do HYPEvents or any other HYPEvents implementation
  *   [2do HYPEvents](https://2do.directory)
+ *
+ * @package		magicoli/opensim-helpers
+ * @author 		Gudule Lapointe <gudule@speculoos.world>
+ * @link 			https://github.com/magicoli/opensim-helpers
+ * @license		AGPLv3
  *
  * Includes portions of code from
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)

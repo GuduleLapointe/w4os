@@ -1,16 +1,17 @@
 <?php
-/*
+/**
  * currency.php
  *
  * Provides web tools for OpenSim currencies
  *
- * Part of "flexible_helpers_scripts" collection
- *   https://github.com/GuduleLapointe/flexible_helper_scripts
- *   by Gudule Lapointe <gudule@speculoos.world>
- *
  * Requires an OpenSimulator Money Server
  *    [DTL/NSL Money Server for OpenSim](http://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?OpenSim%2FMoneyServer)
  * or [Gloebit module](http://dev.gloebit.com/opensim/configuration-instructions/)
+ *
+ * @package		magicoli/opensim-helpers
+ * @author 		Gudule Lapointe <gudule@speculoos.world>
+ * @link 			https://github.com/magicoli/opensim-helpers
+ * @license		AGPLv3
  *
  * Includes portions of code from
  *   Melanie Thielker and Teravus Ovares (http://opensimulator.org/)

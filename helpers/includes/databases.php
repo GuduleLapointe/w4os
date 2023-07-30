@@ -1,8 +1,13 @@
 <?php
-
 /**
  * New database class using PDO, replaces DB class using mysqli
+ *
+ * @package		magicoli/opensim-helpers
+ * @author 		Gudule Lapointe <gudule@speculoos.world>
+ * @link 			https://github.com/magicoli/opensim-helpers
+ * @license		AGPLv3
  */
+
 class OSPDO extends PDO {
 	public function __construct( $dsn, $username = null, $password = null, $driver_options = null ) {
 		try {

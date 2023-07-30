@@ -1,12 +1,14 @@
 <?php
-/*
+/**
  * parseevents.php
- *
- * Part of "flexible_helpers_scripts" collection
- * https://github.com/GuduleLapointe/flexible_helper_scripts
  *
  * This script parses data from registered hosts to feed the search database.
  * It must be run regularly by a cron task for the search to work properly.
+ *
+ * @package		magicoli/opensim-helpers
+ * @author 		Gudule Lapointe <gudule@speculoos.world>
+ * @link 			https://github.com/magicoli/opensim-helpers
+ * @license		AGPLv3
  */
 
 require_once 'includes/config.php';

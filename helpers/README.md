@@ -1,11 +1,9 @@
 # OpenSimulator Helpers
 
-- Version: 2.1.11
+![Version 2.2.0](https://badgen.net/badge/Version/2.2.0/blue) ![Stable 2.2.0](https://badgen.net/badge/Stable/2.2.0/green) ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf) ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
+
 - Project URL: <https://github.com/magicoli/opensim-helpers>
 - Donate: <https://w4os.org/donate/>
-- Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, helpers
-- Requires PHP: 7.3
-- License: AGPLv3
 
 ## Description
 

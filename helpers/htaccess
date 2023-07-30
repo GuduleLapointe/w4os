@@ -1,0 +1,1 @@
+RedirectMatch "^/opensimulator/flexible_helper_scripts.git(.*)" "https://github.com/GuduleLapointe/flexible_helper_scripts.git"

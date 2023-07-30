@@ -1,19 +1,20 @@
 <?php
-/*
+/**
  * offline.php
  *
  * Handles Instant Messages sent to offline users and deliver them when the user
  * comes back online. If the user has enabled Send offline IM by email (in
  * viewer preferences), the messages are also forwarded immediately by email.
  *
- * Part of "flexible_helpers_scripts" collection
- *   https://github.com/GuduleLapointe/flexible_helper_scripts
- *   by Gudule Lapointe <gudule@speculoos.world>
+ * @package		magicoli/opensim-helpers
+ * @author 		Gudule Lapointe <gudule@speculoos.world>
+ * @link 			https://github.com/magicoli/opensim-helpers
+ * @license		AGPLv3
  *
  * Includes portions of code from
  *   http://opensimulator.org/wiki/Offline_Messaging
  *   http://www.weberdev.com/get_example-4372.html
- */
+**/
 
 require_once 'includes/config.php';
 require_once 'includes/databases.php';

@@ -1,15 +1,16 @@
 <?php
-/*
+/**
  * search.php
  *
  * Provides database and functions required by OpenSimSearch scripts
  *
- * Part of "flexible_helpers_scripts" collection
- *   https://github.com/GuduleLapointe/flexible_helper_scripts
- *   by Gudule Lapointe <gudule@speculoos.world>
- *
  * Requires OpenSimulator Search module
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
+ *
+ * @package		magicoli/opensim-helpers
+ * @author 		Gudule Lapointe <gudule@speculoos.world>
+ * @link 			https://github.com/magicoli/opensim-helpers
+ * @license		AGPLv3
  *
  * Includes portions of code from
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)

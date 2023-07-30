@@ -1,12 +1,13 @@
 <?php
-/*
+/**
  * economy.php
  *
  * Provides functions required by helpers
  *
- * Part of "flexible_helpers_scripts" collection
- *   https://github.com/GuduleLapointe/flexible_helper_scripts
- *   by Gudule Lapointe <gudule@speculoos.world>
+ * @package		magicoli/opensim-helpers
+ * @author 		Gudule Lapointe <gudule@speculoos.world>
+ * @link 			https://github.com/magicoli/opensim-helpers
+ * @license		AGPLv3
  */
 
 /**
