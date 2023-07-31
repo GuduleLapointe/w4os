@@ -100,8 +100,8 @@
 					'<code>include-hypergrid</code>',
 					'<code>include-landsales</code>',
 				),
-				__( 'Popular places are essentially intended for splash pages, where hypergrid links would not work.', 'w4os' )
-				__( 'Land sales usually generate additional traffic, which could make the search engine ranking irrelevant for these regions.', 'w4os' ),
+				__( 'Popular places are essentially intended for splash pages, where hypergrid links would not work.', 'w4os' ),
+				__( 'Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions.', 'w4os' ),
 			)
 		) . '</li></ul>';
 		echo $options;

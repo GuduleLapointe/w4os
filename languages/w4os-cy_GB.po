@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface (dev)"
-msgstr "w4os - OpenSimulator Gweinyddol Gwe (datblygol)"
+msgid "w4os - OpenSimulator Web Interface"
+msgstr "w4os - OpenSimulator Gweinyddiadur Gwe"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
