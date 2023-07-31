@@ -821,6 +821,40 @@ msgstr "Erreur"
 msgid "You must agree to the terms on page %s."
 msgstr "Vous devez accepter les conditions de la page %s."
 
+#: includes/class-tos.php:70
+msgid "Registration"
+msgstr "Inscription"
+
+#: includes/class-tos.php:76
+msgid "Terms of Service page"
+msgstr "Page des conditions d'utilisation"
+
+#: includes/class-tos.php:80
+msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
+msgstr ""
+"Sélectionnez la page contenant les conditions d'utilisation pour ajouter une case à cocher d'acceptation des CGU sur la "
+"page d'inscription des utilisateurs."
+
+#: includes/class-tos.php:81
+msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
+msgstr "Laissez vide pour désactiver la case à cocher ou si elle est gérée par un autre plugin."
+
+#: includes/class-tos.php:82
+msgid "Note: It is crucial to have a well-crafted and legally accurate TOS page for your website."
+msgstr ""
+"Note : Il est crucial d'avoir une page de conditions d'utilisation bien rédigée et juridiquement précise pour votre "
+"site web."
+
+#: includes/class-tos.php:83
+msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
+msgstr ""
+"Nous vous recommandons d'utiliser un plugin dédié ou de faire appel à des services professionnels pour vous aider à "
+"rédiger le texte de la page des conditions d'utilisation."
+
+#: includes/class-tos.php:88
+msgid "Select a TOS page"
+msgstr "Sélectionnez une page de CGU"
+
 #: includes/updates.php:35
 msgid "Update %s applied"
 msgstr "Mise à jour %s appliquée"

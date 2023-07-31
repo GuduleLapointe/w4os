@@ -874,6 +874,38 @@ msgstr "Errore"
 msgid "You must agree to the terms on page %s."
 msgstr "Devi accettare i termini nella pagina %s."
 
+#: includes/class-tos.php:70
+msgid "Registration"
+msgstr "Registrazione"
+
+#: includes/class-tos.php:76
+msgid "Terms of Service page"
+msgstr "Pagina Termini di Servizio"
+
+#: includes/class-tos.php:80
+msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
+msgstr ""
+"Seleziona la pagina contenente i termini di servizio da aggiungere una casella di consenso TOS sulla pagina di "
+"registrazione dell'utente."
+
+#: includes/class-tos.php:81
+msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
+msgstr "Lascia vuoto per disabilitare la casella di controllo o se è gestita da un altro plugin."
+
+#: includes/class-tos.php:82
+msgid "Note: It is crucial to have a well-crafted and legally accurate TOS page for your website."
+msgstr "Nota: È fondamentale avere una pagina di Termini di Servizio ben redatta e legalmente accurata per il tuo sito web."
+
+#: includes/class-tos.php:83
+msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
+msgstr ""
+"Ti consigliamo di utilizzare un plugin dedicato o di cercare servizi professionali per aiutarti a scrivere il testo "
+"della pagina dei Termini di Servizio."
+
+#: includes/class-tos.php:88
+msgid "Select a TOS page"
+msgstr "Seleziona una pagina TOS"
+
 #: includes/updates.php:35
 msgid "Update %s applied"
 msgstr "Aggiornamento %s applicato"
