@@ -3,7 +3,7 @@
 /**
  * WooCommerce fixes
  *
- * @package w4os
+ * @package GuduleLapointe/w4os
  * @author Olivier van Helden <olivier@van-helden.net>
  *
  * Remove Dashboard sections that have no content, to clarify My Account page.

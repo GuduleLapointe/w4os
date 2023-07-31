@@ -5,7 +5,7 @@
  * @link       https://github.com/magicoli/w4os
  * @since      0.1.0
  *
- * @package    w4os
+ * @package    GuduleLapointe/w4os
  * @subpackage w4os/includes
  */
 
@@ -16,7 +16,7 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    w4os
+ * @package    GuduleLapointe/w4os
  * @subpackage w4os/includes
  * @author     Magiiic <info@magiiic.com>
  */

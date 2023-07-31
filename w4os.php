@@ -11,7 +11,7 @@
  * Text Domain:       w4os
  * Domain Path:       /languages/
  *
- * @package w4os
+ * @package GuduleLapointe/w4os
  *
  * Icon1x: https://github.com/GuduleLapointe/w4os/raw/master/assets/icon-128x128.png
  * Icon2x: https://github.com/GuduleLapointe/w4os/raw/master/assets/icon-256x256.png

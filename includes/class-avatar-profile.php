@@ -2,7 +2,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @package    w4os
+ * @package    GuduleLapointe/w4os
  * @subpackage w4os/includes
  */
 

@@ -3,7 +3,7 @@
 /**
  * Shortcodes
  *
- * @package w4os
+ * @package GuduleLapointe/w4os
  * @author Olivier van Helden <olivier@van-helden.net>
  */
 

@@ -2,7 +2,7 @@
 /**
  * Functions to register client-side assets (scripts and stylesheets) for the Gutenberg block.
  *
- * @package w4os
+ * @package GuduleLapointe/w4os
  */
 
 /**
