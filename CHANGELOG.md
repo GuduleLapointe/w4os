@@ -1,6 +1,12 @@
 ## Changelog
 
-### 2.5.1
+### 2.6.0
+- prevent fatal errors with wrongly formatted translations or any other sprintf() error
+- added support for WPML and Polylang (other translation plugin don't need it)
+- added Italian and Portuguese translations (to already present French, Dutch, German and Welsh)
+- added admin bar menu
+- Popular Places block displays now only local results and exclude land for sale by default, added options to override
+- helpers: show only local results in popular places
 
 ### 2.5
 

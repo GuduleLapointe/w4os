@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.2.2
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -192,7 +192,13 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 
 == Changelog ==
 
-= 2.5.1 =
+= 2.6.0 =
+* prevent fatal errors with wrongly formatted translations or any other sprintf() error
+* added support for WPML and Polylang (other translation plugin don't need it)
+* added Italian and Portuguese translations (to already present French, Dutch, German and Welsh)
+* added admin bar menu
+* Popular Places block displays now only local results and exclude land for sale by default, added options to override
+* helpers: show only local results in popular places
 
 = 2.5 =
 
