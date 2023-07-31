@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.6.2
+- added terms of service checkbox
+
 ### 2.6.0
 - prevent fatal errors with wrongly formatted translations or any other sprintf() error
 - added support for WPML and Polylang (other translation plugin don't need it)

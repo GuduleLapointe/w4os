@@ -22,74 +22,83 @@ class W4OS_Tos extends W4OS_Loader {
 			),
 		);
 
-		$this->tos_page_id = W4OS::get_option('w4os_tos_page_id');
-		if($this->tos_page_id) {
-			$this->actions = array_merge($this->actions, array(
+		$this->tos_page_id = W4OS::get_option( 'w4os_tos_page_id' );
+		if ( $this->tos_page_id ) {
+			$this->actions = array_merge(
+				$this->actions,
 				array(
-					'hook'     => 'register_form',
-					'callback' => 'tos_checkbox',
-				),
+					array(
+						'hook'     => 'register_form',
+						'callback' => 'tos_checkbox',
+					),
 
-				array(
-					'hook'     => 'woocommerce_register_form',
-					'callback' => 'wc_tos_checkbox',
-				),
-			));
+					array(
+						'hook'     => 'woocommerce_register_form',
+						'callback' => 'wc_tos_checkbox',
+					),
+				)
+			);
 
-			$this->filters = array_merge($this->filters, array(
+			$this->filters = array_merge(
+				$this->filters,
 				array(
-					'hook'     => 'registration_errors',
-					'callback' => 'tos_checkbox_validation',
-				),
+					array(
+						'hook'     => 'registration_errors',
+						'callback' => 'tos_checkbox_validation',
+					),
 
-				array(
-					'hook'     => 'woocommerce_registration_errors',
-					'callback' => 'wc_tos_checkbox_validation',
-				),
-			));
+					array(
+						'hook'     => 'woocommerce_registration_errors',
+						'callback' => 'wc_tos_checkbox_validation',
+					),
+				)
+			);
 		}
 	}
 
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
-		$meta_boxes[] = [
+		$meta_boxes[] = array(
 			'title'          => __( 'Registration', 'w4os' ),
 			'id'             => 'registration',
-			'settings_pages' => ['w4os_settings'],
+			'settings_pages' => array( 'w4os_settings' ),
 			'class'          => 'w4os-settings',
-			'fields'         => [
-				[
+			'fields'         => array(
+				array(
 					'name'        => __( 'Terms of Service page', 'w4os' ),
 					'id'          => $prefix . 'tos_page_id',
 					'type'        => 'post',
 					// 'label_description' => __( 'label desc', 'w4os' ),
-					'desc'        => '<ul><li>' . join('</li><li>', array(
-						__( 'Select the page containing the terms of service to add a TOS consent checkbox on the user registration page.', 'w4os'),
-						__( 'Leave blank to disable the checkbox or if it is handled by another plugin.', 'w4os'),
-						__( 'Note: It is crucial to have a well-crafted and legally accurate TOS page for your website.', 'w4os')
-						. ' ' . __( 'We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page.', 'w4os' ),
-					)) . '</li></ul>',
-					'post_type'   => ['page'],
+					'desc'        => '<ul><li>' . join(
+						'</li><li>',
+						array(
+							__( 'Select the page containing the terms of service to add a TOS consent checkbox on the user registration page.', 'w4os' ),
+							__( 'Leave blank to disable the checkbox or if it is handled by another plugin.', 'w4os' ),
+							__( 'Note: It is crucial to have a well-crafted and legally accurate TOS page for your website.', 'w4os' )
+							. ' ' . __( 'We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page.', 'w4os' ),
+						)
+					) . '</li></ul>',
+					'post_type'   => array( 'page' ),
 					'field_type'  => 'select_advanced',
 					'add_new'     => true,
 					'placeholder' => __( 'Select a TOS page', 'w4os' ),
-				],
-			],
-		];
+				),
+			),
+		);
 
 		return $meta_boxes;
 	}
 
 	function set_strings() {
-		$tos_page_id = W4OS::get_localized_post_id($this->tos_page_id, false);
-		$this->tos_link = '<a href="' . get_permalink($tos_page_id) . '">' . get_the_title( $tos_page_id ). '</a>';
+		$tos_page_id         = W4OS::get_localized_post_id( $this->tos_page_id, false );
+		$this->tos_link      = '<a href="' . get_permalink( $tos_page_id ) . '">' . get_the_title( $tos_page_id ) . '</a>';
 		$this->tos_agreement = sprintf(
 			/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */
 			__( 'I agree to the terms on page %s.', 'w4os' ),
 			$this->tos_link,
 		);
-		$this->tos_error = '<strong>' . __('Error', 'w4os') . '</strong>: ' . sprintf(
+		$this->tos_error = '<strong>' . __( 'Error', 'w4os' ) . '</strong>: ' . sprintf(
 			/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */
 			__( 'You must agree to the terms on page %s.', 'w4os' ),
 			$this->tos_link,

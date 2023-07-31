@@ -556,12 +556,12 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	// public static function db_field_value( $new, $field, $old, $object_id ) {
-	// 	// Save the custom field value
-	// 	// $new: New field value
-	// 	// $old: Old field value
-	// 	// $post_id: Current post ID
-	// 	// $field: Field settings
-	// 	return $new;
+	// Save the custom field value
+	// $new: New field value
+	// $old: Old field value
+	// $post_id: Current post ID
+	// $field: Field settings
+	// return $new;
 	// }
 }
 

@@ -24,7 +24,7 @@ class W4OS {
 			} else {
 				// Get the original post ID using WPML's icl_object_id function with current locale
 				$localized_post_id = icl_object_id( $post_id, 'post', false );
-				$localized_post_id = (empty($localized_post_id)) ? icl_object_id( $post_id, 'post', false, $default_language ) : $localized_post_id;
+				$localized_post_id = ( empty( $localized_post_id ) ) ? icl_object_id( $post_id, 'post', false, $default_language ) : $localized_post_id;
 			}
 
 			// If the original post ID is different, return it; otherwise, return the current post ID

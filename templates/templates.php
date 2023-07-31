@@ -16,7 +16,7 @@ add_action( 'template_include', 'w4os_template_include' );
 function w4os_template_include( $template ) {
 	global $wp_query;
 	$localized_post_id = W4OS::get_localized_post_id();
-	$original         = get_post( $localized_post_id );
+	$original          = get_post( $localized_post_id );
 	if ( empty( $localized_post_id ) ) {
 		return $template; // Although there's no reason this happens
 	}
@@ -42,7 +42,7 @@ function w4os_the_content( $content ) {
 	global $wp_query;
 	global $template;
 	$localized_post_id = W4OS::get_localized_post_id();
-	$original         = get_post( $localized_post_id );
+	$original          = get_post( $localized_post_id );
 	// if(empty($localized_post_id)) return $content; // Although there's no reason this happens
 
 	if ( function_exists( 'wc_print_notices' ) ) {
