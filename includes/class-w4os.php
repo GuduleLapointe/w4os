@@ -9,19 +9,25 @@
 
 class W4OS {
 
-	public static function get_original_post_id( $post_id = null ) {
+	public static function get_localized_post_id( $post_id = null, $default = true ) {
 		if ( empty( $post_id ) ) {
 			$post_id = get_the_id();
 		}
 
 		// Check for WPML
 		if ( function_exists( 'icl_object_id' ) ) {
-			// Get the original post ID using WPML's icl_object_id function
-			$default_language = apply_filters( 'wpml_default_language', null );
-			$original_post_id = icl_object_id( $post_id, 'post', false, $default_language );
+			if ( $default ) {
+				// Get the original post ID using WPML's icl_object_id function with default language
+				$default_language = apply_filters( 'wpml_default_language', null );
+				$localized_post_id = icl_object_id( $post_id, 'post', false, $default_language );
+
+			} else {
+				// Get the original post ID using WPML's icl_object_id function with current locale
+				$localized_post_id = icl_object_id( $post_id, 'post', false );
+			}
 
 			// If the original post ID is different, return it; otherwise, return the current post ID
-			return ( $original_post_id !== $post_id ) ? $original_post_id : $post_id;
+			return empty( $localized_post_id ) ? $post_id : $localized_post_id;
 		}
 
 		// Check for Polylang
@@ -29,8 +35,13 @@ class W4OS {
 			global $polylang;
 			$languages = $polylang->model->get_languages_list();
 
-			$default_language = $polylang->default_lang;
-			$original_post_id = $post_id;
+			if ( $default ) {
+				$default_language = $polylang->default_lang;
+			} else {
+				$default_language = get_locale();
+			}
+
+			$localized_post_id = $post_id;
 
 			if ( isset( $languages[ $default_language ] ) && $languages[ $default_language ]['slug'] !== get_locale() ) {
 				// Get the Polylang translation relationships
@@ -38,12 +49,12 @@ class W4OS {
 
 				// Check if the original post ID exists in the translations
 				if ( isset( $translations[ $default_language ] ) ) {
-					$original_post_id = $translations[ $default_language ];
+					$localized_post_id = $translations[ $default_language ];
 				}
 			}
 
 			// Return the original post ID
-			return $original_post_id;
+			return $localized_post_id;
 		}
 
 		// If no translation plugin is active or supported, return the current post ID
