@@ -12,7 +12,7 @@ class W4OS_Tos extends W4OS_Loader {
 	public $tos_link;
 	private $tos_error;
 
-	public function __construct() {
+	public function init() {
 
 		$this->actions = array();
 		$this->filters = array(
@@ -24,18 +24,6 @@ class W4OS_Tos extends W4OS_Loader {
 
 		$this->tos_page_id = W4OS::get_option('w4os_tos_page_id');
 		if($this->tos_page_id) {
-			$this->tos_link = '<a href="' . get_permalink($this->tos_page_id) . '">' . get_the_title( $this->tos_page_id ). '</a>';
-			$this->tos_agreement = sprintf(
-				/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */
-				__( 'I agree to the terms on page %s.', 'w4os' ),
-				$this->tos_link,
-			);
-			$this->tos_error = '<strong>' . __('Error', 'w4os') . '</strong>: ' . sprintf(
-				/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */
-				__( 'You must agree to the terms on page %s.', 'w4os' ),
-				$this->tos_link,
-			);
-
 			$this->actions = array_merge($this->actions, array(
 				array(
 					'hook'     => 'register_form',
@@ -61,7 +49,6 @@ class W4OS_Tos extends W4OS_Loader {
 			));
 		}
 	}
-
 
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
@@ -93,11 +80,30 @@ class W4OS_Tos extends W4OS_Loader {
 		return $meta_boxes;
 	}
 
+	function set_strings() {
+		$tos_page_id = W4OS::get_localized_post_id($this->tos_page_id, false);
+		error_log("original $this->tos_page_id locale $tos_page_id");
+
+		$this->tos_link = '<a href="' . get_permalink($tos_page_id) . '">' . get_the_title( $tos_page_id ). '</a>';
+		$this->tos_agreement = sprintf(
+			/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */
+			__( 'I agree to the terms on page %s.', 'w4os' ),
+			$this->tos_link,
+		);
+		$this->tos_error = '<strong>' . __('Error', 'w4os') . '</strong>: ' . sprintf(
+			/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */
+			__( 'You must agree to the terms on page %s.', 'w4os' ),
+			$this->tos_link,
+		);
+	}
+
 	function tos_checkbox() {
+		$this->set_strings();
 		echo '<p><label for="tos_confirm"><input type="checkbox" name="tos_confirm" id="tos_confirm" required> ' . $this->tos_agreement . '</label></p>';
 	}
 
 	function tos_checkbox_validation( $errors ) {
+		$this->set_strings();
 		if ( empty( $_POST['tos_confirm'] ) ) {
 			$errors->add( 'tos_confirm_error', $this->tos_error );
 		}
@@ -106,11 +112,13 @@ class W4OS_Tos extends W4OS_Loader {
 
 	// Add the checkbox to WooCommerce registration form
 	function wc_tos_checkbox() {
+		$this->set_strings();
 		echo '<p class="form-row terms"><label for="tos_confirm" class="woocommerce-form__label woocommerce-form__label-for-checkbox"><input type="checkbox" class="woocommerce-form__input-checkbox" name="tos_confirm" id="tos_confirm" required> ' . $this->tos_agreement . '</label></p>';
 	}
 
 	// Validate the checkbox in WooCommerce registration
 	function wc_tos_checkbox_validation( $errors ) {
+		$this->set_strings();
 		if ( empty( $_POST['tos_confirm'] ) ) {
 			$errors->add( 'tos_confirm_error', $this->tos_error );
 		}
