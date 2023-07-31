@@ -220,7 +220,7 @@ if ( ! class_exists( 'Puc_v4p9_Scheduler', false ) ) :
 				$scheduleName               = 'every' . $this->checkPeriod . 'hours';
 				$schedules[ $scheduleName ] = array(
 					'interval' => $this->checkPeriod * 3600,
-					'display'  => sprintf( 'Every %d hours', $this->checkPeriod ),
+					'display'  => W4OS::sprintf_safe( 'Every %d hours', $this->checkPeriod ),
 				);
 			}
 			return $schedules;

@@ -192,11 +192,11 @@ class W4OS_Economy extends W4OS_Loader {
 						'</li><li>',
 						array(
 							'<strong>' . __( 'Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator.', 'w4os' ) . '</strong>',
-							'<strong>' . sprintf(
+							'<strong>' . W4OS::sprintf_safe(
 								__( 'For Linux, see %s to avoid certificate-related errors.', 'w4os' ),
 								'<a href=https://github.com/magicoli/opensim-helpers/blob/master/README-Gloebit.md target=_blank>README-Gloebit.md</a>',
 							) . '</strong>',
-							sprintf(
+							W4OS::sprintf_safe(
 								__( 'Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator.', 'w4os' ),
 								'<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>',
 								'<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>dev.gloebit.com</a>',

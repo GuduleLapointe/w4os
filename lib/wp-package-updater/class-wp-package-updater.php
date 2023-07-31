@@ -445,7 +445,7 @@ if ( ! class_exists( 'WP_Package_Updater' ) ) {
 				'expired' === $license_data->status
 			) {
 				if ( isset( $license_data->date_expiry ) ) {
-					$license_data->message = sprintf(
+					$license_data->message = W4OS::sprintf_safe(
 						// translators: the license expiry date
 						__( 'The license expired on %s and needs to be renewed to be updated.', 'wp-package-updater' ),
 						date_i18n( get_option( 'date_format' ), $license_data->date_expiry )
@@ -558,7 +558,7 @@ if ( ! class_exists( 'WP_Package_Updater' ) ) {
 				$this->type = 'Theme';
 			} else {
 				throw new RuntimeException(
-					sprintf(
+					W4OS::sprintf_safe(
 						'The package updater cannot determine if "%s" is a plugin or a theme. ',
 						htmlentities( $this->package_path )
 					)

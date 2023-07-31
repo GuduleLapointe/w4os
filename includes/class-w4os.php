@@ -49,4 +49,25 @@ class W4OS {
     // If no translation plugin is active or supported, return the current post ID
     return $post_id;
   }
+
+  public static function sprintf_safe($format, ...$args) {
+      try {
+          // Attempt to format the string using sprintf
+          $result = sprintf($format, ...$args);
+
+          // Restore the previous error handler
+          restore_error_handler();
+
+          return $result;
+      } catch (Throwable $e) {
+          // Log an error or handle the situation gracefully
+          error_log("Error W4OS::sprintf_safe( $format, " . join(', ', $args) . "): " . $e->getMessage());
+
+          // Fallback: Return the format string with placeholders intact
+          restore_error_handler();
+
+          return $format;
+      }
+  }
+
 }

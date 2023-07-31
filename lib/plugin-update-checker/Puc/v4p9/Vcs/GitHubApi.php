@@ -232,7 +232,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_GitHubApi', false ) ) :
 
 			$error = new WP_Error(
 				'puc-github-http-error',
-				sprintf( 'GitHub API error. Base URL: "%s",  HTTP status code: %d.', $baseUrl, $code )
+				W4OS::sprintf_safe( 'GitHub API error. Base URL: "%s",  HTTP status code: %d.', $baseUrl, $code )
 			);
 			do_action( 'puc_api_error', $error, $response, $url, $this->slug );
 
@@ -287,7 +287,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_GitHubApi', false ) ) :
 		 * @return string
 		 */
 		public function buildArchiveDownloadUrl( $ref = 'master' ) {
-			$url = sprintf(
+			$url = W4OS::sprintf_safe(
 				'https://api.github.com/repos/%1$s/%2$s/zipball/%3$s',
 				urlencode( $this->userName ),
 				urlencode( $this->repositoryName ),
@@ -354,7 +354,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_GitHubApi', false ) ) :
 		public function enableReleaseAssets( $fileNameRegex = null ) {
 			$this->releaseAssetsEnabled = true;
 			$this->assetFilterRegex     = $fileNameRegex;
-			$this->assetApiBaseUrl      = sprintf(
+			$this->assetApiBaseUrl      = W4OS::sprintf_safe(
 				'//api.github.com/repos/%1$s/%2$s/releases/assets/',
 				$this->userName,
 				$this->repositoryName

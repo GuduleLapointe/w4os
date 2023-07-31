@@ -80,13 +80,13 @@ function w4os_the_content( $content ) {
 // if(w4os_get_option('layout_page_title:official_website')) {
 // $url = rwmb_meta( 'official_website', array(), $post_ID );
 // if($url) {
-// $links[] = sprintf("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Website', 'w4os'));
+// $links[] = W4OS::sprintf_safe("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Website', 'w4os'));
 // }
 // }
 // if(w4os_get_option('layout_page_title:official_store')) {
 // $url = rwmb_meta( 'official_store', array(), $post_ID );
 // if($url) {
-// $links[] = sprintf("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Store', 'w4os'));
+// $links[] = W4OS::sprintf_safe("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Store', 'w4os'));
 // }
 // }
 // if(!empty($links)) $title_after .= "<ul class=links>" . join(' ', $links) . "</ul>";
@@ -98,7 +98,7 @@ function w4os_the_content( $content ) {
 // if($band_ID = rwmb_meta( 'band', array(), $post_ID )) {
 // $band = get_post($band_ID);
 // echo "<pre>"; print_r($band); die;
-// $title_after .= sprintf(__('by <a href="%s">%s</a>', 'w4os'), get_permalink($band), $band->post_title);
+// $title_after .= W4OS::sprintf_safe(__('by <a href="%s">%s</a>', 'w4os'), get_permalink($band), $band->post_title);
 // }
 // }
 //

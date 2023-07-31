@@ -59,13 +59,13 @@ function w4os_get_avatar_by_name( $firstname = '', $lastname = '' ) {
 add_action(
 	'login_form_bottom',
 	function() {
-		$links[] = sprintf(
+		$links[] = W4OS::sprintf_safe(
 			'<a href="%1$s" alt="%2$s">%2$s</a>',
 			esc_url( wp_lostpassword_url(), 'w4os' ),
 			esc_attr__( 'Lost Password', 'textdomain', 'w4os' ),
 		);
 		if ( get_option( 'users_can_register' ) || get_option( 'avatars_can_register' ) ) {
-			$links[] = sprintf(
+			$links[] = W4OS::sprintf_safe(
 				'<a href="%1$s" alt="%2$s">%2$s</a>',
 				esc_url( wp_registration_url(), 'w4os' ),
 				esc_attr__( 'Register', 'textdomain', 'w4os' ),
@@ -91,7 +91,7 @@ function w4os_login_form( $args = array() ) {
 	switch ( $action ) {
 		case 'lostpassword':
 			$login_form = 'lost password form';
-			$login_form = sprintf(
+			$login_form = W4OS::sprintf_safe(
 				'<div id="password-lost-form" class="widecolumn">
         <p>%1$s</p>
         <form id="lostpasswordform" action="%2$s" method="post">
@@ -111,7 +111,7 @@ function w4os_login_form( $args = array() ) {
 				wp_lostpassword_url(),
 				__( 'Email', 'w4os' ),
 				__( 'Reset Password', 'w4os' ),
-				sprintf( '<a href="%1$s">%2$s</a>', W4OS_LOGIN_PAGE, __( 'Log in', 'w4Os' ) ),
+				W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_LOGIN_PAGE, __( 'Log in', 'w4Os' ) ),
 			);
 			break;
 
@@ -202,7 +202,7 @@ add_action(
 			if ( $avatar_profile ) {
 				$avatar_name = esc_attr( get_the_author_meta( 'w4os_firstname', $avatar->ID ) . ' ' . get_the_author_meta( 'w4os_lastname', $avatar->ID ) );
 				$page_title  = $avatar_name;
-				$head_title  = sprintf( __( "%s's profile", 'w4os' ), $avatar_name );
+				$head_title  = W4OS::sprintf_safe( __( "%s's profile", 'w4os' ), $avatar_name );
 			} else {
 				$not_found  = true;
 				$page_title = __( 'Avatar not found', 'w4os' );

@@ -1664,9 +1664,8 @@ msgid "Install the viewer and open it."
 msgstr "Installeer de viewer en open deze."
 
 #: templates/content-configuration.php:29
-#, fuzzy
-msgid "You can use [any compatible viewer] to access %s."
-msgstr "U kunt [elke compatibele viewer] gebruiken om %s te openen."
+msgid "You can use [any compatible viewer] to access %1$s."
+msgstr "Je kunt [elke compatibele viewer] gebruiken om toegang te krijgen tot %1$s."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"

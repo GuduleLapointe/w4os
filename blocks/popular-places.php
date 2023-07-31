@@ -91,7 +91,7 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 
 	$class = preg_replace( ':/:', '-', $block->name );
 
-	return sprintf(
+	return W4OS::sprintf_safe(
 		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
 		$content
@@ -205,7 +205,7 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 			break;
 		}
 
-		$image = sprintf(
+		$image = W4OS::sprintf_safe(
 			'<img class="place-image" src="%1$s" alt="%2$s">',
 			w4os_get_asset_url( $place['imageUUID'] ),
 			$place['name'],
@@ -213,7 +213,7 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 
 		$tplink = opensim_format_tp( $place['gatekeeperURL'] . '/' . $place['regionname'] . '/' . $place['landingpoint'], TPLINK_HG );
 
-		$content .= sprintf(
+		$content .= W4OS::sprintf_safe(
 			'<div class="place"><a href="%1$s"><div class=place-name>%2$s</div>%3$s</a></div>',
 			$tplink,
 			$place['name'],
@@ -329,7 +329,7 @@ function et_builder_module_w4os_popular_places_init() {
 
 				$output = w4os_popular_places_html( $atts );
 
-				return sprintf(
+				return W4OS::sprintf_safe(
 					'<div class="et_pb_module et_pb_w4os_popular_places w4os-popular-places">%s</div>',
 					$output
 				);

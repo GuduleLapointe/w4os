@@ -106,7 +106,7 @@ function w4os_newusers_html( $atts = array(), $args = array() ) {
 		$uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
 		if ( $uuid ) {
 
-			$recentusers .= sprintf(
+			$recentusers .= W4OS::sprintf_safe(
 				'<li>
 			<span class="profile-pic"><a href="%1$s">%2$s</a></span>
 			<span class=info>

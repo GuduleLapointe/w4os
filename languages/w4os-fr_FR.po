@@ -1614,8 +1614,8 @@ msgid "Install the viewer and open it."
 msgstr "Installez le visualiseur et ouvrez-le."
 
 #: templates/content-configuration.php:29
-msgid "You can use [any compatible viewer] to access %s."
-msgstr "Vous pouvez utiliser [n'importe quel visualiseur compatible] pour accéder à %s."
+msgid "You can use [any compatible viewer] to access %1$s."
+msgstr "Vous pouvez utiliser [n'importe quel viewer compatible] pour accéder à %1$s."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"

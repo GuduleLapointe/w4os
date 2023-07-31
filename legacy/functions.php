@@ -53,7 +53,7 @@ function w4os_notice( $message, $class = '', $id = '', $context = '' ) {
 	} else {
 		wp_cache_set(
 			'w4os_notices',
-			wp_cache_get( 'w4os_notices' ) . sprintf(
+			wp_cache_get( 'w4os_notices' ) . W4OS::sprintf_safe(
 				'<div class="notice notice-%2$s"><p>%1$s</p></div>',
 				$message,
 				$class,
@@ -64,7 +64,7 @@ function w4os_notice( $message, $class = '', $id = '', $context = '' ) {
 }
 
 function w4os_gen_uuid() {
-	return sprintf(
+	return W4OS::sprintf_safe(
 		'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 		// 32 bits for "time_low"
 		mt_rand( 0, 0xffff ),
@@ -216,7 +216,7 @@ function w4os_update_grid_info( $rechecknow = false ) {
 }
 
 function w4os_give_settings_url( $message = '' ) {
-	return sprintf(
+	return W4OS::sprintf_safe(
 		"<p>%s<a href='%s'>%s</a></p>",
 		$message,
 		get_admin_url( '', 'admin.php?page=w4os_settings' ),
@@ -264,7 +264,7 @@ function w4os_grid_status() {
 			$fp     = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
 			$status = ( $fp ) ? __( 'Online', 'w4os' ) : __( 'Offline', 'w4os' );
 		} else {
-			$status = sprintf(
+			$status = W4OS::sprintf_safe(
 				__( 'Invalid Login URI', 'w4os' ),
 				$login_uri,
 			);
@@ -416,7 +416,7 @@ function w4os_get_url_status( $url, $output = null, $force = false ) {
 			$success     = false;
 	}
 	if ( $output == 'icon' ) {
-		return sprintf( '<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%2$s"></span>', $status_code, $status_icon );
+		return W4OS::sprintf_safe( '<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%2$s"></span>', $status_code, $status_icon );
 	} elseif ( $output == 'boolean' ) {
 		return ( ! empty( $success ) ) ? $success : null;
 	} else {
@@ -499,7 +499,7 @@ function w4os_status_icon( $bool = null ) {
 	} else {
 		$status_icon = 'no';
 	}
-	return sprintf( '<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%1$s"></span>', $status_icon );
+	return W4OS::sprintf_safe( '<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%1$s"></span>', $status_icon );
 }
 
 function w4os_format_ini( $array ) {
@@ -509,7 +509,7 @@ function w4os_format_ini( $array ) {
 	$content = '<div class=iniconfig>';
 	foreach ( $array as $inifile => $sections ) {
 		$content .= '<p class="inifile dashicons-before dashicons-media-text">';
-		$content .= sprintf( __( '%s', 'w4os' ), $inifile );
+		$content .= W4OS::sprintf_safe( __( '%s', 'w4os' ), $inifile );
 		$content .= '<pre>';
 		foreach ( $sections as $section => $params ) {
 			$content .= "$section<br>";
@@ -555,7 +555,7 @@ function w4os_hop( $url = null, $string = null ) {
 	if ( preg_match( ':/app/agent/:', $url ) ) {
 		$class .= ' profile';
 	}
-	return sprintf( '<a class="%3$s" href="hop://%1$s">%2$s</a>', esc_attr( $url ), $string, $class );
+	return W4OS::sprintf_safe( '<a class="%3$s" href="hop://%1$s">%2$s</a>', esc_attr( $url ), $string, $class );
 }
 
 function w4os_age( $time ) {
@@ -566,9 +566,9 @@ function w4os_age( $time ) {
 	if ( $age == 0 ) {
 		$ageshown = __( 'Joined today' );
 	} else {
-		$ageshown = sprintf( __( '%s days old', 'w4os' ), $age );
+		$ageshown = W4OS::sprintf_safe( __( '%s days old', 'w4os' ), $age );
 	}
-	return sprintf(
+	return W4OS::sprintf_safe(
 		'%s (%s)',
 		wp_date( get_option( 'date_format' ), $time ),
 		$ageshown,

@@ -89,7 +89,7 @@ function w4os_user_actions_profile_view( $actions, $user ) {
 		return $actions;
 	}
 
-	$actions['view'] = sprintf(
+	$actions['view'] = W4OS::sprintf_safe(
 		'
     <a class=view href="%s">%s</a>',
 		w4os_web_profile_url( $user ),
@@ -164,7 +164,7 @@ function w4os_users_filter_avatars( $position ) {
 	$options_html = '';
 	foreach ( $options as $value => $label ) {
 		$param         = 'filter_avatar_' . $position;
-		$options_html .= sprintf(
+		$options_html .= W4OS::sprintf_safe(
 			'<option value="%1$s" %3$s>%2$s</option>',
 			esc_attr( $value ),
 			esc_attr( $label ),
@@ -172,7 +172,7 @@ function w4os_users_filter_avatars( $position ) {
 		);
 	}
 
-	$select = sprintf(
+	$select = W4OS::sprintf_safe(
 		'
     <select name="filter_avatar_%1$s" style="float:none;margin-left:10px;">
       <option value="">%2$s</option>
@@ -296,7 +296,7 @@ function w4os_process_actions( $args = array() ) {
 
 		$page = get_page_by_path( $slug );
 		if ( ! is_wp_error( $page ) & ! empty( $page ) ) {
-			w4os_transient_admin_notice( sprintf( __( 'Page %s already exists.', 'w4os' ), W4OS_PAGES[ $helper ]['name'] ), 'error' );
+			w4os_transient_admin_notice( W4OS::sprintf_safe( __( 'Page %s already exists.', 'w4os' ), W4OS_PAGES[ $helper ]['name'] ), 'error' );
 		} else {
 			$data = W4OS_PAGES[ $helper ];
 			// (empty($_REQUEST['guid'])) ? site_url() . "/$slug" : $_REQUEST['guid'];
@@ -315,11 +315,11 @@ function w4os_process_actions( $args = array() ) {
 			if ( ! is_wp_error( $page_id ) ) {
 				w4os_get_url_status( $guid, true, true );
 				w4os_transient_admin_notice(
-					sprintf( __( 'New page %s created.', 'w4os' ), '<a href=' . get_permalink( $page_id ) . '>' . $data['name'] . '</a>' ),
+					W4OS::sprintf_safe( __( 'New page %s created.', 'w4os' ), '<a href=' . get_permalink( $page_id ) . '>' . $data['name'] . '</a>' ),
 					'success',
 				);
 			} else {
-				w4os_transient_admin_notice( sprintf( __( 'Error while creating page %s.', 'w4os' ), W4OS_PAGES[ $helper ]['name'] ), 'error' );
+				w4os_transient_admin_notice( W4OS::sprintf_safe( __( 'Error while creating page %s.', 'w4os' ), W4OS_PAGES[ $helper ]['name'] ), 'error' );
 			}
 		}
 		wp_redirect( admin_url( 'admin.php?page=' . $_GET['page'] ) );

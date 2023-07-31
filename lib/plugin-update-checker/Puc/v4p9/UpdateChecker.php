@@ -242,7 +242,7 @@ if ( ! class_exists( 'Puc_v4p9_UpdateChecker', false ) ) :
 			// Fail silently if we can't find the plugin/theme or read its header.
 			if ( $installedVersion === null ) {
 				$this->triggerError(
-					sprintf( 'Skipping update check for %s - installed version unknown.', $this->slug ),
+					W4OS::sprintf_safe( 'Skipping update check for %s - installed version unknown.', $this->slug ),
 					E_USER_WARNING
 				);
 				return null;
@@ -623,7 +623,7 @@ if ( ! class_exists( 'Puc_v4p9_UpdateChecker', false ) ) :
 			} else {
 				do_action( 'puc_api_error', $status, $result, $url, $this->slug );
 				$this->triggerError(
-					sprintf( 'The URL %s does not point to a valid metadata file. ', $url )
+					W4OS::sprintf_safe( 'The URL %s does not point to a valid metadata file. ', $url )
 					. $status->get_error_message(),
 					E_USER_WARNING
 				);
@@ -851,7 +851,7 @@ if ( ! class_exists( 'Puc_v4p9_UpdateChecker', false ) ) :
 				if ( $this->isBadDirectoryStructure( $remoteSource ) ) {
 					return new WP_Error(
 						'puc-incorrect-directory-structure',
-						sprintf(
+						W4OS::sprintf_safe(
 							'The directory structure of the update is incorrect. All files should be inside ' .
 							'a directory named <span class="code">%s</span>, not at the root of the ZIP archive.',
 							htmlentities( $this->slug )
@@ -861,7 +861,7 @@ if ( ! class_exists( 'Puc_v4p9_UpdateChecker', false ) ) :
 
 				/** @var WP_Upgrader_Skin $upgrader ->skin */
 				$upgrader->skin->feedback(
-					sprintf(
+					W4OS::sprintf_safe(
 						'Renaming %s to %s&#8230;',
 						'<span class="code">' . basename( $source ) . '</span>',
 						'<span class="code">' . $this->directoryName . '</span>'

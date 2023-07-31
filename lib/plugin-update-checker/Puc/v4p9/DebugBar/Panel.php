@@ -10,7 +10,7 @@ if ( ! class_exists( 'Puc_v4p9_DebugBar_Panel', false ) && class_exists( 'Debug_
 
 		public function __construct( $updateChecker ) {
 			$this->updateChecker = $updateChecker;
-			$title               = sprintf(
+			$title               = W4OS::sprintf_safe(
 				'<span class="puc-debug-menu-link-%s">PUC (%s)</span>',
 				esc_attr( $this->updateChecker->getUniqueName( 'uid' ) ),
 				$this->updateChecker->slug
@@ -55,7 +55,7 @@ if ( ! class_exists( 'Puc_v4p9_DebugBar_Panel', false ) && class_exists( 'Debug_
 				if ( $scheduler->throttleRedundantChecks && ( $scheduler->checkPeriod > 0 ) ) {
 					$this->row(
 						'Throttling',
-						sprintf(
+						W4OS::sprintf_safe(
 							'Enabled. If an update is already available, check for updates every %1$d hours instead of every %2$d hours.',
 							$scheduler->throttledCheckPeriod,
 							$scheduler->checkPeriod

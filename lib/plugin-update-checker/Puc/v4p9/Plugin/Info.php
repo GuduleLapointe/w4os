@@ -137,7 +137,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Info', false ) ) :
 		protected function getFormattedAuthor() {
 			if ( ! empty( $this->author_homepage ) ) {
 				/** @noinspection HtmlUnknownTarget */
-				return sprintf( '<a href="%s">%s</a>', $this->author_homepage, $this->author );
+				return W4OS::sprintf_safe( '<a href="%s">%s</a>', $this->author_homepage, $this->author );
 			}
 			return $this->author;
 		}

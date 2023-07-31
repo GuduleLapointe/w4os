@@ -41,7 +41,7 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 	add_action(
 		'admin_notices',
 		function() {
-			echo sprintf(
+			echo W4OS::sprintf_safe(
 				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
 				__( 'You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.', 'w4os' ),
 			);
@@ -53,7 +53,7 @@ if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-
 	add_action(
 		'admin_notices',
 		function() {
-			echo sprintf(
+			echo W4OS::sprintf_safe(
 				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
 				__( 'Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.', 'w4os' ),
 			);

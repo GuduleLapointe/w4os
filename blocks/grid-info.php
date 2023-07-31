@@ -90,7 +90,7 @@ function w4os_grid_info_block_render( $attributes, $void, $block = true ) {
 
 	$class = preg_replace( ':/:', '-', $block->name );
 
-	return sprintf(
+	return W4OS::sprintf_safe(
 		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
 		$content
@@ -258,7 +258,7 @@ function et_builder_module_w4os_grid_info_init() {
 
 				$output = w4os_grid_info_html( $atts );
 
-				return sprintf(
+				return W4OS::sprintf_safe(
 					'<div class="et_pb_module et_pb_w4os_grid_info w4os-grid-info">%s</div>',
 					$output
 				);
