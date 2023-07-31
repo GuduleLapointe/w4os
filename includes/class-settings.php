@@ -355,7 +355,7 @@ class W4OS_Settings extends W4OS_Loader {
 			// update_option( 'w4os_profile_page', ( ( isset( $_POST['w4os_profile_page'] ) && $_POST['w4os_profile_page'] ) ? 'provide' : 'default' ) );
 
 			$options = $_POST['w4os_profile_page_options'];
-			error_log( print_r( $options, true ) );
+
 			update_option( 'w4os_profile_page', ( ( isset( $options['provide'] ) && $options['provide'] ) ? 'provide' : 'default' ) );
 			update_option( 'w4os_configuration_instructions', ( isset( $options['instructions'] ) ? $options['instructions'] : false ) );
 			update_option( 'w4os_login_page', ( ( isset( $options['login_page'] ) && $options['login_page'] ) ? 'profile' : 'default' ) );
@@ -555,15 +555,14 @@ class W4OS_Settings extends W4OS_Loader {
 		return $output;
 	}
 
-	public static function db_field_value( $new, $field, $old, $object_id ) {
-		error_log( __CLASS__ . '::' . __METHOD__ . ' ' . print_r( $new, true ) );
-		// Save the custom field value
-		// $new: New field value
-		// $old: Old field value
-		// $post_id: Current post ID
-		// $field: Field settings
-		return $new;
-	}
+	// public static function db_field_value( $new, $field, $old, $object_id ) {
+	// 	// Save the custom field value
+	// 	// $new: New field value
+	// 	// $old: Old field value
+	// 	// $post_id: Current post ID
+	// 	// $field: Field settings
+	// 	return $new;
+	// }
 }
 
 $this->loaders[] = new W4OS_Settings();
