@@ -1,12 +1,12 @@
 <?php if ( ! defined( 'WPINC' ) ) {
 	die;}
 
-function w4os_get_page_slug($page_slug) {
+function w4os_get_page_slug( $page_slug ) {
 
-	switch($page_slug) {
-		case get_option('w4os_profile_slug', 'profile'):
-		$page_slug = 'profile';
-		break;
+	switch ( $page_slug ) {
+		case get_option( 'w4os_profile_slug', 'profile' ):
+			$page_slug = 'profile';
+			break;
 	}
 
 	return $page_slug;
@@ -16,10 +16,12 @@ add_action( 'template_include', 'w4os_template_include' );
 function w4os_template_include( $template ) {
 	global $wp_query;
 	$original_post_id = W4OS::get_original_post_id();
-	$original = get_post($original_post_id);
-	if(empty($original_post_id)) return $template; // Although there's no reason this happens
+	$original         = get_post( $original_post_id );
+	if ( empty( $original_post_id ) ) {
+		return $template; // Although there's no reason this happens
+	}
 
-	$post_name      = w4os_get_page_slug( $original->post_name );
+	$post_name = w4os_get_page_slug( $original->post_name );
 	// error_log("original $original_post_id post_name $post_name");
 	$template_slug  = str_replace( '.php', '', basename( $template ) );
 	$post_type_slug = get_post_type();
@@ -40,7 +42,7 @@ function w4os_the_content( $content ) {
 	global $wp_query;
 	global $template;
 	$original_post_id = W4OS::get_original_post_id();
-	$original = get_post($original_post_id);
+	$original         = get_post( $original_post_id );
 	// if(empty($original_post_id)) return $content; // Although there's no reason this happens
 
 	if ( function_exists( 'wc_print_notices' ) ) {
@@ -51,7 +53,7 @@ function w4os_the_content( $content ) {
 	$template_slug  = str_replace( '.php', '', basename( $template ) );
 	$custom_slug    = "content-$post_type_slug-$post_name";
 
-	$custom         = W4OS_DIR . "/templates/$custom_slug.php";
+	$custom = W4OS_DIR . "/templates/$custom_slug.php";
 
 	if ( file_exists( $custom ) ) {
 		ob_start();

@@ -20,7 +20,7 @@ class W4OS_Settings extends W4OS_Loader {
 				'priority' => 5,
 			),
 			array(
-				'hook' => 'admin_bar_menu',
+				'hook'     => 'admin_bar_menu',
 				'callback' => 'admin_bar_menus',
 				'priority' => 20,
 			),
@@ -81,8 +81,8 @@ class W4OS_Settings extends W4OS_Loader {
 					'id'     => 'w4os-menu',
 					'title'  => __( 'OpenSimulator', 'w4os' ),
 					'href'   => get_admin_url( '', 'admin.php?page=w4os' ),
-					'meta' => array(
-						'title' => __( 'OpenSimulator Administration', 'w4os' ), //This title will show on hover
+					'meta'   => array(
+						'title' => __( 'OpenSimulator Administration', 'w4os' ), // This title will show on hover
 					),
 				)
 			);

@@ -1,7 +1,6 @@
 ## Changelog
 
-### Unreleased (2.5.1-dev.1126)
-- Popular Places block now only displays local results and excludes land for sale by default, added options to override
+### 2.5.1
 
 ### 2.5
 
