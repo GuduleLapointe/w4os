@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "POT-Creation-Date: 2023-07-26T03:45:43+00:00\n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: gpt-po v1.0.5\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - Interface web pour OpenSimulator"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - Interface Web OpenSimulator (dev)"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
@@ -76,6 +76,10 @@ msgstr "Profil sur la grille si l'utilisateur est connecté et possède un avata
 msgid "(formerly %s)"
 msgstr "(anciennement %s)"
 
+#: admin/templates/shortcodes.php:85
+msgid "Only show name and picture"
+msgstr "Afficher uniquement le nom et la photo"
+
 #: admin/templates/shortcodes.php:75
 msgid "Most visited regions in your grid."
 msgstr "Régions les plus visitées dan votre grille."
@@ -84,9 +88,31 @@ msgstr "Régions les plus visitées dan votre grille."
 msgid "Show maximum n results"
 msgstr "Montrer maximum n résultats"
 
-#: admin/templates/shortcodes.php:85
-msgid "Only show name and picture"
-msgstr "Afficher uniquement le nom et la photo"
+#: admin/templates/shortcodes.php:86
+msgid "Include results from other grids"
+msgstr "Inclure les résultats des autres grilles"
+
+#: admin/templates/shortcodes.php:87
+msgid "Include land for sale"
+msgstr "Inclure des terrains à vendre"
+
+#: admin/templates/shortcodes.php:99
+msgid ""
+"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not "
+"be enabled."
+msgstr ""
+"Les options %1$s et %2$s sont fournies uniquement pour permettre de revenir au comportement précédent, mais dans la "
+"plupart des cas, elles ne devraient pas être activées."
+
+#: admin/templates/shortcodes.php:103
+msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
+msgstr "Les lieux populaires sont principalement destinés aux pages d'accueil, où les liens hypergrid ne fonctionneraient pas."
+
+#: admin/templates/shortcodes.php:104
+msgid "Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions."
+msgstr ""
+"Les ventes de terrains génèrent généralement un trafic supplémentaire, ce qui peut rendre le classement des moteurs de "
+"recherche peu fiable pour ces régions."
 
 #: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:14
@@ -219,6 +245,28 @@ msgstr "Maximum résultats"
 #: blocks/popular-places.php:276
 msgid "Enter the maximum number of results to display."
 msgstr "Entrez le nombre maximum de résultats à afficher."
+
+#: blocks/popular-places.php:292
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:115
+#: blocks/popular-places/popular-places.js:115
+msgid "Include Hypergrid"
+msgstr "Inclure Hypergrid"
+
+#: blocks/popular-places.php:294
+msgid "Enable to restrict results to the grid."
+msgstr "Activer pour limiter les résultats à la grille."
+
+#: blocks/popular-places.php:304
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:123
+#: blocks/popular-places/popular-places.js:123
+msgid "Include Land for Sale"
+msgstr "Inclure des terrains à vendre"
+
+#: blocks/popular-places.php:306
+msgid "Enable to include land for sale in results."
+msgstr "Activer l'inclusion des terrains à vendre dans les résultats."
 
 #: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80
 #: legacy/admin/status-page.php:58
@@ -624,6 +672,14 @@ msgstr "Les fonctionnalités de recherche nécessitent l'installation du module 
 #: includes/class-helpers-search.php:229
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "Le binaire OpenSimSearch.Modules.dll prêt à l'emploi peut être trouvé ici :"
+
+#: legacy/profile.php:198 legacy/profile.php:1039
+msgid "OpenSimulator"
+msgstr "OpenSimulator"
+
+#: includes/class-settings.php:85
+msgid "OpenSimulator Administration"
+msgstr "Administration d'OpenSimulator"
 
 #: includes/class-settings.php:77
 msgid "OpenSimulator Status"
@@ -1343,10 +1399,6 @@ msgstr "Changer le mot de passe"
 msgid "Password reset link"
 msgstr "Lien de réinitialisation du mot de passe"
 
-#: legacy/profile.php:198 legacy/profile.php:1039
-msgid "OpenSimulator"
-msgstr "OpenSimulator"
-
 #: legacy/profile.php:386
 msgid "This user already has an avatar."
 msgstr "Cet utilisateur a déjà un avatar."
@@ -1563,7 +1615,7 @@ msgstr "Installez le visualiseur et ouvrez-le."
 
 #: templates/content-configuration.php:29
 msgid "You can use [any compatible viewer] to access %s."
-msgstr "Vous pouvez utiliser [n'importe quel visualiseur compatible] pour accéder à %2$s."
+msgstr "Vous pouvez utiliser [n'importe quel visualiseur compatible] pour accéder à %s."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"

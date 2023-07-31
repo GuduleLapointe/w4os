@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - OpenSimulator Web Interface"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - OpenSimulator Web Interface (dev)"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
@@ -83,6 +83,10 @@ msgstr "Grid-profiel als de gebruiker is verbonden en heeft een avatar, anders a
 msgid "(formerly %s)"
 msgstr "(voorheen %s)"
 
+#: admin/templates/shortcodes.php:85
+msgid "Only show name and picture"
+msgstr "Alleen naam en afbeelding weergeven"
+
 #: admin/templates/shortcodes.php:75
 msgid "Most visited regions in your grid."
 msgstr "Meest bezochte regio's in jouw grid."
@@ -91,9 +95,31 @@ msgstr "Meest bezochte regio's in jouw grid."
 msgid "Show maximum n results"
 msgstr "Toon maximaal n resultaten"
 
-#: admin/templates/shortcodes.php:85
-msgid "Only show name and picture"
-msgstr "Alleen naam en afbeelding weergeven"
+#: admin/templates/shortcodes.php:86
+msgid "Include results from other grids"
+msgstr "Resultaten van andere grids opnemen"
+
+#: admin/templates/shortcodes.php:87
+msgid "Include land for sale"
+msgstr "Inclusief grond te koop"
+
+#: admin/templates/shortcodes.php:99
+msgid ""
+"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not "
+"be enabled."
+msgstr ""
+"De opties %1$s en %2$s worden alleen aangeboden om terug te keren naar het vorige gedrag, maar in de meeste gevallen "
+"moeten ze niet worden ingeschakeld."
+
+#: admin/templates/shortcodes.php:103
+msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
+msgstr "Populaire plaatsen zijn in feite bedoeld voor splash-pagina's, waar hypergrid-links niet zouden werken."
+
+#: admin/templates/shortcodes.php:104
+msgid "Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions."
+msgstr ""
+"Landverkopen genereren meestal extra verkeer, wat de betrouwbaarheid van de zoekmachine ranking voor deze regio's kan "
+"beïnvloeden."
 
 #: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:14
@@ -241,6 +267,28 @@ msgstr "Geen resultaat"
 #: blocks/popular-places.php:276
 msgid "Enter the maximum number of results to display."
 msgstr "Voer het maximale aantal resultaten in dat weergegeven moet worden."
+
+#: blocks/popular-places.php:292
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:115
+#: blocks/popular-places/popular-places.js:115
+msgid "Include Hypergrid"
+msgstr "Inclusief Hypergrid"
+
+#: blocks/popular-places.php:294
+msgid "Enable to restrict results to the grid."
+msgstr "Resultaten beperken tot het grid inschakelen."
+
+#: blocks/popular-places.php:304
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:123
+#: blocks/popular-places/popular-places.js:123
+msgid "Include Land for Sale"
+msgstr "Inclusief Land te Koop"
+
+#: blocks/popular-places.php:306
+msgid "Enable to include land for sale in results."
+msgstr "Land te koop opnemen in de resultaten inschakelen."
 
 #: includes/class-avatar-model.php:62
 #: includes/class-avatar-model.php:80
@@ -664,6 +712,14 @@ msgstr "Zoekfuncties vereisen de installatie van de OpenSimSearch-module op Open
 #: includes/class-helpers-search.php:229
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "Een kant-en-klare OpenSimSearch.Modules.dll-binair bestand is hier te vinden:"
+
+#: legacy/profile.php:198 legacy/profile.php:1039
+msgid "OpenSimulator"
+msgstr "OpenSimulator"
+
+#: includes/class-settings.php:85
+msgid "OpenSimulator Administration"
+msgstr "OpenSimulator Beheer"
 
 #: includes/class-settings.php:77
 msgid "OpenSimulator Status"
@@ -1394,10 +1450,6 @@ msgstr "Wachtwoord wijzigen"
 msgid "Password reset link"
 msgstr "Wachtwoord reset link"
 
-#: legacy/profile.php:198 legacy/profile.php:1039
-msgid "OpenSimulator"
-msgstr "OpenSimulator"
-
 #: legacy/profile.php:386
 msgid "This user already has an avatar."
 msgstr "Deze gebruiker heeft al een avatar."
@@ -1614,7 +1666,7 @@ msgstr "Installeer de viewer en open deze."
 #: templates/content-configuration.php:29
 #, fuzzy
 msgid "You can use [any compatible viewer] to access %s."
-msgstr "U kunt [elke compatibele viewer] gebruiken om %1$s te openen."
+msgstr "U kunt [elke compatibele viewer] gebruiken om %s te openen."
 
 #: templates/content-configuration.php:33
 msgid "Add %1$s to your viewer"

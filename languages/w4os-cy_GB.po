@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - Rhyngwyneb Gwe OpenSimulator"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - OpenSimulator Gweinyddol Gwe (datblygol)"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
@@ -76,6 +76,10 @@ msgstr "Proffil Afatar os yw'r defnyddiwr wedi cysylltu ac mae ganddo afatar, ff
 msgid "(formerly %s)"
 msgstr "(%s yn flaenorol)"
 
+#: admin/templates/shortcodes.php:85
+msgid "Only show name and picture"
+msgstr "Dangos enw a llun proffil yn unig"
+
 #: admin/templates/shortcodes.php:75
 msgid "Most visited regions in your grid."
 msgstr "Y rhanbarthau mwyaf poblogaidd yn eich grid."
@@ -84,9 +88,31 @@ msgstr "Y rhanbarthau mwyaf poblogaidd yn eich grid."
 msgid "Show maximum n results"
 msgstr "Dangos uchafswm o n canlyniad"
 
-#: admin/templates/shortcodes.php:85
-msgid "Only show name and picture"
-msgstr "Dangos enw a llun proffil yn unig"
+#: admin/templates/shortcodes.php:86
+msgid "Include results from other grids"
+msgstr "Cynnwys canlyniadau o gridiau eraill"
+
+#: admin/templates/shortcodes.php:87
+msgid "Include land for sale"
+msgstr "包括待售土地"
+
+#: admin/templates/shortcodes.php:99
+msgid ""
+"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not "
+"be enabled."
+msgstr ""
+"Yr opsiynau %1$s a %2$s dim ond i ganiatáu dychwelyd i'r ymddygiad blaenorol, ond yn y mwyafrif o achosion ni ddylent "
+"gael eu galluogi."
+
+#: admin/templates/shortcodes.php:103
+msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
+msgstr "Popular places yn bennaf ar gyfer tudalenni sgwrsio, lle na fyddai dolenni hypergrid yn gweithio."
+
+#: admin/templates/shortcodes.php:104
+msgid "Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions."
+msgstr ""
+"Land sales yn ôl y cyffredin yn cynhyrchu traffig ychwanegol, a allai wneud y rancio'r peiriant chwilio yn "
+"anghynaliadwy ar gyfer y rhanbarthau hyn."
 
 #: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:14
@@ -219,6 +245,28 @@ msgstr "Nifer Mwyaf o Ganlyniadau"
 #: blocks/popular-places.php:276
 msgid "Enter the maximum number of results to display."
 msgstr "Rhowch y nifer uchaf o ganlyniadau i'w dangos."
+
+#: blocks/popular-places.php:292
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:115
+#: blocks/popular-places/popular-places.js:115
+msgid "Include Hypergrid"
+msgstr "包括Hypergrid"
+
+#: blocks/popular-places.php:294
+msgid "Enable to restrict results to the grid."
+msgstr "Galluogi i gyfyngu'r canlyniadau i'r grid."
+
+#: blocks/popular-places.php:304
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:123
+#: blocks/popular-places/popular-places.js:123
+msgid "Include Land for Sale"
+msgstr "包括待售土地"
+
+#: blocks/popular-places.php:306
+msgid "Enable to include land for sale in results."
+msgstr "Gallwch alluogi cynnwys tir ar werth yn y canlyniadau."
 
 #: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80
 #: legacy/admin/status-page.php:58
@@ -644,6 +692,14 @@ msgstr "Search features require the installation of the OpenSimSearch Module on 
 #: includes/class-helpers-search.php:229
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "可以在这里找到可直接使用的 OpenSimSearch.Modules.dll 二进制文件："
+
+#: legacy/profile.php:198 legacy/profile.php:1039
+msgid "OpenSimulator"
+msgstr "OpenSimulator"
+
+#: includes/class-settings.php:85
+msgid "OpenSimulator Administration"
+msgstr "Gweinyddu OpenSimulator"
 
 #: includes/class-settings.php:77
 msgid "OpenSimulator Status"
@@ -1401,10 +1457,6 @@ msgstr "Newid cyfrinair"
 #: legacy/profile.php:150
 msgid "Password reset link"
 msgstr "Dolen ailadu cyfrinair"
-
-#: legacy/profile.php:198 legacy/profile.php:1039
-msgid "OpenSimulator"
-msgstr "OpenSimulator"
 
 #: legacy/profile.php:386
 msgid "This user already has an avatar."

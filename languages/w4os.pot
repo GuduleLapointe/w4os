@@ -2,19 +2,19 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface 2.5\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface (dev) 2.5.1-dev\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-29T17:26:25+00:00\n"
+"POT-Creation-Date: 2023-07-31T11:18:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
+msgid "w4os - OpenSimulator Web Interface (dev)"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -34,7 +34,7 @@ msgid "https://speculoos.world"
 msgstr ""
 
 #: admin/templates/shortcodes.php:1
-#: includes/class-settings.php:81
+#: includes/class-settings.php:108
 msgid "Available Shortcodes"
 msgstr ""
 
@@ -53,7 +53,7 @@ msgstr ""
 #: admin/templates/shortcodes.php:18
 #: admin/templates/shortcodes.php:38
 #: admin/templates/shortcodes.php:60
-#: admin/templates/shortcodes.php:82
+#: admin/templates/shortcodes.php:83
 msgid "Bloc title"
 msgstr ""
 
@@ -66,8 +66,8 @@ msgstr ""
 
 #: admin/templates/shortcodes.php:21
 #: admin/templates/shortcodes.php:41
-#: admin/templates/shortcodes.php:63
-#: admin/templates/shortcodes.php:87
+#: admin/templates/shortcodes.php:64
+#: admin/templates/shortcodes.php:89
 msgid "Options"
 msgstr ""
 
@@ -83,16 +83,36 @@ msgstr ""
 msgid "(formerly %s)"
 msgstr ""
 
-#: admin/templates/shortcodes.php:75
+#: admin/templates/shortcodes.php:62
+msgid "Only show name and picture"
+msgstr ""
+
+#: admin/templates/shortcodes.php:76
 msgid "Most visited regions in your grid."
 msgstr ""
 
-#: admin/templates/shortcodes.php:83
+#: admin/templates/shortcodes.php:85
 msgid "Show maximum n results"
 msgstr ""
 
-#: admin/templates/shortcodes.php:85
-msgid "Only show name and picture"
+#: admin/templates/shortcodes.php:86
+msgid "Include results from other grids"
+msgstr ""
+
+#: admin/templates/shortcodes.php:87
+msgid "Include land for sale"
+msgstr ""
+
+#: admin/templates/shortcodes.php:99
+msgid "The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not be enabled."
+msgstr ""
+
+#: admin/templates/shortcodes.php:103
+msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
+msgstr ""
+
+#: admin/templates/shortcodes.php:104
+msgid "Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions."
 msgstr ""
 
 #: blocks/avatar-profile.php:205
@@ -105,7 +125,7 @@ msgstr ""
 #: blocks/avatar-profile.php:219
 #: blocks/grid-info.php:223
 #: blocks/grid-status.php:175
-#: blocks/popular-places.php:249
+#: blocks/popular-places.php:260
 #: blocks/avatar-profile/avatar-profile.js:1
 #: blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
@@ -113,11 +133,11 @@ msgstr ""
 #: src/blocks/avatar-profile/editor.js:68
 #: src/blocks/grid-info/editor.js:58
 #: src/blocks/grid-status/editor.js:58
-#: src/blocks/popular-places/editor.js:67
+#: src/blocks/popular-places/editor.js:81
 #: blocks/avatar-profile/avatar-profile.js:68
 #: blocks/grid-info/grid-info.js:58
 #: blocks/grid-status/grid-status.js:58
-#: blocks/popular-places/popular-places.js:67
+#: blocks/popular-places/popular-places.js:81
 msgid "Title"
 msgstr ""
 
@@ -133,7 +153,7 @@ msgstr ""
 #: blocks/avatar-profile.php:230
 #: blocks/grid-info.php:231
 #: blocks/grid-status.php:183
-#: blocks/popular-places.php:257
+#: blocks/popular-places.php:268
 #: blocks/avatar-profile/avatar-profile.js:1
 #: blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
@@ -141,18 +161,18 @@ msgstr ""
 #: src/blocks/avatar-profile/editor.js:76
 #: src/blocks/grid-info/editor.js:66
 #: src/blocks/grid-status/editor.js:66
-#: src/blocks/popular-places/editor.js:75
+#: src/blocks/popular-places/editor.js:89
 #: blocks/avatar-profile/avatar-profile.js:76
 #: blocks/grid-info/grid-info.js:66
 #: blocks/grid-status/grid-status.js:66
-#: blocks/popular-places/popular-places.js:75
+#: blocks/popular-places/popular-places.js:89
 msgid "Title Level"
 msgstr ""
 
 #: blocks/avatar-profile.php:232
 #: blocks/grid-info.php:233
 #: blocks/grid-status.php:185
-#: blocks/popular-places.php:259
+#: blocks/popular-places.php:270
 msgid "Select the HTML heading level for the title."
 msgstr ""
 
@@ -164,10 +184,14 @@ msgid "Mini Profile"
 msgstr ""
 
 #: blocks/avatar-profile.php:254
+#: blocks/popular-places.php:297
+#: blocks/popular-places.php:309
 msgid "Yes"
 msgstr ""
 
 #: blocks/avatar-profile.php:255
+#: blocks/popular-places.php:296
+#: blocks/popular-places.php:308
 msgid "No"
 msgstr ""
 
@@ -177,20 +201,20 @@ msgstr ""
 
 #: blocks/grid-info.php:106
 #: blocks/grid-info.php:227
-#: includes/class-settings.php:110
-#: includes/class-settings.php:111
-#: includes/class-settings.php:112
-#: includes/class-settings.php:113
+#: includes/class-settings.php:137
+#: includes/class-settings.php:138
+#: includes/class-settings.php:139
+#: includes/class-settings.php:140
 msgid "Grid Info"
 msgstr ""
 
 #: blocks/grid-info.php:182
-#: includes/class-settings.php:128
+#: includes/class-settings.php:155
 msgid "Grid Name"
 msgstr ""
 
 #: blocks/grid-info.php:183
-#: includes/class-settings.php:119
+#: includes/class-settings.php:146
 msgid "Login URI"
 msgstr ""
 
@@ -211,12 +235,12 @@ msgstr ""
 
 #: blocks/grid-status.php:108
 #: blocks/grid-status.php:179
-#: includes/class-settings.php:134
+#: includes/class-settings.php:161
 msgid "Grid Status"
 msgstr ""
 
 #: blocks/grid-status.php:142
-#: blocks/popular-places.php:186
+#: blocks/popular-places.php:192
 msgid "No result"
 msgstr ""
 
@@ -231,31 +255,53 @@ msgstr ""
 msgid "Enter the title for the Grid Status module."
 msgstr ""
 
-#: blocks/popular-places.php:108
-#: blocks/popular-places.php:253
+#: blocks/popular-places.php:106
+#: blocks/popular-places.php:264
 msgid "Popular Places"
 msgstr ""
 
-#: blocks/popular-places.php:227
+#: blocks/popular-places.php:235
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:13
-#: blocks/popular-places/popular-places.js:13
+#: src/blocks/popular-places/editor.js:14
+#: blocks/popular-places/popular-places.js:14
 msgid "OpenSimulator Popular Places"
 msgstr ""
 
-#: blocks/popular-places.php:251
+#: blocks/popular-places.php:262
 msgid "Enter the title for the Popular Places module."
 msgstr ""
 
-#: blocks/popular-places.php:274
+#: blocks/popular-places.php:285
 #: blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:92
-#: blocks/popular-places/popular-places.js:92
+#: src/blocks/popular-places/editor.js:106
+#: blocks/popular-places/popular-places.js:106
 msgid "Max Results"
 msgstr ""
 
-#: blocks/popular-places.php:276
+#: blocks/popular-places.php:287
 msgid "Enter the maximum number of results to display."
+msgstr ""
+
+#: blocks/popular-places.php:292
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:115
+#: blocks/popular-places/popular-places.js:115
+msgid "Include Hypergrid"
+msgstr ""
+
+#: blocks/popular-places.php:294
+msgid "Enable to restrict results to the grid."
+msgstr ""
+
+#: blocks/popular-places.php:304
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:123
+#: blocks/popular-places/popular-places.js:123
+msgid "Include Land for Sale"
+msgstr ""
+
+#: blocks/popular-places.php:306
+msgid "Enable to include land for sale in results."
 msgstr ""
 
 #: includes/class-avatar-model.php:62
@@ -609,126 +655,136 @@ msgstr ""
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr ""
 
-#: includes/class-settings.php:77
+#: includes/class-settings.php:82
+#: legacy/profile.php:198
+#: legacy/profile.php:1039
+msgid "OpenSimulator"
+msgstr ""
+
+#: includes/class-settings.php:85
+msgid "OpenSimulator Administration"
+msgstr ""
+
+#: includes/class-settings.php:104
 msgid "OpenSimulator Status"
 msgstr ""
 
-#: includes/class-settings.php:77
+#: includes/class-settings.php:104
 #: legacy/functions.php:310
 msgid "Status"
 msgstr ""
 
-#: includes/class-settings.php:81
+#: includes/class-settings.php:108
 msgid "Shortcodes"
 msgstr ""
 
-#: includes/class-settings.php:94
+#: includes/class-settings.php:121
 #: legacy/admin/settings.php:261
 msgid "Settings"
 msgstr ""
 
-#: includes/class-settings.php:159
+#: includes/class-settings.php:186
 msgid "ROBUST Database"
 msgstr ""
 
-#: includes/class-settings.php:179
+#: includes/class-settings.php:206
 msgid "Grid Users"
 msgstr ""
 
-#: includes/class-settings.php:189
+#: includes/class-settings.php:216
 msgid "Profile Page"
 msgstr ""
 
-#: includes/class-settings.php:195
+#: includes/class-settings.php:222
 msgid "URL"
 msgstr ""
 
-#: includes/class-settings.php:206
+#: includes/class-settings.php:233
 msgid "A profile page exists with permalink set as %1$s, as defined in [permalinks settings]."
 msgstr ""
 
-#: includes/class-settings.php:207
+#: includes/class-settings.php:234
 msgid "A profile page must be created with permalink set as %1$s, as defined in [permalinks settings]."
 msgstr ""
 
-#: includes/class-settings.php:215
+#: includes/class-settings.php:242
 msgid "Public Profile Page"
 msgstr ""
 
-#: includes/class-settings.php:219
+#: includes/class-settings.php:246
 msgid "Provide avatars with a public web profile page in the following format: %1$s."
 msgstr ""
 
-#: includes/class-settings.php:227
+#: includes/class-settings.php:254
 msgid "Login Page"
 msgstr ""
 
-#: includes/class-settings.php:230
+#: includes/class-settings.php:257
 msgid "Use profile page as login page."
 msgstr ""
 
-#: includes/class-settings.php:240
+#: includes/class-settings.php:267
 msgid "Instructions"
 msgstr ""
 
-#: includes/class-settings.php:243
+#: includes/class-settings.php:270
 msgid "Show configuration instructions to new users on their profile page."
 msgstr ""
 
-#: includes/class-settings.php:251
+#: includes/class-settings.php:278
 msgid "Replace User Names"
 msgstr ""
 
-#: includes/class-settings.php:254
+#: includes/class-settings.php:281
 msgid "Show avatar name instead of user name in users list."
 msgstr ""
 
-#: includes/class-settings.php:260
+#: includes/class-settings.php:287
 msgid "Exclude from stats"
 msgstr ""
 
-#: includes/class-settings.php:263
+#: includes/class-settings.php:290
 msgid "Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you have real avatars without email address."
 msgstr ""
 
-#: includes/class-settings.php:265
+#: includes/class-settings.php:292
 msgid "Models"
 msgstr ""
 
-#: includes/class-settings.php:266
+#: includes/class-settings.php:293
 msgid "Accounts without mail address"
 msgstr ""
 
-#: includes/class-settings.php:267
+#: includes/class-settings.php:294
 msgid "Hypergrid visitors"
 msgstr ""
 
-#: includes/class-settings.php:306
+#: includes/class-settings.php:333
 #: legacy/functions.php:268
 msgid "Invalid Login URI"
 msgstr ""
 
-#: includes/class-settings.php:367
+#: includes/class-settings.php:394
 msgid "Default"
 msgstr ""
 
-#: includes/class-settings.php:390
+#: includes/class-settings.php:417
 msgid "Hostname"
 msgstr ""
 
-#: includes/class-settings.php:397
+#: includes/class-settings.php:424
 msgid "Port"
 msgstr ""
 
-#: includes/class-settings.php:404
+#: includes/class-settings.php:431
 msgid "DB Name"
 msgstr ""
 
-#: includes/class-settings.php:411
+#: includes/class-settings.php:438
 msgid "Username"
 msgstr ""
 
-#: includes/class-settings.php:418
+#: includes/class-settings.php:445
 #: tmp/class-avatar.php:277
 msgid "Password"
 msgstr ""
@@ -1281,11 +1337,6 @@ msgstr ""
 msgid "Password reset link"
 msgstr ""
 
-#: legacy/profile.php:198
-#: legacy/profile.php:1039
-msgid "OpenSimulator"
-msgstr ""
-
 #: legacy/profile.php:386
 msgid "This user already has an avatar."
 msgstr ""
@@ -1743,10 +1794,10 @@ msgstr ""
 #: src/blocks/avatar-profile/editor.js:64
 #: src/blocks/grid-info/editor.js:54
 #: src/blocks/grid-status/editor.js:54
-#: src/blocks/popular-places/editor.js:63
+#: src/blocks/popular-places/editor.js:77
 #: blocks/avatar-profile/avatar-profile.js:64
 #: blocks/grid-info/grid-info.js:54
 #: blocks/grid-status/grid-status.js:54
-#: blocks/popular-places/popular-places.js:63
+#: blocks/popular-places/popular-places.js:77
 msgid "Block Settings"
 msgstr ""

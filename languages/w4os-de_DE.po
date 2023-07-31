@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - OpenSimulator Web-Schnittstelle"
+msgid "w4os - OpenSimulator Web Interface (dev)"
+msgstr "w4os - OpenSimulator Web Interface (dev)"
 
 #. Plugin URI of the plugin
 msgid "https://w4os.org/"
@@ -88,6 +88,10 @@ msgstr "Rasterprofil, wenn der Benutzer verbunden ist und einen Avatar hat, anso
 msgid "(formerly %s)"
 msgstr "(ehemals %s)"
 
+#: admin/templates/shortcodes.php:85
+msgid "Only show name and picture"
+msgstr "Nur Name und Bild anzeigen."
+
 #: admin/templates/shortcodes.php:75
 msgid "Most visited regions in your grid."
 msgstr "Am meisten besuchte Regionen in Ihrem Raster."
@@ -96,9 +100,31 @@ msgstr "Am meisten besuchte Regionen in Ihrem Raster."
 msgid "Show maximum n results"
 msgstr "Zeige maximal n Ergebnisse."
 
-#: admin/templates/shortcodes.php:85
-msgid "Only show name and picture"
-msgstr "Nur Name und Bild anzeigen."
+#: admin/templates/shortcodes.php:86
+msgid "Include results from other grids"
+msgstr "Ergebnisse von anderen Grids anzeigen"
+
+#: admin/templates/shortcodes.php:87
+msgid "Include land for sale"
+msgstr "Land zum Verkauf inklusive"
+
+#: admin/templates/shortcodes.php:99
+msgid ""
+"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not "
+"be enabled."
+msgstr ""
+"Die Optionen %1$s und %2$s werden nur bereitgestellt, um zur vorherigen Verhaltensweise zurückzukehren, sollten jedoch "
+"in den meisten Fällen nicht aktiviert werden."
+
+#: admin/templates/shortcodes.php:103
+msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
+msgstr "Beliebte Orte sind im Wesentlichen für Splash-Seiten gedacht, auf denen Hypergrid-Links nicht funktionieren würden."
+
+#: admin/templates/shortcodes.php:104
+msgid "Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions."
+msgstr ""
+"Der Verkauf von Land führt in der Regel zu zusätzlichem Verkehr, was die Zuverlässigkeit des Suchmaschinen-Rankings für "
+"diese Regionen beeinträchtigen kann."
 
 #: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
 #: src/blocks/avatar-profile/editor.js:14
@@ -257,6 +283,28 @@ msgstr "Kein Ergebnis"
 #: blocks/popular-places.php:276
 msgid "Enter the maximum number of results to display."
 msgstr "Geben Sie die maximale Anzahl der anzuzeigenden Ergebnisse ein."
+
+#: blocks/popular-places.php:292
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:115
+#: blocks/popular-places/popular-places.js:115
+msgid "Include Hypergrid"
+msgstr "Hypergrid einbeziehen"
+
+#: blocks/popular-places.php:294
+msgid "Enable to restrict results to the grid."
+msgstr "Aktiviere die Möglichkeit, die Ergebnisse auf das Grid zu beschränken."
+
+#: blocks/popular-places.php:304
+#: blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:123
+#: blocks/popular-places/popular-places.js:123
+msgid "Include Land for Sale"
+msgstr "Grundstücke zum Verkauf inklusive"
+
+#: blocks/popular-places.php:306
+msgid "Enable to include land for sale in results."
+msgstr "Aktivieren Sie die Möglichkeit, Grundstücke zum Verkauf in den Ergebnissen anzuzeigen."
 
 #: includes/class-avatar-model.php:62
 #: includes/class-avatar-model.php:80
@@ -712,6 +760,14 @@ msgstr "Die Suchfunktionen erfordern die Installation des OpenSimSearch-Moduls a
 #: includes/class-helpers-search.php:229
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "Fertige OpenSimSearch.Modules.dll-Binärdatei kann hier gefunden werden:"
+
+#: legacy/profile.php:198 legacy/profile.php:1039
+msgid "OpenSimulator"
+msgstr "OpenSimulator"
+
+#: includes/class-settings.php:85
+msgid "OpenSimulator Administration"
+msgstr "OpenSimulator-Verwaltung"
 
 #: includes/class-settings.php:77
 msgid "OpenSimulator Status"
@@ -1451,10 +1507,6 @@ msgstr "Passwort ändern"
 #: legacy/profile.php:150
 msgid "Password reset link"
 msgstr "Passwort zurücksetzen Link"
-
-#: legacy/profile.php:198 legacy/profile.php:1039
-msgid "OpenSimulator"
-msgstr "OpenSimulator"
 
 #: legacy/profile.php:386
 msgid "This user already has an avatar."
