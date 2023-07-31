@@ -20,6 +20,11 @@ class W4OS_Settings extends W4OS_Loader {
 				'priority' => 5,
 			),
 			array(
+				'hook' => 'admin_bar_menu',
+				'callback' => 'admin_bar_menus',
+				'priority' => 20,
+			),
+			array(
 				'hook'     => 'admin_menu',
 				'callback' => 'register_admin_submenus',
 				'priority' => 20,
@@ -60,6 +65,28 @@ class W4OS_Settings extends W4OS_Loader {
 			// 'callback' => 'register_query_vars',
 			// ),
 		);
+	}
+
+	/**
+	 * Add the "OpenSimulator" link in admin bar main menu.
+	 *
+	 * @since 2.5.1
+	 * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
+	 */
+	public function admin_bar_menus( $wp_admin_bar ) {
+		if ( current_user_can( 'manage_options' ) ) {
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'appearance',
+					'id'     => 'w4os-menu',
+					'title'  => __( 'OpenSimulator', 'w4os' ),
+					'href'   => get_admin_url( '', 'admin.php?page=w4os' ),
+					'meta' => array(
+						'title' => __( 'OpenSimulator Administration', 'w4os' ), //This title will show on hover
+					),
+				)
+			);
+		}
 	}
 
 	function register_admin_menu() {
