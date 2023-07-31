@@ -14,7 +14,15 @@ class W4OS_Tos extends W4OS_Loader {
 
 	public function __construct() {
 
-		$this->tos_page_id = get_option('w4os_tos_page_id');
+		$this->actions = array();
+		$this->filters = array(
+			array(
+				'hook'     => 'rwmb_meta_boxes',
+				'callback' => 'register_settings_fields',
+			),
+		);
+
+		$this->tos_page_id = W4OS::get_option('w4os_tos_page_id');
 		if($this->tos_page_id) {
 			$this->tos_link = '<a href="' . get_permalink($this->tos_page_id) . '">' . get_the_title( $this->tos_page_id ). '</a>';
 			$this->tos_agreement = sprintf(
@@ -28,7 +36,7 @@ class W4OS_Tos extends W4OS_Loader {
 				$this->tos_link,
 			);
 
-			$this->actions = array(
+			$this->actions = array_merge($this->actions, array(
 				array(
 					'hook'     => 'register_form',
 					'callback' => 'tos_checkbox',
@@ -38,9 +46,9 @@ class W4OS_Tos extends W4OS_Loader {
 					'hook'     => 'woocommerce_register_form',
 					'callback' => 'wc_tos_checkbox',
 				),
-			);
+			));
 
-			$this->filters = array(
+			$this->filters = array_merge($this->filters, array(
 				array(
 					'hook'     => 'registration_errors',
 					'callback' => 'tos_checkbox_validation',
@@ -50,11 +58,39 @@ class W4OS_Tos extends W4OS_Loader {
 					'hook'     => 'woocommerce_registration_errors',
 					'callback' => 'wc_tos_checkbox_validation',
 				),
-			);
-		} else {
-			$this->actions = array();
-			$this->filters = array();
+			));
 		}
+	}
+
+
+	function register_settings_fields( $meta_boxes ) {
+		$prefix = 'w4os_';
+
+		$meta_boxes[] = [
+			'title'          => __( 'Registration', 'w4os' ),
+			'id'             => 'registration',
+			'settings_pages' => ['w4os_settings'],
+			'class'          => 'w4os-settings',
+			'fields'         => [
+				[
+					'name'        => __( 'Terms of Service page', 'w4os' ),
+					'id'          => $prefix . 'tos_page_id',
+					'type'        => 'post',
+					'desc'        => '<ul><li>' . join('</li><li>', array(
+						__( 'Select the page containing the terms of service to add a TOS consent checkbox on the user registration page.', 'w4os'),
+						__( 'Leave blank to disable the checkbox or if it is handled by another plugin.', 'w4os'),
+						__( 'Note: It is crucial to have a well-crafted and legally accurate TOS page for your website.', 'w4os')
+						. ' ' . __( 'We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page.', 'w4os' ),
+					)) . '</li></ul>',
+					'post_type'   => ['page'],
+					'field_type'  => 'select_advanced',
+					'add_new'     => true,
+					'placeholder' => __( 'Select a TOS page', 'w4os' ),
+				],
+			],
+		];
+
+		return $meta_boxes;
 	}
 
 	function tos_checkbox() {
