@@ -70,4 +70,39 @@ class W4OS {
 		}
 	}
 
+	static function get_option( $option, $default = false ) {
+		$settings_page = null;
+		$result        = $default;
+		if ( preg_match( '/:/', $option ) ) {
+			$settings_page = strstr( $option, ':', true );
+			$option        = trim( strstr( $option, ':' ), ':' );
+		} else {
+			$settings_page = 'w4os_settings';
+		}
+
+		$settings = get_option( $settings_page );
+		if ( $settings && isset( $settings[ $option ] ) ) {
+			$result = $settings[ $option ];
+		}
+
+		// } else {
+		// $result = get_option($option, $default);
+		// }
+		return $result;
+	}
+
+	static function update_option( $option, $value, $autoload = null ) {
+		$settings_page = null;
+		if ( preg_match( '/:/', $option ) ) {
+			$settings_page       = strstr( $option, ':', true );
+			$option              = trim( strstr( $option, ':' ), ':' );
+			$settings            = get_option( $settings_page );
+			$settings[ $option ] = $value;
+			$result              = update_option( $settings_page, $settings, $autoload );
+		} else {
+			$result = update_option( $option, $value, $autoload );
+		}
+		return $result;
+	}
+
 }
