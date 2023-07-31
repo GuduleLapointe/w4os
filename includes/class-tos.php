@@ -63,6 +63,7 @@ class W4OS_Tos extends W4OS_Loader {
 					'name'        => __( 'Terms of Service page', 'w4os' ),
 					'id'          => $prefix . 'tos_page_id',
 					'type'        => 'post',
+					// 'label_description' => __( 'label desc', 'w4os' ),
 					'desc'        => '<ul><li>' . join('</li><li>', array(
 						__( 'Select the page containing the terms of service to add a TOS consent checkbox on the user registration page.', 'w4os'),
 						__( 'Leave blank to disable the checkbox or if it is handled by another plugin.', 'w4os'),
@@ -82,8 +83,6 @@ class W4OS_Tos extends W4OS_Loader {
 
 	function set_strings() {
 		$tos_page_id = W4OS::get_localized_post_id($this->tos_page_id, false);
-		error_log("original $this->tos_page_id locale $tos_page_id");
-
 		$this->tos_link = '<a href="' . get_permalink($tos_page_id) . '">' . get_the_title( $tos_page_id ). '</a>';
 		$this->tos_agreement = sprintf(
 			/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */
