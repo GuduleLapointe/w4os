@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface2.5.1-dev\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.6.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-31T14:45:35+00:00\n"
+"POT-Creation-Date: 2023-07-31T20:49:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
@@ -787,6 +787,20 @@ msgstr ""
 #: includes/class-settings.php:445
 #: tmp/class-avatar.php:277
 msgid "Password"
+msgstr ""
+
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+#: includes/class-tos.php:22
+msgid "I agree to the terms on page %s."
+msgstr ""
+
+#: includes/class-tos.php:25
+msgid "Error"
+msgstr ""
+
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+#: includes/class-tos.php:27
+msgid "You must agree to the terms on page %s."
 msgstr ""
 
 #: includes/updates.php:35

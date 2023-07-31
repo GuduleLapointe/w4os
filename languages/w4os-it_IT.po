@@ -860,6 +860,20 @@ msgstr "Nome utente"
 msgid "Password"
 msgstr "Password"
 
+#: includes/class-tos.php:22
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "I agree to the terms on page %s."
+msgstr "Accetto i termini nella pagina %s."
+
+#: includes/class-tos.php:25
+msgid "Error"
+msgstr "Errore"
+
+#: includes/class-tos.php:27
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "You must agree to the terms on page %s."
+msgstr "Devi accettare i termini nella pagina %s."
+
 #: includes/updates.php:35
 msgid "Update %s applied"
 msgstr "Aggiornamento %s applicato"

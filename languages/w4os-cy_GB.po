@@ -851,6 +851,20 @@ msgstr "Enw defnyddiwr"
 msgid "Password"
 msgstr "Cyfrinair"
 
+#: includes/class-tos.php:22
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "I agree to the terms on page %s."
+msgstr "Rwy'n cytuno i'r telerau ar dudalen %s."
+
+#: includes/class-tos.php:25
+msgid "Error"
+msgstr "錯誤"
+
+#: includes/class-tos.php:27
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "You must agree to the terms on page %s."
+msgstr "You must agree to the terms on page %s."
+
 #: includes/updates.php:35
 msgid "Update %s applied"
 msgstr "Diweddariad %s wedi'i gymhwyso"
