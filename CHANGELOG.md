@@ -4,10 +4,12 @@
 - fix W4OS_DIR not defined when database is not configured
 
 ### 2.6.3
+- Not stable: bugs introduced in this version were fixed in 2.6.4
 - fix regression in 41dfe8e 2.6.2 (some admin menus missing)
 - fixed profile displayed twice when profile page is personalized with Divi Builder
 
 ### 2.6.2
+- Not stable: bugs introduced in this version were fixed in 2.6.4
 - added terms of service checkbox
 
 ### 2.6.0
