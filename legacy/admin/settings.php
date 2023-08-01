@@ -249,6 +249,7 @@ function w4os_settings_callback_models( $arg ) {
 
 /**
  * Probablyu obsolte
+ *
  * @deprecated:
  */
 function w4os_settings_link_array( $links ) {

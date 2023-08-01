@@ -133,7 +133,7 @@ function w4os_check_db_tables( $tables, $error = false ) {
 		if ( $error ) {
 			w4os_admin_notice(
 				W4OS::sprintf_safe(
-					__( 'Missing tables: %s. The ROBUST database is connected, but some required tables are missing. Check database settings on %s.', 'w4os' ),
+					__( 'Missing tables: %1$s. The ROBUST database is connected, but some required tables are missing. Check database settings on %2$s.', 'w4os' ),
 					' <strong><em>' . join( ', ', $missing ) . '</em></strong>',
 					w4os_settings_link(),
 				),
