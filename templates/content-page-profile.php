@@ -7,7 +7,7 @@ $query_lastname  = get_query_var( 'profile_lastname' );
 
 $page_content = $content;
 
-if ( ! preg_match( "/<table class='avatar-profile-table'>/", $content ) ) {
+if ( ! preg_match( "/<table class='avatar-profile-table'>|\[et_pb_w4os_avatar_profile /", $content ) ) {
 	if ( empty( $query_firstname ) || empty( $query_lastname ) ) {
 		if ( is_user_logged_in() ) {
 			// User logged in, get profile if exists, avatar form otherwise
