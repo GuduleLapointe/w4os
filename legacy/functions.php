@@ -215,7 +215,15 @@ function w4os_update_grid_info( $rechecknow = false ) {
 	return $grid_info;
 }
 
-function w4os_give_settings_url( $message = '' ) {
+function w4os_settings_link( $page = 'w4os_settings' ) {
+	return W4OS::sprintf_safe(
+		"<a href='%s'>%s</a>",
+		get_admin_url( '', 'admin.php?page=' . $page ),
+		__( 'OpenSimulator settings page', 'w4os' ),
+	);
+}
+
+function w4os_append_settings_link( $message = '' ) {
 	return W4OS::sprintf_safe(
 		"<p>%s<a href='%s'>%s</a></p>",
 		$message,

@@ -247,7 +247,11 @@ function w4os_settings_callback_models( $arg ) {
 // echo "<p class=help>" . __('A web assets server is needed to display in-world assets (from the grid) on the website (e.g. profile pictures). You can use an external web assets server if you already have one installed, or use the one provided by w4os plugin.', 'w4os') . "</p>";
 // }
 
-function w4os_settings_link( $links ) {
+/**
+ * Probablyu obsolte
+ * @deprecated:
+ */
+function w4os_settings_link_array( $links ) {
 	$url = esc_url(
 		add_query_arg(
 			'page',

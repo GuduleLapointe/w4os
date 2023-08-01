@@ -82,7 +82,10 @@ add_action( 'init', 'w4os_shortcodes_init' );
 function w4os_newusers_html( $atts = array(), $args = array() ) {
 	if ( ! W4OS_DB_CONNECTED ) {
 		if ( $args['args']['error-messages'] ) {
-			echo w4os_give_settings_url( __( 'Configure W4OS database ', 'w4os' ) );
+			echo W4OS::sprintf_safe(
+				__( 'Configure W4OS database on %s.', 'w4os' ),
+				w4os_settings_link(),
+			);
 		}
 		return;
 	};
@@ -139,7 +142,10 @@ function w4os_newusers_html( $atts = array(), $args = array() ) {
 // function w4os_grid_status_html( $atts = array(), $args = array() ) {
 // if ( ! W4OS_DB_CONNECTED ) {
 // if ( $args['args']['error-messages'] ) {
-// echo w4os_give_settings_url( __( 'Configure W4OS database: ', 'w4os' ) );
+// 	echo W4OS::sprintf_safe(
+// 		__( 'Configure W4OS database on %s.', 'w4os' ),
+// 		w4os_settings_link(),
+// 	),
 // }
 // return;
 // };

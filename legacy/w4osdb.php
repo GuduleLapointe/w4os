@@ -13,7 +13,10 @@ if ( get_option( 'w4os_db_user' ) && get_option( 'w4os_db_pass' ) && get_option(
 	// }
 } else {
 	w4os_admin_notice(
-		w4os_give_settings_url( __( 'ROBUST database is not configured. To finish configuration, go to ', 'w4os' ) )
+		W4OS::sprintf_safe(
+			__( 'ROBUST database is not configured. To finish configuration, go to %s.', 'w4os' ),
+			w4os_settings_link(),
+		),
 	);
 }
 
@@ -49,14 +52,20 @@ function w4os_check_db( $cred = array() ) {
 
 	if ( ! empty( $checkdb ) & ! $checkdb->check_connection( false ) ) {
 		w4os_admin_notice(
-			w4os_give_settings_url( __( 'Could not connect to the database server, please verify your credentials on ', 'w4os' ) ),
+			W4OS::sprintf_safe(
+				__( 'Could not connect to the database server, please verify your credentials on %s.', 'w4os' ),
+				w4os_settings_link(),
+			),
 			'error',
 		);
 		return false;
 	}
 	if ( ! $checkdb->get_var( "SHOW DATABASES LIKE '" . get_option( 'w4os_db_database' ) . "'" ) ) {
 		w4os_admin_notice(
-			w4os_give_settings_url( __( 'Could not connect to the ROBUST database, please verify database name and/or credentials on ', 'w4os' ) ),
+			W4OS::sprintf_safe(
+				__( 'Could not connect to the ROBUST database, please verify database name and/or credentials on %s.', 'w4os' ),
+				w4os_settings_link(),
+			),
 			'error',
 		);
 		return false;
@@ -123,11 +132,10 @@ function w4os_check_db_tables( $tables, $error = false ) {
 	if ( count( $missing ) > 0 ) {
 		if ( $error ) {
 			w4os_admin_notice(
-				w4os_give_settings_url(
-					W4OS::sprintf_safe(
-						__( 'Missing tables: %s. The ROBUST database is connected, but some required tables are missing. ', 'w4os' ),
-						' <strong><em>' . join( ', ', $missing ) . '</em></strong>',
-					),
+				W4OS::sprintf_safe(
+					__( 'Missing tables: %s. The ROBUST database is connected, but some required tables are missing. Check database settings on %s.', 'w4os' ),
+					' <strong><em>' . join( ', ', $missing ) . '</em></strong>',
+					w4os_settings_link(),
 				),
 				'error',
 			);
