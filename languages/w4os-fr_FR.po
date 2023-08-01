@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2023-07-26T03:45:43+00:00\n"
+"POT-Creation-Date: 2023-08-01T14:46:30+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: gpt-po v1.0.5\n"
 "Language-Team: \n"
@@ -33,7 +33,7 @@ msgstr "Speculoos World"
 msgid "https://speculoos.world"
 msgstr "https://speculoos.world"
 
-#: admin/templates/shortcodes.php:1 includes/class-settings.php:81
+#: admin/templates/shortcodes.php:1 includes/class-settings.php:108
 msgid "Available Shortcodes"
 msgstr "Code courts (shortcodes) disponibles"
 
@@ -50,7 +50,7 @@ msgid "General information (grid name and login uri)"
 msgstr "Informations générales (nom de la grille et URI de connexion)"
 
 #: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38
-#: admin/templates/shortcodes.php:60 admin/templates/shortcodes.php:82
+#: admin/templates/shortcodes.php:60 admin/templates/shortcodes.php:83
 msgid "Bloc title"
 msgstr "Titre du bloc"
 
@@ -60,7 +60,7 @@ msgid "Title level (h1 to h6)"
 msgstr "Niveau de titre (de h1 à h6)"
 
 #: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41
-#: admin/templates/shortcodes.php:63 admin/templates/shortcodes.php:87
+#: admin/templates/shortcodes.php:64 admin/templates/shortcodes.php:89
 msgid "Options"
 msgstr "Options"
 
@@ -76,15 +76,15 @@ msgstr "Profil sur la grille si l'utilisateur est connecté et possède un avata
 msgid "(formerly %s)"
 msgstr "(anciennement %s)"
 
-#: admin/templates/shortcodes.php:85
+#: admin/templates/shortcodes.php:62
 msgid "Only show name and picture"
 msgstr "Afficher uniquement le nom et la photo"
 
-#: admin/templates/shortcodes.php:75
+#: admin/templates/shortcodes.php:76
 msgid "Most visited regions in your grid."
 msgstr "Régions les plus visitées dan votre grille."
 
-#: admin/templates/shortcodes.php:83
+#: admin/templates/shortcodes.php:85
 msgid "Show maximum n results"
 msgstr "Montrer maximum n résultats"
 
@@ -121,15 +121,15 @@ msgid "OpenSimulator Avatar Profile"
 msgstr "OpenSimulator - Profil"
 
 #: blocks/avatar-profile.php:219 blocks/grid-info.php:223
-#: blocks/grid-status.php:175 blocks/popular-places.php:249
+#: blocks/grid-status.php:175 blocks/popular-places.php:260
 #: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
 #: blocks/popular-places/popular-places.js:1
 #: src/blocks/avatar-profile/editor.js:68 src/blocks/grid-info/editor.js:58
-#: src/blocks/grid-status/editor.js:58 src/blocks/popular-places/editor.js:67
+#: src/blocks/grid-status/editor.js:58 src/blocks/popular-places/editor.js:81
 #: blocks/avatar-profile/avatar-profile.js:68 blocks/grid-info/grid-info.js:58
 #: blocks/grid-status/grid-status.js:58
-#: blocks/popular-places/popular-places.js:67
+#: blocks/popular-places/popular-places.js:81
 msgid "Title"
 msgstr "Titre"
 
@@ -142,20 +142,20 @@ msgid "Avatar Profile"
 msgstr "Profil d'avatar"
 
 #: blocks/avatar-profile.php:230 blocks/grid-info.php:231
-#: blocks/grid-status.php:183 blocks/popular-places.php:257
+#: blocks/grid-status.php:183 blocks/popular-places.php:268
 #: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
 #: blocks/popular-places/popular-places.js:1
 #: src/blocks/avatar-profile/editor.js:76 src/blocks/grid-info/editor.js:66
-#: src/blocks/grid-status/editor.js:66 src/blocks/popular-places/editor.js:75
+#: src/blocks/grid-status/editor.js:66 src/blocks/popular-places/editor.js:89
 #: blocks/avatar-profile/avatar-profile.js:76 blocks/grid-info/grid-info.js:66
 #: blocks/grid-status/grid-status.js:66
-#: blocks/popular-places/popular-places.js:75
+#: blocks/popular-places/popular-places.js:89
 msgid "Title Level"
 msgstr "Niveau de titre"
 
 #: blocks/avatar-profile.php:232 blocks/grid-info.php:233
-#: blocks/grid-status.php:185 blocks/popular-places.php:259
+#: blocks/grid-status.php:185 blocks/popular-places.php:270
 msgid "Select the HTML heading level for the title."
 msgstr "Selectionnez le niveau de titre."
 
@@ -165,11 +165,13 @@ msgstr "Selectionnez le niveau de titre."
 msgid "Mini Profile"
 msgstr "Mini profil"
 
-#: blocks/avatar-profile.php:254
+#: blocks/avatar-profile.php:254 blocks/popular-places.php:297
+#: blocks/popular-places.php:309
 msgid "Yes"
 msgstr "Oui"
 
-#: blocks/avatar-profile.php:255
+#: blocks/avatar-profile.php:255 blocks/popular-places.php:296
+#: blocks/popular-places.php:308
 msgid "No"
 msgstr "Non"
 
@@ -178,16 +180,16 @@ msgid "Enable mini profile display."
 msgstr "Activer le profil réduit."
 
 #: blocks/grid-info.php:106 blocks/grid-info.php:227
-#: includes/class-settings.php:110 includes/class-settings.php:111
-#: includes/class-settings.php:112 includes/class-settings.php:113
+#: includes/class-settings.php:137 includes/class-settings.php:138
+#: includes/class-settings.php:139 includes/class-settings.php:140
 msgid "Grid Info"
 msgstr "Infos sur la grille"
 
-#: blocks/grid-info.php:182 includes/class-settings.php:128
+#: blocks/grid-info.php:182 includes/class-settings.php:155
 msgid "Grid Name"
 msgstr "Nom de la grille"
 
-#: blocks/grid-info.php:183 includes/class-settings.php:119
+#: blocks/grid-info.php:183 includes/class-settings.php:146
 msgid "Login URI"
 msgstr "URI de connexion"
 
@@ -205,11 +207,11 @@ msgid "Enter the title for the Grid Info module."
 msgstr "Entrez le titre du module Infos de la grille."
 
 #: blocks/grid-status.php:108 blocks/grid-status.php:179
-#: includes/class-settings.php:134
+#: includes/class-settings.php:161
 msgid "Grid Status"
 msgstr "Statut de la grille"
 
-#: blocks/grid-status.php:142 blocks/popular-places.php:186
+#: blocks/grid-status.php:142 blocks/popular-places.php:192
 msgid "No result"
 msgstr "Aucun résultat"
 
@@ -222,32 +224,31 @@ msgstr "OpenSimulator - Statut de la grille"
 msgid "Enter the title for the Grid Status module."
 msgstr "Entrez le titre du module Statut de la grille."
 
-#: blocks/popular-places.php:108 blocks/popular-places.php:253
+#: blocks/popular-places.php:106 blocks/popular-places.php:264
 msgid "Popular Places"
 msgstr "Lieux populaires"
 
-#: blocks/popular-places.php:227 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:13
-#: blocks/popular-places/popular-places.js:13
+#: blocks/popular-places.php:235 blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:14
+#: blocks/popular-places/popular-places.js:14
 msgid "OpenSimulator Popular Places"
 msgstr "OpenSimulator - Lieux populaires"
 
-#: blocks/popular-places.php:251
+#: blocks/popular-places.php:262
 msgid "Enter the title for the Popular Places module."
 msgstr "Entrez le titre du module Lieux Populaires."
 
-#: blocks/popular-places.php:274 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:92
-#: blocks/popular-places/popular-places.js:92
+#: blocks/popular-places.php:285 blocks/popular-places/popular-places.js:1
+#: src/blocks/popular-places/editor.js:106
+#: blocks/popular-places/popular-places.js:106
 msgid "Max Results"
 msgstr "Maximum résultats"
 
-#: blocks/popular-places.php:276
+#: blocks/popular-places.php:287
 msgid "Enter the maximum number of results to display."
 msgstr "Entrez le nombre maximum de résultats à afficher."
 
-#: blocks/popular-places.php:292
-#: blocks/popular-places/popular-places.js:1
+#: blocks/popular-places.php:292 blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:115
 #: blocks/popular-places/popular-places.js:115
 msgid "Include Hypergrid"
@@ -257,8 +258,7 @@ msgstr "Inclure Hypergrid"
 msgid "Enable to restrict results to the grid."
 msgstr "Activer pour limiter les résultats à la grille."
 
-#: blocks/popular-places.php:304
-#: blocks/popular-places/popular-places.js:1
+#: blocks/popular-places.php:304 blocks/popular-places/popular-places.js:1
 #: src/blocks/popular-places/editor.js:123
 #: blocks/popular-places/popular-places.js:123
 msgid "Include Land for Sale"
@@ -673,7 +673,8 @@ msgstr "Les fonctionnalités de recherche nécessitent l'installation du module 
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "Le binaire OpenSimSearch.Modules.dll prêt à l'emploi peut être trouvé ici :"
 
-#: legacy/profile.php:198 legacy/profile.php:1039
+#: includes/class-settings.php:82 legacy/profile.php:198
+#: legacy/profile.php:1039
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
@@ -681,85 +682,85 @@ msgstr "OpenSimulator"
 msgid "OpenSimulator Administration"
 msgstr "Administration d'OpenSimulator"
 
-#: includes/class-settings.php:77
+#: includes/class-settings.php:104
 msgid "OpenSimulator Status"
 msgstr "Statut OpenSimulator"
 
-#: includes/class-settings.php:77 legacy/functions.php:310
+#: includes/class-settings.php:104 legacy/functions.php:310
 msgid "Status"
 msgstr "Statut"
 
-#: includes/class-settings.php:81
+#: includes/class-settings.php:108
 msgid "Shortcodes"
 msgstr "Code courts"
 
-#: includes/class-settings.php:94 legacy/admin/settings.php:261
+#: includes/class-settings.php:121 legacy/admin/settings.php:261
 msgid "Settings"
 msgstr "Réglages"
 
-#: includes/class-settings.php:159
+#: includes/class-settings.php:186
 msgid "ROBUST Database"
 msgstr "Base de données ROBUST"
 
-#: includes/class-settings.php:179
+#: includes/class-settings.php:206
 msgid "Grid Users"
 msgstr "Utilisateurs de la grille"
 
-#: includes/class-settings.php:189
+#: includes/class-settings.php:216
 msgid "Profile Page"
 msgstr "Page de profil"
 
-#: includes/class-settings.php:195
+#: includes/class-settings.php:222
 msgid "URL"
 msgstr "URL"
 
-#: includes/class-settings.php:206
+#: includes/class-settings.php:233
 msgid "A profile page exists with permalink set as %1$s, as defined in [permalinks settings]."
 msgstr "Une page de profil existe avec un permalien défini comme %1$s, tel que spécifié dans les [réglages des permaliens]."
 
-#: includes/class-settings.php:207
+#: includes/class-settings.php:234
 msgid "A profile page must be created with permalink set as %1$s, as defined in [permalinks settings]."
 msgstr ""
 "Une page de profil doit être créée avec le permalien défini comme %1$s, tel que spécifié dans les [réglages des "
 "permaliens]."
 
-#: includes/class-settings.php:215
+#: includes/class-settings.php:242
 msgid "Public Profile Page"
 msgstr "Page de profil publique"
 
-#: includes/class-settings.php:219
+#: includes/class-settings.php:246
 msgid "Provide avatars with a public web profile page in the following format: %1$s."
 msgstr "Fournir des avatars avec une page de profil web publique au format suivant : %1$s."
 
-#: includes/class-settings.php:227
+#: includes/class-settings.php:254
 msgid "Login Page"
 msgstr "Page de connexion"
 
-#: includes/class-settings.php:230
+#: includes/class-settings.php:257
 msgid "Use profile page as login page."
 msgstr "Utiliser la page de profil comme page de connexion."
 
-#: includes/class-settings.php:240
+#: includes/class-settings.php:267
 msgid "Instructions"
 msgstr "Instructions"
 
-#: includes/class-settings.php:243
+#: includes/class-settings.php:270
 msgid "Show configuration instructions to new users on their profile page."
 msgstr "Afficher les instructions de configuration aux nouveaux utilisateurs."
 
-#: includes/class-settings.php:251
+#: includes/class-settings.php:278
 msgid "Replace User Names"
 msgstr "Remplacer le nom d'utilisateur"
 
-#: includes/class-settings.php:254
+#: includes/class-settings.php:281
 msgid "Show avatar name instead of user name in users list."
 msgstr "Affiche le nom de l'avatar au lieu du nom d'utilisateur dans la liste."
 
-#: includes/class-settings.php:260
+#: includes/class-settings.php:287
 msgid "Exclude from stats"
 msgstr "Exclure des statistiques"
 
-#: includes/class-settings.php:263
+#: includes/class-settings.php:290
 msgid ""
 "Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you "
 "have real avatars without email address."
@@ -767,93 +768,93 @@ msgstr ""
 "Les comptes sans adresse e-mail sont généralement des comptes de test ou techniques créés à partir de la console. "
 "Décochez cette case uniquement si vous avez des avatars réels sans adresse e-mail."
 
-#: includes/class-settings.php:265
+#: includes/class-settings.php:292
 msgid "Models"
 msgstr "Modèles"
 
-#: includes/class-settings.php:266
+#: includes/class-settings.php:293
 msgid "Accounts without mail address"
 msgstr "Comptes sans adresse e=mail"
 
-#: includes/class-settings.php:267
+#: includes/class-settings.php:294
 msgid "Hypergrid visitors"
 msgstr "Visiteurs hypergrid"
 
-#: includes/class-settings.php:306 legacy/functions.php:268
+#: includes/class-settings.php:333 legacy/functions.php:268
 msgid "Invalid Login URI"
 msgstr "URI de connexion invalide"
 
-#: includes/class-settings.php:367
+#: includes/class-settings.php:394
 msgid "Default"
 msgstr "Défaut"
 
-#: includes/class-settings.php:390
+#: includes/class-settings.php:417
 msgid "Hostname"
 msgstr "Nom d'hôte"
 
-#: includes/class-settings.php:397
+#: includes/class-settings.php:424
 msgid "Port"
 msgstr "Port"
 
-#: includes/class-settings.php:404
+#: includes/class-settings.php:431
 msgid "DB Name"
 msgstr "Nom DB"
 
-#: includes/class-settings.php:411
+#: includes/class-settings.php:438
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: includes/class-settings.php:418 tmp/class-avatar.php:277
+#: includes/class-settings.php:445 tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Mot de passe"
 
-#: includes/class-tos.php:22
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "I agree to the terms on page %s."
-msgstr "Je suis d'accord avec les conditions de la page %s."
-
-#: includes/class-tos.php:25
-msgid "Error"
-msgstr "Erreur"
-
-#: includes/class-tos.php:27
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "You must agree to the terms on page %s."
-msgstr "Vous devez accepter les conditions de la page %s."
-
-#: includes/class-tos.php:70
+#: includes/class-tos.php:63
 msgid "Registration"
 msgstr "Inscription"
 
-#: includes/class-tos.php:76
+#: includes/class-tos.php:69
 msgid "Terms of Service page"
 msgstr "Page des conditions d'utilisation"
 
-#: includes/class-tos.php:80
+#: includes/class-tos.php:76
 msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
 msgstr ""
 "Sélectionnez la page contenant les conditions d'utilisation pour ajouter une case à cocher d'acceptation des CGU sur la "
 "page d'inscription des utilisateurs."
 
-#: includes/class-tos.php:81
+#: includes/class-tos.php:77
 msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
 msgstr "Laissez vide pour désactiver la case à cocher ou si elle est gérée par un autre plugin."
 
-#: includes/class-tos.php:82
+#: includes/class-tos.php:78
 msgid "Note: It is crucial to have a well-crafted and legally accurate TOS page for your website."
 msgstr ""
 "Note : Il est crucial d'avoir une page de conditions d'utilisation bien rédigée et juridiquement précise pour votre "
 "site web."
 
-#: includes/class-tos.php:83
+#: includes/class-tos.php:79
 msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
 msgstr ""
 "Nous vous recommandons d'utiliser un plugin dédié ou de faire appel à des services professionnels pour vous aider à "
 "rédiger le texte de la page des conditions d'utilisation."
 
-#: includes/class-tos.php:88
+#: includes/class-tos.php:85
 msgid "Select a TOS page"
 msgstr "Sélectionnez une page de CGU"
+
+#: includes/class-tos.php:98
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "I agree to the terms on page %s."
+msgstr "Je suis d'accord avec les conditions de la page %s."
+
+#: includes/class-tos.php:101
+msgid "Error"
+msgstr "Erreur"
+
+#: includes/class-tos.php:103
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "You must agree to the terms on page %s."
+msgstr "Vous devez accepter les conditions de la page %s."
 
 #: includes/updates.php:35
 msgid "Update %s applied"
@@ -1327,7 +1328,7 @@ msgid "Reset Password"
 msgstr "Réinitialisation du mot de passe"
 
 #: legacy/profile-page.php:114 legacy/profile-page.php:192
-#: templates/content-configuration.php:43 templates/content-page-profile.php:26
+#: templates/content-configuration.php:43 templates/content-page-profile.php:27
 msgid "Log in"
 msgstr "Connexion"
 
@@ -1343,7 +1344,7 @@ msgstr "Mon profil"
 msgid "Create My Avatar"
 msgstr "Créer mon avatar"
 
-#: legacy/profile-page.php:205 templates/content-page-profile.php:54
+#: legacy/profile-page.php:205 templates/content-page-profile.php:55
 msgid "%s's profile"
 msgstr "Profil de %s"
 
@@ -1579,7 +1580,7 @@ msgstr "URL du profil web"
 
 #: legacy/shortcodes.php:85
 msgid "Configure W4OS database "
-msgstr "Configurer la base de données W4OS "
+msgstr "Configurer la base de données W4OS"
 
 #: legacy/shortcodes.php:126
 msgid "Edit user"
@@ -1617,21 +1618,21 @@ msgstr "Données d'avatar mises à jour pour %s utilisateurs"
 
 #: legacy/w4osdb.php:16
 msgid "ROBUST database is not configured. To finish configuration, go to "
-msgstr "La base de données de Robust n'est pas configurée. Pour terminer la configuration, rendez-vous sur "
+msgstr "La base de données de Robust n'est pas configurée. Pour terminer la configuration, rendez-vous sur"
 
 #: legacy/w4osdb.php:52
 msgid "Could not connect to the database server, please verify your credentials on "
-msgstr "Impossible de se connecter au serveur de bases de données, vérifiez vos identifiants sur "
+msgstr "Impossible de se connecter au serveur de bases de données, vérifiez vos identifiants sur"
 
 #: legacy/w4osdb.php:59
 msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
 msgstr ""
 "Impossible de se connecter à la base de données de Robust, vérifiez le nom de la base de données et/ou vos identifiants "
-"sur "
+"sur"
 
 #: legacy/w4osdb.php:128
 msgid "Missing tables: %s. The ROBUST database is connected, but some required tables are missing. "
-msgstr "Tables manquantes : %s. La base de données ROBUST est connectée, mais certaines tables requises sont manquantes. "
+msgstr "Tables manquantes : %s. La base de données ROBUST est connectée, mais certaines tables requises sont manquantes."
 
 #: legacy/widgets.php:11
 msgid "Grid info Widget"
@@ -1647,7 +1648,7 @@ msgstr "Avatar"
 
 #: legacy/woocommerce.php:99
 msgid "Your avatar: "
-msgstr "Votre avatar : "
+msgstr "Votre avatar :"
 
 #: templates/content-configuration.php:2
 msgid "this grid"
@@ -1703,7 +1704,7 @@ msgstr ""
 msgid "Click \"Log In\""
 msgstr "Cliquer sur \"Connexion\""
 
-#: templates/content-page-profile.php:15
+#: templates/content-page-profile.php:16
 msgid "My Avatar"
 msgstr "Mon avatar"
 
@@ -1907,9 +1908,9 @@ msgstr ""
 #: blocks/grid-status/grid-status.js:1
 #: blocks/popular-places/popular-places.js:1
 #: src/blocks/avatar-profile/editor.js:64 src/blocks/grid-info/editor.js:54
-#: src/blocks/grid-status/editor.js:54 src/blocks/popular-places/editor.js:63
+#: src/blocks/grid-status/editor.js:54 src/blocks/popular-places/editor.js:77
 #: blocks/avatar-profile/avatar-profile.js:64 blocks/grid-info/grid-info.js:54
 #: blocks/grid-status/grid-status.js:54
-#: blocks/popular-places/popular-places.js:63
+#: blocks/popular-places/popular-places.js:77
 msgid "Block Settings"
 msgstr "Réglages du bloc"

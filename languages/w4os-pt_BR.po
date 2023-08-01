@@ -860,20 +860,6 @@ msgstr "Nome de usuário"
 msgid "Password"
 msgstr "Senha"
 
-#: includes/class-tos.php:22
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "I agree to the terms on page %s."
-msgstr "Eu concordo com os termos na página %s."
-
-#: includes/class-tos.php:25
-msgid "Error"
-msgstr "Erro"
-
-#: includes/class-tos.php:27
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "You must agree to the terms on page %s."
-msgstr "Você precisa concordar com os termos na página %s."
-
 #: includes/class-tos.php:70
 msgid "Registration"
 msgstr "Registro"
@@ -905,6 +891,20 @@ msgstr ""
 #: includes/class-tos.php:88
 msgid "Select a TOS page"
 msgstr "Selecione uma página de Termos de Serviço"
+
+#: includes/class-tos.php:22
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "I agree to the terms on page %s."
+msgstr "Eu concordo com os termos na página %s."
+
+#: includes/class-tos.php:25
+msgid "Error"
+msgstr "Erro"
+
+#: includes/class-tos.php:27
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "You must agree to the terms on page %s."
+msgstr "Você precisa concordar com os termos na página %s."
 
 #: includes/updates.php:35
 msgid "Update %s applied"
@@ -1684,7 +1684,7 @@ msgstr "Não foi possível conectar ao servidor de banco de dados, por favor ver
 
 #: legacy/w4osdb.php:59
 msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
-msgstr "Não foi possível conectar ao banco de dados ROBUST, por favor verifique o nome do banco de dados e/ou as credenciais em "
+msgstr "Não foi possível conectar ao banco de dados ROBUST, por favor verifique o nome do banco de dados e/ou as credenciais em"
 
 #: legacy/w4osdb.php:128
 msgid "Missing tables: %s. The ROBUST database is connected, but some required tables are missing. "

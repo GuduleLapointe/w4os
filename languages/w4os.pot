@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface 2.6.1\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.6.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-31T22:07:15+00:00\n"
+"POT-Creation-Date: 2023-08-01T14:50:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
@@ -789,46 +789,46 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
+#: includes/class-tos.php:63
+msgid "Registration"
+msgstr ""
+
+#: includes/class-tos.php:69
+msgid "Terms of Service page"
+msgstr ""
+
+#: includes/class-tos.php:76
+msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
+msgstr ""
+
+#: includes/class-tos.php:77
+msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
+msgstr ""
+
+#: includes/class-tos.php:78
+msgid "Note: It is crucial to have a well-crafted and legally accurate TOS page for your website."
+msgstr ""
+
+#: includes/class-tos.php:79
+msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
+msgstr ""
+
+#: includes/class-tos.php:85
+msgid "Select a TOS page"
+msgstr ""
+
 #. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-#: includes/class-tos.php:30
+#: includes/class-tos.php:98
 msgid "I agree to the terms on page %s."
 msgstr ""
 
-#: includes/class-tos.php:33
+#: includes/class-tos.php:101
 msgid "Error"
 msgstr ""
 
 #. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-#: includes/class-tos.php:35
+#: includes/class-tos.php:103
 msgid "You must agree to the terms on page %s."
-msgstr ""
-
-#: includes/class-tos.php:70
-msgid "Registration"
-msgstr ""
-
-#: includes/class-tos.php:76
-msgid "Terms of Service page"
-msgstr ""
-
-#: includes/class-tos.php:80
-msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
-msgstr ""
-
-#: includes/class-tos.php:81
-msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
-msgstr ""
-
-#: includes/class-tos.php:82
-msgid "Note: It is crucial to have a well-crafted and legally accurate TOS page for your website."
-msgstr ""
-
-#: includes/class-tos.php:83
-msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
-msgstr ""
-
-#: includes/class-tos.php:88
-msgid "Select a TOS page"
 msgstr ""
 
 #: includes/updates.php:35

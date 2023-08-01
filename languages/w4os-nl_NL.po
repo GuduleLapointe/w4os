@@ -855,20 +855,6 @@ msgstr "Gebruikersnaam"
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: includes/class-tos.php:22
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "I agree to the terms on page %s."
-msgstr "Ik ga akkoord met de voorwaarden op pagina %s."
-
-#: includes/class-tos.php:25
-msgid "Error"
-msgstr "Fout"
-
-#: includes/class-tos.php:27
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "You must agree to the terms on page %s."
-msgstr "Je moet akkoord gaan met de voorwaarden op pagina %s."
-
 #: includes/class-tos.php:70
 msgid "Registration"
 msgstr "Registratie"
@@ -902,6 +888,20 @@ msgstr ""
 #: includes/class-tos.php:88
 msgid "Select a TOS page"
 msgstr "Selecteer een TOS-pagina"
+
+#: includes/class-tos.php:22
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "I agree to the terms on page %s."
+msgstr "Ik ga akkoord met de voorwaarden op pagina %s."
+
+#: includes/class-tos.php:25
+msgid "Error"
+msgstr "Fout"
+
+#: includes/class-tos.php:27
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "You must agree to the terms on page %s."
+msgstr "Je moet akkoord gaan met de voorwaarden op pagina %s."
 
 #: includes/updates.php:35
 msgid "Update %s applied"
@@ -1630,7 +1630,7 @@ msgstr "Web profiel URL"
 
 #: legacy/shortcodes.php:85
 msgid "Configure W4OS database "
-msgstr "Configureer W4OS database "
+msgstr "Configureer W4OS database"
 
 #: legacy/shortcodes.php:126
 msgid "Edit user"
@@ -1668,15 +1668,15 @@ msgstr "%s lokale gebruikers bijgewerkt met avatar data"
 
 #: legacy/w4osdb.php:16
 msgid "ROBUST database is not configured. To finish configuration, go to "
-msgstr "ROBUST database is niet geconfigureerd. Om de configuratie te voltooien, ga naar "
+msgstr "ROBUST database is niet geconfigureerd. Om de configuratie te voltooien, ga naar"
 
 #: legacy/w4osdb.php:52
 msgid "Could not connect to the database server, please verify your credentials on "
-msgstr "Kon geen verbinding maken met de database server, controleer uw inloggegevens op "
+msgstr "Kon geen verbinding maken met de database server, controleer uw inloggegevens op"
 
 #: legacy/w4osdb.php:59
 msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
-msgstr "Kon geen verbinding maken met de ROBUST database, controleer de databasenaam en/of de inloggegevens op "
+msgstr "Kon geen verbinding maken met de ROBUST database, controleer de databasenaam en/of de inloggegevens op"
 
 #: legacy/w4osdb.php:128
 msgid "Missing tables: %s. The ROBUST database is connected, but some required tables are missing. "
