@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.6.4
+- fix W4OS_DIR not defined
+
 ### 2.6.3
 - fix regression in 41dfe8e 2.6.2 (some admin menus missing)
 - fixed profile displayed twice when profile page is personalized with Divi Builder

@@ -1,6 +1,6 @@
 {
   "name": "w4os",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "WordPress interface for OpenSimulator (w4os)",
   "main": "webpack.config.js",
   "scripts": {
