@@ -252,14 +252,8 @@ function w4os_settings_callback_models( $arg ) {
  *
  * @deprecated:
  */
-function w4os_settings_link_array( $links ) {
-	$url = esc_url(
-		add_query_arg(
-			'page',
-			'w4os_settings',
-			get_admin_url() . 'admin.php'
-		)
-	);
+function w4os_add_action_links( $links ) {
+	$url = w4os_settings_url();
 
 	array_push(
 		$links,
@@ -268,4 +262,4 @@ function w4os_settings_link_array( $links ) {
 
 	return $links;
 }
-add_filter( 'plugin_action_links_' . W4OS_PLUGIN, 'w4os_settings_link' );
+add_filter( 'plugin_action_links_' . W4OS_PLUGIN, 'w4os_add_action_links' );

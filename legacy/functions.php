@@ -214,21 +214,23 @@ function w4os_update_grid_info( $rechecknow = false ) {
 	update_option( 'w4os_grid_info', json_encode( $grid_info ) );
 	return $grid_info;
 }
+function w4os_settings_url( $page = 'w4os_settings' ) {
+	// get_admin_url( '', 'admin.php?page=' . $page ),
+	$url = esc_url(
+		add_query_arg(
+			'page',
+			'w4os_settings',
+			get_admin_url() . 'admin.php'
+		)
+	);
+	return $url;
+}
 
 function w4os_settings_link( $page = 'w4os_settings' ) {
 	return sprintf(
 		"<a href='%s'>%s</a>",
-		get_admin_url( '', 'admin.php?page=' . $page ),
-		__( 'OpenSimulator settings page', 'w4os' ),
-	);
-}
-
-function w4os_append_settings_link( $message = '' ) {
-	return sprintf(
-		"<p>%s<a href='%s'>%s</a></p>",
-		$message,
-		get_admin_url( '', 'admin.php?page=w4os_settings' ),
-		__( 'OpenSimulator settings page', 'w4os' ),
+		w4os_settings_url( $page ),
+		__( 'settings page', 'w4os' ),
 	);
 }
 

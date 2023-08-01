@@ -96,7 +96,7 @@ function custom_account_dashboard_content() {
 		'%3$s <span class=profile><span class=profile-pic>%1$s</span><span class=profile-details>%2$s</span></span>',
 		$avatar->profile_picture(),
 		$avatar->AvatarName,
-		__( 'Your avatar: ', 'w4os' )
+		__( 'Your avatar:', 'w4os' )
 	);
 	// echo w4os_profile_display( $user );
 	if ( get_option( 'w4os_configuration_instructions' ) && get_the_author_meta( 'w4os_lastseen', $user->ID ) == 0 ) {
