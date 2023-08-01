@@ -13,3 +13,4 @@ vendor/magicoli/opensim-rest-php/opensim-rest-cli
 vendor/magicoli/opensim-rest-php/opensim-rest-cli.php
 vendor/magicoli/opensim-rest-php/src/
 .gpt-po/key*
+helpers/destinations

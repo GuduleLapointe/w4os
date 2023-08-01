@@ -1,0 +1,85 @@
+/**
+ * css/guide.css
+ *
+ * @package    magicoli/opensim-helpers
+ * @subpackage    magicoli/opensim-helpers/guide
+ *
+ * @author     Gudule Lapointe <gudule@speculoos.world>
+ * @link       https://github.com/magicoli/opensim-helpers
+ * @license    AGPLv3
+ */
+
+:root {
+  --guide-color-green: #61c909;
+  --guide-color-orange: #ff7f00;
+  --guide-color-text: white;
+}
+
+body.destination-guide {
+  padding: 0;
+  margin: 0;
+  background: var(--guide-color-orange);
+}
+
+#guide {
+  font-family: "Liberation Sans", Arial, Roboto, "Helvetica", sans-serif;
+  background: var(--guide-color-orange);
+  padding: 10px;
+  color: var(--guide-color-text);
+}
+
+#guide a {
+  color: var(--guide-color-text);
+  text-decoration: none;
+}
+
+#guide :hover {
+  color: black;
+}
+
+#guide .item:hover {
+  background: var(--guide-color-green);
+  /* transform: scale(0.95); /* Slight scale-up effect on hover */ */
+}
+
+#guide h1, #guide h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  padding: 0 10px 5px;
+  display: inline-block;
+}
+
+#guide a.back {
+  font-size: 0.9rem;
+}
+
+#guide .list {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding-bottom: 10px;
+}
+
+#guide .item {
+  padding: 10px;
+  width: 160px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect for background color */
+}
+
+#guide img.thumbnail {
+  width: 140px;
+  height: 85px;
+  object-fit: cover; /* Crop the image to fit without stretching */
+}
+
+#guide .name {
+  font-size: 0.85rem;
+  font-weight: bold;
+  white-space: nowrap; /* Prevent the name from wrapping */
+  overflow: hidden; /* Hide overflowing content */
+  text-overflow: ellipsis; /* Add an ellipsis (...) to indicate content is hidden */
+}
+
+#guide .data {
+  font-size: 0.8rem;
+}
