@@ -193,7 +193,7 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 == Changelog ==
 
 = 2.6.4 =
-* fix W4OS_DIR not defined
+* fix W4OS_DIR not defined when database is not configured
 
 = 2.6.3 =
 * fix regression in 41dfe8e 2.6.2 (some admin menus missing)
