@@ -13,7 +13,7 @@ if ( get_option( 'w4os_db_user' ) && get_option( 'w4os_db_pass' ) && get_option(
 	// }
 } else {
 	w4os_admin_notice(
-		W4OS::sprintf_safe(
+		sprintf(
 			__( 'ROBUST database is not configured. To finish configuration, go to %s.', 'w4os' ),
 			w4os_settings_link(),
 		),
@@ -52,7 +52,7 @@ function w4os_check_db( $cred = array() ) {
 
 	if ( ! empty( $checkdb ) & ! $checkdb->check_connection( false ) ) {
 		w4os_admin_notice(
-			W4OS::sprintf_safe(
+			sprintf(
 				__( 'Could not connect to the database server, please verify your credentials on %s.', 'w4os' ),
 				w4os_settings_link(),
 			),
@@ -62,7 +62,7 @@ function w4os_check_db( $cred = array() ) {
 	}
 	if ( ! $checkdb->get_var( "SHOW DATABASES LIKE '" . get_option( 'w4os_db_database' ) . "'" ) ) {
 		w4os_admin_notice(
-			W4OS::sprintf_safe(
+			sprintf(
 				__( 'Could not connect to the ROBUST database, please verify database name and/or credentials on %s.', 'w4os' ),
 				w4os_settings_link(),
 			),
@@ -132,7 +132,7 @@ function w4os_check_db_tables( $tables, $error = false ) {
 	if ( count( $missing ) > 0 ) {
 		if ( $error ) {
 			w4os_admin_notice(
-				W4OS::sprintf_safe(
+				sprintf(
 					__( 'Missing tables: %1$s. The ROBUST database is connected, but some required tables are missing. Check database settings on %2$s.', 'w4os' ),
 					' <strong><em>' . join( ', ', $missing ) . '</em></strong>',
 					w4os_settings_link(),
