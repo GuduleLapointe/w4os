@@ -12,7 +12,7 @@ class W4OS_Tos extends W4OS_Loader {
 	public $tos_link;
 	private $tos_error;
 
-	public function init() {
+	public function __construct() {
 
 		$this->actions = array();
 		$this->filters = array(
