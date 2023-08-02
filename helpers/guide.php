@@ -18,8 +18,7 @@
 // require_once __DIR__ . '/includes/config.php'; // DEBUG: disabled until we're ready with WP
 require_once __DIR__ . '/includes/functions.php';
 
-class OpenSim_Guide
-{
+class OpenSim_Guide {
   private $destinations = [];
   private $fullHTML = false; // Flag to determine whether to output HTML tags
   private $url_base;
@@ -37,36 +36,36 @@ class OpenSim_Guide
       $this->url_args['source'] = $this->source;
     }
 
-    if( ! defined('OPENSIM_GUIDE_SOURCE' ) ) {
-      // TODO: Check if script was really called directly even while
-      // OPENSIM_GUIDE_SOURCE if not set
+    // If it's the main script, output the html, otherwise let the main app
+    // decide how and when, with build_html and output_html methods
+    if( $this->is_main_script() ) {
       $this->fullHTML = true;
-      $this->outputHTML();
+      $this->output_html();
     }
   }
 
-  public function outputHTML() {
-    echo $this->buildHTML();
+  public function output_html() {
+    echo $this->build_html();
   }
 
-  public function buildHTML() {
-    $this->loadDestinations($this->source);
+  public function build_html() {
+    $this->load_destinations($this->source);
 
-    $content = $this->startHTML();
+    $content = $this->html_prefix();
 
     if( empty($this->destinations) ) {
-      $content .= $this->noResultsMessage();
+      $content .= $this->no_result();
     } else if (empty($_GET['category'])) {
-      $content .= $this->displayMainCategories();
+      $content .= $this->categories_list();
     } else {
-      $content .= $this->displayDestinations($_GET['category']);
+      $content .= $this->destinations_list($_GET['category']);
     }
-    $content .= $this->stopHTML();
+    $content .= $this->html_suffix();
 
     return $content;
   }
 
-  private function loadDestinations($source)
+  private function load_destinations($source)
   {
     $fileContent = null;
     // Check if the source is a URL or a file path
@@ -100,7 +99,7 @@ class OpenSim_Guide
     }
   }
 
-  public function displayMainCategories()
+  public function categories_list()
   {
     $content = '<div class=header>'
     . '<h1>Destinations List</h1>'
@@ -108,9 +107,9 @@ class OpenSim_Guide
     . '<div class="list">';
     foreach ($this->destinations as $categoryTitle => $destinations) {
       if (!empty($destinations)) {
-        $content .= '<a href="' . $this->buildURL($categoryTitle) . '">'
+        $content .= '<a href="' . $this->build_url($categoryTitle) . '">'
         . '<div class="item">'
-        . '<img class="thumbnail" src="' . $this->getThumbnail() . '" alt="' . $categoryTitle . '">'
+        . '<img class="thumbnail" src="' . $this->place_thumbnail() . '" alt="' . $categoryTitle . '">'
         . '<div class="name">' . $categoryTitle . '</div>'
         . '<div class="data">' . count($destinations) . ' destinations</div>'
         . '</div>'
@@ -121,26 +120,26 @@ class OpenSim_Guide
     return $content;
   }
 
-  public function displayDestinations($categoryTitle)
+  public function destinations_list($categoryTitle)
   {
     $content = '<div class=header>'
     . '<h2>' . $categoryTitle . '</h2>'
-    . '<a href="' . $this->buildURL() . '" class="back">Back to categories</a>'
+    . '<a href="' . $this->build_url() . '" class="back">Back to categories</a>'
     . '</div>'
     . '<div class="list">';
     foreach ($this->destinations[$categoryTitle] as $destination) {
-      $traffic = $this->getTraffic();
-      $people = $this->getNumberOfPeople();
+      $traffic = $this->place_traffic();
+      $people = $this->place_people();
       $content .= '<a href="' . opensim_format_tp($destination['url'], TPLINK_HG) . '">'
       . '<div class="item">'
-      . '<img class="thumbnail" src="' . $this->getThumbnail() . '" alt="' . $destination['name'] . '">'
+      . '<img class="thumbnail" src="' . $this->place_thumbnail() . '" alt="' . $destination['name'] . '">'
       . '<div class="name">' . $destination['name'] . '</div>'
       . '<div class="data">';
       if ($people > 0) {
-        $content .= ' <span>' . $this->getNumberOfPeople() . ' people</span> ';
+        $content .= ' <span>' . $this->place_people() . ' people</span> ';
       }
       if ($traffic > 0) {
-        $content .= ' <span>Traffic: ' . $this->getTraffic() . '</span> ';
+        $content .= ' <span>Traffic: ' . $this->place_traffic() . '</span> ';
       }
       $content .= '</div></div></a>';
     }
@@ -149,7 +148,7 @@ class OpenSim_Guide
     return $content;
   }
 
-  private function noResultsMessage()
+  private function no_result()
   {
     echo '<div class="error">';
     echo 'The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!';
@@ -164,31 +163,39 @@ class OpenSim_Guide
     return strtolower(str_replace(' ', '-', $text));
   }
 
-  private function getThumbnail()
+  private function place_thumbnail()
   {
     // Replace this with the actual URL for the thumbnail placeholder
     return 'no-img.jpg';
   }
 
-  private function getTraffic()
+  private function place_traffic()
   {
     // Replace this with the actual traffic placeholder value
     return null;
   }
 
-  private function getNumberOfPeople()
+  private function place_people()
   {
     // Replace this with the actual number of people placeholder value
     return null;
   }
 
-  private function is_included() {
-    $trace = debug_backtrace();
-    return isset($trace[1]) && $trace[1]['function'] === 'include' || $trace[1]['function'] === 'require';
+  private function is_main_script() {
+    if ( defined('OPENSIM_GUIDE_SOURCE' ) ) return false;
+    if ( defined('ABSPATH' ) ) return false;
+    if ( function_exists('debug_backtrace') ) {
+      $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+      foreach ($trace as $trace_info) {
+        if (isset($trace_info['function']) && in_array($trace_info['function'], array('include', 'require'))) {
+          return false;
+        }
+      }
+    }
+    return true; // Probably true actually
   }
 
-
-  private function startHTML() {
+  private function html_prefix() {
     $content = '';
     if ($this->fullHTML) {
       $content = '<!DOCTYPE html>'
@@ -206,7 +213,7 @@ class OpenSim_Guide
     return $content;
   }
 
-  private function stopHTML() {
+  private function html_suffix() {
     $content = "</div>";
     if ($this->fullHTML) {
       $content .= '</body></html>';
@@ -221,7 +228,7 @@ class OpenSim_Guide
     return $protocol . $host . $request;
   }
 
-  private function buildURL($category = null)
+  private function build_url($category = null)
   {
     $args = array_filter( array_merge( $this->url_args, array(
       'category' => $category,
@@ -233,4 +240,4 @@ class OpenSim_Guide
   }
 }
 
-$destinationGuide = new OpenSim_Guide();
+$destinations_guide = new OpenSim_Guide();
