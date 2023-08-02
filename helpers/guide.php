@@ -104,11 +104,11 @@ class OpenSim_Guide {
 
       if (isset($parts[3]) && trim($parts[3]) !== '') {
         // Use the 4th and 5th elements to build the URL
-        $url = trim($parts[3]) . '/' . trim($parts[4]);
+        $url = trim($parts[3]) . '/' . ( isset($parts[4]) ? trim($parts[4]) : null );
       } else {
         // Use the 2nd element as before
-        $url = trim($parts[1]);
       }
+      $url = isset($parts[1]) ? trim($parts[1]) : null;
 
       if (empty($url)) {
         // New category found
