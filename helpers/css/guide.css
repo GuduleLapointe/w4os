@@ -14,20 +14,35 @@
   --guide-color-orange: #ff7f00;
   --guide-color-text: white;
 }
+body {
+}
 
 body.destination-guide {
   padding: 0;
   margin: 0;
-  background: var(--guide-color-orange);
+  /* background: var(--guide-color-orange); */
+  height: 100vh; /* Set the height of the body to the full viewport height */
+  display: flex;
+  justify-content: center; /* Center the #guide div horizontally */
+  align-items: center; /* Center #guide both horizontally and vertically */
+  overflow: hidden; /* Hide any content that overflows outside #guide */
 }
 
 #guide {
   font-family: "Liberation Sans", Arial, Roboto, "Helvetica", sans-serif;
   background: var(--guide-color-orange);
-  padding: 10px;
   color: var(--guide-color-text);
+  padding: 10px;
+  width: 100%; /* Allow #guide to fill the entire width of the viewport */
+  height: 100vh; /* Set the height of #guide to the full viewport height */
+  overflow: hidden; /* Hide any content that overflows outside #guide */
+  display: flex; /* Add this line to use flexbox layout */
+  flex-direction: column; /* Add this line to set the flex direction to column */
 }
 
+#guide .header {
+  padding-top: 10px;
+}
 #guide a {
   color: var(--guide-color-text);
   text-decoration: none;
@@ -57,6 +72,8 @@ body.destination-guide {
 #guide .list {
   display: flex;
   overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Hide vertical scrolling */
+    flex-grow: 1; /* Allow .list to grow and fill the remaining height */
   padding-bottom: 10px;
 }
 
@@ -73,7 +90,7 @@ body.destination-guide {
 
 #guide img.thumbnail {
   width: 140px;
-  height: 85px;
+  height: 105px;
   object-fit: cover; /* Crop the image to fit without stretching */
 }
 
