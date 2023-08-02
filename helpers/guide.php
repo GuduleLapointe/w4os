@@ -124,7 +124,7 @@ class OpenSim_Guide {
   {
     $content = '<div class=header>'
     . '<h1>Destinations List</h1>'
-    . '<span class="disclaimer">This feature is a work in progress. Please be indulgent.</span>'
+    . '<span class="disclaimer">This is a work in progress, please be indulgent.</span>'
     . '</div>'
     . '<div class="list">';
     foreach ($this->destinations as $categoryTitle => $destinations) {
@@ -148,7 +148,7 @@ class OpenSim_Guide {
     if (count($this->destinations) > 1) {
       $content .= '<a href="' . $this->build_url() . '" class="back">Back to categories</a>';
     }
-    $content .= '<span class="disclaimer">This feature is a work in progress. Please be indulgent.</span>';
+    $content .= '<span class="disclaimer">This is a work in progress, please be indulgent.</span>';
     $content .= '</div>';
 
     // Build list
