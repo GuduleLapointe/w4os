@@ -6,10 +6,10 @@
  * Instead copy the 'define(...)' lines to config.php, before the addons include
  * command, and customize from there.
  *
- * @package		magicoli/opensim-helpers
- * @author 		Gudule Lapointe <gudule@speculoos.world>
- * @link 			https://github.com/magicoli/opensim-helpers
- * @license		AGPLv3
+ * @package     magicoli/opensim-helpers
+ * @author      Gudule Lapointe <gudule@speculoos.world>
+ * @link            https://github.com/magicoli/opensim-helpers
+ * @license     AGPLv3
  */
 
 if ( CURRENCY_PROVIDER != 'gloebit' ) {

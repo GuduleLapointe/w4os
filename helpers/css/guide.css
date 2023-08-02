@@ -79,7 +79,7 @@ body.destination-guide {
   display: flex;
   overflow-x: auto; /* Enable horizontal scrolling */
   overflow-y: hidden; /* Hide vertical scrolling */
-    flex-grow: 1; /* Allow .list to grow and fill the remaining height */
+	flex-grow: 1; /* Allow .list to grow and fill the remaining height */
   padding-bottom: 10px;
 }
 

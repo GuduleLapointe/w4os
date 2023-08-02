@@ -4,10 +4,10 @@
  *
  * Provides functions required by helpers
  *
- * @package		magicoli/opensim-helpers
- * @author 		Gudule Lapointe <gudule@speculoos.world>
- * @link 			https://github.com/magicoli/opensim-helpers
- * @license		AGPLv3
+ * @package     magicoli/opensim-helpers
+ * @author      Gudule Lapointe <gudule@speculoos.world>
+ * @link            https://github.com/magicoli/opensim-helpers
+ * @license     AGPLv3
  */
 
 /**
@@ -410,6 +410,23 @@ if ( ! function_exists( 'osdebug' ) ) {
 	}
 }
 
+function getPreferredLanguage() {
+	if ( isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) {
+		$languages         = explode( ',', $_SERVER['HTTP_ACCEPT_LANGUAGE'] );
+		$preferredLanguage = $languages[0]; // The first language in the list is the preferred one
+		// If the language code contains a region (e.g., en-US), extract only the language part (e.g., en)
+		$preferredLanguage = preg_replace( '/;.*$/', '', $preferredLanguage );
+		return trim( $preferredLanguage );
+	}
+	return null; // Return a default language if the header is not set
+}
+
+function helpers_set_locale( $lang = null ) {
+	// setlocale(LC_ALL, $userLanguage);
+	// bindtextdomain('messages', HELPERS_LOCALE_DIR);
+	// textdomain('messages');
+}
+
 define( 'NULL_KEY', '00000000-0000-0000-0000-000000000000' );
 define( 'TPLINK_LOCAL', 1 ); // seconlife://Region/x/y/z
 define( 'TPLINK_HG', 2 ); // seconlife://yourgrid.org:8002 Region/x/y/z
@@ -421,6 +438,7 @@ define( 'TPLINK_MAP', 64 ); // secondlife:///app/map/yourgrid.org:8002:Region/x/
 define( 'TPLINK', pow( 2, 8 ) - 1 ); // all formats
 define( 'TPLINK_DEFAULT', TPLINK_HOP ); // default
 
+define( 'HELPERS_LOCALE_DIR', dirname( __DIR__ ) );
 
 /**
  * OpenSim source to help further attempts to allow Hypergrid search results.

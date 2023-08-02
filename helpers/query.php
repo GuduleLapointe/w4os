@@ -8,10 +8,10 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  * Events need to be fetched with a separate script, from an HYPEvents server
  *
- * @package		magicoli/opensim-helpers
- * @author 		Gudule Lapointe <gudule@speculoos.world>
- * @link 			https://github.com/magicoli/opensim-helpers
- * @license		AGPLv3
+ * @package     magicoli/opensim-helpers
+ * @author      Gudule Lapointe <gudule@speculoos.world>
+ * @link            https://github.com/magicoli/opensim-helpers
+ * @license     AGPLv3
  *
  * Includes portions of code from
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
