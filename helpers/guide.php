@@ -103,12 +103,12 @@ class OpenSim_Guide {
       $url = '';
 
       if (isset($parts[3]) && trim($parts[3]) !== '') {
-        // Use the 4th and 5th elements to build the URL
+        // Use the 4th and 5th elements to support old format
         $url = trim($parts[3]) . '/' . ( isset($parts[4]) ? trim($parts[4]) : null );
       } else {
-        // Use the 2nd element as before
+        // Use the 2nd element as in current format
+        $url = isset($parts[1]) ? trim($parts[1]) : null;
       }
-      $url = isset($parts[1]) ? trim($parts[1]) : null;
 
       if (empty($url)) {
         // New category found
