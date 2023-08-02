@@ -21,39 +21,49 @@ require_once __DIR__ . '/includes/functions.php';
 class OpenSim_Guide
 {
   private $destinations = [];
-  private $outputHTML = true; // Flag to determine whether to output HTML tags
+  private $fullHTML = false; // Flag to determine whether to output HTML tags
   private $url_base;
   private $url_args = [];
+  private $source;
 
   public function __construct()
   {
     $this->url_base = $this->getFullURL();
 
     if (defined('OPENSIM_GUIDE_SOURCE') && !empty(OPENSIM_GUIDE_SOURCE)) {
-      $source = OPENSIM_GUIDE_SOURCE;
+      $this->source = OPENSIM_GUIDE_SOURCE;
     } else {
-      $source = isset($_GET['source']) ? $_GET['source'] : null;
-      $this->url_args['source'] = $source;
+      $this->source = isset($_GET['source']) ? $_GET['source'] : null;
+      $this->url_args['source'] = $this->source;
     }
 
-    $this->loadDestinations($source);
-
-    $this->startHTML();
-
-    // if(!empty($source)) {
-      if (isset($_GET['category'])) {
-        $this->displayDestinations($_GET['category']);
-      } else {
-        $this->displayMainCategories();
-      }
-    // }
-
-    // Display a custom message if there are no destinations
-    if (empty($this->destinations)) {
-      $this->noResultsMessage();
+    if( ! defined('OPENSIM_GUIDE_SOURCE' ) ) {
+      // TODO: Check if script was really called directly even while
+      // OPENSIM_GUIDE_SOURCE if not set
+      $this->fullHTML = true;
+      $this->outputHTML();
     }
+  }
 
-    $this->stopHTML();
+  public function outputHTML() {
+    echo $this->buildHTML();
+  }
+
+  public function buildHTML() {
+    $this->loadDestinations($this->source);
+
+    $content = $this->startHTML();
+
+    if( empty($this->destinations) ) {
+      $content .= $this->noResultsMessage();
+    } else if (empty($_GET['category'])) {
+      $content .= $this->displayMainCategories();
+    } else {
+      $content .= $this->displayDestinations($_GET['category']);
+    }
+    $content .= $this->stopHTML();
+
+    return $content;
   }
 
   private function loadDestinations($source)
@@ -92,51 +102,51 @@ class OpenSim_Guide
 
   public function displayMainCategories()
   {
-    echo '<div class=header>';
-    echo '<h1>Destinations List</h1>';
-    echo '</div>';
-    echo '<div class="list">';
+    $content = '<div class=header>'
+    . '<h1>Destinations List</h1>'
+    . '</div>'
+    . '<div class="list">';
     foreach ($this->destinations as $categoryTitle => $destinations) {
       if (!empty($destinations)) {
-        echo '<a href="' . $this->buildURL($categoryTitle) . '">';
-        echo '<div class="item">';
-        echo '<img class="thumbnail" src="' . $this->getThumbnail() . '" alt="' . $categoryTitle . '">';
-        echo '<div class="name">' . $categoryTitle . '</div>';
-        echo '<div class="data">' . count($destinations) . ' destinations</div>';
-        echo '</div>';
-        echo '</a>';
+        $content .= '<a href="' . $this->buildURL($categoryTitle) . '">'
+        . '<div class="item">'
+        . '<img class="thumbnail" src="' . $this->getThumbnail() . '" alt="' . $categoryTitle . '">'
+        . '<div class="name">' . $categoryTitle . '</div>'
+        . '<div class="data">' . count($destinations) . ' destinations</div>'
+        . '</div>'
+        . '</a>';
       }
     }
-    echo '</div>';
+    $content .= '</div>';
+    return $content;
   }
 
   public function displayDestinations($categoryTitle)
   {
-    echo '<div class=header>';
-    echo '<h2>' . $categoryTitle . '</h2>';
-    echo '<a href="' . $this->buildURL() . '" class="back">Back to categories</a>';
-    echo '</div>';
-
-    echo '<div class="list">';
+    $content = '<div class=header>'
+    . '<h2>' . $categoryTitle . '</h2>'
+    . '<a href="' . $this->buildURL() . '" class="back">Back to categories</a>'
+    . '</div>'
+    . '<div class="list">';
     foreach ($this->destinations[$categoryTitle] as $destination) {
       $traffic = $this->getTraffic();
       $people = $this->getNumberOfPeople();
-      echo '<a href="' . opensim_format_tp($destination['url'], TPLINK_HG) . '">';
-      echo '<div class="item">';
-      echo '<img class="thumbnail" src="' . $this->getThumbnail() . '" alt="' . $destination['name'] . '">';
-      echo '<div class="name">' . $destination['name'] . '</div>';
-      echo '<div class="data">';
+      $content .= '<a href="' . opensim_format_tp($destination['url'], TPLINK_HG) . '">'
+      . '<div class="item">'
+      . '<img class="thumbnail" src="' . $this->getThumbnail() . '" alt="' . $destination['name'] . '">'
+      . '<div class="name">' . $destination['name'] . '</div>'
+      . '<div class="data">';
       if ($people > 0) {
-        echo ' <span>' . $this->getNumberOfPeople() . ' people</span> ';
+        $content .= ' <span>' . $this->getNumberOfPeople() . ' people</span> ';
       }
       if ($traffic > 0) {
-        echo ' <span>Traffic: ' . $this->getTraffic() . '</span> ';
+        $content .= ' <span>Traffic: ' . $this->getTraffic() . '</span> ';
       }
-      echo '</div>';
-      echo '</div>';
-      echo '</a>';
+      $content .= '</div></div></a>';
     }
-    echo '</div>';
+    $content .= '</div>';
+
+    return $content;
   }
 
   private function noResultsMessage()
@@ -179,27 +189,29 @@ class OpenSim_Guide
 
 
   private function startHTML() {
-    if ($this->outputHTML) {
-      echo '<!DOCTYPE html>';
-      echo '<html lang="en">';
-      echo '<head>';
-      echo '<meta charset="UTF-8">';
-      echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-      echo '<title>Destination Guide</title>';
-      echo '</head>';
-      echo '<body class="destination-guide">';
+    $content = '';
+    if ($this->fullHTML) {
+      $content = '<!DOCTYPE html>'
+      . '<html lang="en">'
+      . '<head>'
+      . '<meta charset="UTF-8">'
+      . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+      . '<title>Destination Guide</title>'
+      . '</head>'
+      . '<body class="destination-guide">';
     }
 
-    echo '<link rel="stylesheet" type="text/css" href="css/guide.css?' . time() . '">';
-    echo '<div id="guide">';
+    $content .= '<link rel="stylesheet" type="text/css" href="css/guide.css?' . time() . '">'
+    . '<div id="guide">';
+    return $content;
   }
 
   private function stopHTML() {
-    echo "</div>";
-    if ($this->outputHTML) {
-      echo '</body>';
-      echo '</html>';
+    $content = "</div>";
+    if ($this->fullHTML) {
+      $content .= '</body></html>';
     }
+    return $content;
   }
 
   private function getFullURL() {
