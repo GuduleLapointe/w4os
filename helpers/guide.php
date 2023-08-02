@@ -92,14 +92,27 @@ class OpenSim_Guide {
         continue;
       }
 
-      list($name, $url) = explode('|', $line . '|');
-      if (empty($name)) {
+      $line = rtrim($line, '|'); // Remove trailing '|' to handle empty values
+      $parts = explode('|', $line);
+
+      if (empty($parts[0])) {
         continue;
+      }
+
+      $name = trim($parts[0]);
+      $url = '';
+
+      if (isset($parts[3]) && trim($parts[3]) !== '') {
+        // Use the 4th and 5th elements to build the URL
+        $url = trim($parts[3]) . '/' . trim($parts[4]);
+      } else {
+        // Use the 2nd element as before
+        $url = trim($parts[1]);
       }
 
       if (empty($url)) {
         // New category found
-        $categoryTitle = trim($name);
+        $categoryTitle = $name;
       } else {
         // Destination within a category
         $this->destinations[$categoryTitle][] = ['name' => $name, 'url' => $url];
@@ -168,12 +181,6 @@ class OpenSim_Guide {
   }
 
   // Rest of the class remains unchanged...
-
-  private function getAnchor($text)
-  {
-    // Helper function to create an anchor-friendly version of the text
-    return strtolower(str_replace(' ', '-', $text));
-  }
 
   private function place_thumbnail()
   {
