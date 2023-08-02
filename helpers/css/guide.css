@@ -65,6 +65,11 @@ body.destination-guide {
   display: inline-block;
 }
 
+#guide .disclaimer {
+  float: right;
+  font-size: 0.85rem;
+}
+
 #guide a.back {
   font-size: 0.9rem;
 }
