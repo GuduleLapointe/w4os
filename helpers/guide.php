@@ -26,7 +26,7 @@ class OpenSim_Guide {
 	private $source;
 
 	public function __construct() {
-		error_log( 'language ' . getPreferredLanguage() );
+		set_helpers_locale();
 
 		$this->url_base = $this->getFullURL();
 
@@ -85,7 +85,7 @@ class OpenSim_Guide {
 
 		$lines = explode( "\n", $fileContent );
 
-		$categoryTitle = 'Destinations list';
+		$categoryTitle = _('Destinations Guide');
 		foreach ( $lines as $line ) {
 			// Exclude lines starting with "#" or "//" or containing no actual characters
 			if ( substr( trim( $line ), 0, 1 ) === '#' || substr( trim( $line ), 0, 2 ) === '//' || ! trim( $line ) ) {
@@ -125,8 +125,8 @@ class OpenSim_Guide {
 
 	public function categories_list() {
 		$content = '<div class=header>'
-		. '<h1>Destinations List</h1>'
-		. '<span class="disclaimer">This is a work in progress, please be indulgent.</span>'
+		. '<h1>' . _('Destinations Guide') . '</h1>'
+		. '<span class="disclaimer">' . _('This is a work in progress, please be indulgent.') . '</span>'
 		. '</div>'
 		. '<div class="list">';
 		foreach ( $this->destinations as $categoryTitle => $destinations ) {
@@ -135,7 +135,8 @@ class OpenSim_Guide {
 				. '<div class="item">'
 				. '<img class="thumbnail" src="' . $this->place_thumbnail() . '" alt="' . $categoryTitle . '">'
 				. '<div class="name">' . $categoryTitle . '</div>'
-				. '<div class="data">' . count( $destinations ) . ' destinations</div>'
+				# Translators: %s will be replaced with the number of destinations
+				. '<div class="data">' . sprintf( _('%s destinations'), count( $destinations ) ) . '</div>'
 				. '</div>'
 				. '</a>';
 			}
@@ -148,9 +149,9 @@ class OpenSim_Guide {
 		// Build header
 		$content = '<div class=header><h2>' . $categoryTitle . '</h2>';
 		if ( count( $this->destinations ) > 1 ) {
-			$content .= '<a href="' . $this->build_url() . '" class="back">Back to categories</a>';
+			$content .= '<a href="' . $this->build_url() . '" class="back">' . _('Back to categories') . '</a>';
 		}
-		$content .= '<span class="disclaimer">This is a work in progress, please be indulgent.</span>';
+		$content .= '<span class="disclaimer">' . _('This is a work in progress, please be indulgent.') . '</span>';
 		$content .= '</div>';
 
 		// Build list
@@ -164,11 +165,11 @@ class OpenSim_Guide {
 			. '<div class="name">' . $destination['name'] . '</div>'
 			. '<div class="data">';
 			if ( $people > 0 ) {
-				$content .= ' <span>' . $this->place_people() . ' people</span> ';
+        $content .= ' <span>' . sprintf( _('%s people'), $this->place_people() ) . '</span> ';
 			}
 			if ( $traffic > 0 ) {
-				$content .= ' <span>Traffic: ' . $this->place_traffic() . '</span> ';
-			}
+        $content .= ' <span>' . sprintf( _('traffic %s'), $this->place_traffic() ) . '</span> ';
+      }
 			$content .= '</div></div></a>';
 		}
 		$content .= '</div>';
@@ -178,7 +179,7 @@ class OpenSim_Guide {
 
 	private function no_result() {
 		echo '<div class="error">';
-		echo 'The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!';
+		echo _('The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!');
 		echo '</div>';
 		echo $this->getFullURL() . "?source=$this->source";
 	}

@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: gpt-po v1.0.7\n"
+"Language-Team: \n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: guide.php:88 guide.php:128
+msgid "Destinations Guide"
+msgstr "Guida delle destinazioni"
+
+#: guide.php:129 guide.php:153
+msgid "This is a work in progress, please be indulgent."
+msgstr "Questo è un lavoro in corso, per favore sii indulgente."
+
+#: guide.php:138
+#, php-format
+msgid "%s destinations"
+msgstr "%s destinazioni"
+
+#: guide.php:151
+msgid "Back to categories"
+msgstr "Torna alle categorie"
+
+#: guide.php:167
+#, php-format
+msgid "%s people"
+msgstr "%s persone"
+
+#: guide.php:170
+#, php-format
+msgid "traffic %s"
+msgstr "traffico %s"
+
+#: guide.php:182
+msgid ""
+"The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let "
+"them venture forth to curate a grand tapestry of remarkable places for your exploration!"
+msgstr ""
+"Il regno delle destinazioni che cerchi ci sfugge, portato via da gnomi sfuggenti. Raduna i gestori della griglia, "
+"lasciali avventurarsi per creare un magnifico mosaico di luoghi straordinari da esplorare!"
