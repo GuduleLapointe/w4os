@@ -33,7 +33,8 @@ body.destination-guide {
   text-decoration: none;
 }
 
-#guide :hover {
+#guide .item:hover,
+#guide a:hover {
   color: black;
 }
 
@@ -59,10 +60,14 @@ body.destination-guide {
   padding-bottom: 10px;
 }
 
-#guide .item {
+#guide .item,
+#guide .error {
   padding: 10px;
-  width: 160px;
   box-sizing: border-box;
+}
+
+#guide .item {
+  width: 160px;
   transition: background-color 0.3s ease; /* Add a smooth transition effect for background color */
 }
 
