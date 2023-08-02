@@ -53,12 +53,20 @@ class OpenSim_Guide {
 
     $content = $this->html_prefix();
 
+    if (count($this->destinations) === 1) {
+      $keys = array_keys($this->destinations);
+      $category = $keys[0];
+    } else {
+      $category = isset($_GET['category']) ? $_GET['category'] : null;
+      $category = isset($this->destinations[$category]) ? $category : null;
+    }
+
     if( empty($this->destinations) ) {
       $content .= $this->no_result();
-    } else if (empty($_GET['category'])) {
+    } else if (empty($category)) {
       $content .= $this->categories_list();
     } else {
-      $content .= $this->destinations_list($_GET['category']);
+      $content .= $this->destinations_list($category);
     }
     $content .= $this->html_suffix();
 
@@ -120,13 +128,16 @@ class OpenSim_Guide {
     return $content;
   }
 
-  public function destinations_list($categoryTitle)
-  {
-    $content = '<div class=header>'
-    . '<h2>' . $categoryTitle . '</h2>'
-    . '<a href="' . $this->build_url() . '" class="back">Back to categories</a>'
-    . '</div>'
-    . '<div class="list">';
+  public function destinations_list($categoryTitle) {
+    // Build header
+    $content = '<div class=header><h2>' . $categoryTitle . '</h2>';
+    if (count($this->destinations) > 1) {
+      $content .= '<a href="' . $this->build_url() . '" class="back">Back to categories</a>';
+    }
+    $content .= '</div>';
+
+    // Build list
+    $content .= '<div class="list">';
     foreach ($this->destinations[$categoryTitle] as $destination) {
       $traffic = $this->place_traffic();
       $people = $this->place_people();
@@ -153,6 +164,7 @@ class OpenSim_Guide {
     echo '<div class="error">';
     echo 'The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!';
     echo '</div>';
+    echo $this->getFullURL(). "?source=$this->source";
   }
 
   // Rest of the class remains unchanged...
@@ -215,6 +227,7 @@ class OpenSim_Guide {
 
   private function html_suffix() {
     $content = "</div>";
+    $content .= '<script src="js/guide.js?' . time() . '"></script>';
     if ($this->fullHTML) {
       $content .= '</body></html>';
     }
