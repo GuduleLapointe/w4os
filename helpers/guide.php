@@ -69,6 +69,7 @@ class OpenSim_Guide {
 		} else {
 			$content .= $this->destinations_list( $category );
 		}
+
 		$content .= $this->html_suffix();
 
 		return $content;
@@ -178,10 +179,10 @@ class OpenSim_Guide {
 	}
 
 	private function no_result() {
-		echo '<div class="error">';
-		echo _('The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!');
-		echo '</div>';
-		echo $this->getFullURL() . "?source=$this->source";
+		$content = '<div class="error">'
+		. _('The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!')
+		. '</div>';
+		return $content;
 	}
 
 	// Rest of the class remains unchanged...
