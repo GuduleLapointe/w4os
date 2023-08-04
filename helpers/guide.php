@@ -28,12 +28,12 @@ class OpenSim_Guide {
 	public function __construct( $source = null ) {
 		set_helpers_locale();
 
-		$this->public_url = $this->get_public_url();
+		$this->public_url   = $this->get_public_url();
 		$this->internal_url = $this->get_child_script_url();
 
-		if(!empty($source)) {
+		if ( ! empty( $source ) ) {
 			$this->source = $source;
-		} else if ( defined( 'OPENSIM_GUIDE_SOURCE' ) && ! empty( OPENSIM_GUIDE_SOURCE ) ) {
+		} elseif ( defined( 'OPENSIM_GUIDE_SOURCE' ) && ! empty( OPENSIM_GUIDE_SOURCE ) ) {
 			$this->source = OPENSIM_GUIDE_SOURCE;
 		} else {
 			$this->source             = isset( $_GET['source'] ) ? $_GET['source'] : null;
@@ -54,8 +54,9 @@ class OpenSim_Guide {
 	}
 
 	public function output_html() {
-		if(empty($fullHTML))
-		echo $this->build_html();
+		if ( empty( $fullHTML ) ) {
+			echo $this->build_html();
+		}
 	}
 
 	public function build_html() {
@@ -95,7 +96,7 @@ class OpenSim_Guide {
 
 		$lines = explode( "\n", $fileContent );
 
-		$categoryTitle = _('Destinations Guide');
+		$categoryTitle = _( 'Destinations Guide' );
 		foreach ( $lines as $line ) {
 			// Exclude lines starting with "#" or "//" or containing no actual characters
 			if ( substr( trim( $line ), 0, 1 ) === '#' || substr( trim( $line ), 0, 2 ) === '//' || ! trim( $line ) ) {
@@ -135,8 +136,8 @@ class OpenSim_Guide {
 
 	public function categories_list() {
 		$content = '<div class=header>'
-		. '<h1>' . _('Destinations Guide') . '</h1>'
-		. '<span class="disclaimer">' . _('This is a work in progress, please be indulgent.') . '</span>'
+		. '<h1>' . _( 'Destinations Guide' ) . '</h1>'
+		. '<span class="disclaimer">' . _( 'This is a work in progress, please be indulgent.' ) . '</span>'
 		. '</div>'
 		. '<div class="list">';
 		foreach ( $this->destinations as $categoryTitle => $destinations ) {
@@ -145,8 +146,8 @@ class OpenSim_Guide {
 				. '<div class="item">'
 				. '<img class="thumbnail" src="' . $this->place_thumbnail() . '" alt="' . $categoryTitle . '">'
 				. '<div class="name">' . $categoryTitle . '</div>'
-				# Translators: %s will be replaced with the number of destinations
-				. '<div class="data">' . sprintf( _('%s destinations'), count( $destinations ) ) . '</div>'
+				// Translators: %s will be replaced with the number of destinations
+				. '<div class="data">' . sprintf( _( '%s destinations' ), count( $destinations ) ) . '</div>'
 				. '</div>'
 				. '</a>';
 			}
@@ -159,9 +160,9 @@ class OpenSim_Guide {
 		// Build header
 		$content = '<div class=header><h2>' . $categoryTitle . '</h2>';
 		if ( count( $this->destinations ) > 1 ) {
-			$content .= '<a href="' . $this->build_url() . '" class="back">' . _('Back to categories') . '</a>';
+			$content .= '<a href="' . $this->build_url() . '" class="back">' . _( 'Back to categories' ) . '</a>';
 		}
-		$content .= '<span class="disclaimer">' . _('This is a work in progress, please be indulgent.') . '</span>';
+		$content .= '<span class="disclaimer">' . _( 'This is a work in progress, please be indulgent.' ) . '</span>';
 		$content .= '</div>';
 
 		// Build list
@@ -175,11 +176,11 @@ class OpenSim_Guide {
 			. '<div class="name">' . $destination['name'] . '</div>'
 			. '<div class="data">';
 			if ( $people > 0 ) {
-        $content .= ' <span>' . sprintf( _('%s people'), $this->place_people() ) . '</span> ';
+				$content .= ' <span>' . sprintf( _( '%s people' ), $this->place_people() ) . '</span> ';
 			}
 			if ( $traffic > 0 ) {
-        $content .= ' <span>' . sprintf( _('traffic %s'), $this->place_traffic() ) . '</span> ';
-      }
+				$content .= ' <span>' . sprintf( _( 'traffic %s' ), $this->place_traffic() ) . '</span> ';
+			}
 			$content .= '</div></div></a>';
 		}
 		$content .= '</div>';
@@ -189,7 +190,7 @@ class OpenSim_Guide {
 
 	private function no_result() {
 		$content = '<div class="error">'
-		. _('The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!')
+		. _( 'The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!' )
 		. '</div>';
 		return $content;
 	}
@@ -257,13 +258,13 @@ class OpenSim_Guide {
 	}
 
 	private function get_public_url() {
-		$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
-		$host = $_SERVER['HTTP_HOST'];
+		$protocol    = isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+		$host        = $_SERVER['HTTP_HOST'];
 		$request_uri = $_SERVER['REQUEST_URI'];
 
 		// Parse the request URI to extract only the path part
-		$parsed_url = parse_url($request_uri);
-		$path = $parsed_url['path'];
+		$parsed_url = parse_url( $request_uri );
+		$path       = $parsed_url['path'];
 
 		return $protocol . $host . $path;
 	}
@@ -286,31 +287,31 @@ class OpenSim_Guide {
 	// ... (other methods in the OpenSim_Guide class)
 
 	private function get_child_script_url() {
-	    // Get the full path of the current file (the helper script)
-	    $helper_script_path = __FILE__;
+		// Get the full path of the current file (the helper script)
+		$helper_script_path = __FILE__;
 
-	    // Get the directory path of the current file
-	    $directory_path = dirname($helper_script_path);
+		// Get the directory path of the current file
+		$directory_path = dirname( $helper_script_path );
 
-	    // Get the server's document root path
-	    $document_root = $_SERVER['DOCUMENT_ROOT'];
+		// Get the server's document root path
+		$document_root = $_SERVER['DOCUMENT_ROOT'];
 
-	    // Convert the directory path to a URL by replacing the document root with an empty string
-	    $child_script_url = str_replace($document_root, '', $directory_path);
+		// Convert the directory path to a URL by replacing the document root with an empty string
+		$child_script_url = str_replace( $document_root, '', $directory_path );
 
-	    // Ensure the URL starts with a slash to make it an absolute URL
-	    $child_script_url = '/' . ltrim($child_script_url, '/');
+		// Ensure the URL starts with a slash to make it an absolute URL
+		$child_script_url = '/' . ltrim( $child_script_url, '/' );
 
-	    // Get the current protocol (http or https)
-	    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+		// Get the current protocol (http or https)
+		$protocol = isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
 
-	    // Get the host
-	    $host = $_SERVER['HTTP_HOST'];
+		// Get the host
+		$host = $_SERVER['HTTP_HOST'];
 
-	    // Combine the protocol, host, and child script URL to get the full URL of the child script
-	    $full_child_script_url = $protocol . $host . $child_script_url;
+		// Combine the protocol, host, and child script URL to get the full URL of the child script
+		$full_child_script_url = $protocol . $host . $child_script_url;
 
-	    return $full_child_script_url;
+		return $full_child_script_url;
 	}
 }
 

@@ -1,5 +1,8 @@
 ## Changelog
 
+### Unreleased (2.7-dev.1175)
+- new destinations guide (work in progress)
+
 ### 2.6.4
 - fix W4OS_DIR not defined when database is not configured
 

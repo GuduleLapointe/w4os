@@ -1,4 +1,4 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
@@ -191,6 +191,9 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.7-dev.1175) =
+* new destinations guide (work in progress)
 
 = 2.6.4 =
 * fix W4OS_DIR not defined when database is not configured
