@@ -1,18 +1,11 @@
 <?php
 /**
- * Register all actions and filters for the plugin
+ * Provide Destinations Guide for Viewer 3
  *
  * @package    GuduleLapointe/w4os
  * @subpackage w4os/includes
  */
 
-/**
- * Register all actions and filters for the plugin.
- *
- * Maintain a list of all hooks that are registered throughout
- * the plugin, and register them with the WordPress API. Call the
- * run function to execute the list of actions and filters.
- */
 class W4OS_Guide extends W4OS_Loader {
 	protected $actions;
 	protected $filters;
@@ -31,6 +24,14 @@ class W4OS_Guide extends W4OS_Loader {
 				'hook'     => 'admin_menu',
 				'callback' => 'register_settings_sidebar',
 			),
+			array(
+				'hook' => 'init',
+				'callback' => 'set_rewrite_rules',
+			),
+			array(
+				'hook' => 'parse_request',
+				'callback' => 'parse_request_custom_guide',
+			),
 		);
 
 		$this->filters = array(
@@ -41,6 +42,10 @@ class W4OS_Guide extends W4OS_Loader {
 			array(
 				'hook'     => 'rwmb_meta_boxes',
 				'callback' => 'register_settings_fields',
+			),
+			array(
+				'hook' => 'query_vars',
+				'callback' => 'custom_query_vars',
 			),
 		);
 	}
@@ -63,13 +68,9 @@ class W4OS_Guide extends W4OS_Loader {
 	}
 
 	function register_settings_fields( $meta_boxes ) {
-		$prefix = 'w4os_';
+		$prefix = '';
 
-		$guide_url = ( ! empty( W4OS_GRID_INFO['message'] ) ) ? W4OS_GRID_INFO['message'] : get_home_url( null, '/helpers/guide/' );
-
-		// $example_url = 'http://example.org/helpers/guide.php';
 		$guide_url = get_option( 'w4os_destinations_guide_uri',  get_home_url( null, '/guide/' ) );
-		// $guide_url = get_home_url( null, '/helpers/guide.php' );
 
 		$meta_boxes[] = array(
 			'title'          => __( 'Destinations Guide Settings', 'w4os' ),
@@ -79,22 +80,18 @@ class W4OS_Guide extends W4OS_Loader {
 			'fields'         => array(
 				array(
 					'name'       => __( 'Provide Destinations Guide Service', 'w4os' ),
-					'id'         => $prefix . 'provide_destinations_guide',
+					'id'         => $prefix . 'provide',
 					'type'       => 'switch',
 					'style'      => 'rounded',
-					'std'        => get_option( 'w4os_provide_destinations_guide', true ),
-					'save_field' => false,
-					// 'desc'       => '';
+					'std'        => true,
 				),
 				array(
 					'name'        => __( 'Source', 'w4os' ),
-					'id'          => $prefix . 'destinations_guide_source',
+					'id'          => $prefix . 'source',
 					'type'        => 'text',
-					// 'placeholder' => $guide_url,
-					// 'class'       => 'copyable',
-					// 'std'         => $guide_url,
+					'required'		=> true,
 					'visible'     => array(
-						'when'     => array( array( 'provide_destinations_guide', '=', 1 ) ),
+						'when'     => array( array( 'provide', '=', 1 ) ),
 						'relation' => 'or',
 					),
 					'desc'        => '<ul><li>' . join('</li><li>', array(
@@ -123,15 +120,14 @@ class W4OS_Guide extends W4OS_Loader {
 				),
 				array(
 					'name'        => __( 'Destinations Guide URL', 'w4os' ),
-					'id'          => $prefix . 'destinations_guide_url',
+					'id'          => $prefix . 'url',
 					'type'        => 'url',
 					'placeholder' => $guide_url,
 					'readonly'    => true,
-					'save_field'  => false,
 					'class'       => 'copyable',
 					'std'         => $guide_url,
 					'visible'     => array(
-						'when'     => array( array( 'provide_destinations_guide', '=', 1 ) ),
+						'when'     => array( array( 'provide', '=', 1 ) ),
 						'relation' => 'or',
 					),
 					'desc'        => '<p>'
@@ -184,14 +180,45 @@ class W4OS_Guide extends W4OS_Loader {
 		}
 
 		if ( isset( $_POST['nonce_destinations-guide-settings'] ) && wp_verify_nonce( $_POST['nonce_destinations-guide-settings'], 'rwmb-save-destinations-guide-settings' ) ) {
-			error_log( print_r( $_POST, true ) );
-			$provide = isset( $_POST['w4os_provide_destinations_guide'] ) ? true : false;
-			update_option( 'w4os_provide_destinations_guide', $provide );
+			update_option('w4os_flush_rewrite_rules', true);
+		}
+	}
 
-			if ( $provide ) {
-				update_option( 'w4os_guide_sender', isset( $_POST['w4os_guide_sender'] ) ? $_POST['w4os_guide_sender'] : null );
-				update_option( 'w4os_guide_helper_uri', isset( $_POST['w4os_guide_helper_uri'] ) ? $_POST['w4os_guide_sender'] : get_home_url( null, '/helpers/guide.php' ) );
-			}
+	function custom_query_vars($vars) {
+	    $vars[] = 'guide_source';
+	    return $vars;
+	}
+
+	// Check conditions and enable rewrite rule
+	function set_rewrite_rules() {
+		$provide = W4OS::get_option('w4os-guide:provide');
+		$url = W4OS::get_option('w4os-guide:url');
+
+		if ($provide && !empty($url)) {
+			// Remove the host part of the URL to create the permalink_slug
+			$parsed_url = parse_url($url);
+			$permalink_slug = untrailingslashit($parsed_url['path']); // Automatically adds trailing slash if not already present
+			$permalink_slug = ltrim($permalink_slug, '/'); // Remove leading slash if present
+
+			// Add an optional match for anything following the slug
+			add_rewrite_rule('^' . $permalink_slug . '(/.*)?$', 'index.php?guide_source=$matches[1]', 'top');
+		}
+	}
+
+	// Handle the custom guide request
+	function parse_request_custom_guide() {
+		global $wp;
+
+		if (array_key_exists('guide_source', $wp->query_vars)) {
+			require_once(W4OS_DIR . '/helpers/guide.php');
+
+			$source = W4OS::get_option('w4os-guide:source');
+			$guide = new OpenSim_Guide($source);
+			$content = $guide->output_html();
+
+			// Output the guide content
+			echo $content;
+			exit; // Stop WordPress from loading the default template
 		}
 	}
 }
