@@ -19,7 +19,7 @@ add_action(
 		);
 	}
 );
-update_option( 'w4os_rewrite_rules', true );
+update_option( 'w4os_flush_rewrite_rules', true );
 flush_rewrite_rules();
 
 add_filter( 'query_vars', 'w4os_profile_query_vars' );
@@ -285,7 +285,7 @@ add_action(
 					$newslug = 'profile';
 				}
 				update_option( 'w4os_profile_slug', $newslug );
-				update_option( 'w4os_rewrite_rules', true );
+				update_option( 'w4os_flush_rewrite_rules', true );
 			}
 		}
 	}

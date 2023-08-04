@@ -116,10 +116,10 @@ function w4os_add_crossorigin( $tag, $handle ) {
 /**
  * Rewrite rules after any version update or if explicitely requested
  */
-if ( get_option( 'w4os_rewrite_rules' ) || get_option( 'w4os_rewrite_version' ) != W4OS_VERSION ) {
+if ( get_option( 'w4os_flush_rewrite_rules' ) || get_option( 'w4os_rewrite_version' ) != W4OS_VERSION ) {
 	wp_cache_flush();
 	add_action( 'init', 'flush_rewrite_rules' );
-	update_option( 'w4os_rewrite_rules', false );
+	update_option( 'w4os_flush_rewrite_rules', false );
 	update_option( 'w4os_rewrite_version', W4OS_VERSION );
 }
 

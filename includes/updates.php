@@ -72,7 +72,7 @@ function w4os_updates( $args = array() ) {
 function w4os_update_1() {
 	global $wpdb;
 	// $results=array();
-	update_option( 'w4os_rewrite_rules', true );
+	update_option( 'w4os_flush_rewrite_rules', true );
 	// if(!empty($results)) return join("<br/>", $results);
 	return true;
 }
@@ -124,7 +124,7 @@ function w4os_update_4() {
 		update_option( 'w4os_profile_slug', 'profile' );
 	}
 	update_option( 'w4os_sync_users', true );
-	update_option( 'w4os_rewrite_rules', true );
+	update_option( 'w4os_flush_rewrite_rules', true );
 	return __( 'Grid and WordPress users synchronized.', 'w4os' );
 }
 

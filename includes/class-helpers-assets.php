@@ -158,7 +158,7 @@ class W4OS_Assets extends W4OS_Loader {
 		if ( isset( $_POST['nonce_assets-server'] ) ) {
 			$this->provide = isset( $_POST['w4os_provide'] ) ? $_POST['w4os_provide'] : false;
 			if ( $this->provide != get_option( 'w4os_provide_asset_server' ) ) {
-				update_option( 'w4os_rewrite_rules', true );
+				update_option( 'w4os_flush_rewrite_rules', true );
 			}
 			update_option( 'w4os_provide_asset_server', $this->provide );
 			$this->external_url = isset( $_POST['w4os_external_url'] ) ? $_POST['w4os_external_url'] : null;
@@ -173,7 +173,7 @@ class W4OS_Assets extends W4OS_Loader {
 			if ( wp_verify_nonce( $nonce, 'w4os-permalinks-assets' ) ) {
 				$this->slug = empty( $_POST['w4os_assets_slug'] ) ? 'assets' : sanitize_title( $_POST['w4os_assets_slug'] );
 				if ( $this->slug !== get_option( 'w4os_assets_slug' ) ) {
-					update_option( 'w4os_rewrite_rules', true );
+					update_option( 'w4os_flush_rewrite_rules', true );
 				}
 				update_option( 'w4os_assets_slug', $this->slug );
 			}
