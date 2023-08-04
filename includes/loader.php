@@ -105,6 +105,7 @@ class W4OS_Loader {
 			require_once W4OS_DIR . '/includes/class-helpers-economy.php';
 			require_once W4OS_DIR . '/includes/class-helpers-search.php';
 		}
+		require_once W4OS_DIR . '/includes/class-helpers-guide.php';
 		require_once W4OS_DIR . '/includes/class-helpers-offline.php';
 
 		/**
