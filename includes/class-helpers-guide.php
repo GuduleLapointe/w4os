@@ -214,7 +214,7 @@ class W4OS_Guide extends W4OS_Loader {
 
 			$source = W4OS::get_option('w4os-guide:source');
 			$guide = new OpenSim_Guide($source);
-			$content = $guide->output_html();
+			$content = $guide->output_page();
 
 			// Output the guide content
 			echo $content;

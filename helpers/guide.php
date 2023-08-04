@@ -21,16 +21,19 @@ require_once __DIR__ . '/includes/functions.php';
 class OpenSim_Guide {
 	private $destinations = array();
 	private $fullHTML     = false; // Flag to determine whether to output HTML tags
-	private $url_base;
+	private $public_url;
 	private $url_args = array();
 	private $source;
 
-	public function __construct() {
+	public function __construct( $source = null ) {
 		set_helpers_locale();
 
-		$this->url_base = $this->getFullURL();
+		$this->public_url = $this->get_public_url();
+		$this->internal_url = $this->get_child_script_url();
 
-		if ( defined( 'OPENSIM_GUIDE_SOURCE' ) && ! empty( OPENSIM_GUIDE_SOURCE ) ) {
+		if(!empty($source)) {
+			$this->source = $source;
+		} else if ( defined( 'OPENSIM_GUIDE_SOURCE' ) && ! empty( OPENSIM_GUIDE_SOURCE ) ) {
 			$this->source = OPENSIM_GUIDE_SOURCE;
 		} else {
 			$this->source             = isset( $_GET['source'] ) ? $_GET['source'] : null;
@@ -45,7 +48,13 @@ class OpenSim_Guide {
 		}
 	}
 
+	public function output_page() {
+		$this->fullHTML = true;
+		$this->output_html();
+	}
+
 	public function output_html() {
+		if(empty($fullHTML))
 		echo $this->build_html();
 	}
 
@@ -189,7 +198,7 @@ class OpenSim_Guide {
 
 	private function place_thumbnail() {
 		// Replace this with the actual URL for the thumbnail placeholder
-		return 'no-img.jpg';
+		return $this->internal_url . '/no-img.jpg';
 	}
 
 	private function place_traffic() {
@@ -233,25 +242,30 @@ class OpenSim_Guide {
 			. '<body class="destination-guide">';
 		}
 
-		$content .= '<link rel="stylesheet" type="text/css" href="css/guide.css?' . time() . '">'
+		$content .= '<link rel="stylesheet" type="text/css" href="' . $this->internal_url . '/css/guide.css?' . time() . '">'
 		. '<div id="guide">';
 		return $content;
 	}
 
 	private function html_suffix() {
 		$content  = '</div>';
-		$content .= '<script src="js/guide.js?' . time() . '"></script>';
+		$content .= '<script src="' . $this->internal_url . '/js/guide.js?' . time() . '"></script>';
 		if ( $this->fullHTML ) {
 			$content .= '</body></html>';
 		}
 		return $content;
 	}
 
-	private function getFullURL() {
-		$protocol = isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
-		$host     = $_SERVER['HTTP_HOST'];
-		$request  = $_SERVER['PHP_SELF'];
-		return $protocol . $host . $request;
+	private function get_public_url() {
+		$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+		$host = $_SERVER['HTTP_HOST'];
+		$request_uri = $_SERVER['REQUEST_URI'];
+
+		// Parse the request URI to extract only the path part
+		$parsed_url = parse_url($request_uri);
+		$path = $parsed_url['path'];
+
+		return $protocol . $host . $path;
 	}
 
 	private function build_url( $category = null ) {
@@ -264,9 +278,39 @@ class OpenSim_Guide {
 			)
 		);
 		if ( empty( $args ) ) {
-			return $this->url_base;
+			return $this->public_url;
 		}
-		return $this->url_base . '?' . http_build_query( $args );
+		return $this->public_url . '?' . http_build_query( $args );
+	}
+
+	// ... (other methods in the OpenSim_Guide class)
+
+	private function get_child_script_url() {
+	    // Get the full path of the current file (the helper script)
+	    $helper_script_path = __FILE__;
+
+	    // Get the directory path of the current file
+	    $directory_path = dirname($helper_script_path);
+
+	    // Get the server's document root path
+	    $document_root = $_SERVER['DOCUMENT_ROOT'];
+
+	    // Convert the directory path to a URL by replacing the document root with an empty string
+	    $child_script_url = str_replace($document_root, '', $directory_path);
+
+	    // Ensure the URL starts with a slash to make it an absolute URL
+	    $child_script_url = '/' . ltrim($child_script_url, '/');
+
+	    // Get the current protocol (http or https)
+	    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+
+	    // Get the host
+	    $host = $_SERVER['HTTP_HOST'];
+
+	    // Combine the protocol, host, and child script URL to get the full URL of the child script
+	    $full_child_script_url = $protocol . $host . $child_script_url;
+
+	    return $full_child_script_url;
 	}
 }
 
