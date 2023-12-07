@@ -1,11 +1,12 @@
 ## Changelog
 
-### Unreleased (2.7.1-dev-3)
-- new destinations guide (work in progress)
-- added bases for localization (work in progress)
+### 2.7
+- new web search block (experimental)
+- new destinations guide (experimental)
 - added bases for localization
 - added helpers/guide.php
 - fix avatar creation form not displayed for new accounts
+- search settings: only show the applicable SearchURL to avoid confusions
 - use dialog modal box for avatar creation form when form container is too small
 
 ### 2.6.4

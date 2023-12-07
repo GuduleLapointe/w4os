@@ -48,8 +48,6 @@ $xmlrpc_server = xmlrpc_server_create();
 xmlrpc_server_register_method( $xmlrpc_server, 'dir_places_query', 'dir_places_query' );
 function dir_places_query( $method_name, $params, $app_data ) {
 	global $SearchDB;
-	error_log("params " . print_r($params, true));
-
 	$req = $params[0];
 
 	$flags       = $req['flags'];
