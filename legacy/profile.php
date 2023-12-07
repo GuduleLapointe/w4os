@@ -815,12 +815,52 @@ function w4os_profile_display( $user, $args = array() ) {
 		// );
 		// return $content;
 	} else {
-		if(empty($args['mini'])) {
-			$content= w4os_avatar_creation_form ($user);
+		if (!empty($args['mini'])) {
+		    // Display simple link when 'mini' argument is set
+		    $content .= W4OS::sprintf_safe('<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __('Create an avatar', 'w4os'));
 		} else {
-			$content .= W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __( 'Create an avatar', 'w4os' ) );
+		    // Display responsive form and hidden dialog
+		    $content .= '<div id="profilewrapper">';
+		    $content .= '<div id="profileform">' . w4os_avatar_creation_form($user) . '</div>';
+		    $content .= '<a href="#" id="profilelink" style="display: none;" onclick="openDialog(); return false;">' . __('Create an avatar', 'w4os') . '</a>';
+		    $content .= '</div>';
+
+		    // Dialog HTML
+		    $content .= '<dialog id="modalDialog">';
+		    $content .= '<div id="dialogContent"></div>';
+		    $content .= '<button onclick="closeDialog()">Close</button>';
+		    $content .= '</dialog>';
+
+		    // JavaScript for responsive behavior and dialog
+		    $content .= "
+		    <script>
+		    function checkSize() {
+		        var box = document.getElementById('profilewrapper');
+		        if (box.offsetWidth < 30 * parseFloat(getComputedStyle(document.documentElement).fontSize)) {
+		            document.getElementById('profilelink').style.display = 'block';
+		            document.getElementById('profileform').style.display = 'none';
+		        }
+		    }
+
+		    function openDialog() {
+		        var dialog = document.getElementById('modalDialog');
+		        var content = document.getElementById('profileform').innerHTML;
+		        document.getElementById('dialogContent').innerHTML = content;
+		        dialog.showModal(); // Use showModal() for modal dialog
+		    }
+
+		    function closeDialog() {
+		        var dialog = document.getElementById('modalDialog');
+		        dialog.close();
+		    }
+
+		    window.onload = checkSize;
+		    window.onresize = checkSize;
+		    </script>
+		    ";
 		}
 	}
+
 	if ( ! empty( $content ) ) {
 		$content = $before_title . $title . $after_title . $content;
 	}
