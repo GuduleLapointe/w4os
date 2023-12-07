@@ -135,10 +135,14 @@ class W4OS_Search extends W4OS_Loader {
 						array(
 							'OpenSim.ini' => array(
 								'[Search]' => array(
+									';; Save your settings before copying the values below',
 									'Module'       => 'OpenSimSearch',
-									( get_option( 'w4os_provide_search' ) ? '' : '; ' ) . 'SearchURL' => '"' . ( empty( get_option( 'w4os_search_url' ) ) ? $this->default_search_url : get_option( 'w4os_search_url' ) ) . '?gk=' . $this->gatekeeper . '"',
-									( get_option( 'w4os_provide_search' ) ? '; ' : '' ) . 'SearchURL' => '"' . 'http://2do.directory/helpers/query.php?gk=' . $this->gatekeeper . '"',
-									'; SearchURL ' => '"http://example.org/query.php"',
+									'SearchURL' => '"' . (
+										get_option( 'w4os_provide_search' )
+										? ( empty( get_option( 'w4os_search_url' ) ) ? $this->default_search_url : get_option( 'w4os_search_url' ) ) . '?gk=' . $this->gatekeeper
+										: 'http://2do.directory/helpers/query.php?gk=' . $this->gatekeeper
+									) . '"',
+									// '; SearchURL ' => '"http://example.org/query.php"',
 								),
 							),
 						)
