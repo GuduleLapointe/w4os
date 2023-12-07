@@ -52,7 +52,7 @@ function dir_places_query( $method_name, $params, $app_data ) {
 
 	$flags       = $req['flags'];
 	$text        = $req['text'];
-	$category    = $req['category'];
+	$category    = isset($req['category']) ? $req['category'] : null;
 	$query_start = $req['query_start'];
 	if ( ! is_int( $query_start ) ) {
 		$query_start = 0;
