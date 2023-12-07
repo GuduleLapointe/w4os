@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || die;
+
 /**
  * Media field class which users WordPress media popup to upload and select files.
  */
@@ -207,6 +209,6 @@ class RWMB_Media_Field extends RWMB_File_Field {
 	 * Template for media item.
 	 */
 	public static function print_templates() {
-		require_once RWMB_INC_DIR . 'templates/media.php';
+		require RWMB_INC_DIR . 'templates/media.php';
 	}
 }

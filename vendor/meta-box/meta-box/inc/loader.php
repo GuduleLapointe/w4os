@@ -7,7 +7,7 @@
 class RWMB_Loader {
 	protected function constants() {
 		// Script version, used to add version for scripts and styles.
-		define( 'RWMB_VER', '5.7.4' );
+		define( 'RWMB_VER', '5.9.0' );
 
 		list( $path, $url ) = self::get_path( dirname( __DIR__ ) );
 
@@ -117,12 +117,6 @@ class RWMB_Loader {
 		if ( is_admin() ) {
 			$about = new RWMB_About( $update_checker );
 			$about->init();
-
-			new RWMB_Dashboard( 'http://feeds.feedburner.com/metaboxio', 'https://metabox.io/blog/', [
-				'title'           => 'Meta Box',
-				'dismiss_tooltip' => esc_html__( 'Dismiss all Meta Box news', 'meta-box' ),
-				'dismiss_confirm' => esc_html__( 'Are you sure to dismiss all Meta Box news?', 'meta-box' ),
-			] );
 		}
 
 		// Public functions.

@@ -90,7 +90,15 @@
 			};
 		}
 
-		$this.show().select2( options );
+		$this.show();
+
+		if ( $this.hasClass( 'rwmb-icon' ) ) {
+			// Initialize select2 with icons for icon field.
+			$this.trigger( 'init_icon_field', [ options ] );
+		} else {
+			// Initialize select2 normally.
+			$this.select2( options );
+		}
 
 		if ( !$this.attr( 'multiple' ) ) {
 			return;
@@ -110,10 +118,24 @@
 	}
 
 	function init( e ) {
-		$( e.target ).find( '.rwmb-select_advanced' ).each( transform );
+		$( e.target ).find( '.rwmb-select_advanced, .rwmb-icon' ).each( transform );
 	}
+
+	function fixDropdownPosition( e ) {
+		if ( $( "#wpadminbar" ).length === 0 ) {
+			return;
+		}
+
+		if ( rwmbSelect2.isAdmin == 1 ) {
+			$( 'body > .select2-container--open .select2-dropdown--above' ).css( 'top', 0 );
+			return;
+		}
+
+		$( 'body > .select2-container:last-child > .select2-dropdown' ).css( 'top', $( document.body ).offset().top );
+	};
 
 	rwmb.$document
 		.on( 'mb_ready', init )
-		.on( 'clone', '.rwmb-select_advanced', transform );
+		.on( 'clone', '.rwmb-select_advanced, .rwmb-icon', transform )
+		.on( 'select2:open', fixDropdownPosition );
 } )( jQuery, rwmb );

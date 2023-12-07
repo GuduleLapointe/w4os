@@ -4,7 +4,7 @@ Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.2.2
+Tested up to: 6.4.1
 Stable tag: 2.6.4
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -192,8 +192,13 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 
 == Changelog ==
 
-= Unreleased (2.7-dev.1175) =
+= Unreleased (2.7.1-dev) =
 * new destinations guide (work in progress)
+* added bases for localization (work in progress)
+* added bases for localization
+* added helpers/guide.php
+* fix avatar creation form not displayed for new accounts
+* use dialog modal box for avatar creation form when form container is too small
 
 = 2.6.4 =
 * fix W4OS_DIR not defined when database is not configured

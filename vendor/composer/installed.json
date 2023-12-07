@@ -279,17 +279,17 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.6.1",
-            "version_normalized": "3.6.1.0",
+            "version": "3.7.0",
+            "version_normalized": "3.7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef"
+                "reference": "7a2046a5e6a15786068bb0298407522f30c694b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
-                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/7a2046a5e6a15786068bb0298407522f30c694b4",
+                "reference": "7a2046a5e6a15786068bb0298407522f30c694b4",
                 "shasum": ""
             },
             "require-dev": {
@@ -298,7 +298,7 @@
                 "wp-cli/wp-cli": "~2.5.0",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2023-06-14T19:23:12+00:00",
+            "time": "2023-11-20T12:24:41+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "scripts-description": {
@@ -316,26 +316,26 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.1"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.7.0"
             },
             "install-path": "../woocommerce/action-scheduler"
         },
         {
             "name": "wpmetabox/meta-box",
-            "version": "5.7.4",
-            "version_normalized": "5.7.4.0",
+            "version": "5.9.0",
+            "version_normalized": "5.9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmetabox/meta-box.git",
-                "reference": "cd17d25946b2c48568cef5ca996dde4eb2736a38"
+                "reference": "01b14e882103ebb0d19275a766d668c9d84d9bad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/cd17d25946b2c48568cef5ca996dde4eb2736a38",
-                "reference": "cd17d25946b2c48568cef5ca996dde4eb2736a38",
+                "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/01b14e882103ebb0d19275a766d668c9d84d9bad",
+                "reference": "01b14e882103ebb0d19275a766d668c9d84d9bad",
                 "shasum": ""
             },
-            "time": "2023-07-18T02:40:31+00:00",
+            "time": "2023-11-22T03:02:53+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -368,7 +368,7 @@
             ],
             "support": {
                 "issues": "https://github.com/wpmetabox/meta-box/issues",
-                "source": "https://github.com/wpmetabox/meta-box/tree/5.7.4"
+                "source": "https://github.com/wpmetabox/meta-box/tree/5.9.0"
             },
             "install-path": "../meta-box/meta-box"
         }

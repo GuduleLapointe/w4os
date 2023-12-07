@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || die;
+
 /**
  * The file upload field which allows users to drag and drop files to upload.
  */
@@ -34,6 +36,6 @@ class RWMB_File_Upload_Field extends RWMB_Media_Field {
 	 */
 	public static function print_templates() {
 		parent::print_templates();
-		require_once RWMB_INC_DIR . 'templates/upload.php';
+		require RWMB_INC_DIR . 'templates/upload.php';
 	}
 }

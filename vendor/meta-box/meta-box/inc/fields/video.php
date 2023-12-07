@@ -1,4 +1,6 @@
 <?php
+defined( 'ABSPATH' ) || die;
+
 /**
  * Video field which uses WordPress media popup to upload and select video.
  */
@@ -125,6 +127,6 @@ class RWMB_Video_Field extends RWMB_Media_Field {
 	 */
 	public static function print_templates() {
 		parent::print_templates();
-		require_once RWMB_INC_DIR . 'templates/video.php';
+		require RWMB_INC_DIR . 'templates/video.php';
 	}
 }

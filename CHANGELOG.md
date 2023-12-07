@@ -1,7 +1,12 @@
 ## Changelog
 
-### Unreleased (2.7-dev.1175)
+### Unreleased (2.7.1-dev)
 - new destinations guide (work in progress)
+- added bases for localization (work in progress)
+- added bases for localization
+- added helpers/guide.php
+- fix avatar creation form not displayed for new accounts
+- use dialog modal box for avatar creation form when form container is too small
 
 ### 2.6.4
 - fix W4OS_DIR not defined when database is not configured
