@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "POT-Creation-Date: 2023-08-01T14:46:30+00:00\n"
 "PO-Revision-Date: \n"
-"Last-Translator: gpt-po v1.0.5\n"
+"Last-Translator: gpt-po v1.0.7\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -49,18 +49,18 @@ msgstr "Ils sont également disponible comme blocs Gutenberg et modules Divi con
 msgid "General information (grid name and login uri)"
 msgstr "Informations générales (nom de la grille et URI de connexion)"
 
-#: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38
-#: admin/templates/shortcodes.php:60 admin/templates/shortcodes.php:83
+#: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38 admin/templates/shortcodes.php:60
+#: admin/templates/shortcodes.php:83
 msgid "Bloc title"
 msgstr "Titre du bloc"
 
-#: admin/templates/shortcodes.php:19 admin/templates/shortcodes.php:39
-#: admin/templates/shortcodes.php:61 admin/templates/shortcodes.php:84
+#: admin/templates/shortcodes.php:19 admin/templates/shortcodes.php:39 admin/templates/shortcodes.php:61
+#: admin/templates/shortcodes.php:84
 msgid "Title level (h1 to h6)"
 msgstr "Niveau de titre (de h1 à h6)"
 
-#: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41
-#: admin/templates/shortcodes.php:64 admin/templates/shortcodes.php:89
+#: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41 admin/templates/shortcodes.php:64
+#: admin/templates/shortcodes.php:89
 msgid "Options"
 msgstr "Options"
 
@@ -114,22 +114,16 @@ msgstr ""
 "Les ventes de terrains génèrent généralement un trafic supplémentaire, ce qui peut rendre le classement des moteurs de "
 "recherche peu fiable pour ces régions."
 
-#: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1
-#: src/blocks/avatar-profile/editor.js:14
+#: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1 src/blocks/avatar-profile/editor.js:14
 #: blocks/avatar-profile/avatar-profile.js:14
 msgid "OpenSimulator Avatar Profile"
 msgstr "OpenSimulator - Profil"
 
-#: blocks/avatar-profile.php:219 blocks/grid-info.php:223
-#: blocks/grid-status.php:175 blocks/popular-places.php:260
-#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
-#: blocks/grid-status/grid-status.js:1
-#: blocks/popular-places/popular-places.js:1
-#: src/blocks/avatar-profile/editor.js:68 src/blocks/grid-info/editor.js:58
-#: src/blocks/grid-status/editor.js:58 src/blocks/popular-places/editor.js:81
-#: blocks/avatar-profile/avatar-profile.js:68 blocks/grid-info/grid-info.js:58
-#: blocks/grid-status/grid-status.js:58
-#: blocks/popular-places/popular-places.js:81
+#: blocks/avatar-profile.php:219 blocks/grid-info.php:223 blocks/grid-status.php:175 blocks/popular-places.php:260
+#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1 blocks/grid-status/grid-status.js:1
+#: blocks/popular-places/popular-places.js:1 src/blocks/avatar-profile/editor.js:68 src/blocks/grid-info/editor.js:58
+#: src/blocks/grid-status/editor.js:58 src/blocks/popular-places/editor.js:81 blocks/avatar-profile/avatar-profile.js:68
+#: blocks/grid-info/grid-info.js:58 blocks/grid-status/grid-status.js:58 blocks/popular-places/popular-places.js:81
 msgid "Title"
 msgstr "Titre"
 
@@ -141,37 +135,28 @@ msgstr "Entrez le titre du module Profil d'avatar."
 msgid "Avatar Profile"
 msgstr "Profil d'avatar"
 
-#: blocks/avatar-profile.php:230 blocks/grid-info.php:231
-#: blocks/grid-status.php:183 blocks/popular-places.php:268
-#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
-#: blocks/grid-status/grid-status.js:1
-#: blocks/popular-places/popular-places.js:1
-#: src/blocks/avatar-profile/editor.js:76 src/blocks/grid-info/editor.js:66
-#: src/blocks/grid-status/editor.js:66 src/blocks/popular-places/editor.js:89
-#: blocks/avatar-profile/avatar-profile.js:76 blocks/grid-info/grid-info.js:66
-#: blocks/grid-status/grid-status.js:66
-#: blocks/popular-places/popular-places.js:89
+#: blocks/avatar-profile.php:230 blocks/grid-info.php:231 blocks/grid-status.php:183 blocks/popular-places.php:268
+#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1 blocks/grid-status/grid-status.js:1
+#: blocks/popular-places/popular-places.js:1 src/blocks/avatar-profile/editor.js:76 src/blocks/grid-info/editor.js:66
+#: src/blocks/grid-status/editor.js:66 src/blocks/popular-places/editor.js:89 blocks/avatar-profile/avatar-profile.js:76
+#: blocks/grid-info/grid-info.js:66 blocks/grid-status/grid-status.js:66 blocks/popular-places/popular-places.js:89
 msgid "Title Level"
 msgstr "Niveau de titre"
 
-#: blocks/avatar-profile.php:232 blocks/grid-info.php:233
-#: blocks/grid-status.php:185 blocks/popular-places.php:270
+#: blocks/avatar-profile.php:232 blocks/grid-info.php:233 blocks/grid-status.php:185 blocks/popular-places.php:270
 msgid "Select the HTML heading level for the title."
 msgstr "Selectionnez le niveau de titre."
 
-#: blocks/avatar-profile.php:250 blocks/avatar-profile/avatar-profile.js:1
-#: src/blocks/avatar-profile/editor.js:93
+#: blocks/avatar-profile.php:250 blocks/avatar-profile/avatar-profile.js:1 src/blocks/avatar-profile/editor.js:93
 #: blocks/avatar-profile/avatar-profile.js:93
 msgid "Mini Profile"
 msgstr "Mini profil"
 
-#: blocks/avatar-profile.php:254 blocks/popular-places.php:297
-#: blocks/popular-places.php:309
+#: blocks/avatar-profile.php:254 blocks/popular-places.php:297 blocks/popular-places.php:309
 msgid "Yes"
 msgstr "Oui"
 
-#: blocks/avatar-profile.php:255 blocks/popular-places.php:296
-#: blocks/popular-places.php:308
+#: blocks/avatar-profile.php:255 blocks/popular-places.php:296 blocks/popular-places.php:308
 msgid "No"
 msgstr "Non"
 
@@ -179,8 +164,7 @@ msgstr "Non"
 msgid "Enable mini profile display."
 msgstr "Activer le profil réduit."
 
-#: blocks/grid-info.php:106 blocks/grid-info.php:227
-#: includes/class-settings.php:137 includes/class-settings.php:138
+#: blocks/grid-info.php:106 blocks/grid-info.php:227 includes/class-settings.php:137 includes/class-settings.php:138
 #: includes/class-settings.php:139 includes/class-settings.php:140
 msgid "Grid Info"
 msgstr "Infos sur la grille"
@@ -197,8 +181,7 @@ msgstr "URI de connexion"
 msgid "OpenSimulator not configured"
 msgstr "OpenSimulator n'est pas configuré"
 
-#: blocks/grid-info.php:203 blocks/grid-info/grid-info.js:1
-#: src/blocks/grid-info/editor.js:13 blocks/grid-info/grid-info.js:13
+#: blocks/grid-info.php:203 blocks/grid-info/grid-info.js:1 src/blocks/grid-info/editor.js:13 blocks/grid-info/grid-info.js:13
 msgid "OpenSimulator Grid Info"
 msgstr "OpenSimulator - Infos de la grille"
 
@@ -206,8 +189,7 @@ msgstr "OpenSimulator - Infos de la grille"
 msgid "Enter the title for the Grid Info module."
 msgstr "Entrez le titre du module Infos de la grille."
 
-#: blocks/grid-status.php:108 blocks/grid-status.php:179
-#: includes/class-settings.php:161
+#: blocks/grid-status.php:108 blocks/grid-status.php:179 includes/class-settings.php:161
 msgid "Grid Status"
 msgstr "Statut de la grille"
 
@@ -215,8 +197,8 @@ msgstr "Statut de la grille"
 msgid "No result"
 msgstr "Aucun résultat"
 
-#: blocks/grid-status.php:155 blocks/grid-status/grid-status.js:1
-#: src/blocks/grid-status/editor.js:13 blocks/grid-status/grid-status.js:13
+#: blocks/grid-status.php:155 blocks/grid-status/grid-status.js:1 src/blocks/grid-status/editor.js:13
+#: blocks/grid-status/grid-status.js:13
 msgid "OpenSimulator Grid Status"
 msgstr "OpenSimulator - Statut de la grille"
 
@@ -228,8 +210,7 @@ msgstr "Entrez le titre du module Statut de la grille."
 msgid "Popular Places"
 msgstr "Lieux populaires"
 
-#: blocks/popular-places.php:235 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:14
+#: blocks/popular-places.php:235 blocks/popular-places/popular-places.js:1 src/blocks/popular-places/editor.js:14
 #: blocks/popular-places/popular-places.js:14
 msgid "OpenSimulator Popular Places"
 msgstr "OpenSimulator - Lieux populaires"
@@ -238,8 +219,7 @@ msgstr "OpenSimulator - Lieux populaires"
 msgid "Enter the title for the Popular Places module."
 msgstr "Entrez le titre du module Lieux Populaires."
 
-#: blocks/popular-places.php:285 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:106
+#: blocks/popular-places.php:285 blocks/popular-places/popular-places.js:1 src/blocks/popular-places/editor.js:106
 #: blocks/popular-places/popular-places.js:106
 msgid "Max Results"
 msgstr "Maximum résultats"
@@ -248,8 +228,7 @@ msgstr "Maximum résultats"
 msgid "Enter the maximum number of results to display."
 msgstr "Entrez le nombre maximum de résultats à afficher."
 
-#: blocks/popular-places.php:292 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:115
+#: blocks/popular-places.php:292 blocks/popular-places/popular-places.js:1 src/blocks/popular-places/editor.js:115
 #: blocks/popular-places/popular-places.js:115
 msgid "Include Hypergrid"
 msgstr "Inclure Hypergrid"
@@ -258,8 +237,7 @@ msgstr "Inclure Hypergrid"
 msgid "Enable to restrict results to the grid."
 msgstr "Activer pour limiter les résultats à la grille."
 
-#: blocks/popular-places.php:304 blocks/popular-places/popular-places.js:1
-#: src/blocks/popular-places/editor.js:123
+#: blocks/popular-places.php:304 blocks/popular-places/popular-places.js:1 src/blocks/popular-places/editor.js:123
 #: blocks/popular-places/popular-places.js:123
 msgid "Include Land for Sale"
 msgstr "Inclure des terrains à vendre"
@@ -268,8 +246,40 @@ msgstr "Inclure des terrains à vendre"
 msgid "Enable to include land for sale in results."
 msgstr "Activer l'inclusion des terrains à vendre dans les résultats."
 
-#: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80
-#: legacy/admin/status-page.php:58
+#: helpers/guide.php:98 helpers/guide.php:138 includes/class-helpers-guide.php:55
+msgid "Destinations Guide"
+msgstr "Guide des destinations"
+
+#: helpers/guide.php:139 helpers/guide.php:164
+msgid "This is a work in progress, please be indulgent."
+msgstr "Ceci est un travail en cours, veuillez faire preuve d'indulgence."
+
+#: helpers/guide.php:149
+#. Translators: %s will be replaced with the number of destinations
+msgid "%s destinations"
+msgstr "destinations de %s"
+
+#: helpers/guide.php:162
+msgid "Back to categories"
+msgstr "Retour aux catégories"
+
+#: helpers/guide.php:178
+msgid "%s people"
+msgstr "%s personnes"
+
+#: helpers/guide.php:181
+msgid "traffic %s"
+msgstr "trafic %s"
+
+#: helpers/guide.php:192
+msgid ""
+"The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let "
+"them venture forth to curate a grand tapestry of remarkable places for your exploration!"
+msgstr ""
+"Le royaume des destinations que vous recherchez nous échappe, emporté par des lutins insaisissables. Rassemblez les "
+"gestionnaires de la grille, laissez-les s'aventurer pour créer une grande collection de lieux remarquables à explorer !"
+
+#: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80 legacy/admin/status-page.php:58
 msgid "Avatar Models"
 msgstr "Modèles d'avatars"
 
@@ -533,6 +543,60 @@ msgstr ""
 msgid "Ready to use binaries and example config files can be downloaded here:"
 msgstr "Des binaires prêts à l'emploi et des exemples de fichiers de configuration peuvent être téléchargés ici :"
 
+#: includes/class-helpers-guide.php:56 includes/class-helpers-guide.php:76
+msgid "Destinations Guide Settings"
+msgstr "Paramètres du guide des destinations"
+
+#: includes/class-helpers-guide.php:82
+msgid "Provide Destinations Guide Service"
+msgstr "Service de guide des destinations"
+
+#: includes/class-helpers-guide.php:89
+msgid "Source"
+msgstr "Source"
+
+#: includes/class-helpers-guide.php:100
+msgid "A text file with a formatted list of destinations."
+msgstr "Un fichier texte avec une liste formatée de destinations."
+
+#: includes/class-helpers-guide.php:101
+msgid "The source can be an URL or the full path of a local file your web server can access."
+msgstr "La source peut être une URL ou le chemin complet d'un fichier local accessible par votre serveur web."
+
+#: includes/class-helpers-guide.php:102
+msgid "Destination name and teleport URL are separated by a pipe (|) character."
+msgstr "Le nom de la destination et l'URL de téléportation sont séparés par le caractère pipe (|)."
+
+#: includes/class-helpers-guide.php:103
+msgid "Lines containing only text are interpreted as categories."
+msgstr "Les lignes contenant uniquement du texte sont interprétées comme des catégories."
+
+#: includes/class-helpers-guide.php:104
+msgid "Lines beginning with \"#\" or \"//\" are ignored."
+msgstr "Les lignes commençant par \"#\" ou \"//\" sont ignorées."
+
+#: includes/class-helpers-guide.php:106
+msgid "The format is identical to the format used by the in-world object %s so the same source URL can be used for both."
+msgstr ""
+"Le format est identique au format utilisé par l'objet %s dans le monde virtuel, donc la même URL source peut être "
+"utilisée pour les deux."
+
+#: includes/class-helpers-guide.php:127
+msgid "Destinations Guide URL"
+msgstr "URL du guide des destinations"
+
+#: includes/class-helpers-guide.php:176
+msgid "Destinations guide is a Viewer 3 feature, providing a window with places suggestions."
+msgstr "Le guide des destinations est une fonctionnalité de Viewer 3, qui propose une fenêtre avec des suggestions de lieux."
+
+#: includes/class-helpers-guide.php:177
+msgid ""
+"While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of "
+"must-see places, from your own grid or outside."
+msgstr ""
+"Bien que cela ne soit pas obligatoire et que tous les utilisateurs n'en bénéficieront pas, c'est une façon utile de "
+"leur fournir une liste d'endroits incontournables, qu'ils soient sur votre propre grille ou à l'extérieur."
+
 #: includes/class-helpers-offline.php:46
 msgid "Offline Messages"
 msgstr "Messages hors-ligne"
@@ -673,8 +737,7 @@ msgstr "Les fonctionnalités de recherche nécessitent l'installation du module 
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "Le binaire OpenSimSearch.Modules.dll prêt à l'emploi peut être trouvé ici :"
 
-#: includes/class-settings.php:82 legacy/profile.php:198
-#: legacy/profile.php:1039
+#: includes/class-settings.php:82 legacy/profile.php:198 legacy/profile.php:1039
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
 
@@ -896,13 +959,11 @@ msgstr "Base de données de recherche mise à jour."
 msgid "OpenSimulator Helpers"
 msgstr "Assistants OpenSimulator"
 
-#: legacy/admin/admin-init.php:63 legacy/profile.php:135
-#: tmp/class-avatar.php:318
+#: legacy/admin/admin-init.php:63 legacy/profile.php:135 tmp/class-avatar.php:318
 msgid "Avatar Name"
 msgstr "Nom de l'avatar"
 
-#: legacy/admin/admin-init.php:69 legacy/admin/admin-init.php:75
-#: legacy/profile.php:141 tmp/class-avatar.php:355
+#: legacy/admin/admin-init.php:69 legacy/admin/admin-init.php:75 legacy/profile.php:141 tmp/class-avatar.php:355
 msgid "Born"
 msgstr "Naissance"
 
@@ -1251,9 +1312,9 @@ msgstr "every_five_minutes"
 msgid "A local Robust server has been found. Please check Login URI and Grid Name configuration."
 msgstr "Un serveur Robust local a été trouvé. Veuillez vérifier la configuration de l'URI de connexion et du nom de grille."
 
-#: legacy/functions.php:223
-msgid "OpenSimulator settings page"
-msgstr "Page des réglages OpenSimulator"
+#: legacy/functions.php:233
+msgid "settings page"
+msgstr "page de paramètres"
 
 #: legacy/functions.php:265
 msgid "Online"
@@ -1327,8 +1388,8 @@ msgstr "E-mail"
 msgid "Reset Password"
 msgstr "Réinitialisation du mot de passe"
 
-#: legacy/profile-page.php:114 legacy/profile-page.php:192
-#: templates/content-configuration.php:43 templates/content-page-profile.php:27
+#: legacy/profile-page.php:114 legacy/profile-page.php:192 templates/content-configuration.php:43
+#: templates/content-page-profile.php:27
 msgid "Log in"
 msgstr "Connexion"
 
@@ -1578,9 +1639,9 @@ msgstr "Doit être réglé dans le visualiseur."
 msgid "Web Profile URL"
 msgstr "URL du profil web"
 
-#: legacy/shortcodes.php:85
-msgid "Configure W4OS database "
-msgstr "Configurer la base de données W4OS"
+#: legacy/shortcodes.php:86
+msgid "Configure W4OS database on %s."
+msgstr "Configurer la base de données W4OS sur %s."
 
 #: legacy/shortcodes.php:126
 msgid "Edit user"
@@ -1616,23 +1677,27 @@ msgstr[1] "%d références obsolètes supprimées"
 msgid "%s local users updated with avatar data"
 msgstr "Données d'avatar mises à jour pour %s utilisateurs"
 
-#: legacy/w4osdb.php:16
-msgid "ROBUST database is not configured. To finish configuration, go to "
-msgstr "La base de données de Robust n'est pas configurée. Pour terminer la configuration, rendez-vous sur"
+#: legacy/w4osdb.php:17
+msgid "ROBUST database is not configured. To finish configuration, go to %s."
+msgstr "La base de données ROBUST n'est pas configurée. Pour terminer la configuration, rendez-vous sur %s."
 
-#: legacy/w4osdb.php:52
-msgid "Could not connect to the database server, please verify your credentials on "
-msgstr "Impossible de se connecter au serveur de bases de données, vérifiez vos identifiants sur"
+#: legacy/w4osdb.php:56
+msgid "Could not connect to the database server, please verify your credentials on %s."
+msgstr "Impossible de se connecter au serveur de base de données, veuillez vérifier vos identifiants sur %s."
 
-#: legacy/w4osdb.php:59
-msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
+#: legacy/w4osdb.php:66
+msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on %s."
 msgstr ""
-"Impossible de se connecter à la base de données de Robust, vérifiez le nom de la base de données et/ou vos identifiants "
-"sur"
+"Impossible de se connecter à la base de données ROBUST, veuillez vérifier le nom de la base de données et/ou les "
+"informations d'identification sur %s."
 
-#: legacy/w4osdb.php:128
-msgid "Missing tables: %s. The ROBUST database is connected, but some required tables are missing. "
-msgstr "Tables manquantes : %s. La base de données ROBUST est connectée, mais certaines tables requises sont manquantes."
+#: legacy/w4osdb.php:136
+msgid ""
+"Missing tables: %1$s. The ROBUST database is connected, but some required tables are missing. Check database settings "
+"on %2$s."
+msgstr ""
+"Tables manquantes : %1$s. La base de données ROBUST est connectée, mais certaines tables requises sont manquantes. "
+"Vérifiez les paramètres de la base de données sur %2$s."
 
 #: legacy/widgets.php:11
 msgid "Grid info Widget"
@@ -1647,7 +1712,7 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #: legacy/woocommerce.php:99
-msgid "Your avatar: "
+msgid "Your avatar:"
 msgstr "Votre avatar :"
 
 #: templates/content-configuration.php:2
@@ -1904,13 +1969,9 @@ msgstr ""
 "Une autre version de <strong>W4OS - Interface Web pour OpenSimulator</strong> est installée et active. Le doublon a été "
 "désactivé."
 
-#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1
-#: blocks/grid-status/grid-status.js:1
-#: blocks/popular-places/popular-places.js:1
-#: src/blocks/avatar-profile/editor.js:64 src/blocks/grid-info/editor.js:54
-#: src/blocks/grid-status/editor.js:54 src/blocks/popular-places/editor.js:77
-#: blocks/avatar-profile/avatar-profile.js:64 blocks/grid-info/grid-info.js:54
-#: blocks/grid-status/grid-status.js:54
-#: blocks/popular-places/popular-places.js:77
+#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1 blocks/grid-status/grid-status.js:1
+#: blocks/popular-places/popular-places.js:1 src/blocks/avatar-profile/editor.js:64 src/blocks/grid-info/editor.js:54
+#: src/blocks/grid-status/editor.js:54 src/blocks/popular-places/editor.js:77 blocks/avatar-profile/avatar-profile.js:64
+#: blocks/grid-info/grid-info.js:54 blocks/grid-status/grid-status.js:54 blocks/popular-places/popular-places.js:77
 msgid "Block Settings"
 msgstr "Réglages du bloc"

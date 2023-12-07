@@ -2,14 +2,14 @@
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface 2.6.2\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface2.7.1-dev-2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-01T14:50:57+00:00\n"
+"POT-Creation-Date: 2023-12-07T15:22:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
@@ -146,7 +146,7 @@ msgid "Enter the title for the Avatar Profile module."
 msgstr ""
 
 #: blocks/avatar-profile.php:223
-#: legacy/profile.php:927
+#: legacy/profile.php:970
 msgid "Avatar Profile"
 msgstr ""
 
@@ -302,6 +302,38 @@ msgstr ""
 
 #: blocks/popular-places.php:306
 msgid "Enable to include land for sale in results."
+msgstr ""
+
+#: helpers/guide.php:98
+#: helpers/guide.php:138
+#: includes/class-helpers-guide.php:55
+msgid "Destinations Guide"
+msgstr ""
+
+#: helpers/guide.php:139
+#: helpers/guide.php:164
+msgid "This is a work in progress, please be indulgent."
+msgstr ""
+
+#. Translators: %s will be replaced with the number of destinations
+#: helpers/guide.php:149
+msgid "%s destinations"
+msgstr ""
+
+#: helpers/guide.php:162
+msgid "Back to categories"
+msgstr ""
+
+#: helpers/guide.php:178
+msgid "%s people"
+msgstr ""
+
+#: helpers/guide.php:181
+msgid "traffic %s"
+msgstr ""
+
+#: helpers/guide.php:192
+msgid "The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!"
 msgstr ""
 
 #: includes/class-avatar-model.php:62
@@ -537,6 +569,55 @@ msgstr ""
 msgid "Ready to use binaries and example config files can be downloaded here:"
 msgstr ""
 
+#: includes/class-helpers-guide.php:56
+#: includes/class-helpers-guide.php:76
+msgid "Destinations Guide Settings"
+msgstr ""
+
+#: includes/class-helpers-guide.php:82
+msgid "Provide Destinations Guide Service"
+msgstr ""
+
+#: includes/class-helpers-guide.php:89
+msgid "Source"
+msgstr ""
+
+#: includes/class-helpers-guide.php:100
+msgid "A text file with a formatted list of destinations."
+msgstr ""
+
+#: includes/class-helpers-guide.php:101
+msgid "The source can be an URL or the full path of a local file your web server can access."
+msgstr ""
+
+#: includes/class-helpers-guide.php:102
+msgid "Destination name and teleport URL are separated by a pipe (|) character."
+msgstr ""
+
+#: includes/class-helpers-guide.php:103
+msgid "Lines containing only text are interpreted as categories."
+msgstr ""
+
+#: includes/class-helpers-guide.php:104
+msgid "Lines beginning with \"#\" or \"//\" are ignored."
+msgstr ""
+
+#: includes/class-helpers-guide.php:106
+msgid "The format is identical to the format used by the in-world object %s so the same source URL can be used for both."
+msgstr ""
+
+#: includes/class-helpers-guide.php:127
+msgid "Destinations Guide URL"
+msgstr ""
+
+#: includes/class-helpers-guide.php:176
+msgid "Destinations guide is a Viewer 3 feature, providing a window with places suggestions."
+msgstr ""
+
+#: includes/class-helpers-guide.php:177
+msgid "While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of must-see places, from your own grid or outside."
+msgstr ""
+
 #: includes/class-helpers-offline.php:46
 msgid "Offline Messages"
 msgstr ""
@@ -657,7 +738,7 @@ msgstr ""
 
 #: includes/class-settings.php:82
 #: legacy/profile.php:198
-#: legacy/profile.php:1039
+#: legacy/profile.php:1082
 msgid "OpenSimulator"
 msgstr ""
 
@@ -670,7 +751,7 @@ msgid "OpenSimulator Status"
 msgstr ""
 
 #: includes/class-settings.php:104
-#: legacy/functions.php:310
+#: legacy/functions.php:320
 msgid "Status"
 msgstr ""
 
@@ -679,7 +760,7 @@ msgid "Shortcodes"
 msgstr ""
 
 #: includes/class-settings.php:121
-#: legacy/admin/settings.php:261
+#: legacy/admin/settings.php:260
 msgid "Settings"
 msgstr ""
 
@@ -760,7 +841,7 @@ msgid "Hypergrid visitors"
 msgstr ""
 
 #: includes/class-settings.php:333
-#: legacy/functions.php:268
+#: legacy/functions.php:278
 msgid "Invalid Login URI"
 msgstr ""
 
@@ -888,7 +969,7 @@ msgid "Last Seen"
 msgstr ""
 
 #: legacy/admin/admin-init.php:96
-#: legacy/shortcodes.php:127
+#: legacy/shortcodes.php:130
 msgid "View profile"
 msgstr ""
 
@@ -1182,55 +1263,55 @@ msgstr ""
 msgid "A local Robust server has been found. Please check Login URI and Grid Name configuration."
 msgstr ""
 
-#: legacy/functions.php:223
-msgid "OpenSimulator settings page"
+#: legacy/functions.php:233
+msgid "settings page"
 msgstr ""
 
-#: legacy/functions.php:265
+#: legacy/functions.php:275
 msgid "Online"
 msgstr ""
 
-#: legacy/functions.php:265
+#: legacy/functions.php:275
 msgid "Offline"
 msgstr ""
 
-#: legacy/functions.php:311
+#: legacy/functions.php:321
 msgid "Members"
 msgstr ""
 
-#: legacy/functions.php:317
+#: legacy/functions.php:327
 msgid "Active members (30 days)"
 msgstr ""
 
-#: legacy/functions.php:324
+#: legacy/functions.php:334
 msgid "Members in world"
 msgstr ""
 
-#: legacy/functions.php:335
+#: legacy/functions.php:345
 msgid "Active users (30 days)"
 msgstr ""
 
-#: legacy/functions.php:341
+#: legacy/functions.php:351
 msgid "Total users in world"
 msgstr ""
 
-#: legacy/functions.php:349
+#: legacy/functions.php:359
 msgid "Regions"
 msgstr ""
 
-#: legacy/functions.php:355
+#: legacy/functions.php:365
 msgid "Total area"
 msgstr ""
 
-#: legacy/functions.php:512
+#: legacy/functions.php:522
 msgid "%s"
 msgstr ""
 
-#: legacy/functions.php:567
+#: legacy/functions.php:577
 msgid "Joined today"
 msgstr ""
 
-#: legacy/functions.php:569
+#: legacy/functions.php:579
 msgid "%s days old"
 msgstr ""
 
@@ -1484,36 +1565,37 @@ msgstr ""
 msgid "leave blank to leave unchanged"
 msgstr ""
 
-#: legacy/profile.php:818
+#: legacy/profile.php:820
+#: legacy/profile.php:825
 msgid "Create an avatar"
 msgstr ""
 
-#: legacy/profile.php:1049
+#: legacy/profile.php:1092
 msgid "Avatar First Name"
 msgstr ""
 
-#: legacy/profile.php:1055
+#: legacy/profile.php:1098
 msgid "Avatar Last Name"
 msgstr ""
 
-#: legacy/profile.php:1061
+#: legacy/profile.php:1104
 #: tmp/class-avatar.php:366
 msgid "Profile Picture"
 msgstr ""
 
-#: legacy/profile.php:1063
+#: legacy/profile.php:1106
 msgid "Must be set in the viewer."
 msgstr ""
 
-#: legacy/profile.php:1068
+#: legacy/profile.php:1111
 msgid "Web Profile URL"
 msgstr ""
 
-#: legacy/shortcodes.php:85
-msgid "Configure W4OS database "
+#: legacy/shortcodes.php:86
+msgid "Configure W4OS database on %s."
 msgstr ""
 
-#: legacy/shortcodes.php:126
+#: legacy/shortcodes.php:129
 msgid "Edit user"
 msgstr ""
 
@@ -1547,20 +1629,20 @@ msgstr[1] ""
 msgid "%s local users updated with avatar data"
 msgstr ""
 
-#: legacy/w4osdb.php:16
-msgid "ROBUST database is not configured. To finish configuration, go to "
+#: legacy/w4osdb.php:17
+msgid "ROBUST database is not configured. To finish configuration, go to %s."
 msgstr ""
 
-#: legacy/w4osdb.php:52
-msgid "Could not connect to the database server, please verify your credentials on "
+#: legacy/w4osdb.php:56
+msgid "Could not connect to the database server, please verify your credentials on %s."
 msgstr ""
 
-#: legacy/w4osdb.php:59
-msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
+#: legacy/w4osdb.php:66
+msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on %s."
 msgstr ""
 
-#: legacy/w4osdb.php:128
-msgid "Missing tables: %s. The ROBUST database is connected, but some required tables are missing. "
+#: legacy/w4osdb.php:136
+msgid "Missing tables: %1$s. The ROBUST database is connected, but some required tables are missing. Check database settings on %2$s."
 msgstr ""
 
 #: legacy/widgets.php:11
@@ -1578,7 +1660,7 @@ msgid "Avatar"
 msgstr ""
 
 #: legacy/woocommerce.php:99
-msgid "Your avatar: "
+msgid "Your avatar:"
 msgstr ""
 
 #: templates/content-configuration.php:2

@@ -1,6 +1,6 @@
 ## Changelog
 
-### Unreleased (2.7.1-dev)
+### Unreleased (2.7.1-dev-2)
 - new destinations guide (work in progress)
 - added bases for localization (work in progress)
 - added bases for localization
