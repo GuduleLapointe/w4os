@@ -48,6 +48,8 @@ $xmlrpc_server = xmlrpc_server_create();
 xmlrpc_server_register_method( $xmlrpc_server, 'dir_places_query', 'dir_places_query' );
 function dir_places_query( $method_name, $params, $app_data ) {
 	global $SearchDB;
+	error_log("params " . print_r($params, true));
+
 	$req = $params[0];
 
 	$flags       = $req['flags'];
@@ -93,19 +95,21 @@ function dir_places_query( $method_name, $params, $app_data ) {
 	}
 	$query = $SearchDB->prepareAndExecute(
 		'SELECT * FROM parcels
+		INNER JOIN ' . SEARCH_REGION_TABLE . ' AS r ON parcels.regionUUID = r.regionUUID
     WHERE ' . join( ' AND ', $terms ) . " ORDER BY :order LIMIT $query_start,101",
 		$values
 	);
 
 	$data = array();
 	while ( $row = $query->fetch( PDO::FETCH_ASSOC ) ) {
-		$data[] = array(
+
+		$data[] = array_merge($row, array(
 			'parcel_id' => $row['infouuid'],
 			'name'      => $row['parcelname'],
 			'for_sale'  => 'False',
 			'auction'   => 'False',
 			'dwell'     => $row['dwell'],
-		);
+		));
 	}
 
 	if ( empty( $data ) ) {

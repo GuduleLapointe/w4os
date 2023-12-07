@@ -141,13 +141,13 @@ function w4os_web_search( $atts = array() ) {
 		}
 		// 24 PG; 25 Mature; 26 Adult; default PG & Mature
 	}
-	error_log("atts "  . print_r($atts, true) . " req "  . print_r($req, true));
 
 	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
 	$req['sim_name']       = '';
 	// $req = array_merge($atts, $req);
 	$req['include_hypergrid'] = ! empty( $atts['include_hypergrid'] ) ? empty( $atts['include_hypergrid'] ) : 'false';
 	$req['include_landsales'] = ! empty( $atts['include_landsales'] ) ? 'true' : 'false';
+	$req['websearch'] = true;
 
 	$request = xmlrpc_encode_request( 'dir_places_query', $req );
 
@@ -213,9 +213,13 @@ function w4os_web_search_html( $atts = array(), $args = array() ) {
 			$content .= '<div class="places">';
 
 			foreach ( $places as $place ) {
-				// if ( empty($place['imageUUID']) || w4os_empty( $place['imageUUID'] ) ) {
-				// 	continue;
-				// }
+				$place = array_merge( array(
+					'imageUUID' => W4OS_NULL_KEY_IMG,
+					'regionname' => '',
+					'landingpoint' => '',
+					'gatekeeperURL' => '',
+				), $place );
+
 				if ( $i++ >= $max ) {
 					break;
 				}
