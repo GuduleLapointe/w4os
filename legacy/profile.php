@@ -815,8 +815,11 @@ function w4os_profile_display( $user, $args = array() ) {
 		// );
 		// return $content;
 	} else {
-		$content .= W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __( 'Create an avatar', 'w4os' ) );
-		// $content= w4os_avatar_creation_form ($user);
+		if(empty($args['mini'])) {
+			$content= w4os_avatar_creation_form ($user);
+		} else {
+			$content .= W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __( 'Create an avatar', 'w4os' ) );
+		}
 	}
 	if ( ! empty( $content ) ) {
 		$content = $before_title . $title . $after_title . $content;
