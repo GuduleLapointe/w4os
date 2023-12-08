@@ -342,6 +342,7 @@ add_action(
 					'name'            => __( 'Search Service', 'w4os' ),
 					'description'     => __( 'Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll.', 'w4os' ),
 					'third_party_url' => ( get_option( 'w4os_provide_search' ) ) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+					'recommended' => get_option( 'w4os_search_url') . '?gk=http://' . get_option( 'w4os_login_uri' ),
 					'os_config'       => array(
 						'OpenSim.ini' => array(
 							'[Search]' => array( 'SearchURL = %1$s' ),
@@ -363,6 +364,7 @@ add_action(
 				'message'   => array(
 					'name'            => __( 'Offline messages', 'w4os' ),
 					'description'     => __( 'Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os' ),
+					'recommended'     => get_option('w4os_offline_helper_uri'),
 					'os_config'       => array(
 						'Robust.HG.ini' => array( '[GridInfoService]' => array( 'message = %1$s' ) ),
 						'OpenSim.ini'   => array( '[Messaging]' => array( 'OfflineMessageURL = %1$s' ) ),

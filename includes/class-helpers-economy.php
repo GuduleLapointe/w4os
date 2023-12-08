@@ -22,6 +22,9 @@ class W4OS_Economy extends W4OS_Loader {
 	}
 
 	public function init() {
+		if ( empty( get_option( 'w4os_economy_slug' ) ) ) {
+			update_option( 'w4os_economy_slug', 'economy' );
+		}
 
 		$this->actions = array(
 			array(

@@ -24,7 +24,7 @@ class W4OS_Search extends W4OS_Loader {
 
 	public function __construct() {
 		$this->login_uri               = get_option( 'w4os_login_uri', 'yourgrid.org:8002' );
-		$this->helpers_internal        = str_replace( 'https:', 'http:', get_home_url() ) . '/helpers/';
+		$this->helpers_internal        = str_replace( 'https:', 'http:', get_home_url() ) . '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/';
 		$this->helpers_external        = 'http://2do.directory/helpers/';
 		$this->helpers                 = ( get_option( 'w4os_provide_search' ) ) ? $this->helpers_internal : $this->helpers_external;
 		$this->default_search_url      = $this->helpers . 'query.php';
@@ -137,11 +137,7 @@ class W4OS_Search extends W4OS_Loader {
 								'[Search]' => array(
 									';; Save your settings before copying the values below',
 									'Module'       => 'OpenSimSearch',
-									'SearchURL' => '"' . (
-										get_option( 'w4os_provide_search' )
-										? ( empty( get_option( 'w4os_search_url' ) ) ? $this->default_search_url : get_option( 'w4os_search_url' ) ) . '?gk=' . $this->gatekeeper
-										: 'http://2do.directory/helpers/query.php?gk=' . $this->gatekeeper
-									) . '"',
+									'SearchURL' => '"' . $this->helpers . 'query.php?gk=' . $this->gatekeeper . '"',
 									// '; SearchURL ' => '"http://example.org/query.php"',
 								),
 							),
@@ -236,20 +232,29 @@ class W4OS_Search extends W4OS_Loader {
 		) . '</li></ul>';
 	}
 
+	static function set_search_url() {
+		$provide = get_option ( 'w4os_provide_search', false );
+		if($provide) {
+			$search_url = get_home_url( null, '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/query.php' );
+			$register_url = get_home_url( null, '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/register.php' );
+			update_option( 'w4os_search_url', $search_url );
+			update_option( 'w4os_search_register', $register_url );
+		}
+	}
+
 	function sanitize_options() {
 		if ( empty( $_POST ) ) {
 			return;
 		}
 
 		if ( isset( $_POST['nonce_search-settings'] ) && wp_verify_nonce( $_POST['nonce_search-settings'], 'rwmb-save-search-settings' ) ) {
-			error_log( print_r( $_POST, true ) );
 			$provide = isset( $_POST['w4os_provide_search'] ) ? true : false;
 			update_option( 'w4os_provide_search', $provide );
 
-			update_option( 'w4os_search_url', isset( $_POST['w4os_search_url'] ) ? $_POST['w4os_search_url'] : null );
-			update_option( 'w4os_search_register', isset( $_POST['w4os_search_register'] ) ? $_POST['w4os_search_register'] : null );
 			update_option( 'w4os_hypevents_url', empty( $_POST['w4os_hypevents_url'] ) ? 'http://2do.directory/events/' : $_POST['w4os_hypevents_url'] );
+			W4OS_Search::set_search_url();
 			if ( $provide ) {
+
 				$use_default = isset( $_POST['w4os_search-db']['use_default'] );
 				update_option( 'w4os_search_use_default_db', $use_default );
 				if ( ! $use_default ) {
@@ -260,6 +265,9 @@ class W4OS_Search extends W4OS_Loader {
 					update_option( 'w4os_search_db_user', $credentials['user'] );
 					update_option( 'w4os_search_db_pass', $credentials['pass'] );
 				}
+			} else {
+				update_option( 'w4os_search_url', isset( $_POST['w4os_search_url'] ) ? $_POST['w4os_search_url'] : null );
+				update_option( 'w4os_search_register', isset( $_POST['w4os_search_register'] ) ? $_POST['w4os_search_register'] : null );
 			}
 		}
 	}
