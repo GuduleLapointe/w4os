@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.7.2
+- added permalink option for helpers slug
+
 ### 2.7.1
 - added clearer instructions for missing requirements on status page
 - fix web search output unnecessary closing tag
