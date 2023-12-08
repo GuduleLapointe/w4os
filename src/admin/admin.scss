@@ -145,6 +145,20 @@ table.gridstatus td:first-child,
   font-weight: bold;
 }
 
+.notice .warning-list {
+	list-style: none; /* Remove default list style */
+	padding-left: 1.5em; /* Adjust padding as needed */
+}
+
+.notice .warning-list li:before {
+	content: "\26A0"; /* Unicode for warning sign, you can replace it with your own icon */
+	color: #ff0000; /* Warning sign color, change as needed */
+	font-weight: bold; /* Optional: makes the warning sign bold */
+	display: inline-block; /* Needed for proper alignment */
+	width: 1.5em; /* Adjust the width as needed */
+	margin-left: -1.5em; /* Adjust margin to align the icon properly */
+}
+
 @media screen and (max-width: 480px) {
 	.w4os-table.shortcodes,
 	.w4os-table.shortcodes > tbody,
