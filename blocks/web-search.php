@@ -240,9 +240,9 @@ function w4os_web_search_html( $atts = array(), $args = array() ) {
 				);
 			}
 		}
+		$content .= '</div>';
 	}
 
-	$content .= '</div>';
 	return $content;
 }
 
