@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, stand
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.4.2
-Stable tag: 2.7
+Stable tag: 2.7.1
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -191,6 +191,10 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.7.1 =
+* added clearer instructions for missing requirements on status page
+* fix web search output unnecessary closing tag
 
 = 2.7 =
 * new web search block (experimental)

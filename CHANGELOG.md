@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.7.1
+- added clearer instructions for missing requirements on status page
+- fix web search output unnecessary closing tag
+
 ### 2.7
 - new web search block (experimental)
 - new destinations guide (experimental)
