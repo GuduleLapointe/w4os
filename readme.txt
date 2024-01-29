@@ -17,6 +17,11 @@ Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/).
 
 See Features and Roadmap sections for current and upcoming functionalties.
 
+- Installation:     INSTALLATION.md
+- Troubleshooting:  TROUBLESHOOTING.md
+- Changelog         CHANGELOG.md
+- Official website  https://w4os.org/
+
 = Features =
 
 - **Avatar creation**:
