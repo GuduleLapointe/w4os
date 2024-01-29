@@ -2,3 +2,11 @@
 //     @import "{{ site.theme }}";
 // Then using this theme with jekyll-remote-theme will work fine.
 @import "jekyll-theme-minimal";
+
+.wrapper {
+  width: 1080px;
+}
+
+section {
+  width: 780px;
+}
