@@ -16,9 +16,10 @@
     <div class="wrapper">
       <header>
         <h1><a href="{{ "/" | absolute_url }}">
-          <span style:display:hidden>{{ site.title | default: site.github.repository_name }}</span>
           {% if site.logo %}
-            <img src="{{site.logo | relative_url}}" alt="Logo" />
+            <img src="{{site.logo | relative_url}}" alt="{{ site.title | default: site.github.repository_name }}" />
+          {% else %}
+            {{ site.title | default: site.github.repository_name }}
           {% endif %}
         </a></h1>
 
