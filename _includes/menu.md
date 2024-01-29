@@ -1,0 +1,4 @@
+- [Installation](INSTALLATION.md)
+- [Troubleshooting](TROUBLESHOOTING.md)
+- [Changelog](CHANGELOG.md)
+- Official website  https://w4os.org/
