@@ -14,3 +14,4 @@ INSTALLATION.md
 /tmp/
 /src/
 .gitattributes
+_config.yaml
