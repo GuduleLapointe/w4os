@@ -119,7 +119,7 @@ See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.h
 
 == Roadmap ==
 
-See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
+See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
 
 = Medium term =
 
