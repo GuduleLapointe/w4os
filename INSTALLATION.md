@@ -4,7 +4,7 @@ Before installing and configure W4OS plugin, you must already have OpenSimulator
 
 ### OpenSimulator installation
 
-- *Please refer to [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.**
+Please check [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.
 
 - Choose MySQL storage
 - To allow default outfits on registration and web user profiles, you must enable user profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and [UserProfiles] sections)
@@ -12,7 +12,7 @@ Before installing and configure W4OS plugin, you must already have OpenSimulator
 
 ### WordPress installation
 
-- *Please refer to [WordPress](https://wordpress.org/) documentation to install and configure WordPress.**
+Please check [WordPress](https://wordpress.org/) documentation to install and configure WordPress.
 
 - Permalinks need to be enabled (set to any other choice than the default "Plain" setting)
 - PHP minimum version: 7.3
