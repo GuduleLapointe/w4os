@@ -15,3 +15,5 @@ INSTALLATION.md export-ignore
 /tmp/ export-ignore
 /src/ export-ignore
 .gitattributes export-ignore
+_config.yaml export-ignore
+_* export-ignore

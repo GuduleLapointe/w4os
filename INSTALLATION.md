@@ -4,7 +4,7 @@ Before installing and configure W4OS plugin, you must already have OpenSimulator
 
 ### OpenSimulator installation
 
-**Please refer to [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.**
+- *Please refer to [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.**
 
 - Choose MySQL storage
 - To allow default outfits on registration and web user profiles, you must enable user profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and [UserProfiles] sections)
@@ -12,7 +12,7 @@ Before installing and configure W4OS plugin, you must already have OpenSimulator
 
 ### WordPress installation
 
-**Please refer to [WordPress](https://wordpress.org/) documentation to install and configure WordPress.**
+- *Please refer to [WordPress](https://wordpress.org/) documentation to install and configure WordPress.**
 
 - Permalinks need to be enabled (set to any other choice than the default "Plain" setting)
 - PHP minimum version: 7.3
@@ -32,9 +32,9 @@ Note: if upgrading from a different distribution (e.a. switching from github to 
 4. Visit `OpenSimulator > Settings > Web assets server` and make sure the option is enabled. (You can disable it you have a third party web assets server up and running, and enter its full URL below)
 5. You should be able to register a new avatar from the website. You can customize your website with shortcodes or blocks, like Grid Info, Grid Status or Popular Places (see full list and descriptions in `OpenSimulator > Settings > Shortcodes`)
 
-**Several options of the plugin require the update of a related parameter in OpenSimulator itself, they are documented in the interface. Make sure to adjust the ini files accordingly and restart OpenSimulator for any change to take effect.**
+- *Several options of the plugin require the update of a related parameter in OpenSimulator itself, they are documented in the interface. Make sure to adjust the ini files accordingly and restart OpenSimulator for any change to take effect.**
 
-## Avatar models
+### Avatar models
 
 Models are displayed on new avatar registration form, to allow chosing an initial appearance other than Ruth. They are made by creating model avatar accounts and adjusting their appearance.
 
@@ -61,3 +61,8 @@ Model avatars can only be used for this purpose. **Under no circumstances** shou
   - Disconnect the model avatar after modifications, to make sure changes will be taken in account immediately
 
 The models will appear in new avatar registration form, with their profile picture.
+
+### Troubleshooting
+
+See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
+

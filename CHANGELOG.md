@@ -1,5 +1,8 @@
 ## Changelog
 
+### Unreleased (2.7.3-dev.1220)
+- updated INSTALLATION.md, link to githup pages in README
+
 ### 2.7.2
 - added permalink option for helpers slug
 
