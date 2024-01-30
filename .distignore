@@ -4,11 +4,7 @@
 .phpcfbignore
 package.json
 package-lock.json
-README.md
-CHANGELOG.md
 webpack.config.js
-README.md
-INSTALLATION.md
 /node_modules/
 /sources/
 /tmp/

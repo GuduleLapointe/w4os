@@ -61,8 +61,3 @@ Model avatars can only be used for this purpose. **Under no circumstances** shou
   - Disconnect the model avatar after modifications, to make sure changes will be taken in account immediately
 
 The models will appear in new avatar registration form, with their profile picture.
-
-### Troubleshooting
-
-See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
-

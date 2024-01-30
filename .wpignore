@@ -2,3 +2,6 @@ lib
 lib/package-updater.php
 lib/plugin-update-checker
 lib/wp-package-updater
+CHANGELOG.md
+INSTALLATION.md
+README.md

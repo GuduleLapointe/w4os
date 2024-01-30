@@ -113,7 +113,7 @@ Model avatars can only be used for this purpose. **Under no circumstances** shou
 
 The models will appear in new avatar registration form, with their profile picture.
 
-= Troubleshooting =
+== Troubleshooting ==
 
 See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
 
