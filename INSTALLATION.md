@@ -1,8 +1,8 @@
-# Installation
+## Installation
 
 Before installing and configure W4OS plugin, you must already have OpenSimulator up and running, as well as a functional WordPress website.
 
-## OpenSimulator installation
+### OpenSimulator installation
 
 **Please refer to [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.**
 
@@ -10,7 +10,7 @@ Before installing and configure W4OS plugin, you must already have OpenSimulator
 - To allow default outfits on registration and web user profiles, you must enable user profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and [UserProfiles] sections)
 - Start  the simulator, create the first (admin) avatar and a first region, and connect in-world to make sure the grid is working properly
 
-## WordPress installation
+### WordPress installation
 
 **Please refer to [WordPress](https://wordpress.org/) documentation to install and configure WordPress.**
 
@@ -18,7 +18,7 @@ Before installing and configure W4OS plugin, you must already have OpenSimulator
 - PHP minimum version: 7.3
 - The PHP modules curl, xml, xml-rpc and imagick are needed to allow full functionalty of the plugin (and they are also recommended for WordPress anyway). Without these plugins, some important functionalties will not be available.
 
-## Plugin installation and configuration
+### Plugin installation and configuration
 
 Note: if upgrading from a different distribution (e.a. switching from github to WordPress Plugin Directory), make sure you disabled the previous version before activating the new one.
 
