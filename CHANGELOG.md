@@ -1,6 +1,7 @@
 ## Changelog
 
-### 2.7.4
+### 2.7.5
+* tested up to WP 6.5
 
 ### 2.7.3
 - updated INSTALLATION.md, link to githup pages in README
