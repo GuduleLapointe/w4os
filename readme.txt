@@ -4,7 +4,7 @@ Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.5-RC2
+Tested up to: 6.5
 Stable tag: 2.7.4
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
