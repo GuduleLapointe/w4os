@@ -1,5 +1,7 @@
 ## Changelog
 
+### 2.7.4
+
 ### 2.7.3
 - updated INSTALLATION.md, link to githup pages in README
 - updated libraries
