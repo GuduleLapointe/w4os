@@ -5,11 +5,7 @@
 .phpcfbignore export-ignore
 package.json export-ignore
 package-lock.json export-ignore
-README.md export-ignore
-CHANGELOG.md export-ignore
 webpack.config.js export-ignore
-README.md export-ignore
-INSTALLATION.md export-ignore
 /node_modules/ export-ignore
 /sources/ export-ignore
 /tmp/ export-ignore
@@ -17,3 +13,4 @@ INSTALLATION.md export-ignore
 .gitattributes export-ignore
 _config.yaml export-ignore
 _* export-ignore
+/.gpt-po export-ignore

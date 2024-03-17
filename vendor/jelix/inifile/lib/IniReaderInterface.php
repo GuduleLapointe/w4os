@@ -2,7 +2,7 @@
 
 /**
  * @author     Laurent Jouanneau
- * @copyright  2016-2018 Laurent Jouanneau
+ * @copyright  2016-2024 Laurent Jouanneau
  *
  * @link       http://jelix.org
  * @licence    http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
@@ -15,6 +15,10 @@ namespace Jelix\IniFile;
  */
 interface IniReaderInterface
 {
+    /**
+     * @const support of comments starting with the hash sign `#`
+     */
+    const FORMAT_COMMENT_HASH = 4;
 
     /**
      * @return boolean true if there is no content

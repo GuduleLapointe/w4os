@@ -1,5 +1,16 @@
 Changelog
 
+3.4.0
+=====
+
+- `IniModifier::save()`: support of new flag `FORMAT_SPACE_AROUND_EQUAL` to add
+  spaces around the equal sign
+- new method `Utils::arrayToIniString()`
+- support of comments starting with `#`, with a new flag `FORMAT_COMMENT_HASH` on constructors
+- Fix an issue when given `''` as a section name to methods of `IniModifier`.
+- The library is compatible with PHP 8.2 and 8.3.
+
+
 3.3.2
 =====
 

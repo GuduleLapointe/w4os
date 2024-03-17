@@ -207,18 +207,7 @@ class Util
      */
     public static function write($array, $filename, $header = '', $chmod = null)
     {
-        $result = '';
-        foreach ($array as $k => $v) {
-            if (is_array($v)) {
-                $result .= '['.$k."]\n";
-                foreach ($v as $k2 => $v2) {
-                    $result .= self::_iniValue($k2, $v2);
-                }
-            } else {
-                // we put simple values at the beginning of the file.
-                $result = self::_iniValue($k, $v).$result;
-            }
-        }
+        $result = self::arrayToIniString($array);
 
         if ($f = @fopen($filename, 'wb')) {
             fwrite($f, $header.$result);
@@ -229,6 +218,31 @@ class Util
         } else {
             throw new IniException('Error while writing ini file '.$filename, 24);
         }
+    }
+
+    /**
+     * convert data to a content having an ini format
+     * the data array should follow the same structure returned by
+     * the read method (or parse_ini_file/parse_ini_string).
+     *
+     * @param array  $array    the content of an ini as an array
+     * @return string the ini content
+     */
+    public static function arrayToIniString(array $iniContent)
+    {
+        $result = '';
+        foreach ($iniContent as $k => $v) {
+            if (is_array($v)) {
+                $result .= '['.$k."]\n";
+                foreach ($v as $k2 => $v2) {
+                    $result .= self::_iniValue($k2, $v2);
+                }
+            } else {
+                // we put simple values at the beginning of the file.
+                $result = self::_iniValue($k, $v).$result;
+            }
+        }
+        return $result;
     }
 
     /**

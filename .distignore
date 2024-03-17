@@ -12,3 +12,4 @@ webpack.config.js
 .gitattributes
 _config.yaml
 _*
+/.gpt-po

@@ -1,7 +1,7 @@
-# w4os - OpenSimulator Web Interface (dev)
+# w4os - OpenSimulator Web Interface
 
-![Stable 2.7.2](https://badgen.net/badge/Stable/2.7.2/00aa00)
-![WordPress 5.3.0 - 6.4.2](https://badgen.net/badge/WordPress/5.3.0%20-%206.4.2/3858e9)
+![Stable 2.7.3](https://badgen.net/badge/Stable/2.7.3/00aa00)
+![WordPress 5.3.0 - 6.6-alpha-57847](https://badgen.net/badge/WordPress/5.3.0%20-%206.6-alpha-57847/3858e9)
 ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
 ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
 
@@ -45,9 +45,13 @@ See Features and Roadmap sections for current and upcoming functionalties.
 
 The free version from WordPress plugins directory and the [paid version](https://magiiic.com/wordpress/plugins/w4os/) are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
 
+## Troubleshooting
+
+See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
+
 ## Roadmap
 
-See (https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
+See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
 
 ### Medium term
 

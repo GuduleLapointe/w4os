@@ -2,7 +2,7 @@
 
 /**
  * @author     Laurent Jouanneau
- * @copyright  2008-2017 Laurent Jouanneau
+ * @copyright  2008-2024 Laurent Jouanneau
  *
  * @link       http://jelix.org
  * @licence    http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
@@ -68,14 +68,15 @@ class IniReader implements IniReaderInterface
      * load the given ini file.
      *
      * @param string $filename the file to load
+     * @param integer $format the format of the INI content. See IniReaderInterface::FORMAT_*
      */
-    public function __construct($filename)
+    public function __construct($filename, $format = 0)
     {
         if (!file_exists($filename) || !is_file($filename)) {
             throw new IniInvalidArgumentException("The file $filename does not exists");
         }
         $this->filename = $filename;
-        $this->parse(preg_split("/(\r\n|\n|\r)/", file_get_contents($filename)));
+        $this->parse(preg_split("/(\r\n|\n|\r)/", file_get_contents($filename)), $format);
     }
 
     public function isEmpty()
@@ -98,7 +99,7 @@ class IniReader implements IniReaderInterface
     /**
      * parsed the lines of the ini file.
      */
-    protected function parse($lines)
+    protected function parse($lines, $format = 0)
     {
         $this->content = array(0 => array());
         $currentSection = 0;
@@ -106,6 +107,8 @@ class IniReader implements IniReaderInterface
         $currentValue = null;
 
         $arrayContents = array();
+
+        $commentRegExp = $format & self::FORMAT_COMMENT_HASH ? '/^(\\s*[;#].*)$/':'/^(\\s*;.*)$/';
 
         foreach ($lines as $num => $line) {
             if ($multiline) {
@@ -143,7 +146,7 @@ class IniReader implements IniReaderInterface
                     }
                     $this->content[$currentSection][] = $currentValue;
                 }
-            } elseif (preg_match('/^(\\s*;.*)$/', $line, $m)) {
+            } elseif (preg_match($commentRegExp, $line, $m)) {
                 $this->content[$currentSection][] = array(self::TK_COMMENT, $m[1]);
             } elseif (preg_match('/^(\\s*\\[([^\\]]+)\\]\\s*)/ui', $line, $m)) {
                 if (strpos($m[2], ';')) {

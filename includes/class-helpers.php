@@ -36,23 +36,23 @@ class W4OS_Helpers extends W4OS_Loader {
 				'priority' => 9,
 			),
 			// array(
-			// 	'hook'     => 'template_include',
-			// 	'callback' => 'template_include',
+			// 'hook'     => 'template_include',
+			// 'callback' => 'template_include',
 			// ),
 		);
 
 		$this->filters = array(
 			// array(
-			// 	'hook'     => 'mb_settings_pages',
-			// 	'callback' => 'register_settings_pages',
+			// 'hook'     => 'mb_settings_pages',
+			// 'callback' => 'register_settings_pages',
 			// ),
 			// array(
-			// 	'hook'     => 'rwmb_meta_boxes',
-			// 	'callback' => 'register_settings_fields',
+			// 'hook'     => 'rwmb_meta_boxes',
+			// 'callback' => 'register_settings_fields',
 			// ),
 			// array(
-			// 	'hook'     => 'query_vars',
-			// 	'callback' => 'register_query_vars',
+			// 'hook'     => 'query_vars',
+			// 'callback' => 'register_query_vars',
 			// ),
 		);
 	}
@@ -63,13 +63,13 @@ class W4OS_Helpers extends W4OS_Loader {
 		}
 
 		// define(
-		// 	'W4OS_WEB_HELPERS_SERVER_URI',
-		// 	( get_option( 'w4os_provide_helpers_server' ) == 1 )
-		// 	? get_home_url( null, '/' . get_option( 'w4os_helpers_slug' ) . '/' )
-		// 	: esc_attr( get_option( 'w4os_external_helpers_server_uri' ) )
+		// 'W4OS_WEB_HELPERS_SERVER_URI',
+		// ( get_option( 'w4os_provide_helpers_server' ) == 1 )
+		// ? get_home_url( null, '/' . get_option( 'w4os_helpers_slug' ) . '/' )
+		// : esc_attr( get_option( 'w4os_external_helpers_server_uri' ) )
 		// );
 		// if ( get_option( 'w4os_provide_helpers_server' ) == 1 ) {
-		// 	update_option( 'w4os_internal_helpers_server_uri', W4OS_WEB_HELPERS_SERVER_URI );
+		// update_option( 'w4os_internal_helpers_server_uri', W4OS_WEB_HELPERS_SERVER_URI );
 		// }
 	}
 
@@ -79,16 +79,16 @@ class W4OS_Helpers extends W4OS_Loader {
 		}
 
 		// if ( isset( $_POST['nonce_helpers-server'] ) ) {
-		// 	$this->provide = isset( $_POST['w4os_provide'] ) ? $_POST['w4os_provide'] : false;
-		// 	if ( $this->provide != get_option( 'w4os_provide_asset_server' ) ) {
-		// 		update_option( 'w4os_flush_rewrite_rules', true );
-		// 	}
-		// 	update_option( 'w4os_provide_asset_server', $this->provide );
-		// 	$this->external_url = isset( $_POST['w4os_external_url'] ) ? $_POST['w4os_external_url'] : null;
-		// 	update_option( 'w4os_external_asset_server_uri', $this->external_url );
-		// 	$this->internal_url = trailingslashit( get_home_url( null, '/' . get_option( 'w4os_helpers_slug' ) ) );
-		// 	// update_option('w4os_internal_asset_server_uri', $this->internal_url );
-		// 	return;
+		// $this->provide = isset( $_POST['w4os_provide'] ) ? $_POST['w4os_provide'] : false;
+		// if ( $this->provide != get_option( 'w4os_provide_asset_server' ) ) {
+		// update_option( 'w4os_flush_rewrite_rules', true );
+		// }
+		// update_option( 'w4os_provide_asset_server', $this->provide );
+		// $this->external_url = isset( $_POST['w4os_external_url'] ) ? $_POST['w4os_external_url'] : null;
+		// update_option( 'w4os_external_asset_server_uri', $this->external_url );
+		// $this->internal_url = trailingslashit( get_home_url( null, '/' . get_option( 'w4os_helpers_slug' ) ) );
+		// update_option('w4os_internal_asset_server_uri', $this->internal_url );
+		// return;
 		// }
 		//
 		if ( isset( $_POST['w4os-permalinks-helpers-nonce'] ) ) {
@@ -146,10 +146,10 @@ class W4OS_Helpers extends W4OS_Loader {
 	}
 
 	// function template_include( $template ) {
-	// 	if ( empty( get_query_var( 'helpers_uuid' ) ) ) {
-	// 		return $template;
-	// 	}
-	// 	return W4OS_DIR . '/templates/helpers-render.php';
+	// if ( empty( get_query_var( 'helpers_uuid' ) ) ) {
+	// return $template;
+	// }
+	// return W4OS_DIR . '/templates/helpers-render.php';
 	// }
 }
 

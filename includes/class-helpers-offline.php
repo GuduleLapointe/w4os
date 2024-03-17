@@ -64,7 +64,7 @@ class W4OS_Offline extends W4OS_Loader {
 		$prefix = 'w4os_';
 
 		// $offline_url = ( ! empty( W4OS_GRID_INFO['message'] ) ) ? W4OS_GRID_INFO['message'] : $this->default_offline_url ;
-		$offline_url = get_option('w4os_offline_helper_uri');
+		$offline_url = get_option( 'w4os_offline_helper_uri' );
 		// $offline_url = $this->default_offline_url;
 
 		// $example_url = 'http://example.org/helpers/offline.php';
@@ -145,7 +145,7 @@ class W4OS_Offline extends W4OS_Loader {
 
 	static function set_offline_uri() {
 		$offline_provide = get_option( 'w4os_provide_offline_messages', false );
-		$offline_url = ( $offline_provide ) ? get_home_url( null, '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/offline.php' ) : null;
+		$offline_url     = ( $offline_provide ) ? get_home_url( null, '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/offline.php' ) : null;
 		update_option( 'w4os_offline_helper_uri', $offline_url );
 	}
 
@@ -157,10 +157,10 @@ class W4OS_Offline extends W4OS_Loader {
 		if ( isset( $_POST['nonce_offline-messages-settings'] ) && wp_verify_nonce( $_POST['nonce_offline-messages-settings'], 'rwmb-save-offline-messages-settings' ) ) {
 			$provide = isset( $_POST['w4os_provide_offline_messages'] ) ? true : false;
 			update_option( 'w4os_provide_offline_messages', $provide );
-			W4OS_Offline::set_offline_uri();
+			self::set_offline_uri();
 			// if ( $provide ) {
-			// 	update_option( 'w4os_offline_sender', isset( $_POST['w4os_offline_sender'] ) ? $_POST['w4os_offline_sender'] : null );
-			// 	update_option( 'w4os_offline_helper_uri', isset( $_POST['w4os_offline_helper_uri'] ) ? $_POST['w4os_offline_sender'] : $this->default_offline_url );
+			// update_option( 'w4os_offline_sender', isset( $_POST['w4os_offline_sender'] ) ? $_POST['w4os_offline_sender'] : null );
+			// update_option( 'w4os_offline_helper_uri', isset( $_POST['w4os_offline_helper_uri'] ) ? $_POST['w4os_offline_sender'] : $this->default_offline_url );
 			// }
 		}
 	}

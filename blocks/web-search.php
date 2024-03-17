@@ -129,9 +129,8 @@ function w4os_web_search( $atts = array() ) {
 	}
 
 	$req['query_start'] = 0;
-	$req['text']        = empty($atts['text']) ? '' : $atts['text'];
+	$req['text']        = empty( $atts['text'] ) ? '' : $atts['text'];
 	$req['flags']       = pow( 2, 12 );  // has_picture
-
 
 	if ( isset( $atts['rating'] ) ) {
 		if ( $atts['rating'] == 'pg' ) {
@@ -147,7 +146,7 @@ function w4os_web_search( $atts = array() ) {
 	// $req = array_merge($atts, $req);
 	$req['include_hypergrid'] = ! empty( $atts['include_hypergrid'] ) ? empty( $atts['include_hypergrid'] ) : 'false';
 	$req['include_landsales'] = ! empty( $atts['include_landsales'] ) ? 'true' : 'false';
-	$req['websearch'] = true;
+	$req['websearch']         = true;
 
 	$request = xmlrpc_encode_request( 'dir_places_query', $req );
 
@@ -188,8 +187,8 @@ function w4os_web_search_html( $atts = array(), $args = array() ) {
 
 	$content = ( empty( $title ) ) ? '' : $before_title . $title . $after_title;
 
-	$search_string = isset($_REQUEST['searchString']) ? sanitize_text_field(stripslashes($_REQUEST['searchString'])) : '';
-	$search_string_field = '<input type="text" name="searchString" placeholder="Search..." value="' . esc_attr($search_string) . '"/>';
+	$search_string       = isset( $_REQUEST['searchString'] ) ? sanitize_text_field( stripslashes( $_REQUEST['searchString'] ) ) : '';
+	$search_string_field = '<input type="text" name="searchString" placeholder="Search..." value="' . esc_attr( $search_string ) . '"/>';
 
 	$form_html = '<form action="" method="get">'
 	. $search_string_field
@@ -198,27 +197,30 @@ function w4os_web_search_html( $atts = array(), $args = array() ) {
 
 	$content .= $form_html;
 
-	if(empty($search_string)) {
-		$content .= '<p>' . __( 'Type a search key in the field', 'w4os') .'</p>';
+	if ( empty( $search_string ) ) {
+		$content .= '<p>' . __( 'Type a search key in the field', 'w4os' ) . '</p>';
 	} else {
 		$atts['text'] = $search_string;
 
 		$places = w4os_web_search( $atts );
 
 		if ( empty( $places ) ) {
-			$content .= __( 'No result', 'w4os');
+			$content .= __( 'No result', 'w4os' );
 		} else {
-			error_log("places " . print_r($places, true));
+			error_log( 'places ' . print_r( $places, true ) );
 			$i        = 0;
 			$content .= '<div class="places">';
 
 			foreach ( $places as $place ) {
-				$place = array_merge( array(
-					'imageUUID' => W4OS_NULL_KEY_IMG,
-					'regionname' => '',
-					'landingpoint' => '',
-					'gatekeeperURL' => '',
-				), $place );
+				$place = array_merge(
+					array(
+						'imageUUID'     => W4OS_NULL_KEY_IMG,
+						'regionname'    => '',
+						'landingpoint'  => '',
+						'gatekeeperURL' => '',
+					),
+					$place
+				);
 
 				if ( $i++ >= $max ) {
 					break;

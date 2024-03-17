@@ -12,10 +12,10 @@ function w4os_register_settings() {
 	$gatekeeperURL           = preg_match( '#https?://#', $login_uri ) ? $login_uri : 'http://' . $login_uri;
 
 	// if ( get_option( 'w4os_provide_search' ) || empty( get_option( 'w4os_search_url' ) ) ) {
-	// 	update_option( 'w4os_search_url', $default_search_url );
+	// update_option( 'w4os_search_url', $default_search_url );
 	// }
 	// if ( get_option( 'w4os_provide_search' ) || empty( get_option( 'w4os_search_register' ) ) ) {
-	// 	update_option( 'w4os_search_register', $default_search_register );
+	// update_option( 'w4os_search_register', $default_search_register );
 	// }
 
 	if ( ! w4os_option_exists( 'w4os_configuration_instructions' ) ) {

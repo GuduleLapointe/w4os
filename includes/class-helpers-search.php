@@ -136,7 +136,7 @@ class W4OS_Search extends W4OS_Loader {
 							'OpenSim.ini' => array(
 								'[Search]' => array(
 									';; Save your settings before copying the values below',
-									'Module'       => 'OpenSimSearch',
+									'Module'    => 'OpenSimSearch',
 									'SearchURL' => '"' . $this->helpers . 'query.php?gk=' . $this->gatekeeper . '"',
 									// '; SearchURL ' => '"http://example.org/query.php"',
 								),
@@ -233,9 +233,9 @@ class W4OS_Search extends W4OS_Loader {
 	}
 
 	static function set_search_url() {
-		$provide = get_option ( 'w4os_provide_search', false );
-		if($provide) {
-			$search_url = get_home_url( null, '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/query.php' );
+		$provide = get_option( 'w4os_provide_search', false );
+		if ( $provide ) {
+			$search_url   = get_home_url( null, '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/query.php' );
 			$register_url = get_home_url( null, '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/register.php' );
 			update_option( 'w4os_search_url', $search_url );
 			update_option( 'w4os_search_register', $register_url );
@@ -252,7 +252,7 @@ class W4OS_Search extends W4OS_Loader {
 			update_option( 'w4os_provide_search', $provide );
 
 			update_option( 'w4os_hypevents_url', empty( $_POST['w4os_hypevents_url'] ) ? 'http://2do.directory/events/' : $_POST['w4os_hypevents_url'] );
-			W4OS_Search::set_search_url();
+			self::set_search_url();
 			if ( $provide ) {
 
 				$use_default = isset( $_POST['w4os_search-db']['use_default'] );

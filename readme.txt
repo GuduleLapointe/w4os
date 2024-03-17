@@ -1,11 +1,11 @@
-=== w4os - OpenSimulator Web Interface (dev) ===
+=== w4os - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, metaverse, avatar, web interface, grids, standalone, hypergrid, 3D
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.4.2
-Stable tag: 2.7.2
+Tested up to: 6.5-RC2
+Stable tag: 2.7.3
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -199,8 +199,9 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 
 == Changelog ==
 
-= Unreleased (2.7.3-dev.1220) =
+= 2.7.3 =
 * updated INSTALLATION.md, link to githup pages in README
+* updated libraries
 
 = 2.7.2 =
 * added permalink option for helpers slug

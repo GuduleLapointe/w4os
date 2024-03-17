@@ -815,24 +815,24 @@ function w4os_profile_display( $user, $args = array() ) {
 		// );
 		// return $content;
 	} else {
-		if (!empty($args['mini'])) {
-		    // Display simple link when 'mini' argument is set
-		    $content .= W4OS::sprintf_safe('<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __('Create an avatar', 'w4os'));
+		if ( ! empty( $args['mini'] ) ) {
+			// Display simple link when 'mini' argument is set
+			$content .= W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __( 'Create an avatar', 'w4os' ) );
 		} else {
-		    // Display responsive form and hidden dialog
-		    $content .= '<div id="profilewrapper">';
-		    $content .= '<div id="profileform">' . w4os_avatar_creation_form($user) . '</div>';
-		    $content .= '<a href="#" id="profilelink" style="display: none;" onclick="openDialog(); return false;">' . __('Create an avatar', 'w4os') . '</a>';
-		    $content .= '</div>';
+			// Display responsive form and hidden dialog
+			$content .= '<div id="profilewrapper">';
+			$content .= '<div id="profileform">' . w4os_avatar_creation_form( $user ) . '</div>';
+			$content .= '<a href="#" id="profilelink" style="display: none;" onclick="openDialog(); return false;">' . __( 'Create an avatar', 'w4os' ) . '</a>';
+			$content .= '</div>';
 
-		    // Dialog HTML
-		    $content .= '<dialog id="modalDialog">';
-		    $content .= '<div id="dialogContent"></div>';
-		    $content .= '<button onclick="closeDialog()">Close</button>';
-		    $content .= '</dialog>';
+			// Dialog HTML
+			$content .= '<dialog id="modalDialog">';
+			$content .= '<div id="dialogContent"></div>';
+			$content .= '<button onclick="closeDialog()">Close</button>';
+			$content .= '</dialog>';
 
-		    // JavaScript for responsive behavior and dialog
-		    $content .= "
+			// JavaScript for responsive behavior and dialog
+			$content .= "
 		    <script>
 		    function checkSize() {
 		        var box = document.getElementById('profilewrapper');

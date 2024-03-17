@@ -21,6 +21,11 @@ interface IniModifierInterface extends IniReaderInterface
     const FORMAT_NO_QUOTES = 1;
 
     /**
+     * @const Indicate to add a space before and after the equal sign
+     */
+    const FORMAT_SPACE_AROUND_EQUAL = 2;
+
+    /**
      * modify an option in the ini file. If the option doesn't exist,
      * it is created.
      *

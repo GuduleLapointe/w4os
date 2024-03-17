@@ -2,7 +2,7 @@
 
 /**
  * @author     Laurent Jouanneau
- * @copyright  2008-2019 Laurent Jouanneau
+ * @copyright  2008-2024 Laurent Jouanneau
  *
  * @link       http://jelix.org
  * @licence    http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
@@ -30,16 +30,16 @@ class IniModifier extends IniReader implements IniModifierInterface
      * @param string $initialContent if the file does not exists, it takes the given content
      *                               as initial content.
      */
-    public function __construct($filename, $initialContent = '')
+    public function __construct($filename, $initialContent = '', $format = 0)
     {
         if (!$filename) {
             throw new IniInvalidArgumentException('Filename should not be empty');
         }
         $this->filename = $filename;
         if (file_exists($filename) && is_file($filename)) {
-            $this->parse(preg_split("/(\r\n|\n|\r)/", file_get_contents($filename)));
+            $this->parse(preg_split("/(\r\n|\n|\r)/", file_get_contents($filename)), $format);
         } elseif ($initialContent != '') {
-            $this->parse(preg_split("/(\r\n|\n|\r)/", $initialContent));
+            $this->parse(preg_split("/(\r\n|\n|\r)/", $initialContent), $format);
         }
         else {
             $this->content = array(0 => array());
@@ -60,7 +60,9 @@ class IniModifier extends IniReader implements IniModifierInterface
         if (!preg_match('/^[^\\[\\]]*$/', $name)) {
             throw new IniInvalidArgumentException("Invalid value name $name");
         }
-
+        if (!$section) {
+            $section = 0;
+        }
         if (is_array($value)) {
             if ($key !== null) {
                 throw new IniInvalidArgumentException('You cannot indicate a key for an array value');
@@ -221,6 +223,10 @@ class IniModifier extends IniReader implements IniModifierInterface
      */
     public function removeValue($name, $section = 0, $key = null, $removePreviousComment = true)
     {
+        if (!$section) {
+            $section = 0;
+        }
+
         if ($section === 0 && $name == '') {
             return;
         }
@@ -309,6 +315,10 @@ class IniModifier extends IniReader implements IniModifierInterface
      */
     public function removeSection($section = 0, $removePreviousComment = true)
     {
+        if (!$section) {
+            $section = 0;
+        }
+
         if ($section === 0 || !isset($this->content[$section])) {
             return;
         }
@@ -386,10 +396,17 @@ class IniModifier extends IniReader implements IniModifierInterface
         return $this->modified;
     }
 
+    /**
+     * @param integer $format a combination of IniModifierInterface::FORMAT_* flags
+     * @return string the content as INI format
+     */
     protected function generateIni($format)
     {
         $content = '';
         $lastToken = null;
+
+        $equal = $format & self::FORMAT_SPACE_AROUND_EQUAL?' = ':'=';
+
         foreach ($this->content as $sectionname => $section) {
             foreach ($section as $item) {
                 $lastToken = $item[0];
@@ -408,13 +425,13 @@ class IniModifier extends IniReader implements IniModifierInterface
                     $content .= $item[1]."\n";
                     break;
                   case self::TK_VALUE:
-                        $content .= $item[1].'='.$this->getIniValue($item[2], $format)."\n";
+                        $content .= $item[1].$equal.$this->getIniValue($item[2], $format)."\n";
                     break;
                   case self::TK_ARR_VALUE:
                       if (is_numeric($item[3])) {
-                          $content .= $item[1].'[]='.$this->getIniValue($item[2], $format)."\n";
+                          $content .= $item[1].'[]'.$equal.$this->getIniValue($item[2], $format)."\n";
                       } else {
-                          $content .= $item[1].'['.$item[3].']='.$this->getIniValue($item[2], $format)."\n";
+                          $content .= $item[1].'['.$item[3].']'.$equal.$this->getIniValue($item[2], $format)."\n";
                       }
 
                     break;

@@ -64,8 +64,8 @@ class W4OS_Loader {
 		);
 		$this->filters = array(
 			// array(
-			// 	'hook' => 'mod_rewrite_rules',
-			// 	'callback'=> 'mod_rewrite_rules_filter',
+			// 'hook' => 'mod_rewrite_rules',
+			// 'callback'=> 'mod_rewrite_rules_filter',
 			// ),
 		);
 
@@ -265,12 +265,12 @@ class W4OS_Loader {
 	 * Update .htaccess rewrite rules to optimize speed for helpers not relying on WP framework.
 	 */
 	// function mod_rewrite_rules_filter($rules) {
-	// 	$permalink_slug = 'guide';
-	// 	$new_rule = 'RewriteRule ^' . $permalink_slug . '(/.*)?$ ' . W4OS_DIR . '/helpers/guide.php [QSA,L]';
-	// 	// $rules = $new_rule . "\n" . $rules;
-	// 	// error_log("rules\n" . print_r($rules, true));
+	// $permalink_slug = 'guide';
+	// $new_rule = 'RewriteRule ^' . $permalink_slug . '(/.*)?$ ' . W4OS_DIR . '/helpers/guide.php [QSA,L]';
+	// $rules = $new_rule . "\n" . $rules;
+	// error_log("rules\n" . print_r($rules, true));
 	//
-	// 	return $rules;
+	// return $rules;
 	// }
 }
 
