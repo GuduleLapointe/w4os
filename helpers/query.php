@@ -52,7 +52,7 @@ function dir_places_query( $method_name, $params, $app_data ) {
 
 	$flags       = $req['flags'];
 	$text        = $req['text'];
-	$category    = isset($req['category']) ? $req['category'] : null;
+	$category    = isset( $req['category'] ) ? $req['category'] : null;
 	$query_start = $req['query_start'];
 	if ( ! is_int( $query_start ) ) {
 		$query_start = 0;
@@ -101,13 +101,16 @@ function dir_places_query( $method_name, $params, $app_data ) {
 	$data = array();
 	while ( $row = $query->fetch( PDO::FETCH_ASSOC ) ) {
 
-		$data[] = array_merge($row, array(
-			'parcel_id' => $row['infouuid'],
-			'name'      => $row['parcelname'],
-			'for_sale'  => 'False',
-			'auction'   => 'False',
-			'dwell'     => $row['dwell'],
-		));
+		$data[] = array_merge(
+			$row,
+			array(
+				'parcel_id' => $row['infouuid'],
+				'name'      => $row['parcelname'],
+				'for_sale'  => 'False',
+				'auction'   => 'False',
+				'dwell'     => $row['dwell'],
+			)
+		);
 	}
 
 	if ( empty( $data ) ) {

@@ -1,7 +1,11 @@
 ## Changelog
 
+### 2.7.6
+- fix eventsparser crashing (undefined varfiable $array)
+- (dev) get helpers as submodule instead of composer dependency
+
 ### 2.7.5
-* tested up to WP 6.5
+- tested up to WP 6.5
 
 ### 2.7.3
 - updated INSTALLATION.md, link to githup pages in README
