@@ -20,3 +20,6 @@ src/blocks/grid-status/index.js
 src/blocks/popular-places/editor.js
 src/blocks/popular-places/index.js
 src/blocks/popular-places/style.js
+src/blocks/web-search/editor.js
+src/blocks/web-search/index.js
+src/blocks/web-search/style.js
