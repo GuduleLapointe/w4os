@@ -1,6 +1,6 @@
 # OpenSimulator Helpers
 
-![Version 2.3.4](https://badgen.net/badge/Version/2.3.4/blue) ![Stable 2.3.4](https://badgen.net/badge/Stable/2.3.4/green) ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf) ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
+![Version 2.4.0](https://badgen.net/badge/Version/2.4.0/blue) ![Stable 2.4.0](https://badgen.net/badge/Stable/2.4.0/green) ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf) ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
 
 - Project URL: <https://github.com/magicoli/opensim-helpers>
 - Donate: <https://w4os.org/donate/>

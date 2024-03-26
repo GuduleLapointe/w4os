@@ -1,0 +1,10 @@
+bin/
+tools/
+composer.json
+composer.lock
+includes/config.php
+install-library.sh
+*-load.php
+*.example.php
+.git*
+.libignore

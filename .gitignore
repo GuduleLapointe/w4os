@@ -14,3 +14,12 @@ vendor/magicoli/opensim-rest-php/opensim-rest-cli.php
 vendor/magicoli/opensim-rest-php/src/
 .gpt-po/key*
 helpers/destinations
+helpers/bin/
+helpers/tools/
+helpers/composer.json
+helpers/composer.lock
+helpers/includes/*.example.php
+helpers/install-library.sh
+helpers/*-load.php
+helpers/.git*
+helpers/.libignore

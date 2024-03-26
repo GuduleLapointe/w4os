@@ -411,45 +411,50 @@ if ( ! function_exists( 'osdebug' ) ) {
 }
 
 function set_helpers_locale( $locale = null, $domain = 'messages' ) {
-	mb_internal_encoding('UTF-8');
+	mb_internal_encoding( 'UTF-8' );
 	$encoding = mb_internal_encoding();
 
-	if (isset($_GET["l"])) $locale = $_GET["l"];
-	$languages = array_filter(array_merge( array($locale), explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']) ));
+	if ( isset( $_GET['l'] ) ) {
+		$locale = $_GET['l'];
+	}
+	$languages = array_filter( array_merge( array( $locale ), explode( ',', $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) );
 
 	// $results = putenv("LC_ALL=$locale");
 	// if (!$results) {
-	// 	exit ('putenv failed');
+	// exit ('putenv failed');
 	// }
 
 	// $currentLocale = setlocale(LC_ALL, 0);
-	$user_locales = array_unique(array( $locale, $locale . ".$encoding", $locale . '.UTF-8', $locale . '.utf8', $locale, 0 ));
+	$user_locales = array_unique( array( $locale, $locale . ".$encoding", $locale . '.UTF-8', $locale . '.utf8', $locale, 0 ) );
 
-	$user_locales = array_map(function ($code) {
-		return preg_replace(
-			array('/;.*/', '/-/' ),
-			array ('', '_'),
-			$code
-		);
-	}, $languages);
+	$user_locales = array_map(
+		function ( $code ) {
+			return preg_replace(
+				array( '/;.*/', '/-/' ),
+				array( '', '_' ),
+				$code
+			);
+		},
+		$languages
+	);
 
 	// Generate variants with different encodings appended
 	$variants = array();
-	foreach ($user_locales as $lang) {
+	foreach ( $user_locales as $lang ) {
 		$variants[] = $lang;
 		$variants[] = "$lang.$encoding";
 		// $variants[] = "$lang.UTF-8";
 	}
 
-	$variants = array_unique($variants);
-	if ( ! setlocale(LC_ALL, $variants ) ) {
-		error_log ("setlocale() failed: none of  '" . join(', ', $variants) . "' does exist in this environment or setlocale() is not available on this platform");
-		setlocale(LC_ALL, 0 );
+	$variants = array_unique( $variants );
+	if ( ! setlocale( LC_ALL, $variants ) ) {
+		error_log( "setlocale() failed: none of  '" . join( ', ', $variants ) . "' does exist in this environment or setlocale() is not available on this platform" );
+		setlocale( LC_ALL, 0 );
 		return 0;
 	}
 
-	bindtextdomain($domain, "./locales");
-	textdomain($domain);
+	bindtextdomain( $domain, './locales' );
+	textdomain( $domain );
 }
 
 define( 'NULL_KEY', '00000000-0000-0000-0000-000000000000' );

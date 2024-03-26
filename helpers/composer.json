@@ -1,0 +1,18 @@
+{
+    "name": "magicoli/opensim-helpers",
+    "description": "Helpers needed to enable common functionalties like search, currency, events in OpenSimulator grids.",
+    "type": "library",
+    "license": "AGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Gudule Lapointe",
+            "email": "gudule@speculoos.world"
+        }
+    ],
+    "require-dev": {
+        "magicoli/php-bump-library": "^1.0"
+    },
+    "scripts": {
+      "bump-version": "vendor/magicoli/php-bump-library/vendor/bin/robo --load-from=vendor/magicoli/php-bump-library/RoboFile.php bump:version"
+    }
+}
