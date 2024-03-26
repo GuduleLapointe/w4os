@@ -54,7 +54,7 @@ function getEventCategory( $values ) {
 		return 0; // Undefined
 	}
 	if ( ! is_array( $values ) ) {
-		$values = $array( $values );
+		$values = array( $values );
 	}
 	foreach ( $values as $value ) {
 		if ( is_int( $value ) ) {
