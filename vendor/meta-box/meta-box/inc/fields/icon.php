@@ -156,14 +156,12 @@ class RWMB_Icon_Field extends RWMB_Select_Advanced_Field {
 			return $icons;
 		}
 
-		// JSON file: "icon-class": { "label": "Label", "svg": "<svg...>" }
+		// JSON file: "icon-class": { "label": "Label", "svg": "<svg...>" } or from `icon_dir`.
 		if ( is_array( $icon ) ) {
-			$label = empty( $icon['label'] ) ? $key : $icon['label'];
-			$svg   = empty( $icon['svg'] ) ? '' : $icon['svg'];
 			return [
-				'value' => $key,
-				'label' => $label,
-				'svg'   => $svg,
+				'value' => $icon['value'] ?? $key,
+				'label' => $icon['label'] ?? $key,
+				'svg'   => $icon['svg'] ?? '',
 			];
 		}
 
@@ -264,7 +262,7 @@ class RWMB_Icon_Field extends RWMB_Select_Advanced_Field {
 	 *
 	 * @return string
 	 */
-	public static function format_value( $field, $value, $args, $post_id ) {
+	public static function format_single_value( $field, $value, $args, $post_id ) {
 		// SVG from file.
 		if ( $field['icon_dir'] ) {
 			return self::get_svg( $field, $value );
@@ -285,6 +283,7 @@ class RWMB_Icon_Field extends RWMB_Select_Advanced_Field {
 		self::enqueue_icon_font_style( $field );
 		return sprintf( '<span class="%s"></span>', $value );
 	}
+
 	private static function url_to_path( string $url ): string {
 		return str_starts_with( $url, home_url( '/' ) ) ? str_replace( home_url( '/' ), trailingslashit( ABSPATH ), $url ) : '';
 	}
