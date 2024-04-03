@@ -13,3 +13,4 @@ webpack.config.js
 _config.yaml
 _*
 /.gpt-po
+Gemfile
