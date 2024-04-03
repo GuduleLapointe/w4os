@@ -1,17 +1,17 @@
-# Copyright (C) 2023 Speculoos World
+# Copyright (C) 2024 Speculoos World
 # This file is distributed under the AGPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: w4os - OpenSimulator Web Interface2.7.1-dev-2\n"
+"Project-Id-Version: w4os - OpenSimulator Web Interface 2.7.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-07T15:22:09+00:00\n"
+"POT-Creation-Date: 2024-04-03T18:54:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 
 #. Plugin Name of the plugin
 msgid "w4os - OpenSimulator Web Interface"
@@ -126,18 +126,22 @@ msgstr ""
 #: blocks/grid-info.php:223
 #: blocks/grid-status.php:175
 #: blocks/popular-places.php:260
+#: blocks/web-search.php:284
 #: blocks/avatar-profile/avatar-profile.js:1
 #: blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
 #: blocks/popular-places/popular-places.js:1
+#: blocks/web-search/web-search.js:1
 #: src/blocks/avatar-profile/editor.js:68
 #: src/blocks/grid-info/editor.js:58
 #: src/blocks/grid-status/editor.js:58
 #: src/blocks/popular-places/editor.js:81
+#: src/blocks/web-search/editor.js:81
 #: blocks/avatar-profile/avatar-profile.js:68
 #: blocks/grid-info/grid-info.js:58
 #: blocks/grid-status/grid-status.js:58
 #: blocks/popular-places/popular-places.js:81
+#: blocks/web-search/web-search.js:81
 msgid "Title"
 msgstr ""
 
@@ -154,18 +158,22 @@ msgstr ""
 #: blocks/grid-info.php:231
 #: blocks/grid-status.php:183
 #: blocks/popular-places.php:268
+#: blocks/web-search.php:292
 #: blocks/avatar-profile/avatar-profile.js:1
 #: blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
 #: blocks/popular-places/popular-places.js:1
+#: blocks/web-search/web-search.js:1
 #: src/blocks/avatar-profile/editor.js:76
 #: src/blocks/grid-info/editor.js:66
 #: src/blocks/grid-status/editor.js:66
 #: src/blocks/popular-places/editor.js:89
+#: src/blocks/web-search/editor.js:89
 #: blocks/avatar-profile/avatar-profile.js:76
 #: blocks/grid-info/grid-info.js:66
 #: blocks/grid-status/grid-status.js:66
 #: blocks/popular-places/popular-places.js:89
+#: blocks/web-search/web-search.js:89
 msgid "Title Level"
 msgstr ""
 
@@ -173,6 +181,7 @@ msgstr ""
 #: blocks/grid-info.php:233
 #: blocks/grid-status.php:185
 #: blocks/popular-places.php:270
+#: blocks/web-search.php:294
 msgid "Select the HTML heading level for the title."
 msgstr ""
 
@@ -186,12 +195,16 @@ msgstr ""
 #: blocks/avatar-profile.php:254
 #: blocks/popular-places.php:297
 #: blocks/popular-places.php:309
+#: blocks/web-search.php:321
+#: blocks/web-search.php:333
 msgid "Yes"
 msgstr ""
 
 #: blocks/avatar-profile.php:255
 #: blocks/popular-places.php:296
 #: blocks/popular-places.php:308
+#: blocks/web-search.php:320
+#: blocks/web-search.php:332
 msgid "No"
 msgstr ""
 
@@ -241,6 +254,7 @@ msgstr ""
 
 #: blocks/grid-status.php:142
 #: blocks/popular-places.php:192
+#: blocks/web-search.php:208
 msgid "No result"
 msgstr ""
 
@@ -272,73 +286,109 @@ msgid "Enter the title for the Popular Places module."
 msgstr ""
 
 #: blocks/popular-places.php:285
+#: blocks/web-search.php:309
 #: blocks/popular-places/popular-places.js:1
+#: blocks/web-search/web-search.js:1
 #: src/blocks/popular-places/editor.js:106
+#: src/blocks/web-search/editor.js:106
 #: blocks/popular-places/popular-places.js:106
+#: blocks/web-search/web-search.js:106
 msgid "Max Results"
 msgstr ""
 
 #: blocks/popular-places.php:287
+#: blocks/web-search.php:311
 msgid "Enter the maximum number of results to display."
 msgstr ""
 
 #: blocks/popular-places.php:292
+#: blocks/web-search.php:316
 #: blocks/popular-places/popular-places.js:1
+#: blocks/web-search/web-search.js:1
 #: src/blocks/popular-places/editor.js:115
+#: src/blocks/web-search/editor.js:115
 #: blocks/popular-places/popular-places.js:115
+#: blocks/web-search/web-search.js:115
 msgid "Include Hypergrid"
 msgstr ""
 
 #: blocks/popular-places.php:294
+#: blocks/web-search.php:318
 msgid "Enable to restrict results to the grid."
 msgstr ""
 
 #: blocks/popular-places.php:304
+#: blocks/web-search.php:328
 #: blocks/popular-places/popular-places.js:1
+#: blocks/web-search/web-search.js:1
 #: src/blocks/popular-places/editor.js:123
+#: src/blocks/web-search/editor.js:123
 #: blocks/popular-places/popular-places.js:123
+#: blocks/web-search/web-search.js:123
 msgid "Include Land for Sale"
 msgstr ""
 
 #: blocks/popular-places.php:306
+#: blocks/web-search.php:330
 msgid "Enable to include land for sale in results."
 msgstr ""
 
-#: helpers/guide.php:98
-#: helpers/guide.php:138
+#: blocks/web-search.php:106
+#: blocks/web-search.php:288
+#: legacy/admin/admin-init.php:354
+msgid "Web Search"
+msgstr ""
+
+#: blocks/web-search.php:201
+msgid "Type a search key in the field"
+msgstr ""
+
+#: blocks/web-search.php:259
+#: blocks/web-search/web-search.js:1
+#: src/blocks/web-search/editor.js:14
+#: blocks/web-search/web-search.js:14
+msgid "OpenSimulator Web Search"
+msgstr ""
+
+#: blocks/web-search.php:286
+msgid "Enter the title for the Web Search module."
+msgstr ""
+
+#: helpers/guide.php:99
+#: helpers/guide.php:139
 #: includes/class-helpers-guide.php:55
 msgid "Destinations Guide"
 msgstr ""
 
-#: helpers/guide.php:139
-#: helpers/guide.php:164
+#: helpers/guide.php:140
+#: helpers/guide.php:165
 msgid "This is a work in progress, please be indulgent."
 msgstr ""
 
 #. Translators: %s will be replaced with the number of destinations
-#: helpers/guide.php:149
+#: helpers/guide.php:150
 msgid "%s destinations"
 msgstr ""
 
-#: helpers/guide.php:162
+#: helpers/guide.php:163
 msgid "Back to categories"
 msgstr ""
 
-#: helpers/guide.php:178
+#: helpers/guide.php:179
 msgid "%s people"
 msgstr ""
 
-#: helpers/guide.php:181
+#: helpers/guide.php:182
 msgid "traffic %s"
 msgstr ""
 
-#: helpers/guide.php:192
+#: helpers/guide.php:193
 msgid "The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them venture forth to curate a grand tapestry of remarkable places for your exploration!"
 msgstr ""
 
 #: includes/class-avatar-model.php:62
 #: includes/class-avatar-model.php:80
-#: legacy/admin/status-page.php:58
+#: legacy/admin/status-page.php:92
 msgid "Avatar Models"
 msgstr ""
 
@@ -459,113 +509,113 @@ msgstr ""
 msgid "Assets base"
 msgstr ""
 
-#: includes/class-helpers-economy.php:51
-#: legacy/admin/admin-init.php:411
+#: includes/class-helpers-economy.php:54
+#: legacy/admin/admin-init.php:413
 msgid "Economy"
 msgstr ""
 
-#: includes/class-helpers-economy.php:52
-#: includes/class-helpers-economy.php:76
+#: includes/class-helpers-economy.php:55
+#: includes/class-helpers-economy.php:79
 msgid "Economy Settings"
 msgstr ""
 
-#: includes/class-helpers-economy.php:82
+#: includes/class-helpers-economy.php:85
 msgid "Provide Economy Helper"
 msgstr ""
 
-#: includes/class-helpers-economy.php:91
+#: includes/class-helpers-economy.php:94
 msgid "Economy Helper URI"
 msgstr ""
 
-#: includes/class-helpers-economy.php:104
+#: includes/class-helpers-economy.php:107
 msgid "The URL must be set in Robust configuration."
 msgstr ""
 
-#: includes/class-helpers-economy.php:119
+#: includes/class-helpers-economy.php:122
 msgid "Economy Database"
 msgstr ""
 
-#: includes/class-helpers-economy.php:138
+#: includes/class-helpers-economy.php:141
 msgid "Set the same credentials here and in MoneyServer.ini"
 msgstr ""
 
-#: includes/class-helpers-economy.php:153
+#: includes/class-helpers-economy.php:156
 msgid "Currency Provider"
 msgstr ""
 
-#: includes/class-helpers-economy.php:165
+#: includes/class-helpers-economy.php:168
 msgid "Generic MoneyServer, for fake money or alternate providers."
 msgstr ""
 
-#: includes/class-helpers-economy.php:170
+#: includes/class-helpers-economy.php:173
 msgid "Currency Conversion Rate"
 msgstr ""
 
-#: includes/class-helpers-economy.php:173
+#: includes/class-helpers-economy.php:176
 msgid "Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent per money unit)."
 msgstr ""
 
-#: includes/class-helpers-economy.php:188
+#: includes/class-helpers-economy.php:191
 msgid "Gloebit Configuration"
 msgstr ""
 
-#: includes/class-helpers-economy.php:194
+#: includes/class-helpers-economy.php:197
 msgid "Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator."
 msgstr ""
 
-#: includes/class-helpers-economy.php:196
+#: includes/class-helpers-economy.php:199
 msgid "For Linux, see %s to avoid certificate-related errors."
 msgstr ""
 
-#: includes/class-helpers-economy.php:200
+#: includes/class-helpers-economy.php:203
 msgid "Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator."
 msgstr ""
 
-#: includes/class-helpers-economy.php:204
+#: includes/class-helpers-economy.php:207
 msgid "Add Gloebit configuration in OpenSim.ini."
 msgstr ""
 
-#: includes/class-helpers-economy.php:205
+#: includes/class-helpers-economy.php:208
 msgid "Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll)."
 msgstr ""
 
-#: includes/class-helpers-economy.php:244
+#: includes/class-helpers-economy.php:247
 msgid "Money Script Access Key"
 msgstr ""
 
-#: includes/class-helpers-economy.php:254
+#: includes/class-helpers-economy.php:257
 msgid "Choose a unique access key and set it in MoneyServer.ini"
 msgstr ""
 
-#: includes/class-helpers-economy.php:267
+#: includes/class-helpers-economy.php:270
 msgid "Podex Options"
 msgstr ""
 
-#: includes/class-helpers-economy.php:277
+#: includes/class-helpers-economy.php:280
 msgid "Podex Redirect Message"
 msgstr ""
 
-#: includes/class-helpers-economy.php:281
+#: includes/class-helpers-economy.php:284
 msgid "Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange area."
 msgstr ""
 
-#: includes/class-helpers-economy.php:284
+#: includes/class-helpers-economy.php:287
 msgid "Exchange Teleport URL"
 msgstr ""
 
-#: includes/class-helpers-economy.php:315
+#: includes/class-helpers-economy.php:318
 msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
 msgstr ""
 
-#: includes/class-helpers-economy.php:316
+#: includes/class-helpers-economy.php:319
 msgid "Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, land and object sales, payments..."
 msgstr ""
 
-#: includes/class-helpers-economy.php:317
+#: includes/class-helpers-economy.php:320
 msgid "This plugin only provides the web helpers required by the money server module. A third-party module must be installed and configured on the simulator, for example:"
 msgstr ""
 
-#: includes/class-helpers-economy.php:327
+#: includes/class-helpers-economy.php:330
 msgid "Ready to use binaries and example config files can be downloaded here:"
 msgstr ""
 
@@ -618,40 +668,40 @@ msgstr ""
 msgid "While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of must-see places, from your own grid or outside."
 msgstr ""
 
-#: includes/class-helpers-offline.php:46
+#: includes/class-helpers-offline.php:48
 msgid "Offline Messages"
 msgstr ""
 
-#: includes/class-helpers-offline.php:47
-#: includes/class-helpers-offline.php:71
+#: includes/class-helpers-offline.php:49
+#: includes/class-helpers-offline.php:75
 msgid "Offline Messages Settings"
 msgstr ""
 
-#: includes/class-helpers-offline.php:77
+#: includes/class-helpers-offline.php:81
 msgid "Provide Offline Messages Service"
 msgstr ""
 
-#: includes/class-helpers-offline.php:86
+#: includes/class-helpers-offline.php:90
 msgid "Honor \"Email me IMs when I'm offline\" viewer option."
 msgstr ""
 
-#: includes/class-helpers-offline.php:87
+#: includes/class-helpers-offline.php:91
 msgid "OpenSimulator core offline messages module delivers messages sent to an offline user when they come back online but don't handle e-mail forwarding option available in the viewer."
 msgstr ""
 
-#: includes/class-helpers-offline.php:92
+#: includes/class-helpers-offline.php:96
 msgid "Sender e-mail address"
 msgstr ""
 
-#: includes/class-helpers-offline.php:103
+#: includes/class-helpers-offline.php:107
 msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
 msgstr ""
 
-#: includes/class-helpers-offline.php:106
+#: includes/class-helpers-offline.php:110
 msgid "Offline Messages Helper"
 msgstr ""
 
-#: includes/class-helpers-offline.php:119
+#: includes/class-helpers-offline.php:123
 msgid "Set the URL in Robust and OpenSimulator configurations."
 msgstr ""
 
@@ -736,6 +786,10 @@ msgstr ""
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr ""
 
+#: includes/class-helpers.php:121
+msgid "Helpers base"
+msgstr ""
+
 #: includes/class-settings.php:82
 #: legacy/profile.php:198
 #: legacy/profile.php:1082
@@ -751,7 +805,7 @@ msgid "OpenSimulator Status"
 msgstr ""
 
 #: includes/class-settings.php:104
-#: legacy/functions.php:320
+#: legacy/functions.php:324
 msgid "Status"
 msgstr ""
 
@@ -841,7 +895,7 @@ msgid "Hypergrid visitors"
 msgstr ""
 
 #: includes/class-settings.php:333
-#: legacy/functions.php:278
+#: legacy/functions.php:282
 msgid "Invalid Login URI"
 msgstr ""
 
@@ -1054,63 +1108,59 @@ msgstr ""
 msgid "Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
 msgstr ""
 
-#: legacy/admin/admin-init.php:353
-msgid "Web Search"
-msgstr ""
-
-#: legacy/admin/admin-init.php:354
+#: legacy/admin/admin-init.php:355
 msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
 msgstr ""
 
-#: legacy/admin/admin-init.php:364
+#: legacy/admin/admin-init.php:365
 msgid "Offline messages"
 msgstr ""
 
-#: legacy/admin/admin-init.php:365
+#: legacy/admin/admin-init.php:366
 msgid "Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user."
 msgstr ""
 
-#: legacy/admin/admin-init.php:373
+#: legacy/admin/admin-init.php:375
 msgid "Splash"
 msgstr ""
 
-#: legacy/admin/admin-init.php:374
+#: legacy/admin/admin-init.php:376
 msgid "The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended."
 msgstr ""
 
-#: legacy/admin/admin-init.php:399
+#: legacy/admin/admin-init.php:401
 msgid "Registration page"
 msgstr ""
 
-#: legacy/admin/admin-init.php:400
+#: legacy/admin/admin-init.php:402
 msgid "Link to the user registration."
 msgstr ""
 
-#: legacy/admin/admin-init.php:405
+#: legacy/admin/admin-init.php:407
 msgid "Password revovery"
 msgstr ""
 
-#: legacy/admin/admin-init.php:406
+#: legacy/admin/admin-init.php:408
 msgid "Link to lost password page."
 msgstr ""
 
-#: legacy/admin/admin-init.php:412
+#: legacy/admin/admin-init.php:414
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
 msgstr ""
 
-#: legacy/admin/admin-init.php:418
+#: legacy/admin/admin-init.php:420
 msgid "About this grid"
 msgstr ""
 
-#: legacy/admin/admin-init.php:419
+#: legacy/admin/admin-init.php:421
 msgid "Detailed info page on your website, via a link displayed on the viewer login page."
 msgstr ""
 
-#: legacy/admin/admin-init.php:423
+#: legacy/admin/admin-init.php:425
 msgid "Help"
 msgstr ""
 
-#: legacy/admin/admin-init.php:424
+#: legacy/admin/admin-init.php:426
 msgid "Link to a help page on your website."
 msgstr ""
 
@@ -1141,117 +1191,117 @@ msgstr ""
 msgid "Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar registration form, with their in-world profile picture."
 msgstr ""
 
-#: legacy/admin/status-page.php:16
-msgid "PHP xml-rpc is required but is not installed."
+#: legacy/admin/status-page.php:14
+msgid "%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support resources for specific instructions."
 msgstr ""
 
-#: legacy/admin/status-page.php:24
+#: legacy/admin/status-page.php:39
+msgid "Permalinks are not enabled. Choose any permalink structure other than 'Plain' in the [permalink settings page].</a>"
+msgstr ""
+
+#: legacy/admin/status-page.php:49
+msgid "Requirements not met for w4os plugin"
+msgstr ""
+
+#: legacy/admin/status-page.php:58
 msgid "Users"
 msgstr ""
 
-#: legacy/admin/status-page.php:29
+#: legacy/admin/status-page.php:63
 msgid "Total"
 msgstr ""
 
-#: legacy/admin/status-page.php:33
+#: legacy/admin/status-page.php:67
 msgid "WP only"
 msgstr ""
 
-#: legacy/admin/status-page.php:36
+#: legacy/admin/status-page.php:70
 msgid "Sync"
 msgstr ""
 
-#: legacy/admin/status-page.php:40
+#: legacy/admin/status-page.php:74
 msgid "Grid only"
 msgstr ""
 
-#: legacy/admin/status-page.php:46
+#: legacy/admin/status-page.php:80
 msgid "Grid accounts"
 msgstr ""
 
-#: legacy/admin/status-page.php:53
+#: legacy/admin/status-page.php:87
 msgid "Linked WordPress accounts"
 msgstr ""
 
-#: legacy/admin/status-page.php:67
+#: legacy/admin/status-page.php:101
 msgid "Other service accounts"
 msgstr ""
 
-#: legacy/admin/status-page.php:84
+#: legacy/admin/status-page.php:118
 msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
 msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
 msgstr[0] ""
 msgstr[1] ""
 
-#: legacy/admin/status-page.php:95
+#: legacy/admin/status-page.php:129
 msgid "%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference."
 msgid_plural "%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference."
 msgstr[0] ""
 msgstr[1] ""
 
-#: legacy/admin/status-page.php:106
+#: legacy/admin/status-page.php:140
 msgid "%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks."
 msgid_plural "%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks."
 msgstr[0] ""
 msgstr[1] ""
 
-#: legacy/admin/status-page.php:111
+#: legacy/admin/status-page.php:145
 msgid "Real accounts need a unique email address for W4OS to function properly."
 msgstr ""
 
-#: legacy/admin/status-page.php:123
+#: legacy/admin/status-page.php:157
 msgid "Synchronize users now"
 msgstr ""
 
-#: legacy/admin/status-page.php:125
+#: legacy/admin/status-page.php:159
 msgid "Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from the grid administration console."
 msgstr ""
 
-#: legacy/admin/status-page.php:150
-msgid "Missing PHP modules"
-msgstr ""
-
-#: legacy/admin/status-page.php:152
-msgid "These modules were not found: %s. Install them to get the most of this plugin."
-msgstr ""
-
-#: legacy/admin/status-page.php:160
+#: legacy/admin/status-page.php:173
 msgid "OpenSimulator pages"
 msgstr ""
 
-#: legacy/admin/status-page.php:162
+#: legacy/admin/status-page.php:175
 msgid "The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file."
 msgstr ""
 
-#: legacy/admin/status-page.php:172
+#: legacy/admin/status-page.php:185
 msgid "Grid not running, start Robust server or %1$scheck OpenSimulator settings%2$s."
 msgstr ""
 
-#: legacy/admin/status-page.php:196
+#: legacy/admin/status-page.php:209
 msgid "Check pages now"
 msgstr ""
 
-#: legacy/admin/status-page.php:200
+#: legacy/admin/status-page.php:213
 msgid "Last checked %s ago."
 msgstr ""
 
-#: legacy/admin/status-page.php:201
+#: legacy/admin/status-page.php:214
 msgid "OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status."
 msgstr ""
 
-#: legacy/admin/status-page.php:222
+#: legacy/admin/status-page.php:235
 msgid "Should be %s"
 msgstr ""
 
-#: legacy/admin/status-page.php:228
+#: legacy/admin/status-page.php:241
 msgid "This service requires a separate web application."
 msgstr ""
 
-#: legacy/admin/status-page.php:232
+#: legacy/admin/status-page.php:245
 msgid "Try %s"
 msgstr ""
 
-#: legacy/admin/status-page.php:261
+#: legacy/admin/status-page.php:274
 msgid "Create %s page"
 msgstr ""
 
@@ -1263,55 +1313,55 @@ msgstr ""
 msgid "A local Robust server has been found. Please check Login URI and Grid Name configuration."
 msgstr ""
 
-#: legacy/functions.php:233
+#: legacy/functions.php:237
 msgid "settings page"
 msgstr ""
 
-#: legacy/functions.php:275
+#: legacy/functions.php:279
 msgid "Online"
 msgstr ""
 
-#: legacy/functions.php:275
+#: legacy/functions.php:279
 msgid "Offline"
 msgstr ""
 
-#: legacy/functions.php:321
+#: legacy/functions.php:325
 msgid "Members"
 msgstr ""
 
-#: legacy/functions.php:327
+#: legacy/functions.php:331
 msgid "Active members (30 days)"
 msgstr ""
 
-#: legacy/functions.php:334
+#: legacy/functions.php:338
 msgid "Members in world"
 msgstr ""
 
-#: legacy/functions.php:345
+#: legacy/functions.php:349
 msgid "Active users (30 days)"
 msgstr ""
 
-#: legacy/functions.php:351
+#: legacy/functions.php:355
 msgid "Total users in world"
 msgstr ""
 
-#: legacy/functions.php:359
+#: legacy/functions.php:363
 msgid "Regions"
 msgstr ""
 
-#: legacy/functions.php:365
+#: legacy/functions.php:369
 msgid "Total area"
 msgstr ""
 
-#: legacy/functions.php:522
+#: legacy/functions.php:526
 msgid "%s"
 msgstr ""
 
-#: legacy/functions.php:577
+#: legacy/functions.php:581
 msgid "Joined today"
 msgstr ""
 
-#: legacy/functions.php:579
+#: legacy/functions.php:583
 msgid "%s days old"
 msgstr ""
 
@@ -1915,13 +1965,16 @@ msgstr ""
 #: blocks/grid-info/grid-info.js:1
 #: blocks/grid-status/grid-status.js:1
 #: blocks/popular-places/popular-places.js:1
+#: blocks/web-search/web-search.js:1
 #: src/blocks/avatar-profile/editor.js:64
 #: src/blocks/grid-info/editor.js:54
 #: src/blocks/grid-status/editor.js:54
 #: src/blocks/popular-places/editor.js:77
+#: src/blocks/web-search/editor.js:77
 #: blocks/avatar-profile/avatar-profile.js:64
 #: blocks/grid-info/grid-info.js:54
 #: blocks/grid-status/grid-status.js:54
 #: blocks/popular-places/popular-places.js:77
+#: blocks/web-search/web-search.js:77
 msgid "Block Settings"
 msgstr ""

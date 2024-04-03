@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "POT-Creation-Date: 2023-07-26T03:45:43+00:00\n"
 "PO-Revision-Date: \n"
-"Last-Translator: gpt-po v1.0.5\n"
+"Last-Translator: gpt-po v1.0.11\n"
 "Language-Team: \n"
 "Language: cy\n"
 "MIME-Version: 1.0\n"
@@ -267,6 +267,62 @@ msgstr "包括待售土地"
 #: blocks/popular-places.php:306
 msgid "Enable to include land for sale in results."
 msgstr "Gallwch alluogi cynnwys tir ar werth yn y canlyniadau."
+
+#: legacy/admin/admin-init.php:353
+msgid "Web Search"
+msgstr "Chwiliad Gwe"
+
+#: blocks/web-search.php:201
+msgid "Type a search key in the field"
+msgstr "Rhowch allwedd chwilio yn y maes"
+
+#: blocks/web-search.php:259
+#: blocks/web-search/web-search.js:1
+#: src/blocks/web-search/editor.js:14
+#: blocks/web-search/web-search.js:14
+msgid "OpenSimulator Web Search"
+msgstr "Chwilio Gwe OpenSimulator"
+
+#: blocks/web-search.php:286
+msgid "Enter the title for the Web Search module."
+msgstr "Rhowch y teitl ar gyfer y modiwl Chwilio'r We."
+
+#: helpers/guide.php:99
+#: helpers/guide.php:139
+#: includes/class-helpers-guide.php:55
+msgid "Destinations Guide"
+msgstr "Teithlyddau Cyfeiriadau"
+
+#: helpers/guide.php:140
+#: helpers/guide.php:165
+msgid "This is a work in progress, please be indulgent."
+msgstr "Mae hyn yn waith ar y gweill, fodlonwch os gwelwch yn dda."
+
+#: helpers/guide.php:150
+#. Translators: %s will be replaced with the number of destinations
+msgid "%s destinations"
+msgstr "%s cyfeiriadau"
+
+#: helpers/guide.php:163
+msgid "Back to categories"
+msgstr "Nôl i gategorïau"
+
+#: helpers/guide.php:179
+msgid "%s people"
+msgstr "%s pobl"
+
+#: helpers/guide.php:182
+msgid "traffic %s"
+msgstr "traffig %s"
+
+#: helpers/guide.php:193
+msgid ""
+"The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let "
+"them venture forth to curate a grand tapestry of remarkable places for your exploration!"
+msgstr ""
+"Yr ystafellau o cyrchfannau rydych chi'n eu chwilio amdanynt wedi eu dwyn oddi ar ein gafael, wedi'u cludo i ffwrdd gan "
+"gnomes anhysbys. Raliwch y rheolwyr grid, gadewch iddynt anturio ymlaen i guradu taflen fawr o leoedd rhyfeddol ar "
+"gyfer eich archwilio!"
 
 #: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80
 #: legacy/admin/status-page.php:58
@@ -535,6 +591,61 @@ msgstr ""
 msgid "Ready to use binaries and example config files can be downloaded here:"
 msgstr "Gallwch lawrlwytho binariau sy'n barod i'w defnyddio a ffeiliau cyfluniad enghreifftiol yma:"
 
+#: includes/class-helpers-guide.php:56
+#: includes/class-helpers-guide.php:76
+msgid "Destinations Guide Settings"
+msgstr "Gosodiadau'r Ganllawiau o Destyniadau"
+
+#: includes/class-helpers-guide.php:82
+msgid "Provide Destinations Guide Service"
+msgstr "Darparu Gwasanaeth Tywysfa Cyfeiriannau"
+
+#: includes/class-helpers-guide.php:89
+msgid "Source"
+msgstr "Ffynhonnell"
+
+#: includes/class-helpers-guide.php:100
+msgid "A text file with a formatted list of destinations."
+msgstr "Ffeil destyniadau wedi'u rhestru'n fformatio."
+
+#: includes/class-helpers-guide.php:101
+msgid "The source can be an URL or the full path of a local file your web server can access."
+msgstr "Gall fod y ffynhonnell yn URL neu'r llwybr llawn i ffeil leol y gall eich gweinydd gwe ei chyrraedd."
+
+#: includes/class-helpers-guide.php:102
+msgid "Destination name and teleport URL are separated by a pipe (|) character."
+msgstr "Enw'r cyrchfan a'r URL teithio ar wahân gan farc pibell (|)."
+
+#: includes/class-helpers-guide.php:103
+msgid "Lines containing only text are interpreted as categories."
+msgstr "Llinellau sy'n cynnwys testun yn unig yn cael eu dehongli fel categorïau."
+
+#: includes/class-helpers-guide.php:104
+msgid "Lines beginning with \"#\" or \"//\" are ignored."
+msgstr "Llinellau sy'n dechrau gyda \"#\" neu \"//\" yn cael eu hanwybyddu."
+
+#: includes/class-helpers-guide.php:106
+msgid "The format is identical to the format used by the in-world object %s so the same source URL can be used for both."
+msgstr ""
+"Mae'r fformat yn yr un fformat â'r gwrthrych yn y byd go iawn %s felly gellir defnyddio'r un URL ffynhonnell ar gyfer y "
+"ddau."
+
+#: includes/class-helpers-guide.php:127
+msgid "Destinations Guide URL"
+msgstr "URL Canllawau Cyfeiriadau"
+
+#: includes/class-helpers-guide.php:176
+msgid "Destinations guide is a Viewer 3 feature, providing a window with places suggestions."
+msgstr "Mae canllawau cyrchfan yn nodwedd Viewer 3, gan ddarparu ffenestr gyda awgrymiadau lleoedd."
+
+#: includes/class-helpers-guide.php:177
+msgid ""
+"While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of "
+"must-see places, from your own grid or outside."
+msgstr ""
+"Er nad yw'n orfodol, ac ni fydd pob defnyddiwr yn elwa arno, mae'n ffordd ddefnyddiol o ddarparu rhestr o leoedd rhaid "
+"eu gweld, o'ch grid eich hun neu o'r tu allan."
+
 #: includes/class-helpers-offline.php:46
 msgid "Offline Messages"
 msgstr "Negeseuon All-lein"
@@ -692,6 +803,10 @@ msgstr "Search features require the installation of the OpenSimSearch Module on 
 #: includes/class-helpers-search.php:229
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "可以在这里找到可直接使用的 OpenSimSearch.Modules.dll 二进制文件："
+
+#: includes/class-helpers.php:121
+msgid "Helpers base"
+msgstr "sylfaenyddion sail"
 
 #: legacy/profile.php:198 legacy/profile.php:1039
 msgid "OpenSimulator"
@@ -1037,10 +1152,6 @@ msgstr ""
 "Gwasanaeth chwilio a ddefnyddir gan y gwyliwr. Gellir darparu chwiliad gan graidd yr efelychydd (cyfyngedig), neu gan "
 "wasanaeth allanol ar gyfer swyddogaethau ychwanegol (fel digwyddiadau). Angen OpenSimSearch.Modules.dll."
 
-#: legacy/admin/admin-init.php:353
-msgid "Web Search"
-msgstr "Chwiliad Gwe"
-
 #: legacy/admin/admin-init.php:354
 msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
 msgstr "Tab gwe o ffenestri chwilio gwyliwr. Yn berthnasol os oes gennych dudalen chwilio sy'n darparu cynnwys o'r grid."
@@ -1137,9 +1248,23 @@ msgstr ""
 "Mae cyfrifon grid sy'n cyfateb i'r enw cyntaf neu'r enw olaf a osodwyd isod yn cael eu hystyried fel modelau avatar. "
 "Byddant yn ymddangos ar y ffurflen gofrestru avatar, gyda'u llun proffil yn y byd."
 
-#: legacy/admin/status-page.php:16
-msgid "PHP xml-rpc is required but is not installed."
-msgstr "PHP xml-rpc is required but is not installed."
+#: legacy/admin/status-page.php:14
+msgid ""
+"%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support "
+"resources for specific instructions."
+msgstr ""
+"Mae %s yn ofynnol ond nid yw wedi ei osod. Cyfeiriwch at y manual PHP neu ymgynghewch â chymorth eich darparwr "
+"gwesteiwr am ganllawiau penodol."
+
+#: legacy/admin/status-page.php:39
+msgid "Permalinks are not enabled. Choose any permalink structure other than 'Plain' in the [permalink settings page].</a>"
+msgstr ""
+"Nid yw permalinks wedi'u galluogi. Dewiswch unrhyw strwythur permalink heblaw am 'Plain' yn y [tudalen gosodiadau "
+"permalink].</a>"
+
+#: legacy/admin/status-page.php:49
+msgid "Requirements not met for w4os plugin"
+msgstr ""
 
 #: legacy/admin/status-page.php:24
 msgid "Users"
@@ -1239,14 +1364,6 @@ msgstr ""
 "angen ei gychwyn â llaw i gael canlyniad ar unwaith, yn enwedig os yw defnyddwyr wedi'u hychwanegu neu eu dileu yn "
 "uniongyrchol o'r consol gweinyddu grid."
 
-#: legacy/admin/status-page.php:150
-msgid "Missing PHP modules"
-msgstr "Modiwlau PHP ar goll"
-
-#: legacy/admin/status-page.php:152
-msgid "These modules were not found: %s. Install them to get the most of this plugin."
-msgstr "Ni ddaethpwyd o hyd i'r modiwlau hyn: %s. Gosodwch nhw i gael y gorau o'r ategyn hwn."
-
 #: legacy/admin/status-page.php:160
 msgid "OpenSimulator pages"
 msgstr "Tudalennau OpenSimulator"
@@ -1304,9 +1421,9 @@ msgstr "pob_pum_munud"
 msgid "A local Robust server has been found. Please check Login URI and Grid Name configuration."
 msgstr "A local Robust server has been found. Please check Login URI and Grid Name configuration."
 
-#: legacy/functions.php:223
-msgid "OpenSimulator settings page"
-msgstr "Tudalen gosodiadau OpenSimulator"
+#: legacy/functions.php:237
+msgid "settings page"
+msgstr "tudalennau gosod"
 
 #: legacy/functions.php:265
 msgid "Online"
@@ -1630,9 +1747,9 @@ msgstr "Rhaid ei osod yn y gwyliwr."
 msgid "Web Profile URL"
 msgstr "URL Proffil Gwe"
 
-#: legacy/shortcodes.php:85
-msgid "Configure W4OS database "
-msgstr "Ffurfweddu cronfa ddata W4OS"
+#: legacy/shortcodes.php:86
+msgid "Configure W4OS database on %s."
+msgstr "Cyflunio cronfa ddata W4OS ar %s."
 
 #: legacy/shortcodes.php:126
 msgid "Edit user"
@@ -1674,21 +1791,25 @@ msgstr[3] "%d cyfeirnod toredig wedi'i dynnu"
 msgid "%s local users updated with avatar data"
 msgstr "Diweddarwyd %s defnyddiwr lleol gyda data avatar"
 
-#: legacy/w4osdb.php:16
-msgid "ROBUST database is not configured. To finish configuration, go to "
-msgstr "Nid yw cronfa ddata ROBUST wedi'i ffurfweddu. I orffen cyfluniad, ewch i"
+#: legacy/w4osdb.php:17
+msgid "ROBUST database is not configured. To finish configuration, go to %s."
+msgstr "Nid yw'r gronfa ddata ROBUST wedi'i ffurfweddu. I orffen y ffurfweddiad, ewch i %s."
 
-#: legacy/w4osdb.php:52
-msgid "Could not connect to the database server, please verify your credentials on "
-msgstr "Methu cysylltu â gweinydd y gronfa ddata, gwiriwch eich manylion adnabod ymlaen"
+#: legacy/w4osdb.php:56
+msgid "Could not connect to the database server, please verify your credentials on %s."
+msgstr "Do not connect to the database server, please verify your credentials on %s."
 
-#: legacy/w4osdb.php:59
-msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on "
-msgstr "Methu cysylltu â chronfa ddata ROBUST, gwiriwch enw'r gronfa ddata a/neu'r manylion adnabod ymlaen"
+#: legacy/w4osdb.php:66
+msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on %s."
+msgstr "Methu cysylltu â'r gronfa ddata ROBUST, gwiriwch enw'r gronfa ddata a/neu'r manylion mewngofnodi ar %s."
 
-#: legacy/w4osdb.php:128
-msgid "Missing tables: %s. The ROBUST database is connected, but some required tables are missing. "
-msgstr "缺少表格：%s。ROBUST数据库已连接，但缺少一些必需的表格。"
+#: legacy/w4osdb.php:136
+msgid ""
+"Missing tables: %1$s. The ROBUST database is connected, but some required tables are missing. Check database settings "
+"on %2$s."
+msgstr ""
+"Tablau'r coll: %1$s. Mae'r gronfa ddata ROBUST wedi'i chysylltu, ond mae rhai tablau angenrheidiol ar goll. Gwiriwch y "
+"gosodiadau cronfa ddata ar %2$s."
 
 #: legacy/widgets.php:11
 msgid "Grid info Widget"
@@ -1704,8 +1825,8 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #: legacy/woocommerce.php:99
-msgid "Your avatar: "
-msgstr "Dy dyfyniad:"
+msgid "Your avatar:"
+msgstr "Eich avatar:"
 
 #: templates/content-configuration.php:2
 msgid "this grid"

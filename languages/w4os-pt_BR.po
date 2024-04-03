@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - w4os &#8211; OpenSimulator Web Interface - Stable (latest release)\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2023-12-07 12:13-0400\n"
-"Last-Translator: gpt-po v1.0.7\n"
+"Last-Translator: gpt-po v1.0.11\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -99,11 +99,11 @@ msgstr "Incluir terrenos à venda"
 
 #: admin/templates/shortcodes.php:99
 msgid ""
-"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not be "
-"enabled."
+"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not "
+"be enabled."
 msgstr ""
-"As opções %1$s e %2$s são fornecidas apenas para permitir reverter para o comportamento anterior, mas na maioria dos casos "
-"elas não devem ser ativadas."
+"As opções %1$s e %2$s são fornecidas apenas para permitir reverter para o comportamento anterior, mas na maioria dos "
+"casos elas não devem ser ativadas."
 
 #: admin/templates/shortcodes.php:103
 msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
@@ -247,6 +247,25 @@ msgstr "Incluir Terrenos à Venda"
 msgid "Enable to include land for sale in results."
 msgstr "Habilitar a inclusão de terrenos à venda nos resultados."
 
+#: legacy/admin/admin-init.php:353
+msgid "Web Search"
+msgstr "Pesquisa na Web"
+
+#: blocks/web-search.php:201
+msgid "Type a search key in the field"
+msgstr "Digite uma chave de pesquisa no campo"
+
+#: blocks/web-search.php:259
+#: blocks/web-search/web-search.js:1
+#: src/blocks/web-search/editor.js:14
+#: blocks/web-search/web-search.js:14
+msgid "OpenSimulator Web Search"
+msgstr "Pesquisa Web do OpenSimulator"
+
+#: blocks/web-search.php:286
+msgid "Enter the title for the Web Search module."
+msgstr "Digite o título para o módulo de Pesquisa na Web."
+
 #: helpers/guide.php:98 helpers/guide.php:138 includes/class-helpers-guide.php:55
 msgid "Destinations Guide"
 msgstr "Guia de Destinos"
@@ -255,8 +274,8 @@ msgstr "Guia de Destinos"
 msgid "This is a work in progress, please be indulgent."
 msgstr "Este é um trabalho em andamento, por favor, seja indulgente."
 
-#. Translators: %s will be replaced with the number of destinations
 #: helpers/guide.php:149
+#. Translators: %s will be replaced with the number of destinations
 msgid "%s destinations"
 msgstr "destinos %s"
 
@@ -274,12 +293,12 @@ msgstr "tráfego %s"
 
 #: helpers/guide.php:192
 msgid ""
-"The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let them "
-"venture forth to curate a grand tapestry of remarkable places for your exploration!"
+"The realm of destinations you seek has eluded our grasp, spirited away by elusive knomes. Rally the grid managers, let "
+"them venture forth to curate a grand tapestry of remarkable places for your exploration!"
 msgstr ""
-"The magical realm of destinations you're searching for has slipped through our fingers, hidden away by mischievous creatures. "
-"Let's gather the grid managers and send them on a quest to curate a magnificent collection of extraordinary places for you to "
-"explore!"
+"The magical realm of destinations you're searching for has slipped through our fingers, hidden away by mischievous "
+"creatures. Let's gather the grid managers and send them on a quest to curate a magnificent collection of extraordinary "
+"places for you to explore!"
 
 #: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80 legacy/admin/status-page.php:58
 msgid "Avatar Models"
@@ -327,19 +346,19 @@ msgstr "Modelos Disponíveis"
 
 #: includes/class-avatar-model.php:167
 msgid ""
-"If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the "
-"initial outfit of the created avatar."
+"If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will "
+"determine the initial outfit of the created avatar."
 msgstr ""
-"Se os modelos de avatar estiverem definidos, novos usuários terão a opção de escolher no formulário de criação de avatar, o "
-"que determinará a roupa inicial do avatar criado."
+"Se os modelos de avatar estiverem definidos, novos usuários terão a opção de escolher no formulário de criação de "
+"avatar, o que determinará a roupa inicial do avatar criado."
 
 #: includes/class-avatar-model.php:168
 msgid ""
-"The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and "
-"add a profile picture."
+"The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the "
+"outfit, and add a profile picture."
 msgstr ""
-"O administrador do grid precisa criar cada modelo a partir do console ROBUST, fazer login com o visualizador, personalizar o "
-"traje e adicionar uma foto de perfil."
+"O administrador do grid precisa criar cada modelo a partir do console ROBUST, fazer login com o visualizador, "
+"personalizar o traje e adicionar uma foto de perfil."
 
 #: includes/class-avatar-model.php:169
 msgid "The avatars used for the models should never be real user accounts."
@@ -351,8 +370,8 @@ msgstr "O novo avatar usará a mesma roupa que o modelo no momento do registro."
 
 #: includes/class-avatar-model.php:171
 msgid ""
-"If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added "
-"to the list."
+"If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically "
+"added to the list."
 msgstr ""
 "Se a regra de atribuição do modelo for baseada no nome, cada novo avatar criado que corresponder a essa regra será "
 "automaticamente adicionado à lista."
@@ -409,11 +428,11 @@ msgstr "Você pode definir o slug dos ativos na [página de configurações de l
 
 #: includes/class-helpers-assets.php:135
 msgid ""
-"If 'Provide Web Assets Server' is disabled, it is necessary to install a third-party service and enter its URL here to ensure "
-"the proper functioning of the plugin."
+"If 'Provide Web Assets Server' is disabled, it is necessary to install a third-party service and enter its URL here to "
+"ensure the proper functioning of the plugin."
 msgstr ""
-"Se a opção 'Fornecer Servidor de Ativos Web' estiver desativada, é necessário instalar um serviço de terceiros e inserir sua "
-"URL aqui para garantir o funcionamento adequado do plugin."
+"Se a opção 'Fornecer Servidor de Ativos Web' estiver desativada, é necessário instalar um serviço de terceiros e "
+"inserir sua URL aqui para garantir o funcionamento adequado do plugin."
 
 #: includes/class-helpers-assets.php:195
 msgid "Assets base"
@@ -461,11 +480,11 @@ msgstr "Taxa de conversão de moeda"
 
 #: includes/class-helpers-economy.php:173
 msgid ""
-"Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 cent "
-"per money unit)."
+"Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 "
+"cent per money unit)."
 msgstr ""
-"Valor a ser pago em US$ por 1000 unidades de dinheiro virtual. Usado para estimativa de custo. Se não definido, a taxa será "
-"de 10/1000 (1 centavo por unidade de dinheiro)."
+"Valor a ser pago em US$ por 1000 unidades de dinheiro virtual. Usado para estimativa de custo. Se não definido, a taxa "
+"será de 10/1000 (1 centavo por unidade de dinheiro)."
 
 #: includes/class-helpers-economy.php:188
 msgid "Gloebit Configuration"
@@ -474,7 +493,8 @@ msgstr "Configuração do Gloebit"
 #: includes/class-helpers-economy.php:194
 msgid "Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator."
 msgstr ""
-"O módulo Gloebit precisa ser configurado antes de reiniciar a região, caso contrário, pode causar uma falha no simulador."
+"O módulo Gloebit precisa ser configurado antes de reiniciar a região, caso contrário, pode causar uma falha no "
+"simulador."
 
 #: includes/class-helpers-economy.php:196
 msgid "For Linux, see %s to avoid certificate-related errors."
@@ -483,7 +503,8 @@ msgstr "Para Linux, consulte %s para evitar erros relacionados a certificados."
 #: includes/class-helpers-economy.php:200
 msgid "Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator."
 msgstr ""
-"Registre uma conta ou conecte-se em %1$s e siga as instruções em %2$s para configurar um aplicativo para o seu grid/simulador."
+"Registre uma conta ou conecte-se em %1$s e siga as instruções em %2$s para configurar um aplicativo para o seu "
+"grid/simulador."
 
 #: includes/class-helpers-economy.php:204
 msgid "Add Gloebit configuration in OpenSim.ini."
@@ -512,7 +533,8 @@ msgstr "Mensagem de Redirecionamento do Podex"
 #: includes/class-helpers-economy.php:281
 msgid "Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange area."
 msgstr ""
-"Por favor, use nossos terminais no mundo virtual para prosseguir. Clique em OK para teleportar para a área de troca da Podex."
+"Por favor, use nossos terminais no mundo virtual para prosseguir. Clique em OK para teleportar para a área de troca da "
+"Podex."
 
 #: includes/class-helpers-economy.php:284
 msgid "Exchange Teleport URL"
@@ -521,24 +543,24 @@ msgstr "Trocar URL de Teleporte"
 #: includes/class-helpers-economy.php:315
 msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
 msgstr ""
-"Os ajudantes de economia são scripts adicionais necessários se você implementar uma economia em sua grid (com moeda real ou "
-"fictícia)."
+"Os ajudantes de economia são scripts adicionais necessários se você implementar uma economia em sua grid (com moeda "
+"real ou fictícia)."
 
 #: includes/class-helpers-economy.php:316
 msgid ""
-"Helper scripts allow communication between the money server and the grid: current balance update, currency cost estimation, "
-"land and object sales, payments..."
+"Helper scripts allow communication between the money server and the grid: current balance update, currency cost "
+"estimation, land and object sales, payments..."
 msgstr ""
-"Os scripts auxiliares permitem a comunicação entre o servidor de dinheiro e a grid: atualização do saldo atual, estimativa de "
-"custo da moeda, vendas de terrenos e objetos, pagamentos..."
+"Os scripts auxiliares permitem a comunicação entre o servidor de dinheiro e a grid: atualização do saldo atual, "
+"estimativa de custo da moeda, vendas de terrenos e objetos, pagamentos..."
 
 #: includes/class-helpers-economy.php:317
 msgid ""
-"This plugin only provides the web helpers required by the money server module. A third-party module must be installed and "
-"configured on the simulator, for example:"
+"This plugin only provides the web helpers required by the money server module. A third-party module must be installed "
+"and configured on the simulator, for example:"
 msgstr ""
-"Este plugin apenas fornece os auxiliares web necessários pelo módulo do servidor de dinheiro. Um módulo de terceiros deve ser "
-"instalado e configurado no simulador, por exemplo:"
+"Este plugin apenas fornece os auxiliares web necessários pelo módulo do servidor de dinheiro. Um módulo de terceiros "
+"deve ser instalado e configurado no simulador, por exemplo:"
 
 #: includes/class-helpers-economy.php:327
 msgid "Ready to use binaries and example config files can be downloaded here:"
@@ -579,7 +601,8 @@ msgstr "Linhas começando com \"#\" ou \"//\" são ignoradas."
 #: includes/class-helpers-guide.php:106
 msgid "The format is identical to the format used by the in-world object %s so the same source URL can be used for both."
 msgstr ""
-"O formato é idêntico ao formato usado pelo objeto no mundo virtual %s, então a mesma URL de origem pode ser usada para ambos."
+"O formato é idêntico ao formato usado pelo objeto no mundo virtual %s, então a mesma URL de origem pode ser usada para "
+"ambos."
 
 #: includes/class-helpers-guide.php:127
 msgid "Destinations Guide URL"
@@ -591,11 +614,11 @@ msgstr "O guia de destinos é uma funcionalidade do Viewer 3, que oferece uma ja
 
 #: includes/class-helpers-guide.php:177
 msgid ""
-"While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of must-see "
-"places, from your own grid or outside."
+"While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of "
+"must-see places, from your own grid or outside."
 msgstr ""
-"Embora não seja obrigatório e nem todos os usuários se beneficiarão disso, é uma maneira útil de fornecer a eles uma lista de "
-"lugares imperdíveis, tanto dentro do seu próprio grid quanto externos."
+"Embora não seja obrigatório e nem todos os usuários se beneficiarão disso, é uma maneira útil de fornecer a eles uma "
+"lista de lugares imperdíveis, tanto dentro do seu próprio grid quanto externos."
 
 #: includes/class-helpers-offline.php:46
 msgid "Offline Messages"
@@ -615,11 +638,11 @@ msgstr "Honrar a opção do visualizador \"Enviar-me e-mails quando estiver offl
 
 #: includes/class-helpers-offline.php:87
 msgid ""
-"OpenSimulator core offline messages module delivers messages sent to an offline user when they come back online but don't "
-"handle e-mail forwarding option available in the viewer."
+"OpenSimulator core offline messages module delivers messages sent to an offline user when they come back online but "
+"don't handle e-mail forwarding option available in the viewer."
 msgstr ""
-"O módulo de mensagens offline do núcleo do OpenSimulator entrega mensagens enviadas a um usuário offline quando ele volta a "
-"ficar online, mas não lida com a opção de encaminhamento de e-mail disponível no visualizador."
+"O módulo de mensagens offline do núcleo do OpenSimulator entrega mensagens enviadas a um usuário offline quando ele "
+"volta a ficar online, mas não lida com a opção de encaminhamento de e-mail disponível no visualizador."
 
 #: includes/class-helpers-offline.php:92
 msgid "Sender e-mail address"
@@ -628,8 +651,8 @@ msgstr "Endereço de e-mail do remetente"
 #: includes/class-helpers-offline.php:103
 msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
 msgstr ""
-"Um endereço de e-mail sem resposta usado para encaminhar mensagens para usuários que ativaram a opção \"Enviar-me e-mails "
-"quando estiver offline\"."
+"Um endereço de e-mail sem resposta usado para encaminhar mensagens para usuários que ativaram a opção \"Enviar-me "
+"e-mails quando estiver offline\"."
 
 #: includes/class-helpers-offline.php:106
 msgid "Offline Messages Helper"
@@ -669,22 +692,23 @@ msgstr "Apenas um pode ser definido, as outras linhas são exemplos alternativos
 
 #: includes/class-helpers-search.php:133
 msgid ""
-"Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements may vary "
-"for other engines."
+"Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements "
+"may vary for other engines."
 msgstr ""
 "Os serviços que utilizam o motor w4os precisam que o URI do gatekeeper (geralmente o URI de login) seja passado como "
 "argumento \"gk\". Os requisitos podem variar para outros motores."
 
 #: includes/class-helpers-search.php:146
 msgid ""
-"Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is relevant "
-"if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or secondlife://). It "
-"is optional and is referenced here only to disambiguate settings which unfortunately have similar names."
+"Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is "
+"relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or "
+"secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar "
+"names."
 msgstr ""
-"Por favor, observe que a URL de pesquisa é diferente da URL de pesquisa na web, que atualmente não é suportada pelo W4OS. A "
-"pesquisa na web é relevante se você tiver uma página de pesquisa na web dedicada ao conteúdo do grid, fornecendo resultados "
-"com URLs dentro do mundo virtual (hop:// ou secondlife://). Essa configuração é opcional e é mencionada aqui apenas para "
-"diferenciar as configurações que, infelizmente, possuem nomes semelhantes."
+"Por favor, observe que a URL de pesquisa é diferente da URL de pesquisa na web, que atualmente não é suportada pelo "
+"W4OS. A pesquisa na web é relevante se você tiver uma página de pesquisa na web dedicada ao conteúdo do grid, "
+"fornecendo resultados com URLs dentro do mundo virtual (hop:// ou secondlife://). Essa configuração é opcional e é "
+"mencionada aqui apenas para diferenciar as configurações que, infelizmente, possuem nomes semelhantes."
 
 #: includes/class-helpers-search.php:161
 msgid "Search Register URL"
@@ -720,10 +744,11 @@ msgstr "Ativar o uso de um mecanismo de busca local, permitindo apenas resultado
 
 #: includes/class-helpers-search.php:227
 msgid ""
-"Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public grids."
+"Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public "
+"grids."
 msgstr ""
-"Desativar o uso de um mecanismo de busca externo, como o 2do Directory, permitindo resultados tanto do seu grid quanto de "
-"outros grids públicos."
+"Desativar o uso de um mecanismo de busca externo, como o 2do Directory, permitindo resultados tanto do seu grid quanto "
+"de outros grids públicos."
 
 #: includes/class-helpers-search.php:228
 msgid "Search features require the installation of OpenSimSearch Module on OpenSimulator."
@@ -732,6 +757,10 @@ msgstr "As funcionalidades de pesquisa requerem a instalação do módulo OpenSi
 #: includes/class-helpers-search.php:229
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "O arquivo binário OpenSimSearch.Modules.dll pronto para uso pode ser encontrado aqui:"
+
+#: includes/class-helpers.php:121
+msgid "Helpers base"
+msgstr "Base de ajudantes"
 
 #: includes/class-settings.php:82 legacy/profile.php:198 legacy/profile.php:1039
 msgid "OpenSimulator"
@@ -780,7 +809,8 @@ msgstr "Existe uma página de perfil com o permalink definido como %1$s, conform
 #: includes/class-settings.php:234
 msgid "A profile page must be created with permalink set as %1$s, as defined in [permalinks settings]."
 msgstr ""
-"Uma página de perfil deve ser criada com o permalink definido como %1$s, conforme definido nas [configurações de permalinks]."
+"Uma página de perfil deve ser criada com o permalink definido como %1$s, conforme definido nas [configurações de "
+"permalinks]."
 
 #: includes/class-settings.php:242
 msgid "Public Profile Page"
@@ -820,11 +850,11 @@ msgstr "Excluir das estatísticas"
 
 #: includes/class-settings.php:290
 msgid ""
-"Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you have real "
-"avatars without email address."
+"Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you "
+"have real avatars without email address."
 msgstr ""
-"Contas sem endereço de e-mail geralmente são contas de teste ou contas técnicas criadas a partir do console. Desmarque apenas "
-"se você tiver avatares reais sem endereço de e-mail."
+"Contas sem endereço de e-mail geralmente são contas de teste ou contas técnicas criadas a partir do console. Desmarque "
+"apenas se você tiver avatares reais sem endereço de e-mail."
 
 #: includes/class-settings.php:292
 msgid "Models"
@@ -877,8 +907,8 @@ msgstr "Página de Termos de Serviço"
 #: includes/class-tos.php:80
 msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
 msgstr ""
-"Selecione a página que contém os termos de serviço para adicionar uma caixa de seleção de consentimento dos termos de serviço "
-"na página de registro do usuário."
+"Selecione a página que contém os termos de serviço para adicionar uma caixa de seleção de consentimento dos termos de "
+"serviço na página de registro do usuário."
 
 #: includes/class-tos.php:81
 msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
@@ -891,15 +921,15 @@ msgstr "Observação: É crucial ter uma página de Termos de Serviço bem elabo
 #: includes/class-tos.php:83
 msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
 msgstr ""
-"Recomendamos usar um plugin dedicado ou buscar serviços profissionais para ajudá-lo a escrever o texto da página de Termos de "
-"Serviço."
+"Recomendamos usar um plugin dedicado ou buscar serviços profissionais para ajudá-lo a escrever o texto da página de "
+"Termos de Serviço."
 
 #: includes/class-tos.php:88
 msgid "Select a TOS page"
 msgstr "Selecione uma página de Termos de Serviço"
 
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
 #: includes/class-tos.php:22
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
 msgid "I agree to the terms on page %s."
 msgstr "Eu concordo com os termos na página %s."
 
@@ -907,8 +937,8 @@ msgstr "Eu concordo com os termos na página %s."
 msgid "Error"
 msgstr "Erro"
 
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
 #: includes/class-tos.php:27
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
 msgid "You must agree to the terms on page %s."
 msgstr "Você precisa concordar com os termos na página %s."
 
@@ -1044,21 +1074,17 @@ msgstr "Serviço de Busca"
 
 #: legacy/admin/admin-init.php:343
 msgid ""
-"Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for "
-"additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
+"Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service "
+"for additional functionalities (like events). Requires OpenSimSearch.Modules.dll."
 msgstr ""
-"Serviço de busca usado pelo visualizador. A busca pode ser fornecida pelo núcleo do simulador (limitada) ou por um serviço "
-"externo para funcionalidades adicionais (como eventos). Requer OpenSimSearch.Modules.dll."
-
-#: legacy/admin/admin-init.php:353
-msgid "Web Search"
-msgstr "Pesquisa na Web"
+"Serviço de busca usado pelo visualizador. A busca pode ser fornecida pelo núcleo do simulador (limitada) ou por um "
+"serviço externo para funcionalidades adicionais (como eventos). Requer OpenSimSearch.Modules.dll."
 
 #: legacy/admin/admin-init.php:354
 msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
 msgstr ""
-"Guia da web das janelas de pesquisa do visualizador. Importante se você tiver uma página de pesquisa que forneça conteúdo da "
-"grade."
+"Guia da web das janelas de pesquisa do visualizador. Importante se você tiver uma página de pesquisa que forneça "
+"conteúdo da grade."
 
 #: legacy/admin/admin-init.php:364
 msgid "Offline messages"
@@ -1066,11 +1092,11 @@ msgstr "Mensagens offline"
 
 #: legacy/admin/admin-init.php:365
 msgid ""
-"Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not "
-"accessed directly by the user."
+"Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, "
+"not accessed directly by the user."
 msgstr ""
-"Necessário pelos visualizadores para manter mensagens enquanto o usuário está offline e entregá-las quando ele voltar online. "
-"Serviço interno, não acessado diretamente pelo usuário."
+"Necessário pelos visualizadores para manter mensagens enquanto o usuário está offline e entregá-las quando ele voltar "
+"online. Serviço interno, não acessado diretamente pelo usuário."
 
 #: legacy/admin/admin-init.php:373
 msgid "Splash"
@@ -1139,20 +1165,34 @@ msgstr "Os valores devem corresponder ao arquivo de configuração Robust.HG.ini
 #: legacy/admin/settings.php:238
 msgid "Robust server must be running. Values entered here will be checked against your Robust server and updated if needed."
 msgstr ""
-"O servidor Robust deve estar em execução. Os valores inseridos aqui serão verificados em relação ao seu servidor Robust e "
-"atualizados, se necessário."
+"O servidor Robust deve estar em execução. Os valores inseridos aqui serão verificados em relação ao seu servidor Robust "
+"e atualizados, se necessário."
 
 #: legacy/admin/settings.php:243
 msgid ""
-"Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the avatar "
-"registration form, with their in-world profile picture."
+"Grid accounts matching first name or last name set below are considered as avatar models. They will appear on the "
+"avatar registration form, with their in-world profile picture."
 msgstr ""
-"As contas do grid que correspondem ao primeiro nome ou sobrenome definidos abaixo são consideradas como modelos de avatar. "
-"Elas aparecerão no formulário de registro de avatar, juntamente com sua foto de perfil no mundo virtual."
+"As contas do grid que correspondem ao primeiro nome ou sobrenome definidos abaixo são consideradas como modelos de "
+"avatar. Elas aparecerão no formulário de registro de avatar, juntamente com sua foto de perfil no mundo virtual."
 
-#: legacy/admin/status-page.php:16
-msgid "PHP xml-rpc is required but is not installed."
-msgstr "É necessário ter o PHP xml-rpc instalado, mas ele não está instalado."
+#: legacy/admin/status-page.php:14
+msgid ""
+"%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support "
+"resources for specific instructions."
+msgstr ""
+"%s é necessário, mas não está instalado. Consulte o manual do PHP ou os recursos de suporte do seu provedor de "
+"hospedagem para instruções específicas."
+
+#: legacy/admin/status-page.php:39
+msgid "Permalinks are not enabled. Choose any permalink structure other than 'Plain' in the [permalink settings page].</a>"
+msgstr ""
+"Os permalinks não estão habilitados. Escolha qualquer estrutura de permalink que não seja 'Padrão' na [página de "
+"configurações de permalinks].</a>"
+
+#: legacy/admin/status-page.php:49
+msgid "Requirements not met for w4os plugin"
+msgstr "Requisitos não atendidos para o plugin w4os"
 
 #: legacy/admin/status-page.php:24
 msgid "Users"
@@ -1194,31 +1234,31 @@ msgstr[1] "%d contas da grade não têm uma conta WP vinculada. A sincronizaçã
 
 #: legacy/admin/status-page.php:95
 msgid ""
-"%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove "
-"the broken reference."
+"%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but "
+"remove the broken reference."
 msgid_plural ""
-"%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove "
-"the broken reference."
+"%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but "
+"remove the broken reference."
 msgstr[0] ""
-"A conta do WordPress %d está vinculada a um avatar inexistente (UUID incorreto). Sincronizar as contas manterá esta conta do "
-"WP, mas removerá a referência quebrada."
+"A conta do WordPress %d está vinculada a um avatar inexistente (UUID incorreto). Sincronizar as contas manterá esta "
+"conta do WP, mas removerá a referência quebrada."
 msgstr[1] ""
-"%d contas do WordPress estão vinculadas a avatares inexistentes (UUID incorreto). A sincronização das contas manterá essas "
-"contas WP, mas removerá a referência quebrada."
+"%d contas do WordPress estão vinculadas a avatares inexistentes (UUID incorreto). A sincronização das contas manterá "
+"essas contas WP, mas removerá a referência quebrada."
 
 #: legacy/admin/status-page.php:106
 msgid ""
-"%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service "
-"tasks."
-msgid_plural ""
-"%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or "
+"%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or "
 "service tasks."
+msgid_plural ""
+"%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance "
+"or service tasks."
 msgstr[0] ""
 "%d conta do grid (exceto modelos) não possui um endereço de e-mail, o que é aceitável desde que seja usada apenas para "
 "tarefas de manutenção ou serviço."
 msgstr[1] ""
-"%d contas da grade (exceto modelos) não têm um endereço de e-mail, o que é aceitável, desde que sejam usadas apenas para "
-"tarefas de manutenção ou serviço."
+"%d contas da grade (exceto modelos) não têm um endereço de e-mail, o que é aceitável, desde que sejam usadas apenas "
+"para tarefas de manutenção ou serviço."
 
 #: legacy/admin/status-page.php:111
 msgid "Real accounts need a unique email address for W4OS to function properly."
@@ -1230,21 +1270,13 @@ msgstr "Sincronizar usuários agora"
 
 #: legacy/admin/status-page.php:125
 msgid ""
-"Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it may be "
-"necessary to initiate it manually to get an immediate result, especially if users have been added or deleted directly from "
-"the grid administration console."
+"Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it "
+"may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted "
+"directly from the grid administration console."
 msgstr ""
-"A sincronização é feita na ativação do plugin e é gerenciada automaticamente posteriormente, mas em certas circunstâncias "
-"pode ser necessário iniciá-la manualmente para obter um resultado imediato, especialmente se os usuários tiverem sido "
-"adicionados ou excluídos diretamente do console de administração da grade."
-
-#: legacy/admin/status-page.php:150
-msgid "Missing PHP modules"
-msgstr "Módulos PHP ausentes"
-
-#: legacy/admin/status-page.php:152
-msgid "These modules were not found: %s. Install them to get the most of this plugin."
-msgstr "Esses módulos não foram encontrados: %s. Instale-os para aproveitar ao máximo este plugin."
+"A sincronização é feita na ativação do plugin e é gerenciada automaticamente posteriormente, mas em certas "
+"circunstâncias pode ser necessário iniciá-la manualmente para obter um resultado imediato, especialmente se os usuários "
+"tiverem sido adicionados ou excluídos diretamente do console de administração da grade."
 
 #: legacy/admin/status-page.php:160
 msgid "OpenSimulator pages"
@@ -1252,10 +1284,11 @@ msgstr "Páginas do OpenSimulator"
 
 #: legacy/admin/status-page.php:162
 msgid ""
-"The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator .ini file."
+"The following page are needed by OpenSimulator and/or by W4OS plugin. Make sure they exist or adjust your simulator "
+".ini file."
 msgstr ""
-"As seguintes páginas são necessárias pelo OpenSimulator e/ou pelo plugin W4OS. Certifique-se de que elas existam ou ajuste o "
-"arquivo .ini do seu simulador."
+"As seguintes páginas são necessárias pelo OpenSimulator e/ou pelo plugin W4OS. Certifique-se de que elas existam ou "
+"ajuste o arquivo .ini do seu simulador."
 
 #: legacy/admin/status-page.php:172
 msgid "Grid not running, start Robust server or %1$scheck OpenSimulator settings%2$s."
@@ -1271,11 +1304,11 @@ msgstr "Verificado pela última vez há %s."
 
 #: legacy/admin/status-page.php:201
 msgid ""
-"OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate "
-"status."
+"OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an "
+"immediate status."
 msgstr ""
-"As páginas do OpenSimulator são verificadas regularmente em segundo plano. Sincronize agora apenas se você fez alterações e "
-"deseja um status imediato."
+"As páginas do OpenSimulator são verificadas regularmente em segundo plano. Sincronize agora apenas se você fez "
+"alterações e deseja um status imediato."
 
 #: legacy/admin/status-page.php:222
 msgid "Should be %s"
@@ -1363,10 +1396,11 @@ msgstr "Registrar"
 
 #: legacy/profile-page.php:110
 msgid ""
-"Lost your password? Please enter your username or email address. You will receive a link to create a new password via email."
+"Lost your password? Please enter your username or email address. You will receive a link to create a new password via "
+"email."
 msgstr ""
-"Esqueceu sua senha? Por favor, digite seu nome de usuário ou endereço de e-mail. Você receberá um link para criar uma nova "
-"senha por e-mail."
+"Esqueceu sua senha? Por favor, digite seu nome de usuário ou endereço de e-mail. Você receberá um link para criar uma "
+"nova senha por e-mail."
 
 #: legacy/profile-page.php:112
 msgid "Email"
@@ -1576,8 +1610,8 @@ msgstr "Você precisa de um avatar para explorar nosso mundo virtual."
 #: legacy/profile.php:711
 msgid "Choose a name below. This is how people will see you in-world. Once set, your avatar name cannot be changed."
 msgstr ""
-"Escolha um nome abaixo. É assim que as pessoas vão te ver no mundo virtual. Depois de definido, seu nome de avatar não pode "
-"ser alterado."
+"Escolha um nome abaixo. É assim que as pessoas vão te ver no mundo virtual. Depois de definido, seu nome de avatar não "
+"pode ser alterado."
 
 #: legacy/profile.php:734
 msgid "Avatar first name"
@@ -1676,14 +1710,16 @@ msgstr "Não foi possível conectar ao servidor de banco de dados, por favor ver
 #: legacy/w4osdb.php:66
 msgid "Could not connect to the ROBUST database, please verify database name and/or credentials on %s."
 msgstr ""
-"Não foi possível conectar ao banco de dados ROBUST, por favor verifique o nome do banco de dados e/ou as credenciais em %s."
+"Não foi possível conectar ao banco de dados ROBUST, por favor verifique o nome do banco de dados e/ou as credenciais em "
+"%s."
 
 #: legacy/w4osdb.php:136
 msgid ""
-"Missing tables: %1$s. The ROBUST database is connected, but some required tables are missing. Check database settings on %2$s."
+"Missing tables: %1$s. The ROBUST database is connected, but some required tables are missing. Check database settings "
+"on %2$s."
 msgstr ""
-"Tabelas ausentes: %1$s. O banco de dados ROBUST está conectado, mas algumas tabelas necessárias estão faltando. Verifique as "
-"configurações do banco de dados em %2$s."
+"Tabelas ausentes: %1$s. O banco de dados ROBUST está conectado, mas algumas tabelas necessárias estão faltando. "
+"Verifique as configurações do banco de dados em %2$s."
 
 #: legacy/widgets.php:11
 msgid "Grid info Widget"
@@ -1913,13 +1949,13 @@ msgstr "Mesma senha do usuário do WP"
 msgid "Model"
 msgstr "Modelo"
 
-#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
 #: tmp/class-avatar.php:325
+#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
 msgid "Firstname"
 msgstr "Primeiro nome"
 
-#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
 #: tmp/class-avatar.php:325
+#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
 msgid "Lastname"
 msgstr "Sobrenome"
 
@@ -1941,11 +1977,11 @@ msgstr "%1$s contém caracteres inválidos, substituído \"%2$s\" por \"%3$s\""
 
 #: w4os.php:46
 msgid ""
-"You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins "
-"directory. The developer version has been deactivated and should be uninstalled."
+"You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress "
+"plugins directory. The developer version has been deactivated and should be uninstalled."
 msgstr ""
-"Você já instalou a versão oficial do <strong>W4OS - Interface Web do OpenSimulator</strong> a partir do diretório de plugins "
-"do WordPress. A versão de desenvolvedor foi desativada e deve ser desinstalada."
+"Você já instalou a versão oficial do <strong>W4OS - Interface Web do OpenSimulator</strong> a partir do diretório de "
+"plugins do WordPress. A versão de desenvolvedor foi desativada e deve ser desinstalada."
 
 #: w4os.php:58
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."

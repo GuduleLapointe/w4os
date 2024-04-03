@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
 "POT-Creation-Date: 2023-07-26T03:45:43+00:00\n"
 "PO-Revision-Date: \n"
-"Last-Translator: gpt-po v1.0.7\n"
+"Last-Translator: gpt-po v1.0.11\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -245,6 +245,25 @@ msgstr "Grundstücke zum Verkauf inklusive"
 #: blocks/popular-places.php:306
 msgid "Enable to include land for sale in results."
 msgstr "Aktivieren Sie die Möglichkeit, Grundstücke zum Verkauf in den Ergebnissen anzuzeigen."
+
+#: legacy/admin/admin-init.php:353
+msgid "Web Search"
+msgstr "Web-Suche"
+
+#: blocks/web-search.php:201
+msgid "Type a search key in the field"
+msgstr "Geben Sie einen Suchbegriff in das Feld ein"
+
+#: blocks/web-search.php:259
+#: blocks/web-search/web-search.js:1
+#: src/blocks/web-search/editor.js:14
+#: blocks/web-search/web-search.js:14
+msgid "OpenSimulator Web Search"
+msgstr "OpenSimulator Web Suche"
+
+#: blocks/web-search.php:286
+msgid "Enter the title for the Web Search module."
+msgstr "Geben Sie den Titel für das Web-Suchmodul ein."
 
 #: helpers/guide.php:98 helpers/guide.php:138 includes/class-helpers-guide.php:55
 msgid "Destinations Guide"
@@ -741,6 +760,10 @@ msgstr "Die Suchfunktionen erfordern die Installation des OpenSimSearch-Moduls a
 msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
 msgstr "Fertige OpenSimSearch.Modules.dll-Binärdatei kann hier gefunden werden:"
 
+#: includes/class-helpers.php:121
+msgid "Helpers base"
+msgstr "Helfer-Basis"
+
 #: legacy/profile.php:198 legacy/profile.php:1039
 msgid "OpenSimulator"
 msgstr "OpenSimulator"
@@ -1059,10 +1082,6 @@ msgstr ""
 "Vom Viewer verwendeter Suchdienst. Die Suche kann vom Simulatorkern (eingeschränkt) oder von einem externen Dienst für "
 "zusätzliche Funktionalitäten (wie Ereignisse) bereitgestellt werden. Erfordert OpenSimSearch.Modules.dll."
 
-#: legacy/admin/admin-init.php:353
-msgid "Web Search"
-msgstr "Web-Suche"
-
 #: legacy/admin/admin-init.php:354
 msgid "Web tab of viewer search windows. Relevant if you have a search page providing content from the grid."
 msgstr ""
@@ -1159,9 +1178,23 @@ msgstr ""
 "Grid-Konten, die dem unten angegebenen Vor- oder Nachnamen entsprechen, gelten als Avatar-Modelle. Sie erscheinen auf "
 "dem Avatar-Registrierungsformular mit ihrem Profilbild in der Welt."
 
-#: legacy/admin/status-page.php:16
-msgid "PHP xml-rpc is required but is not installed."
-msgstr "PHP XML-RPC wird benötigt, ist aber nicht installiert."
+#: legacy/admin/status-page.php:14
+msgid ""
+"%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support "
+"resources for specific instructions."
+msgstr ""
+"%s ist erforderlich, aber nicht installiert. Bitte konsultieren Sie das PHP-Handbuch oder wenden Sie sich an die "
+"Support-Ressourcen Ihres Hosting-Anbieters für spezifische Anweisungen."
+
+#: legacy/admin/status-page.php:39
+msgid "Permalinks are not enabled. Choose any permalink structure other than 'Plain' in the [permalink settings page].</a>"
+msgstr ""
+"Permalinks sind nicht aktiviert. Wählen Sie eine Permalink-Struktur außer 'Einfach' auf der "
+"[Permalink-Einstellungsseite].</a>"
+
+#: legacy/admin/status-page.php:49
+msgid "Requirements not met for w4os plugin"
+msgstr "Anforderungen nicht erfüllt für das w4os-Plugin"
 
 #: legacy/admin/status-page.php:24
 msgid "Users"
@@ -1246,14 +1279,6 @@ msgstr ""
 "Die Synchronisierung erfolgt bei der Aktivierung des Plugins und wird danach automatisch durchgeführt. Unter bestimmten "
 "Umständen kann es jedoch notwendig sein, die Synchronisierung manuell einzuleiten, um ein sofortiges Ergebnis zu "
 "erhalten, insbesondere wenn Benutzer direkt über die Grid-Administrationskonsole hinzugefügt oder gelöscht wurden."
-
-#: legacy/admin/status-page.php:150
-msgid "Missing PHP modules"
-msgstr "Fehlende PHP-Module"
-
-#: legacy/admin/status-page.php:152
-msgid "These modules were not found: %s. Install them to get the most of this plugin."
-msgstr "Diese Module wurden nicht gefunden: %s. Installieren Sie sie, um dieses Plugin optimal nutzen zu können."
 
 #: legacy/admin/status-page.php:160
 msgid "OpenSimulator pages"
