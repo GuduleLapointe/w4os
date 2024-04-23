@@ -125,9 +125,9 @@ foreach ( $json as $json_event ) {
 }
 
 if ( is_object( $SearchDB ) && $SearchDB->connected ) {
-	$SearchDB->query( 'DELETE FROM events' );
+	$SearchDB->query( 'DELETE FROM ' . SEARCH_TABLE_EVENTS );
 	foreach ( $events as $event ) {
-		$result = $SearchDB->insert( 'events', $event );
+		$result = $SearchDB->insert( SEARCH_TABLE_EVENTS, $event );
 		if ( ! $result ) {
 			error_log( 'error while inserting new events)' );
 		}

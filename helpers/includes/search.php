@@ -16,6 +16,10 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
+if(! defined('SEARCH_TABLE_EVENTS')) {
+  define('SEARCH_TABLE_EVENTS', 'events');
+}
+
 function ossearch_db_tables( $db ) {
 	if ( ! $db->connected ) {
 		return false;
@@ -55,7 +59,7 @@ function ossearch_db_tables( $db ) {
     PRIMARY KEY  (`classifieduuid`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-  CREATE TABLE IF NOT EXISTS `events` (
+  CREATE TABLE IF NOT EXISTS `" . SEARCH_TABLE_EVENTS . "` (
     `owneruuid` char(36) NOT NULL,
     `name` varchar(255) NOT NULL,
     `eventid` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -71,6 +75,9 @@ function ossearch_db_tables( $db ) {
     `globalPos` varchar(255) NOT NULL,
     `eventflags` int(1) NOT NULL,
     `gatekeeperURL` varchar(255),
+    `landingpoint` varchar(35) DEFAULT NULL, -- JOpenSim compatibility
+    `parcelName` varchar(255) DEFAULT NULL, -- JOpenSim compatibility
+    `mature` enum('true','false') NOT NULL, -- JOpenSim compatibility
     PRIMARY KEY (`eventid`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -166,7 +173,7 @@ function ossearch_db_update_1() {
 		return false;
 	}
 
-	$tables = array( 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' );
+	$tables = array( 'allparcels', 'classifieds', SEARCH_TABLE_EVENTS, 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' );
 	foreach ( $tables as $table ) {
 		if ( ! count( $SearchDB->query( "SHOW COLUMNS FROM `$table` LIKE 'gatekeeperURL'" )->fetchAll() ) ) {
 			$SearchDB->query( "ALTER TABLE $table ADD gatekeeperURL varchar(255)" );
@@ -259,7 +266,7 @@ if ( $SearchDB && $SearchDB->connected ) {
 	}
 	define( 'SEARCH_REGION_TABLE', $regions_table );
 
-	if ( ! tableExists( $SearchDB, array( SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', 'events', 'classifieds', 'hostsregister' ) ) ) {
+	if ( ! tableExists( $SearchDB, array( SEARCH_REGION_TABLE, 'parcels', 'parcelsales', 'allparcels', 'objects', 'popularplaces', SEARCH_TABLE_EVENTS, 'classifieds', 'hostsregister' ) ) ) {
 		error_log( 'Creating missing OpenSimSearch tables in ' . SEARCH_DB_NAME );
 		ossearch_db_tables( $SearchDB );
 	}
