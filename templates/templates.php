@@ -43,6 +43,8 @@ function w4os_the_content( $content ) {
 	global $template;
 	$localized_post_id = W4OS::get_localized_post_id();
 	$original          = get_post( $localized_post_id );
+	if(!$original) return $content;
+
 	// if(empty($localized_post_id)) return $content; // Although there's no reason this happens
 
 	if ( function_exists( 'wc_print_notices' ) ) {
