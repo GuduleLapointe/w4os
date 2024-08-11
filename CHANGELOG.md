@@ -1,5 +1,10 @@
 ## Changelog
 
+### 2.7.7
+- Tested up to WP 6.6.1 (fix #78)
+- don't process template content if original language page is not found
+- minor dev changes
+
 ### 2.7.6
 - fix eventsparser crashing (undefined varfiable $array)
 - (dev) get helpers as submodule instead of composer dependency
