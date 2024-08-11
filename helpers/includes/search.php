@@ -16,8 +16,8 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  */
 
-if(! defined('SEARCH_TABLE_EVENTS')) {
-  define('SEARCH_TABLE_EVENTS', 'events');
+if ( ! defined( 'SEARCH_TABLE_EVENTS' ) ) {
+	define( 'SEARCH_TABLE_EVENTS', 'events' );
 }
 
 function ossearch_db_tables( $db ) {
