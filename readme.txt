@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.6.1
-Stable tag: 2.7.7
+Stable tag: 2.7.8
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -198,6 +198,13 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.7.8 =
+* fix scheduled jobs list growing indefinitely
+* fix w4os_get_urls_statuses and w4os_sync_users scheduled action failng (not properly registered)
+* fix empty content passed to ImageMagic
+* fix PHP Fatal error  Zero size image string passed to Imagick
+* fix deprecation warnings Optional parameter  declared before required parameter
 
 = 2.7.7 =
 * Tested up to WP 6.6.1 (fix #78)

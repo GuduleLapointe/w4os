@@ -1,5 +1,12 @@
 ## Changelog
 
+### 2.7.8
+- fix scheduled jobs list growing indefinitely
+- fix w4os_get_urls_statuses and w4os_sync_users scheduled action failng (not properly registered)
+- fix empty content passed to ImageMagic
+- fix PHP Fatal error  Zero size image string passed to Imagick
+- fix deprecation warnings Optional parameter  declared before required parameter
+
 ### 2.7.7
 - Tested up to WP 6.6.1 (fix #78)
 - don't process template content if original language page is not found
