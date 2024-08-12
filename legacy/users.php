@@ -214,7 +214,7 @@ function w4os_sync_users() {
 			// // No linked account, but none referenced so we should not interfer
 			// w4os_profile_dereference($account['user_id']);
 		}
-		w4os_clean_previous_scheduled_actions(__FUNCTION__);
+		w4os_clean_previous_scheduled_actions( __FUNCTION__ );
 	}
 
 	if ( ! empty( $users_updated ) ) {
@@ -390,9 +390,9 @@ function w4os_profile_sync_all() {
 // Enregistrer l'action planifiée
 function register_w4os_sync_users_async_cron() {
 	// as_unschedule_all_actions('w4os_sync_users');
-    if ( false === as_has_scheduled_action( 'w4os_sync_users' ) ) {
-        as_schedule_cron_action( time(), '*/5 * * * *', 'w4os_sync_users' );
-    }
+	if ( false === as_has_scheduled_action( 'w4os_sync_users' ) ) {
+		as_schedule_cron_action( time(), '*/5 * * * *', 'w4os_sync_users' );
+	}
 }
 add_action( 'init', 'register_w4os_sync_users_async_cron' );
 add_action( 'w4os_sync_users', 'w4os_sync_users' );

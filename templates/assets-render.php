@@ -115,49 +115,49 @@ function w4os_asset_get( $asset_uuid, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
 		// }
 
 		$data = base64_decode( $xml->Data );
-        if ($data === false) {
-            error_log("Failed to decode base64 data for asset UUID: $asset_uuid");
-            return w4os_asset_get_zero($format);
-        }
+		if ( $data === false ) {
+			error_log( "Failed to decode base64 data for asset UUID: $asset_uuid" );
+			return w4os_asset_get_zero( $format );
+		}
 		w4os_cache_write( $asset_uuid, $data, W4OS_ASSETS_CACHE_JP2 );
 	} else {
-		$h = fopen(W4OS_ASSETS_CACHE_JP2 . $asset_uuid, 'rb');
-		if ($h === false) {
-			error_log("Failed to open cache file for asset UUID: $asset_uuid");
-			return w4os_asset_get_zero($format);
+		$h = fopen( W4OS_ASSETS_CACHE_JP2 . $asset_uuid, 'rb' );
+		if ( $h === false ) {
+			error_log( "Failed to open cache file for asset UUID: $asset_uuid" );
+			return w4os_asset_get_zero( $format );
 		}
 
-		$filesize = filesize(W4OS_ASSETS_CACHE_JP2 . $asset_uuid);
-		if ($filesize > 0) {
-			$data = fread($h, $filesize);
-			if ($data === false) {
-				error_log("Failed to read data from cache file for asset UUID: $asset_uuid");
-				fclose($h);
-				return w4os_asset_get_zero($format);
+		$filesize = filesize( W4OS_ASSETS_CACHE_JP2 . $asset_uuid );
+		if ( $filesize > 0 ) {
+			$data = fread( $h, $filesize );
+			if ( $data === false ) {
+				error_log( "Failed to read data from cache file for asset UUID: $asset_uuid" );
+				fclose( $h );
+				return w4os_asset_get_zero( $format );
 			}
 		} else {
-			error_log("Cache file for asset UUID: $asset_uuid is empty");
-			fclose($h);
-			return w4os_asset_get_zero($format);
+			error_log( "Cache file for asset UUID: $asset_uuid is empty" );
+			fclose( $h );
+			return w4os_asset_get_zero( $format );
 		}
-		fclose($h);
-		if ($data === false) {
-            error_log("Failed to read data from cache file for asset UUID: $asset_uuid");
-            return w4os_asset_get_zero($format);
-        }
+		fclose( $h );
+		if ( $data === false ) {
+			error_log( "Failed to read data from cache file for asset UUID: $asset_uuid" );
+			return w4os_asset_get_zero( $format );
+		}
 	}
 
 	/* Convert original jp2 image to requested format :  */
 	$_img = new Imagick();
 	try {
-        $_img->readImageBlob( $data );
-    } catch (ImagickException $e) {
+		$_img->readImageBlob( $data );
+	} catch ( ImagickException $e ) {
 		$error_message = $e->getMessage();
-		if (!preg_match('/Zero size image string passed/', $error_message) || (defined('WP_DEBUG') && WP_DEBUG)) {
-	        error_log("ImagickException: " . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . ' (Error code: ' . $e->getCode() . ')');
+		if ( ! preg_match( '/Zero size image string passed/', $error_message ) || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+			error_log( 'ImagickException: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . ' (Error code: ' . $e->getCode() . ')' );
 		}
-        return w4os_asset_get_zero($format);
-    }
+		return w4os_asset_get_zero( $format );
+	}
 	$_img->setImageFormat( $format ); // TODO : check for error
 
 	if ( W4OS_ASSETS_DO_RESIZE ) {
@@ -190,26 +190,26 @@ function w4os_asset_get( $asset_uuid, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
  * @author Anthony Le Mansec <a.lm@free.fr>
  */
 function w4os_cache_check( $asset_uuid, $cachedir = W4OS_ASSETS_CACHE_JP2 ) {
-    $cache_file   = $cachedir . $asset_uuid;
-    $file_max_age = time() - W4OS_ASSETS_CACHE_TTL;
+	$cache_file   = $cachedir . $asset_uuid;
+	$file_max_age = time() - W4OS_ASSETS_CACHE_TTL;
 
-    if ( ! file_exists( $cache_file ) ) {
-        return false;
-    }
+	if ( ! file_exists( $cache_file ) ) {
+		return false;
+	}
 
-    if ( filesize( $cache_file ) == 0 ) {
-        // empty file, removing:
-        unlink( $cache_file );
-        return false;
-    }
+	if ( filesize( $cache_file ) == 0 ) {
+		// empty file, removing:
+		unlink( $cache_file );
+		return false;
+	}
 
-    if ( filemtime( $cache_file ) < $file_max_age ) {
-        // expired, removing old file:
-        unlink( $cache_file );
-        return false;
-    }
+	if ( filemtime( $cache_file ) < $file_max_age ) {
+		// expired, removing old file:
+		unlink( $cache_file );
+		return false;
+	}
 
-    return true;
+	return true;
 }
 
 

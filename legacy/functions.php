@@ -439,90 +439,90 @@ function w4os_get_url_status( $url, $output = null, $force = false ) {
 }
 
 function w4os_get_urls_statuses( $urls = array(), $force = false ) {
-    set_transient( 'w4os_get_url_status_checked', time() );
-    // Avoid concurrent checks
-    if ( get_transient( 'w4os_get_urls_statuses_lock' ) ) {
-        // w4os_get_urls_statuses_lock is already processing, skipping
-        return;
-    }
-    if ( $force ) {
-        set_transient( 'w4os_get_urls_statuses_lock', true, 3600 );
-        set_transient( 'w4os_get_url_status_checked', time() );
-    }
+	set_transient( 'w4os_get_url_status_checked', time() );
+	// Avoid concurrent checks
+	if ( get_transient( 'w4os_get_urls_statuses_lock' ) ) {
+		// w4os_get_urls_statuses_lock is already processing, skipping
+		return;
+	}
+	if ( $force ) {
+		set_transient( 'w4os_get_urls_statuses_lock', true, 3600 );
+		set_transient( 'w4os_get_url_status_checked', time() );
+	}
 
-    if ( is_array( $urls ) ) {
-        foreach ( $urls as $key => $url ) {
-            if ( esc_url_raw( $url ) == $url ) {
-                w4os_get_url_status( $url, null, $force );
-            } else {
-                error_log(__METHOD__ . " Invalid URL: " . $url );
-            }
-        }
-    } else {
-        error_log(__METHOD__ . " Empty URLs array");
-    }
+	if ( is_array( $urls ) ) {
+		foreach ( $urls as $key => $url ) {
+			if ( esc_url_raw( $url ) == $url ) {
+				w4os_get_url_status( $url, null, $force );
+			} else {
+				error_log( __METHOD__ . ' Invalid URL: ' . $url );
+			}
+		}
+	} else {
+		error_log( __METHOD__ . ' Empty URLs array' );
+	}
 
-    if ( $force ) {
-        delete_transient( 'w4os_get_urls_statuses_lock' );
-    }
+	if ( $force ) {
+		delete_transient( 'w4os_get_urls_statuses_lock' );
+	}
 
-    if ( ! empty( $errors ) ) {
-        $messages[] = '<p class=sync-errors><ul><li>' . join( '</li><li>', $errors ) . '</p>';
-    }
-    // $messages[] = w4os_array2table($accounts, 'accounts', 2);
-    if ( ! empty( $messages ) ) {
-        return '<div class=messages><p>' . join( '</p><p>', $messages ) . '</div>';
-    }
+	if ( ! empty( $errors ) ) {
+		$messages[] = '<p class=sync-errors><ul><li>' . join( '</li><li>', $errors ) . '</p>';
+	}
+	// $messages[] = w4os_array2table($accounts, 'accounts', 2);
+	if ( ! empty( $messages ) ) {
+		return '<div class=messages><p>' . join( '</p><p>', $messages ) . '</div>';
+	}
 
-	w4os_clean_previous_scheduled_actions(__FUNCTION__);
+	w4os_clean_previous_scheduled_actions( __FUNCTION__ );
 }
 
 function w4os_clean_previous_scheduled_actions( $hook ) {
-    // Use the same logic as ActionScheduler_WPCLI_Clean_Command.php
-    // DO NOT USE as_unschedule_action, it has already been tested and it does not clean the actions Scheduled Actions admin page
+	// Use the same logic as ActionScheduler_WPCLI_Clean_Command.php
+	// DO NOT USE as_unschedule_action, it has already been tested and it does not clean the actions Scheduled Actions admin page
 
-    $batch_size = 20; // Number of actions to delete per batch
-    $status = ActionScheduler_Store::STATUS_COMPLETE;
-    
-    // $before = '31 days ago'; // Delete actions older than this date
-    // try {
-    //     $lifespan = as_get_datetime_object( $before );
-    // } catch ( Exception $e ) {
-    //     $lifespan = null;
-    // }
-    
+	$batch_size = 20; // Number of actions to delete per batch
+	$status     = ActionScheduler_Store::STATUS_COMPLETE;
+
+	// $before = '31 days ago'; // Delete actions older than this date
+	// try {
+	// $lifespan = as_get_datetime_object( $before );
+	// } catch ( Exception $e ) {
+	// $lifespan = null;
+	// }
+
 	// Instance of the action store
-    $store_args = array(
-        'hooks'   => [ $hook ],
-    );
-    $store = ActionScheduler::store();
-    
-    // Retrieve actions associated with the specified hook
-    $args = array(
-        'hook'   => $hook,
-        'status' => $status,
-        // 'date'   => $lifespan ? $lifespan->format( 'Y-m-d H:i:s' ) : null,
-    );
-    $actions = as_get_scheduled_actions( $args );
-    if ( empty( $actions ) ) {
-        // No actions to check for $hook, stopping
-        return;
-    }
+	$store_args = array(
+		'hooks' => array( $hook ),
+	);
+	$store      = ActionScheduler::store();
 
-    foreach ( $actions as $action_id => $action ) {
-        try {
-            $store->delete_action( $action_id );
-        } catch ( Exception $e ) {
-            error_log( __METHOD__ . " Error while deleting $hook action $action_id : " . $e->getMessage() . ' (File: ' . $e->getFile() . ', Line: ' . $e->getLine() . ')' );
-        }
-    }
+	// Retrieve actions associated with the specified hook
+	$args = array(
+		'hook'   => $hook,
+		'status' => $status,
+		// 'date'   => $lifespan ? $lifespan->format( 'Y-m-d H:i:s' ) : null,
+	);
+	$actions = as_get_scheduled_actions( $args );
+	if ( empty( $actions ) ) {
+		// No actions to check for $hook, stopping
+		return;
+	}
+
+	foreach ( $actions as $action_id => $action ) {
+		try {
+			$store->delete_action( $action_id );
+		} catch ( Exception $e ) {
+			error_log( __METHOD__ . " Error while deleting $hook action $action_id : " . $e->getMessage() . ' (File: ' . $e->getFile() . ', Line: ' . $e->getLine() . ')' );
+		}
+	}
 }
 
 function register_w4os_get_urls_statuses_async_cron() {
-    // Schedule a new instance of the action only if it is not already running or scheduled
-    if ( false === as_has_scheduled_action( 'w4os_get_urls_statuses' ) && ! get_transient( 'w4os_get_urls_statuses_lock' ) ) {
-        as_schedule_cron_action( time(), '*/5 * * * *', 'w4os_get_urls_statuses' );
-    }
+	// Schedule a new instance of the action only if it is not already running or scheduled
+	if ( false === as_has_scheduled_action( 'w4os_get_urls_statuses' ) && ! get_transient( 'w4os_get_urls_statuses_lock' ) ) {
+		as_schedule_cron_action( time(), '*/5 * * * *', 'w4os_get_urls_statuses' );
+	}
 }
 add_action( 'init', 'register_w4os_get_urls_statuses_async_cron' );
 add_action( 'w4os_get_urls_statuses', 'w4os_get_urls_statuses' );
