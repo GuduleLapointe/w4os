@@ -439,25 +439,39 @@ function w4os_get_url_status( $url, $output = null, $force = false ) {
 }
 
 function w4os_get_urls_statuses( $urls = array(), $force = false ) {
-	set_transient( 'w4os_get_url_status_checked', time() );
-	// Avoid concurrent checks
-	if ( get_transient( 'w4os_get_urls_statuses_lock' ) ) {
-		return;
-	}
-	if ( $force ) {
-		set_transient( 'w4os_get_urls_statuses_lock', true, 3600 );
-		set_transient( 'w4os_get_url_status_checked', time() );
-	}
+    set_transient( 'w4os_get_url_status_checked', time() );
+    // Avoid concurrent checks
+    if ( get_transient( 'w4os_get_urls_statuses_lock' ) ) {
+        // w4os_get_urls_statuses_lock is already processing, skipping
+        return;
+    }
+    if ( $force ) {
+        set_transient( 'w4os_get_urls_statuses_lock', true, 3600 );
+        set_transient( 'w4os_get_url_status_checked', time() );
+    }
 
-	if ( is_array( $urls ) ) {
-		foreach ( $urls as $key => $url ) {
-			if ( esc_url_raw( $url ) == $url ) {
-				w4os_get_url_status( $url, null, $force );
-			}
-		}
+    if ( is_array( $urls ) ) {
+        foreach ( $urls as $key => $url ) {
+            if ( esc_url_raw( $url ) == $url ) {
+                w4os_get_url_status( $url, null, $force );
+            } else {
+                error_log(__METHOD__ . " Invalid URL: " . $url );
+            }
+        }
+    } else {
+		error_log(__METHOD__ . " Empty URLs array");
+    }
+
+    if ( $force ) {
+        delete_transient( 'w4os_get_urls_statuses_lock' );
+    }
+
+	if ( ! empty( $errors ) ) {
+		$messages[] = '<p class=sync-errors><ul><li>' . join( '</li><li>', $errors ) . '</p>';
 	}
-	if ( $force ) {
-		delete_transient( 'w4os_get_urls_statuses_lock' );
+	// $messages[] = w4os_array2table($accounts, 'accounts', 2);
+	if ( ! empty( $messages ) ) {
+		return '<div class=messages><p>' . join( '</p><p>', $messages ) . '</div>';
 	}
 }
 
@@ -467,6 +481,7 @@ function register_w4os_get_urls_statuses_async_cron() {
 	}
 }
 add_action( 'init', 'register_w4os_get_urls_statuses_async_cron' );
+add_action( 'w4os_get_urls_statuses', 'w4os_get_urls_statuses' );
 
 function w4os_sanitize_login_uri( $login_uri ) {
 	if ( empty( $login_uri ) ) {

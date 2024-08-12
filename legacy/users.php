@@ -386,9 +386,11 @@ function w4os_profile_sync_all() {
 	return;
 }
 
+// Enregistrer l'action planifiée
 function register_w4os_sync_users_async_cron() {
-	if ( false === as_next_scheduled_action( 'w4os_sync_users' ) ) {
-		as_schedule_cron_action( time(), '0 * * * *', 'w4os_sync_users' );
-	}
+    if ( false === as_next_scheduled_action( 'w4os_sync_users' ) ) {
+        as_schedule_cron_action( time(), '0 * * * *', 'w4os_sync_users' );
+    }
 }
 add_action( 'init', 'register_w4os_sync_users_async_cron' );
+add_action( 'w4os_sync_users', 'w4os_sync_users_callback' );
