@@ -262,7 +262,7 @@ function et_builder_module_w4os_avatar_profile_init() {
 				return $fields;
 			}
 
-			function shortcode_callback( $atts, $content = null, $function_name ) {
+			function shortcode_callback( $atts, $content = null, $function_name = null ) {
 				$atts = wp_parse_args(
 					$atts,
 					w4os_avatar_profile_defaults(),
