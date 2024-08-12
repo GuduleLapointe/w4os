@@ -152,7 +152,10 @@ function w4os_asset_get( $asset_uuid, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
 	try {
         $_img->readImageBlob( $data );
     } catch (ImagickException $e) {
-        error_log("ImagickException: " . $e->getMessage());
+		$error_message = $e->getMessage();
+		if (!preg_match('/Zero size image string passed/', $error_message) || (defined('WP_DEBUG') && WP_DEBUG)) {
+	        error_log("ImagickException: " . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . ' (Error code: ' . $e->getCode() . ')');
+		}
         return w4os_asset_get_zero($format);
     }
 	$_img->setImageFormat( $format ); // TODO : check for error
@@ -187,18 +190,26 @@ function w4os_asset_get( $asset_uuid, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
  * @author Anthony Le Mansec <a.lm@free.fr>
  */
 function w4os_cache_check( $asset_uuid, $cachedir = W4OS_ASSETS_CACHE_JP2 ) {
-	$cache_file   = $cachedir . $asset_uuid;
-	$file_max_age = time() - W4OS_ASSETS_CACHE_TTL;
-	if ( ! file_exists( $cache_file ) ) {
-		return ( false );
-	}
-	if ( filemtime( $cache_file ) < $file_max_age ) {
-		// expired, removing old file:
-		unlink( $cache_file );
-		return ( false );
-	}
+    $cache_file   = $cachedir . $asset_uuid;
+    $file_max_age = time() - W4OS_ASSETS_CACHE_TTL;
 
-	return ( true );
+    if ( ! file_exists( $cache_file ) ) {
+        return false;
+    }
+
+    if ( filesize( $cache_file ) == 0 ) {
+        // empty file, removing:
+        unlink( $cache_file );
+        return false;
+    }
+
+    if ( filemtime( $cache_file ) < $file_max_age ) {
+        // expired, removing old file:
+        unlink( $cache_file );
+        return false;
+    }
+
+    return true;
 }
 
 
