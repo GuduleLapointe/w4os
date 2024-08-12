@@ -115,16 +115,46 @@ function w4os_asset_get( $asset_uuid, $format = W4OS_ASSETS_DEFAULT_FORMAT ) {
 		// }
 
 		$data = base64_decode( $xml->Data );
+        if ($data === false) {
+            error_log("Failed to decode base64 data for asset UUID: $asset_uuid");
+            return w4os_asset_get_zero($format);
+        }
 		w4os_cache_write( $asset_uuid, $data, W4OS_ASSETS_CACHE_JP2 );
 	} else {
-		$h    = fopen( W4OS_ASSETS_CACHE_JP2 . $asset_uuid, 'rb' );
-		$data = fread( $h, filesize( W4OS_ASSETS_CACHE_JP2 . $asset_uuid ) );
-		fclose( $h );
+		$h = fopen(W4OS_ASSETS_CACHE_JP2 . $asset_uuid, 'rb');
+		if ($h === false) {
+			error_log("Failed to open cache file for asset UUID: $asset_uuid");
+			return w4os_asset_get_zero($format);
+		}
+
+		$filesize = filesize(W4OS_ASSETS_CACHE_JP2 . $asset_uuid);
+		if ($filesize > 0) {
+			$data = fread($h, $filesize);
+			if ($data === false) {
+				error_log("Failed to read data from cache file for asset UUID: $asset_uuid");
+				fclose($h);
+				return w4os_asset_get_zero($format);
+			}
+		} else {
+			error_log("Cache file for asset UUID: $asset_uuid is empty");
+			fclose($h);
+			return w4os_asset_get_zero($format);
+		}
+		fclose($h);
+		if ($data === false) {
+            error_log("Failed to read data from cache file for asset UUID: $asset_uuid");
+            return w4os_asset_get_zero($format);
+        }
 	}
 
 	/* Convert original jp2 image to requested format :  */
 	$_img = new Imagick();
-	$_img->readImageBlob( $data ); // TODO : error checking
+	try {
+        $_img->readImageBlob( $data );
+    } catch (ImagickException $e) {
+        error_log("ImagickException: " . $e->getMessage());
+        return w4os_asset_get_zero($format);
+    }
 	$_img->setImageFormat( $format ); // TODO : check for error
 
 	if ( W4OS_ASSETS_DO_RESIZE ) {
