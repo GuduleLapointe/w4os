@@ -84,7 +84,6 @@ switch ( $method ) {
 			} else {
 				$body = $xml->message;
 			}
-			$body = str_replace( "\n", "\n<br>", $body );
 			if ( ! empty( OPENSIM_GRID_NAME ) ) {
 				$in = ' in ' . OPENSIM_GRID_NAME;
 			}
@@ -121,16 +120,20 @@ switch ( $method ) {
 
 				default:
 					$subject = "Message from $xml->fromAgentName";
-					$intro   = "$xml->fromAgentName sent you a message$in:";
+					$outro   = "Sent by $xml->fromAgentName $in";
 			}
 			$body    = htmlspecialchars( $body );
 			$subject = htmlspecialchars( $subject );
 
+			$body = str_replace( "\n", "\n<br>", $body );
+						// $body = str_replace( "\n", "\r\n", $body );
+
 			$body = '<html><body>'
-			. "<p>$intro</p>"
-			. "<blockquote>$body</blockquote>"
+			. ( empty($intro) ? "" : "<p></p>" )
+			. $body
 			. "\r\n"
 			. "\r\n"
+			. ( empty($outro) ? "" : "<blockquote>$outro</blockquote>" )
 			. '<hr>'
 			. "<p style='font-size:small'><b>" . OPENSIM_GRID_NAME . '</b> Instant Messages mail forwarding by w4os.'
 			. '<br>Please log in-world to answer to this message. Emails to the sender address will not be processed.'
