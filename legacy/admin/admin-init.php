@@ -259,7 +259,7 @@ function w4os_custom_post_states( $states, $post ) {
 	if ( ! empty( W4OS_GRID_INFO['password'] ) && $post->ID === url_to_postid( W4OS_GRID_INFO['password'] ) ) {
 		$states[] = __( 'OpenSimulator Password', 'w4os' );
 	}
-	if ( ! empty( W4OS_GRID_INFO['message'] ) && $post->ID === url_to_postid( W4OS_GRID_INFO['message'] ) ) {
+	if ( ! empty( W4OS_GRID_INFO['OfflineMessageURL'] ) && $post->ID === url_to_postid( W4OS_GRID_INFO['OfflineMessageURL'] ) ) {
 		$states[] = __( 'OpenSimulator Offline Messages', 'w4os' );
 	}
 
@@ -361,15 +361,16 @@ add_action(
 						),
 					),
 				),
-				'message'   => array(
+				// OfflineMessageURL is not populated by the grid server but by indivual simulators
+				'OfflineMessageURL'   => array(
 					'name'            => __( 'Offline messages', 'w4os' ),
 					'description'     => __( 'Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os' ),
 					'recommended'     => get_option( 'w4os_offline_helper_uri' ),
 					'os_config'       => array(
-						'Robust.HG.ini' => array( '[GridInfoService]' => array( 'message = %1$s' ) ),
 						'OpenSim.ini'   => array( '[Messaging]' => array( 'OfflineMessageURL = %1$s' ) ),
+						'Robust.HG.ini' => array( '[GridInfoService]' => array( 'OfflineMessageURL = %1$s' ) ),
 					),
-					'third_party_url' => ( get_option( 'w4os_provide_offline' ) ) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
+					'settings_page_url' => admin_url( 'admin.php?page=w4os-offline' ),
 				),
 				'welcome'   => array(
 					'name'        => __( 'Splash', 'w4os' ),

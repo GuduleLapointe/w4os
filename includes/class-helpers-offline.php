@@ -63,7 +63,7 @@ class W4OS_Offline extends W4OS_Loader {
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
-		// $offline_url = ( ! empty( W4OS_GRID_INFO['message'] ) ) ? W4OS_GRID_INFO['message'] : $this->default_offline_url ;
+		// $offline_url = ( ! empty( W4OS_GRID_INFO['OfflineMessageURL'] ) ) ? W4OS_GRID_INFO['OfflineMessageURL'] : $this->default_offline_url ;
 		$offline_url = get_option( 'w4os_offline_helper_uri' );
 		// $offline_url = $this->default_offline_url;
 
@@ -88,7 +88,7 @@ class W4OS_Offline extends W4OS_Loader {
 						'<br/>',
 						array(
 							__( 'Honor "Email me IMs when I\'m offline" viewer option.', 'w4os' ),
-							__( 'OpenSimulator core offline messages module delivers messages sent to an offline user when they come back online but don\'t handle e-mail forwarding option available in the viewer.', 'w4os' ),
+							__( 'OpenSimulator core offline messages module doesn\'t handle e-mail forwarding option available in the viewer settings.', 'w4os' ),
 						)
 					),
 				),
@@ -120,18 +120,22 @@ class W4OS_Offline extends W4OS_Loader {
 						'relation' => 'or',
 					),
 					'desc'        => '<p>'
-					. __( 'Set the URL in Robust and OpenSimulator configurations.', 'w4os' )
+					. __( 'Set the URL in OpenSimulator configurations. Go to Settings > Permalinks and', 'w4os' )
 					. w4os_format_ini(
 						array(
-							'Robust.HG.ini' => array(
-								'[GridInfoService]' => array(
-									'message' => $offline_url,
-								),
-							),
 							'OpenSim.ini'   => array(
 								'[Messaging]' => array(
 									'OfflineMessageModule' => 'OfflineMessageModule',
 									'OfflineMessageURL'    => $offline_url,
+								),
+							),
+							'Robust.HG.ini' => array(
+								'[GridInfoService]' => array(
+									';; Optional. To allow different grid to communicate their offline messages service',
+									';; In previous versions, we recommended the "message" variable to add',
+									';; the URL in Robust.HG.ini GridInfoService section, but this value seems',
+									';; to be intended for other purposes, although not enforced (yet?).', 
+									'OfflineMessageURL'	=> $offline_url,
 								),
 							),
 						)

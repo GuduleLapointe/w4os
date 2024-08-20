@@ -30,8 +30,8 @@ if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( W4OS_GRID_I
 	}
 }
 
-if ( get_option( 'w4os_provide_offline_messages' ) == true & ! empty( W4OS_GRID_INFO['message'] ) ) {
-	$message = parse_url( W4OS_GRID_INFO['message'] )['path'];
+if ( get_option( 'w4os_provide_offline_messages' ) == true & ! empty( W4OS_GRID_INFO['OfflineMessageURL'] ) ) {
+	$message = parse_url( W4OS_GRID_INFO['OfflineMessageURL'] )['path'];
 	if ( preg_match( ":^$message/(SaveMessage|RetrieveMessages|offlineim)/:", "$url/" ) ) {
 		require 'offline.php';
 	} elseif ( $message == $url ) {
