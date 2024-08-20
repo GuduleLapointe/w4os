@@ -1,7 +1,5 @@
 ## Installation
 
-Before installing and configure W4OS plugin, you must already have OpenSimulator up and running, as well as a functional WordPress website.
-
 ### OpenSimulator installation
 
 Please check [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.

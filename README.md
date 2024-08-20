@@ -1,6 +1,6 @@
 # w4os - OpenSimulator Web Interface
 
-![Stable 2.7.8](https://badgen.net/badge/Stable/2.7.8/00aa00)
+![Stable 2.7.9](https://badgen.net/badge/Stable/2.7.9/00aa00)
 ![WordPress 5.3.0 - 6.6.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.6.1/3858e9)
 ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
 ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
@@ -41,17 +41,15 @@ See Features and Roadmap sections for current and upcoming functionalties.
 - Manual and cron Grid/WP users sync
 - Auth with avatar credentials (if no matching wp account, create one)
 
+### Paid version
+
+The free version from WordPress plugins directory and the [paid version](https://magiiic.com/wordpress/plugins/w4os/) are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
+
 ## Requirements
 
 - OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
 - Latest WordPdress release
 - PHP 8.x or later (8.2 recommended), and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
-
-**Before installing and configure W4OS plugin**, you must already have OpenSimulator up and running, as well as a functional WordPress website.
-
-### Paid version
-
-The free version from WordPress plugins directory and the [paid version](https://magiiic.com/wordpress/plugins/w4os/) are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
 
 ## Troubleshooting
 

@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.6.1
-Stable tag: 2.7.8
+Stable tag: 2.7.9
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -202,6 +202,11 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.7.9 =
+* updated Economy settings instructions
+* fix Offline Message url instructions for Robust (we used 'message' variable, which Firestorm Viewer seems to use for another purpose)
+* offline message : move sender info after the message for better display in mailbox list
 
 = 2.7.8 =
 * fix scheduled jobs list growing indefinitely

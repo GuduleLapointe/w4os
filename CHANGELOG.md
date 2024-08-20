@@ -1,5 +1,10 @@
 ## Changelog
 
+### 2.7.9
+- updated Economy settings instructions
+- fix Offline Message url instructions for Robust (we used 'message' variable, which Firestorm Viewer seems to use for another purpose)
+- offline message : move sender info after the message for better display in mailbox list
+
 ### 2.7.8
 - fix scheduled jobs list growing indefinitely
 - fix w4os_get_urls_statuses and w4os_sync_users scheduled action failng (not properly registered)
