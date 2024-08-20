@@ -586,13 +586,24 @@ function w4os_format_ini( $array ) {
 		$content .= '<pre>';
 		foreach ( $sections as $section => $params ) {
 			$content .= "$section<br>";
-			foreach ( $params as $param => $value ) {
-				if ( is_numeric( $param ) ) {
-					$content .= "  $value<br>";
-				} else {
-					$content .= "  $param = $value<br>";
+			if(is_array($params)){
+				foreach ( $params as $param => $value ) {
+					if ( is_numeric( $param ) ) {
+						$content .= "  $value<br>";
+					} else {
+						$content .= "  $param = $value<br>";
+					}
 				}
+			} else {
+				$content .= "  $params<br>";
 			}
+			// foreach ( $params as $param => $value ) {
+			// 	if ( is_numeric( $param ) ) {
+			// 		$content .= "  $value<br>";
+			// 	} else {
+			// 		$content .= "  $param = $value<br>";
+			// 	}
+			// }
 		}
 		$content  = preg_replace( '/<br>$/', '', $content );
 		$content .= '</pre></p>';
