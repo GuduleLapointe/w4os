@@ -197,7 +197,7 @@ function w4os_update_grid_info( $rechecknow = false ) {
 	if ( get_option( 'w4os_provide_search', false ) ) {
 		$grid_info['SearchURL'] = get_option( 'w4os_search_url' ) . '?gk=http://' . get_option( 'w4os_login_uri' );
 	}
-	
+
 	if ( 'provide' === get_option( 'w4os_profile_page' ) && empty( $grid_info['profile'] ) && defined( 'W4OS_PROFILE_URL' ) ) {
 		$grid_info['profile'] = W4OS_PROFILE_URL;
 	}
@@ -208,9 +208,9 @@ function w4os_update_grid_info( $rechecknow = false ) {
 		update_option( 'w4os_grid_name', $grid_info['gridname'] );
 	}
 	// if ( isset( $grid_info['OfflineMessageURL'] ) ) {
-	// 	update_option( 'w4os_offline_helper_uri', $grid_info['OfflineMessageURL'] );
+	// update_option( 'w4os_offline_helper_uri', $grid_info['OfflineMessageURL'] );
 	// }
-	
+
 	if ( isset( $urls ) && is_array( $urls ) ) {
 		w4os_get_urls_statuses( $urls, get_option( 'w4os_check_urls_now' ) );
 	}
@@ -586,7 +586,7 @@ function w4os_format_ini( $array ) {
 		$content .= '<pre>';
 		foreach ( $sections as $section => $params ) {
 			$content .= "$section<br>";
-			if(is_array($params)){
+			if ( is_array( $params ) ) {
 				foreach ( $params as $param => $value ) {
 					if ( is_numeric( $param ) ) {
 						$content .= "  $value<br>";
@@ -598,11 +598,11 @@ function w4os_format_ini( $array ) {
 				$content .= "  $params<br>";
 			}
 			// foreach ( $params as $param => $value ) {
-			// 	if ( is_numeric( $param ) ) {
-			// 		$content .= "  $value<br>";
-			// 	} else {
-			// 		$content .= "  $param = $value<br>";
-			// 	}
+			// if ( is_numeric( $param ) ) {
+			// $content .= "  $value<br>";
+			// } else {
+			// $content .= "  $param = $value<br>";
+			// }
 			// }
 		}
 		$content  = preg_replace( '/<br>$/', '', $content );

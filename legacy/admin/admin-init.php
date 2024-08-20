@@ -334,11 +334,11 @@ add_action(
 		define(
 			'W4OS_PAGES',
 			array(
-				'profile'   => array(
+				'profile'           => array(
 					'name'        => __( 'Avatar profile', 'w4os' ),
 					'description' => __( 'The base URL for avatar web profiles.', 'w4os' ),
 				),
-				'SearchURL' => array(
+				'SearchURL'         => array(
 					'name'            => __( 'Search Service', 'w4os' ),
 					'description'     => __( 'Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll.', 'w4os' ),
 					'third_party_url' => ( get_option( 'w4os_provide_search' ) ) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
@@ -350,7 +350,7 @@ add_action(
 						),
 					),
 				),
-				'search'    => array(
+				'search'            => array(
 					'name'            => __( 'Web Search', 'w4os' ),
 					'description'     => __( 'Web tab of viewer search windows. Relevant if you have a search page providing content from the grid.', 'w4os' ),
 					'third_party_url' => ( get_option( 'w4os_provide_search' ) ) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
@@ -362,17 +362,17 @@ add_action(
 					),
 				),
 				// OfflineMessageURL is not populated by the grid server but by indivual simulators
-				'OfflineMessageURL'   => array(
-					'name'            => __( 'Offline messages', 'w4os' ),
-					'description'     => __( 'Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os' ),
-					'recommended'     => get_option( 'w4os_offline_helper_uri' ),
-					'os_config'       => array(
+				'OfflineMessageURL' => array(
+					'name'              => __( 'Offline messages', 'w4os' ),
+					'description'       => __( 'Needed by viewers to keep messages while user is offline and deliver them when they come back online. Internal service, not accessed directly by the user.', 'w4os' ),
+					'recommended'       => get_option( 'w4os_offline_helper_uri' ),
+					'os_config'         => array(
 						'OpenSim.ini'   => array( '[Messaging]' => array( 'OfflineMessageURL = %1$s' ) ),
 						'Robust.HG.ini' => array( '[GridInfoService]' => array( 'OfflineMessageURL = %1$s' ) ),
 					),
 					'settings_page_url' => admin_url( 'admin.php?page=w4os-offline' ),
 				),
-				'welcome'   => array(
+				'welcome'           => array(
 					'name'        => __( 'Splash', 'w4os' ),
 					'description' => __( 'The welcome page displayed in the viewer with the login form. A short, no-scroll page, with only essential info. It is required, or at least highly recommended.', 'w4os' ),
 					'os_config'   => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'welcome = %s' ) ) ),
@@ -398,31 +398,31 @@ add_action(
       <!-- /wp:column --></div>
       <!-- /wp:columns -->',
 				),
-				'register'  => array(
+				'register'          => array(
 					'name'        => __( 'Registration page', 'w4os' ),
 					'description' => __( 'Link to the user registration.', 'w4os' ),
 					'recommended' => wp_registration_url(),
 					'os_config'   => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'register = %s' ) ) ),
 				),
-				'password'  => array(
+				'password'          => array(
 					'name'        => __( 'Password revovery', 'w4os' ),
 					'description' => __( 'Link to lost password page.', 'w4os' ),
 					'recommended' => wp_lostpassword_url(),
 					'os_config'   => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'password = %s' ) ) ),
 				),
-				'economy'   => array(
+				'economy'           => array(
 					'name'            => __( 'Economy', 'w4os' ),
 					'description'     => __( 'Currencies and some other services queried by the viewer. They are not accessed directly by the user.', 'w4os' ),
 					'external'        => true,
 					'os_config'       => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'economy = %s' ) ) ),
 					'third_party_url' => ( get_option( 'w4os_provide_currency' ) ) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
 				),
-				'about'     => array(
+				'about'             => array(
 					'name'        => __( 'About this grid', 'w4os' ),
 					'description' => __( 'Detailed info page on your website, via a link displayed on the viewer login page.', 'w4os' ),
 					'os_config'   => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'about = %s' ) ) ),
 				),
-				'help'      => array(
+				'help'              => array(
 					'name'        => __( 'Help', 'w4os' ),
 					'description' => __( 'Link to a help page on your website.', 'w4os' ),
 					'os_config'   => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'help = %s' ) ) ),

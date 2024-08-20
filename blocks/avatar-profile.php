@@ -4,7 +4,6 @@
  *
  * @package GuduleLapointe/w4os
  */
-
 function w4os_avatar_profile_attributes() {
 	return array(
 		'title' => array(

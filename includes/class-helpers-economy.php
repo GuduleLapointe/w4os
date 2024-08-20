@@ -140,16 +140,16 @@ class W4OS_Economy extends W4OS_Loader {
 					),
 					// 'desc'       => __( 'Set the same credentials here and in MoneyServer.ini', 'w4os' )
 					// . w4os_format_ini(
-					// 	array(
-					// 		'MoneyServer.ini' => array(
-					// 			'[MySql]' => array(
-					// 				'hostname' => ( $use_default_db ) ? get_option( 'w4os_db_host' ) : get_option( 'w4os_economy_db_host' ),
-					// 				'database' => ( $use_default_db ) ? get_option( 'w4os_db_database' ) : get_option( 'w4os_economy_db_database' ),
-					// 				'username' => ( $use_default_db ) ? get_option( 'w4os_db_user' ) : get_option( 'w4os_economy_db_user' ),
-					// 				'password' => '(your password)',
-					// 			),
-					// 		),
-					// 	)
+					// array(
+					// 'MoneyServer.ini' => array(
+					// '[MySql]' => array(
+					// 'hostname' => ( $use_default_db ) ? get_option( 'w4os_db_host' ) : get_option( 'w4os_economy_db_host' ),
+					// 'database' => ( $use_default_db ) ? get_option( 'w4os_db_database' ) : get_option( 'w4os_economy_db_database' ),
+					// 'username' => ( $use_default_db ) ? get_option( 'w4os_db_user' ) : get_option( 'w4os_economy_db_user' ),
+					// 'password' => '(your password)',
+					// ),
+					// ),
+					// )
 					// ),
 				),
 				array(
@@ -205,8 +205,8 @@ class W4OS_Economy extends W4OS_Loader {
 								'<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>dev.gloebit.com</a>',
 							),
 							__( 'Add Gloebit configuration in OpenSim.ini.', 'w4os' ),
-							W4OS::sprintf_safe( 
-								'Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll), from %1$s or %2$s', 
+							W4OS::sprintf_safe(
+								'Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll), from %1$s or %2$s',
 								'<a href="https://github.com/GuduleLapointe/opensim-debian" target="_blank">github.com/GuduleLapointe/opensim-debian</a>',
 								'<a href="http://dev.gloebit.com/opensim/downloads/" target="_blank">dev.gloebit.com</a>',
 							),
@@ -235,7 +235,7 @@ class W4OS_Economy extends W4OS_Loader {
 										( $use_default_db ? get_option( 'w4os_db_database' ) : get_option( 'w4os_economy_db_database' ) ),
 										( $use_default_db ? get_option( 'w4os_db_user' ) : get_option( 'w4os_economy_db_user' ) ),
 										'your_password',
-									)
+									),
 								),
 							),
 							'Robust.HG.ini (optional, for grid-wide support)' => array(
@@ -273,7 +273,7 @@ class W4OS_Economy extends W4OS_Loader {
 									'EnableScriptSendMoney' => 'true',
 									'MoneyScriptAccessKey' => esc_attr( get_option( 'w4os_money_script_access_key' ) ),
 								),
-								'[MySql]' => array(
+								'[MySql]'       => array(
 									'hostname' => ( $use_default_db ) ? get_option( 'w4os_db_host' ) : get_option( 'w4os_economy_db_host' ),
 									'database' => ( $use_default_db ) ? get_option( 'w4os_db_database' ) : get_option( 'w4os_economy_db_database' ),
 									'username' => ( $use_default_db ) ? get_option( 'w4os_db_user' ) : get_option( 'w4os_economy_db_user' ),

@@ -232,8 +232,8 @@ $count = w4os_count_users();
 					$status_icon,
 					( ! empty( $url ) ) ? W4OS::sprintf_safe( '<p class=url><a href="%1$s">%1$s</a></p>', $url ) : '',
 					( ! empty( $data['description'] ) ) ? '<p class=description>' . $data['description'] . '</p>' : '',
-					( ! empty( $data['recommended'] ) && $url != $data['recommended'] ) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> ' 
-					. W4OS::sprintf_safe( __( 'Should be %s, got %s', 'w4os' ), $data['recommended'], $url ) . '</p>' : '',
+					( ! empty( $data['recommended'] ) && $url != $data['recommended'] ) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> '
+					. W4OS::sprintf_safe( __( 'Should be %1$s, got %2$s', 'w4os' ), $data['recommended'], $url ) . '</p>' : '',
 					( ! empty( $data['os_config'] ) )
 					? W4OS::sprintf_safe( w4os_format_ini( $data['os_config'] ), ( ! empty( $data['recommended'] ) ) ? $data['recommended'] : $url )
 					: '',

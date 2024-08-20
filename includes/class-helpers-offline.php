@@ -134,8 +134,8 @@ class W4OS_Offline extends W4OS_Loader {
 									';; Optional. To allow different grid to communicate their offline messages service',
 									';; In previous versions, we recommended the "message" variable to add',
 									';; the URL in Robust.HG.ini GridInfoService section, but this value seems',
-									';; to be intended for other purposes, although not enforced (yet?).', 
-									'OfflineMessageURL'	=> $offline_url,
+									';; to be intended for other purposes, although not enforced (yet?).',
+									'OfflineMessageURL' => $offline_url,
 								),
 							),
 						)
