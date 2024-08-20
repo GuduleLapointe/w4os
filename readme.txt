@@ -49,9 +49,13 @@ See Features and Roadmap sections for current and upcoming functionalties.
 
 The free version from WordPress plugins directory and the [paid version](https://magiiic.com/wordpress/plugins/w4os/) are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
 
-== Installation ==
+== Requirements ==
 
-Before installing and configure W4OS plugin, you must already have OpenSimulator up and running, as well as a functional WordPress website.
+* OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
+* Latest WordPdress release
+* PHP 8.x or later (8.2 recommended), and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
+
+== Installation ==
 
 = OpenSimulator installation =
 
