@@ -1,5 +1,10 @@
 ## Changelog
 
+### 2.8
+- fix database credential not shown in settings
+- fix PHP Fatal error:  Uncaught Error: Call to undefined method MetaBoxSupportArr::to_depth (updated metabox dependencies)
+- Tested up to 6.7-RC1
+
 ### 2.7.9
 - updated Economy settings instructions
 - fix Offline Message url instructions for Robust (we used 'message' variable, which Firestorm Viewer seems to use for another purpose)
