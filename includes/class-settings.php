@@ -536,10 +536,10 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	public function db_field_html( $html, $field = null, $values = array() ) {
-		error_log(__METHOD__ . ' field = ' . print_r($field, true) . ' values = ' . print_r($values, true));
+		error_log( __METHOD__ . ' field = ' . print_r( $field, true ) . ' values = ' . print_r( $values, true ) );
 
 		// Fix apparent change in RWMB behavior
-		if( isset($field['std']) &! is_array($value)) {
+		if ( isset( $field['std'] ) & ! is_array( $values ) ) {
 			$values = $field['std'];
 		}
 		// Render the HTML output for the w4os db field type
