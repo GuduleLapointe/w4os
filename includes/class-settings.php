@@ -536,6 +536,12 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	public function db_field_html( $html, $field = null, $values = array() ) {
+		error_log(__METHOD__ . ' field = ' . print_r($field, true) . ' values = ' . print_r($values, true));
+
+		// Fix apparent change in RWMB behavior
+		if( isset($field['std']) &! is_array($value)) {
+			$values = $field['std'];
+		}
 		// Render the HTML output for the w4os db field type
 		// Use $field and $meta to access field settings and saved values
 		// $fields = array('use_default', 'type', 'host', 'port', 'database', 'user', 'pass');
