@@ -1,0 +1,108 @@
+name: Create GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Tags like v1.0.0 or v1.0.0-beta or v1.0.0-beta-1
+
+permissions:
+  contents: "write"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetches the Git history
+
+      # Step 2: Set up environment variables
+      - name: Set up environment variables
+        run: |
+          if [ -f composer.json ]; then
+            PLUGIN_NAME=$(jq -r '.name // empty' composer.json)
+          elif [ -f package.json ]; then
+            PLUGIN_NAME=$(jq -r '.name // empty' package.json)
+          else
+            PLUGIN_NAME=$(basename "${GITHUB_REPOSITORY}")
+          fi
+          PLUGIN_NAME=$(basename "${PLUGIN_NAME}")
+
+          VERSION=${GITHUB_REF#refs/tags/}
+          RELEASE_VERSION="${VERSION}"
+          RELEASE_ZIP="${PLUGIN_NAME}-${RELEASE_VERSION}.zip"
+
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
+          echo "PLUGIN_NAME=${PLUGIN_NAME}" >> $GITHUB_ENV
+          echo "RELEASE_ZIP=${RELEASE_ZIP}" >> $GITHUB_ENV
+
+      # Step 3: Get the tag message
+      - name: Get Tag Message
+        id: get_tag_message
+        run: |
+          TAG_MESSAGE=$(git tag -l "${VERSION}" --format='%(contents)')
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$TAG_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      # Step 4: Generate the ZIP archive
+      - name: Generate Release ZIP
+        run: |
+          PLUGIN_NAME="${PLUGIN_NAME}"
+
+          # Create a temporary directory with the plugin name
+          mkdir -p "${PLUGIN_NAME}"
+
+          # Generate exclusion arguments
+          EXCLUDES=""
+          [ -f .gitignore ] && EXCLUDES="$EXCLUDES --exclude-from=.gitignore"
+          [ -f .distignore ] && EXCLUDES="$EXCLUDES --exclude-from=.distignore"
+
+          # Add default exclusions
+          EXCLUDES="$EXCLUDES --exclude=.git/"
+          EXCLUDES="$EXCLUDES --exclude=node_modules/"
+          EXCLUDES="$EXCLUDES --exclude=tests/"
+          EXCLUDES="$EXCLUDES --exclude=.github/"
+          EXCLUDES="$EXCLUDES --exclude=.env"
+          EXCLUDES="$EXCLUDES --exclude=README.md"
+
+          # Copy files into the temporary directory
+          rsync -av $EXCLUDES ./ "${PLUGIN_NAME}/"
+
+          # Create the ZIP archive containing the plugin directory
+          zip -r "${RELEASE_ZIP}" "${PLUGIN_NAME}"
+
+          # Remove the temporary plugin directory
+          rm -rf "${PLUGIN_NAME}"
+
+          # Verify that the ZIP file was created
+          if [ ! -f "${RELEASE_ZIP}" ]; then
+            echo "Error: The ZIP archive was not created."
+            exit 1
+          fi
+
+      # Step 5: Create the GitHub Release
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: Release ${{ env.RELEASE_VERSION }}
+          body: ${{ env.RELEASE_BODY }}
+          draft: false
+          prerelease: ${{ contains(env.RELEASE_VERSION, '-beta') }}
+
+      # Step 6: Attach the ZIP archive to the release
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.RELEASE_ZIP }}
+          asset_name: ${{ env.RELEASE_ZIP }}
+          asset_content_type: application/zip

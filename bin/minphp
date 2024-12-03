@@ -1,0 +1,51 @@
+#!/bin/bash
+
+ignore="lib/*,vendor/*,node_modules/*,build/plugin-update-checker,build/wp-package-updater,sources/,*.asset.php,*/*/*.asset.php,*.map,includes/fullcalendar/fullcalendar.*"
+
+TMP=/tmp/$(basename "$0").$$
+
+[ $1 ] && echo "$1" | grep -qv "\-" && version=$1 && shift || version=5.7
+[ "$1" = "-x" ] && mode=executable
+
+phpcs -p . --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors
+if [ $? -eq 0 ]
+then
+  min=$version
+else
+  lastbad=$(grep "or earlier" $TMP.errors | sed -E "s/.* (([0-9]+\.)+[0-9]+) or earlier.*/\\1/" | sort -u | sort -n | tail -1)
+  version=$(echo $lastbad | cut -d. -f1).$(($(echo $lastbad | cut -d. -f 2) + 1))
+  phpcs -p . --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors && min=$version
+fi
+
+[ "$min" = "" ] && cat $TMP.errors && exit 1
+echo Minimum PHP: $min >&2
+
+if [ "$mode" = "executable" ]
+then
+  which php$min >/dev/null \
+  && echo found matching php$min >&2
+
+  php=$(which php)
+  versions=$(ls $php[0-9]*.* | sed "s/.*php//" | sort -n)
+  for version in $versions
+  do
+    phpcs -p . --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors \
+    && echo php $min not installed, using $version >&2 && which php$version && exit
+  done
+  echo "php $min not installed, could not find compatible version" >&2
+  exit 1
+fi
+
+
+# cat $TMP.errors
+# for version in $test
+# do
+#   echo Testing $version >&2
+#   phpcs -p . --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors && min=$version && break
+#   grep "or earlier" $TMP.errors | sed "s/"
+#   break
+# done
+
+rm -f $TMP.*
+
+echo $min

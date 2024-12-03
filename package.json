@@ -11,9 +11,17 @@
     "lint:js": "wp-scripts lint-js",
     "packages-update": "wp-scripts packages-update",
     "plugin-zip": "wp-scripts plugin-zip",
-    "php-loader": "^0.2.0"
+    "php-loader": "^0.2.0",
+    "grunt": "grunt default",
+    "readme": "grunt readme",
+    "i18n": "grunt i18n"
   },
   "devDependencies": {
+    "grunt": "^1.6.1",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-text-replace": "^0.4.0",
+    "grunt-wp-i18n": "^1.0.3",
+    "grunt-wp-readme-to-markdown": "^2.1.0",
     "@wordpress/scripts": "^28.5.0",
     "copy-webpack-plugin": "^11.0.0",
     "react-refresh": "^0.14.0",
@@ -21,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.magiiic.com:opensimulator/w4os.git"
+    "url": "https://github.com/GuduleLapointe/w4os"
   },
   "keywords": [
     "OpenSimulator",
