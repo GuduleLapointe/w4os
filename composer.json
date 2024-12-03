@@ -30,7 +30,7 @@
       "vendor/{$vendor}/{$name}": ["type:wordpress-plugin"]
     }
   },
-  "license": "AGPLV3",
+  "license": "AGPL-3.0-or-later",
   "authors": [
     {
       "name": "Gudule Lapointe",
@@ -45,11 +45,16 @@
   },
   "require-dev": {
     "magicoli/opensim-rest-php": "^1.0",
+    "wp-coding-standards/wpcs": "^3.1",
     "magicoli/php-bump-library": "^1.0"
   },
   "config": {
     "allow-plugins": {
-      "composer/installers": true
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
-  }
+  },
+  "scripts": {
+    "bump-version": "vendor/magicoli/php-bump-library/vendor/bin/robo --load-from=vendor/magicoli/php-bump-library/RoboFile.php bump:version"
+  }    
 }
