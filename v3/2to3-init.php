@@ -50,11 +50,13 @@ class W4OS3 {
         // Load v3 features if enabled
         if ( W4OS_ENABLE_V3 ) {
             // Include v3 feature files
-            // require_once W4OS_INCLUDES_DIR . 'v3-feature.php';
+            require_once W4OS_INCLUDES_DIR . '2to3-avatar.php';
         }
 
         // Once all files are loaded, we start the classes.
         W4OS3_Settings::init();
+
+        $Avatar = new W4OS3_Avatar(); $Avatar->init();
     }
 
     // Replicate core add_submenu_page to simplify other classes code.
