@@ -71,11 +71,12 @@ class W4OS3 {
     public static function render_settings_page() {
         $page_title = esc_html( get_admin_page_title() );
         $menu_slug = preg_replace( '/^.*_page_/', '', esc_html( get_current_screen()->id ) );
-        $template = W4OS_TEMPLATES_DIR . 'settings.php';
         $action_links_html = null; // TODO: Add action links
-
+        
+        $template_base = W4OS_TEMPLATES_DIR . 'admin-' . preg_replace( '/^w4os-/', '', $menu_slug );
+        $template = $template_base . '-template.php';
         if ( isset( $_GET['tab'] ) ) {
-            $tab_template = W4OS_TEMPLATES_DIR . 'settings-' . $_GET['tab'] . '.php';
+            $tab_template = $template_base . '-template.php';
             if( file_exists( $tab_template ) ) {
                 $template = $tab_template;
             }
@@ -89,11 +90,6 @@ class W4OS3 {
             $action_links_html,
             $menu_slug,
         );
-
-        if( ! file_exists( $template ) ) {
-            // trigger an error and display settings errors
-            // admin_notice( 'error', __( 'No settings available for this page.', 'w4os' ) );
-        }
 
         settings_errors( $menu_slug );
 
