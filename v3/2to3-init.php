@@ -38,6 +38,7 @@ class W4OS3 {
         define( 'W4OS_PLUGIN_DIR', plugin_dir_path( __DIR__) );
         define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
         define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
+        define( 'W4OS_ENABLE_V3', W4OS3::get_option( 'enable-v3-features', false ) );
     }
 
     public static function includes() {
@@ -45,6 +46,12 @@ class W4OS3 {
 
         // First we include all the files
         require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
+
+        // Load v3 features if enabled
+        if ( W4OS_ENABLE_V3 ) {
+            // Include v3 feature files
+            // require_once W4OS_INCLUDES_DIR . 'v3-feature.php';
+        }
 
         // Once all files are loaded, we start the classes.
         W4OS3_Settings::init();
@@ -104,6 +111,39 @@ class W4OS3 {
 
         printf( '</div>' );
     }
+
+    static function get_option( $option, $default = false ) {
+		$options_main = 'w4os_settings';
+		$result        = $default;
+		if ( preg_match( '/:/', $option ) ) {
+			$options_main = strstr( $option, ':', true );
+			$option        = trim( strstr( $option, ':' ), ':' );
+		}
+
+		$options = get_option( $options_main );
+		if ( $options && isset( $options[ $option ] ) ) {
+			$result = $options[ $option ];
+		}
+
+		// } else {
+		// $result = get_option($option, $default);
+		// }
+		return $result;
+	}
+
+	static function update_option( $option, $value, $autoload = null ) {
+		$options_main = null;
+		if ( preg_match( '/:/', $option ) ) {
+			$options_main       = strstr( $option, ':', true );
+			$option              = trim( strstr( $option, ':' ), ':' );
+        }
+        $options            = get_option( $options_main );
+        $options[ $option ] = $value;
+        $result              = update_option( $options_main, $options, $autoload );
+
+        return $result;
+	}
+
 }
 
 W4OS3::init();
