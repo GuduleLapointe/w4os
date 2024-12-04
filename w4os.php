@@ -35,39 +35,35 @@ if ( ! defined( 'WPINC' ) ) {
  * WordPress Directory, we want to make sure only one version of the plugin is
  * activated.
  */
-$plugin_dir_check = basename( dirname( __FILE__ ) );
-// First web check if official plugin release is active, even if not yet loaded, as it has priority
-if ( $plugin_dir_check != 'w4os-opensimulator-web-interface' && in_array( 'w4os-opensimulator-web-interface/w4os.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-	add_action(
-		'admin_notices',
-		function() {
-			echo W4OS::sprintf_safe(
-				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
-				__( 'You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress plugins directory. The developer version has been deactivated and should be uninstalled.', 'w4os' ),
-			);
-		}
-	);
-	deactivate_plugins( $plugin_dir_check . '/' . basename( __FILE__ ) );
-	// Then we check for any other plugin conflict, first loaded is kept
-} elseif ( defined( 'W4OS_SLUG' ) ) {
-	add_action(
-		'admin_notices',
-		function() {
-			echo W4OS::sprintf_safe(
-				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s</p></div>",
-				__( 'Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.', 'w4os' ),
-			);
-		}
-	);
-	deactivate_plugins( $plugin_dir_check . '/' . basename( __FILE__ ) );
+if ( defined( 'W4OS_SLUG' ) ) {
+
+	// If W4OS_SLUG is defined, another version of the plugin is active, abort.
+
+	add_action( 'admin_notices', function() {
+		echo W4OS::sprintf_safe(
+			"<div class='notice notice-error'><p><strong>W4OS:</strong> %s (%s).</p></div>",
+			__( 'Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.', 'w4os' ),
+			basename( __DIR__ ) . '/' . basename( __FILE__ ),
+		);
+	} );
+	deactivate_plugins( basename( __DIR__ ) . '/' . basename( __FILE__ ) );
 } else {
-	// Finally, actually load if no conflict
+
+	// No conflict, initialize the plugin.
+
+	// Temporary init class for v2 to v3 transition.	
+	require_once plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php';
+
+	// Legacy v2 inits. Both will be removed when v3 is ready.
 	require_once plugin_dir_path( __FILE__ ) . 'legacy/init.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/loader.php';
+
+	// Plugin updater. Should definitively be moved to init class.
 	if ( file_exists( plugin_dir_path( __FILE__ ) . 'lib/package-updater.php' ) ) {
 		include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
 	}
 
+	// Legacy admin init.
 	if ( is_admin() ) {
 		require_once plugin_dir_path( __FILE__ ) . 'legacy/admin/admin-init.php';
 	}
