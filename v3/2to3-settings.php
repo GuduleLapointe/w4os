@@ -1,6 +1,6 @@
 <?php
 /**
- * New v3 settings class.
+ * Beta v3 settings class.
  * 
  * Defines the general settings pages, not related to any specific feature.
  * Main menu is already defined in init and has the slug 'w4os'.
@@ -25,8 +25,8 @@ class W4OS3_Settings {
     public static function add_submenus() {
         W4OS3::add_submenu_page(
             'w4os',                         // Parent slug
-            __( 'v3 Settings', 'w4os' ),  // Page title
-            __( 'v3 Settings', 'w4os' ),        // Menu title
+            __( 'Beta Settings (v3 backports)', 'w4os' ),  // Page title
+            __( 'Beta Settings', 'w4os' ),        // Menu title
             'manage_options',               // Capability
             'settings',               // Menu slug
             [ 'W4OS3', 'render_settings_page' ],  // Callback
@@ -36,24 +36,24 @@ class W4OS3_Settings {
 
     public static function register_transition_settings() {
         register_setting( 
-            'w4os_settings_transition',         // Option group
+            'w4os_settings_beta',         // Option group
             'w4os_settings',                    // Option name
             [ __CLASS__, 'sanitize_options' ],  // Sanitize callback
         );
 
         add_settings_section(
-            'w4os_transition_section',
+            'w4os_section_beta',
             null,
             null,
-            'w4os_settings_transition'
+            'w4os_settings_beta'
         );
 
         add_settings_field(
             'enable-v3-features',
             __( 'Beta test', 'w4os' ),
             [ __CLASS__, 'enable_v3_features_callback' ],
-            'w4os_settings_transition',
-            'w4os_transition_section'
+            'w4os_settings_beta',
+            'w4os_section_beta'
         );
 
         if(! W4OS_ENABLE_V3) {
@@ -83,7 +83,7 @@ class W4OS3_Settings {
             '<label>
             <input type="checkbox" name="w4os_settings[enable-v3-features]" value="1" %s />%s</label>',
             checked( 1, $value, false ),
-            __( 'Enable v3 features', 'w4os' ),
+            __( 'Enable beta v3 features', 'w4os' ),
         );
         echo '<p class="description">' . __( 'Warning: These features are in beta and may not be stable.', 'w4os' ) . '</p>';
     }
