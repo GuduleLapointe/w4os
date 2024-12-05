@@ -54,6 +54,14 @@ class W4OS3_Avatar {
 	public function __construct( $args = null ) {
 		global $w4osdb;
 
+		$this->init_avatar( $args );
+	}
+
+	private function init_avatar( $args = null ) {
+		if (empty($args) ){
+			return;
+		}
+
 		if ( is_numeric( $args ) ) {
 			$this->ID = $args;
 			$post     = get_post( $this->ID );
@@ -109,84 +117,105 @@ class W4OS3_Avatar {
 	 * @since    1.0.0
 	 */
 	public function init() {
+		add_action('init', array($this, 'register_post_types'));
+        if (W4OS3::get_option('w4os_sync_users')) {
+			error_log(__METHOD__ . ' - w4os_sync_users');
+            W4OS3::update_option('w4os_sync_users', false);
+            add_action('init', array($this, 'sync_avatars'));
+        }
+		add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
+		add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ], 20 );
+        add_action( 'admin_head', array($this, 'remove_avatar_edit_delete_action' ) );
 
-		$this->actions = array(
-			array(
-				'hook'     => 'init',
-				'callback' => 'register_post_types',
-			),
-			array(
-				'hook'     => 'wp_ajax_check_name_availability',
-				'callback' => 'ajax_check_name_availability',
-			),
-			array(
-				'hook'          => 'post_updated',
-				'callback'      => 'update_password',
-				'accepted_args' => 3,
-			),
+        add_action('wp_ajax_check_name_availability', array($this, 'ajax_check_name_availability'));
+        add_action('post_updated', array($this, 'update_password'), 10, 3);
+        add_action('save_post_avatar', array($this, 'save_post_action'), 10, 3);
+        add_action('wp_trash_post', array($this, 'avatar_deletion_warning'));
 
-			array(
-				'hook'          => 'save_post_avatar',
-				'callback'      => 'save_post_action',
-				'accepted_args' => 3,
-			),
-			array(
-				'hook'     => 'wp_trash_post',
-				'callback' => 'avatar_deletion_warning',
-			),
-			array(
-				'hook'     => 'admin_head',
-				'callback' => 'remove_avatar_edit_delete_action',
-			),
-		);
-
-		if ( get_option( 'w4os_sync_users' ) ) {
-			update_option( 'w4os_sync_users', false );
-			$actions[] = array(
-				'hook'     => 'init',
-				'callback' => 'sync_avatars',
-			);
-		}
-
-		$this->filters = array(
-			array(
-				'hook'     => 'rwmb_meta_boxes',
-				'callback' => 'metaboxes_avatar',
-			),
-			array(
-				'hook'     => 'rwmb_meta_boxes',
-				'callback' => 'metaboxes_userprofile',
-			),
-			// array (
-			// 'hook' => 'wp_insert_post_data',
-			// 'callback' => 'insert_post_data',
-			// 'accepted_args' => 4,
-			// ),
-
-			array(
-				'hook'     => 'views_edit-avatar',
-				'callback' => 'display_synchronization_status',
-			),
-
-			array(
-				'hook'          => 'post_row_actions',
-				'callback'      => 'remove_avatar_delete_row_actions',
-				'accepted_args' => 2,
-			),
-
-			// array (
-			// 'hook' => 'load-edit.php',
-			// 'callback' => 'add_in_admin_footer',
-			// ),
-
-			// array (
-			// 'hook' => 'post_row_actions',
-			// 'add_row_action_links',
-			// 'accepted_args' => 2,
-			// ),
-		);
-
+        add_filter('rwmb_meta_boxes', array($this, 'metaboxes_avatar'));
+        add_filter('rwmb_meta_boxes', array($this, 'metaboxes_userprofile'));
+        add_filter('views_edit-avatar', array($this, 'display_synchronization_status'));
+        add_filter('post_row_actions', array($this, 'remove_avatar_delete_row_actions'), 10, 2);
 	}
+
+	/**
+	 * Add submenu for Avatar settings page
+	 */
+	public static function add_submenus() {
+		W4OS3::add_submenu_page(
+			'w4os',                         // Parent slug
+			__( 'Avatar Settings', 'w4os' ),  // Page title
+			__( 'Avatar Settings', 'w4os' ),        // Menu title
+			'manage_options',               // Capability
+			'w4os-avatar-settings',               // Menu slug
+			[ 'W4OS3_Settings', 'render_settings_page' ],  // Callback
+			2,                             // Position
+		);
+	}
+
+    public static function register_settings() {
+        if(! W4OS_ENABLE_V3) {
+            return;
+        }
+        // Add v3 settings below
+
+		register_setting(
+			'w4os_settings_avatar',
+			'w4os_settings',
+			array( __CLASS__, 'sanitize_options' )
+		);
+
+		# add_settings_section( string $id, string $title, callable $callback, string $page, array $args = array() )
+		add_settings_section(
+			'default',				// ID
+			null,	// Title
+			[ 'W4OS3_Settings', 'render_settings_section' ],  // Callback
+			'w4os_settings_avatar',				// Page
+			array(
+				'description' => __( 'Settings for avatars.', 'w4os' ),
+			)
+		);
+
+		// add_settings_field( string $id, string $title, callable $callback, string $page, string $section = ‘default’, array $args = array() );
+		
+		add_settings_field(
+			'create_wp_account', // id
+			__( 'Create WP accounts', 'w4os' ), // title
+			[ 'W4OS3_Settings', 'render_settings_field' ], // callback
+			'w4os_settings_avatar', // page
+			'default', // section
+			array(
+				'type' => 'checkbox',
+				'label' => __( 'Create WP accounts for avatars without a linked WP account.', 'w4os' ),
+				'description' => __( 'This will create a WP account for each avatar that does not have a linked WP account. The password will be the same as the avatar password.', 'w4os' ),
+				'name' => 'create_wp_account',
+				// 'value' => W4OS3::get_option('create_wp_account'),
+				// 'checked' => W4OS3::get_option('create_wp_account'),
+				// 'attributes' => array(
+				// 	'disabled' => false,
+				// 	'readonly' => false,
+				// ),
+				// 'help' => __( 'This will create a WP account for each avatar that does not have a linked WP account. The password will be the same as the avatar password.', 'w4os' ),
+				// 'error' => true,
+				// 'error_message' => 'Eror mezage',
+				// 'error_attributes' => array(),
+			),
+		);
+
+		add_settings_field(
+			'multiple_avatars',					
+			__( 'Restrict Multiple Avatars', 'w4os' ),
+			[ 'W4OS3_Settings', 'render_settings_field' ],
+			'w4os_settings_avatar',
+			'default',
+			array(
+				'type' => 'checkbox',
+				'label' => __( 'Restrict users to a single avatar.', 'w4os' ),
+				'description' => __( 'This will restrict users to a single avatar. If a user tries to create a new avatar, the existing avatar will be deleted.', 'w4os' ),
+				'name' => 'multiple_avatars',
+			),
+		);
+    }
 
 	function get_simulator_data() {
 		if ( ! W4OS_DB_CONNECTED ) {
@@ -517,7 +546,7 @@ class W4OS3_Avatar {
 						'searchable' => true,
 					),
 					'columns'       => 4,
-					// 'readonly' => (!W4OS::is_new_post()),
+					// 'readonly' => (!W4OS3::is_new_post()),
 					'desc'          => __( 'Optional. If set, the avatar will be linked to any matching WP user account.', 'w4os' ),
 					'hidden'        => array(
 						'when'     => array( array( 'avatar_owner', '!=', '' ) ),
@@ -539,18 +568,18 @@ class W4OS3_Avatar {
 					),
 				),
 				array(
-					'name'    => ( W4OS::is_new_post() ) ? __( 'Password', 'w4os' ) : __( 'Change password', 'w4os' ),
+					'name'    => ( W4OS3::is_new_post() ) ? __( 'Password', 'w4os' ) : __( 'Change password', 'w4os' ),
 					'id'      => $prefix . 'password',
 					'type'    => 'password',
 					'columns' => 4,
-						// 'required' => W4OS::is_new_post() &! current_user_can('administrator'),
+						// 'required' => W4OS3::is_new_post() &! current_user_can('administrator'),
 				),
 				array(
 					'name'    => __( 'Confirm password', 'w4os' ),
 					'id'      => $prefix . 'confirm_password',
 					'type'    => 'password',
 					'columns' => 4,
-						// 'required' => W4OS::is_new_post() &! current_user_can('administrator'),
+						// 'required' => W4OS3::is_new_post() &! current_user_can('administrator'),
 				),
 				array(
 					'name'     => __( 'Same password as WP user', 'w4os' ),
@@ -572,7 +601,7 @@ class W4OS3_Avatar {
 				),
 			),
 		);
-		if ( W4OS::is_new_post() ) {
+		if ( W4OS3::is_new_post() ) {
 			$meta_boxes['avatar']['fields']                                       = array_merge(
 				$meta_boxes['avatar']['fields'],
 				array(
@@ -588,15 +617,15 @@ class W4OS3_Avatar {
 				  'name'        => __( 'Avatar Name', 'w4os' ),
 				  'id'          => $prefix . 'name',
 				  'type'        => 'text',
-				  // 'disabled' => (!W4OS::is_new_post()),
-				  'readonly'    => ( ! W4OS::is_new_post() ),
+				  // 'disabled' => (!W4OS3::is_new_post()),
+				  'readonly'    => ( ! W4OS3::is_new_post() ),
 				  'required'    => true,
 				  // Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
 				  'placeholder' => __( 'Firstname', 'w4os' ) . ' ' . __( 'Lastname', 'w4os' ),
 				  'required'    => true,
 				  // 'columns'     => 6,
 				  'std'         => self::generate_name(),
-				  'desc'        => ( W4OS::is_new_post() ) ? __( 'The avatar name is permanent, it can\'t be changed later.', 'w4os' ) : '',
+				  'desc'        => ( W4OS3::is_new_post() ) ? __( 'The avatar name is permanent, it can\'t be changed later.', 'w4os' ) : '',
 			  );
 			  $meta_boxes['avatar']['validation']['rules'][ $prefix . 'name' ]    = array(
 				  // 'maxlength' => 64,
@@ -755,7 +784,7 @@ class W4OS3_Avatar {
 		if ( ! $update ) {
 			return;
 		}
-		if ( W4OS::is_new_post() ) {
+		if ( W4OS3::is_new_post() ) {
 			return; // triggered when opened new post page, empty
 		}
 		if ( $post->post_type != 'avatar' ) {
@@ -1528,7 +1557,7 @@ class W4OS3_Avatar {
 			return false;
 		}
 
-		update_option( 'w4os_sync_users', null );
+		W4OS3::update_option( 'w4os_sync_users', null );
 
 		$accounts      = self::get_avatars_ids_and_uuids();
 		$messages      = array();

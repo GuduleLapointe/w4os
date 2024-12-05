@@ -56,7 +56,9 @@ class W4OS3 {
         // Once all files are loaded, we start the classes.
         W4OS3_Settings::init();
 
-        $Avatar = new W4OS3_Avatar(); $Avatar->init();
+        if ( W4OS_ENABLE_V3 ) {
+            $AvatarClass = new W4OS3_Avatar(); $AvatarClass->init();
+        }
     }
 
     // Replicate core add_submenu_page to simplify other classes code.
@@ -77,42 +79,6 @@ class W4OS3 {
         );
     }
 
-    public static function render_settings_page() {
-        $page_title = esc_html( get_admin_page_title() );
-        $menu_slug = preg_replace( '/^.*_page_/', '', esc_html( get_current_screen()->id ) );
-        $action_links_html = null; // TODO: Add action links
-        
-        $template_base = W4OS_TEMPLATES_DIR . 'admin-' . preg_replace( '/^w4os-/', '', $menu_slug );
-        $template = $template_base . '-template.php';
-        if ( isset( $_GET['tab'] ) ) {
-            $tab_template = $template_base . '-template.php';
-            if( file_exists( $tab_template ) ) {
-                $template = $tab_template;
-            }
-        }
-
-        printf( 
-            '<h1>
-            %1$s %2$s
-            </h1>', 
-            esc_html( $page_title ),
-            $action_links_html,
-            $menu_slug,
-        );
-
-        settings_errors( $menu_slug );
-
-        printf( '<div class="wrap %s">', esc_attr( $menu_slug ) );
-
-        if( file_exists( $template ) ) {
-            include $template;
-        } else {
-            printf( '<p>%s</p>', __( 'No settings available for this page.', 'w4os' ) );
-            echo $template;
-        }
-
-        printf( '</div>' );
-    }
 
     static function get_option( $option, $default = false ) {
 		$options_main = 'w4os_settings';
@@ -146,6 +112,15 @@ class W4OS3 {
         return $result;
 	}
 
+    static function is_new_post( $args = null ) {
+		global $pagenow;
+		// make sure we are on the backend
+		if ( ! is_admin() ) {
+			return false;
+		}
+		return in_array( $pagenow, array( 'post-new.php' ) );
+		// return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
+	}
 }
 
 W4OS3::init();

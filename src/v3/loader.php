@@ -324,16 +324,16 @@ class W4OS {
 		}
 	}
 
-
-	static function is_new_post( $args = null ) {
-		global $pagenow;
-		// make sure we are on the backend
-		if ( ! is_admin() ) {
-			return false;
-		}
-		return in_array( $pagenow, array( 'post-new.php' ) );
-		// return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
-	}
+	// Replaced by W4OS3::is_new_post() in W4OS3 class
+	// static function is_new_post( $args = null ) {
+	// 	global $pagenow;
+	// 	// make sure we are on the backend
+	// 	if ( ! is_admin() ) {
+	// 		return false;
+	// 	}
+	// 	return in_array( $pagenow, array( 'post-new.php' ) );
+	// 	// return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
+	// }
 
 	static function get_option( $option, $default = false ) {
 		$settings_page = null;

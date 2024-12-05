@@ -516,7 +516,7 @@ class W4OS3_Avatar extends W4OS {
 						'searchable' => true,
 					),
 					'columns'       => 4,
-					// 'readonly' => (!W4OS::is_new_post()),
+					// 'readonly' => (!W4OS3::is_new_post()),
 					'desc'          => __( 'Optional. If set, the avatar will be linked to any matching WP user account.', 'w4os' ),
 					'hidden'        => array(
 						'when'     => array( array( 'avatar_owner', '!=', '' ) ),
@@ -538,18 +538,18 @@ class W4OS3_Avatar extends W4OS {
 					),
 				),
 				array(
-					'name'    => ( W4OS::is_new_post() ) ? __( 'Password', 'w4os' ) : __( 'Change password', 'w4os' ),
+					'name'    => ( W4OS3::is_new_post() ) ? __( 'Password', 'w4os' ) : __( 'Change password', 'w4os' ),
 					'id'      => $prefix . 'password',
 					'type'    => 'password',
 					'columns' => 4,
-						// 'required' => W4OS::is_new_post() &! current_user_can('administrator'),
+						// 'required' => W4OS3::is_new_post() &! current_user_can('administrator'),
 				),
 				array(
 					'name'    => __( 'Confirm password', 'w4os' ),
 					'id'      => $prefix . 'confirm_password',
 					'type'    => 'password',
 					'columns' => 4,
-						// 'required' => W4OS::is_new_post() &! current_user_can('administrator'),
+						// 'required' => W4OS3::is_new_post() &! current_user_can('administrator'),
 				),
 				array(
 					'name'     => __( 'Same password as WP user', 'w4os' ),
@@ -571,7 +571,7 @@ class W4OS3_Avatar extends W4OS {
 				),
 			),
 		);
-		if ( W4OS::is_new_post() ) {
+		if ( W4OS3::is_new_post() ) {
 			$meta_boxes['avatar']['fields']                                       = array_merge(
 				$meta_boxes['avatar']['fields'],
 				array(
@@ -587,15 +587,15 @@ class W4OS3_Avatar extends W4OS {
 				  'name'        => __( 'Avatar Name', 'w4os' ),
 				  'id'          => $prefix . 'name',
 				  'type'        => 'text',
-				  // 'disabled' => (!W4OS::is_new_post()),
-				  'readonly'    => ( ! W4OS::is_new_post() ),
+				  // 'disabled' => (!W4OS3::is_new_post()),
+				  'readonly'    => ( ! W4OS3::is_new_post() ),
 				  'required'    => true,
 				  // Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
 				  'placeholder' => __( 'Firstname', 'w4os' ) . ' ' . __( 'Lastname', 'w4os' ),
 				  'required'    => true,
 				  // 'columns'     => 6,
 				  'std'         => self::generate_name(),
-				  'desc'        => ( W4OS::is_new_post() ) ? __( 'The avatar name is permanent, it can\'t be changed later.', 'w4os' ) : '',
+				  'desc'        => ( W4OS3::is_new_post() ) ? __( 'The avatar name is permanent, it can\'t be changed later.', 'w4os' ) : '',
 			  );
 			  $meta_boxes['avatar']['validation']['rules'][ $prefix . 'name' ]    = array(
 				  // 'maxlength' => 64,
@@ -754,7 +754,7 @@ class W4OS3_Avatar extends W4OS {
 		if ( ! $update ) {
 			return;
 		}
-		if ( W4OS::is_new_post() ) {
+		if ( W4OS3::is_new_post() ) {
 			return; // triggered when opened new post page, empty
 		}
 		if ( $post->post_type != 'avatar' ) {
