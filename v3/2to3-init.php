@@ -39,6 +39,7 @@ class W4OS3 {
         define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
         define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
         define( 'W4OS_ENABLE_V3', W4OS3::get_option( 'enable-v3-features', false ) );
+        define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
     }
 
     public static function includes() {

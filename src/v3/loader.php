@@ -114,7 +114,7 @@ class W4OS {
 		define( 'W4OS_NOTFOUND_PROFILEPIC', '201ce950-aa38-46d8-a8f1-4396e9d6be00' );
 
 
-		define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' );
+		// define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
 		define( 'OPENSIM_GRID_NAME', self::get_option( 'grid_name' ) );
 		define( 'W4OS_LOGIN_PAGE', get_home_url( null, get_option( 'w4os_profile_slug' ) ) );
 		define( 'W4OS_GRID_LOGIN_URI', W4OS::login_uri() );
