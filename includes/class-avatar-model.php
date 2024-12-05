@@ -51,7 +51,17 @@ class W4OS_Model extends W4OS_Loader {
 			),
 		);
 
-		// $this->register_hooks();
+		add_action( 'w4os_avatar_main_tabs', array( $this, 'add_to_main_tabs' ) );
+	}
+
+	function add_to_main_tabs($tabs) {
+
+		$tabs['models'] = array(
+			'title' => __( 'Avatar Models', 'w4os' ),
+			'url'   => admin_url('admin.php?page=w4os-models')
+		);
+
+		return $tabs;
 	}
 
 	function register_post_types() {
@@ -63,7 +73,7 @@ class W4OS_Model extends W4OS_Loader {
 			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
 			'id'         => 'w4os-models',
 			'position'   => 0,
-			'parent'     => 'w4os',
+			'parent'     => 'edit.php?post_type=avatar',
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-users',
@@ -76,6 +86,21 @@ class W4OS_Model extends W4OS_Loader {
 	function register_fields( $meta_boxes ) {
 		$prefix = '';
 
+		// $meta_boxes[] = array(
+		// 	'title' => 'Avatar Models Settings header',
+		// 	'id'    => 'w4os-models-header',
+		// 	'settings_pages' => array( 'w4os-models' ),
+		// 	'class' => 'w4os-settings no-hints',
+		// 	'fields' => array(
+		// 		array(
+		// 			'id'   => $prefix . 'main_tabs',
+		// 			'type' => 'custom_html',
+		// 			// 'std'  => 'settings main tabs go here',
+		// 			'std'  => self::get_main_tabs_html(),
+		// 		),
+		// 	),
+		// );
+		
 		$meta_boxes[] = array(
 			'title'          => __( 'Avatar Models', 'w4os' ),
 			'id'             => 'w4os-models-fields',
@@ -148,6 +173,21 @@ class W4OS_Model extends W4OS_Loader {
 
 		return $meta_boxes;
 	}
+
+	/**
+	 * get_main_tabs_html: 
+	 * 	- exit if not on w4os-models admin page
+	 *  - get the main tabs from W4OS3_Avatar::main_tabs()
+	 * - return the tabs as a string
+	 */
+	function get_main_tabs_html() {
+		if ( ! isset( $_GET['page'] ) || $_GET['page'] !== 'w4os-models' ) {
+			return '';
+		}
+
+		return W4OS3_Avatar::main_tabs_html();
+	}
+
 
 	function register_settings_sidebar() {
 		// Add a custom meta box to the sidebar

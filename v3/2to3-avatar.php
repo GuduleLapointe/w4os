@@ -392,7 +392,7 @@ class W4OS3_Avatar {
 			'not_found'                => esc_html__( 'No avatars found', 'w4os' ),
 			'not_found_in_trash'       => esc_html__( 'No avatars found in Trash', 'w4os' ),
 			'parent_item_colon'        => esc_html__( 'Parent Avatar:', 'w4os' ),
-			'all_items'                => esc_html__( 'All Avatars', 'w4os' ),
+			'all_items'                => esc_html__( 'Avatars', 'w4os' ),
 			'archives'                 => esc_html__( 'Avatar Archives', 'w4os' ),
 			'attributes'               => esc_html__( 'Avatar Attributes', 'w4os' ),
 			'insert_into_item'         => esc_html__( 'Insert into avatar', 'w4os' ),
@@ -1737,7 +1737,7 @@ class W4OS3_Avatar {
 
 	static function display_synchronization_status( $views = null ) {
         // Add main tabs
-        self::add_main_tabs();
+        self::render_main_tabs();
 
         // ...existing code...
 
@@ -2009,11 +2009,11 @@ class W4OS3_Avatar {
         return $views;
     }
 
-    public static function add_main_tabs() {
-        // Determine the current main tab
-        $current_main_tab = isset( $_GET['main_tab'] ) ? $_GET['main_tab'] : 'list';
+    public static function render_main_tabs() {
+		echo self::main_tabs_html();
+    }
 
-        // Base URL for avatar post type
+    public static function main_tabs_html() {
         $base_url = admin_url( 'edit.php?post_type=avatar' );
 		$tabs = array(
 			'list'     => array(
@@ -2024,12 +2024,38 @@ class W4OS3_Avatar {
 				'title' => __( 'Settings', 'w4os' ),
 				'url'   => add_query_arg( 'main_tab', 'settings', $base_url ),
 			),
+			'models' => array(
+				'title' => __( 'Avatar Models', 'w4os' ),
+				'url'   => admin_url('admin.php?page=w4os-models')
+			),
 		);
-        echo '<h2 class="nav-tab-wrapper">';
+		$tabs = apply_filters( 'w4os_avatar_main_tabs', $tabs );
+
+        // Determine the current main tab
+        $current_main_tab = isset( $_GET['main_tab'] ) ? $_GET['main_tab'] : null;
+		// If no main tab is set, chekc if current url matches one of the tabs
+		if ( empty( $current_main_tab ) ) {
+			// Set $current_url to actual current full url
+			$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			foreach ( $tabs as $tab => $data ) {
+				if ( $current_url == $data['url'] ) {
+					$current_main_tab = $tab;
+					break;
+				}
+			}
+		}
+		// If still no main tab is set, default to list
+		if ( empty( $current_main_tab ) ) {
+			$current_main_tab = 'list';
+		}
+
+        // Base URL for avatar post type
+        $html= '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $data ) {
 			$class = ( $current_main_tab === $tab ) ? 'nav-tab-active' : '';
-			echo '<a href="' . esc_url( $data['url'] ) . '" class="nav-tab ' . $class . '">' . esc_html( $data['title'] ) . '</a>';
+			$html .= '<a href="' . esc_url( $data['url'] ) . '" class="nav-tab ' . $class . '">' . esc_html( $data['title'] ) . '</a>';
 		}
-        echo '</h2>';
+        $html .= '</h2>';
+		return $html;
     }
 }

@@ -47,7 +47,7 @@ class W4OS_Settings extends W4OS_Loader {
 			array(
 				'hook'     => 'mb_settings_pages',
 				'callback' => 'register_settings_pages',
-				'priority' => 5,
+				'priority' => 20,
 			),
 			array(
 				'hook'     => 'rwmb_meta_boxes',
@@ -105,7 +105,15 @@ class W4OS_Settings extends W4OS_Loader {
 	}
 
 	function register_admin_submenus() {
-		add_submenu_page( 'w4os', __( 'Available Shortcodes', 'w4os' ), __( 'Shortcodes', 'w4os' ), 'manage_options', 'w4os-shortcodes', array( $this, 'w4os_shortcodes_page' ) );
+		add_submenu_page(
+			'w4os',
+			__( 'Available Shortcodes', 'w4os' ),
+			__( 'Shortcodes', 'w4os' ),
+			'manage_options',
+			'w4os-shortcodes',
+			array( $this, 'w4os_shortcodes_page' ),
+			8
+		);
 	}
 
 	function w4os_shortcodes_page() {
@@ -124,6 +132,7 @@ class W4OS_Settings extends W4OS_Loader {
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-generic',
+			'position'   => 90,
 		);
 
 		return $settings_pages;
