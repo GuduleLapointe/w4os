@@ -81,6 +81,7 @@ class W4OS3_Avatar {
         add_filter('rwmb_meta_boxes', array($this, 'metaboxes_avatar'));
         add_filter('rwmb_meta_boxes', array($this, 'metaboxes_userprofile'));
         add_filter('views_edit-avatar', array($this, 'display_synchronization_status'));
+        add_filter( 'views_edit-avatar', [ __CLASS__, 'add_settings_button' ] );
         add_filter('post_row_actions', array($this, 'remove_avatar_delete_row_actions'), 10, 2);
 	}
 
@@ -148,16 +149,16 @@ class W4OS3_Avatar {
 	 * Add submenu for Avatar settings page
 	 */
 	public static function add_submenus() {
-		W4OS3::add_submenu_page(
-			'w4os',                         // Parent slug
-			__( 'Avatar Settings', 'w4os' ),  // Page title
-			__( 'Avatar Settings', 'w4os' ),        // Menu title
-			'manage_options',               // Capability
-			'w4os-avatar-settings',               // Menu slug
-			[ 'W4OS3_Settings', 'render_settings_page' ],  // Callback
-			3,                             // Position
-		);
-	}
+        // W4OS3::add_submenu_page(
+        //     'w4os',                         
+        //     __( 'Avatar Settings', 'w4os' ),
+        //     __( 'Avatar Settings', 'w4os' ),
+        //     'manage_options',
+        //     'w4os-avatar-settings',
+        //     [ 'W4OS3_Settings', 'render_settings_page' ],
+        //     3,
+        // );
+    }
 
     public static function register_settings_page() {
         if (! W4OS_ENABLE_V3) {
@@ -504,7 +505,6 @@ class W4OS3_Avatar {
 				$role->remove_cap( $cap );
 			}
 		}
-
 	}
 
 	static function metaboxes_avatar( $meta_boxes ) {
@@ -1212,7 +1212,6 @@ class W4OS3_Avatar {
 	static function sanitize_name( $value, $field = array(), $oldvalue = null, $object_id = null ) {
 		// return $value;
 		$return = sanitize_text_field( $value );
-		// $return = strtr(utf8_decode($return), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
 		$return = remove_accents( $return );
 
 		$return = substr( preg_replace( '/(' . W4OS_PATTERN_NAME . ')[^[:alnum:]]*/', '$1', $return ), 0, 64 );
@@ -1739,6 +1738,13 @@ class W4OS3_Avatar {
 	}
 
 	static function display_synchronization_status( $views = null ) {
+        // Check if the 'tab' parameter is set to 'settings'
+        if ( isset( $_GET['tab'] ) && $_GET['tab'] === 'settings' ) {
+            // Render the settings page content
+            W4OS3_Settings::render_settings_page();
+            return $views;
+        }
+
 		$count = self::count();
 
 		$messages = array();
@@ -1978,4 +1984,14 @@ class W4OS3_Avatar {
 		wp_cache_set( $cache_key, $success );
 		return;
 	}
+
+    public static function add_settings_button( $views ) {
+        // Get the current URL without existing 'page' parameters
+        $current_url = remove_query_arg( array('page'), admin_url('edit.php?post_type=avatar') );
+        // Add the 'tab=settings' parameter to the URL
+        $settings_url = add_query_arg( 'tab', 'settings', $current_url );
+        // Add the Settings link to the views
+        $views['settings'] = '<a href="' . esc_url( $settings_url ) . '">' . __( 'Settings', 'w4os' ) . '</a>';
+        return $views;
+    }
 }
