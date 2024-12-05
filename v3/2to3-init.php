@@ -46,7 +46,7 @@ class W4OS3 {
 
         // First we include all the files
         require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
-
+        
         // Load v3 features if enabled
         if ( W4OS_ENABLE_V3 ) {
             // Include v3 feature files

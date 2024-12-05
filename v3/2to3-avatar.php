@@ -1738,8 +1738,15 @@ class W4OS3_Avatar {
 	}
 
 	static function display_synchronization_status( $views = null ) {
-        // Check if the 'tab' parameter is set to 'settings'
-        if ( isset( $_GET['tab'] ) && $_GET['tab'] === 'settings' ) {
+        // Add main tabs
+        self::add_main_tabs();
+
+        // ...existing code...
+
+        // Check the current main tab
+        $current_main_tab = isset( $_GET['main_tab'] ) ? $_GET['main_tab'] : 'list';
+
+        if ( $current_main_tab === 'settings' ) {
             // Render the settings page content
             W4OS3_Settings::render_settings_page();
             return $views;
@@ -1986,12 +1993,45 @@ class W4OS3_Avatar {
 	}
 
     public static function add_settings_button( $views ) {
-        // Get the current URL without existing 'page' parameters
-        $current_url = remove_query_arg( array('page'), admin_url('edit.php?post_type=avatar') );
-        // Add the 'tab=settings' parameter to the URL
-        $settings_url = add_query_arg( 'tab', 'settings', $current_url );
-        // Add the Settings link to the views
-        $views['settings'] = '<a href="' . esc_url( $settings_url ) . '">' . __( 'Settings', 'w4os' ) . '</a>';
+        // Remove the existing Settings link
+        unset( $views['settings'] );
+
+        // Determine the current tab
+        $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'list';
+
+        // Base URL for avatar post type
+        $base_url = admin_url( 'edit.php?post_type=avatar' );
+
+        // Add List tab
+        $views['list'] = '<a href="' . esc_url( $base_url ) . '" class="' . ( $current_tab === 'list' ? 'current' : '' ) . '">' . __( 'List', 'w4os' ) . '</a>';
+
+        // Add Settings tab
+        $views['settings'] = '<a href="' . esc_url( add_query_arg( 'tab', 'settings', $base_url ) ) . '" class="' . ( $current_tab === 'settings' ? 'current' : '' ) . '">' . __( 'Settings', 'w4os' ) . '</a>';
+
         return $views;
+    }
+
+    public static function add_main_tabs() {
+        // Determine the current main tab
+        $current_main_tab = isset( $_GET['main_tab'] ) ? $_GET['main_tab'] : 'list';
+
+        // Base URL for avatar post type
+        $base_url = admin_url( 'edit.php?post_type=avatar' );
+		$tabs = array(
+			'list'     => array(
+				'title' => __( 'List', 'w4os' ),
+				'url'   => $base_url,
+			),
+			'settings' => array(
+				'title' => __( 'Settings', 'w4os' ),
+				'url'   => add_query_arg( 'main_tab', 'settings', $base_url ),
+			),
+		);
+        echo '<h2 class="nav-tab-wrapper">';
+		foreach ( $tabs as $tab => $data ) {
+			$class = ( $current_main_tab === $tab ) ? 'nav-tab-active' : '';
+			echo '<a href="' . esc_url( $data['url'] ) . '" class="nav-tab ' . $class . '">' . esc_html( $data['title'] ) . '</a>';
+		}
+        echo '</h2>';
     }
 }
