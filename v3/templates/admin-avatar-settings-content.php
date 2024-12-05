@@ -7,10 +7,11 @@
 if ( ! defined( 'WPINC' ) ) {
     die;
 }
-
-echo '<form action="options.php" method="post">';
-do_settings_sections( 'w4os_settings_avatar' );
-settings_fields( 'w4os_settings_avatar' );
-submit_button();
-echo '</form>';
 ?>
+<form method="post" action="options.php">
+    <?php
+        settings_fields( 'w4os_settings_avatar' );
+        do_settings_sections( 'w4os-avatar-settings' );
+        submit_button();
+    ?>
+</form>

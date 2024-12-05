@@ -81,7 +81,12 @@ class W4OS3 {
 
 
     static function get_option( $option, $default = false ) {
-		$options_main = 'w4os_settings';
+        if(is_array($option) && isset($option[1])) {
+            $option_main = $option[0];
+            $option = $option[1];
+        } else {
+    		$options_main = 'w4os_settings';
+        }
 		$result        = $default;
 		if ( preg_match( '/:/', $option ) ) {
 			$options_main = strstr( $option, ':', true );
@@ -100,10 +105,14 @@ class W4OS3 {
 	}
 
 	static function update_option( $option, $value, $autoload = null ) {
-		$options_main = null;
-		if ( preg_match( '/:/', $option ) ) {
-			$options_main       = strstr( $option, ':', true );
-			$option              = trim( strstr( $option, ':' ), ':' );
+        if(is_array($option) && isset($option[1])) {
+            $option_main = $option[0];
+            $option = $option[1];
+        } else if ( preg_match( '/:/', $option ) ) {
+            $options_main = strstr( $option, ':', true );
+            $option        = trim( strstr( $option, ':' ), ':' );
+        } else {
+    		$options_main = null;
         }
         $options            = get_option( $options_main );
         $options[ $option ] = $value;

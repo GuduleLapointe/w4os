@@ -4,6 +4,10 @@
  */
 $template_base = W4OS_TEMPLATES_DIR . 'admin-' . preg_replace( '/^w4os-/', '', $menu_slug );
 $template = $template_base . '-content.php';
+if (empty($action_links_html)) {
+    $action_links_html = '';
+}
+
 if ( isset( $_GET['tab'] ) ) {
     $tab_template = $template_base . '-template.php';
     if( file_exists( $tab_template ) ) {

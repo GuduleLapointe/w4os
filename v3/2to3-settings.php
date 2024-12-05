@@ -18,8 +18,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class W4OS3_Settings {
     public static function init() {
-        add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ], 20 );
-        add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
+		add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
+		add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
     }
     
     public static function add_submenus() {
@@ -30,11 +30,11 @@ class W4OS3_Settings {
             'manage_options',               // Capability
             'settings',               // Menu slug
             [ 'W4OS3_Settings', 'render_settings_page' ],  // Callback
-            2,                             // Position
+            0,                             // Position
         );
     }
 
-    public static function register_settings() {
+    public static function register_settings_page() {
         register_setting( 
             'w4os_settings_beta',         // Option group
             'w4os_settings',                    // Option name
@@ -53,7 +53,11 @@ class W4OS3_Settings {
             __( 'Beta test', 'w4os' ),
             [ __CLASS__, 'enable_v3_features_callback' ],
             'w4os_settings_beta',
-            'w4os_section_beta'
+            'w4os_section_beta',
+            array(
+                'label_for' => 'enable-v3-features',
+                'short_description' => 'Enable beta v3 features for testing purposes.', // Added short description
+            )
         );
 
         add_settings_field(
@@ -61,7 +65,11 @@ class W4OS3_Settings {
             __( 'Debug', 'w4os' ),
             [ __CLASS__, 'debug_callback' ],
             'w4os_settings_beta',
-            'w4os_section_beta'
+            'w4os_section_beta',
+            array(
+                'label_for' => 'debug_html',
+                'short_description' => 'Display critical debug information on the front end.', // Added short description
+            )
         );
 
         if(! W4OS_ENABLE_V3) {
@@ -113,7 +121,6 @@ class W4OS3_Settings {
     public static function render_settings_page() {
         $page_title = esc_html( get_admin_page_title() );
         $menu_slug = preg_replace( '/^.*_page_/', '', esc_html( get_current_screen()->id ) );
-        $action_links_html = null; // TODO: Add action links
         $page_template = W4OS_TEMPLATES_DIR . 'admin-settings-page.php';
         
         if( file_exists( $page_template ) ) {
@@ -163,55 +170,39 @@ class W4OS3_Settings {
             'default' => null,
             'description' => null,
         ] );
-        $options = W4OS3::get_option( $args['id'], $args['default'] );
-        $options = is_array( $options ) ? $options : [ $options ];
-        $options = array_map( 'esc_attr', $options );
+        $option_name = $args['option_name'];
+        $field_name = $option_name . '[' . $args['label_for'] . ']';
+        $option = get_option( $option_name );
+        $value = isset( $option[ $args['label_for'] ] ) ? $option[ $args['label_for'] ] : '';
 
-        if ( 'text' === $args['type'] ) {
-            printf(
-                '<input type="text" id="%s" name="%s" value="%s" />',
-                $args['id'],
-                $args['id'],
-                $options[0],
-            );
-        } elseif ( 'checkbox' === $args['type'] ) {
-            printf(
-                '<input type="checkbox" id="%s" name="%s" value="1" %s />',
-                $args['id'],
-                $args['id'],
-                checked( 1, $options[0], false ),
-            );
-        } elseif ( 'select' === $args['type'] ) {
-            printf(
-                '<select id="%s" name="%s">',
-                $args['id'],
-                $args['id'],
-            );
-            foreach ( $args['options'] as $key => $value ) {
+        switch ( $args['type'] ) {
+            case 'text':
                 printf(
-                    '<option value="%s" %s>%s</option>',
-                    $key,
-                    selected( $options[0], $key, false ),
-                    $value,
+                    '<input type="text" id="%s" name="%s" value="%s" />',
+                    esc_attr( $args['label_for'] ),
+                    esc_attr( $field_name ),
+                    esc_attr( $value )
                 );
-            }
-            echo '</select>';
-        } elseif ( 'switch' === $args['type'] ) {
-            printf(
-                '<label class="switch">
-                <input type="checkbox" id="%s" name="%s" value="1" %s />
-                <span class="slider round"></span>
-                </label>',
-                $args['id'],
-                $args['id'],
-                checked( 1, $options[0], false ),
-            );
-        } elseif ( W4OS3::get_option('debug_html') ) {
-            echo "Unknown field type: {$args['type']}";
-            printf(
-                '<pre>%s</pre>',
-                print_r( $args, true ),
-            );
+                break;
+            case 'checkbox':
+                printf(
+                    '<label>
+                        <input type="checkbox" id="%s" name="%s" value="1" %s />
+                        %s
+                    </label>',
+                    esc_attr( $args['label_for'] ),
+                    esc_attr( $field_name ),
+                    checked( $value, '1', false ),
+                    esc_html( $args['label'] ) // Added short description inside label
+                );
+                break;
+            default:
+                printf( __('%s field type not supported.', 'w4os'), $args['type'] );
         }
+
+        printf(
+            '<p class="description">%s</p>',
+            esc_html( $args['description'] )
+        );
     }
 }
