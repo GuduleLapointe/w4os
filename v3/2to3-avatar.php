@@ -65,7 +65,6 @@ class W4OS3_Avatar {
 	public function init() {
 		add_action('init', array($this, 'register_post_types'));
         if (W4OS3::get_option('w4os_sync_users')) {
-			error_log(__METHOD__ . ' - w4os_sync_users');
             W4OS3::update_option('w4os_sync_users', false);
             add_action('init', array($this, 'sync_avatars'));
         }
@@ -231,7 +230,6 @@ class W4OS3_Avatar {
     }
 
 	public static function sanitize_options( $input ) {
-		error_log( __METHOD__ . ' - ' . print_r( $input, true ) );
 		return $input;
 	}
 
@@ -1395,18 +1393,18 @@ class W4OS3_Avatar {
 			}
 		}
 
-		// Fallback to random name
-		$generator = new \CodeNameGenerator\CodeNameGenerator();
+		// Fallback to random name with Faker library
+		$faker = \Faker\Factory::create();
 		for ( $i = 0; $i < 10; $i++ ) {
-			// We don't want to run forever, even if it's unlikely
-			$name = $generator->generate();
-			$name = self::sanitize_name( ucwords( preg_replace( '/([^-]+)-([^-]+)(-.*)?/', '$1 $2', $name ) ) );
+			// Limit attempts, we don't want to run forever, even if it's unlikely
+			$name = self::sanitize_name( $faker->name );
 			if ( self::check_name_availability( $name ) ) {
 				return $name;
 			}
 		}
 
-		return $name;
+		// If still no name found, this is wrong, return false or error.
+		return false;
 	}
 
 	static function count() {
