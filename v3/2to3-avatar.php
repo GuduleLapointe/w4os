@@ -2009,12 +2009,13 @@ class W4OS3_Avatar {
         return $views;
     }
 
-    public static function add_main_tabs() {
-        // Determine the current main tab
-        $current_main_tab = isset( $_GET['main_tab'] ) ? $_GET['main_tab'] : 'list';
-
-        // Base URL for avatar post type
-        $base_url = admin_url( 'edit.php?post_type=avatar' );
+	/**
+	 * Returns the main tabs instead of echoing them
+	 */
+	public static function main_tabs() {
+		// Determine the current main tab
+		// First check if the current url is the tab url, otherwise check the main_tab query var
+		$current_main_tab = isset( $_GET['main_tab'] ) ? $_GET['main_tab'] : false;
 		$tabs = array(
 			'list'     => array(
 				'title' => __( 'List', 'w4os' ),
@@ -2029,11 +2030,34 @@ class W4OS3_Avatar {
 				'url'   => admin_url('admin.php?page=w4os-models')
 			),
 		);
-        echo '<h2 class="nav-tab-wrapper">';
+
+		// if not found with main_tab, check the current url
+		if ( ! $current_main_tab ) {
+			foreach ( $tabs as $tab => $data ) {
+				if ( strpos( $_SERVER['REQUEST_URI'], $data['url'] ) !== false ) {
+					$current_main_tab = $tab;
+					break;
+				}
+			}
+		}
+		// If still not found, set to default 'list'
+
+		// Base URL for avatar post type
+		$base_url = admin_url( 'edit.php?post_type=avatar' );
+		$tabs = apply_filters( 'w4os_main_tabs', $tabs );
+		$tabs = apply_filters( 'w4os_main_tabs_' . $current_main_tab, $tabs );
+
+		$html = '<h2 class="nav-tab-wrapper">' . PHP_EOL;
 		foreach ( $tabs as $tab => $data ) {
 			$class = ( $current_main_tab === $tab ) ? 'nav-tab-active' : '';
-			echo '<a href="' . esc_url( $data['url'] ) . '" class="nav-tab ' . $class . '">' . esc_html( $data['title'] ) . '</a>';
+			$html .= '<a href="' . esc_url( $data['url'] ) . '" class="nav-tab ' . $class . '">' . esc_html( $data['title'] ) . '</a>' . PHP_EOL;
 		}
-        echo '</h2>';
+		$html .= '</h2>' . PHP_EOL;
+
+		return $html;
+	}
+	
+	public static function render_main_tabs() {
+		echo self::get_main_tabs_html();
     }
 }
