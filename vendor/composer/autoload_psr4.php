@@ -6,7 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'MetaBox\\' => array($vendorDir . '/meta-box/meta-box/src'),
     'Jelix\\IniFile\\' => array($vendorDir . '/jelix/inifile/lib'),
+    'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );

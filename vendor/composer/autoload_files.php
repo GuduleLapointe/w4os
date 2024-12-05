@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    '6e3fae29631ef280660b3cdad06f25a8' => $vendorDir . '/symfony/deprecation-contracts/function.php',
     '535cf38403fe1a8c6aea5654339f2510' => $vendorDir . '/meta-box/meta-box/meta-box.php',
     '687e88d103d3c7b7e29ca5e836cb2272' => $vendorDir . '/meta-box/mb-settings-page/mb-settings-page.php',
     'be497f88b773aa5c9974da46821effab' => $vendorDir . '/meta-box/mb-admin-columns/mb-admin-columns.php',

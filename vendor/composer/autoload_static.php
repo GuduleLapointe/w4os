@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
 {
     public static $files = array (
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '535cf38403fe1a8c6aea5654339f2510' => __DIR__ . '/..' . '/meta-box/meta-box/meta-box.php',
         '687e88d103d3c7b7e29ca5e836cb2272' => __DIR__ . '/..' . '/meta-box/mb-settings-page/mb-settings-page.php',
         'be497f88b773aa5c9974da46821effab' => __DIR__ . '/..' . '/meta-box/mb-admin-columns/mb-admin-columns.php',
@@ -17,6 +18,10 @@ class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
     );
 
     public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'Psr\\Container\\' => 14,
+        ),
         'M' => 
         array (
             'MetaBox\\' => 8,
@@ -25,6 +30,10 @@ class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
         array (
             'Jelix\\IniFile\\' => 14,
         ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
         'C' => 
         array (
             'Composer\\Installers\\' => 20,
@@ -32,6 +41,10 @@ class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
     );
 
     public static $prefixDirsPsr4 = array (
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
         'MetaBox\\' => 
         array (
             0 => __DIR__ . '/..' . '/meta-box/meta-box/src',
@@ -39,6 +52,10 @@ class ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437
         'Jelix\\IniFile\\' => 
         array (
             0 => __DIR__ . '/..' . '/jelix/inifile/lib',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
         ),
         'Composer\\Installers\\' => 
         array (
