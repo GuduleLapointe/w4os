@@ -63,7 +63,7 @@ class W4OS_Model extends W4OS_Loader {
 			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
 			'id'         => 'w4os-models',
 			'position'   => 0,
-			'parent'     => 'w4os',
+			'parent'     => 'edit.php?post_type=avatar',
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-users',

@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 class W4OS3_Settings {
     public static function init() {
 		add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
-		add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
+		add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ], 20 );
     }
     
     public static function add_submenus() {
@@ -30,7 +30,7 @@ class W4OS3_Settings {
             'manage_options',               // Capability
             'settings',               // Menu slug
             [ 'W4OS3_Settings', 'render_settings_page' ],  // Callback
-            0,                             // Position
+            90,                             // Position
         );
     }
 

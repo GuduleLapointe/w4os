@@ -392,7 +392,7 @@ class W4OS3_Avatar {
 			'not_found'                => esc_html__( 'No avatars found', 'w4os' ),
 			'not_found_in_trash'       => esc_html__( 'No avatars found in Trash', 'w4os' ),
 			'parent_item_colon'        => esc_html__( 'Parent Avatar:', 'w4os' ),
-			'all_items'                => esc_html__( 'All Avatars', 'w4os' ),
+			'all_items'                => esc_html__( 'Avatars', 'w4os' ),
 			'archives'                 => esc_html__( 'Avatar Archives', 'w4os' ),
 			'attributes'               => esc_html__( 'Avatar Attributes', 'w4os' ),
 			'insert_into_item'         => esc_html__( 'Insert into avatar', 'w4os' ),
@@ -2023,6 +2023,10 @@ class W4OS3_Avatar {
 			'settings' => array(
 				'title' => __( 'Settings', 'w4os' ),
 				'url'   => add_query_arg( 'main_tab', 'settings', $base_url ),
+			),
+			'models'  => array(
+				'title' => __( 'Avatar Models', 'w4os' ),
+				'url'   => admin_url('admin.php?page=w4os-models')
 			),
 		);
         echo '<h2 class="nav-tab-wrapper">';
