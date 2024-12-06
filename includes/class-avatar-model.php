@@ -86,20 +86,19 @@ class W4OS_Model extends W4OS_Loader {
 	function register_fields( $meta_boxes ) {
 		$prefix = '';
 
-		// $meta_boxes[] = array(
-		// 	'title' => 'Avatar Models Settings header',
-		// 	'id'    => 'w4os-models-header',
-		// 	'settings_pages' => array( 'w4os-models' ),
-		// 	'class' => 'w4os-settings no-hints',
-		// 	'fields' => array(
-		// 		array(
-		// 			'id'   => $prefix . 'main_tabs',
-		// 			'type' => 'custom_html',
-		// 			// 'std'  => 'settings main tabs go here',
-		// 			'std'  => self::get_main_tabs_html(),
-		// 		),
-		// 	),
-		// );
+		$meta_boxes[] = array(
+			'title' => 'Avatar Models Settings header',
+			'id'    => 'w4os-models-header',
+			'settings_pages' => array( 'w4os-models' ),
+			'class' => 'w4os-settings no-hints',
+			'fields' => array(
+				array(
+					'id'   => $prefix . 'main_tabs',
+					'type' => 'custom_html',
+					'std'  => self::get_main_tabs_html(),
+				),
+			),
+		);
 		
 		$meta_boxes[] = array(
 			'title'          => __( 'Avatar Models', 'w4os' ),
