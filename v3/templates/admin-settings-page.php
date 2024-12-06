@@ -9,10 +9,13 @@ if (empty($action_links_html)) {
 }
 
 if ( isset( $_GET['tab'] ) ) {
-    $tab_template = $template_base . '-template.php';
-    if( file_exists( $tab_template ) ) {
-        $template = $tab_template;
-    }
+    $template = "$template_base-content-$tab.php";
+
+    // # Option: fallback to main settings page if no template for tab:
+    // $tab_template = "$template_base-content-$tab.php";
+    // if( file_exists( $tab_template ) ) {
+    //     $template = $tab_template;
+    // }
 }
 
 ?>
