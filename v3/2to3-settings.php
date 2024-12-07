@@ -55,7 +55,6 @@ class W4OS3_Settings {
             'w4os_settings_beta',
             'w4os_section_beta',
             array(
-                'label_for' => 'enable-v3-features',
                 'short_description' => 'Enable beta v3 features for testing purposes.', // Added short description
             )
         );
@@ -67,7 +66,6 @@ class W4OS3_Settings {
             'w4os_settings_beta',
             'w4os_section_beta',
             array(
-                'label_for' => 'debug_html',
                 'short_description' => 'Display critical debug information on the front end.', // Added short description
             )
         );
@@ -119,9 +117,15 @@ class W4OS3_Settings {
     }
 
     public static function render_settings_page() {
+        $args = func_get_args();
         $page_title = esc_html( get_admin_page_title() );
         $menu_slug = preg_replace( '/^.*_page_/', '', esc_html( get_current_screen()->id ) );
+        $page = isset( $_GET['page'] ) ? esc_html( $_GET['page'] ) : '';
         $page_template = W4OS_TEMPLATES_DIR . 'admin-settings-page.php';
+        $all_tabs = apply_filters( 'w4os_settings_tabs', [] );
+        $tabs = isset( $all_tabs[ $page ] ) ? $all_tabs[ $page ] : [];
+        $current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
+        $current_section = 'w4os_settings_region_section_' . $current_tab;
         
         if( file_exists( $page_template ) ) {
             include $page_template;
@@ -163,43 +167,48 @@ class W4OS3_Settings {
             return;
         }
         $args = wp_parse_args( $args, [
-            'id' => null,
-            'label' => null,
-            'type' => 'text',
-            'options' => [],
-            'default' => null,
-            'description' => null,
+            // 'id' => null,
+            // 'label' => null,
+            // 'label_for' => null,
+            // 'type' => 'text',
+            // 'options' => [],
+            // 'default' => null,
+            // 'description' => null,
+            // 'option_name' => null,
         ] );
+        error_log('args = ' . print_r($args, true));
+        
         $option_name = $args['option_name'];
-        $field_name = $option_name . '[' . $args['label_for'] . ']';
+        error_log( __METHOD__ . ' option_name: ' . print_r( $option_name, true ) );
+        
+        $field_name = $args['id'];
         $option = get_option( $option_name );
-        $value = isset( $option[ $args['label_for'] ] ) ? $option[ $args['label_for'] ] : '';
-
+        $value = isset( $option[ $args['id'] ] ) ? $option[ $args['id'] ] : '';
+        
         switch ( $args['type'] ) {
+            case 'checkbox':
+                $input_field = sprintf(
+                    '<label>
+                        <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
+                        %4$s
+                        </label>',
+                        esc_attr( $args['id'] ),
+                        esc_attr( $field_name ),
+                        checked( $value, '1', false ),
+                        esc_html( $args['label'] ) // Added short description inside label
+                );
+                break;
             case 'text':
-                printf(
-                    '<input type="text" id="%s" name="%s" value="%s" />',
-                    esc_attr( $args['label_for'] ),
+            default:
+                $input_field = sprintf(
+                    '<input type="text" id="%1$s" name="%2$s" value="%3$s" />',
+                    esc_attr( $args['id'] ),
                     esc_attr( $field_name ),
                     esc_attr( $value )
                 );
-                break;
-            case 'checkbox':
-                printf(
-                    '<label>
-                        <input type="checkbox" id="%s" name="%s" value="1" %s />
-                        %s
-                    </label>',
-                    esc_attr( $args['label_for'] ),
-                    esc_attr( $field_name ),
-                    checked( $value, '1', false ),
-                    esc_html( $args['label'] ) // Added short description inside label
-                );
-                break;
-            default:
-                printf( __('%s field type not supported.', 'w4os'), $args['type'] );
         }
 
+        echo $input_field;
         printf(
             '<p class="description">%s</p>',
             esc_html( $args['description'] )

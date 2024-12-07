@@ -23,6 +23,8 @@ class W4OS3_Region {
     public function init() {
         add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
         add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
+
+		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
     }
 
     /**
@@ -35,11 +37,19 @@ class W4OS3_Region {
             __( 'Regions', 'w4os' ),
             'manage_options',
             'w4os-region-settings',
-            [ 'W4OS3_Settings', 'render_settings_page' ],
+            [ __CLASS__, 'render_settings_page' ],
             3,
         );
     }
 
+	static function add_menu_tabs( $tabs ) {
+		$tabs['w4os-region-settings'] = array(
+			'general' => __( 'General', 'w4os' ),
+			'advanced' => __( 'Advanced', 'w4os' ),
+		);
+		return $tabs;
+	}
+		
     /**
      * Register settings using the Settings API, templates and the method W4OS3_Settings::render_settings_section().
      */
@@ -47,74 +57,215 @@ class W4OS3_Region {
         if (! W4OS_ENABLE_V3) {
             return;
         }
-        // Add v3 settings below
-		$option_group = 'w4os_settings_region';
-		$option_name = 'w4os_settings_region'; // Changed option name
-		$page = 'w4os-region-settings'; // Updated to match menu slug
 
-		register_setting(
-			$option_group, // Option group
-			$option_name, // Option name
-			array(
-				'type' => 'array',
-				'description' => __( '  Regions Settings', 'w4os' ),
-				'sanitize_callback' => [ __CLASS__, 'sanitize_options' ], // recieves empty args for now
-				// 'show_in_rest' => false,
-				'default' => array(
-					'create_wp_account' => true,
-					'multiple_regions' => false,
-				),
-			),
-		);
+        $option_name = 'w4os-region-settings'; // Hard-coded here is fine to make sure it matches intended submenu slug
+        $option_group = $option_name . '_group';
 
-		# add_settings_section( string $id, string $title, callable $callback, string $page, array $args = array() )
+        // Register the main option with a sanitize callback
+        register_setting( $option_group, $option_name, [ __CLASS__, 'sanitize_options' ] );
 
-		$section = "${option_group}_default";
-		add_settings_section(
-			$section,				// ID
-			null,	// Title
-			[ 'W4OS3_Settings', 'render_settings_section' ],  // Callback
-			$page,				// Page
-			array(
-				'description' => __( 'Settings for regions.', 'w4os' ),
-			)
-		);
+        // Get the current tab
+        $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
+        $section = $option_group . '_section_' . $tab;
 
-		// add_settings_field( string $id, string $title, callable $callback, string $page, string $section = ‘default’, array $args = array() );
-		
-		add_settings_field(
-			'region_parameter_1', // id
-			__( 'Region parameter 1', 'w4os' ), // title
-			[ 'W4OS3_Settings', 'render_settings_field' ], // callback
-			$page, // page
-			$section, // section
-			array(
-				'type' => 'checkbox',
-				'label' => __( 'Enable option 1.', 'w4os' ),
-				'description' => __( 'This is a placeholder parameter.', 'w4os' ),
-				'option_name' => $option_name, // Pass option name
-                'label_for' => 'region_parameter_1',
-			),
-		);
+        // Add settings sections and fields based on the current tab
+        if ( $tab == 'general' ) {
+            add_settings_section(
+                $section,
+                null, // No title for the section
+                [ __CLASS__, 'section_callback' ],
+                $option_name // Use dynamic option name
+            );
 
-		add_settings_field(
-			'region_parameter_2', // id
-			__( 'Region parameter 2', 'w4os' ), // title
-			[ 'W4OS3_Settings', 'render_settings_field' ], // callback
-			$page, // page
-			$section, // section
-			array(
-				'type' => 'checkbox',
-				'label' => __( 'Enable option 2.', 'w4os' ),
-				'description' => __( 'This is a placeholder parameter.', 'w4os' ),
-				'option_name' => $option_name, // Pass option name
-                // 'label_for' => 'region_parameter_1',
-			),
-		);
+            add_settings_field(
+                'w4os_settings_region_general_field_1', 
+                'First Tab Fields Title',
+                [ __CLASS__, 'render_settings_field' ],
+                $option_name, // Use dynamic option name as menu slug
+                $section,
+                array(
+                    'id' => 'w4os_settings_region_general_field_1',
+                    'type' => 'checkbox',
+                    'label' => __( 'Enable general option 1.', 'w4os' ),
+                    'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+                    'option_name' => $option_name, // Reference the unified option name
+                    'label_for' => 'w4os_settings_region_general_field_1',
+                    'tab' => 'general', // Added tab information
+                )
+            );
+        } else if ( $tab == 'advanced' ) {
+            add_settings_section(
+                $section,
+                null, // No title for the section
+                null, // No callback for the section
+                $option_name // Use dynamic option name as menu slug
+            );
+
+            add_settings_field(
+                'w4os_settings_region_advanced_field_1', 
+                'Second Tab Fields Title',
+                [ __CLASS__, 'render_settings_field' ],
+                $option_name, // Use dynamic option name as menu slug
+                $section,
+                array(
+                    'id' => 'w4os_settings_region_advanced_field_1',
+                    'type' => 'checkbox',
+                    'label' => __( 'Enable advanced option 1.', 'w4os' ),
+                    'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+                    'option_name' => $option_name, // Reference the unified option name
+                    'label_for' => 'w4os_settings_region_advanced_field_1',
+                    'tab' => 'advanced', // Added tab information
+                )
+            );
+        }
     }
 
-	public static function sanitize_options( $input ) {
-		return $input;
+	public static function section_callback( $args = '' ) {
+		// This is a placeholder for a section callback.
 	}
+	
+	/**
+	 * This method is called by several classes defined in several scripts for several settings pages.
+	 * It uses only the values passed by args parameter and WP settings API.
+	 * Particularly, $menu_slug, $option_name, and $option_group are retrieved dynamically.
+	 */
+	public static function render_settings_page() {
+        $args = func_get_args();
+        
+		$screen = get_current_screen();
+		if( ! $screen || ! isset($screen->id) ) {
+			w4os_admin_notice( 'This page is not available. You probably did nothing wrong, the developer did.', 'error' );
+			// End processing page, display pending admin notices and return.
+			do_action( 'admin_notices' );
+			return;
+		}
 
+		$menu_slug = preg_replace( '/^.*_page_/', '', sanitize_key( get_current_screen()->id ) );
+		$option_name = isset($args[0]['option_name']) 
+		? sanitize_key($args[0]['option_name']) 
+		: sanitize_key($menu_slug); // no need to add settings suffix, it's already in menu slug by convention
+		$option_group = isset($args[0]['option_group']) 
+		? sanitize_key($args[0]['option_group']) 
+		: sanitize_key($menu_slug . '_group');
+
+        $page_title = esc_html(get_admin_page_title());
+        $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'general';
+        $current_section = $option_group . '_section_' . $current_tab;
+
+        ?>
+        <div class="wrap w4os">
+            <header>
+                <h1><?php echo $page_title; ?></h1>
+                <?php echo isset($action_links_html) ? $action_links_html : ''; ?>
+                <!-- echo $tabs_navigation; -->
+                <h2 class="nav-tab-wrapper">
+					<a href="?page=<?php echo esc_attr($menu_slug); ?>" class="nav-tab <?php echo $current_tab === 'general' ? 'nav-tab-active' : ''; ?>">
+						<?php _e('General', 'w4os'); ?>
+					</a>
+					<a href="?page=<?php echo esc_attr($menu_slug); ?>&tab=advanced" class="nav-tab <?php echo $current_tab === 'advanced' ? 'nav-tab-active' : ''; ?>">
+						<?php _e('Advanced', 'w4os'); ?>
+					</a>
+				</h2>
+            </header>
+            <?php settings_errors($menu_slug); ?>
+            <body>
+                <div class="wrap <?php echo esc_attr($menu_slug); ?>">
+                    <?php
+                    // ...existing code...
+                    ?>
+                    <form method="post" action="options.php">
+                        <input type="hidden" name="<?php echo esc_attr($option_name); ?>[<?php echo esc_attr($current_tab); ?>][prevent-empty-array]" value="1">
+                        <?php
+                            settings_fields($option_group); // Use dynamic $option_group
+                            do_settings_sections($menu_slug); // Use dynamic $menu_slug
+                            submit_button();
+                        ?>
+                    </form>
+                </div>
+            </body>
+        </div>
+        <?php
+    }
+
+    public static function render_settings_field($args) {
+        if (!is_array($args)) {
+            return;
+        }
+        $args = wp_parse_args($args, [
+            // 'id' => null,
+            // 'label' => null,
+            // 'label_for' => null,
+            // 'type' => 'text',
+            // 'options' => [],
+            // 'default' => null,
+            // 'description' => null,
+            // 'option_name' => null,
+            // 'tab' => null, // Added tab
+        ]);
+
+        // Retrieve $option_name and $tab from args
+        $option_name = isset($args['option_name']) ? sanitize_key($args['option_name']) : '';
+        $tab = isset($args['tab']) ? sanitize_key($args['tab']) : 'general';
+
+        // Construct the field name to match the options array structure
+        $field_name = "{$option_name}[{$tab}][{$args['id']}]";
+        $option = get_option($option_name, []);
+        $value = isset($option[$tab][$args['id']]) ? $option[$tab][$args['id']] : '';
+
+        switch ($args['type']) {
+            case 'checkbox':
+                $input_field = sprintf(
+                    '<label>
+                        <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
+                        %4$s
+                    </label>',
+                    esc_attr($args['id']),
+                    esc_attr($field_name),
+                    checked($value, '1', false),
+                    esc_html($args['label'])
+                );
+                break;
+            case 'text':
+            default:
+                $input_field = sprintf(
+                    '<input type="text" id="%1$s" name="%2$s" value="%3$s" />',
+                    esc_attr($args['id']),
+                    esc_attr($field_name),
+                    esc_attr($value)
+                );
+        }
+
+        echo $input_field;
+        printf(
+            '<p class="description">%s</p>',
+            esc_html($args['description'])
+        );
+    }
+
+	/**
+	 * Global class for field sanitization.
+	 * Used by different classes to save settings from different settings pages.
+	 */
+	public static function sanitize_options( $input ) {
+		
+		// Initialize the output array with existing options
+		$options = get_option( 'w4os_region_settings', array( 'general' => array(), 'advanced' => array() ) );
+		if( ! is_array( $input ) ) {
+			return $options;
+		}
+		
+		foreach ( $input as $key => $value ) {
+			if(isset($value['prevent-empty-array'])) {
+				unset($value['prevent-empty-array']);
+			}
+			$options[ $key ] = $value;
+		}
+		
+		// Preserve the 'prevent-empty' field
+		if ( isset( $input['prevent-empty'] ) ) {
+			$options['prevent-empty'] = sanitize_text_field( $input['prevent-empty'] );
+		}
+
+		return $options;
+	}
 }

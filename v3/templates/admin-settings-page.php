@@ -7,9 +7,12 @@ $template = $template_base . '-content.php';
 if (empty($action_links_html)) {
     $action_links_html = '';
 }
+// 
+
+$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 
 if ( isset( $_GET['tab'] ) ) {
-    $template = "$template_base-content-$tab.php";
+    // $template = "$template_base-content-$tab.php";
 
     // # Option: fallback to main settings page if no template for tab:
     // $tab_template = "$template_base-content-$tab.php";
@@ -23,6 +26,7 @@ if ( isset( $_GET['tab'] ) ) {
     <header>
         <h1><?php echo esc_html( $page_title ); ?></h1>
         <?php echo $action_links_html; ?>
+        echo $tabs_navigation;
     </header>
     <?php settings_errors( $menu_slug ); ?>
     <body>

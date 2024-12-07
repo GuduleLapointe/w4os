@@ -205,11 +205,11 @@ class W4OS3_Avatar {
 			$page, // page
 			$section, // section
 			array(
+				'id'	=> 'create_wp_account',
 				'type' => 'checkbox',
 				'label' => __( 'Create website accounts for avatars.', 'w4os' ),
 				'description' => __( 'This will create a WordPress account for avatars that do not have one. The password will synced between site and OpenSimulator.', 'w4os' ),
 				'option_name' => $option_name, // Pass option name
-                'label_for' => 'create_wp_account',
 			),
 		);
 
@@ -220,11 +220,11 @@ class W4OS3_Avatar {
 			$page, // page
 			$section, // section
 			array(
+				'id'	=> 'multiple_avatars',
 				'type' => 'checkbox',
 				'label' => __( 'Allow one avatar per website user.', 'w4os' ),
 				'description' => __( 'This will restrict users to a single avatar. The option can only be enforced for avatars created through the website.', 'w4os' ),
 				'option_name' => $option_name, // Pass option name
-                'label_for' => 'multiple_avatars',
 			),
 		);
     }
