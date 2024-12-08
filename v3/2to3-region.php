@@ -33,6 +33,9 @@ class W4OS3_Region {
 
         add_action( 'add_meta_boxes', [ __CLASS__, 'add_meta_boxes' ] );
         add_action( 'save_post', [ __CLASS__, 'save_region_meta' ], 10, 2 );
+
+        add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
+        add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
     }
 
     /**
@@ -580,6 +583,31 @@ class W4OS3_Region {
         }
 
         // 'region_online' is readonly and handled by another process, so we skip saving it here.
+    }
+
+    public static function set_active_menu( $parent_file ) {
+        global $pagenow;
+
+        if ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) {
+            $current_screen = get_current_screen();
+            if ( $current_screen->post_type === 'opensimulator_region' ) {
+                $parent_file = 'w4os'; // Set to main plugin menu slug
+            }
+        }
+
+        return $parent_file;
+    }
+
+    public static function set_active_submenu( $submenu_file ) {
+        global $pagenow, $typenow;
+
+        if ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) {
+            if ( $typenow === 'opensimulator_region' ) {
+                $submenu_file = 'w4os-region-settings'; // Set to submenu slug
+            }
+        }
+
+        return $submenu_file;
     }
 
 }
