@@ -24,6 +24,8 @@ class W4OS3_Region {
         add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
         add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
 
+		add_action( 'init', [ __CLASS__, 'register_post_types' ] );
+
 		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
     }
 
@@ -268,4 +270,45 @@ class W4OS3_Region {
 
 		return $options;
 	}
+
+	/**
+	 * Register post types for the plugin.
+	 */
+	public static function register_post_types() {
+		$labels = array(
+			'name' => __( 'Regions', 'w4os' ),
+			'singular_name' => __( 'Region', 'w4os' ),
+			'add_new' => __( 'Add New', 'w4os' ),
+			'add_new_item' => __( 'Add New Region', 'w4os' ),
+			'edit_item' => __( 'Edit Region', 'w4os' ),
+			'new_item' => __( 'New Region', 'w4os' ),
+			'view_item' => __( 'View Region', 'w4os' ),
+			'search_items' => __( 'Search Regions', 'w4os' ),
+			'not_found' => __( 'No Regions found', 'w4os' ),
+			'not_found_in_trash' => __( 'No Regions found in Trash', 'w4os' ),
+			'parent_item_colon' => __( 'Parent Region:', 'w4os' ),
+			'menu_name' => __( 'Regions', 'w4os' ),
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'hierarchical' => true,
+			'description' => __( 'Regions for the plugin.', 'w4os' ),
+			'supports' => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
+			'public' => true,
+			'show_ui' => true,
+			'show_in_menu' => 'w4os-region-settings',
+			'show_in_nav_menus' => true,
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'has_archive' => true,
+			'query_var' => true,
+			'can_export' => true,
+			'rewrite' => array( 'slug' => 'region' ),
+			'capability_type' => 'post',
+		);
+
+		register_post_type( 'opensimulator_region', $args );
+	}
+
 }
