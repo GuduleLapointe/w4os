@@ -36,10 +36,20 @@ class W4OS3 {
 
     public static function constants() {
         define( 'W4OS_PLUGIN_DIR', plugin_dir_path( __DIR__) );
+        define( 'W4OS_PLUGIN', basename(W4OS_PLUGIN_DIR) . '/w4os.php' );
         define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
         define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
         define( 'W4OS_ENABLE_V3', W4OS3::get_option( 'enable-v3-features', false ) );
         define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
+
+        define( 'W4OS_DB_ROBUST', array(
+            'user'     => get_option( 'w4os_db_user', 'opensim' ),
+            'pass'     => get_option( 'w4os_db_pass', 'opensim' ),
+            'database' => get_option( 'w4os_db_database', 'opensim' ),
+            'host'     => get_option( 'w4os_db_host', 'localhost' ),
+            'port'     => get_option( 'w4os_db_port', '3306' ),
+            // 'type'     => 'mysql',
+        ) );
     }
 
     public static function includes() {
@@ -47,6 +57,7 @@ class W4OS3 {
 
         // First we include all the files
         require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
+        // require_once W4OS_INCLUDES_DIR . 'class-db.php';
         
         // Load v3 features if enabled
         if ( W4OS_ENABLE_V3 ) {

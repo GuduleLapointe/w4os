@@ -93,7 +93,7 @@ class W4OS_Loader {
 		 */
 		require_once W4OS_DIR . '/helpers/includes/functions.php';
 		require_once W4OS_DIR . '/includes/class-w4os.php';
-		require_once W4OS_DIR . '/includes/class-db.php';
+		// require_once W4OS_DIR . '/includes/class-db.php';
 		require_once W4OS_DIR . '/includes/class-i18n.php';
 		require_once W4OS_DIR . '/includes/class-settings.php';
 		require_once W4OS_DIR . '/includes/class-tos.php';

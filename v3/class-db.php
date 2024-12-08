@@ -1,5 +1,7 @@
-<?php if ( ! defined( 'W4OS_PLUGIN' ) ) {
-	die;}
+<?php
+if ( ! defined( 'W4OS_PLUGIN' ) ) {
+	die;
+}
 
 class W4OS_WPDB extends WPDB {
 	public function __construct( $dbuser, $dbpassword = null, $dbname = null, $dbhost = null ) {
