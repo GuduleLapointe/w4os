@@ -637,350 +637,349 @@ class W4OS3_Region {
 }
 
 // Ensure WP_List_Table is loaded before using it
-if ( ! class_exists( 'WP_List_Table' ) ) {
-    require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
+add_action( 'admin_menu', 'w4os_add_W4OS_Region_List_class' );
+function w4os_add_W4OS_Region_List_class() {
+	class W4OS_Region_List extends WP_List_Table {
+		/** Class constructor */
+		public function __construct() {
+			parent::__construct( [
+				'singular' => __( 'Region', 'w4os' ), // Singular name
+				'plural'   => __( 'Regions', 'w4os' ), // Plural name
+				'ajax'     => false // Disable AJAX
+			] );
+		}
 
-class W4OS_Region_List extends WP_List_Table {
-    /** Class constructor */
-    public function __construct() {
-        parent::__construct( [
-            'singular' => __( 'Region', 'w4os' ), // Singular name
-            'plural'   => __( 'Regions', 'w4os' ), // Plural name
-            'ajax'     => false // Disable AJAX
-        ] );
-    }
+		/** Define the columns */
+		public function get_columns() {
+			return [
+				'cb'           => '<input type="checkbox" />',
+				'title'        => __( 'Region Name', 'w4os' ), // Renamed from 'Title' to 'Region Name'
+				'region_estate' => __( 'Estate', 'w4os' ),
+				'region_owner' => __( 'Owner', 'w4os' ),
+				'status'       => __( 'Status', 'w4os' ),       // Added 'Status' column
+				'date'         => __( 'Date', 'w4os' ),
+			];
+		}
 
-    /** Define the columns */
-    public function get_columns() {
-        return [
-            'cb'           => '<input type="checkbox" />',
-            'title'        => __( 'Region Name', 'w4os' ), // Renamed from 'Title' to 'Region Name'
-            'region_estate' => __( 'Estate', 'w4os' ),
-            'region_owner' => __( 'Owner', 'w4os' ),
-            'status'       => __( 'Status', 'w4os' ),       // Added 'Status' column
-            'date'         => __( 'Date', 'w4os' ),
-        ];
-    }
+		/** Define sortable columns */
+		public function get_sortable_columns() {
+			return [
+				'title'        => [ 'title', true ],          // Made 'Region Name' sortable
+				'region_estate' => [ 'region_estate', false ],  // Made 'Owner' sortable
+				'region_owner' => [ 'region_owner', false ],  // Made 'Owner' sortable
+				'status'       => [ 'status', false ],        // Made 'Status' sortable
+				'date'         => [ 'date', false ],
+			];
+		}
 
-    /** Define sortable columns */
-    public function get_sortable_columns() {
-        return [
-            'title'        => [ 'title', true ],          // Made 'Region Name' sortable
-            'region_estate' => [ 'region_estate', false ],  // Made 'Owner' sortable
-            'region_owner' => [ 'region_owner', false ],  // Made 'Owner' sortable
-            'status'       => [ 'status', false ],        // Made 'Status' sortable
-            'date'         => [ 'date', false ],
-        ];
-    }
+		/**
+		 * Extra controls for the table navigation.
+		 * Replaces the dropdown filter with status filter links.
+		 */
+		protected function extra_tablenav( $which ) {
+			if ( $which === 'top' ) {
+				$status_filters = [
+					'all'      => __( 'All', 'w4os' ),
+					'online'   => __( 'Online', 'w4os' ),
+					'offline'  => __( 'Offline', 'w4os' ),
+					'disabled' => __( 'Disabled', 'w4os' ),
+				];
 
-    /**
-     * Extra controls for the table navigation.
-     * Replaces the dropdown filter with status filter links.
-     */
-    protected function extra_tablenav( $which ) {
-        if ( $which === 'top' ) {
-            $status_filters = [
-                'all'      => __( 'All', 'w4os' ),
-                'online'   => __( 'Online', 'w4os' ),
-                'offline'  => __( 'Offline', 'w4os' ),
-                'disabled' => __( 'Disabled', 'w4os' ),
-            ];
+				// Initialize counts
+				$counts = [
+					'all'      => 0,
+					'online'   => 0,
+					'offline'  => 0,
+					'disabled' => 0,
+				];
 
-            // Initialize counts
-            $counts = [
-                'all'      => 0,
-                'online'   => 0,
-                'offline'  => 0,
-                'disabled' => 0,
-            ];
+				// Fetch counts for each status
+				foreach ( $status_filters as $key => $label ) {
+					if ( 'all' === $key ) {
+						$counts[$key] = wp_count_posts( 'opensimulator_region' )->publish;
+					} elseif ( 'online' === $key ) {
+						$counts[$key] = (int) get_posts( [
+							'post_type'      => 'opensimulator_region',
+							'post_status'    => 'publish',
+							'meta_query'     => [
+								[
+									'key'     => 'region_enabled',
+									'value'   => '1',
+									'compare' => '=',
+								],
+								[
+									'key'     => 'region_online',
+									'value'   => '1',
+									'compare' => '=',
+								],
+							],
+							'fields'         => 'ids',
+							'posts_per_page' => -1,
+						] );
+					} elseif ( 'offline' === $key ) {
+						$counts[$key] = (int) get_posts( [
+							'post_type'      => 'opensimulator_region',
+							'post_status'    => 'publish',
+							'meta_query'     => [
+								[
+									'key'     => 'region_enabled',
+									'value'   => '1',
+									'compare' => '=',
+								],
+								[
+									'key'     => 'region_online',
+									'value'   => '0',
+									'compare' => '=',
+								],
+							],
+							'fields'         => 'ids',
+							'posts_per_page' => -1,
+						] );
+					} elseif ( 'disabled' === $key ) {
+						$counts[$key] = (int) get_posts( [
+							'post_type'      => 'opensimulator_region',
+							'post_status'    => 'publish',
+							'meta_query'     => [
+								[
+									'key'     => 'region_enabled',
+									'value'   => '0',
+									'compare' => '=',
+								],
+							],
+							'fields'         => 'ids',
+							'posts_per_page' => -1,
+						] );
+					}
+				}
 
-            // Fetch counts for each status
-            foreach ( $status_filters as $key => $label ) {
-                if ( 'all' === $key ) {
-                    $counts[$key] = wp_count_posts( 'opensimulator_region' )->publish;
-                } elseif ( 'online' === $key ) {
-                    $counts[$key] = (int) get_posts( [
-                        'post_type'      => 'opensimulator_region',
-                        'post_status'    => 'publish',
-                        'meta_query'     => [
-                            [
-                                'key'     => 'region_enabled',
-                                'value'   => '1',
-                                'compare' => '=',
-                            ],
-                            [
-                                'key'     => 'region_online',
-                                'value'   => '1',
-                                'compare' => '=',
-                            ],
-                        ],
-                        'fields'         => 'ids',
-                        'posts_per_page' => -1,
-                    ] );
-                } elseif ( 'offline' === $key ) {
-                    $counts[$key] = (int) get_posts( [
-                        'post_type'      => 'opensimulator_region',
-                        'post_status'    => 'publish',
-                        'meta_query'     => [
-                            [
-                                'key'     => 'region_enabled',
-                                'value'   => '1',
-                                'compare' => '=',
-                            ],
-                            [
-                                'key'     => 'region_online',
-                                'value'   => '0',
-                                'compare' => '=',
-                            ],
-                        ],
-                        'fields'         => 'ids',
-                        'posts_per_page' => -1,
-                    ] );
-                } elseif ( 'disabled' === $key ) {
-                    $counts[$key] = (int) get_posts( [
-                        'post_type'      => 'opensimulator_region',
-                        'post_status'    => 'publish',
-                        'meta_query'     => [
-                            [
-                                'key'     => 'region_enabled',
-                                'value'   => '0',
-                                'compare' => '=',
-                            ],
-                        ],
-                        'fields'         => 'ids',
-                        'posts_per_page' => -1,
-                    ] );
-                }
-            }
+				// Get current filter
+				$current_filter = isset( $_GET['status_filter'] ) ? sanitize_text_field( $_GET['status_filter'] ) : 'all';
 
-            // Get current filter
-            $current_filter = isset( $_GET['status_filter'] ) ? sanitize_text_field( $_GET['status_filter'] ) : 'all';
+				// Build filter links
+				echo '<div class="alignleft actions">';
+				foreach ( $status_filters as $key => $label ) {
+					// Skip 'all' if no posts
+					if ( 'all' === $key && $counts[$key] === 0 ) {
+						continue;
+					}
+					// Skip other statuses if no posts
+					if ( 'all' !== $key && $counts[$key] === 0 ) {
+						continue;
+					}
 
-            // Build filter links
-            echo '<div class="alignleft actions">';
-            foreach ( $status_filters as $key => $label ) {
-                // Skip 'all' if no posts
-                if ( 'all' === $key && $counts[$key] === 0 ) {
-                    continue;
-                }
-                // Skip other statuses if no posts
-                if ( 'all' !== $key && $counts[$key] === 0 ) {
-                    continue;
-                }
+					$class = 'button';
+					if ( $current_filter === $key ) {
+						$class .= ' button-primary';
+					}
 
-                $class = 'button';
-                if ( $current_filter === $key ) {
-                    $class .= ' button-primary';
-                }
+					if ( 'all' === $key ) {
+						$url = remove_query_arg( 'status_filter' );
+					} else {
+						$url = add_query_arg( 'status_filter', $key );
+					}
 
-                if ( 'all' === $key ) {
-                    $url = remove_query_arg( 'status_filter' );
-                } else {
-                    $url = add_query_arg( 'status_filter', $key );
-                }
+					printf(
+						'<a href="%s" class="%s">%s (%d)</a> ',
+						esc_url( $url ),
+						esc_attr( $class ),
+						esc_html( $label ),
+						$counts[$key]
+					);
+				}
+				echo '</div>';
+			}
+		}
 
-                printf(
-                    '<a href="%s" class="%s">%s (%d)</a> ',
-                    esc_url( $url ),
-                    esc_attr( $class ),
-                    esc_html( $label ),
-                    $counts[$key]
-                );
-            }
-            echo '</div>';
-        }
-    }
+		/** Prepare the items for the table */
+		public function prepare_items() {
+			$columns  = $this->get_columns();
+			$hidden   = [];
+			$sortable = $this->get_sortable_columns();
 
-    /** Prepare the items for the table */
-    public function prepare_items() {
-        $columns  = $this->get_columns();
-        $hidden   = [];
-        $sortable = $this->get_sortable_columns();
+			$this->_column_headers = [ $columns, $hidden, $sortable ];
 
-        $this->_column_headers = [ $columns, $hidden, $sortable ];
+			$query_args = [
+				'post_type'      => 'opensimulator_region',
+				'posts_per_page' => -1,
+				'post_status'    => 'publish',
+			];
 
-        $query_args = [
-            'post_type'      => 'opensimulator_region',
-            'posts_per_page' => -1,
-            'post_status'    => 'publish',
-        ];
+			$meta_query = [];
 
-        $meta_query = [];
+			// Handle search
+			if ( ! empty( $_REQUEST['s'] ) ) {
+				$search = sanitize_text_field( $_REQUEST['s'] );
 
-        // Handle search
-        if ( ! empty( $_REQUEST['s'] ) ) {
-            $search = sanitize_text_field( $_REQUEST['s'] );
+				// Modify the search to include title, content, and meta fields
+				$query_args['s'] = $search;
 
-            // Modify the search to include title, content, and meta fields
-            $query_args['s'] = $search;
+				// Add meta_query to search in 'region_owner' and 'region_uuid'
+				$meta_query[] = [
+					'relation' => 'OR',
+					[
+						'key'     => 'region_owner',
+						'value'   => $search,
+						'compare' => 'LIKE',
+					],
+					[
+						'key'     => 'region_uuid',
+						'value'   => $search,
+						'compare' => 'LIKE',
+					],
+				];
+			}
 
-            // Add meta_query to search in 'region_owner' and 'region_uuid'
-            $meta_query[] = [
-                'relation' => 'OR',
-                [
-                    'key'     => 'region_owner',
-                    'value'   => $search,
-                    'compare' => 'LIKE',
-                ],
-                [
-                    'key'     => 'region_uuid',
-                    'value'   => $search,
-                    'compare' => 'LIKE',
-                ],
-            ];
-        }
+			// Handle status filter
+			if ( isset( $_GET['status_filter'] ) && in_array( $_GET['status_filter'], ['all', 'disabled', 'online', 'offline'], true ) ) {
+				$status = sanitize_text_field( $_GET['status_filter'] );
 
-        // Handle status filter
-        if ( isset( $_GET['status_filter'] ) && in_array( $_GET['status_filter'], ['all', 'disabled', 'online', 'offline'], true ) ) {
-            $status = sanitize_text_field( $_GET['status_filter'] );
+				if ( 'all' === $status ) {
+					// No additional meta_query needed for 'all'
+				} elseif ( 'disabled' === $status ) {
+					$meta_query[] = [
+						'key'     => 'region_enabled',
+						'value'   => '0',
+						'compare' => '=',
+					];
+				} elseif ( 'online' === $status ) {
+					$meta_query[] = [
+						'relation' => 'AND',
+						[
+							'key'     => 'region_enabled',
+							'value'   => '1',
+							'compare' => '=',
+						],
+						[
+							'key'     => 'region_online',
+							'value'   => '1',
+							'compare' => '=',
+						],
+					];
+				} elseif ( 'offline' === $status ) {
+					$meta_query[] = [
+						'relation' => 'AND',
+						[
+							'key'     => 'region_enabled',
+							'value'   => '1',
+							'compare' => '=',
+						],
+						[
+							'key'     => 'region_online',
+							'value'   => '0',
+							'compare' => '=',
+						],
+					];
+				}
+			}
 
-            if ( 'all' === $status ) {
-                // No additional meta_query needed for 'all'
-            } elseif ( 'disabled' === $status ) {
-                $meta_query[] = [
-                    'key'     => 'region_enabled',
-                    'value'   => '0',
-                    'compare' => '=',
-                ];
-            } elseif ( 'online' === $status ) {
-                $meta_query[] = [
-                    'relation' => 'AND',
-                    [
-                        'key'     => 'region_enabled',
-                        'value'   => '1',
-                        'compare' => '=',
-                    ],
-                    [
-                        'key'     => 'region_online',
-                        'value'   => '1',
-                        'compare' => '=',
-                    ],
-                ];
-            } elseif ( 'offline' === $status ) {
-                $meta_query[] = [
-                    'relation' => 'AND',
-                    [
-                        'key'     => 'region_enabled',
-                        'value'   => '1',
-                        'compare' => '=',
-                    ],
-                    [
-                        'key'     => 'region_online',
-                        'value'   => '0',
-                        'compare' => '=',
-                    ],
-                ];
-            }
-        }
+			if ( ! empty( $meta_query ) ) {
+				$query_args['meta_query'] = [
+					'relation' => 'AND',
+					...$meta_query,
+				];
+			}
 
-        if ( ! empty( $meta_query ) ) {
-            $query_args['meta_query'] = [
-                'relation' => 'AND',
-                ...$meta_query,
-            ];
-        }
+			// Handle sorting
+			if ( ! empty( $_REQUEST['orderby'] ) && ! empty( $_REQUEST['order'] ) ) {
+				$orderby = sanitize_text_field( $_REQUEST['orderby'] );
+				$order   = sanitize_text_field( $_REQUEST['order'] );
 
-        // Handle sorting
-        if ( ! empty( $_REQUEST['orderby'] ) && ! empty( $_REQUEST['order'] ) ) {
-            $orderby = sanitize_text_field( $_REQUEST['orderby'] );
-            $order   = sanitize_text_field( $_REQUEST['order'] );
+				switch ( $orderby ) {
+					case 'region_owner':
+						$query_args['orderby']  = 'meta_value';
+						$query_args['meta_key'] = 'region_owner';
+						break;
+					case 'region_estate':
+						$query_args['orderby']  = 'meta_value';
+						$query_args['meta_key'] = 'region_estate';
+						break;
+					case 'status':
+						// Sorting by status: Disabled, Online, Offline
+						// Sort by 'region_enabled' then 'region_online'
+						$query_args['orderby']  = [
+							'region_enabled' => 'ASC',
+							'region_online'  => 'ASC',
+						];
+						$query_args['meta_query'][] = [
+							'relation' => 'AND',
+							[
+								'key'     => 'region_enabled',
+								'type'    => 'NUMERIC',
+							],
+							[
+								'key'     => 'region_online',
+								'type'    => 'NUMERIC',
+							],
+						];
+						break;
+					default:
+						$query_args['orderby'] = $orderby;
+				}
 
-            switch ( $orderby ) {
-                case 'region_owner':
-                    $query_args['orderby']  = 'meta_value';
-                    $query_args['meta_key'] = 'region_owner';
-                    break;
+				$query_args['order'] = strtoupper( $order ) === 'DESC' ? 'DESC' : 'ASC';
+			}
+
+			$query = new WP_Query( $query_args );
+			$this->items = $query->posts;
+
+			// Set pagination if needed
+			// $this->set_pagination_args( [
+			//     'total_items' => $query->found_posts,
+			//     'per_page'    => $this->get_items_per_page( 'regions_per_page', 20 ),
+			// ] );
+		}
+
+		/** Render a column when no specific column handler is provided */
+		public function column_default( $item, $column_name ) {
+			switch ( $column_name ) {
+				case 'title':
+					$edit_link = get_edit_post_link( $item->ID );
+					return '<a href="' . esc_url( $edit_link ) . '">' . esc_html( $item->post_title ) . '</a>';
 				case 'region_estate':
-                    $query_args['orderby']  = 'meta_value';
-                    $query_args['meta_key'] = 'region_estate';
-                    break;
-                case 'status':
-                    // Sorting by status: Disabled, Online, Offline
-                    // Sort by 'region_enabled' then 'region_online'
-                    $query_args['orderby']  = [
-                        'region_enabled' => 'ASC',
-                        'region_online'  => 'ASC',
-                    ];
-                    $query_args['meta_query'][] = [
-                        'relation' => 'AND',
-                        [
-                            'key'     => 'region_enabled',
-                            'type'    => 'NUMERIC',
-                        ],
-                        [
-                            'key'     => 'region_online',
-                            'type'    => 'NUMERIC',
-                        ],
-                    ];
-                    break;
-                default:
-                    $query_args['orderby'] = $orderby;
-            }
+					$owner = get_post_meta( $item->ID, 'region_estate', true );
+					return esc_html( $owner );
+				case 'region_owner':
+					$owner = get_post_meta( $item->ID, 'region_owner', true );
+					return esc_html( $owner );
+				case 'status':
+					$enabled = get_post_meta( $item->ID, 'region_enabled', true );
+					$online  = get_post_meta( $item->ID, 'region_online', true );
 
-            $query_args['order'] = strtoupper( $order ) === 'DESC' ? 'DESC' : 'ASC';
-        }
+					if ( ! $enabled ) {
+						return __( 'Disabled', 'w4os' );
+					} elseif ( $online ) {
+						return __( 'Online', 'w4os' );
+					} else {
+						return __( 'Offline', 'w4os' );
+					}
+				case 'date':
+					return esc_html( get_the_date( '', $item ) );
+				default:
+					return print_r( $item, true ); // Show the whole object for troubleshooting
+			}
+		}
 
-        $query = new WP_Query( $query_args );
-        $this->items = $query->posts;
+		/** Render the bulk actions dropdown */
+		protected function bulk_actions( $which = '' ) {
+			if ( $which === 'top' || $which === 'bottom' ) {
+				?>
+				<label class="screen-reader-text" for="bulk-action-selector-<?php echo $which; ?>"><?php _e( 'Select bulk action', 'w4os' ); ?></label>
+				<select name="action" id="bulk-action-selector-<?php echo $which; ?>">
+					<option value=""><?php _e( 'Bulk Actions', 'w4os' ); ?></option>
+					<option value="delete"><?php _e( 'Delete', 'w4os' ); ?></option>
+					<!-- Add more bulk actions if needed -->
 
-        // Set pagination if needed
-        // $this->set_pagination_args( [
-        //     'total_items' => $query->found_posts,
-        //     'per_page'    => $this->get_items_per_page( 'regions_per_page', 20 ),
-        // ] );
-    }
+				</select>
+				<?php
+				submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false );
+			}
+		}
 
-    /** Render a column when no specific column handler is provided */
-    public function column_default( $item, $column_name ) {
-        switch ( $column_name ) {
-            case 'title':
-                $edit_link = get_edit_post_link( $item->ID );
-                return '<a href="' . esc_url( $edit_link ) . '">' . esc_html( $item->post_title ) . '</a>';
-			case 'region_estate':
-				$owner = get_post_meta( $item->ID, 'region_estate', true );
-				return esc_html( $owner );
-            case 'region_owner':
-                $owner = get_post_meta( $item->ID, 'region_owner', true );
-                return esc_html( $owner );
-            case 'status':
-                $enabled = get_post_meta( $item->ID, 'region_enabled', true );
-                $online  = get_post_meta( $item->ID, 'region_online', true );
-
-                if ( ! $enabled ) {
-                    return __( 'Disabled', 'w4os' );
-                } elseif ( $online ) {
-                    return __( 'Online', 'w4os' );
-                } else {
-                    return __( 'Offline', 'w4os' );
-                }
-            case 'date':
-                return esc_html( get_the_date( '', $item ) );
-            default:
-                return print_r( $item, true ); // Show the whole object for troubleshooting
-        }
-    }
-
-    /** Render the bulk actions dropdown */
-    protected function bulk_actions( $which = '' ) {
-        if ( $which === 'top' || $which === 'bottom' ) {
-            ?>
-            <label class="screen-reader-text" for="bulk-action-selector-<?php echo $which; ?>"><?php _e( 'Select bulk action', 'w4os' ); ?></label>
-            <select name="action" id="bulk-action-selector-<?php echo $which; ?>">
-                <option value=""><?php _e( 'Bulk Actions', 'w4os' ); ?></option>
-                <option value="delete"><?php _e( 'Delete', 'w4os' ); ?></option>
-                <!-- Add more bulk actions if needed -->
-
-            </select>
-            <?php
-            submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false );
-        }
-    }
-
-    /** Render the checkbox column */
-    function column_cb( $item ) {
-        return sprintf(
-            '<input type="checkbox" name="region[]" value="%s" />', $item->ID
-        );
-    }
+		/** Render the checkbox column */
+		function column_cb( $item ) {
+			return sprintf(
+				'<input type="checkbox" name="region[]" value="%s" />', $item->ID
+			);
+		}
+	}
 }
