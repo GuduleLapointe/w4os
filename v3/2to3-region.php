@@ -36,6 +36,8 @@ class W4OS3_Region {
 
         add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
         add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
+
+        add_action( 'admin_init', [ __CLASS__, 'redirect_regions_list_access' ] );
     }
 
     /**
@@ -333,7 +335,7 @@ class W4OS3_Region {
 			'public' => true,
 			'show_ui' => true,
 			'show_in_menu' => 'w4os-region-settings',
-			'show_in_nav_menus' => true,
+			// 'show_in_nav_menus' => true,
 			'publicly_queryable' => true,
 			'exclude_from_search' => false,
 			'has_archive' => true,
@@ -505,6 +507,7 @@ class W4OS3_Region {
         wp_nonce_field( 'w4os_save_region_meta', 'w4os_region_meta_nonce' );
 
         // Retrieve existing values from the database
+		$region_estate = get_post_meta( $post->ID, 'region_estate', true );
         $region_owner = get_post_meta( $post->ID, 'region_owner', true );
         $region_uuid = get_post_meta( $post->ID, 'region_uuid', true );
         // Add more fields as needed
@@ -514,6 +517,10 @@ class W4OS3_Region {
         $region_online  = get_post_meta( $post->ID, 'region_online', true );
 
         ?>
+        <p>
+            <label for="region_estate"><?php _e( 'Estate:', 'w4os' ); ?></label>
+            <input type="text" id="region_estate" name="region_estate" value="<?php echo esc_attr( $region_estate ); ?>" class="widefat" />
+        </p>
         <p>
             <label for="region_owner"><?php _e( 'Owner:', 'w4os' ); ?></label>
             <input type="text" id="region_owner" name="region_owner" value="<?php echo esc_attr( $region_owner ); ?>" class="widefat" />
@@ -558,6 +565,12 @@ class W4OS3_Region {
         if ( ! current_user_can( 'edit_post', $post_id ) ) {
             return;
         }
+
+		// Sanitize and save the Region Estate
+		if ( isset( $_POST['region_estate'] ) ) {
+			$region_estate = sanitize_text_field( $_POST['region_estate'] );
+			update_post_meta( $post_id, 'region_estate', $region_estate );
+		}
 
         // Sanitize and save the Region Owner
         if ( isset( $_POST['region_owner'] ) ) {
@@ -610,6 +623,17 @@ class W4OS3_Region {
         return $submenu_file;
     }
 
+    /**
+     * Redirect access to the Regions list to the Regions settings page.
+     */
+    public static function redirect_regions_list_access() {
+        global $pagenow;
+
+        if ( $pagenow === 'edit.php' && isset( $_GET['post_type'] ) && $_GET['post_type'] === 'opensimulator_region' ) {
+            wp_redirect( admin_url( 'admin.php?page=w4os-region-settings' ) );
+            exit;
+        }
+	}
 }
 
 // Ensure WP_List_Table is loaded before using it
@@ -946,6 +970,7 @@ class W4OS_Region_List extends WP_List_Table {
                 <option value=""><?php _e( 'Bulk Actions', 'w4os' ); ?></option>
                 <option value="delete"><?php _e( 'Delete', 'w4os' ); ?></option>
                 <!-- Add more bulk actions if needed -->
+
             </select>
             <?php
             submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false );
