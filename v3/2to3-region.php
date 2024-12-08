@@ -9,6 +9,9 @@
  */
 
 class W4OS3_Region {
+	private $post_type;
+	private $metaboxes;
+
     public function __construct() {
         // We will define region objects properties here later, not implemented now.
 
@@ -24,15 +27,15 @@ class W4OS3_Region {
         add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
         add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
 
-		add_action( 'init', [ __CLASS__, 'register_post_types' ] );
+		add_action( 'init', [ $this, 'register_post_types' ] );
+		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
+        add_action( 'save_post', [ $this, 'sanitize_meta_boxes' ], 10, 2 );
 
 		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
 
         add_filter( 'manage_opensimulator_region_posts_columns', [ __CLASS__, 'add_custom_columns' ] );
         add_action( 'manage_opensimulator_region_posts_custom_column', [ __CLASS__, 'render_custom_columns' ], 10, 2 );
 
-        add_action( 'add_meta_boxes', [ __CLASS__, 'add_meta_boxes' ] );
-        add_action( 'save_post', [ __CLASS__, 'save_region_meta' ], 10, 2 );
 
         add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
         add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
@@ -216,7 +219,7 @@ class W4OS3_Region {
         }
 
         // Instantiate and display the list table
-        $regionsTable = new W4OS_Region_List();
+        $regionsTable = new W4OS_List_Table();
         $regionsTable->prepare_items();
         ?>
         <div class="wrap">
@@ -311,7 +314,7 @@ class W4OS3_Region {
 	/**
 	 * Register post types for the plugin.
 	 */
-	public static function register_post_types() {
+	public function register_post_types() {
 		$labels = array(
 			'name' => __( 'Regions', 'w4os' ),
 			'singular_name' => __( 'Region', 'w4os' ),
@@ -331,7 +334,7 @@ class W4OS3_Region {
 			'labels' => $labels,
 			'hierarchical' => true,
 			'description' => __( 'Regions for the plugin.', 'w4os' ),
-			'supports' => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
+			'supports' => array( 'title', 'editor', 'thumbnail' ),
 			'public' => true,
 			'show_ui' => true,
 			'show_in_menu' => 'w4os-region-settings',
@@ -345,69 +348,132 @@ class W4OS3_Region {
 			'capability_type' => 'post',
 		);
 
-		register_post_type( 'opensimulator_region', $args );
+		$this->post_type = register_post_type( 'opensimulator_region', $args );
 
-		register_post_meta( 'opensimulator_region', 'region_uuid', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_size', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_owner', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_status', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_type', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_location', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_ip', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_port', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_grid', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
+		$this->metaboxes = array(
+			'w4os_region_details' => array(
+				'title' => __( 'Region New Details', 'w4os' ),
+				'context' => 'advanced',
+				'priority' => 'default',
+				'fields' => array(
+					'region_estate' => array(
+						'title' => __( 'Estate', 'w4os' ),
+						'type' => 'text',
+					),
+					'region_owner' => array(
+						'title' => __( 'Owner', 'w4os' ),
+						'type' => 'text',
+					),
+					'region_uuid' => array(
+						'title' => __( 'UUID', 'w4os' ),
+						'type' => 'text',
+					),
+					'region_enabled' => array(
+						'title' => __( 'Enabled', 'w4os' ),
+						'type' => 'checkbox',
+					),
+					'region_online' => array(
+						'title' => __( 'Online', 'w4os' ),
+						'type' => 'checkbox',
+					),
+				),
+			),
+		);
+	}
+
+	function add_meta_boxes() {
+		if(empty($this->metaboxes)) {
+			error_log( __METHOD__ . ' No metaboxes defined.' );
+			return;
+		}
+
+		$metaboxes = $this->metaboxes;
+		$post_type_name = $this->post_type->name;
+
+		foreach ( $metaboxes as $id => $metabox ) {
+			$metabox = WP_parse_args( $metabox, array(
+				'title' => null,
+				'context' => 'advanced',
+				'priority' => 'default',
+				'fields' => array(),
 			) );
-			
-		// Register 'region_enabled' meta
-		register_post_meta( 'opensimulator_region', 'region_enabled', array(
-			'show_in_rest' => true,
-			'single'       => true,
-			'type'         => 'boolean',
-			'default'      => true, // Enabled by default
+			add_meta_box(
+				$id, // Metabox ID
+				$metabox['title'], // Metabox title
+				array( $this, 'render_meta_box' ), // Callback function
+				$post_type_name, // Post type
+				$metabox['context'], // Context
+				$metabox['priority'], // Priority
+				$metabox // Callback arguments
+			);
+		}
+		
+		return;
+	}
+	
+	function render_meta_box( $post, $metabox ) {
+		$post_type_name = $this->post_type->name;
+		$nonce = 'w4os_' . $post_type_name . '_nonce';
+		wp_nonce_field( $nonce, $nonce );
+		$this->fields = $metabox['args']['fields'];
+		if(!empty($this->fields)) {
+			echo "<table class='form-table w4os-metabox'>";
+			foreach( $this->fields as $field_id => $field ) {
+				$value = get_post_meta( $post->ID, $field_id, true );
+				$this->render_field( $field, $value );
+			}
+			echo "</table>";
+		}			
+	}		
+
+	function render_field( $args, $value=null ) {
+		$field = WP_parse_args( $args, array(
+			'id' => null,
+			'title' => null,
+			'description' => null,
+			'type' => 'text',
+			'options' => array(),
+			'option_name' => null,
+			'label_for' => null,
 		) );
 
-		// Register 'region_online' meta
-		register_post_meta( 'opensimulator_region', 'region_online', array(
-			'show_in_rest' => true,
-			'single'       => true,
-			'type'         => 'boolean',
-			'default'      => false, // Offline by default
-		) );
+		switch( $field['type'] ) {
+			case "boolean":
+			case "checkbox":
+				$input_field = sprintf(
+					'<label>
+						<input type="checkbox" id="%1$s" name="%1$s" value="1" %2$s />
+						%3$s
+					</label>',
+					esc_attr( $field['id'] ),
+					checked( $value, '1', false ),
+					esc_html( empty( $field['label'] ) ? $field['title'] : $field['label'] ),
+				);
+				break;
+			case "text":
+			default:
+				$input_field = sprintf(
+					'<input type="text" id="%1$s" name="%1$s" value="%2$s" />',
+					esc_attr( $field['id'] ),
+					esc_attr( $value )
+				);
+				break;
+		}
+		printf(
+			'<tr><th><label for="%1$s">%2$s</label></th><td>%3$s %4$s</p></td></tr>',
+			esc_attr( $field['id'] ),
+			esc_html( $field['title'] ),
+			$input_field,
+			$field['description'] ? sprintf( '<p class="description">%s</p>', esc_html( $field['description'] ) ) : ''
+		);
+		// printf( $input_field );
+		// if( !empty($field['description']) ) {
+		// 	printf(
+		// 		'<p class="description">%s</p>',
+		// 		esc_html( $field['description'] )
+		// 	);
+		// }
+		// echo '</p>';
 	}
 
     // Add custom admin columns
@@ -429,134 +495,26 @@ class W4OS3_Region {
         }
     }
 
-	function register_fields() {
-		// Register fields for the Region post type
-		register_post_meta( 'opensimulator_region', 'region_uuid', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_size', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_owner', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-			// Remove 'admin_columns' parameter
-			// 'admin_columns' => array(
-			//     'position'   => 'after title',
-			//     'sort'       => true,
-			//     'searchable' => true,
-			//     'filterable' => true,
-			// ),
-		) );
-		register_post_meta( 'opensimulator_region', 'region_status', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_type', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_location', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_ip', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_port', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-		register_post_meta( 'opensimulator_region', 'region_grid', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		) );
-	}
-
-    /**
-     * Add metaboxes for Region custom fields.
-     */
-    public static function add_meta_boxes() {
-        add_meta_box(
-            'w4os_region_details',                // ID
-            __( 'Region Details', 'w4os' ),      // Title
-            [ __CLASS__, 'render_region_meta_box' ], // Callback
-            'opensimulator_region',               // Post type
-            'normal',                             // Context
-            'default'                             // Priority
-        );
-    }
-
-    /**
-     * Render the Region Details metabox.
-     */
-    public static function render_region_meta_box( $post ) {
-        // Add a nonce field for security
-        wp_nonce_field( 'w4os_save_region_meta', 'w4os_region_meta_nonce' );
-
-        // Retrieve existing values from the database
-		$region_estate = get_post_meta( $post->ID, 'region_estate', true );
-        $region_owner = get_post_meta( $post->ID, 'region_owner', true );
-        $region_uuid = get_post_meta( $post->ID, 'region_uuid', true );
-        // Add more fields as needed
-
-        // Retrieve existing values from the database
-        $region_enabled = get_post_meta( $post->ID, 'region_enabled', true );
-        $region_online  = get_post_meta( $post->ID, 'region_online', true );
-
-        ?>
-        <p>
-            <label for="region_estate"><?php _e( 'Estate:', 'w4os' ); ?></label>
-            <input type="text" id="region_estate" name="region_estate" value="<?php echo esc_attr( $region_estate ); ?>" class="widefat" />
-        </p>
-        <p>
-            <label for="region_owner"><?php _e( 'Owner:', 'w4os' ); ?></label>
-            <input type="text" id="region_owner" name="region_owner" value="<?php echo esc_attr( $region_owner ); ?>" class="widefat" />
-        </p>
-        <p>
-            <label for="region_uuid"><?php _e( 'UUID:', 'w4os' ); ?></label>
-            <input type="text" id="region_uuid" name="region_uuid" value="<?php echo esc_attr( $region_uuid ); ?>" class="widefat" />
-        </p>
-        <!-- Add more fields as necessary -->
-        <p>
-            <label for="region_enabled"><?php _e( 'Enabled:', 'w4os' ); ?></label>
-            <input type="checkbox" id="region_enabled" name="region_enabled" value="1" <?php checked( $region_enabled, 1 ); ?> />
-        </p>
-        <p>
-            <label for="region_online"><?php _e( 'Online:', 'w4os' ); ?></label>
-            <input type="checkbox" id="region_online" name="region_online" value="1" <?php checked( $region_online, 1 ); ?> disabled />
-        </p>
-        <!-- ...existing code... -->
-        <?php
-    }
-
     /**
      * Save the Region custom fields.
      */
-    public static function save_region_meta( $post_id, $post ) {
+    public function sanitize_meta_boxes( $post_id, $post ) {
+		$post_type_name = $this->post_type->name;
+		$nonce = 'w4os_' . $post_type_name . '_nonce';
+
         // Check if our nonce is set.
-        if ( ! isset( $_POST['w4os_region_meta_nonce'] ) ) {
+        if ( ! isset( $_POST[$nonce] ) ) {
+			error_log( __METHOD__ . " Nonce $nonce not set." );
             return;
         }
 
         // Verify that the nonce is valid.
-        if ( ! wp_verify_nonce( $_POST['w4os_region_meta_nonce'], 'w4os_save_region_meta' ) ) {
+        if ( ! wp_verify_nonce( $_POST[$nonce], $nonce ) ) {
+			error_log( __METHOD__ . " Nonce $nonce not verified." );
             return;
         }
 
-        // If this is an autosave, our form has not been submitted, so we don't want to do anything.
+		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
             return;
         }
@@ -566,6 +524,10 @@ class W4OS3_Region {
             return;
         }
 
+		error_log( __METHOD__ . " Metaboxes: " . print_r( $this->metaboxes, true ) );
+		error_log( __METHOD__ . " Saving post $post_id. " . print_r( $_POST, true ) );
+
+		return;
 		// Sanitize and save the Region Estate
 		if ( isset( $_POST['region_estate'] ) ) {
 			$region_estate = sanitize_text_field( $_POST['region_estate'] );
@@ -637,9 +599,16 @@ class W4OS3_Region {
 }
 
 // Ensure WP_List_Table is loaded before using it
-add_action( 'admin_menu', 'w4os_add_W4OS_Region_List_class' );
-function w4os_add_W4OS_Region_List_class() {
-	class W4OS_Region_List extends WP_List_Table {
+add_action( 'admin_menu', function() {
+	/**
+	 * - Extend WP_List_Table class for custom post-types
+	 * - use parameters from registered post_type and registered meta fields
+	 * - create a submenu to combined list/settings page with tabs. Default tab shows the list.
+	 * - disable default edit.php access for the custom post type.
+	 * 
+	 * This class should be post-type agnostic, so it can be used for any custom post type.
+	 */
+	class W4OS_List_Table extends WP_List_Table {
 		/** Class constructor */
 		public function __construct() {
 			parent::__construct( [
@@ -982,4 +951,4 @@ function w4os_add_W4OS_Region_List_class() {
 			);
 		}
 	}
-}
+});

@@ -162,6 +162,22 @@ class W4OS3_Settings {
         }
     }
 
+    /**
+     * Render a settings field.
+     * 
+     * @param array $args {
+     *     Array of arguments for the settings field.
+     * 
+     *      @type string $id Field ID.
+     *      @type string $label Field label.
+     *      @type string $label_for Field label for attribute.
+     *      @type string $type Field type.
+     *      @type array $options Field options.
+     *      @type string $default Default value.
+     *      @type string $description Field description.
+     *      @type string $option_name Option name.
+     * }
+     */
     public static function render_settings_field( $args ) {
         if ( ! is_array( $args ) ) {
             return;
