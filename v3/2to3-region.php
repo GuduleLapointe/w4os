@@ -46,7 +46,7 @@ class W4OS3_Region {
 	public static function add_submenus() {
         W4OS3::add_submenu_page(
             'w4os',                         
-            __( 'Regions Settings', 'w4os' ),
+            __( 'Regions', 'w4os' ),
             __( 'Regions', 'w4os' ),
             'manage_options',
             'w4os-region-settings',
@@ -57,7 +57,7 @@ class W4OS3_Region {
 
 	static function add_menu_tabs( $tabs ) {
 		$tabs['w4os-region-settings'] = array(
-			'regions'  => __( 'Regions', 'w4os' ), // Added 'Regions' tab
+			'regions'  => __( 'List', 'w4os' ), // Added 'Regions' tab
 			'settings' => __( 'Settings', 'w4os' ),
 			'advanced' => __( 'Advanced', 'w4os' ),
 		);
@@ -174,7 +174,7 @@ class W4OS3_Region {
                 <!-- echo $tabs_navigation; -->
                 <h2 class="nav-tab-wrapper">
 					<a href="?page=<?php echo esc_attr($menu_slug); ?>" class="nav-tab <?php echo $current_tab === 'regions' ? 'nav-tab-active' : ''; ?>">
-						<?php _e('Regions', 'w4os'); ?>
+						<?php _e('List', 'w4os'); ?>
 					</a>
 					<a href="?page=<?php echo esc_attr($menu_slug); ?>&tab=settings" class="nav-tab <?php echo $current_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
 						<?php _e('Settings', 'w4os'); ?>
