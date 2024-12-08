@@ -8,16 +8,54 @@
  * - The header and content are managed by the render_settings_page() method.
  */
 
+## Region table fields:
+
+// Field	Type	Null	Key	Default	Extra
+// uuid	varchar(36)	NO	PRI	NULL	 
+// regionHandle	bigint(20) unsigned	NO	MUL	NULL	
+// regionName	varchar(32)	YES	MUL	NULL	
+// regionRecvKey	varchar(128)	YES		NULL	
+// regionSendKey	varchar(128)	YES		NULL	
+// regionSecret	varchar(128)	YES		NULL	
+// regionDataURI	varchar(255)	YES		NULL	
+// serverIP	varchar(64)	YES		NULL	
+// serverPort	int(10) unsigned	YES		NULL	
+// serverURI	varchar(255)	YES		NULL	
+// locX	int(10) unsigned	YES		NULL	
+// locY	int(10) unsigned	YES		NULL	
+// locZ	int(10) unsigned	YES		NULL	
+// eastOverrideHandle	bigint(20) unsigned	YES	MUL	NULL	
+// westOverrideHandle	bigint(20) unsigned	YES		NULL	
+// southOverrideHandle	bigint(20) unsigned	YES		NULL	
+// northOverrideHandle	bigint(20) unsigned	YES		NULL	
+// regionAssetURI	varchar(255)	YES		NULL	
+// regionAssetRecvKey	varchar(128)	YES	PRI	NULL	
+// regionAssetSendKey	varchar(128)	YES	PRI	NULL	
+// regionUserURI	varchar(255)	YES		NULL	
+// regionUserRecvKey	varchar(128)	YES		NULL	
+// regionUserSendKey	varchar(128)	YES		NULL	
+// regionMapTexture	varchar(36)	YES		NULL	
+// serverHttpPort	int(10)	YES		NULL	
+// serverRemotingPort	int(10)	YES		NULL	
+// owner_uuid	varchar(36)	NO		00000000-0000-0000-0000-000000000000	
+// originUUID	varchar(36)	YES		NULL	
+// access	int(10) unsigned	YES		1	
+// ScopeID	char(36)	NO		00000000-0000-0000-0000-000000000000	
+// sizeX	int(11)	NO		0	
+// sizeY	int(11)	NO		0	
+// flags	int(11)	NO		0	
+// last_seen	int(11)	NO		0	
+// PrincipalID	char(36)	NO		00000000-0000-0000-0000-000000000000	
+// Token	varchar(255)	NO		None	
+// parcelMapTexture	varchar(36)	YES		NULL	
+
+
 class W4OS3_Region {
-	private $post_type;
-	private $metaboxes;
+	private $db;
 
     public function __construct() {
-        // We will define region objects properties here later, not implemented now.
-
-        // $args = func_get_args();
-        // if ( ! empty ( $args ) ) {
-        // }
+        // Initialize the custom database connection with credentials
+        $this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
     }
 
     /**
@@ -25,41 +63,33 @@ class W4OS3_Region {
      */
     public function init() {
         add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
-        add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
-
-		add_action( 'init', [ $this, 'register_post_types' ] );
-		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
-        add_action( 'save_post', [ $this, 'sanitize_meta_boxes' ], 10, 2 );
+        add_action( 'admin_menu', [ $this, 'add_submenus' ] );
 
 		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
 
-        add_filter( 'manage_opensimulator_region_posts_columns', [ __CLASS__, 'add_custom_columns' ] );
-        add_action( 'manage_opensimulator_region_posts_custom_column', [ __CLASS__, 'render_custom_columns' ], 10, 2 );
 
+        // add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
+        // add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
 
-        add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
-        add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
-
-        add_action( 'admin_init', [ __CLASS__, 'redirect_regions_list_access' ] );
     }
 
     /**
 	 * Add submenu for Region settings page
 	 */
-	public static function add_submenus() {
+	public function add_submenus() {
         W4OS3::add_submenu_page(
             'w4os',                         
             __( 'Regions', 'w4os' ),
             __( 'Regions', 'w4os' ),
             'manage_options',
-            'w4os-region-settings',
-            [ __CLASS__, 'render_settings_page' ],
+            'w4os-region',
+            [ $this, 'render_settings_page' ],
             3,
         );
     }
 
 	static function add_menu_tabs( $tabs ) {
-		$tabs['w4os-region-settings'] = array(
+		$tabs['w4os-region'] = array(
 			'regions'  => __( 'List', 'w4os' ), // Added 'Regions' tab
 			'settings' => __( 'Settings', 'w4os' ),
 			'advanced' => __( 'Advanced', 'w4os' ),
@@ -75,7 +105,7 @@ class W4OS3_Region {
             return;
         }
 
-        $option_name = 'w4os-region-settings'; // Hard-coded here is fine to make sure it matches intended submenu slug
+        $option_name = 'w4os-region'; // Hard-coded here is fine to make sure it matches intended submenu slug
         $option_group = $option_name . '_group';
 
         // Register the main option with a sanitize callback
@@ -146,7 +176,7 @@ class W4OS3_Region {
 	 * It uses only the values passed by args parameter and WP settings API.
 	 * Particularly, $menu_slug, $option_name, and $option_group are retrieved dynamically.
 	 */
-	public static function render_settings_page() {
+	public function render_settings_page() {
         $args = func_get_args();
         
 		$screen = get_current_screen();
@@ -192,7 +222,7 @@ class W4OS3_Region {
                 <div class="wrap <?php echo esc_attr($menu_slug); ?>">
                     <?php
                     if ( $current_tab === 'regions' ) {
-                        self::display_regions_list();
+                        $this->display_regions_list();
                     } else {
                     ?>
                     <form method="post" action="options.php">
@@ -211,15 +241,31 @@ class W4OS3_Region {
     }
 
     /**
-     * Display the list of Regions
+     * Display the list of Regions from the custom database.
      */
-    public static function display_regions_list() {
-        if ( ! class_exists( 'WP_List_Table' ) ) {
-            require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-        }
+    public function display_regions_list() {
+        // if ( ! class_exists( 'WP_List_Table' ) ) {
+        //     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+        // }
 
         // Instantiate and display the list table
-        $regionsTable = new W4OS_List_Table();
+        $regionsTable = new W4OS_List_Table( $this->db, 'regions', [
+			'singular' => 'Region',
+			'plural'   => 'Regions',
+			'menu'     => 'Regions',
+			'columns' => array(
+				'regionName'  => __( 'Region Name', 'w4os' ), // Renamed from 'Title' to 'Region Name'
+				'owner_uuid'        => __( 'Owner', 'w4os' ),
+				'status'       => __( 'Status', 'w4os' ),       // Added 'Status' column
+				'last_seen' => __( 'Last Seen', 'w4os' ),
+			),
+			'sortable' => [
+				'regionName'  => [ 'regionName', true ],
+				'owner_uuid'        => [ 'owner_uuid', false ],
+				'status'       => [ 'status', false ],
+				'last_seen' => [ 'last_seen', false ],
+			],
+		] );
         $regionsTable->prepare_items();
         ?>
         <div class="wrap">
@@ -233,6 +279,11 @@ class W4OS3_Region {
         <?php
     }
 
+	/**
+	 * Render a settings field.
+	 * 
+	 * This method should be agnostic, it will be moved in another class later and used by different settings pages.
+	 */
     public static function render_settings_field($args) {
         if (!is_array($args)) {
             return;
@@ -259,6 +310,40 @@ class W4OS3_Region {
         $value = isset($option[$tab][$args['id']]) ? $option[$tab][$args['id']] : '';
 
         switch ($args['type']) {
+			case 'db_credentials':
+				// Grouped fields for database credentials
+				$creds = WP_parse_args( $value, [
+					'user'     => null,
+					'pass'     => null,
+					'database' => null,
+					'host'     => null,
+					'port'     => null,
+				] );
+				$input_field = sprintf(
+					'<label for="%1$s_user">%2$s</label>
+					<input type="text" id="%1$s_user" name="%3$s[user]" value="%4$s" />
+					<label for="%1$s_pass">%5$s</label>
+					<input type="password" id="%1$s_pass" name="%3$s[pass]" value="%6$s" />
+					<label for="%1$s_database">%7$s</label>
+					<input type="text" id="%1$s_database" name="%3$s[database]" value="%8$s" />
+					<label for="%1$s_host">%9$s</label>
+					<input type="text" id="%1$s_host" name="%3$s[host]" value="%10$s" />
+					<label for="%1$s_port">%11$s</label>
+					<input type="text" id="%1$s_port" name="%3$s[port]" value="%12$s" />',
+					esc_attr($args['id']),
+					esc_html__('User', 'w4os'),
+					esc_attr($field_name),
+					esc_attr($creds['user']),
+					esc_html__('Password', 'w4os'),
+					esc_attr($creds['pass']),
+					esc_html__('Database', 'w4os'),
+					esc_attr($creds['database']),
+					esc_html__('Host', 'w4os'),
+					esc_attr($creds['host']),
+					esc_html__('Port', 'w4os'),
+					esc_attr($creds['port'])
+				);
+				break;
             case 'checkbox':
                 $input_field = sprintf(
                     '<label>
@@ -289,13 +374,14 @@ class W4OS3_Region {
     }
 
 	/**
-	 * Global class for field sanitization.
-	 * Used by different classes to save settings from different settings pages.
+	 * General class for field sanitization. Used by different classes to save settings from different settings pages.
+	 * 
+	 * This method should be agnostic, it will be moved in another class later and used by different settings pages.
 	 */
 	public static function sanitize_options( $input ) {
 		
 		// Initialize the output array with existing options
-		$options = get_option( 'w4os-region-settings', array( 'settings' => array(), 'advanced' => array() ) );
+		$options = get_option( 'w4os-region', array( 'settings' => array(), 'advanced' => array() ) );
 		if( ! is_array( $input ) ) {
 			return $options;
 		}
@@ -311,291 +397,6 @@ class W4OS3_Region {
 		return $options;
 	}
 
-	/**
-	 * Register post types for the plugin.
-	 */
-	public function register_post_types() {
-		$labels = array(
-			'name' => __( 'Regions', 'w4os' ),
-			'singular_name' => __( 'Region', 'w4os' ),
-			'add_new' => __( 'Add New', 'w4os' ),
-			'add_new_item' => __( 'Add New Region', 'w4os' ),
-			'edit_item' => __( 'Edit Region', 'w4os' ),
-			'new_item' => __( 'New Region', 'w4os' ),
-			'view_item' => __( 'View Region', 'w4os' ),
-			'search_items' => __( 'Search Regions', 'w4os' ),
-			'not_found' => __( 'No Regions found', 'w4os' ),
-			'not_found_in_trash' => __( 'No Regions found in Trash', 'w4os' ),
-			'parent_item_colon' => __( 'Parent Region:', 'w4os' ),
-			'menu_name' => __( 'Regions', 'w4os' ),
-		);
-
-		$args = array(
-			'labels' => $labels,
-			'hierarchical' => true,
-			'description' => __( 'Regions for the plugin.', 'w4os' ),
-			'supports' => array( 'title', 'editor', 'thumbnail' ),
-			'public' => true,
-			'show_ui' => true,
-			'show_in_menu' => 'w4os-region-settings',
-			// 'show_in_nav_menus' => true,
-			'publicly_queryable' => true,
-			'exclude_from_search' => false,
-			'has_archive' => true,
-			'query_var' => true,
-			'can_export' => true,
-			'rewrite' => array( 'slug' => 'region' ),
-			'capability_type' => 'post',
-		);
-
-		$this->post_type = register_post_type( 'opensimulator_region', $args );
-
-		$this->metaboxes = array(
-			'w4os_region_details' => array(
-				'title' => __( 'Region New Details', 'w4os' ),
-				'context' => 'advanced',
-				'priority' => 'default',
-				'fields' => array(
-					'region_estate' => array(
-						'title' => __( 'Estate', 'w4os' ),
-						'type' => 'text',
-					),
-					'region_owner' => array(
-						'title' => __( 'Owner', 'w4os' ),
-						'type' => 'text',
-					),
-					'region_uuid' => array(
-						'title' => __( 'UUID', 'w4os' ),
-						'type' => 'text',
-					),
-					'region_enabled' => array(
-						'title' => __( 'Enabled', 'w4os' ),
-						'type' => 'checkbox',
-					),
-					'region_online' => array(
-						'title' => __( 'Online', 'w4os' ),
-						'type' => 'checkbox',
-					),
-				),
-			),
-		);
-	}
-
-	function add_meta_boxes() {
-		if(empty($this->metaboxes)) {
-			error_log( __METHOD__ . ' No metaboxes defined.' );
-			return;
-		}
-
-		$metaboxes = $this->metaboxes;
-		$post_type_name = $this->post_type->name;
-
-		foreach ( $metaboxes as $id => $metabox ) {
-			$metabox = WP_parse_args( $metabox, array(
-				'title' => null,
-				'context' => 'advanced',
-				'priority' => 'default',
-				'fields' => array(),
-			) );
-			add_meta_box(
-				$id, // Metabox ID
-				$metabox['title'], // Metabox title
-				array( $this, 'render_meta_box' ), // Callback function
-				$post_type_name, // Post type
-				$metabox['context'], // Context
-				$metabox['priority'], // Priority
-				$metabox // Callback arguments
-			);
-		}
-		
-		return;
-	}
-	
-	function render_meta_box( $post, $metabox ) {
-		$post_type_name = $this->post_type->name;
-		$nonce = 'w4os_' . $post_type_name . '_nonce';
-		wp_nonce_field( $nonce, $nonce );
-		$this->fields = $metabox['args']['fields'];
-		if(!empty($this->fields)) {
-			echo "<table class='form-table w4os-metabox'>";
-			foreach( $this->fields as $field_id => $field ) {
-				$value = get_post_meta( $post->ID, $field_id, true );
-				$this->render_field( $field, $value );
-			}
-			echo "</table>";
-		}			
-	}		
-
-	function render_field( $args, $value=null ) {
-		$field = WP_parse_args( $args, array(
-			'id' => null,
-			'title' => null,
-			'description' => null,
-			'type' => 'text',
-			'options' => array(),
-			'option_name' => null,
-			'label_for' => null,
-		) );
-
-		switch( $field['type'] ) {
-			case "boolean":
-			case "checkbox":
-				$input_field = sprintf(
-					'<label>
-						<input type="checkbox" id="%1$s" name="%1$s" value="1" %2$s />
-						%3$s
-					</label>',
-					esc_attr( $field['id'] ),
-					checked( $value, '1', false ),
-					esc_html( empty( $field['label'] ) ? $field['title'] : $field['label'] ),
-				);
-				break;
-			case "text":
-			default:
-				$input_field = sprintf(
-					'<input type="text" id="%1$s" name="%1$s" value="%2$s" />',
-					esc_attr( $field['id'] ),
-					esc_attr( $value )
-				);
-				break;
-		}
-		printf(
-			'<tr><th><label for="%1$s">%2$s</label></th><td>%3$s %4$s</p></td></tr>',
-			esc_attr( $field['id'] ),
-			esc_html( $field['title'] ),
-			$input_field,
-			$field['description'] ? sprintf( '<p class="description">%s</p>', esc_html( $field['description'] ) ) : ''
-		);
-		// printf( $input_field );
-		// if( !empty($field['description']) ) {
-		// 	printf(
-		// 		'<p class="description">%s</p>',
-		// 		esc_html( $field['description'] )
-		// 	);
-		// }
-		// echo '</p>';
-	}
-
-    // Add custom admin columns
-    public static function add_custom_columns( $columns ) {
-        $new_columns = array();
-        foreach ( $columns as $key => $value ) {
-            $new_columns[$key] = $value;
-            if ( $key === 'title' ) {
-                $new_columns['region_owner'] = __( 'Owner', 'w4os' );
-            }
-        }
-        return $new_columns;
-    }
-
-    public static function render_custom_columns( $column, $post_id ) {
-        if ( $column === 'region_owner' ) {
-            $owner = get_post_meta( $post_id, 'region_owner', true );
-            echo esc_html( $owner );
-        }
-    }
-
-    /**
-     * Save the Region custom fields.
-     */
-    public function sanitize_meta_boxes( $post_id, $post ) {
-		$post_type_name = $this->post_type->name;
-		$nonce = 'w4os_' . $post_type_name . '_nonce';
-
-        // Check if our nonce is set.
-        if ( ! isset( $_POST[$nonce] ) ) {
-			error_log( __METHOD__ . " Nonce $nonce not set." );
-            return;
-        }
-
-        // Verify that the nonce is valid.
-        if ( ! wp_verify_nonce( $_POST[$nonce], $nonce ) ) {
-			error_log( __METHOD__ . " Nonce $nonce not verified." );
-            return;
-        }
-
-		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
-        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-            return;
-        }
-
-        // Check the user's permissions.
-        if ( ! current_user_can( 'edit_post', $post_id ) ) {
-            return;
-        }
-
-		error_log( __METHOD__ . " Metaboxes: " . print_r( $this->metaboxes, true ) );
-		error_log( __METHOD__ . " Saving post $post_id. " . print_r( $_POST, true ) );
-
-		return;
-		// Sanitize and save the Region Estate
-		if ( isset( $_POST['region_estate'] ) ) {
-			$region_estate = sanitize_text_field( $_POST['region_estate'] );
-			update_post_meta( $post_id, 'region_estate', $region_estate );
-		}
-
-        // Sanitize and save the Region Owner
-        if ( isset( $_POST['region_owner'] ) ) {
-            $region_owner = sanitize_text_field( $_POST['region_owner'] );
-            update_post_meta( $post_id, 'region_owner', $region_owner );
-        }
-
-        // Sanitize and save the Region UUID
-        if ( isset( $_POST['region_uuid'] ) ) {
-            $region_uuid = sanitize_text_field( $_POST['region_uuid'] );
-            update_post_meta( $post_id, 'region_uuid', $region_uuid );
-        }
-
-        // Add more fields as necessary
-
-        // Sanitize and save the Region Enabled
-        if ( isset( $_POST['region_enabled'] ) ) {
-            $region_enabled = sanitize_text_field( $_POST['region_enabled'] ) ? 1 : 0;
-            update_post_meta( $post_id, 'region_enabled', $region_enabled );
-        } else {
-            // If checkbox is unchecked, set to 0
-            update_post_meta( $post_id, 'region_enabled', 0 );
-        }
-
-        // 'region_online' is readonly and handled by another process, so we skip saving it here.
-    }
-
-    public static function set_active_menu( $parent_file ) {
-        global $pagenow;
-
-        if ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) {
-            $current_screen = get_current_screen();
-            if ( $current_screen->post_type === 'opensimulator_region' ) {
-                $parent_file = 'w4os'; // Set to main plugin menu slug
-            }
-        }
-
-        return $parent_file;
-    }
-
-    public static function set_active_submenu( $submenu_file ) {
-        global $pagenow, $typenow;
-
-        if ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) {
-            if ( $typenow === 'opensimulator_region' ) {
-                $submenu_file = 'w4os-region-settings'; // Set to submenu slug
-            }
-        }
-
-        return $submenu_file;
-    }
-
-    /**
-     * Redirect access to the Regions list to the Regions settings page.
-     */
-    public static function redirect_regions_list_access() {
-        global $pagenow;
-
-        if ( $pagenow === 'edit.php' && isset( $_GET['post_type'] ) && $_GET['post_type'] === 'opensimulator_region' ) {
-            wp_redirect( admin_url( 'admin.php?page=w4os-region-settings' ) );
-            exit;
-        }
-	}
 }
 
 // Ensure WP_List_Table is loaded before using it
@@ -609,35 +410,44 @@ add_action( 'admin_menu', function() {
 	 * This class should be post-type agnostic, so it can be used for any custom post type.
 	 */
 	class W4OS_List_Table extends WP_List_Table {
+		private $db;
+		private $columns;
+		private $sortable;
+
 		/** Class constructor */
-		public function __construct() {
-			parent::__construct( [
-				'singular' => __( 'Region', 'w4os' ), // Singular name
-				'plural'   => __( 'Regions', 'w4os' ), // Plural name
+		public function __construct( $db, $table, $args ) {
+			$args = WP_parse_args( $args, [
+				'singular' => 'Item',
+				'plural'   => 'Items',
 				'ajax'     => false // Disable AJAX
 			] );
+			$this->columns = $args['columns'];
+			error_log( 'columns: ' . print_r( $args['columns'], true ) );
+			$this->sortable = empty($args['sortable']) ? [] : $args['sortable'];
+			error_log( 'sortable: ' . print_r( $this->sortable, true ) );
+			parent::__construct( $this->labels );
+
+			// Initialize database connection with credentials
+			$this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
 		}
 
 		/** Define the columns */
 		public function get_columns() {
-			return [
+			$columns = WP_parse_args( $this->columns, [
 				'cb'           => '<input type="checkbox" />',
-				'title'        => __( 'Region Name', 'w4os' ), // Renamed from 'Title' to 'Region Name'
-				'region_estate' => __( 'Estate', 'w4os' ),
-				'region_owner' => __( 'Owner', 'w4os' ),
-				'status'       => __( 'Status', 'w4os' ),       // Added 'Status' column
-				'date'         => __( 'Date', 'w4os' ),
-			];
+			] );
+			return $columns;
 		}
 
 		/** Define sortable columns */
 		public function get_sortable_columns() {
+
+
 			return [
-				'title'        => [ 'title', true ],          // Made 'Region Name' sortable
-				'region_estate' => [ 'region_estate', false ],  // Made 'Owner' sortable
-				'region_owner' => [ 'region_owner', false ],  // Made 'Owner' sortable
+				'regionName'  => [ 'regionName', true ],          // Made 'Region Name' sortable
+				'owner_uuid'        => [ 'owner_uuid', false ],  // Made 'Owner' sortable
 				'status'       => [ 'status', false ],        // Made 'Status' sortable
-				'date'         => [ 'date', false ],
+				'last_seen' => [ 'last_seen', false ],
 			];
 		}
 
@@ -767,162 +577,41 @@ add_action( 'admin_menu', function() {
 
 			$this->_column_headers = [ $columns, $hidden, $sortable ];
 
-			$query_args = [
-				'post_type'      => 'opensimulator_region',
-				'posts_per_page' => -1,
-				'post_status'    => 'publish',
-			];
-
-			$meta_query = [];
+			$query = "SELECT * FROM regions"; // Replace 'regions' with your actual table name
 
 			// Handle search
 			if ( ! empty( $_REQUEST['s'] ) ) {
-				$search = sanitize_text_field( $_REQUEST['s'] );
-
-				// Modify the search to include title, content, and meta fields
-				$query_args['s'] = $search;
-
-				// Add meta_query to search in 'region_owner' and 'region_uuid'
-				$meta_query[] = [
-					'relation' => 'OR',
-					[
-						'key'     => 'region_owner',
-						'value'   => $search,
-						'compare' => 'LIKE',
-					],
-					[
-						'key'     => 'region_uuid',
-						'value'   => $search,
-						'compare' => 'LIKE',
-					],
-				];
-			}
-
-			// Handle status filter
-			if ( isset( $_GET['status_filter'] ) && in_array( $_GET['status_filter'], ['all', 'disabled', 'online', 'offline'], true ) ) {
-				$status = sanitize_text_field( $_GET['status_filter'] );
-
-				if ( 'all' === $status ) {
-					// No additional meta_query needed for 'all'
-				} elseif ( 'disabled' === $status ) {
-					$meta_query[] = [
-						'key'     => 'region_enabled',
-						'value'   => '0',
-						'compare' => '=',
-					];
-				} elseif ( 'online' === $status ) {
-					$meta_query[] = [
-						'relation' => 'AND',
-						[
-							'key'     => 'region_enabled',
-							'value'   => '1',
-							'compare' => '=',
-						],
-						[
-							'key'     => 'region_online',
-							'value'   => '1',
-							'compare' => '=',
-						],
-					];
-				} elseif ( 'offline' === $status ) {
-					$meta_query[] = [
-						'relation' => 'AND',
-						[
-							'key'     => 'region_enabled',
-							'value'   => '1',
-							'compare' => '=',
-						],
-						[
-							'key'     => 'region_online',
-							'value'   => '0',
-							'compare' => '=',
-						],
-					];
-				}
-			}
-
-			if ( ! empty( $meta_query ) ) {
-				$query_args['meta_query'] = [
-					'relation' => 'AND',
-					...$meta_query,
-				];
+				$search = $this->db->esc_like( $_REQUEST['s'] );
+				$query  .= $this->db->prepare( " WHERE regionName LIKE %s OR owner_uuid LIKE %s", '%' . $search . '%', '%' . $search . '%' );
 			}
 
 			// Handle sorting
 			if ( ! empty( $_REQUEST['orderby'] ) && ! empty( $_REQUEST['order'] ) ) {
 				$orderby = sanitize_text_field( $_REQUEST['orderby'] );
-				$order   = sanitize_text_field( $_REQUEST['order'] );
+				$order   = sanitize_text_field( $_REQUEST['order'] ) === 'desc' ? 'DESC' : 'ASC';
+				$allowed_orderbys = [ 'regionName', 'owner_uuid', 'status', 'last_seen' ];
 
-				switch ( $orderby ) {
-					case 'region_owner':
-						$query_args['orderby']  = 'meta_value';
-						$query_args['meta_key'] = 'region_owner';
-						break;
-					case 'region_estate':
-						$query_args['orderby']  = 'meta_value';
-						$query_args['meta_key'] = 'region_estate';
-						break;
-					case 'status':
-						// Sorting by status: Disabled, Online, Offline
-						// Sort by 'region_enabled' then 'region_online'
-						$query_args['orderby']  = [
-							'region_enabled' => 'ASC',
-							'region_online'  => 'ASC',
-						];
-						$query_args['meta_query'][] = [
-							'relation' => 'AND',
-							[
-								'key'     => 'region_enabled',
-								'type'    => 'NUMERIC',
-							],
-							[
-								'key'     => 'region_online',
-								'type'    => 'NUMERIC',
-							],
-						];
-						break;
-					default:
-						$query_args['orderby'] = $orderby;
+				if ( in_array( $orderby, $allowed_orderbys, true ) ) {
+					$query .= " ORDER BY {$orderby} {$order}";
 				}
-
-				$query_args['order'] = strtoupper( $order ) === 'DESC' ? 'DESC' : 'ASC';
 			}
 
-			$query = new WP_Query( $query_args );
-			$this->items = $query->posts;
+			$results = $this->db->get_results( $query );
 
-			// Set pagination if needed
-			// $this->set_pagination_args( [
-			//     'total_items' => $query->found_posts,
-			//     'per_page'    => $this->get_items_per_page( 'regions_per_page', 20 ),
-			// ] );
+			$this->items = $results;
 		}
 
 		/** Render a column when no specific column handler is provided */
 		public function column_default( $item, $column_name ) {
 			switch ( $column_name ) {
-				case 'title':
-					$edit_link = get_edit_post_link( $item->ID );
-					return '<a href="' . esc_url( $edit_link ) . '">' . esc_html( $item->post_title ) . '</a>';
-				case 'region_estate':
-					$owner = get_post_meta( $item->ID, 'region_estate', true );
-					return esc_html( $owner );
-				case 'region_owner':
-					$owner = get_post_meta( $item->ID, 'region_owner', true );
-					return esc_html( $owner );
+				case 'regionName':
+					return esc_html( $item->regionName );
+				case 'owner_uuid':
+					return esc_html( $item->owner_uuid );
 				case 'status':
-					$enabled = get_post_meta( $item->ID, 'region_enabled', true );
-					$online  = get_post_meta( $item->ID, 'region_online', true );
-
-					if ( ! $enabled ) {
-						return __( 'Disabled', 'w4os' );
-					} elseif ( $online ) {
-						return __( 'Online', 'w4os' );
-					} else {
-						return __( 'Offline', 'w4os' );
-					}
-				case 'date':
-					return esc_html( get_the_date( '', $item ) );
+					return esc_html( ucfirst( $item->status ) );
+				case 'last_seen':
+					return esc_html( $item->last_seen );
 				default:
 					return print_r( $item, true ); // Show the whole object for troubleshooting
 			}
@@ -930,17 +619,19 @@ add_action( 'admin_menu', function() {
 
 		/** Render the bulk actions dropdown */
 		protected function bulk_actions( $which = '' ) {
+			// Not implemented yet, keep for future reference
 			if ( $which === 'top' || $which === 'bottom' ) {
 				?>
 				<label class="screen-reader-text" for="bulk-action-selector-<?php echo $which; ?>"><?php _e( 'Select bulk action', 'w4os' ); ?></label>
-				<select name="action" id="bulk-action-selector-<?php echo $which; ?>">
+				<select name="action" id="bulk-action-selector-<?php echo "$which"; ?>" disabled>
 					<option value=""><?php _e( 'Bulk Actions', 'w4os' ); ?></option>
-					<option value="delete"><?php _e( 'Delete', 'w4os' ); ?></option>
-					<!-- Add more bulk actions if needed -->
-
+					<option value="start"><?php _e( 'Start', 'w4os' ); ?></option>
+					<option value="restart"><?php _e( 'Restart', 'w4os' ); ?></option>
+					<option value="stop"><?php _e( 'Stop', 'w4os' ); ?></option>
+					<option value="disable"><?php _e( 'Disable', 'w4os' ); ?></option>
 				</select>
 				<?php
-				submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false );
+				submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false, array( 'disabled' => "1" ) );
 			}
 		}
 
@@ -949,6 +640,18 @@ add_action( 'admin_menu', function() {
 			return sprintf(
 				'<input type="checkbox" name="region[]" value="%s" />', $item->ID
 			);
+		}
+
+		/** Process bulk actions */
+		protected function process_bulk_action() {
+			if ( 'delete' === $this->current_action() ) {
+				// Bulk delete regions
+				if ( isset( $_POST['region'] ) && is_array( $_POST['region'] ) ) {
+					foreach ( $_POST['region'] as $region_id ) {
+						$this->db->delete( 'regions', [ 'id' => intval( $region_id ) ], [ '%d' ] );
+					}
+				}
+			}
 		}
 	}
 });

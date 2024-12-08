@@ -21,17 +21,29 @@ if ( ! defined( 'WPINC' ) ) {
  * This class loads the classes and functions needed to test v3 features
  */
 class W4OS3 {
+    public $robust_db;
     // public function __construct() {
     //     // Safety only, this class should not be instantiated.
     //     self::init();
     // }
 
-    public static function init() {
+    public function init() {
         self::constants();
         self::includes();
 
+        // Connect to the robust database and make it available to all classes.
+        $this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
+
         // Register hooks
+        
         // add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
+    }
+
+    function db( $db = 'robust' ) {
+        if ( $db == 'robust' ) {
+            return $this->robust_db;
+        }
+        // return $this->robust_db;
     }
 
     public static function constants() {
@@ -57,7 +69,7 @@ class W4OS3 {
 
         // First we include all the files
         require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
-        // require_once W4OS_INCLUDES_DIR . 'class-db.php';
+        require_once W4OS_INCLUDES_DIR . 'class-db.php';
         
         // Load v3 features if enabled
         if ( W4OS_ENABLE_V3 ) {
@@ -146,4 +158,6 @@ class W4OS3 {
 	}
 }
 
-W4OS3::init();
+$w4os3 = new W4OS3();
+$w4os3->init();
+
