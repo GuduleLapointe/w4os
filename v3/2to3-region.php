@@ -262,7 +262,7 @@ class W4OS3_Region {
 					'title' => __( 'Region Name', 'w4os' ),
 					'sortable' => true, // optional, defaults to false
 					'sort_column' => 'regionName', // optional, defaults to column key, use 'callback' to use render_callback value
-					'sort_order' => 'ASC', // optional, defaults to 'ASC'
+					'order' => 'ASC', // optional, defaults to 'ASC'
 					'searchable' => true, // optional, defaults to false
 					'search_column' => 'regionName', // optional, defaults to column key, use 'callback' to use render_callback value
 					'filterable' => true, // optional, defaults to false, enable action links filter
@@ -273,7 +273,7 @@ class W4OS3_Region {
 					'title' => __( 'Owner', 'w4os' ),
 					'sortable' => true,
 					'sort_column' => 'callback',
-					'sort_order' => 'ASC',
+					'order' => 'ASC',
 					'search_column' => 'callback',
 					'filterable' => true,
 					'searchable' => true, // Should filter on the rendered value, not the raw value
@@ -307,6 +307,7 @@ class W4OS3_Region {
 					'render_callback' => [ $this, 'last_seen' ],
 					'size' => 10,
 					'sortable' => true,
+					'order' => 'DESC',
 				),
 			),
 		] );

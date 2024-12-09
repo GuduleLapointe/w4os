@@ -54,7 +54,8 @@ add_action( 'admin_menu', function() {
 					} else {
 						$sort_column = $key;
 					}
-					$this->sortable[ $key ] = [ $sort_column, true ];
+					$order = isset( $column['order'] ) ? strtoupper( $column['order'] ) : 'ASC';
+					$this->sortable[ $key ] = [ $sort_column, ( $order === 'DESC' ) ];
 				}
 
 				// Set searchable
@@ -161,6 +162,11 @@ add_action( 'admin_menu', function() {
 						$query .= " ORDER BY `{$sort_column}` {$order}";
 					}
 				}
+			} else {
+				// If we get here, we have no sorting applied. All sort orders must pass through
+				// the test above, to ensure that only valid columns are sorted.
+				// id_field is irrelevant anyway.
+				// $query .= " ORDER BY `{$this->id_field}` ASC";
 			}
 
 			$results = $this->db->get_results( $query );
@@ -272,8 +278,14 @@ add_action( 'admin_menu', function() {
 		* @return void
 		*/
 		function get_views() {
+			$page_url = ( isset( $_GET['page'] ) ) ? admin_url( 'admin.php?page=' . $_GET['page'] ) : $_SERVER['REQUEST_URI'];
 			$views = array(
-				'all' => '<a href="">All <span class="count">(' . count( $this->items ) . ')</span></a>'
+				'all' => sprintf(
+					'<a href="%s">%s <span class="count">(%s)</span></a>',
+					esc_url( $page_url ),
+					__( 'All', 'w4os' ),
+					count( $this->items )
+				)
 			);
 
 			// First scan the values to use for the views
