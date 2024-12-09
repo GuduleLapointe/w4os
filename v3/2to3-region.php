@@ -276,7 +276,7 @@ class W4OS3_Region {
 					'order' => 'ASC',
 					'search_column' => 'callback',
 					'filterable' => true,
-					'searchable' => true, // Should filter on the rendered value, not the raw value
+					// 'searchable' => true, // Should filter on the rendered value, not the raw value
 					'render_callback' => [ $this, 'owner_name' ],
 				),
 				'teleport_link' => array(
@@ -286,34 +286,36 @@ class W4OS3_Region {
 				'serverURI' => array(
 					'title' => __( 'Simulator URI', 'w4os' ),
 					'render_callback' => [ $this, 'server_uri' ],
+					'size' => '10%',
 				),
 				'serverPort' => array(
 					'title' => __( 'Internal Port', 'w4os' ),
 					'render_callback' => [ $this, 'server_port_column' ],
-					'size' => 10,
+					'size' => '8%',
 				),
 				'status' => array(
 					'title' => __( 'Status', 'w4os' ),
 					'render_callback' => [ $this, 'region_status' ],
 					'sortable' => true,
 					'sort_column' => 'callback',
-					'size' => 10,
+					'size' => '8%',
 					'views' => 'callback', // Add subsubsub links based on the rendered value
 				),
 				'last_seen' => array(
 					'title' => __( 'Last Activity', 'w4os' ),
 					'render_callback' => [ $this, 'last_seen' ],
-					'size' => 10,
+					'size' => '10%',
 					'sortable' => true,
 					'order' => 'DESC',
 				),
 			),
 		] );
         $regionsTable->prepare_items();
+		$regionsTable->styles();
         ?>
 
 		<?php $regionsTable->views(); ?>
-		<div class="wrap w4os-list">
+		<div class="wrap w4os-list w4os-list-regions">
             <form method="post">
                 <?php
                     $regionsTable->search_box( 'Search Regions', 's' ); // Add search box

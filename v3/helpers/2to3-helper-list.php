@@ -24,7 +24,7 @@ add_action( 'admin_menu', function() {
 		private $views_columns;
 		private $admin_columns;
 		private $php_filters = []; // Add property for PHP-based filters
-		private $views_html = [];
+		private $column_sizes = []; // Add property for column sizes
 
 		/** Class constructor */
 		public function __construct( $db, $table, $args ) {
@@ -101,11 +101,39 @@ add_action( 'admin_menu', function() {
 			foreach ( $columns as $key => &$title ) {
 				if ( isset( $this->column_sizes[ $key ] ) && is_numeric( $this->column_sizes[ $key ] ) ) {
 					$size = intval( $this->column_sizes[ $key ] );
-					$title = '<span style="display: inline-block; width: ' . $size . 'px;">' . $title . '</span>';
+					$title = '<span style="display: inline-block; width: ' . $size . 'em;">' . $title . '</span>';
 				}
 			}
 			
 			return $columns;
+		}
+
+		/**
+		 * Add css types to set the column width
+		 */
+		public function column_widths() {
+			$styles = '';
+			foreach ( $this->column_sizes as $key => $size ) {
+				// if size is only numeric, assume it's in pixels
+				if ( is_numeric( $size ) ) {
+					$size .= 'px';
+				}
+				$styles .= ".column-$key { width: {$size}; }" . PHP_EOL;
+			}
+			return $styles;
+		}
+
+		/**
+		 * Implement WP_List_Table->styles()
+		 */
+		public function styles() {
+			$styles = '';
+			// Disallow wrap for title column, disallow splitting words
+			// Add column width styles
+			$styles .= $this->column_widths();
+			if ( ! empty( $styles ) ) {
+				echo '<style>' . $styles . '</style>';
+			}
 		}
 
 		/** Define sortable columns */
@@ -378,7 +406,6 @@ add_action( 'admin_menu', function() {
 				}
 			}
 
-			$this->views_html = $views;
 			return $views;
 		}
 
