@@ -298,7 +298,6 @@ class W4OS3_Region {
 					'render_callback' => [ $this, 'region_status' ],
 					'sortable' => true,
 					'sort_column' => 'callback',
-					'filter_link' => true,
 					'size' => 10,
 					'views' => 'callback', // Add subsubsub links based on the rendered value
 				),

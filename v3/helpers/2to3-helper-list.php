@@ -23,6 +23,7 @@ add_action( 'admin_menu', function() {
 		private $render_callbacks; // Add property for render callbacks
 		private $views_columns;
 		private $admin_columns;
+		private $php_filters = []; // Add property for PHP-based filters
 
 		/** Class constructor */
 		public function __construct( $db, $table, $args ) {
@@ -141,6 +142,21 @@ add_action( 'admin_menu', function() {
 				}
 			}
 
+			// Handle filters using 'views_columns' instead of 'filterable'
+			foreach ( $this->views_columns as $key => $type ) {
+				if ( ! empty( $_GET['filter_' . $key ] ) ) {
+					$filter_value = sanitize_text_field( $_GET['filter_' . $key ] );
+
+					if ( $type === 'callback' && isset( $this->render_callbacks[ $key ] ) && is_callable( $this->render_callbacks[ $key ] ) ) {
+						// For columns with render_callback, apply PHP-based filtering after fetching results
+						$this->php_filters[] = [
+							'column' => $key,
+							'value'  => $filter_value,
+						];
+					}
+				}
+			}
+
 			if ( ! empty( $conditions ) ) {
 				$query .= ' WHERE ' . implode( ' AND ', $conditions );
 			}
@@ -171,9 +187,25 @@ add_action( 'admin_menu', function() {
 
 			$results = $this->db->get_results( $query );
 
-			if ( ! empty( $results ) ) {
+			// Apply PHP-based filters if any
+			if ( ! empty( $this->php_filters ) ) {
+				foreach ( $this->php_filters as $filter ) {
+					$column = $filter['column'];
+					$value  = $filter['value'];
+					if ( isset( $this->render_callbacks[ $column ] ) && is_callable( $this->render_callbacks[ $column ] ) ) {
+						$results = array_filter( $results, function( $item ) use ( $column, $value ) {
+							$rendered = call_user_func( $this->render_callbacks[ $column ], $item );
+							return strcmp( strtolower( $rendered ), strtolower( $value ) ) === 0;
+						} );
+					}
+				}
+			}
+
+			if ( ! empty( $results[0] ) && is_object( $results[0] ) ) {
 				// Set the ID field based on the first property of the first result
 				$this->id_field = array_key_first( get_object_vars( $results[0] ) );
+			} else {
+				$this->id_field = null; // Handle cases where results are empty or invalid
 			}
 
 			# Good method, but hardcoded, disabled until fixed
