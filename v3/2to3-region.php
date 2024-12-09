@@ -253,33 +253,50 @@ class W4OS3_Region {
 			'singular' => 'Region',
 			'plural'   => 'Regions',
 			'menu'     => 'Regions',
-			'columns' => array(
-				'regionName'  => __( 'Region Name', 'w4os' ), // Renamed from 'Title' to 'Region Name'
-				'owner_uuid'        => __( 'Owner', 'w4os' ),
-				'teleport_link'    => __( 'Teleport', 'w4os' ), // Ensure key matches column
-				'serverURI' => __( 'Simulator URI', 'w4os' ),
-				'serverPort' => __( 'Internal Port', 'w4os' ),
-				'status'       => __( 'Status', 'w4os' ),       // Added 'Status' column
-				'last_seen' => __( 'Last Activity', 'w4os' ),
+			'admin_columns' => array(
+				'regionName' => array(
+					'title' => __( 'Region Name', 'w4os' ),
+					'sortable' => true, // optional, defaults to false
+					'sort_column' => 'regionName', // optional, defaults to column key
+					'sort_order' => 'ASC', // optional, defaults to 'ASC'
+					'searchable' => true, // optional, defaults to false
+					'filterable' => true, // optional, defaults to false, enable action links filter
+					'render_callback' => [ $this, 'region_name_column' ], // optional, defaults to 'column_' . $key
+					'size' => null, // optional, defaults to null (auto)
+				),
+				'owner_uuid' => array(
+					'title' => __( 'Owner', 'w4os' ),
+					'sortable' => true,
+					'filterable' => true,
+					'searchable' => true, // Should filter on the rendered value, not the raw value
+					'render_callback' => [ $this, 'owner_name' ],
+				),
+				'teleport_link' => array(
+					'title' => __( 'Teleport', 'w4os' ),
+					'render_callback' => [ $this, 'region_tp_link' ],
+				),
+				'serverURI' => array(
+					'title' => __( 'Simulator URI', 'w4os' ),
+					'render_callback' => [ $this, 'server_uri' ],
+				),
+				'serverPort' => array(
+					'title' => __( 'Internal Port', 'w4os' ),
+					'render_callback' => [ $this, 'server_port_column' ],
+					'size' => 10,
+				),
+				'status' => array(
+					'title' => __( 'Status', 'w4os' ),
+					'render_callback' => [ $this, 'region_status' ],
+					'sortable' => true,
+					'filter_link' => true,
+					'size' => 10,
+				),
+				'last_seen' => array(
+					'title' => __( 'Last Activity', 'w4os' ),
+					'render_callback' => [ $this, 'last_seen' ],
+					'size' => 10,
+				),
 			),
-			'sortable' => [
-				'regionName'  => [ 'regionName', true ],
-				'owner_uuid'        => [ 'owner_uuid', false ],
-				'status'       => [ 'status', false ],
-				'last_seen' => [ 'last_seen', false ],
-				'serverURI' => [ 'serverURI', false ],
-			],
-			'searchable' => [
-				'regionName',
-				'owner_uuid',
-			],
-			'render_callbacks' => [
-				'owner_uuid' => [ $this, 'owner_name' ],
-				'status'     => [ $this, 'region_status' ],
-				'last_seen' => [ $this, 'last_seen_column' ],
-				'teleport_link'    => [ $this, 'region_tp_link' ], // Ensure key matches column
-				'serverURI' => [ $this, 'server_uri_column' ],
-			],
 		] );
         $regionsTable->prepare_items();
         ?>
@@ -460,7 +477,7 @@ class W4OS3_Region {
 	/**
 	 * Format the last seen date.
 	 */
-	public function last_seen_column( $item ) {
+	public function last_seen( $item ) {
 		$last_seen = intval( $item->last_seen );
 		if( $last_seen === 0 ) {
 			return 'Never';
@@ -472,7 +489,7 @@ class W4OS3_Region {
 	/**
 	 * Format the server URI column in a lighter way.
 	 */
-	public function server_uri_column( $item ) {
+	public function server_uri( $item ) {
 		$server_uri = $item->serverURI;
 		if( empty( $server_uri ) ) {
 			return;
@@ -509,16 +526,40 @@ add_action( 'admin_menu', function() {
 				'singular'         => 'Item',
 				'plural'           => 'Items',
 				'ajax'             => false,
-				'columns'          => [],
-				'sortable'         => [],
-				'searchable'       => [],
-				'render_callbacks' => [], // Initialize render callbacks
+				'admin_columns'    => [], // Initialize admin columns
 			] );
 			$this->table            = sanitize_text_field( $table ); // Ensure table name is safe
-			$this->columns          = $args['columns'];
-			$this->sortable         = $args['sortable'];
-			$this->searchable       = $args['searchable'];
-			$this->render_callbacks = $args['render_callbacks'];
+			$this->columns          = array();
+			$this->sortable         = array();
+			$this->searchable       = array();
+			$this->render_callbacks = array();
+
+			// Extract admin_columns
+			foreach ( $args['admin_columns'] as $key => $column ) {
+				// Set column title
+				$this->columns[ $key ] = isset( $column['title'] ) ? $column['title'] : ucfirst( $key );
+
+				// Set sortable
+				if ( isset( $column['sortable'] ) && $column['sortable'] ) {
+					$sort_column = isset( $column['sort_column'] ) ? $column['sort_column'] : $key;
+					$this->sortable[ $key ] = [ $sort_column, true ];
+				}
+
+				// Set searchable
+				if ( isset( $column['searchable'] ) && $column['searchable'] ) {
+					$this->searchable[] = $key;
+				}
+
+				// Set render callbacks
+				if ( isset( $column['render_callback'] ) && is_callable( $column['render_callback'] ) ) {
+					$this->render_callbacks[ $key ] = $column['render_callback'];
+				}
+
+				// Set column sizes
+				if ( isset( $column['size'] ) ) {
+					$this->column_sizes[ $key ] = $column['size'];
+				}
+			}
 
 			parent::__construct( [
 				'singular' => $args['singular'],
