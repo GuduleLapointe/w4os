@@ -48,7 +48,12 @@ add_action( 'admin_menu', function() {
 
 				// Set sortable
 				if ( isset( $column['sortable'] ) && $column['sortable'] ) {
-					$sort_column = isset( $column['sort_column'] ) ? $column['sort_column'] : $key;
+					# Not here, the menu has to always use the column key even if overidden by sort_column
+					if( ! empty( $column['sort_column'] ) && $column['sort_column'] != 'callback' ) {
+						$sort_column = $column['sort_column'];
+					} else {
+						$sort_column = $key;
+					}
 					$this->sortable[ $key ] = [ $sort_column, true ];
 				}
 
@@ -139,6 +144,8 @@ add_action( 'admin_menu', function() {
 				$query .= ' WHERE ' . implode( ' AND ', $conditions );
 			}
 
+			$orderby = null;
+			$sort_column = null;
 			// Handle sorting by callback
 			if ( ! empty( $_REQUEST['orderby'] ) && ! empty( $_REQUEST['order'] ) ) {
 				$orderby = sanitize_text_field( $_REQUEST['orderby'] );
@@ -146,17 +153,13 @@ add_action( 'admin_menu', function() {
 				$allowed_orderbys = array_keys( $this->sortable );
 
 				# Wrong hardcoded method, disabled until fixed
-				// if ( in_array( $orderby, $allowed_orderbys, true ) ) {
-				// 	if ( $orderby === 'owner_name' ) {
-				// 		$query .= " ORDER BY owner_name {$order}";
-				// 	} elseif ( $orderby === 'status' ) {
-				// 		// Custom sorting for status will be handled in PHP
-				// 	} else {
-				// 		$query .= " ORDER BY `{$orderby}` {$order}";
-				// 	}
-				// }
-				if($orderby != 'callback') {
-					$query .= " ORDER BY `{$orderby}` {$order}";
+				if ( in_array( $orderby, $allowed_orderbys, true ) ) {
+					$column = $this->admin_columns[ $orderby ];
+					$sort_column = empty( $column['sort_column'] ) ? $orderby : $column['sort_column'];
+					// We deal with callbacks in another way
+					if ( $sort_column !== 'callback' ) {
+						$query .= " ORDER BY `{$sort_column}` {$order}";
+					}
 				}
 			}
 
@@ -169,22 +172,30 @@ add_action( 'admin_menu', function() {
 
 			# Good method, but hardcoded, disabled until fixed
 			// Handle custom sorting for columns sorted by render callback
-			// if ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] === 'status' && ! empty( $_REQUEST['order'] ) ) {
-			// 	usort( $results, function( $a, $b ) use ( $order ) {
-			// 		$status_a = $this->render_callbacks['status']( $a );
-			// 		$status_b = $this->render_callbacks['status']( $b );
+			if( $orderby === 'callback' ) {
+				error_log( "post-process sort by callback for column $orderby" );
+			}
 
-			// 		if ( $status_a == $status_b ) {
-			// 			return 0;
-			// 		}
+			if($sort_column === 'callback') {
+				if ( ! empty($orderby) && ! empty( $order ) ) {
+					if ( is_callable( $this->render_callbacks[$orderby] ) ) {
+						usort( $results, function( $a, $b ) use ( $orderby, $order ) {
+							$value_a = $this->render_callbacks[$orderby]( $a );
+							$value_b = $this->render_callbacks[$orderby]( $b );
 
-			// 		if ( $order === 'ASC' ) {
-			// 			return ($status_a < $status_b) ? -1 : 1;
-			// 		} else {
-			// 			return ($status_a > $status_b) ? -1 : 1;
-			// 		}
-			// 	} );
-			// }
+							if ( $value_a == $value_b ) {
+								return 0;
+							}
+
+							if ( $order === 'ASC' ) {
+								return ($value_a < $value_b) ? -1 : 1;
+							} else {
+								return ($value_a > $value_b) ? -1 : 1;
+							}
+						} );
+					}
+				}
+			}
 
 			$this->items = $results;
 		}

@@ -254,9 +254,9 @@ class W4OS3_Region {
 			'singular' => 'Region',
 			'plural'   => 'Regions',
 			'ajax'     => false, // Optional, defaults to false
-			'query' => "SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name 
-			FROM `regions` 
-			LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID",
+			// 'query' => "SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name 
+			// FROM `regions` 
+			// LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID",
 			'admin_columns' => array(
 				'regionName' => array(
 					'title' => __( 'Region Name', 'w4os' ),
@@ -269,10 +269,11 @@ class W4OS3_Region {
 					'render_callback' => [ $this, 'region_name_column' ], // optional, defaults to 'column_' . $key
 					'size' => null, // optional, defaults to null (auto)
 				),
-				'owner_uuid' => array(
+				'owner_name' => array(
 					'title' => __( 'Owner', 'w4os' ),
 					'sortable' => true,
 					'sort_column' => 'callback',
+					'sort_order' => 'ASC',
 					'search_column' => 'callback',
 					'filterable' => true,
 					'searchable' => true, // Should filter on the rendered value, not the raw value
