@@ -253,6 +253,7 @@ class W4OS3_Region {
         $regionsTable = new W4OS_List_Table( $this->db, 'regions', [
 			'singular' => 'Region',
 			'plural'   => 'Regions',
+			'ajax'     => false, // Optional, defaults to false
 			'query' => "SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name 
 			FROM `regions` 
 			LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID",
@@ -260,9 +261,10 @@ class W4OS3_Region {
 				'regionName' => array(
 					'title' => __( 'Region Name', 'w4os' ),
 					'sortable' => true, // optional, defaults to false
-					'sort_column' => 'regionName', // optional, defaults to column key
+					'sort_column' => 'regionName', // optional, defaults to column key, use 'callback' to use render_callback value
 					'sort_order' => 'ASC', // optional, defaults to 'ASC'
 					'searchable' => true, // optional, defaults to false
+					'search_column' => 'regionName', // optional, defaults to column key, use 'callback' to use render_callback value
 					'filterable' => true, // optional, defaults to false, enable action links filter
 					'render_callback' => [ $this, 'region_name_column' ], // optional, defaults to 'column_' . $key
 					'size' => null, // optional, defaults to null (auto)
@@ -270,6 +272,8 @@ class W4OS3_Region {
 				'owner_uuid' => array(
 					'title' => __( 'Owner', 'w4os' ),
 					'sortable' => true,
+					'sort_column' => 'callback',
+					'search_column' => 'callback',
 					'filterable' => true,
 					'searchable' => true, // Should filter on the rendered value, not the raw value
 					'render_callback' => [ $this, 'owner_name' ],
@@ -281,6 +285,7 @@ class W4OS3_Region {
 				'serverURI' => array(
 					'title' => __( 'Simulator URI', 'w4os' ),
 					'render_callback' => [ $this, 'server_uri' ],
+					'views' => true, // Add subsubsub links based on the raw value
 				),
 				'serverPort' => array(
 					'title' => __( 'Internal Port', 'w4os' ),
@@ -291,8 +296,10 @@ class W4OS3_Region {
 					'title' => __( 'Status', 'w4os' ),
 					'render_callback' => [ $this, 'region_status' ],
 					'sortable' => true,
+					'sort_column' => 'callback',
 					'filter_link' => true,
 					'size' => 10,
+					'views' => 'callback', // Add subsubsub links based on the rendered value
 				),
 				'last_seen' => array(
 					'title' => __( 'Last Activity', 'w4os' ),
@@ -300,12 +307,13 @@ class W4OS3_Region {
 					'size' => 10,
 					'sortable' => true,
 				),
-				'query' => $query, // Pass the query from the region class
 			),
 		] );
         $regionsTable->prepare_items();
         ?>
-        <div class="wrap">
+
+		<?php $regionsTable->views(); ?>
+		<div class="wrap w4os-list">
             <form method="post">
                 <?php
                     $regionsTable->search_box( 'Search Regions', 's' ); // Add search box
@@ -505,242 +513,3 @@ class W4OS3_Region {
 		return esc_html( $server_uri );
 	}
 }
-
-// Ensure WP_List_Table is loaded before using it
-add_action( 'admin_menu', function() {
-	/**
-	 * - Extend WP_List_Table class for custom post-types
-	 * - use parameters from registered post_type and registered meta fields
-	 * - create a submenu to combined list/settings page with tabs. Default tab shows the list.
-	 * - disable default edit.php access for the custom post type.
-	 * 
-	 * This class should be agnostic, so it can be used for any custom post type, any class, in any context.
-	 * It cannot contain any specific name of table or column.
-	 * All the specific have to be passed as parameters by the calling class.
-	 * This class only provide the engine to make a list table.
-	 */
-	class W4OS_List_Table extends WP_List_Table {
-		private $db;
-		private $columns;
-		private $sortable;
-		private $searchable;
-		private $id_field;
-		private $table;
-		private $render_callbacks; // Add property for render callbacks
-
-		/** Class constructor */
-		public function __construct( $db, $table, $args ) {
-			$args = WP_parse_args( $args, [
-				'singular'         => 'Item',
-				'plural'           => 'Items',
-				'ajax'             => false,
-				'admin_columns'    => [], // Initialize admin columns
-			] );
-			$this->table            = sanitize_text_field( $table ); // Ensure table name is safe
-			$this->columns          = array();
-			$this->sortable         = array();
-			$this->searchable       = array();
-			$this->render_callbacks = array();
-
-			// Extract admin_columns
-			foreach ( $args['admin_columns'] as $key => $column ) {
-				// Set column title
-				$this->columns[ $key ] = isset( $column['title'] ) ? $column['title'] : ucfirst( $key );
-
-				// Set sortable
-				if ( isset( $column['sortable'] ) && $column['sortable'] ) {
-					$sort_column = isset( $column['sort_column'] ) ? $column['sort_column'] : $key;
-					$this->sortable[ $key ] = [ $sort_column, true ];
-				}
-
-				// Set searchable
-				if ( isset( $column['searchable'] ) && $column['searchable'] ) {
-					$this->searchable[] = $key;
-				}
-
-				// Set render callbacks
-				if ( isset( $column['render_callback'] ) && is_callable( $column['render_callback'] ) ) {
-					$this->render_callbacks[ $key ] = $column['render_callback'];
-				}
-
-				// Set column sizes
-				if ( isset( $column['size'] ) ) {
-					$this->column_sizes[ $key ] = $column['size'];
-				}
-			}
-
-			parent::__construct( [
-				'singular' => $args['singular'],
-				'plural'   => $args['plural'],
-				'ajax'     => $args['ajax']
-			] );
-
-			// Use the passed DB connection
-			$this->db = $db;
-		}
-
-		/** Define the columns */
-		public function get_columns() {
-			$columns = WP_parse_args( $this->columns, [
-				'cb' => '<input type="checkbox" />',
-				] );
-				
-				// Add classes or styles for column sizes
-				foreach ( $columns as $key => &$title ) {
-					if ( isset( $this->column_sizes[ $key ] ) && is_numeric( $this->column_sizes[ $key ] ) ) {
-						$size = intval( $this->column_sizes[ $key ] );
-						$title = '<span style="display: inline-block; width: ' . $size . 'px;">' . $title . '</span>';
-					}
-				}
-				
-				return $columns;
-		}
-
-		/** Define sortable columns */
-		public function get_sortable_columns() {
-			return $this->sortable;
-		}
-
-		/** Prepare the items for the table */
-		public function prepare_items() {
-			$columns  = $this->get_columns();
-			$hidden   = [];
-			$sortable = $this->get_sortable_columns();
-
-			$this->_column_headers = [ $columns, $hidden, $sortable ];
-
-			if( empty( $this->args['query'] ) ) {
-				$query = "SELECT * FROM `{$this->table}`";
-			} else {
-				// Use dynamic query from arguments
-			   $query = $this->args['query'];
-			}
-
-			$conditions = [];
-
-			// Handle search
-			if ( ! empty( $_REQUEST['s'] ) ) {
-				$search = '%' . $this->db->esc_like( $_REQUEST['s'] ) . '%';
-				$search_conditions = [];
-				foreach ( $this->searchable as $field ) {
-					if ( $field === 'owner_name' ) {
-						$search_conditions[] = $this->db->prepare( "CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) LIKE %s", $search );
-					} else {
-						$search_conditions[] = $this->db->prepare( "`$field` LIKE %s", $search );
-					}
-				}
-				if ( ! empty( $search_conditions ) ) {
-					$conditions[] = '(' . implode( ' OR ', $search_conditions ) . ')';
-				}
-			}
-
-			if ( ! empty( $conditions ) ) {
-				$query .= ' WHERE ' . implode( ' AND ', $conditions );
-			}
-
-			// Handle sorting
-			if ( ! empty( $_REQUEST['orderby'] ) && ! empty( $_REQUEST['order'] ) ) {
-				$orderby = sanitize_text_field( $_REQUEST['orderby'] );
-				$order   = sanitize_text_field( $_REQUEST['order'] ) === 'desc' ? 'DESC' : 'ASC';
-				$allowed_orderbys = array_keys( $this->sortable );
-
-				if ( in_array( $orderby, $allowed_orderbys, true ) ) {
-					if ( $orderby === 'owner_name' ) {
-						$query .= " ORDER BY owner_name {$order}";
-					} elseif ( $orderby === 'status' ) {
-						// Custom sorting for status will be handled in PHP
-					} else {
-						$query .= " ORDER BY `{$orderby}` {$order}";
-					}
-				}
-			}
-
-			$results = $this->db->get_results( $query );
-
-			if ( ! empty( $results ) ) {
-				// Set the ID field based on the first property of the first result
-				$this->id_field = array_key_first( get_object_vars( $results[0] ) );
-			}
-
-			// Handle custom sorting for 'status' if applied
-			if ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] === 'status' && ! empty( $_REQUEST['order'] ) ) {
-				usort( $results, function( $a, $b ) use ( $order ) {
-					$status_a = $this->render_callbacks['status']( $a );
-					$status_b = $this->render_callbacks['status']( $b );
-
-					if ( $status_a == $status_b ) {
-						return 0;
-					}
-
-					if ( $order === 'ASC' ) {
-						return ($status_a < $status_b) ? -1 : 1;
-					} else {
-						return ($status_a > $status_b) ? -1 : 1;
-					}
-				} );
-			}
-
-			$this->items = $results;
-		}
-
-		/** Render a column when no specific column handler is provided */
-		public function column_default( $item, $column_name ) {
-			if ( isset( $this->render_callbacks[ $column_name ] ) && is_callable( $this->render_callbacks[ $column_name ] ) ) {
-				return call_user_func( $this->render_callbacks[ $column_name ], $item );
-			}
-
-			return isset( $item->$column_name ) ? esc_html( $item->$column_name ) : '';
-		}
-
-		/** 
-		 * Render the bulk actions dropdown
-		 * 
-		 * DO NOT DELETE. Not implemented yet, kept for future reference
-		 */
-		protected function bulk_actions( $which = '' ) {
-			if ( $which === 'top' || $which === 'bottom' ) {
-				?>
-				<label class="screen-reader-text" for="bulk-action-selector-<?php echo $which; ?>"><?php _e( 'Select bulk action', 'w4os' ); ?></label>
-				<select name="action" id="bulk-action-selector-<?php echo "$which"; ?>" disabled>
-					<option value=""><?php _e( 'Bulk Actions', 'w4os' ); ?></option>
-					<option value="start"><?php _e( 'Start', 'w4os' ); ?></option>
-					<option value="restart"><?php _e( 'Restart', 'w4os' ); ?></option>
-					<option value="stop"><?php _e( 'Stop', 'w4os' ); ?></option>
-					<option value="disable"><?php _e( 'Disable', 'w4os' ); ?></option>
-				</select>
-				<?php
-				submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false, array( 'disabled' => "1" ) );
-			}
-		}
-		
-		/** 
-		 * Process bulk actions
-		 * 
-		 * DO NOT DELETE. Not implemented yet, kept for future reference
-		 */
-		protected function process_bulk_action() {
-			if ( 'delete' === $this->current_action() ) {
-				// Bulk delete regions
-				if ( isset( $_POST['region'] ) && is_array( $_POST['region'] ) ) {
-					foreach ( $_POST['region'] as $region_id ) {
-						$this->db->delete( 'regions', [ 'id' => intval( $region_id ) ], [ '%d' ] );
-					}
-				}
-			}
-		}
-
-		/**
-		 * Render the checkbox column
-		 */
-		function column_cb( $item ) {
-			$id = isset( $this->id_field ) ? $item->{$this->id_field} : '';
-			return sprintf(
-				'<input type="checkbox" name="region[]" value="%s" />',
-				esc_attr( $id )
-			);
-		}
-
-
-	
-	}
-});

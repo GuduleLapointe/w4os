@@ -70,6 +70,8 @@ class W4OS3 {
         // First we include all the files
         require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
         require_once W4OS_INCLUDES_DIR . 'class-db.php';
+
+        require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
         
         // Load v3 features if enabled
         if ( W4OS_ENABLE_V3 ) {
