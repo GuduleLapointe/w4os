@@ -128,6 +128,13 @@ corrupted image.
 
 Divi Theme support is fixed in versions 2.4.5 and above.
 
+### I use OpenSimulator 0.8.x and...
+
+Don't even finish that sentence. Versions of OpenSimulator older than 0.9
+are definitely not supported anymore. You might be lucky and it might work, 
+or not. In either case, idk&idc.
+
+
 ## Screenshots
 
 1. Grid info and grid status examples
