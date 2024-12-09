@@ -156,8 +156,46 @@ class W4OS3 {
 		return in_array( $pagenow, array( 'post-new.php' ) );
 		// return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
 	}
+
+    /**
+     * Date function that accepts multiple arguments.
+     * 
+     * This function is a wrapper for wp_date that accepts multiple arguments.
+     * For backward compatibility, the function accepts both
+     * w4os_date( $timestamp, $format, $timezone ) and
+     * w4os_date( $format, $timestamp, $timezone ) formats.
+     * 
+     * @param mixed  $timestamp     Optional. Unix timestamp or date string to convert. Default current time.
+     * @param string $format        Optional. Format to use for date. Default to website date format.
+     * @param string $timezone      Optional. Timezone to use for date. Default to website timezone.
+     * 
+     * @return string The date in the specified format.
+     */
+    public static function date( $timestamp = null, $format = null, $timezone = null ) {
+        $args = func_get_args();
+        if ( empty( $args ) ) {
+            $timestamp = time();
+            $format = get_option( 'date_format' );
+        } else if ( is_numeric( $args[0] ) ) {
+            $timestamp = $args[0];
+            $format = $args[1] ?? get_option( 'date_format' );
+        } else {
+            $format = $args[0] ?? get_option( 'date_format' );
+            $timestamp = $args[1] ?? time();
+        }
+
+        $timezone = $args[2] ?? null;
+        if ( empty( $timestamp ) ) {
+            return;
+        }
+        if ( empty( $format ) ) {
+            $format = get_option( 'date_format' );
+        }
+        return wp_date( $format, $timestamp, $timezone );
+    }
+
 }
+
 
 $w4os3 = new W4OS3();
 $w4os3->init();
-
