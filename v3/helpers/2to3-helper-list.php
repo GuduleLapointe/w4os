@@ -24,6 +24,7 @@ add_action( 'admin_menu', function() {
 		private $views_columns;
 		private $admin_columns;
 		private $php_filters = []; // Add property for PHP-based filters
+		private $views_html = [];
 
 		/** Class constructor */
 		public function __construct( $db, $table, $args ) {
@@ -129,6 +130,14 @@ add_action( 'admin_menu', function() {
 			}
 
 			$conditions = [];
+
+			// Get unfiltered items to build views action links
+			$unfiltered_query = "SELECT * FROM `{$this->table}`";
+			if (!empty($this->args['query'])) {
+				$unfiltered_query = $this->args['query'];
+			}
+			$unfiltered_items = $this->db->get_results($unfiltered_query);
+			$this->build_views( $unfiltered_items );
 
 			// Handle search
 			if ( ! empty( $_REQUEST['s'] ) ) {
@@ -310,16 +319,22 @@ add_action( 'admin_menu', function() {
 		* @return void
 		*/
 		function get_views() {
+			return $this->views_html;
+		}
+
+		function build_views( $items = [] ) {
+			if(empty($items)) {
+				return;
+			}
 			$page_url = ( isset( $_GET['page'] ) ) ? admin_url( 'admin.php?page=' . $_GET['page'] ) : $_SERVER['REQUEST_URI'];
 			$views = array(
 				'all' => sprintf(
 					'<a href="%s">%s <span class="count">(%s)</span></a>',
 					esc_url( $page_url ),
 					__( 'All', 'w4os' ),
-					count( $this->items )
+					count( $items )
 				)
 			);
-
 			// First scan the values to use for the views
 			foreach ( $this->views_columns as $column => $enable_views ) {
 				if( empty( $enable_views ) || $enable_views === false ) {
@@ -327,7 +342,7 @@ add_action( 'admin_menu', function() {
 				}
 
 				$column_values = array();
-				foreach ( $this->items as $item ) {
+				foreach ( $items as $item ) {
 					$view_column = 'view_' . $column;
 					if ( isset( $this->render_callbacks[ $column ] ) && is_callable( $this->render_callbacks[ $column ] ) ) {
 						$item->$view_column = call_user_func( $this->render_callbacks[ $column ], $item );
@@ -343,7 +358,7 @@ add_action( 'admin_menu', function() {
 
 			foreach ( $column_values as $value ) {
 				$count = 0;
-				foreach( $this->items as $item ) {
+				foreach( $items as $item ) {
 					if ( $item->$view_column === $value ) {
 						$count++;
 					}
@@ -356,7 +371,7 @@ add_action( 'admin_menu', function() {
 				);
 			}
 
-
+			$this->views_html = $views;
 			return $views;
 		}
 
