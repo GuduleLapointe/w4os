@@ -265,6 +265,15 @@ class W4OS3_Region {
 				'status'       => [ 'status', false ],
 				'last_seen' => [ 'last_seen', false ],
 			],
+			'searchable' => [
+				'regionName',
+				'owner_uuid',
+			],
+			'render_callbacks' => [
+				'owner_uuid' => [ $this, 'owner_name' ],
+				'status'     => [ $this, 'region_status' ],
+				'last_seen' => [ $this, 'last_seen_column' ],
+			],
 		] );
         $regionsTable->prepare_items();
         ?>
@@ -397,6 +406,36 @@ class W4OS3_Region {
 		return $options;
 	}
 
+	public function owner_name( $item ) {
+		$uuid = $item->owner_uuid;
+		if( ! $this->db ) {
+			return "not found ($uuid)";
+		}
+		$query = "SELECT CONCAT(FirstName, ' ', LastName) AS Name FROM UserAccounts WHERE PrincipalID = %s";
+		$result = $this->db->get_var( $this->db->prepare( $query, $uuid ) );
+		return esc_html( $result );
+	}
+
+	public function region_status( $item ) {
+		$last_seen = intval( $item->last_seen );
+		$diff = time() - $last_seen;
+		if( $diff < 3600 ) {
+			return 'Online';
+		} else {
+			$ago = human_time_diff( $last_seen );
+			return 'Offline (' . esc_html( $ago ) . ')';
+		}
+	}
+
+	public function last_seen_column( $item ) {
+		$last_seen = intval( $item->last_seen );
+		if( $last_seen === 0 ) {
+			return 'Never';
+		}
+		$last_seen = W4OS3::date( $last_seen );
+		return esc_html( $last_seen );
+	}
+
 }
 
 // Ensure WP_List_Table is loaded before using it
@@ -407,166 +446,55 @@ add_action( 'admin_menu', function() {
 	 * - create a submenu to combined list/settings page with tabs. Default tab shows the list.
 	 * - disable default edit.php access for the custom post type.
 	 * 
-	 * This class should be post-type agnostic, so it can be used for any custom post type.
+	 * This class should be agnostic, so it can be used for any custom post type, any class, in any context.
 	 */
 	class W4OS_List_Table extends WP_List_Table {
 		private $db;
 		private $columns;
 		private $sortable;
+		private $searchable;
+		private $id_field;
+		private $table;
+		private $render_callbacks; // Add property for render callbacks
 
 		/** Class constructor */
 		public function __construct( $db, $table, $args ) {
 			$args = WP_parse_args( $args, [
-				'singular' => 'Item',
-				'plural'   => 'Items',
-				'ajax'     => false // Disable AJAX
+				'singular'         => 'Item',
+				'plural'           => 'Items',
+				'ajax'             => false,
+				'columns'          => [],
+				'sortable'         => [],
+				'searchable'       => [],
+				'render_callbacks' => [], // Initialize render callbacks
 			] );
-			$this->columns = $args['columns'];
-			error_log( 'columns: ' . print_r( $args['columns'], true ) );
-			$this->sortable = empty($args['sortable']) ? [] : $args['sortable'];
-			error_log( 'sortable: ' . print_r( $this->sortable, true ) );
-			parent::__construct( $this->labels );
+			$this->table            = sanitize_text_field( $table ); // Ensure table name is safe
+			$this->columns          = $args['columns'];
+			$this->sortable         = $args['sortable'];
+			$this->searchable       = $args['searchable'];
+			$this->render_callbacks = $args['render_callbacks'];
 
-			// Initialize database connection with credentials
-			$this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
+			parent::__construct( [
+				'singular' => $args['singular'],
+				'plural'   => $args['plural'],
+				'ajax'     => $args['ajax']
+			] );
+
+			// Use the passed DB connection
+			$this->db = $db;
 		}
 
 		/** Define the columns */
 		public function get_columns() {
 			$columns = WP_parse_args( $this->columns, [
-				'cb'           => '<input type="checkbox" />',
+				'cb' => '<input type="checkbox" />',
 			] );
 			return $columns;
 		}
 
 		/** Define sortable columns */
 		public function get_sortable_columns() {
-
-
-			return [
-				'regionName'  => [ 'regionName', true ],          // Made 'Region Name' sortable
-				'owner_uuid'        => [ 'owner_uuid', false ],  // Made 'Owner' sortable
-				'status'       => [ 'status', false ],        // Made 'Status' sortable
-				'last_seen' => [ 'last_seen', false ],
-			];
-		}
-
-		/**
-		 * Extra controls for the table navigation.
-		 * Replaces the dropdown filter with status filter links.
-		 */
-		protected function extra_tablenav( $which ) {
-			if ( $which === 'top' ) {
-				$status_filters = [
-					'all'      => __( 'All', 'w4os' ),
-					'online'   => __( 'Online', 'w4os' ),
-					'offline'  => __( 'Offline', 'w4os' ),
-					'disabled' => __( 'Disabled', 'w4os' ),
-				];
-
-				// Initialize counts
-				$counts = [
-					'all'      => 0,
-					'online'   => 0,
-					'offline'  => 0,
-					'disabled' => 0,
-				];
-
-				// Fetch counts for each status
-				foreach ( $status_filters as $key => $label ) {
-					if ( 'all' === $key ) {
-						$counts[$key] = wp_count_posts( 'opensimulator_region' )->publish;
-					} elseif ( 'online' === $key ) {
-						$counts[$key] = (int) get_posts( [
-							'post_type'      => 'opensimulator_region',
-							'post_status'    => 'publish',
-							'meta_query'     => [
-								[
-									'key'     => 'region_enabled',
-									'value'   => '1',
-									'compare' => '=',
-								],
-								[
-									'key'     => 'region_online',
-									'value'   => '1',
-									'compare' => '=',
-								],
-							],
-							'fields'         => 'ids',
-							'posts_per_page' => -1,
-						] );
-					} elseif ( 'offline' === $key ) {
-						$counts[$key] = (int) get_posts( [
-							'post_type'      => 'opensimulator_region',
-							'post_status'    => 'publish',
-							'meta_query'     => [
-								[
-									'key'     => 'region_enabled',
-									'value'   => '1',
-									'compare' => '=',
-								],
-								[
-									'key'     => 'region_online',
-									'value'   => '0',
-									'compare' => '=',
-								],
-							],
-							'fields'         => 'ids',
-							'posts_per_page' => -1,
-						] );
-					} elseif ( 'disabled' === $key ) {
-						$counts[$key] = (int) get_posts( [
-							'post_type'      => 'opensimulator_region',
-							'post_status'    => 'publish',
-							'meta_query'     => [
-								[
-									'key'     => 'region_enabled',
-									'value'   => '0',
-									'compare' => '=',
-								],
-							],
-							'fields'         => 'ids',
-							'posts_per_page' => -1,
-						] );
-					}
-				}
-
-				// Get current filter
-				$current_filter = isset( $_GET['status_filter'] ) ? sanitize_text_field( $_GET['status_filter'] ) : 'all';
-
-				// Build filter links
-				echo '<div class="alignleft actions">';
-				foreach ( $status_filters as $key => $label ) {
-					// Skip 'all' if no posts
-					if ( 'all' === $key && $counts[$key] === 0 ) {
-						continue;
-					}
-					// Skip other statuses if no posts
-					if ( 'all' !== $key && $counts[$key] === 0 ) {
-						continue;
-					}
-
-					$class = 'button';
-					if ( $current_filter === $key ) {
-						$class .= ' button-primary';
-					}
-
-					if ( 'all' === $key ) {
-						$url = remove_query_arg( 'status_filter' );
-					} else {
-						$url = add_query_arg( 'status_filter', $key );
-					}
-
-					printf(
-						'<a href="%s" class="%s">%s (%d)</a> ',
-						esc_url( $url ),
-						esc_attr( $class ),
-						esc_html( $label ),
-						$counts[$key]
-					);
-				}
-				echo '</div>';
-			}
+			return $this->sortable;
 		}
 
 		/** Prepare the items for the table */
@@ -577,49 +505,63 @@ add_action( 'admin_menu', function() {
 
 			$this->_column_headers = [ $columns, $hidden, $sortable ];
 
-			$query = "SELECT * FROM regions"; // Replace 'regions' with your actual table name
+			// Build the SQL query
+			$query = "SELECT * FROM `{$this->table}`";
+
+			$conditions = [];
 
 			// Handle search
 			if ( ! empty( $_REQUEST['s'] ) ) {
-				$search = $this->db->esc_like( $_REQUEST['s'] );
-				$query  .= $this->db->prepare( " WHERE regionName LIKE %s OR owner_uuid LIKE %s", '%' . $search . '%', '%' . $search . '%' );
+				$search = '%' . $this->db->esc_like( $_REQUEST['s'] ) . '%';
+				$search_conditions = [];
+				foreach ( $this->searchable as $field ) {
+					$search_conditions[] = $this->db->prepare( "`$field` LIKE %s", $search );
+				}
+				if ( ! empty( $search_conditions ) ) {
+					$conditions[] = '(' . implode( ' OR ', $search_conditions ) . ')';
+				}
+			}
+
+			if ( ! empty( $conditions ) ) {
+				$query .= ' WHERE ' . implode( ' AND ', $conditions );
 			}
 
 			// Handle sorting
 			if ( ! empty( $_REQUEST['orderby'] ) && ! empty( $_REQUEST['order'] ) ) {
 				$orderby = sanitize_text_field( $_REQUEST['orderby'] );
 				$order   = sanitize_text_field( $_REQUEST['order'] ) === 'desc' ? 'DESC' : 'ASC';
-				$allowed_orderbys = [ 'regionName', 'owner_uuid', 'status', 'last_seen' ];
+				$allowed_orderbys = array_keys( $this->sortable );
 
 				if ( in_array( $orderby, $allowed_orderbys, true ) ) {
-					$query .= " ORDER BY {$orderby} {$order}";
+					$query .= " ORDER BY `{$orderby}` {$order}";
 				}
 			}
 
 			$results = $this->db->get_results( $query );
+
+			if ( ! empty( $results ) ) {
+				// Set the ID field based on the first property of the first result
+				$this->id_field = array_key_first( get_object_vars( $results[0] ) );
+			}
 
 			$this->items = $results;
 		}
 
 		/** Render a column when no specific column handler is provided */
 		public function column_default( $item, $column_name ) {
-			switch ( $column_name ) {
-				case 'regionName':
-					return esc_html( $item->regionName );
-				case 'owner_uuid':
-					return esc_html( $item->owner_uuid );
-				case 'status':
-					return esc_html( ucfirst( $item->status ) );
-				case 'last_seen':
-					return esc_html( $item->last_seen );
-				default:
-					return print_r( $item, true ); // Show the whole object for troubleshooting
+			if ( isset( $this->render_callbacks[ $column_name ] ) && is_callable( $this->render_callbacks[ $column_name ] ) ) {
+				return call_user_func( $this->render_callbacks[ $column_name ], $item );
 			}
+
+			return isset( $item->$column_name ) ? esc_html( $item->$column_name ) : '';
 		}
 
-		/** Render the bulk actions dropdown */
+		/** 
+		 * Render the bulk actions dropdown
+		 * 
+		 * DO NOT DELETE. Not implemented yet, kept for future reference
+		 */
 		protected function bulk_actions( $which = '' ) {
-			// Not implemented yet, keep for future reference
 			if ( $which === 'top' || $which === 'bottom' ) {
 				?>
 				<label class="screen-reader-text" for="bulk-action-selector-<?php echo $which; ?>"><?php _e( 'Select bulk action', 'w4os' ); ?></label>
@@ -634,15 +576,12 @@ add_action( 'admin_menu', function() {
 				submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false, array( 'disabled' => "1" ) );
 			}
 		}
-
-		/** Render the checkbox column */
-		function column_cb( $item ) {
-			return sprintf(
-				'<input type="checkbox" name="region[]" value="%s" />', $item->ID
-			);
-		}
-
-		/** Process bulk actions */
+		
+		/** 
+		 * Process bulk actions
+		 * 
+		 * DO NOT DELETE. Not implemented yet, kept for future reference
+		 */
 		protected function process_bulk_action() {
 			if ( 'delete' === $this->current_action() ) {
 				// Bulk delete regions
@@ -653,5 +592,19 @@ add_action( 'admin_menu', function() {
 				}
 			}
 		}
+
+		/**
+		 * Render the checkbox column
+		 */
+		function column_cb( $item ) {
+			$id = isset( $this->id_field ) ? $item->{$this->id_field} : '';
+			return sprintf(
+				'<input type="checkbox" name="region[]" value="%s" />',
+				esc_attr( $id )
+			);
+		}
+
+
+	
 	}
 });
