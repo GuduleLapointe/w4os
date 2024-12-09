@@ -256,14 +256,18 @@ class W4OS3_Region {
 			'columns' => array(
 				'regionName'  => __( 'Region Name', 'w4os' ), // Renamed from 'Title' to 'Region Name'
 				'owner_uuid'        => __( 'Owner', 'w4os' ),
+				'teleport_link'    => __( 'Teleport', 'w4os' ), // Ensure key matches column
+				'serverURI' => __( 'Simulator URI', 'w4os' ),
+				'serverPort' => __( 'Internal Port', 'w4os' ),
 				'status'       => __( 'Status', 'w4os' ),       // Added 'Status' column
-				'last_seen' => __( 'Last Seen', 'w4os' ),
+				'last_seen' => __( 'Last Activity', 'w4os' ),
 			),
 			'sortable' => [
 				'regionName'  => [ 'regionName', true ],
 				'owner_uuid'        => [ 'owner_uuid', false ],
 				'status'       => [ 'status', false ],
 				'last_seen' => [ 'last_seen', false ],
+				'serverURI' => [ 'serverURI', false ],
 			],
 			'searchable' => [
 				'regionName',
@@ -273,6 +277,7 @@ class W4OS3_Region {
 				'owner_uuid' => [ $this, 'owner_name' ],
 				'status'     => [ $this, 'region_status' ],
 				'last_seen' => [ $this, 'last_seen_column' ],
+				'teleport_link'    => [ $this, 'region_tp_link' ], // Ensure key matches column
 			],
 		] );
         $regionsTable->prepare_items();
@@ -416,17 +421,44 @@ class W4OS3_Region {
 		return esc_html( $result );
 	}
 
+	/**
+	 * Check if Region is online by trying to connect to the server URI.
+	 */
 	public function region_status( $item ) {
-		$last_seen = intval( $item->last_seen );
-		$diff = time() - $last_seen;
-		if( $diff < 3600 ) {
-			return 'Online';
-		} else {
-			$ago = human_time_diff( $last_seen );
-			return 'Offline (' . esc_html( $ago ) . ')';
+		$server_uri = $item->serverURI;
+		if( empty( $server_uri ) ) {
+			return 'Unknown';
 		}
+		$server_uri = esc_url( $server_uri );
+		$server_uri = trailingslashit( $server_uri );
+		$server_uri = set_url_scheme( $server_uri, 'http' );
+		$response = wp_remote_get( $server_uri );
+		if( is_wp_error( $response ) ) {
+			return 'Offline';
+		}
+		return 'Online';
 	}
 
+	/**
+	 * Format Region hop URL for list table.
+	 */
+	public function region_tp_link( $item ) {
+		// error_log( 'Region hop URL callback ' . print_r( $item, true ) );
+		$regionName = $item->regionName;
+		$gateway = get_option( 'w4os_login_uri' );
+		if( empty( $gateway ) ) {
+			return __( 'Gateway not set', 'w4os' );
+		}
+		// Strip protocol from $gateway
+		$gateway = trailingslashit( preg_replace( '/^https?:\/\//', '', $gateway ) );
+		$string = trim($gateway . $regionName);
+		$link = w4os_hop( $gateway . $regionName, $string );
+		return $link;
+	}
+
+	/**
+	 * Format the last seen date.
+	 */
 	public function last_seen_column( $item ) {
 		$last_seen = intval( $item->last_seen );
 		if( $last_seen === 0 ) {
