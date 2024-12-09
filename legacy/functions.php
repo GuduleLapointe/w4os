@@ -628,7 +628,7 @@ function w4os_hop( $url = null, $string = null ) {
 	if ( empty( $url ) ) {
 		return;
 	}
-	if ( get_option( $url ) ) {
+	if ( ! get_option( $url ) ) {
 		$url = get_option( 'w4os_login_uri' );
 	}
 	$url = preg_replace( '#.*://#', '', $url );
