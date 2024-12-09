@@ -131,14 +131,6 @@ add_action( 'admin_menu', function() {
 
 			$conditions = [];
 
-			// Get unfiltered items to build views action links
-			$unfiltered_query = "SELECT * FROM `{$this->table}`";
-			if (!empty($this->args['query'])) {
-				$unfiltered_query = $this->args['query'];
-			}
-			$unfiltered_items = $this->db->get_results($unfiltered_query);
-			$this->build_views( $unfiltered_items );
-
 			// Handle search
 			if ( ! empty( $_REQUEST['s'] ) ) {
 				$search = '%' . $this->db->esc_like( $_REQUEST['s'] ) . '%';
@@ -319,18 +311,32 @@ add_action( 'admin_menu', function() {
 		* @return void
 		*/
 		function get_views() {
-			return $this->views_html;
-		}
-
-		function build_views( $items = [] ) {
+			// Get unfiltered items to build views action links
+			$unfiltered_query = "SELECT * FROM `{$this->table}`";
+			if (!empty($this->args['query'])) {
+				$unfiltered_query = $this->args['query'];
+			}
+			$items = $this->db->get_results($unfiltered_query);
+			
 			if(empty($items)) {
 				return;
 			}
 			$page_url = ( isset( $_GET['page'] ) ) ? admin_url( 'admin.php?page=' . $_GET['page'] ) : $_SERVER['REQUEST_URI'];
+			
+			// Determine the current filter by scanning $_GET for 'filter_' parameters
+			$current_filter = '';
+			foreach ($this->views_columns as $column => $enable_views) {
+				if (!empty($_GET['filter_' . $column])) {
+					$current_filter = sanitize_text_field($_GET['filter_' . $column]);
+					break;
+				}
+			}
+
 			$views = array(
 				'all' => sprintf(
-					'<a href="%s">%s <span class="count">(%s)</span></a>',
+					'<a href="%s" class="%s">%s <span class="count">(%s)</span></a>',
 					esc_url( $page_url ),
+					empty($current_filter) ? 'current' : '',
 					__( 'All', 'w4os' ),
 					count( $items )
 				)
@@ -354,21 +360,22 @@ add_action( 'admin_menu', function() {
 
 				$column_values = array_unique( $column_values );
 				sort( $column_values );
-			}
 
-			foreach ( $column_values as $value ) {
-				$count = 0;
-				foreach( $items as $item ) {
-					if ( $item->$view_column === $value ) {
-						$count++;
+				foreach ( $column_values as $value ) {
+					$count = 0;
+					foreach( $items as $item ) {
+						if ( $item->$view_column === $value ) {
+							$count++;
+						}
 					}
+					$views[ $value ] = sprintf(
+						'<a href="%s" class="%s">%s <span class="count">(%s)</span></a>',
+						esc_url( add_query_arg( array( 'filter_' . $column => $value ) ) ),
+						($current_filter === $value) ? 'current' : '',
+						esc_html($value),
+						$count
+					);
 				}
-				$views[ $value ] = sprintf(
-					'<a href="%s">%s <span class="count">(%s)</span></a>',
-					esc_url( add_query_arg( array( 'filter_' . $column => $value ) ) ),
-					$value,
-					$count
-				);
 			}
 
 			$this->views_html = $views;

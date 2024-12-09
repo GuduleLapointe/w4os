@@ -286,7 +286,6 @@ class W4OS3_Region {
 				'serverURI' => array(
 					'title' => __( 'Simulator URI', 'w4os' ),
 					'render_callback' => [ $this, 'server_uri' ],
-					'views' => true, // Add subsubsub links based on the raw value
 				),
 				'serverPort' => array(
 					'title' => __( 'Internal Port', 'w4os' ),
