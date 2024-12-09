@@ -278,6 +278,7 @@ class W4OS3_Region {
 				'status'     => [ $this, 'region_status' ],
 				'last_seen' => [ $this, 'last_seen_column' ],
 				'teleport_link'    => [ $this, 'region_tp_link' ], // Ensure key matches column
+				'serverURI' => [ $this, 'server_uri_column' ],
 			],
 		] );
         $regionsTable->prepare_items();
@@ -468,6 +469,19 @@ class W4OS3_Region {
 		return esc_html( $last_seen );
 	}
 
+	/**
+	 * Format the server URI column in a lighter way.
+	 */
+	public function server_uri_column( $item ) {
+		$server_uri = $item->serverURI;
+		if( empty( $server_uri ) ) {
+			return;
+		}
+		$server_uri = untrailingslashit( $server_uri );
+		$server_uri = preg_replace( '/^https?:\/\//', '', $server_uri );
+
+		return esc_html( $server_uri );
+	}
 }
 
 // Ensure WP_List_Table is loaded before using it
