@@ -236,13 +236,15 @@ add_action( 'admin_menu', function() {
 		 * DO NOT DELETE. Not implemented yet, kept for future reference
 		 */
 		protected function process_bulk_action() {
-			if ( 'delete' === $this->current_action() ) {
-				// Bulk delete regions
-				if ( isset( $_POST['region'] ) && is_array( $_POST['region'] ) ) {
-					foreach ( $_POST['region'] as $region_id ) {
-						$this->db->delete( 'regions', [ 'id' => intval( $region_id ) ], [ '%d' ] );
-					}
-				}
+			// TODO: Implement bulk actions
+			// Check if a callback is set for the current action in $this->admin_columns['bulk_actions']
+			// If so, call the callback with the selected items
+			// If not, add admin notice and return;
+			$table = $this->table;
+			$actions = $this->admin_columns['bulk_actions'];
+			$action = $this->current_action();
+			if ( ! isset( $actions[ $action ] ) ) {
+				return;
 			}
 		}
 
@@ -252,7 +254,8 @@ add_action( 'admin_menu', function() {
 		function column_cb( $item ) {
 			$id = isset( $this->id_field ) ? $item->{$this->id_field} : '';
 			return sprintf(
-				'<input type="checkbox" name="region[]" value="%s" />',
+				'<input type="checkbox" name="%s[]" value="%s" />',
+				$this->table,
 				esc_attr( $id )
 			);
 		}
