@@ -249,10 +249,13 @@ class W4OS3_Region {
         // }
 
         // Instantiate and display the list table
+
         $regionsTable = new W4OS_List_Table( $this->db, 'regions', [
 			'singular' => 'Region',
 			'plural'   => 'Regions',
-			'menu'     => 'Regions',
+			'query' => "SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name 
+			FROM `regions` 
+			LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID",
 			'admin_columns' => array(
 				'regionName' => array(
 					'title' => __( 'Region Name', 'w4os' ),
@@ -295,7 +298,9 @@ class W4OS3_Region {
 					'title' => __( 'Last Activity', 'w4os' ),
 					'render_callback' => [ $this, 'last_seen' ],
 					'size' => 10,
+					'sortable' => true,
 				),
+				'query' => $query, // Pass the query from the region class
 			),
 		] );
         $regionsTable->prepare_items();
@@ -510,6 +515,9 @@ add_action( 'admin_menu', function() {
 	 * - disable default edit.php access for the custom post type.
 	 * 
 	 * This class should be agnostic, so it can be used for any custom post type, any class, in any context.
+	 * It cannot contain any specific name of table or column.
+	 * All the specific have to be passed as parameters by the calling class.
+	 * This class only provide the engine to make a list table.
 	 */
 	class W4OS_List_Table extends WP_List_Table {
 		private $db;
@@ -575,8 +583,17 @@ add_action( 'admin_menu', function() {
 		public function get_columns() {
 			$columns = WP_parse_args( $this->columns, [
 				'cb' => '<input type="checkbox" />',
-			] );
-			return $columns;
+				] );
+				
+				// Add classes or styles for column sizes
+				foreach ( $columns as $key => &$title ) {
+					if ( isset( $this->column_sizes[ $key ] ) && is_numeric( $this->column_sizes[ $key ] ) ) {
+						$size = intval( $this->column_sizes[ $key ] );
+						$title = '<span style="display: inline-block; width: ' . $size . 'px;">' . $title . '</span>';
+					}
+				}
+				
+				return $columns;
 		}
 
 		/** Define sortable columns */
@@ -592,8 +609,12 @@ add_action( 'admin_menu', function() {
 
 			$this->_column_headers = [ $columns, $hidden, $sortable ];
 
-			// Build the SQL query
-			$query = "SELECT * FROM `{$this->table}`";
+			if( empty( $this->args['query'] ) ) {
+				$query = "SELECT * FROM `{$this->table}`";
+			} else {
+				// Use dynamic query from arguments
+			   $query = $this->args['query'];
+			}
 
 			$conditions = [];
 
@@ -602,7 +623,11 @@ add_action( 'admin_menu', function() {
 				$search = '%' . $this->db->esc_like( $_REQUEST['s'] ) . '%';
 				$search_conditions = [];
 				foreach ( $this->searchable as $field ) {
-					$search_conditions[] = $this->db->prepare( "`$field` LIKE %s", $search );
+					if ( $field === 'owner_name' ) {
+						$search_conditions[] = $this->db->prepare( "CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) LIKE %s", $search );
+					} else {
+						$search_conditions[] = $this->db->prepare( "`$field` LIKE %s", $search );
+					}
 				}
 				if ( ! empty( $search_conditions ) ) {
 					$conditions[] = '(' . implode( ' OR ', $search_conditions ) . ')';
@@ -620,7 +645,13 @@ add_action( 'admin_menu', function() {
 				$allowed_orderbys = array_keys( $this->sortable );
 
 				if ( in_array( $orderby, $allowed_orderbys, true ) ) {
-					$query .= " ORDER BY `{$orderby}` {$order}";
+					if ( $orderby === 'owner_name' ) {
+						$query .= " ORDER BY owner_name {$order}";
+					} elseif ( $orderby === 'status' ) {
+						// Custom sorting for status will be handled in PHP
+					} else {
+						$query .= " ORDER BY `{$orderby}` {$order}";
+					}
 				}
 			}
 
@@ -629,6 +660,24 @@ add_action( 'admin_menu', function() {
 			if ( ! empty( $results ) ) {
 				// Set the ID field based on the first property of the first result
 				$this->id_field = array_key_first( get_object_vars( $results[0] ) );
+			}
+
+			// Handle custom sorting for 'status' if applied
+			if ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] === 'status' && ! empty( $_REQUEST['order'] ) ) {
+				usort( $results, function( $a, $b ) use ( $order ) {
+					$status_a = $this->render_callbacks['status']( $a );
+					$status_b = $this->render_callbacks['status']( $b );
+
+					if ( $status_a == $status_b ) {
+						return 0;
+					}
+
+					if ( $order === 'ASC' ) {
+						return ($status_a < $status_b) ? -1 : 1;
+					} else {
+						return ($status_a > $status_b) ? -1 : 1;
+					}
+				} );
 			}
 
 			$this->items = $results;
