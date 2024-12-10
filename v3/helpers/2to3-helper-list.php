@@ -25,6 +25,7 @@ add_action( 'admin_menu', function() {
 		private $admin_columns;
 		private $php_filters = []; // Add property for PHP-based filters
 		private $column_sizes = []; // Add property for column sizes
+		private $query;
 
 		/** Class constructor */
 		public function __construct( $db, $table, $args ) {
@@ -42,6 +43,7 @@ add_action( 'admin_menu', function() {
 			$this->views_columns	= array();
 			$this->admin_columns 	= $args['admin_columns'];
 			$this->primary 			= ( isset( $args['primary'] ) ) ? $args['primary'] : array_key_first( $this->admin_columns );
+			$this->query = ( isset( $args['query'] ) ) ? $args['query'] : "SELECT * FROM `{$this->table}`";
 
 			// Extract admin_columns
 			foreach ( $args['admin_columns'] as $key => $column ) {
@@ -150,18 +152,14 @@ add_action( 'admin_menu', function() {
 
 			$this->_column_headers = [ $columns, $hidden, $sortable, $primary ];
 
-			if( empty( $this->args['query'] ) ) {
-				$query = "SELECT * FROM `{$this->table}`";
-			} else {
-				// Use custom query from arguments
-			   $query = $this->args['query'];
-			}
+			$query = $this->query;
 
 			$conditions = [];
 
 			// Handle search
 			if ( ! empty( $_REQUEST['s'] ) ) {
 				$search = '%' . $this->db->esc_like( $_REQUEST['s'] ) . '%';
+				$search = '%' . $search . '%';
 				$search_conditions = [];
 				foreach ( $this->searchable as $field ) {
 					$search_conditions[] = $this->db->prepare( "`$field` LIKE %s", $search );
@@ -189,7 +187,7 @@ add_action( 'admin_menu', function() {
 			if ( ! empty( $conditions ) ) {
 				$query .= ' WHERE ' . implode( ' AND ', $conditions );
 			}
-
+			
 			$orderby = null;
 			$sort_column = null;
 			// Handle sorting by callback
@@ -235,12 +233,6 @@ add_action( 'admin_menu', function() {
 				$this->id_field = array_key_first( get_object_vars( $results[0] ) );
 			} else {
 				$this->id_field = null; // Handle cases where results are empty or invalid
-			}
-
-			# Good method, but hardcoded, disabled until fixed
-			// Handle custom sorting for columns sorted by render callback
-			if( $orderby === 'callback' ) {
-				error_log( "post-process sort by callback for column $orderby" );
 			}
 
 			if($sort_column === 'callback') {
@@ -340,10 +332,7 @@ add_action( 'admin_menu', function() {
 		*/
 		function get_views() {
 			// Get unfiltered items to build views action links
-			$unfiltered_query = "SELECT * FROM `{$this->table}`";
-			if (!empty($this->args['query'])) {
-				$unfiltered_query = $this->args['query'];
-			}
+			$unfiltered_query = $this->query;
 			$items = $this->db->get_results($unfiltered_query);
 			
 			if(empty($items)) {

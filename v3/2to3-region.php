@@ -253,10 +253,12 @@ class W4OS3_Region {
         $regionsTable = new W4OS_List_Table( $this->db, 'regions', [
 			'singular' => 'Region',
 			'plural'   => 'Regions',
-			'ajax'     => false, // Optional, defaults to false
-			// 'query' => "SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name 
-			// FROM `regions` 
-			// LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID",
+			'ajax'     => true, // Optional, defaults to false
+			'query' => "SELECT * FROM (
+				SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name
+				FROM `regions`
+				LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID
+			) AS subquery",
 			'admin_columns' => array(
 				'regionName' => array(
 					'title' => __( 'Region Name', 'w4os' ),
@@ -272,12 +274,9 @@ class W4OS3_Region {
 				'owner_name' => array(
 					'title' => __( 'Owner', 'w4os' ),
 					'sortable' => true,
-					'sort_column' => 'callback',
+					'searchable' => true,
 					'order' => 'ASC',
-					'search_column' => 'callback',
 					'filterable' => true,
-					// 'searchable' => true, // Should filter on the rendered value, not the raw value
-					'render_callback' => [ $this, 'owner_name' ],
 				),
 				'teleport_link' => array(
 					'title' => __( 'Teleport', 'w4os' ),
