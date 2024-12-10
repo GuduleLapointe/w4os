@@ -197,6 +197,42 @@ class W4OS3 {
         return wp_date( $format, $timestamp, $timezone );
     }
 
+    /**
+     * Rewrite of wp_enqueue_scripts to allow minimal syntax in scripts.
+     */
+    public static function enqueue_script( $handle, $src, $deps = array(), $ver = false, $in_footer = false ) {
+        $handle = preg_match( '/^w4os-/', $handle ) ? $handle : 'w4os-' . $handle;
+        $ver = empty( $ver ) ? W4OS_VERSION : $ver;
+        $src = preg_match( '/^http/', $src ) ? $src : W4OS_PLUGIN_DIR_URL . $src;
+        $hook = is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts';
+        if( function_exists( 'wp_enqueue_script' ) ) {
+            error_log( 'Enqueueing script: ' . $handle . ' ' . $src );
+            wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
+            return;
+        }
+        add_action( $hook, function() use ( $handle, $src, $deps, $ver, $in_footer ) {
+            error_log( 'Hook Enqueueing script: ' . $handle . ' ' . $src );
+            wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
+        } );
+    }
+
+    /**
+     * Rewrite of wp_enqueue_styles to allow minimal syntax in styles.
+     */
+    public static function enqueue_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ) {
+        $handle = preg_match( '/^w4os-/', $handle ) ? $handle : 'w4os-' . $handle;
+        $ver = empty( $ver ) ? W4OS_VERSION : $ver;
+        $src = preg_match( '/^http/', $src ) ? $src : W4OS_PLUGIN_DIR_URL . $src;
+        $hook = is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts';
+        if( function_exists( 'wp_enqueue_style' ) ) {
+            wp_enqueue_style( $handle, $src, $deps, $ver, $media );
+            return;
+        }
+        add_action( $hook, function() use ( $handle, $src, $deps, $ver, $media ) {
+            error_log( 'Enqueueing style: ' . $handle . ' ' . $src );
+            wp_enqueue_style( $handle, $src, $deps, $ver, $media );
+        } );
+    }
 }
 
 
