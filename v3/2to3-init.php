@@ -48,6 +48,7 @@ class W4OS3 {
 
     public static function constants() {
         define( 'W4OS_PLUGIN_DIR', plugin_dir_path( __DIR__) );
+        define( 'W4OS_PLUGIN_DIR_URL', plugin_dir_url( __DIR__ ) );
         define( 'W4OS_PLUGIN', basename(W4OS_PLUGIN_DIR) . '/w4os.php' );
         define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
         define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
