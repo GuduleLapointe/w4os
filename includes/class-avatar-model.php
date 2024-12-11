@@ -51,12 +51,12 @@ class W4OS_Model extends W4OS_Loader {
 			),
 		);
 
-		add_action( 'w4os_settings_tabs', array( $this, 'add_tabs' ) );
+		add_filter( 'w4os_settings_tabs', array( $this, 'register_settings_tabs' ) );
 	}
 
-	function add_tabs($tabs) {
+	function register_settings_tabs($tabs) {
 
-		$tabs['models'] = array(
+		$tabs['w4os-avatar']['models'] = array(
 			'title' => __( 'Avatar Models', 'w4os' ),
 			'url'   => admin_url('admin.php?page=w4os-models')
 		);
@@ -73,8 +73,7 @@ class W4OS_Model extends W4OS_Loader {
 			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
 			'id'         => 'w4os-models',
 			'position'   => 0,
-			// 'parent'     => 'edit.php?post_type=avatar',
-			'parent'     => 'w4os-avatar',
+			'parent'     => 'w4os',
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-users',
@@ -181,7 +180,10 @@ class W4OS_Model extends W4OS_Loader {
 	 * - return the tabs as a string
 	 */
 	function get_tabs_html() {
+		// TODO: fix, currently the page appears briefly then disappears
 		// return W4OS3_Settings::get_tabs_html( 'w4os-avatar' );
+
+		// Workaround: return a link to the Avatar Settings page
 		$avatar_page_url = admin_url( 'admin.php?page=w4os-avatar' );
 		return sprintf(
 			'<a href="%s" class="nav-tab">%s</a>',

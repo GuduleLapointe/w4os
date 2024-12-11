@@ -72,10 +72,10 @@ class W4OS3_Avatar {
 				'title' => __('Avatar Settings', 'w4os'),
 				// 'url'   => admin_url('admin.php?page=w4os-avatar&tab=settings')
 			),
-			'models' => array(
-				'title' => __('Avatar Models', 'w4os'),
-				'url'   => admin_url('admin.php?page=w4os-models')
-			),
+			// 'models' => array(
+			// 	'title' => __('Avatar Models', 'w4os'),
+			// 	'url'   => admin_url('admin.php?page=w4os-models')
+			// ),
 		);
 		return $tabs;
 	}
