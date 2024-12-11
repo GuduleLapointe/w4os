@@ -39,7 +39,7 @@ class W4OS3_Avatar {
         add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
         add_action( 'admin_menu', [ $this, 'add_submenus' ] );
 
-		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
+		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'register_settings_tabs' ] );
     }
 
     /**
@@ -57,7 +57,7 @@ class W4OS3_Avatar {
         );
     }
 
-	static function add_menu_tabs( $tabs ) {
+	static function register_settings_tabs( $tabs ) {
 		$tabs['w4os-avatars'] = array(
 			'avatars'  => array(
 				'title' => __('List', 'w4os'),
@@ -105,7 +105,7 @@ class W4OS3_Avatar {
             add_settings_field(
                 'create_wp_account', 
 				__('Create WP accounts', 'w4os'), // title
-                [ __CLASS__, 'render_settings_field' ],
+                'W4OS3_Settings::render_settings_field',
                 $option_name, // Use dynamic option name as menu slug
                 $section,
                 array(
@@ -120,7 +120,7 @@ class W4OS3_Avatar {
 			add_settings_field(
 				'allow_multiple_avatars',
 				__('Allow multiple avatars', 'w4os'),
-				[ __CLASS__, 'render_settings_field' ],
+				'W4OS3_Settings::render_settings_field',
 				$option_name,
 				$section,
 				array(
@@ -169,7 +169,6 @@ class W4OS3_Avatar {
 
 		$tabs = apply_filters( 'w4os_settings_tabs', array() );
 		$page_tabs = isset($tabs[$menu_slug]) ? $tabs[$menu_slug] : array();
-		error_log( 'Page tabs: ' . print_r( $page_tabs, true ) );
 		$tabs_navigation = '';
 		foreach( $page_tabs as $tab => $tab_data ) {
 			$url = $tab_data['url'] ?? admin_url( 'admin.php?page=' . $menu_slug . '&tab=' . $tab );
@@ -317,100 +316,6 @@ class W4OS3_Avatar {
     }
 
 	/**
-	 * Render a settings field.
-	 * 
-	 * This method should be agnostic, it will be moved in another class later and used by different settings pages.
-	 */
-    public static function render_settings_field($args) {
-        if (!is_array($args)) {
-            return;
-        }
-        $args = wp_parse_args($args, [
-            // 'id' => null,
-            // 'label' => null,
-            // 'label_for' => null,
-            // 'type' => 'text',
-            // 'options' => [],
-            // 'default' => null,
-            // 'description' => null,
-            // 'option_name' => null,
-            // 'tab' => null, // Added tab
-        ]);
-
-        // Retrieve $option_name and $tab from args
-        $option_name = isset($args['option_name']) ? sanitize_key($args['option_name']) : '';
-        $tab = isset($args['tab']) ? sanitize_key($args['tab']) : 'settings';
-
-        // Construct the field name to match the options array structure
-        $field_name = "{$option_name}[{$tab}][{$args['id']}]";
-        $option = get_option($option_name, []);
-        $value = isset($option[$tab][$args['id']]) ? $option[$tab][$args['id']] : '';
-
-        switch ($args['type']) {
-			case 'db_credentials':
-				// Grouped fields for database credentials
-				$creds = WP_parse_args( $value, [
-					'user'     => null,
-					'pass'     => null,
-					'database' => null,
-					'host'     => null,
-					'port'     => null,
-				] );
-				$input_field = sprintf(
-					'<label for="%1$s_user">%2$s</label>
-					<input type="text" id="%1$s_user" name="%3$s[user]" value="%4$s" />
-					<label for="%1$s_pass">%5$s</label>
-					<input type="password" id="%1$s_pass" name="%3$s[pass]" value="%6$s" />
-					<label for="%1$s_database">%7$s</label>
-					<input type="text" id="%1$s_database" name="%3$s[database]" value="%8$s" />
-					<label for="%1$s_host">%9$s</label>
-					<input type="text" id="%1$s_host" name="%3$s[host]" value="%10$s" />
-					<label for="%1$s_port">%11$s</label>
-					<input type="text" id="%1$s_port" name="%3$s[port]" value="%12$s" />',
-					esc_attr($args['id']),
-					esc_html__('User', 'w4os'),
-					esc_attr($field_name),
-					esc_attr($creds['user']),
-					esc_html__('Password', 'w4os'),
-					esc_attr($creds['pass']),
-					esc_html__('Database', 'w4os'),
-					esc_attr($creds['database']),
-					esc_html__('Host', 'w4os'),
-					esc_attr($creds['host']),
-					esc_html__('Port', 'w4os'),
-					esc_attr($creds['port'])
-				);
-				break;
-            case 'checkbox':
-                $input_field = sprintf(
-                    '<label>
-                        <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
-                        %4$s
-                    </label>',
-                    esc_attr($args['id']),
-                    esc_attr($field_name),
-                    checked($value, '1', false),
-                    esc_html($args['label'])
-                );
-                break;
-            case 'text':
-            default:
-                $input_field = sprintf(
-                    '<input type="text" id="%1$s" name="%2$s" value="%3$s" />',
-                    esc_attr($args['id']),
-                    esc_attr($field_name),
-                    esc_attr($value)
-                );
-        }
-
-        echo $input_field;
-        printf(
-            '<p class="description">%s</p>',
-            esc_html($args['description'])
-        );
-    }
-
-	/**
 	 * General class for field sanitization. Used by different classes to save settings from different settings pages.
 	 * 
 	 * This method should be agnostic, it will be moved in another class later and used by different settings pages.
@@ -533,4 +438,23 @@ class W4OS3_Avatar {
 
 		return esc_html( $server_uri );
 	}
+
+	static function get_avatars( $format = OBJECT ) {
+		global $w4osdb;
+		if ( empty( $w4osdb ) ) {
+			return false;
+		}
+
+		$avatars = array();
+
+		$sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE active = true';
+		$result = $w4osdb->get_results( $sql, $format );
+		if ( is_array( $result ) ) {
+			foreach ( $result as $avatar ) {
+				$avatars[ $avatar->PrincipalID ] = trim( "$avatar->FirstName $avatar->LastName" );
+			}
+		}
+		return $avatars;
+	}
+
 }

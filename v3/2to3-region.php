@@ -127,7 +127,7 @@ class W4OS3_Region {
             add_settings_field(
                 'w4os_settings_region_settings_field_1', 
                 'First Tab Fields Title',
-                [ __CLASS__, 'render_settings_field' ],
+                'W4OS3_Settings::render_settings_field',
                 $option_name, // Use dynamic option name as menu slug
                 $section,
                 array(
@@ -151,7 +151,7 @@ class W4OS3_Region {
             add_settings_field(
                 'w4os_settings_region_advanced_field_1', 
                 'Second Tab Fields Title',
-                [ __CLASS__, 'render_settings_field' ],
+                'W4OS3_Settings::render_settings_field',
                 $option_name, // Use dynamic option name as menu slug
                 $section,
                 array(
@@ -324,124 +324,6 @@ class W4OS3_Region {
         </div>
         <?php
     }
-
-	/**
-	 * Render a settings field.
-	 * 
-	 * This method should be agnostic, it will be moved in another class later and used by different settings pages.
-	 */
-    public static function render_settings_field($args) {
-        if (!is_array($args)) {
-            return;
-        }
-        $args = wp_parse_args($args, [
-            // 'id' => null,
-            // 'label' => null,
-            // 'label_for' => null,
-            // 'type' => 'text',
-            // 'options' => [],
-            // 'default' => null,
-            // 'description' => null,
-            // 'option_name' => null,
-            // 'tab' => null, // Added tab
-        ]);
-
-        // Retrieve $option_name and $tab from args
-        $option_name = isset($args['option_name']) ? sanitize_key($args['option_name']) : '';
-        $tab = isset($args['tab']) ? sanitize_key($args['tab']) : 'settings';
-
-        // Construct the field name to match the options array structure
-        $field_name = "{$option_name}[{$tab}][{$args['id']}]";
-        $option = get_option($option_name, []);
-        $value = isset($option[$tab][$args['id']]) ? $option[$tab][$args['id']] : '';
-
-        switch ($args['type']) {
-			case 'db_credentials':
-				// Grouped fields for database credentials
-				$creds = WP_parse_args( $value, [
-					'user'     => null,
-					'pass'     => null,
-					'database' => null,
-					'host'     => null,
-					'port'     => null,
-				] );
-				$input_field = sprintf(
-					'<label for="%1$s_user">%2$s</label>
-					<input type="text" id="%1$s_user" name="%3$s[user]" value="%4$s" />
-					<label for="%1$s_pass">%5$s</label>
-					<input type="password" id="%1$s_pass" name="%3$s[pass]" value="%6$s" />
-					<label for="%1$s_database">%7$s</label>
-					<input type="text" id="%1$s_database" name="%3$s[database]" value="%8$s" />
-					<label for="%1$s_host">%9$s</label>
-					<input type="text" id="%1$s_host" name="%3$s[host]" value="%10$s" />
-					<label for="%1$s_port">%11$s</label>
-					<input type="text" id="%1$s_port" name="%3$s[port]" value="%12$s" />',
-					esc_attr($args['id']),
-					esc_html__('User', 'w4os'),
-					esc_attr($field_name),
-					esc_attr($creds['user']),
-					esc_html__('Password', 'w4os'),
-					esc_attr($creds['pass']),
-					esc_html__('Database', 'w4os'),
-					esc_attr($creds['database']),
-					esc_html__('Host', 'w4os'),
-					esc_attr($creds['host']),
-					esc_html__('Port', 'w4os'),
-					esc_attr($creds['port'])
-				);
-				break;
-            case 'checkbox':
-                $input_field = sprintf(
-                    '<label>
-                        <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
-                        %4$s
-                    </label>',
-                    esc_attr($args['id']),
-                    esc_attr($field_name),
-                    checked($value, '1', false),
-                    esc_html($args['label'])
-                );
-                break;
-            case 'text':
-            default:
-                $input_field = sprintf(
-                    '<input type="text" id="%1$s" name="%2$s" value="%3$s" />',
-                    esc_attr($args['id']),
-                    esc_attr($field_name),
-                    esc_attr($value)
-                );
-        }
-
-        echo $input_field;
-        printf(
-            '<p class="description">%s</p>',
-            esc_html($args['description'])
-        );
-    }
-
-	/**
-	 * General class for field sanitization. Used by different classes to save settings from different settings pages.
-	 * 
-	 * This method should be agnostic, it will be moved in another class later and used by different settings pages.
-	 */
-	public static function sanitize_options( $input ) {
-		
-		// Initialize the output array with existing options
-		$options = get_option( 'w4os-regions', array( 'settings' => array(), 'advanced' => array() ) );
-		if( ! is_array( $input ) ) {
-			return $options;
-		}
-		
-		foreach ( $input as $key => $value ) {
-			// We don't want to clutter the options with temporary check values
-			if(isset($value['prevent-empty-array'])) {
-				unset($value['prevent-empty-array']);
-			}
-			$options[ $key ] = $value;
-		}
-
-		return $options;
-	}
 
 	public function owner_name( $item ) {
 		$uuid = $item->owner_uuid;

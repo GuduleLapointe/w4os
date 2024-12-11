@@ -122,11 +122,11 @@ class W4OS3_Settings {
         }
         $page_title = esc_html(get_admin_page_title());
         $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'avatars';
+        $option_group = $menu_slug . '_group';
         $current_section = $option_group . '_section_' . $current_tab;
 
 		$tabs = apply_filters( 'w4os_settings_tabs', array() );
 		$page_tabs = isset($tabs[$menu_slug]) ? $tabs[$menu_slug] : array();
-		error_log( 'Page tabs: ' . print_r( $page_tabs, true ) );
 		$tabs_navigation = '';
 		foreach( $page_tabs as $tab => $tab_data ) {
 			$url = $tab_data['url'] ?? admin_url( 'admin.php?page=' . $menu_slug . '&tab=' . $tab );
@@ -194,26 +194,15 @@ class W4OS3_Settings {
     }
 
     /**
-     * Render a settings field.
-     * 
-     * @param array $args {
-     *     Array of arguments for the settings field.
-     * 
-     *      @type string $id Field ID.
-     *      @type string $label Field label.
-     *      @type string $label_for Field label for attribute.
-     *      @type string $type Field type.
-     *      @type array $options Field options.
-     *      @type string $default Default value.
-     *      @type string $description Field description.
-     *      @type string $option_name Option name.
-     * }
-     */
-    public static function render_settings_field( $args ) {
-        if ( ! is_array( $args ) ) {
+	 * Render a settings field.
+	 * 
+	 * This method should be agnostic, it will be moved in another class later and used by different settings pages.
+	 */
+    public static function render_settings_field($args) {
+        if (!is_array($args)) {
             return;
         }
-        $args = wp_parse_args( $args, [
+        $args = wp_parse_args($args, [
             // 'id' => null,
             // 'label' => null,
             // 'label_for' => null,
@@ -222,43 +211,117 @@ class W4OS3_Settings {
             // 'default' => null,
             // 'description' => null,
             // 'option_name' => null,
-        ] );
-        error_log('args = ' . print_r($args, true));
-        
-        $option_name = $args['option_name'];
-        error_log( __METHOD__ . ' option_name: ' . print_r( $option_name, true ) );
-        
-        $field_name = $args['id'];
-        $option = get_option( $option_name );
-        $value = isset( $option[ $args['id'] ] ) ? $option[ $args['id'] ] : '';
-        
-        switch ( $args['type'] ) {
+            // 'tab' => null, // Added tab
+        ]);
+
+        // Retrieve $option_name and $tab from args
+        $option_name = isset($args['option_name']) ? sanitize_key($args['option_name']) : '';
+        $tab = isset($args['tab']) ? sanitize_key($args['tab']) : 'settings';
+
+        // Construct the field name to match the options array structure
+        $field_name = "{$option_name}[{$tab}][{$args['id']}]";
+        $option = get_option($option_name, []);
+        $value = isset($option[$tab][$args['id']]) ? $option[$tab][$args['id']] : '';
+        if ( empty($value) && isset($args['default']) ) {
+            $value = $args['default'];
+        }
+        switch ($args['type']) {
+			case 'db_credentials':
+				// Grouped fields for database credentials
+				$creds = WP_parse_args( $value, [
+					'user'     => null,
+					'pass'     => null,
+					'database' => null,
+					'host'     => null,
+					'port'     => null,
+				] );
+				$input_field = sprintf(
+					'<label for="%1$s_user">%2$s</label>
+					<input type="text" id="%1$s_user" name="%3$s[user]" value="%4$s" />
+					<label for="%1$s_pass">%5$s</label>
+					<input type="password" id="%1$s_pass" name="%3$s[pass]" value="%6$s" />
+					<label for="%1$s_database">%7$s</label>
+					<input type="text" id="%1$s_database" name="%3$s[database]" value="%8$s" />
+					<label for="%1$s_host">%9$s</label>
+					<input type="text" id="%1$s_host" name="%3$s[host]" value="%10$s" />
+					<label for="%1$s_port">%11$s</label>
+					<input type="text" id="%1$s_port" name="%3$s[port]" value="%12$s" />',
+					esc_attr($args['id']),
+					esc_html__('User', 'w4os'),
+					esc_attr($field_name),
+					esc_attr($creds['user']),
+					esc_html__('Password', 'w4os'),
+					esc_attr($creds['pass']),
+					esc_html__('Database', 'w4os'),
+					esc_attr($creds['database']),
+					esc_html__('Host', 'w4os'),
+					esc_attr($creds['host']),
+					esc_html__('Port', 'w4os'),
+					esc_attr($creds['port'])
+				);
+				break;
+            case 'button_group':
+                $input_field = '';
+                foreach ($args['options'] as $option_value => $option_label) {
+                    $input_field .= sprintf(
+                        '<label>
+                            <input type="radio" id="%1$s_%2$s" name="%3$s" value="%2$s" %4$s />
+                            %5$s
+                        </label>',
+                        esc_attr($args['id']),
+                        esc_attr($option_value),
+                        esc_attr($field_name),
+                        checked($value, $option_value, false),
+                        esc_html($option_label)
+                    );
+                }
+                break;
+            case 'select2':
+            case 'select_advanced':
+                $input_field = sprintf(
+                    '<select id="%1$s" name="%2$s" %3$s>
+                        <option value="">%4$s</option>',
+                    esc_attr($args['id']),
+                    esc_attr($field_name),
+                    $args['multiple'] ? 'multiple' : '',
+                    esc_html($args['placeholder'])
+                );
+                foreach ($args['options'] as $option_value => $option_label) {
+                    $input_field .= sprintf(
+                        '<option value="%1$s" %2$s>%3$s</option>',
+                        esc_attr($option_value),
+                        selected($value, $option_value, false),
+                        esc_html($option_label)
+                    );
+                }
+                $input_field .= '</select>';
+                break;
             case 'checkbox':
                 $input_field = sprintf(
                     '<label>
                         <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
                         %4$s
-                        </label>',
-                        esc_attr( $args['id'] ),
-                        esc_attr( $field_name ),
-                        checked( $value, '1', false ),
-                        esc_html( $args['label'] ) // Added short description inside label
+                    </label>',
+                    esc_attr($args['id']),
+                    esc_attr($field_name),
+                    checked($value, '1', false),
+                    esc_html($args['label'])
                 );
                 break;
             case 'text':
             default:
                 $input_field = sprintf(
                     '<input type="text" id="%1$s" name="%2$s" value="%3$s" />',
-                    esc_attr( $args['id'] ),
-                    esc_attr( $field_name ),
-                    esc_attr( $value )
+                    esc_attr($args['id']),
+                    esc_attr($field_name),
+                    esc_attr($value)
                 );
         }
 
         echo $input_field;
         printf(
             '<p class="description">%s</p>',
-            esc_html( $args['description'] )
+            esc_html($args['description'])
         );
     }
 }
