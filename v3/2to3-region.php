@@ -82,14 +82,14 @@ class W4OS3_Region {
             __( 'Regions', 'w4os' ),
             __( 'Regions', 'w4os' ),
             'manage_options',
-            'w4os-region',
+            'w4os-regions',
             [ $this, 'render_settings_page' ],
             3,
         );
     }
 
 	static function add_menu_tabs( $tabs ) {
-		$tabs['w4os-region'] = array(
+		$tabs['w4os-regions'] = array(
 			'regions'  => __( 'List', 'w4os' ), // Added 'Regions' tab
 			'settings' => __( 'Settings', 'w4os' ),
 			'advanced' => __( 'Advanced', 'w4os' ),
@@ -105,7 +105,7 @@ class W4OS3_Region {
             return;
         }
 
-        $option_name = 'w4os-region'; // Hard-coded here is fine to make sure it matches intended submenu slug
+        $option_name = 'w4os-regions'; // Hard-coded here is fine to make sure it matches intended submenu slug
         $option_group = $option_name . '_group';
 
         // Register the main option with a sanitize callback
@@ -427,7 +427,7 @@ class W4OS3_Region {
 	public static function sanitize_options( $input ) {
 		
 		// Initialize the output array with existing options
-		$options = get_option( 'w4os-region', array( 'settings' => array(), 'advanced' => array() ) );
+		$options = get_option( 'w4os-regions', array( 'settings' => array(), 'advanced' => array() ) );
 		if( ! is_array( $input ) ) {
 			return $options;
 		}

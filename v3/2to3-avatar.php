@@ -51,14 +51,14 @@ class W4OS3_Avatar {
             __( 'Avatars', 'w4os' ),
             __( 'Avatars', 'w4os' ),
             'manage_options',
-            'w4os-avatar',
+            'w4os-avatars',
             [ $this, 'render_settings_page' ],
             3,
         );
     }
 
 	static function add_menu_tabs( $tabs ) {
-		$tabs['w4os-avatar'] = array(
+		$tabs['w4os-avatars'] = array(
 			'avatars'  => array(
 				'title' => __('List', 'w4os'),
 				// 'url'   => admin_url('admin.php?page=w4os-avatar')
@@ -83,7 +83,7 @@ class W4OS3_Avatar {
             return;
         }
 
-        $option_name = 'w4os-avatar'; // Hard-coded here is fine to make sure it matches intended submenu slug
+        $option_name = 'w4os-avatars'; // Hard-coded here is fine to make sure it matches intended submenu slug
         $option_group = $option_name . '_group';
 
         // Register the main option with a sanitize callback
@@ -418,7 +418,7 @@ class W4OS3_Avatar {
 	public static function sanitize_options( $input ) {
 		
 		// Initialize the output array with existing options
-		$options = get_option( 'w4os-avatar', array( 'settings' => array(), 'advanced' => array() ) );
+		$options = get_option( 'w4os-avatars', array( 'settings' => array(), 'advanced' => array() ) );
 		if( ! is_array( $input ) ) {
 			return $options;
 		}

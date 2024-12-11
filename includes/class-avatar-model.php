@@ -52,11 +52,39 @@ class W4OS_Model extends W4OS_Loader {
 		);
 
 		add_filter( 'w4os_settings_tabs', array( $this, 'register_settings_tabs' ) );
+        add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
+        add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
 	}
+
+	public static function set_active_menu( $parent_file ) {
+        global $pagenow;
+
+        if ( $pagenow === 'admin.php' ) {
+			$current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+			if ( $current_page === 'w4os-models' ) {
+                $parent_file = 'w4os'; // Set to main plugin menu slug
+            }
+        }
+
+        return $parent_file;
+    }
+
+    public static function set_active_submenu( $submenu_file ) {
+        global $pagenow, $typenow;
+
+		if ( $pagenow === 'admin.php' ) {
+			$current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+			if ( $current_page === 'w4os-models' ) {
+                $submenu_file = 'w4os-avatars';
+            }
+        }
+
+		return $submenu_file;
+    }
 
 	function register_settings_tabs($tabs) {
 
-		$tabs['w4os-avatar']['models'] = array(
+		$tabs['w4os-avatars']['models'] = array(
 			'title' => __( 'Avatar Models', 'w4os' ),
 			'url'   => admin_url('admin.php?page=w4os-models')
 		);
@@ -73,7 +101,7 @@ class W4OS_Model extends W4OS_Loader {
 			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
 			'id'         => 'w4os-models',
 			'position'   => 0,
-			'parent'     => 'w4os',
+			'parent'     => 'w4os-avatars',
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-users',
@@ -181,15 +209,15 @@ class W4OS_Model extends W4OS_Loader {
 	 */
 	function get_tabs_html() {
 		// TODO: fix, currently the page appears briefly then disappears
-		// return W4OS3_Settings::get_tabs_html( 'w4os-avatar' );
+		return W4OS3_Settings::get_tabs_html( 'w4os-avatars' );
 
-		// Workaround: return a link to the Avatar Settings page
-		$avatar_page_url = admin_url( 'admin.php?page=w4os-avatar' );
-		return sprintf(
-			'<a href="%s" class="nav-tab">%s</a>',
-			$avatar_page_url,
-			__( 'Back to Avatar Settings', 'w4os' ),
-		);
+		// Bad workaround: return a link to the Avatar Settings page
+		// $avatar_page_url = admin_url( 'admin.php?page=w4os-avatar' );
+		// return sprintf(
+		// 	'<a href="%s" class="nav-tab">%s</a>',
+		// 	$avatar_page_url,
+		// 	__( 'Back to Avatar Settings', 'w4os' ),
+		// );
 	}
 
 
