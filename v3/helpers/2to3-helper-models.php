@@ -7,10 +7,170 @@
 
 class W4OS3_Model {
 
-	public static function init() {
+	public function init() {
+		add_filter( 'w4os_settings_tabs', array( $this, 'register_settings_tabs' ) );
+        add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
     //     add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
     //     add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
 	}
+
+	function register_settings_tabs($tabs) {
+
+		$tabs['w4os-avatars']['models'] = array(
+			'title' => __( 'Avatar Models', 'w4os' ),
+			// 'url'   => admin_url('admin.php?page=w4os-models')
+		);
+
+		return $tabs;
+	}
+
+    /**
+     * Register settings using the Settings API, templates and the method W4OS3_Settings::render_settings_section().
+     */
+    public static function register_settings_page() {
+        if (! W4OS_ENABLE_V3) {
+            return;
+        }
+		
+        $option_name = 'w4os-avatars'; // Hard-coded here is fine to make sure it matches intended submenu slug
+        $option_group = $option_name . '_group';
+
+        // Register the main option with a sanitize callback
+        // register_setting( $option_group, $option_name, [ __CLASS__, 'sanitize_options' ] );
+
+        // Get the current tab
+        $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'settings';
+        $section = $option_group . '_section_' . $tab;
+
+        // Add settings sections and fields based on the current tab
+        if ( $tab == 'models' ) {
+            add_settings_section(
+                $section,
+                null, // No title for the section
+                '', // [ __CLASS__, 'section_callback' ],
+                $option_name // Use dynamic option name
+            );
+
+			$prefix = $tab . '-';
+			$fields = array(
+				array(
+					'name'    => __( 'Match', 'w4os' ),
+					'id'      => $prefix . 'match',
+					'type'    => 'button_group',
+					'options' => array(
+						'first' => __( 'First Name', 'w4os' ),
+						'any'   => __( 'Any', 'w4os' ),
+						'last'  => __( 'Last Name', 'w4os' ),
+						'uuid'  => __( 'Custom list', 'w4os' ),
+					),
+					'default'     => 'any',
+				),
+				array(
+					'name'    => __( 'Name', 'w4os' ),
+					'id'      => $prefix . 'name',
+					'type'    => 'text',
+					'std'     => 'Model',
+					'visible' => array(
+						'when'     => array( array( 'match', '!=', 'uuid' ) ),
+						'relation' => 'or',
+					),
+				),
+				array(
+					'name'        => __( 'Select Models', 'w4os' ),
+					'id'          => $prefix . 'uuids',
+					'type'        => 'select_advanced',
+					// 'type'        => 'autocomplete',
+					'placeholder' => __( 'Select one or more existing avatars', 'w4os' ),
+					'multiple'    => true,
+					// 'clone' => true,
+					'options'     => W4OS3_Avatar::get_avatars(),
+					'visible'     => array(
+						'when'     => array( array( 'match', '=', 'uuid' ) ),
+						'relation' => 'or',
+					),
+				),
+				array(
+					'id'             => 'w4os-available-models-container',
+					'settings_pages' => array( 'w4os-models' ),
+					'class'          => 'w4os-settings no-hints',
+					'fields'         => array(
+						array(
+							'name' => __( 'Available Models', 'w4os' ),
+							'id'   => $prefix . 'available_models_container',
+							'type' => 'custom_html',
+							'std'  => '<div class="available-models-container">' . W4OS3_Model::available_models() . '</div>',
+						),
+					),
+				),
+			);
+
+			foreach ( $fields as $field ) {
+				$field_id = $field['id'];
+
+				add_settings_field(
+					$field_id, 
+					$field['name'] ?? '',
+					'W4OS3_Settings::render_settings_field',
+					$option_name, // Use dynamic option name as menu slug
+					$section,
+					$field,
+				);
+			}
+
+        }
+    }
+
+	public static function available_models( $atts = array() ) {
+		$content = '';
+
+		$models = W4OS3_Model::get_models( $atts );
+
+		if ( empty( $models ) ) {
+			$content = '<divclass="models-list">' . __( 'No models found.', 'w4os' ) . '</div>';
+		} else {
+			foreach ( $models as $model ) {
+				$content .= '<li class=model>' . self::model_thumb( $model ) . '</li>';
+			}
+			$content = '<ul class="models-list">' . $content . '</ul>';
+		}
+
+		return $content;
+	}
+
+	public static function model_thumb( $model, $placeholder = W4OS_NOTFOUND_IMG ) {
+		$output = '';
+
+		$name         = $model->FirstName . ' ' . $model->LastName;
+		$display_name = $name;
+		$filter_name  = w4os_get_option( 'w4os-models:name', false );
+		if ( ! empty( $filter_name ) ) {
+			$display_name = preg_replace( '/ *' . $filter_name . ' */', '', $display_name );
+		}
+		$display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $display_name );
+		$display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $display_name );
+		$alt_name     = wp_strip_all_tags( $display_name );
+
+		$imgid = ( w4os_empty( $model->profileImage ) ) ? $placeholder : $model->profileImage;
+		if ( $imgid ) {
+			$output = W4OS::sprintf_safe(
+				'<figure>
+				<img class="model-picture" alt="%2$s" src="%3$s">
+				<figcaption>%1$s</figcaption>
+				</figure>',
+				$display_name,
+				$alt_name,
+				w4os_get_asset_url( $imgid ),
+			);
+		} elseif ( ! empty( $display_name ) ) {
+			$output = W4OS::sprintf_safe(
+				'<span class="model-name">%s</span>',
+				$display_name,
+			);
+		}
+
+		return $output;
+	}
+
 
 	// public static function set_active_menu( $parent_file ) {
     //     global $pagenow;

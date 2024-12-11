@@ -181,7 +181,7 @@ class W4OS_Model extends W4OS {
 
 		$models = W4OS3_Model::get_models();
 		foreach ( $models as $model ) {
-			$content .= '<li class=model>' . $this->model_thumb( $model ) . '</li>';
+			$content .= '<li class=model>' . W4OS3_Model::model_thumb( $model ) . '</li>';
 		}
 		if ( ! empty( $content ) ) {
 			$content = '<ul class="models-list">' . $content . '</ul>';
@@ -217,7 +217,7 @@ class W4OS_Model extends W4OS {
 				</li>',
 				$model_name,
 				$checked,
-				$this->model_thumb( $model ),
+				W4OS3_Model::model_thumb( $model ),
 			);
 		}
 		if ( ! empty( $options ) ) {

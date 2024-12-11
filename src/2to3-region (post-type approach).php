@@ -97,7 +97,7 @@ class W4OS3_Region {
             add_settings_field(
                 'w4os_settings_region_settings_field_1', 
                 'First Tab Fields Title',
-                [ __CLASS__, 'render_settings_field' ],
+                'W4OS3_Settings::render_settings_field',
                 $option_name, // Use dynamic option name as menu slug
                 $section,
                 array(
@@ -121,7 +121,7 @@ class W4OS3_Region {
             add_settings_field(
                 'w4os_settings_region_advanced_field_1', 
                 'Second Tab Fields Title',
-                [ __CLASS__, 'render_settings_field' ],
+                'W4OS3_Settings::render_settings_field',
                 $option_name, // Use dynamic option name as menu slug
                 $section,
                 array(
@@ -231,61 +231,6 @@ class W4OS3_Region {
             </form>
         </div>
         <?php
-    }
-
-    public static function render_settings_field($args) {
-        if (!is_array($args)) {
-            return;
-        }
-        $args = wp_parse_args($args, [
-            // 'id' => null,
-            // 'label' => null,
-            // 'label_for' => null,
-            // 'type' => 'text',
-            // 'options' => [],
-            // 'default' => null,
-            // 'description' => null,
-            // 'option_name' => null,
-            // 'tab' => null, // Added tab
-        ]);
-
-        // Retrieve $option_name and $tab from args
-        $option_name = isset($args['option_name']) ? sanitize_key($args['option_name']) : '';
-        $tab = isset($args['tab']) ? sanitize_key($args['tab']) : 'settings';
-
-        // Construct the field name to match the options array structure
-        $field_name = "{$option_name}[{$tab}][{$args['id']}]";
-        $option = get_option($option_name, []);
-        $value = isset($option[$tab][$args['id']]) ? $option[$tab][$args['id']] : '';
-
-        switch ($args['type']) {
-            case 'checkbox':
-                $input_field = sprintf(
-                    '<label>
-                        <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
-                        %4$s
-                    </label>',
-                    esc_attr($args['id']),
-                    esc_attr($field_name),
-                    checked($value, '1', false),
-                    esc_html($args['label'])
-                );
-                break;
-            case 'text':
-            default:
-                $input_field = sprintf(
-                    '<input type="text" id="%1$s" name="%2$s" value="%3$s" />',
-                    esc_attr($args['id']),
-                    esc_attr($field_name),
-                    esc_attr($value)
-                );
-        }
-
-        echo $input_field;
-        printf(
-            '<p class="description">%s</p>',
-            esc_html($args['description'])
-        );
     }
 
 	/**

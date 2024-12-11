@@ -1413,7 +1413,7 @@ class W4OS3_Avatar extends W4OS {
 		 *
 		 * @var [type]
 		 */
-		$accounts = self::get_avatars_ids_and_uuids();
+		$accounts = W4OS3_Avatar::get_avatars_ids_and_uuids();
 		foreach ( $accounts as $key => $account ) {
 			if ( ! isset( $account['w4os_uuid'] ) ) {
 				$account['w4os_uuid'] = null;
@@ -1529,7 +1529,7 @@ class W4OS3_Avatar extends W4OS {
 
 		update_option( 'w4os_sync_users', null );
 
-		$accounts      = self::get_avatars_ids_and_uuids();
+		$accounts      = W4OS3_Avatar::get_avatars_ids_and_uuids();
 		$messages      = array();
 		$users_created = array();
 		$users_updated = array();
