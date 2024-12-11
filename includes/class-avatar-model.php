@@ -20,7 +20,7 @@ class W4OS_Model extends W4OS_Loader {
 	public $models;
 
 	public function __construct() {
-		$this->models = $this->get_models();
+		$this->models = W4OS3_Model::get_models();
 	}
 
 	public function init() {
@@ -230,66 +230,67 @@ class W4OS_Model extends W4OS_Loader {
 		return $avatars;
 	}
 
-	static function get_models( $atts = array(), $format = OBJECT ) {
-		global $w4osdb;
-		if ( empty( $w4osdb ) ) {
-			return false;
-		}
+	/* Moved to W4OS3_Avatar */
+	// static function get_models( $atts = array(), $format = OBJECT ) {
+	// 	global $w4osdb;
+	// 	if ( empty( $w4osdb ) ) {
+	// 		return false;
+	// 	}
 
-		$models = array();
+	// 	$models = array();
 
-		if ( ! empty( $atts['match'] ) ) {
-			$match = $atts['match'];
-			$name  = $atts['name'];
-			$uuids = $atts['uuids'];
-		} else {
-			if (
-				isset( $_REQUEST['page'] )
-				&& $_REQUEST['page'] == 'w4os-models'
-				&& isset( $_POST['match'] )
-				&& isset( $_POST['name'] )
-				&& isset( $_POST['uuids'] )
-			) {
-				$match = esc_attr( $_POST['match'] );
-				$name  = esc_attr( $_POST['name'] );
-				$uuids = array_map( 'esc_attr', $_POST['uuids'] );
-			} else {
-				$match = w4os_get_option( 'w4os-models:match', 'any' );
-				$name  = w4os_get_option( 'w4os-models:name', false );
-				$uuids = w4os_get_option( 'w4os-models:uuids', array() );
-			}
-		}
+	// 	if ( ! empty( $atts['match'] ) ) {
+	// 		$match = $atts['match'];
+	// 		$name  = $atts['name'];
+	// 		$uuids = $atts['uuids'];
+	// 	} else {
+	// 		if (
+	// 			isset( $_REQUEST['page'] )
+	// 			&& $_REQUEST['page'] == 'w4os-models'
+	// 			&& isset( $_POST['match'] )
+	// 			&& isset( $_POST['name'] )
+	// 			&& isset( $_POST['uuids'] )
+	// 		) {
+	// 			$match = esc_attr( $_POST['match'] );
+	// 			$name  = esc_attr( $_POST['name'] );
+	// 			$uuids = array_map( 'esc_attr', $_POST['uuids'] );
+	// 		} else {
+	// 			$match = w4os_get_option( 'w4os-models:match', 'any' );
+	// 			$name  = w4os_get_option( 'w4os-models:name', false );
+	// 			$uuids = w4os_get_option( 'w4os-models:uuids', array() );
+	// 		}
+	// 	}
 
-		switch ( $match ) {
-			case 'uuid':
-				if ( ! empty( $uuids ) ) {
-					$conditions = "PrincipalID IN ('" . implode( "','", $uuids ) . "')";
-				} else {
-					$conditions = 'FALSE';
-				}
-				break;
+	// 	switch ( $match ) {
+	// 		case 'uuid':
+	// 			if ( ! empty( $uuids ) ) {
+	// 				$conditions = "PrincipalID IN ('" . implode( "','", $uuids ) . "')";
+	// 			} else {
+	// 				$conditions = 'FALSE';
+	// 			}
+	// 			break;
 
-			case 'first':
-				$conditions = "FirstName = '%1\$s'";
-				break;
+	// 		case 'first':
+	// 			$conditions = "FirstName = '%1\$s'";
+	// 			break;
 
-			case 'last':
-				$conditions = "LastName = '%1\$s'";
-				break;
+	// 		case 'last':
+	// 			$conditions = "LastName = '%1\$s'";
+	// 			break;
 
-			default:
-				$conditions = "( FirstName = '%1\$s' OR LastName = '%1\$s' )";
-		}
-		$sql    = $w4osdb->prepare(
-			"SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText FROM
-			UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID WHERE active =
-			true AND {$conditions} ORDER BY FirstName, LastName",
-			$name,
-		);
-		$models = $w4osdb->get_results( $sql, $format );
+	// 		default:
+	// 			$conditions = "( FirstName = '%1\$s' OR LastName = '%1\$s' )";
+	// 	}
+	// 	$sql    = $w4osdb->prepare(
+	// 		"SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText FROM
+	// 		UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID WHERE active =
+	// 		true AND {$conditions} ORDER BY FirstName, LastName",
+	// 		$name,
+	// 	);
+	// 	$models = $w4osdb->get_results( $sql, $format );
 
-		return $models;
-	}
+	// 	return $models;
+	// }
 
 	public function model_thumb( $model, $placeholder = W4OS_NOTFOUND_IMG ) {
 		$output = '';
@@ -328,7 +329,7 @@ class W4OS_Model extends W4OS_Loader {
 	public function available_models( $atts = array() ) {
 		$content = '';
 
-		$models = $this->get_models( $atts );
+		$models = W4OS3_Model::get_models( $atts );
 
 		if ( empty( $models ) ) {
 			$content = '<divclass="models-list">' . __( 'No models found.', 'w4os' ) . '</div>';

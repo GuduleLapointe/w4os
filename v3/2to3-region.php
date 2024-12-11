@@ -253,7 +253,7 @@ class W4OS3_Region {
         $regionsTable = new W4OS_List_Table( $this->db, 'regions', [
 			'singular' => 'Region',
 			'plural'   => 'Regions',
-			'ajax'     => true, // Optional, defaults to false
+			'ajax'     => false,
 			'query' => "SELECT * FROM (
 				SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name
 				FROM `regions`

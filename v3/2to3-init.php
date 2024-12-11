@@ -73,6 +73,7 @@ class W4OS3 {
         require_once W4OS_INCLUDES_DIR . 'class-db.php';
 
         require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
+        require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
         
         // Load v3 features if enabled
         if ( W4OS_ENABLE_V3 ) {
@@ -233,8 +234,16 @@ class W4OS3 {
             wp_enqueue_style( $handle, $src, $deps, $ver, $media );
         } );
     }
-}
 
+    public static function is_true( $value ) {
+		if( is_bool( $value ) ) {
+			return $value;
+		}
+		$value = strtolower( $value );
+		return $value === 'true' || $value === 'yes' || $value === true || $value === 1 || $value === '1';
+	}
+
+}
 
 $w4os3 = new W4OS3();
 $w4os3->init();

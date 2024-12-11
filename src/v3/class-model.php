@@ -20,7 +20,7 @@ class W4OS_Model extends W4OS {
 	public $models;
 
 	public function __construct() {
-		$this->models = $this->get_models();
+		$this->models = W4OS3_Model::get_models();
 	}
 
 	public function init() {
@@ -179,7 +179,7 @@ class W4OS_Model extends W4OS {
 	public function available_models() {
 		$content = '';
 
-		$models = $this->get_models();
+		$models = W4OS3_Model::get_models();
 		foreach ( $models as $model ) {
 			$content .= '<li class=model>' . $this->model_thumb( $model ) . '</li>';
 		}
