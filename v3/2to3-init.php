@@ -88,6 +88,7 @@ class W4OS3 {
         if ( W4OS_ENABLE_V3 ) {
             $AvatarClass = new W4OS3_Avatar(); $AvatarClass->init();
             $RegionClass = new W4OS3_Region(); $RegionClass->init();
+            $ModelClass = new W4OS3_Model(); $ModelClass->init();
         }
     }
 

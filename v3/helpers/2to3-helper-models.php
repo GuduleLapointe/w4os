@@ -7,6 +7,38 @@
 
 class W4OS3_Model {
 
+	public static function init() {
+        add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
+        add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
+	}
+
+	public static function set_active_menu( $parent_file ) {
+        global $pagenow;
+
+        if ( $pagenow === 'admin.php' ) {
+			$current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+			if ( $current_page === 'w4os-models' ) {
+                $parent_file = 'w4os-avatar'; // Set to main plugin menu slug
+            }
+        }
+
+        return $parent_file;
+    }
+
+    public static function set_active_submenu( $submenu_file ) {
+        global $pagenow, $typenow;
+
+		if ( $pagenow === 'admin.php' ) {
+			$current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+			if ( $current_page === 'w4os-models' ) {
+                $submenu_file = 'w4os-avatar'; // Set to submenu slug
+            }
+        }
+
+		return $submenu_file;
+    }
+
+
 	static function is_model( $atts ) {
 		if (empty($atts)) {
 			return false;

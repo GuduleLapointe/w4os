@@ -40,11 +40,6 @@ class W4OS3_Avatar {
         add_action( 'admin_menu', [ $this, 'add_submenus' ] );
 
 		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
-
-
-        // add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
-        // add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
-
     }
 
     /**
