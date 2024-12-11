@@ -51,10 +51,10 @@ class W4OS_Model extends W4OS_Loader {
 			),
 		);
 
-		add_action( 'w4os_avatar_main_tabs', array( $this, 'add_to_main_tabs' ) );
+		add_action( 'w4os_settings_tabs', array( $this, 'add_tabs' ) );
 	}
 
-	function add_to_main_tabs($tabs) {
+	function add_tabs($tabs) {
 
 		$tabs['models'] = array(
 			'title' => __( 'Avatar Models', 'w4os' ),
@@ -73,7 +73,8 @@ class W4OS_Model extends W4OS_Loader {
 			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
 			'id'         => 'w4os-models',
 			'position'   => 0,
-			'parent'     => 'edit.php?post_type=avatar',
+			// 'parent'     => 'edit.php?post_type=avatar',
+			'parent'     => 'w4os-avatar',
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-users',
@@ -95,7 +96,7 @@ class W4OS_Model extends W4OS_Loader {
 				array(
 					'id'   => $prefix . 'main_tabs',
 					'type' => 'custom_html',
-					'std'  => self::get_main_tabs_html(),
+					'std'  => self::get_tabs_html(),
 				),
 			),
 		);
@@ -174,17 +175,19 @@ class W4OS_Model extends W4OS_Loader {
 	}
 
 	/**
-	 * get_main_tabs_html: 
+	 * get_tabs_html: 
 	 * 	- exit if not on w4os-models admin page
 	 *  - get the main tabs from W4OS3_Avatar::main_tabs()
 	 * - return the tabs as a string
 	 */
-	function get_main_tabs_html() {
-		if ( ! isset( $_GET['page'] ) || $_GET['page'] !== 'w4os-models' ) {
-			return '';
-		}
-
-		return W4OS3_Avatar::main_tabs_html();
+	function get_tabs_html() {
+		// return W4OS3_Settings::get_tabs_html( 'w4os-avatar' );
+		$avatar_page_url = admin_url( 'admin.php?page=w4os-avatar' );
+		return sprintf(
+			'<a href="%s" class="nav-tab">%s</a>',
+			$avatar_page_url,
+			__( 'Back to Avatar Settings', 'w4os' ),
+		);
 	}
 
 

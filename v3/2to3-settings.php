@@ -116,6 +116,37 @@ class W4OS3_Settings {
         echo '<p class="description">' . __( 'Warning: This will display critical debug information on the front end.', 'w4os' ) . '</p>';
     }
 
+    public static function get_tabs_html( $menu_slug = null, $default = 'default' ) {
+        if ( empty($menu_slug) ) {
+            $menu_slug = $_GET['page'];
+        }
+        $page_title = esc_html(get_admin_page_title());
+        $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'avatars';
+        $current_section = $option_group . '_section_' . $current_tab;
+
+		$tabs = apply_filters( 'w4os_settings_tabs', array() );
+		$page_tabs = isset($tabs[$menu_slug]) ? $tabs[$menu_slug] : array();
+		error_log( 'Page tabs: ' . print_r( $page_tabs, true ) );
+		$tabs_navigation = '';
+		foreach( $page_tabs as $tab => $tab_data ) {
+			$url = $tab_data['url'] ?? admin_url( 'admin.php?page=' . $menu_slug . '&tab=' . $tab );
+			$title = $tab_data['title'] ?? $tab;
+			$tabs_navigation .= sprintf(
+				'<a href="%s" class="nav-tab %s">%s</a>',
+				esc_url( $url ),
+				$current_tab === $tab ? 'nav-tab-active' : '',
+				esc_html( $title )
+			);
+		}
+        if( ! empty( $tabs_navigation ) ) {
+            return sprintf(
+                '<h2 class="nav-tab-wrapper">%s</h2>',
+                $tabs_navigation
+            );
+        }
+        return "no tabs";
+    }
+
     public static function render_settings_page() {
         $args = func_get_args();
         $page_title = esc_html( get_admin_page_title() );

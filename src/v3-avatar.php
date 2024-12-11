@@ -2036,12 +2036,8 @@ class W4OS3_Avatar
 				'title' => __('Settings', 'w4os'),
 				'url'   => add_query_arg('main_tab', 'settings', $base_url),
 			),
-			'models' => array(
-				'title' => __('Avatar Models', 'w4os'),
-				'url'   => admin_url('admin.php?page=w4os-models')
-			),
 		);
-		$tabs = apply_filters('w4os_avatar_main_tabs', $tabs);
+		$tabs = apply_filters('w4os_settings_tabs', $tabs);
 
 		// Determine the current main tab
 		$current_main_tab = isset($_GET['main_tab']) ? $_GET['main_tab'] : null;

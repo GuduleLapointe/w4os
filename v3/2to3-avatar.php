@@ -64,9 +64,18 @@ class W4OS3_Avatar {
 
 	static function add_menu_tabs( $tabs ) {
 		$tabs['w4os-avatar'] = array(
-			'avatars'  => __( 'List', 'w4os' ),
-			'settings' => __( 'Settings', 'w4os' ),
-			// 'advanced' => __( 'Advanced', 'w4os' ),
+			'avatars'  => array(
+				'title' => __('List', 'w4os'),
+				// 'url'   => admin_url('admin.php?page=w4os-avatar')
+			),
+			'settings' => array(
+				'title' => __('Avatar Settings', 'w4os'),
+				// 'url'   => admin_url('admin.php?page=w4os-avatar&tab=settings')
+			),
+			'models' => array(
+				'title' => __('Avatar Models', 'w4os'),
+				'url'   => admin_url('admin.php?page=w4os-models')
+			),
 		);
 		return $tabs;
 	}
@@ -128,31 +137,6 @@ class W4OS3_Avatar {
 					'option_name' => $option_name,
 				)
 			);
-
-        } else if ( $tab == 'advanced' ) {
-            add_settings_section(
-                $section,
-                null, // No title for the section
-                null, // No callback for the section
-                $option_name // Use dynamic option name as menu slug
-            );
-
-            add_settings_field(
-                'w4os_settings_avatar_advanced_field_1', 
-                'Second Tab Fields Title',
-                [ __CLASS__, 'render_settings_field' ],
-                $option_name, // Use dynamic option name as menu slug
-                $section,
-                array(
-                    'id' => 'w4os_settings_avatar_advanced_field_1',
-                    'type' => 'checkbox',
-                    'label' => __( 'Enable advanced option 1.', 'w4os' ),
-                    'description' => __( 'This is a placeholder parameter.', 'w4os' ),
-                    'option_name' => $option_name, // Reference the unified option name
-                    'label_for' => 'w4os_settings_avatar_advanced_field_1',
-                    'tab' => 'advanced', // Added tab information
-                )
-            );
         }
     }
 
@@ -188,22 +172,31 @@ class W4OS3_Avatar {
         $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'avatars';
         $current_section = $option_group . '_section_' . $current_tab;
 
+		$tabs = apply_filters( 'w4os_settings_tabs', array() );
+		$page_tabs = isset($tabs[$menu_slug]) ? $tabs[$menu_slug] : array();
+		error_log( 'Page tabs: ' . print_r( $page_tabs, true ) );
+		$tabs_navigation = '';
+		foreach( $page_tabs as $tab => $tab_data ) {
+			$url = $tab_data['url'] ?? admin_url( 'admin.php?page=' . $menu_slug . '&tab=' . $tab );
+			$title = $tab_data['title'] ?? $tab;
+			$tabs_navigation .= sprintf(
+				'<a href="%s" class="nav-tab %s">%s</a>',
+				esc_url( $url ),
+				$current_tab === $tab ? 'nav-tab-active' : '',
+				esc_html( $title )
+			);
+		}
         ?>
         <div class="wrap w4os">
             <header>
                 <h1><?php echo $page_title; ?></h1>
                 <?php echo isset($action_links_html) ? $action_links_html : ''; ?>
                 <!-- echo $tabs_navigation; -->
-                <h2 class="nav-tab-wrapper">
-					<a href="?page=<?php echo esc_attr($menu_slug); ?>" class="nav-tab <?php echo $current_tab === 'avatars' ? 'nav-tab-active' : ''; ?>">
-						<?php _e('List', 'w4os'); ?>
-					</a>
-					<a href="?page=<?php echo esc_attr($menu_slug); ?>&tab=settings" class="nav-tab <?php echo $current_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
-						<?php _e('Settings', 'w4os'); ?>
-					</a>
-					<a href="?page=<?php echo esc_attr($menu_slug); ?>&tab=advanced" class="nav-tab <?php echo $current_tab === 'advanced' ? 'nav-tab-active' : ''; ?>">
-						<?php _e('Advanced', 'w4os'); ?>
-					</a>
+                <!-- <h2 class="nav-tab-wrapper"> -->
+					<?php
+					echo W4OS3_Settings::get_tabs_html();
+					//  echo $tabs_navigation; 
+					?>
 				</h2>
             </header>
             <?php settings_errors($menu_slug); ?>
