@@ -62,10 +62,10 @@ class W4OS3_Region {
      * Initialize the class. Register actions and filters.
      */
     public function init() {
-        add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
+        add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
         add_action( 'admin_menu', [ $this, 'add_submenus' ] );
 
-		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
+		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'register_tabs' ] );
 
 
         // add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
@@ -88,7 +88,7 @@ class W4OS3_Region {
         );
     }
 
-	static function add_menu_tabs( $tabs ) {
+	static function register_tabs( $tabs ) {
 		$tabs['w4os-regions'] = array(
 			'regions'  => __( 'List', 'w4os' ), // Added 'Regions' tab
 			'settings' => __( 'Settings', 'w4os' ),
@@ -100,7 +100,7 @@ class W4OS3_Region {
     /**
      * Register settings using the Settings API, templates and the method W4OS3_Settings::render_settings_section().
      */
-    public static function register_settings_page() {
+    public static function register_settings() {
         if (! W4OS_ENABLE_V3) {
             return;
         }

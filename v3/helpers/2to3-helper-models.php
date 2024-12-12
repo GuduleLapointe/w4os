@@ -8,13 +8,13 @@
 class W4OS3_Model {
 
 	public function init() {
-		add_filter( 'w4os_settings_tabs', array( $this, 'register_settings_tabs' ) );
-        add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
+		add_filter( 'w4os_settings_tabs', array( $this, 'register_tabs' ) );
+        add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
     //     add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
     //     add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
 	}
 
-	function register_settings_tabs($tabs) {
+	function register_tabs($tabs) {
 
 		$tabs['w4os-avatars']['models'] = array(
 			'title' => __( 'Avatar Models', 'w4os' ),
@@ -27,7 +27,7 @@ class W4OS3_Model {
     /**
      * Register settings using the Settings API, templates and the method W4OS3_Settings::render_settings_section().
      */
-    public static function register_settings_page() {
+    public static function register_settings() {
         if (! W4OS_ENABLE_V3) {
             return;
         }

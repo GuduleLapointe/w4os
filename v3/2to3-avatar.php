@@ -36,10 +36,10 @@ class W4OS3_Avatar {
      * Initialize the class. Register actions and filters.
      */
     public function init() {
-        add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
+        add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
         add_action( 'admin_menu', [ $this, 'add_submenus' ] );
 
-		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'register_settings_tabs' ] );
+		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'register_tabs' ] );
     }
 
     /**
@@ -57,20 +57,17 @@ class W4OS3_Avatar {
         );
     }
 
-	static function register_settings_tabs( $tabs ) {
+	static function register_tabs( $tabs ) {
 		$tabs['w4os-avatars'] = array(
 			'avatars'  => array(
-				'title' => __('List', 'w4os'),
-				// 'url'   => admin_url('admin.php?page=w4os-avatar')
+				'title' => __( 'List', 'w4os' ),
 			),
 			'settings' => array(
-				'title' => __('Avatar Settings', 'w4os'),
-				// 'url'   => admin_url('admin.php?page=w4os-avatar&tab=settings')
+				'title' => __( 'Settings', 'w4os' ),
 			),
-			// 'models' => array(
-			// 	'title' => __('Avatar Models', 'w4os'),
-			// 	'url'   => admin_url('admin.php?page=w4os-models')
-			// ),
+			'models' => array(
+				'title' => __( 'models', 'w4os' ),
+			),
 		);
 		return $tabs;
 	}
@@ -78,7 +75,7 @@ class W4OS3_Avatar {
     /**
      * Register settings using the Settings API, templates and the method W4OS3_Settings::render_settings_section().
      */
-    public static function register_settings_page() {
+    public static function register_settings() {
         if (! W4OS_ENABLE_V3) {
             return;
         }
@@ -132,6 +129,31 @@ class W4OS3_Avatar {
 					'option_name' => $option_name,
 				)
 			);
+
+        } else if ( $tab == 'models' ) {
+            add_settings_section(
+                $section,
+                null, // No title for the section
+                null, // No callback for the section
+                $option_name // Use dynamic option name as menu slug
+            );
+
+            add_settings_field(
+                'w4os_settings_avatar_models_field_1', 
+                'Second Tab Fields Title',
+                'W4OS3_Settings::render_settings_field',
+                $option_name, // Use dynamic option name as menu slug
+                $section,
+                array(
+                    'id' => 'w4os_settings_avatar_models_field_1',
+                    'type' => 'checkbox',
+                    'label' => __( 'Enable models option 1.', 'w4os' ),
+                    'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+                    'option_name' => $option_name, // Reference the unified option name
+                    'label_for' => 'w4os_settings_avatar_models_field_1',
+                    'tab' => 'models', // Added tab information
+                )
+            );
         }
     }
 
@@ -168,6 +190,8 @@ class W4OS3_Avatar {
         $current_section = $option_group . '_section_' . $current_tab;
 
 		$tabs = apply_filters( 'w4os_settings_tabs', array() );
+		error_log( 'Tabs: ' . print_r( $tabs, true ) );
+
 		$page_tabs = isset($tabs[$menu_slug]) ? $tabs[$menu_slug] : array();
 		$tabs_navigation = '';
 		foreach( $page_tabs as $tab => $tab_data ) {
@@ -323,7 +347,7 @@ class W4OS3_Avatar {
 	public static function sanitize_options( $input ) {
 		
 		// Initialize the output array with existing options
-		$options = get_option( 'w4os-avatars', array( 'settings' => array(), 'advanced' => array() ) );
+		$options = get_option( 'w4os-avatars', array() );
 		if( ! is_array( $input ) ) {
 			return $options;
 		}

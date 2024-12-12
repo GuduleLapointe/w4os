@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class W4OS3_Settings {
     public static function init() {
-		add_action( 'admin_init', [ __CLASS__, 'register_settings_page' ] );
+		add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
 		add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ], 20 );
     }
     
@@ -34,7 +34,7 @@ class W4OS3_Settings {
         );
     }
 
-    public static function register_settings_page() {
+    public static function register_settings() {
         register_setting( 
             'w4os_settings_beta',         // Option group
             'w4os_settings',                    // Option name

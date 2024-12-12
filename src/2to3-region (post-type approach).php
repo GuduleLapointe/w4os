@@ -31,7 +31,7 @@ class W4OS3_Region {
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
         add_action( 'save_post', [ $this, 'sanitize_meta_boxes' ], 10, 2 );
 
-		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'add_menu_tabs' ] );
+		add_filter ( 'w4os_settings_tabs', [ __CLASS__, 'register_tabs' ] );
 
         add_filter( 'manage_opensimulator_region_posts_columns', [ __CLASS__, 'add_custom_columns' ] );
         add_action( 'manage_opensimulator_region_posts_custom_column', [ __CLASS__, 'render_custom_columns' ], 10, 2 );
@@ -58,7 +58,7 @@ class W4OS3_Region {
         );
     }
 
-	static function add_menu_tabs( $tabs ) {
+	static function register_tabs( $tabs ) {
 		$tabs['w4os-region-settings'] = array(
 			'regions'  => __( 'List', 'w4os' ), // Added 'Regions' tab
 			'settings' => __( 'Settings', 'w4os' ),
