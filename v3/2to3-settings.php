@@ -206,10 +206,10 @@ class W4OS3_Settings {
             // 'id' => null,
             // 'label' => null,
             // 'label_for' => null,
-            // 'type' => 'text',
+            'type' => 'text',
             // 'options' => [],
             // 'default' => null,
-            // 'description' => null,
+            'description' => null,
             // 'option_name' => null,
             // 'tab' => null, // Added tab
         ]);
@@ -308,6 +308,15 @@ class W4OS3_Settings {
                     esc_html($args['label'])
                 );
                 break;
+
+            case 'custom_html':
+                $input_field = sprintf(
+                    '<div id="%1$s" name="%1$s">%2$s</div>',
+                    esc_attr($args['id']),
+                    $args['value'],
+                );
+                break;
+
             case 'text':
             default:
                 $input_field = sprintf(
@@ -319,9 +328,11 @@ class W4OS3_Settings {
         }
 
         echo $input_field;
-        printf(
-            '<p class="description">%s</p>',
-            esc_html($args['description'])
-        );
+        if( ! empty($args['description']) ) {
+            printf(
+                '<p class="description">%s</p>',
+                esc_html($args['description'])
+            );
+        }
     }
 }

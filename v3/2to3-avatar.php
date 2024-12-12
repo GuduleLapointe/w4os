@@ -129,31 +129,6 @@ class W4OS3_Avatar {
 					'option_name' => $option_name,
 				)
 			);
-
-        } else if ( $tab == 'models' ) {
-            add_settings_section(
-                $section,
-                null, // No title for the section
-                null, // No callback for the section
-                $option_name // Use dynamic option name as menu slug
-            );
-
-            add_settings_field(
-                'w4os_settings_avatar_models_field_1', 
-                'Second Tab Fields Title',
-                'W4OS3_Settings::render_settings_field',
-                $option_name, // Use dynamic option name as menu slug
-                $section,
-                array(
-                    'id' => 'w4os_settings_avatar_models_field_1',
-                    'type' => 'checkbox',
-                    'label' => __( 'Enable models option 1.', 'w4os' ),
-                    'description' => __( 'This is a placeholder parameter.', 'w4os' ),
-                    'option_name' => $option_name, // Reference the unified option name
-                    'label_for' => 'w4os_settings_avatar_models_field_1',
-                    'tab' => 'models', // Added tab information
-                )
-            );
         }
     }
 
@@ -190,7 +165,6 @@ class W4OS3_Avatar {
         $current_section = $option_group . '_section_' . $current_tab;
 
 		$tabs = apply_filters( 'w4os_settings_tabs', array() );
-		error_log( 'Tabs: ' . print_r( $tabs, true ) );
 
 		$page_tabs = isset($tabs[$menu_slug]) ? $tabs[$menu_slug] : array();
 		$tabs_navigation = '';
@@ -424,7 +398,6 @@ class W4OS3_Avatar {
 	 * Format Avatar hop URL for list table.
 	 */
 	public function avatar_tp_link( $item ) {
-		// error_log( 'Avatar hop URL callback ' . print_r( $item, true ) );
 		$avatarName = $item->avatarName;
 		$gateway = get_option( 'w4os_login_uri' );
 		if( empty( $gateway ) ) {

@@ -47,15 +47,14 @@ class W4OS3_Model {
             add_settings_section(
                 $section,
                 null, // No title for the section
-                '', // [ __CLASS__, 'section_callback' ],
+                null, // [ __CLASS__, 'section_callback' ],
                 $option_name // Use dynamic option name
             );
 
-			$prefix = $tab . '-';
 			$fields = array(
 				array(
 					'name'    => __( 'Match', 'w4os' ),
-					'id'      => $prefix . 'match',
+					'id'      => 'match',
 					'type'    => 'button_group',
 					'options' => array(
 						'first' => __( 'First Name', 'w4os' ),
@@ -67,7 +66,7 @@ class W4OS3_Model {
 				),
 				array(
 					'name'    => __( 'Name', 'w4os' ),
-					'id'      => $prefix . 'name',
+					'id'      => 'name',
 					'type'    => 'text',
 					'std'     => 'Model',
 					'visible' => array(
@@ -77,7 +76,7 @@ class W4OS3_Model {
 				),
 				array(
 					'name'        => __( 'Select Models', 'w4os' ),
-					'id'          => $prefix . 'uuids',
+					'id'          => 'uuids',
 					'type'        => 'select_advanced',
 					// 'type'        => 'autocomplete',
 					'placeholder' => __( 'Select one or more existing avatars', 'w4os' ),
@@ -91,22 +90,22 @@ class W4OS3_Model {
 				),
 				array(
 					'id'             => 'w4os-available-models-container',
+					'name'		   => __( 'Available Models', 'w4os' ),
 					'settings_pages' => array( 'w4os-models' ),
 					'class'          => 'w4os-settings no-hints',
-					'fields'         => array(
-						array(
-							'name' => __( 'Available Models', 'w4os' ),
-							'id'   => $prefix . 'available_models_container',
-							'type' => 'custom_html',
-							'std'  => '<div class="available-models-container">' . W4OS3_Model::available_models() . '</div>',
-						),
-					),
+					'type' => 'custom_html',
+					'value'  => '<div class="available-models-container">' . W4OS3_Model::available_models() . '</div>',
 				),
 			);
 
 			foreach ( $fields as $field ) {
 				$field_id = $field['id'];
-
+				$field = wp_parse_args( $field, array(
+					'option_name' => $option_name,
+					'tab'		 => $tab,
+					// 'label_for'   => $field_id,
+				) );
+				$field['option_name'] = $option_name;
 				add_settings_field(
 					$field_id, 
 					$field['name'] ?? '',
