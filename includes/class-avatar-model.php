@@ -252,7 +252,7 @@ class W4OS_Model extends W4OS_Loader {
 	// }
 
 	function select_model_field() {
-		$models = self::get_models();
+		$models = W4OS3_Model::get_models();
 		if ( empty( $models ) ) {
 			return __( 'No models', 'w4os' );
 		}

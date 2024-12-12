@@ -260,22 +260,21 @@ class W4OS3_Model {
 			$match = $atts['match'];
 			$name  = $atts['name'];
 			$uuids = $atts['uuids'];
+		} else if (
+			isset( $_REQUEST['page'] )
+			&& $_REQUEST['page'] == 'w4os-models'
+			&& isset( $_POST['match'] )
+			&& isset( $_POST['name'] )
+			&& isset( $_POST['uuids'] )
+		) {
+			$match = esc_attr( $_POST['match'] );
+			$name  = esc_attr( $_POST['name'] );
+			$uuids = array_map( 'esc_attr', $_POST['uuids'] );
 		} else {
-			if (
-				isset( $_REQUEST['page'] )
-				&& $_REQUEST['page'] == 'w4os-models'
-				&& isset( $_POST['match'] )
-				&& isset( $_POST['name'] )
-				&& isset( $_POST['uuids'] )
-			) {
-				$match = esc_attr( $_POST['match'] );
-				$name  = esc_attr( $_POST['name'] );
-				$uuids = array_map( 'esc_attr', $_POST['uuids'] );
-			} else {
-				$match = w4os_get_option( 'w4os-models:match', 'any' );
-				$name  = w4os_get_option( 'w4os-models:name', false );
-				$uuids = w4os_get_option( 'w4os-models:uuids', array() );
-			}
+			$models = w4os_get_option( 'w4os-avatars:models', array() );
+			$match = $models['match'] ?? 'any';
+			$name  = $models['name'] ?? 'Default';
+			$uuids = $models['uuids'] ?? array();
 		}
 
 		switch ( $match ) {

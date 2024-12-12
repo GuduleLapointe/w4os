@@ -746,7 +746,7 @@ function w4os_avatar_creation_form( $user ) {
   </p>
   ';
 
-	if ( W4OS_Model::get_models() ) {
+	if ( W4OS3_Model::get_models() ) {
 		$content .= ( new W4OS_Model() )->select_model_field();
 	}
 	// $content .= '</p>';

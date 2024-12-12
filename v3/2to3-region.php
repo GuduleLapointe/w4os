@@ -168,6 +168,9 @@ class W4OS3_Region {
 			);
         }
 
+		if(empty($fields)) {
+			return;
+		}
 		foreach ( $fields as $field ) {
 			$field_id = $field['id'];
 			$field = wp_parse_args( $field, array(
