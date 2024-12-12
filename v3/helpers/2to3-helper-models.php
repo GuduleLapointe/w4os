@@ -205,14 +205,15 @@ class W4OS3_Model {
 		}
 		if( is_string( $atts ) ) {
 			$uuid = $atts;
+			$name = W4OS3_Avatar::get_name( $atts );
+			$first_name = preg_replace( '/\s+.*$/', '', $name );
+			$last_name = preg_replace( '/^.*\s+/', '', $name );
 		} else {
 			$item = $atts;
 			$uuid = $item->PrincipalID;
+			$first_name = $atts->FirstName;
+			$last_name = $atts->LastName;
 		}
-		if ( empty( $w4osdb ) ) {
-			return false;
-		}
-		$name = W4OS3_Avatar::get_name( $atts );
 		$model_options = get_option( 'w4os-models', array() );
 		$match       = $model_options['match'] ?? 'any';
 		$match_name	 = $model_options['name'] ?? 'Default';
@@ -229,7 +230,6 @@ class W4OS3_Model {
 				
 			case 'first':
 				if ( ! empty( $match_name ) ) {
-					$first_name = preg_replace( '/\s+.*$/', '', $name );
 					return $first_name == $match_name;
 				} else {
 					return false;
@@ -238,7 +238,6 @@ class W4OS3_Model {
 
 			case 'last':
 				if ( ! empty( $match_name ) ) {
-					$last_name = preg_replace( '/^.*\s+/', '', $name );
 					return $last_name == $match_name;
 				} else {
 					return false;
@@ -246,8 +245,6 @@ class W4OS3_Model {
 				break;
 
 			default:
-				$first_name = preg_replace( '/\s+.*$/', '', $name );
-				$last_name  = preg_replace( '/^.*\s+/', '', $name );
 				return $first_name == $match_name || $last_name == $match_name;
 		}
 	}
