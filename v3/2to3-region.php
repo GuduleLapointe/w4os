@@ -117,55 +117,94 @@ class W4OS3_Region {
 
         // Add settings sections and fields based on the current tab
         if ( $tab == 'settings' ) {
-            add_settings_section(
-                $section,
-                null, // No title for the section
-                [ __CLASS__, 'section_callback' ],
-                $option_name // Use dynamic option name
-            );
+			// Add default section for the current tab
+			add_settings_section(
+				$section,
+				null, // No title for the section
+				null, // [ __CLASS__, 'section_callback' ],
+				$option_name // Use dynamic option name
+			);
 
-            add_settings_field(
-                'w4os_settings_region_settings_field_1', 
-                'First Tab Fields Title',
-                'W4OS3_Settings::render_settings_field',
-                $option_name, // Use dynamic option name as menu slug
-                $section,
-                array(
-                    'id' => 'w4os_settings_region_settings_field_1',
-                    'type' => 'checkbox',
-                    'label' => __( 'Enable settings option 1.', 'w4os' ),
-                    'description' => __( 'This is a placeholder parameter.', 'w4os' ),
-                    'option_name' => $option_name, // Reference the unified option name
-                    'label_for' => 'w4os_settings_region_settings_field_1',
-                    'tab' => 'settings', // Added tab information
-                )
-            );
-        } else if ( $tab == 'advanced' ) {
-            add_settings_section(
-                $section,
-                null, // No title for the section
-                null, // No callback for the section
-                $option_name // Use dynamic option name as menu slug
-            );
+			$fields = array(
+				array(
+					'id' => 'w4os_settings_region_settings_field_1',
+					'name' => __( 'First Tab Field 1', 'w4os' ),
+					'type' => 'checkbox',
+					'label' => __( 'Enable settings option 1.', 'w4os' ),
+					'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+				),
+				array(
+					'id' => 'w4os_settings_region_settings_field_2',
+					'name' => __( 'First Tab Field 2', 'w4os' ),
+					'type' => 'checkbox',
+					'label' => __( 'Enable settings option 2.', 'w4os' ),
+					'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+				),
+			);
+		} else if ( $tab == 'advanced' ) {
+			// Add default section for the current tab
+			add_settings_section(
+				$section,
+				null, // No title for the section
+				null, // [ __CLASS__, 'section_callback' ],
+				$option_name // Use dynamic option name
+			);
 
-            add_settings_field(
-                'w4os_settings_region_advanced_field_1', 
-                'Second Tab Fields Title',
-                'W4OS3_Settings::render_settings_field',
-                $option_name, // Use dynamic option name as menu slug
-                $section,
-                array(
-                    'id' => 'w4os_settings_region_advanced_field_1',
-                    'type' => 'checkbox',
-                    'label' => __( 'Enable advanced option 1.', 'w4os' ),
-                    'description' => __( 'This is a placeholder parameter.', 'w4os' ),
-                    'option_name' => $option_name, // Reference the unified option name
-                    'label_for' => 'w4os_settings_region_advanced_field_1',
-                    'tab' => 'advanced', // Added tab information
-                )
-            );
+			$fields = array(
+				array(
+					'id' => 'w4os_settings_region_advanced_field_1',
+					'name' => __( 'Advanced Tab Field 1', 'w4os' ),
+					'type' => 'checkbox',
+					'label' => __( 'Enable advanced option 1.', 'w4os' ),
+					'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+				),
+				array(
+					'id' => 'w4os_settings_region_advanced_field_2',
+					'name' => __( 'Advanced Tab Field 2', 'w4os' ),
+					'type' => 'checkbox',
+					'label' => __( 'Enable advanced option 2.', 'w4os' ),
+					'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+				),
+			);
         }
+
+		foreach ( $fields as $field ) {
+			$field_id = $field['id'];
+			$field = wp_parse_args( $field, array(
+				'option_name' => $option_name,
+				'tab'		 => $tab,
+				// 'label_for'   => $field_id,
+			) );
+			$field['option_name'] = $option_name;
+			add_settings_field(
+				$field_id, 
+				$field['name'] ?? '',
+				'W4OS3_Settings::render_settings_field',
+				$option_name, // Use dynamic option name as menu slug
+				$section,
+				$field,
+			);
+		}
     }
+
+	public static function sanitize_options( $input ) {
+		
+		// Initialize the output array with existing options
+		$options = get_option( 'w4os-regions', array() );
+		if( ! is_array( $input ) ) {
+			return $options;
+		}
+		
+		foreach ( $input as $key => $value ) {
+			// We don't want to clutter the options with temporary check values
+			if(isset($value['prevent-empty-array'])) {
+				unset($value['prevent-empty-array']);
+			}
+			$options[ $key ] = $value;
+		}
+
+		return $options;
+	}
 
 	public static function section_callback( $args = '' ) {
 		// This is a placeholder for a section callback.
