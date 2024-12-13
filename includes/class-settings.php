@@ -294,7 +294,7 @@ class W4OS_Settings extends W4OS_Loader {
 					'name'       => __( 'Exclude from stats', 'w4os' ),
 					'id'         => $prefix . 'exclude',
 					'type'       => 'checkbox_list',
-					'desc'       => __( 'Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you have real avatars without email address.', 'w4os' ),
+					'desc'       => __( 'Accounts without email address are usually test or service accounts, created from the console. Uncheck only if you have real avatars without email address.', 'w4os' ),
 					'options'    => array(
 						'models'    => __( 'Models', 'w4os' ),
 						'nomail'    => __( 'Accounts without mail address', 'w4os' ),

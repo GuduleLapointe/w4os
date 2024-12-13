@@ -372,7 +372,7 @@ class W4OS3_Avatar {
 			return __( 'Default Model', 'w4os' );
 		}
 		if ( empty( $email ) ) {
-			return __( 'Technical Account', 'w4os' );
+			return __( 'Service Account', 'w4os' );
 		}
 		return __( 'User Avatar', 'w4os' );
 	}
