@@ -1,10 +1,10 @@
-=== w4os - OpenSimulator Web Interface ===
+=== w4os - OpenSimulator Web Interface (dev) ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.7-RC1
+Tested up to: 6.7.1
 Stable tag: 2.8
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
@@ -209,6 +209,11 @@ or not. In either case, idk&idc.
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased (2.9.0-dev.1349) =
+* transitional release
+* progressively integrate upcoming v3 features as beta
+* do not enabe v3 beta features in production environment
 
 = 2.8 =
 * fix database credential not shown in settings

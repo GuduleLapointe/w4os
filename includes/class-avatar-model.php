@@ -210,7 +210,7 @@ class W4OS_Model extends W4OS_Loader {
 
 	static function get_avatars( $format = OBJECT ) {
 		if ( W4OS_ENABLE_V3 ) {
-			return W4OS3_Model::get_avatars( $format );
+			return W4OS3_Avatar::get_avatars( $format );
 		}
 
 		global $w4osdb;

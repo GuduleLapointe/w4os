@@ -1,7 +1,7 @@
-# w4os - OpenSimulator Web Interface
+# w4os - OpenSimulator Web Interface (dev)
 
-![Stable 2.8.0](https://badgen.net/badge/Stable/2.8.0/00aa00)
-![WordPress 5.3.0 - 6.7-RC1](https://badgen.net/badge/WordPress/5.3.0%20-%206.7-RC1/3858e9)
+![Stable 2.8](https://badgen.net/badge/Stable/2.8/00aa00)
+![WordPress 5.3.0 - 6.7.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.7.1/3858e9)
 ![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
 ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
 
@@ -131,7 +131,7 @@ Divi Theme support is fixed in versions 2.4.5 and above.
 ### I use OpenSimulator 0.8.x and...
 
 Don't even finish that sentence. Versions of OpenSimulator older than 0.9
-are definitely not supported anymore. You might be lucky and it might work, 
+are definitely not supported anymore. You might be lucky and it might work,
 or not. In either case, idk&idc.
 
 

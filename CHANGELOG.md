@@ -1,5 +1,10 @@
 ## Changelog
 
+### Unreleased (2.9.0-dev.1349)
+- transitional release
+- progressively integrate upcoming v3 features as beta
+- do not enabe v3 beta features in production environment
+
 ### 2.8
 - fix database credential not shown in settings
 - fix PHP Fatal error:  Uncaught Error: Call to undefined method MetaBoxSupportArr::to_depth (updated metabox dependencies)

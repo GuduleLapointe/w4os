@@ -50,3 +50,4 @@ _config.yaml
 /.gpt-po
 Gemfile
 /v3/
+.gitattributes
