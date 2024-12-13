@@ -51,8 +51,12 @@ if ( defined( 'W4OS_SLUG' ) ) {
 
 	// No conflict, initialize the plugin.
 
-	// Temporary init class for v2 to v3 transition.	
-	require_once plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php';
+	if( file_exists( plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php' ) ) {
+		// Load v3 transitional files.
+		require_once plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php';
+	} else {
+		define( 'W4OS_ENABLE_V3', false );
+	}
 
 	// Legacy v2 inits. Both will be removed when v3 is ready.
 	require_once plugin_dir_path( __FILE__ ) . 'legacy/init.php';

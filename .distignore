@@ -49,3 +49,4 @@ tests
 _config.yaml
 /.gpt-po
 Gemfile
+/v3/
