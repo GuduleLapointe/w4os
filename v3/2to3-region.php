@@ -77,8 +77,8 @@ class W4OS3_Region {
 	public function add_submenus() {
 		W4OS3::add_submenu_page(
 			'w4os',
-			__( 'Regions (Beta)', 'w4os' ),
-			__( 'Regions (Beta)', 'w4os' ),
+			__( 'Regions', 'w4os' ) . ' (dev)',
+			'(dev) ' . __( 'Regions', 'w4os' ),
 			'manage_options',
 			'w4os-regions',
 			array( $this, 'render_settings_page' ),

@@ -25,8 +25,8 @@ class W4OS3_Settings {
 	public static function add_submenus() {
 		W4OS3::add_submenu_page(
 			'w4os',                         // Parent slug
-			__( 'Beta Settings (v3 backports)', 'w4os' ),  // Page title
-			__( 'Settings (Beta)', 'w4os' ),        // Menu title
+			__( 'Settings', 'w4os' ) . ' (dev)',  // Page title
+			'(dev) ' . __( 'Settings', 'w4os' ),        // Menu title
 			'manage_options',               // Capability
 			'settings',               // Menu slug
 			array( 'W4OS3_Settings', 'render_settings_page' ),  // Callback
@@ -46,17 +46,6 @@ class W4OS3_Settings {
 			null,
 			null,
 			'w4os_settings_beta'
-		);
-
-		add_settings_field(
-			'enable-v3-features',
-			__( 'Beta test', 'w4os' ),
-			array( __CLASS__, 'enable_v3_features_callback' ),
-			'w4os_settings_beta',
-			'w4os_section_beta',
-			array(
-				'short_description' => 'Enable beta v3 features for testing purposes.', // Added short description
-			)
 		);
 
 		add_settings_field(

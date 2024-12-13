@@ -48,8 +48,8 @@ class W4OS3_Avatar {
 	public function add_submenus() {
 		W4OS3::add_submenu_page(
 			'w4os',
-			__( 'Avatars (Beta)', 'w4os' ),
-			__( 'Avatars (Beta)', 'w4os' ),
+			__( 'Avatars', 'w4os' ) . ' (dev)',
+			'(dev) ' . __( 'Avatars', 'w4os' ),
 			'manage_options',
 			'w4os-avatars',
 			array( $this, 'render_settings_page' ),
