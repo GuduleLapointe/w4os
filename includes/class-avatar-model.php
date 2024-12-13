@@ -403,6 +403,9 @@ class W4OS_Model extends W4OS_Loader {
 	}
 
 	function enqueue_custom_settings_script( $hook ) {
+		if ( W4OS_ENABLE_V3 ) {
+			return;
+		}
 		// Enqueue the script only on the specific settings page
 		if ( $hook === 'opensimulator_page_w4os-models' ) {
 			wp_enqueue_script( 'w4os-settings-models', plugin_dir_url( __DIR__ ) . 'includes/admin/settings-models.js', array( 'jquery' ), '1.0', true );
@@ -421,6 +424,9 @@ class W4OS_Model extends W4OS_Loader {
 
 	// AJAX handler to update the available models content
 	public function update_available_models_content() {
+		if ( W4OS_ENABLE_V3 ) {
+			return;
+		}
 		// Verify the AJAX request
 		check_ajax_referer( 'update_available_models_content_nonce', 'nonce' );
 

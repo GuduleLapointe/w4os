@@ -10,9 +10,60 @@ class W4OS3_Model {
 	public function init() {
 		add_filter( 'w4os_settings_tabs', array( $this, 'register_tabs' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+		add_action( 'wp_ajax_update_available_models_content', array( $this, 'ajax_update_available_models_content' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_models_ajax_update_script' ) );
+
 		// add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
 		// add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
+
+		// Update the action name to match the AJAX request
+		add_action( 'wp_ajax_ajax_update_available_models_content', array( $this, 'ajax_update_available_models_content' ) );
 	}
+
+	function enqueue_models_ajax_update_script( $hook ) {
+		error_log( __METHOD__ . ' called' );
+		// Enqueue the script only on the specific settings page
+		if ( $hook === 'opensimulator_page_w4os-avatars' ) {
+			wp_enqueue_script( 'w4os-ajax-update-available-models', W4OS_PLUGIN_DIR_URL . 'v3/helpers/js/ajax-update-available-models.js', array( 'jquery' ), '1.0', true );
+			wp_localize_script(
+				'w4os-ajax-update-available-models',
+				'w4osSettings',
+				array(
+					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
+					'nonce'          => wp_create_nonce( 'ajax_update_available_models_content_nonce' ), // Nonce for security
+					'loadingMessage' => __( 'Refreshing list...', 'w4os' ),
+					'updateAction'   => 'ajax_update_available_models_content',
+				)
+			);
+		}
+	}
+
+	// AJAX handler to update the available models content
+	public function ajax_update_available_models_content() {
+		error_log( __METHOD__ . ' called' );
+		// Verify the AJAX request
+		check_ajax_referer( 'ajax_update_available_models_content_nonce', 'nonce' );
+
+		// Check if the action parameter is set to 'ajax_update_available_models_content'
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'ajax_update_available_models_content' ) {
+			// Sanitize the input values
+			$atts = array(
+				'match' => isset( $_POST['preview_match'] ) ? esc_attr( $_POST['preview_match'] ) : null,
+				'name'  => isset( $_POST['preview_name'] ) ? esc_attr( $_POST['preview_name'] ) : null,
+				'uuids' => isset( $_POST['preview_uuids'] ) ? array_map( 'esc_attr', $_POST['preview_uuids'] ) : null,
+			);
+
+			// Generate the updated available models content
+			$output = $this->available_models( $atts );
+
+			// Send the updated content as the AJAX response
+			wp_send_json( $output );
+		} else {
+			// Invalid action parameter
+			wp_send_json_error( 'Invalid action' );
+		}
+	}
+	
 
 	function register_tabs( $tabs ) {
 
