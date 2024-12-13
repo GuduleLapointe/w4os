@@ -2,10 +2,15 @@
 
 ignore="lib/*,vendor/*,node_modules/*,build/plugin-update-checker,build/wp-package-updater,sources/,*.asset.php,*/*/*.asset.php,*.map,includes/fullcalendar/fullcalendar.*"
 
-TMP=/tmp/$(basename "$0").$$
+PGM=$(basename "$0")
+TMP=/tmp/$PGM.$$
 
 [ $1 ] && echo "$1" | grep -qv "\-" && version=$1 && shift || version=5.7
 [ "$1" = "-x" ] && mode=executable
+
+# Assume PHP version used can be considered as working, as a fallback if minphp fails
+phpbin=$(wp --info | grep "^PHP binary:" | cut -f 2)
+min=$($phpbin --version | head -1 | cut -d " " -f 2 | sed "s/[a-z-].*//i")
 
 phpcs -p . --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors
 if [ $? -eq 0 ]
@@ -14,10 +19,11 @@ then
 else
   lastbad=$(grep "or earlier" $TMP.errors | sed -E "s/.* (([0-9]+\.)+[0-9]+) or earlier.*/\\1/" | sort -u | sort -n | tail -1)
   version=$(echo $lastbad | cut -d. -f1).$(($(echo $lastbad | cut -d. -f 2) + 1))
-  phpcs -p . --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors && min=$version
+  phpcs -p . --error-severity=1 --warning-severity=9 --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors \
+  && min=$version
 fi
 
-[ "$min" = "" ] && cat $TMP.errors && exit 1
+[ "$min" = "" ] && mv $TMP.errors /tmp/$PGM.errors && echo "could not find minimum PHP version, see /tmp/$PGM.errors for details" >&2 && exit 1
 echo Minimum PHP: $min >&2
 
 if [ "$mode" = "executable" ]
