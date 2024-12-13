@@ -132,7 +132,6 @@ class W4OS_Tos extends W4OS_Loader {
 		}
 		return $errors;
 	}
-
 }
 
 $this->loaders[] = new W4OS_Tos();

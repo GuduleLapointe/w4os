@@ -40,7 +40,7 @@ function w4os_updates( $args = array() ) {
 				break;
 			}
 		}
-		$u++;
+		++$u;
 	}
 	if ( @$success ) {
 		if ( empty( $messages ) ) {
@@ -186,15 +186,15 @@ function w4os_update_6() {
 
 // Not ready yet, but keep it for when it's time to migrate.
 // /*
-//  * Migrate Avatar Models settings to a subset of w4os-avatars settings.
-//  */
+// * Migrate Avatar Models settings to a subset of w4os-avatars settings.
+// */
 // function w4os_update_7() {
-// 	$models = get_option( 'w4os-models', array() );
-// 	error_log( 'w4os-models ' . print_r( $models, true ) );
-// 	$avatars = get_option( 'w4os-avatars', array() );
-// 	error_log( 'w4os-avatars ' . print_r( $avatars, true ) );
-// 	$avatars['models'] = $models;
-// 	update_option( 'w4os-avatars', $avatars );
-// 	delete_option( 'w4os-models' );
-// 	return true;
+// $models = get_option( 'w4os-models', array() );
+// error_log( 'w4os-models ' . print_r( $models, true ) );
+// $avatars = get_option( 'w4os-avatars', array() );
+// error_log( 'w4os-avatars ' . print_r( $avatars, true ) );
+// $avatars['models'] = $models;
+// update_option( 'w4os-avatars', $avatars );
+// delete_option( 'w4os-models' );
+// return true;
 // }

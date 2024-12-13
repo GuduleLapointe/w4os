@@ -144,7 +144,7 @@ switch ( $method ) {
 				// We're inside WordPress, use wp_mail()
 				add_action(
 					'plugins_loaded',
-					function() use ( $email, $subject, $body, $headers ) {
+					function () use ( $email, $subject, $body, $headers ) {
 						$result = wp_mail( $email, $subject, $body, $headers );
 						if ( ! $result ) {
 							error_log( __FILE__ . "error $result sending IM notification to $email." );

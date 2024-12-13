@@ -1,5 +1,5 @@
 jQuery( document ).ready(
-	function($) {
+	function ($) {
 		var previousMatch = $( 'input[name="match"]:checked' ).val();
 		var previousName  = $( '#name' ).val();
 		var previousUuids = $( '#uuids' ).val();
@@ -17,11 +17,11 @@ jQuery( document ).ready(
 
 				// Compare the current values with the previous values
 				if (currentMatch !== previousMatch || currentName !== previousName || currentUuids.join( ',' ) !== previousUuids.join( ',' )) {
-					  previousMatch = currentMatch;
-					  previousName  = currentName;
-					  previousUuids = currentUuids;
+						previousMatch = currentMatch;
+						previousName  = currentName;
+						previousUuids = currentUuids;
 
-					  return true; // Fields have changed
+						return true; // Fields have changed
 				}
 
 				return false; // Fields have not changed
@@ -43,7 +43,7 @@ jQuery( document ).ready(
 				$.post(
 					w4osSettings.ajaxUrl,
 					data,
-					function(response) {
+					function (response) {
 							$( '#w4os-available-models-container .available-models-container' ).html( response );
 					}
 				);
@@ -54,7 +54,7 @@ jQuery( document ).ready(
 		$( document ).on(
 			'change',
 			'input[name="match"]',
-			function() {
+			function () {
 				updateAvailableModelsContent();
 			}
 		);
@@ -63,7 +63,7 @@ jQuery( document ).ready(
 		$( document ).on(
 			'input',
 			'#name',
-			function() {
+			function () {
 				updateAvailableModelsContent();
 			}
 		);
@@ -72,7 +72,7 @@ jQuery( document ).ready(
 		$( document ).on(
 			'change',
 			'#uuids',
-			function() {
+			function () {
 				updateAvailableModelsContent();
 			}
 		);

@@ -43,6 +43,5 @@ if ( ! W4OS_ENABLE_V3 ) {
 
 			$this->db_connect();
 		}
-
 	}
 }

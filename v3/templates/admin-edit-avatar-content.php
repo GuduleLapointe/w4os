@@ -5,13 +5,13 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-    die;
+	die;
 }
 ?>
 <form method="post" action="options.php">
-    <?php
-        settings_fields( 'w4os_settings_avatar' );
-        do_settings_sections( 'w4os-avatar-settings' );
-        submit_button();
-    ?>
+	<?php
+		settings_fields( 'w4os_settings_avatar' );
+		do_settings_sections( 'w4os-avatar-settings' );
+		submit_button();
+	?>
 </form>

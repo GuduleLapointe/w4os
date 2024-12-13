@@ -271,7 +271,6 @@ class W4OS_Search extends W4OS_Loader {
 			}
 		}
 	}
-
 }
 
 $this->loaders[] = new W4OS_Search();

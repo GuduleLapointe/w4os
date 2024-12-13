@@ -44,7 +44,6 @@ class W4OS_Profile extends W4OS_Loader {
 		$this->actions = array();
 
 		$this->filters = array();
-
 	}
 }
 

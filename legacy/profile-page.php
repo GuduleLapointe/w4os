@@ -6,7 +6,7 @@ define( 'W4OS_PROFILE_SELF_PATTERN', '^' . esc_attr( get_option( 'w4os_profile_s
 
 add_action(
 	'init',
-	function() {
+	function () {
 		add_rewrite_rule(
 			W4OS_PROFILE_PATTERN,
 			'index.php?pagename=' . esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ) . '&post_tyoe=user&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]',
@@ -58,7 +58,7 @@ function w4os_get_avatar_by_name( $firstname = '', $lastname = '' ) {
 
 add_action(
 	'login_form_bottom',
-	function() {
+	function () {
 		$links[] = W4OS::sprintf_safe(
 			'<a href="%1$s" alt="%2$s">%2$s</a>',
 			esc_url( wp_lostpassword_url(), 'w4os' ),
@@ -124,7 +124,7 @@ function w4os_login_form( $args = array() ) {
 
 add_filter(
 	'login_errors',
-	function( $error ) {
+	function ( $error ) {
 		global $errors;
 
 		if ( $errors ) {
@@ -156,7 +156,7 @@ add_filter(
 
 add_action(
 	'template_include',
-	function( $template ) {
+	function ( $template ) {
 		global $wp_query;
 		if ( isset( $wp_query->queried_object->post_name ) && $wp_query->queried_object->post_name != get_option( 'w4os_profile_slug' ) ) {
 			return $template;
@@ -184,7 +184,7 @@ add_action(
 			if ( is_user_logged_in() ) {
 				$uuid = w4os_profile_sync( wp_get_current_user() );
 				if ( $uuid ) {
-					  $page_title = __( 'My Profile', 'w4os' );
+						$page_title = __( 'My Profile', 'w4os' );
 				} else {
 					$page_title = __( 'Create My Avatar', 'w4os' );
 				}
@@ -217,7 +217,7 @@ add_action(
 
 			add_filter(
 				'the_title',
-				function( $title, $id = null ) use ( $page_title ) {
+				function ( $title, $id = null ) use ( $page_title ) {
 					if ( is_singular() && in_the_loop() && is_main_query() ) {
 						return $page_title;
 					}
@@ -235,7 +235,7 @@ add_action(
 				case 'Divi':
 					add_filter(
 						'pre_get_document_title',
-						function() use ( $head_title ) {
+						function () use ( $head_title ) {
 							return $head_title . ' – ' . get_bloginfo( 'name' );
 						},
 						20
@@ -245,10 +245,10 @@ add_action(
 				default:
 					add_filter(
 						'document_title_parts',
-						function( $title ) use ( $head_title ) {
-							  $title['title'] = $head_title;
-							  // $title['site'] = get_option('w4os_grid_name');
-							  return $title;
+						function ( $title ) use ( $head_title ) {
+								$title['title'] = $head_title;
+								// $title['site'] = get_option('w4os_grid_name');
+								return $title;
 						},
 						20
 					);
@@ -274,7 +274,7 @@ add_action(
 
 add_action(
 	'admin_init',
-	function() {
+	function () {
 
 		add_settings_section( 'w4os_permalinks', 'W4OS', 'w4os_permalinks_output', 'permalink' );
 		add_settings_field( 'w4os_profile_slug', __( 'Profile base', 'w4os' ), 'w4os_profile_slug_output', 'permalink', 'w4os_permalinks' );

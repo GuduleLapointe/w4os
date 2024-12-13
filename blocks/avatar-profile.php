@@ -46,7 +46,7 @@ function avatar_profile_block_init() {
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
 	}
-	$dir = dirname( __FILE__ );
+	$dir = __DIR__;
 
 	$index_js = 'avatar-profile/avatar-profile.js';
 	wp_register_script(

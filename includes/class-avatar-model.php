@@ -55,44 +55,44 @@ class W4OS_Model extends W4OS_Loader {
 			),
 		);
 
-		if(W4OS_ENABLE_V3) {
-			add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
-			add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
+		if ( W4OS_ENABLE_V3 ) {
+			add_filter( 'parent_file', array( __CLASS__, 'set_active_menu' ) );
+			add_filter( 'submenu_file', array( __CLASS__, 'set_active_submenu' ) );
 		}
 	}
 
 	public static function set_active_menu( $parent_file ) {
-        global $pagenow;
-
-        if ( $pagenow === 'admin.php' ) {
-			$current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
-			if ( $current_page === 'w4os-models' ) {
-                $parent_file = 'w4os'; // Set to main plugin menu slug
-            }
-        }
-
-        return $parent_file;
-    }
-
-    public static function set_active_submenu( $submenu_file ) {
-        global $pagenow, $typenow;
+		global $pagenow;
 
 		if ( $pagenow === 'admin.php' ) {
 			$current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
 			if ( $current_page === 'w4os-models' ) {
-                $submenu_file = 'w4os-avatars';
-            }
-        }
+				$parent_file = 'w4os'; // Set to main plugin menu slug
+			}
+		}
+
+		return $parent_file;
+	}
+
+	public static function set_active_submenu( $submenu_file ) {
+		global $pagenow, $typenow;
+
+		if ( $pagenow === 'admin.php' ) {
+			$current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+			if ( $current_page === 'w4os-models' ) {
+				$submenu_file = 'w4os-avatars';
+			}
+		}
 
 		return $submenu_file;
-    }
+	}
 
 
 	function register_post_types() {
 	}
 
 	function register_settings_pages( $settings_pages ) {
-		$parent = W4OS_ENABLE_V3 ? 'w4os-avatars' : 'w4os';
+		$parent           = W4OS_ENABLE_V3 ? 'w4os-avatars' : 'w4os';
 		$settings_pages[] = array(
 			'menu_title' => __( 'Avatar Models', 'w4os' ),
 			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
@@ -209,7 +209,7 @@ class W4OS_Model extends W4OS_Loader {
 	}
 
 	static function get_avatars( $format = OBJECT ) {
-		if( W4OS_ENABLE_V3 ) {
+		if ( W4OS_ENABLE_V3 ) {
 			return W4OS3_Model::get_avatars( $format );
 		}
 
@@ -231,7 +231,7 @@ class W4OS_Model extends W4OS_Loader {
 	}
 
 	static function get_models( $atts = array(), $format = OBJECT ) {
-		if( W4OS_ENABLE_V3 ) {
+		if ( W4OS_ENABLE_V3 ) {
 			return W4OS3_Model::get_models( $atts, $format );
 		}
 
@@ -246,22 +246,21 @@ class W4OS_Model extends W4OS_Loader {
 			$match = $atts['match'];
 			$name  = $atts['name'];
 			$uuids = $atts['uuids'];
-		} else {
-			if (
+		} elseif (
 				isset( $_REQUEST['page'] )
 				&& $_REQUEST['page'] == 'w4os-models'
 				&& isset( $_POST['match'] )
 				&& isset( $_POST['name'] )
 				&& isset( $_POST['uuids'] )
 			) {
+
 				$match = esc_attr( $_POST['match'] );
 				$name  = esc_attr( $_POST['name'] );
 				$uuids = array_map( 'esc_attr', $_POST['uuids'] );
-			} else {
-				$match = w4os_get_option( 'w4os-models:match', 'any' );
-				$name  = w4os_get_option( 'w4os-models:name', false );
-				$uuids = w4os_get_option( 'w4os-models:uuids', array() );
-			}
+		} else {
+			$match = w4os_get_option( 'w4os-models:match', 'any' );
+			$name  = w4os_get_option( 'w4os-models:name', false );
+			$uuids = w4os_get_option( 'w4os-models:uuids', array() );
 		}
 
 		switch ( $match ) {
@@ -299,7 +298,7 @@ class W4OS_Model extends W4OS_Loader {
 		if ( W4OS_ENABLE_V3 ) {
 			return W4OS3_Model::model_thumb( $model, $placeholder );
 		}
-		
+
 		$output = '';
 
 		$name         = $model->FirstName . ' ' . $model->LastName;
@@ -367,7 +366,7 @@ class W4OS_Model extends W4OS_Loader {
 		$m            = 0;
 		$random_model = rand( 1, count( $models ) );
 		foreach ( $models as $model ) {
-			$m++;
+			++$m;
 			$checked = ( $m == $random_model ) ? 'checked' : '';
 			// if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 			$model_name = $model->FirstName . ' ' . $model->LastName;

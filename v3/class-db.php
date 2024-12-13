@@ -3,7 +3,7 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;
 }
 
-if( W4OS_ENABLE_V3 ) {
+if ( W4OS_ENABLE_V3 ) {
 	class W4OS_WPDB extends WPDB {
 		public function __construct( $dbuser, $dbpassword = null, $dbname = null, $dbhost = null, $dbport = null ) {
 			if ( WP_DEBUG && WP_DEBUG_DISPLAY ) {
@@ -12,13 +12,16 @@ if( W4OS_ENABLE_V3 ) {
 
 			// If args are passed as an array, extract them.
 			if ( is_array( $dbuser ) ) {
-				$credentials = WP_parse_args( $dbuser, array(
-					'user'     => null,
-					'pass'     => null,
-					'database' => null,
-					'host'     => null,
-					'port'     => null,
-				) );
+				$credentials = WP_parse_args(
+					$dbuser,
+					array(
+						'user'     => null,
+						'pass'     => null,
+						'database' => null,
+						'host'     => null,
+						'port'     => null,
+					)
+				);
 				$dbuser      = $credentials['user'];
 				$dbpassword  = $credentials['pass'];
 				$dbname      = $credentials['database'];

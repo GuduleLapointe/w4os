@@ -17,7 +17,7 @@ function web_search_block_init() {
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
 	}
-	$dir = dirname( __FILE__ );
+	$dir = __DIR__;
 
 	$index_js = 'web-search/web-search.js';
 	wp_register_script(

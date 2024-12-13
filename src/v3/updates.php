@@ -40,7 +40,7 @@ function w4os_updates( $args = array() ) {
 				break;
 			}
 		}
-		$u++;
+		++$u;
 	}
 	if ( @$success ) {
 		if ( empty( $messages ) ) {

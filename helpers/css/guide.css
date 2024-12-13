@@ -10,107 +10,107 @@
  */
 
 :root {
-  --guide-color-green: #61c909;
-  --guide-color-orange: #ff7f00;
-  --guide-color-text: white;
+	--guide-color-green: #61c909;
+	--guide-color-orange: #ff7f00;
+	--guide-color-text: white;
 }
 body {
 }
 
 body.destination-guide {
-  padding: 0;
-  margin: 0;
-  /* background: var(--guide-color-orange); */
-  height: 100vh; /* Set the height of the body to the full viewport height */
-  display: flex;
-  justify-content: center; /* Center the #guide div horizontally */
-  align-items: center; /* Center #guide both horizontally and vertically */
-  overflow: hidden; /* Hide any content that overflows outside #guide */
+	padding: 0;
+	margin: 0;
+	/* background: var(--guide-color-orange); */
+	height: 100vh; /* Set the height of the body to the full viewport height */
+	display: flex;
+	justify-content: center; /* Center the #guide div horizontally */
+	align-items: center; /* Center #guide both horizontally and vertically */
+	overflow: hidden; /* Hide any content that overflows outside #guide */
 }
 
 #guide {
-  font-family: "Liberation Sans", Arial, Roboto, "Helvetica", sans-serif;
-  background: var(--guide-color-orange);
-  color: var(--guide-color-text);
-  padding: 10px;
-  width: 100%; /* Allow #guide to fill the entire width of the viewport */
-  height: 100vh; /* Set the height of #guide to the full viewport height */
-  overflow: hidden; /* Hide any content that overflows outside #guide */
-  display: flex; /* Add this line to use flexbox layout */
-  flex-direction: column; /* Add this line to set the flex direction to column */
+	font-family: "Liberation Sans", Arial, Roboto, "Helvetica", sans-serif;
+	background: var(--guide-color-orange);
+	color: var(--guide-color-text);
+	padding: 10px;
+	width: 100%; /* Allow #guide to fill the entire width of the viewport */
+	height: 100vh; /* Set the height of #guide to the full viewport height */
+	overflow: hidden; /* Hide any content that overflows outside #guide */
+	display: flex; /* Add this line to use flexbox layout */
+	flex-direction: column; /* Add this line to set the flex direction to column */
 }
 
 #guide .header {
-  padding-top: 10px;
+	padding-top: 10px;
 }
 #guide a {
-  color: var(--guide-color-text);
-  text-decoration: none;
+	color: var(--guide-color-text);
+	text-decoration: none;
 }
 #guide .list > a {
-  height: 160px;
+	height: 160px;
 }
 
 #guide .item:hover,
 #guide a:hover {
-  color: black;
+	color: black;
 }
 
 #guide .item:hover {
-  background: var(--guide-color-green);
-  /* transform: scale(0.95); /* Slight scale-up effect on hover */ */
+	background: var(--guide-color-green);
+	/* transform: scale(0.95); /* Slight scale-up effect on hover */ */
 }
 
 #guide h1, #guide h2 {
-  margin: 0;
-  font-size: 1.25rem;
-  padding: 0 10px 5px;
-  display: inline-block;
+	margin: 0;
+	font-size: 1.25rem;
+	padding: 0 10px 5px;
+	display: inline-block;
 }
 
 #guide .disclaimer {
-  float: right;
-  font-size: 0.85rem;
-  opacity: 0.7;
+	float: right;
+	font-size: 0.85rem;
+	opacity: 0.7;
 }
 
 #guide a.back {
-  font-size: 0.9rem;
+	font-size: 0.9rem;
 }
 
 #guide .list {
-  display: flex;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  overflow-y: hidden; /* Hide vertical scrolling */
+	display: flex;
+	overflow-x: auto; /* Enable horizontal scrolling */
+	overflow-y: hidden; /* Hide vertical scrolling */
 	flex-grow: 1; /* Allow .list to grow and fill the remaining height */
-  padding-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 #guide .item,
 #guide .error {
-  padding: 10px;
-  box-sizing: border-box;
+	padding: 10px;
+	box-sizing: border-box;
 }
 
 #guide .item {
-  width: 160px;
-  transition: background-color 0.3s ease; /* Add a smooth transition effect for background color */
+	width: 160px;
+	transition: background-color 0.3s ease; /* Add a smooth transition effect for background color */
 }
 
 #guide img.thumbnail {
-  width: 140px;
-  height: 105px;
-  object-fit: cover; /* Crop the image to fit without stretching */
+	width: 140px;
+	height: 105px;
+	object-fit: cover; /* Crop the image to fit without stretching */
 }
 
 #guide .name {
-  font-size: 0.85rem;
-  font-weight: bold;
-  white-space: nowrap; /* Prevent the name from wrapping */
-  overflow: hidden; /* Hide overflowing content */
-  text-overflow: ellipsis; /* Add an ellipsis (...) to indicate content is hidden */
+	font-size: 0.85rem;
+	font-weight: bold;
+	white-space: nowrap; /* Prevent the name from wrapping */
+	overflow: hidden; /* Hide overflowing content */
+	text-overflow: ellipsis; /* Add an ellipsis (...) to indicate content is hidden */
 }
 
 #guide .data {
-  font-size: 0.8rem;
+	font-size: 0.8rem;
 }

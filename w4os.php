@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       w4os - OpenSimulator Web Interface
  * Description:       WordPress interface for OpenSimulator (w4os).
- * Version:           2.8
+ * Version:           2.9.0
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
  * Plugin URI:        https://w4os.org/
@@ -39,19 +39,22 @@ if ( defined( 'W4OS_SLUG' ) ) {
 
 	// If W4OS_SLUG is defined, another version of the plugin is active, abort.
 
-	add_action( 'admin_notices', function() {
-		echo W4OS::sprintf_safe(
-			"<div class='notice notice-error'><p><strong>W4OS:</strong> %s (%s).</p></div>",
-			__( 'Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.', 'w4os' ),
-			basename( __DIR__ ) . '/' . basename( __FILE__ ),
-		);
-	} );
+	add_action(
+		'admin_notices',
+		function () {
+			echo W4OS::sprintf_safe(
+				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s (%s).</p></div>",
+				__( 'Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.', 'w4os' ),
+				basename( __DIR__ ) . '/' . basename( __FILE__ ),
+			);
+		}
+	);
 	deactivate_plugins( basename( __DIR__ ) . '/' . basename( __FILE__ ) );
 } else {
 
 	// No conflict, initialize the plugin.
 
-	if( file_exists( plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php' ) ) {
+	if ( file_exists( plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php' ) ) {
 		// Load v3 transitional files.
 		require_once plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php';
 	} else {

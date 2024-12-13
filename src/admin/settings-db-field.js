@@ -1,7 +1,7 @@
 import "./settings-db-field.scss";
 
 jQuery( document ).ready(
-	function($) {
+	function ($) {
 		// Function to toggle subfield visibility based on "use_robot" checkbox
 		function toggleSubfields($checkbox) {
 			var $fieldset  = $checkbox.closest( '.w4osdb-field-group' );
@@ -16,7 +16,7 @@ jQuery( document ).ready(
 
 		// Initial toggle when page loads
 		$( '.w4osdb-field-group' ).each(
-			function() {
+			function () {
 				toggleSubfields( $( this ).find( '.db-field-use_default input[type="checkbox"]' ) );
 			}
 		);
@@ -25,7 +25,7 @@ jQuery( document ).ready(
 		$( document ).on(
 			'change',
 			'.w4osdb-field-group .db-field-use_default input[type="checkbox"]',
-			function() {
+			function () {
 				toggleSubfields( $( this ) );
 			}
 		);

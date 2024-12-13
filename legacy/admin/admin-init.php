@@ -124,7 +124,7 @@ function w4os_date( $format, $timestamp = null, $timezone = null ) {
 	if ( W4OS_ENABLE_V3 ) {
 		return W4OS3::date( $timestamp, $format, $timezone );
 	}
- 
+
 	if ( empty( $timestamp ) ) {
 		return;
 	}
@@ -334,7 +334,7 @@ add_action( 'admin_init', 'w4os_process_actions' );
 
 add_action(
 	'init',
-	function() {
+	function () {
 		define(
 			'W4OS_PAGES',
 			array(

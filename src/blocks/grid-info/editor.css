@@ -6,8 +6,8 @@
 
 .wp-block-w4os-gridinfo-block {
 	/* border: 1px dotted #f00; */
-  background: pink;
+	background: pink;
 }
 .components-placeholder.components-placeholder.wp-block-w4os-gridinfo-block {
-  min-height: 0;
+	min-height: 0;
 }

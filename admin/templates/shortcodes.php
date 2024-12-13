@@ -1,19 +1,19 @@
 <h1><?php _e( 'Available Shortcodes', 'w4os' ); ?></h1>
 
 <p class="description">
-  <?php _e( 'Shortcodes can be included in any page or articles.' ); ?>
-  <?php _e( 'They are also available as configurable Gutenberg blocks and Divi modules.' ); ?>
+	<?php _e( 'Shortcodes can be included in any page or articles.' ); ?>
+	<?php _e( 'They are also available as configurable Gutenberg blocks and Divi modules.' ); ?>
 </p>
 
 <div class=shortcodes>
-  <table class="w4os-table shortcodes">
+	<table class="w4os-table shortcodes">
 	<tr><th>
-	  <code>[grid-info]</code>
-	  <p><?php _e( 'General information (grid name and login uri)', 'w4os' ); ?></p>
+		<code>[grid-info]</code>
+		<p><?php _e( 'General information (grid name and login uri)', 'w4os' ); ?></p>
 	</th><td>
-	  <?php echo w4os_grid_info_shortcode(); ?>
-  </td><td>
-	  <?php
+		<?php echo w4os_grid_info_shortcode(); ?>
+	</td><td>
+		<?php
 		$parameters = array(
 			'title'    => __( 'Bloc title', 'w4os' ),
 			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
@@ -28,12 +28,12 @@
 		?>
 	</td></tr>
 	<tr><th>
-	  <code>[grid-status]</code>
-	  <p><?php _e( 'Online users, regions, etc.', 'w4os' ); ?></p>
+		<code>[grid-status]</code>
+		<p><?php _e( 'Online users, regions, etc.', 'w4os' ); ?></p>
 	</th><td>
-	  <?php echo w4os_grid_status_shortcode(); ?>
-  </td><td>
-	  <?php
+		<?php echo w4os_grid_status_shortcode(); ?>
+	</td><td>
+		<?php
 		$parameters = array(
 			'title'    => __( 'Bloc title', 'w4os' ),
 			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
@@ -48,14 +48,14 @@
 		?>
 	</td></tr>
 	<tr><th>
-	  <code>[avatar-profile]</code>
-	  <p><?php _e( 'Avatar Profile if user is connected and has an avatar, avatar registration form otherwise', 'w4os' ); ?>
+		<code>[avatar-profile]</code>
+		<p><?php _e( 'Avatar Profile if user is connected and has an avatar, avatar registration form otherwise', 'w4os' ); ?>
 		<?php echo W4OS::sprintf_safe( __( '(formerly %s)', 'w4os' ), '<code>[gridprofile]</code>' ); ?>
-	  </p>
+		</p>
 	</th><td>
-	  <?php echo do_shortcode( '[avatar-profile]' ); ?>
-  </td><td>
-	  <?php
+		<?php echo do_shortcode( '[avatar-profile]' ); ?>
+	</td><td>
+		<?php
 		$parameters = array(
 			'title'    => __( 'Bloc title', 'w4os' ),
 			'level=h3' => __( 'Title level (h1 to h6)', 'w4os' ),
@@ -71,14 +71,14 @@
 		?>
 	</td></tr>
 	<tr><th>
-	  <code>[popular-places]</code>
-	  <p>
+		<code>[popular-places]</code>
+		<p>
 		<?php _e( 'Most visited regions in your grid.', 'w4os' ); ?>
-	  </p>
+		</p>
 	</th><td>
-	  <?php echo do_shortcode( '[popular-places max=3]' ); ?>
+		<?php echo do_shortcode( '[popular-places max=3]' ); ?>
 	</td><td>
-	  <?php
+		<?php
 		$parameters = array(
 			'title'             => __( 'Bloc title', 'w4os' ),
 			'level=h3'          => __( 'Title level (h1 to h6)', 'w4os' ),
@@ -108,5 +108,5 @@
 		?>
 	</td>
 	</tr>
-  </table>
+	</table>
 </div>

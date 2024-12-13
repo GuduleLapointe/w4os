@@ -12,7 +12,7 @@ class W4OS_Avatar extends WP_User {
 	public function __construct( $id = 0, $name = '', $site_id = '' ) {
 		/**
 		 * First get WP_User object
-	   *
+		*
 		 * @var [type]
 		 */
 		if ( $id instanceof WP_User ) {
@@ -42,7 +42,7 @@ class W4OS_Avatar extends WP_User {
 
 		/**
 		 * Add W4OS avatar properties
-	   *
+		*
 		 * @var string
 		 */
 		// $this->avatarName = "Avatar of " . $this->user_email;
@@ -147,7 +147,7 @@ class W4OS_Avatar extends WP_User {
 				)
 			);
 			if ( wp_get_current_user()->ID == $this->ID ) {
-				  $profile[ __( 'Change password', 'w4os' ) ] = '<a href="' . wp_lostpassword_url() . '">' . __( 'Password reset link', 'w4os' ) . '</a>';
+					$profile[ __( 'Change password', 'w4os' ) ] = '<a href="' . wp_lostpassword_url() . '">' . __( 'Password reset link', 'w4os' ) . '</a>';
 			}
 
 			/*
@@ -407,8 +407,8 @@ function w4os_create_avatar( $user, $params ) {
 		if ( ! $params['w4os_password_1'] ) {
 			$errors = true;
 			w4os_notice( __( 'Password required', 'w4os' ), 'error' ); } elseif ( ! wp_check_password( $params['w4os_password_1'], $user->user_pass ) ) {
-					  $errors = true;
-					  w4os_notice( __( 'The password does not match.', 'w4os' ), 'error' ); }
+						$errors = true;
+						w4os_notice( __( 'The password does not match.', 'w4os' ), 'error' ); }
 	}
 	if ( $errors == true ) {
 		return false;
@@ -716,7 +716,7 @@ function w4os_avatar_creation_form( $user ) {
 	if ( isset( $_REQUEST['w4os_firstname'] ) && isset( $_REQUEST['w4os_lastname'] ) ) {
 		$firstname = sanitize_text_field( $_REQUEST['w4os_firstname'] );
 		$lastname  = sanitize_text_field( $_REQUEST['w4os_lastname'] );
-	} elseif ( ! empty( get_user_meta( $user->ID, 'first_name', true ) ) & ! ! empty( get_user_meta( $user->ID, 'last_name', true ) ) ) {
+	} elseif ( ! empty( get_user_meta( $user->ID, 'first_name', true ) ) & (bool) empty( get_user_meta( $user->ID, 'last_name', true ) ) ) {
 		$firstname = get_user_meta( $user->ID, 'first_name', true );
 		$lastname  = get_user_meta( $user->ID, 'last_name', true );
 	} else {
@@ -814,25 +814,24 @@ function w4os_profile_display( $user, $args = array() ) {
 		// $avatar->AvatarName,
 		// );
 		// return $content;
-	} else {
-		if ( ! empty( $args['mini'] ) ) {
+	} elseif ( ! empty( $args['mini'] ) ) {
 			// Display simple link when 'mini' argument is set
 			$content .= W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __( 'Create an avatar', 'w4os' ) );
-		} else {
-			// Display responsive form and hidden dialog
-			$content .= '<div id="profilewrapper">';
-			$content .= '<div id="profileform">' . w4os_avatar_creation_form( $user ) . '</div>';
-			$content .= '<a href="#" id="profilelink" style="display: none;" onclick="openDialog(); return false;">' . __( 'Create an avatar', 'w4os' ) . '</a>';
-			$content .= '</div>';
+	} else {
+		// Display responsive form and hidden dialog
+		$content .= '<div id="profilewrapper">';
+		$content .= '<div id="profileform">' . w4os_avatar_creation_form( $user ) . '</div>';
+		$content .= '<a href="#" id="profilelink" style="display: none;" onclick="openDialog(); return false;">' . __( 'Create an avatar', 'w4os' ) . '</a>';
+		$content .= '</div>';
 
-			// Dialog HTML
-			$content .= '<dialog id="modalDialog">';
-			$content .= '<div id="dialogContent"></div>';
-			$content .= '<button onclick="closeDialog()">Close</button>';
-			$content .= '</dialog>';
+		// Dialog HTML
+		$content .= '<dialog id="modalDialog">';
+		$content .= '<div id="dialogContent"></div>';
+		$content .= '<button onclick="closeDialog()">Close</button>';
+		$content .= '</dialog>';
 
-			// JavaScript for responsive behavior and dialog
-			$content .= "
+		// JavaScript for responsive behavior and dialog
+		$content .= "
 		    <script>
 		    function checkSize() {
 		        var box = document.getElementById('profilewrapper');
@@ -858,7 +857,6 @@ function w4os_profile_display( $user, $args = array() ) {
 		    window.onresize = checkSize;
 		    </script>
 		    ";
-		}
 	}
 
 	if ( ! empty( $content ) ) {
@@ -1077,43 +1075,43 @@ function w4os_user_profile_fields( $user ) {
 	$avatar           = new W4OS_Avatar( $user );
 	$profile_settings = array(
 		// 'profile.php' => array(
-		  'sections' => array(
-			  'opensimulator' => array(
-				  'label'  => __( 'OpenSimulator', 'w4os' ),
-				  'fields' => array(
-					  'w4os_uuid'            => array(
-						  'type'     => 'string',
-						  'label'    => 'UUID',
-						  'value'    => esc_attr( get_the_author_meta( 'w4os_uuid', $user->ID ) ),
-						  'disabled' => true,
-					  ),
-					  'w4os_firstname'       => array(
-						  'type'     => 'string',
-						  'label'    => __( 'Avatar First Name', 'w4os' ),
-						  'value'    => esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) ),
-						  'readonly' => $has_avatar,
-					  ),
-					  'w4os_lastname'        => array(
-						  'type'     => 'string',
-						  'label'    => __( 'Avatar Last Name', 'w4os' ),
-						  'value'    => esc_attr( get_the_author_meta( 'w4os_lastname', $user->ID ) ),
-						  'readonly' => $has_avatar,
-					  ),
-					  'w4os_profileimage'    => array(
-						  'type'        => 'os_asset',
-						  'label'       => __( 'Profile Picture', 'w4os' ),
-						  'value'       => esc_attr( get_the_author_meta( 'w4os_profileimage', $user->ID ) ),
-						  'placeholder' => ( $has_avatar ) ? __( 'Must be set in the viewer.', 'w4os' ) : '',
-						  'readonly'    => true,
-					  ),
-					  'w4os_web_profile_url' => array(
-						  'type'     => 'url',
-						  'label'    => __( 'Web Profile URL', 'w4os' ),
-						  'value'    => w4os_web_profile_url( $user ),
-						  'readonly' => true,
-					  ),
+			'sections' => array(
+				'opensimulator' => array(
+					'label'  => __( 'OpenSimulator', 'w4os' ),
+					'fields' => array(
+						'w4os_uuid'            => array(
+							'type'     => 'string',
+							'label'    => 'UUID',
+							'value'    => esc_attr( get_the_author_meta( 'w4os_uuid', $user->ID ) ),
+							'disabled' => true,
+						),
+						'w4os_firstname'       => array(
+							'type'     => 'string',
+							'label'    => __( 'Avatar First Name', 'w4os' ),
+							'value'    => esc_attr( get_the_author_meta( 'w4os_firstname', $user->ID ) ),
+							'readonly' => $has_avatar,
+						),
+						'w4os_lastname'        => array(
+							'type'     => 'string',
+							'label'    => __( 'Avatar Last Name', 'w4os' ),
+							'value'    => esc_attr( get_the_author_meta( 'w4os_lastname', $user->ID ) ),
+							'readonly' => $has_avatar,
+						),
+						'w4os_profileimage'    => array(
+							'type'        => 'os_asset',
+							'label'       => __( 'Profile Picture', 'w4os' ),
+							'value'       => esc_attr( get_the_author_meta( 'w4os_profileimage', $user->ID ) ),
+							'placeholder' => ( $has_avatar ) ? __( 'Must be set in the viewer.', 'w4os' ) : '',
+							'readonly'    => true,
+						),
+						'w4os_web_profile_url' => array(
+							'type'     => 'url',
+							'label'    => __( 'Web Profile URL', 'w4os' ),
+							'value'    => w4os_web_profile_url( $user ),
+							'readonly' => true,
+						),
 					/*
-					 In-world profiles are always public, so are web profiles */
+					In-world profiles are always public, so are web profiles */
 					// 'opensim_profileAllow_web' => array(
 					// 'type' => 'boolean',
 					// 'label' => __('Public profile', 'w4os'),
@@ -1122,10 +1120,10 @@ function w4os_user_profile_fields( $user ) {
 					// 'description' => __('Make avatar profile public (available in search and on the website).', 'w4os')
 					// . (($has_avatar) ? W4OS::sprintf_safe('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_web_profile_url($user) ) : ''),
 					// )
-				  ),
-			  ),
-		  // ),
-		  ),
+					),
+				),
+			// ),
+			),
 	);
 	$settings_pages = array( 'profile.php' => $profile_settings );
 

@@ -60,7 +60,7 @@ class W4OS_Assets extends W4OS_Loader {
 		define( 'W4OS_ASSETS_SERVER_TIMEOUT', 8 ); // timeout in seconds, to wait while requesting an asset (default to 8)
 		define( 'W4OS_ASSETS_DO_RESIZE', false ); // shall we resize picture to width=W4OS_ASSETS_RESIZE_FIXED_WIDTH ?
 		define( 'W4OS_ASSETS_RESIZE_FIXED_WIDTH', 256 ); // width in pixels
-		define( 'W4OS_NULL_KEY_IMG', dirname( dirname( __FILE__ ) ) . '/images/assets-no-img' ); // no extension here
+		define( 'W4OS_NULL_KEY_IMG', dirname( __DIR__ ) . '/images/assets-no-img' ); // no extension here
 		define( 'W4OS_ASSETS_CACHE_TTL', 86400 ); // 1 day
 		define( 'W4OS_ASSETS_CACHE_IMG_FOLDER', 'assets/images' );
 

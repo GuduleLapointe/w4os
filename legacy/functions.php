@@ -94,7 +94,7 @@ function w4os_admin_notice( $notice, $class = 'info', $dismissible = true ) {
 	if ( is_admin() ) {
 		add_action(
 			'admin_notices',
-			function() use ( $notice, $class, $is_dismissible ) {
+			function () use ( $notice, $class, $is_dismissible ) {
 				?>
 		<div class="notice notice-<?php echo $class; ?> <?php echo $is_dismissible; ?>">
 			<p><strong><?php echo W4OS_PLUGIN_NAME; ?></strong>: <?php _e( $notice, 'band-tools' ); ?></p>
@@ -708,7 +708,7 @@ function w4os_replace( $content, $args ) {
 		return $content;
 	}
 	$keys   = array_map(
-		function( $key ) {
+		function ( $key ) {
 			return "/\[$key\]/";
 		},
 		array_keys( $args )

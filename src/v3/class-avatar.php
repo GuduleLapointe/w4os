@@ -184,7 +184,6 @@ class W4OS3_Avatar extends W4OS {
 			// 'accepted_args' => 2,
 			// ),
 		);
-
 	}
 
 	function get_simulator_data() {
@@ -457,7 +456,6 @@ class W4OS3_Avatar extends W4OS {
 				$role->remove_cap( $cap );
 			}
 		}
-
 	}
 
 	static function metaboxes_avatar( $meta_boxes ) {
@@ -572,7 +570,7 @@ class W4OS3_Avatar extends W4OS {
 			),
 		);
 		if ( W4OS3::is_new_post() ) {
-			$meta_boxes['avatar']['fields']                                       = array_merge(
+			$meta_boxes['avatar']['fields']                                      = array_merge(
 				$meta_boxes['avatar']['fields'],
 				array(
 					'model' => array(
@@ -583,29 +581,29 @@ class W4OS3_Avatar extends W4OS {
 					),
 				)
 			);
-			  $meta_boxes['avatar']['fields']['name']                             = array(
-				  'name'        => __( 'Avatar Name', 'w4os' ),
-				  'id'          => $prefix . 'name',
-				  'type'        => 'text',
-				  // 'disabled' => (!W4OS3::is_new_post()),
-				  'readonly'    => ( ! W4OS3::is_new_post() ),
-				  'required'    => true,
-				  // Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
-				  'placeholder' => __( 'Firstname', 'w4os' ) . ' ' . __( 'Lastname', 'w4os' ),
-				  'required'    => true,
-				  // 'columns'     => 6,
-				  'std'         => self::generate_name(),
-				  'desc'        => ( W4OS3::is_new_post() ) ? __( 'The avatar name is permanent, it can\'t be changed later.', 'w4os' ) : '',
-			  );
-			  $meta_boxes['avatar']['validation']['rules'][ $prefix . 'name' ]    = array(
-				  // 'maxlength' => 64,
-				  'pattern' => W4OS_PATTERN_NAME, // Must have 9 digits
-				  'remote'  => admin_url( 'admin-ajax.php?action=check_name_availability' ), // remote ajax validation
-			  );
-			  $meta_boxes['avatar']['validation']['messages'][ $prefix . 'name' ] = array(
-				  'remote'  => 'This name is not available.',
-				  'pattern' => __( 'Please provide first and last name, only letters and numbers, separated by a space.', 'w4os' ),
-			  );
+				$meta_boxes['avatar']['fields']['name']                          = array(
+					'name'        => __( 'Avatar Name', 'w4os' ),
+					'id'          => $prefix . 'name',
+					'type'        => 'text',
+					// 'disabled' => (!W4OS3::is_new_post()),
+					'readonly'    => ( ! W4OS3::is_new_post() ),
+					'required'    => true,
+					// Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
+					'placeholder' => __( 'Firstname', 'w4os' ) . ' ' . __( 'Lastname', 'w4os' ),
+					'required'    => true,
+					// 'columns'     => 6,
+					'std'         => self::generate_name(),
+					'desc'        => ( W4OS3::is_new_post() ) ? __( 'The avatar name is permanent, it can\'t be changed later.', 'w4os' ) : '',
+				);
+				$meta_boxes['avatar']['validation']['rules'][ $prefix . 'name' ] = array(
+					// 'maxlength' => 64,
+					'pattern' => W4OS_PATTERN_NAME, // Must have 9 digits
+					'remote'  => admin_url( 'admin-ajax.php?action=check_name_availability' ), // remote ajax validation
+				);
+				$meta_boxes['avatar']['validation']['messages'][ $prefix . 'name' ] = array(
+					'remote'  => 'This name is not available.',
+					'pattern' => __( 'Please provide first and last name, only letters and numbers, separated by a space.', 'w4os' ),
+				);
 
 		} else {
 			$meta_boxes['avatar']['fields']['uuid'] = array(
@@ -790,21 +788,19 @@ class W4OS3_Avatar extends W4OS {
 		if ( w4os_empty( $uuid ) && $avatar->name != 'TEMPORARY UNDEFINED' ) {
 			$uuid = $avatar->create();
 			if ( ! w4os_empty( $uuid ) && ! empty( $avatar->name ) ) {
-			} else {
-				if ( isset( $_POST['referredby'] ) ) {
+			} elseif ( isset( $_POST['referredby'] ) ) {
 					wp_redirect( $_POST['referredby'] );
 					die();
-				} else {
-					error_log(
-						"Could not create $avatar->name and redirect failed<pre>"
-						. "\nuuid " . print_r( $uuid, true )
-						. "\navatar " . print_r( $avatar, true )
-						. "\ndata " . print_r( $data, true )
-						. "\npostarr " . print_r( $postarr, true )
-						. "\nREQUEST " . print_r( $_REQUEST, true )
-						. '</pre>'
-					);
-				}
+			} else {
+				error_log(
+					"Could not create $avatar->name and redirect failed<pre>"
+					. "\nuuid " . print_r( $uuid, true )
+					. "\navatar " . print_r( $avatar, true )
+					. "\ndata " . print_r( $data, true )
+					. "\npostarr " . print_r( $postarr, true )
+					. "\nREQUEST " . print_r( $_REQUEST, true )
+					. '</pre>'
+				);
 			}
 		}
 		$avatar->uuid = $uuid;
@@ -1413,22 +1409,22 @@ class W4OS3_Avatar extends W4OS {
 		 *
 		 * @var [type]
 		 */
-		$accounts = W4OS3_Avatar::get_avatars_ids_and_uuids();
+		$accounts = self::get_avatars_ids_and_uuids();
 		foreach ( $accounts as $key => $account ) {
 			if ( ! isset( $account['w4os_uuid'] ) ) {
 				$account['w4os_uuid'] = null;
 			}
 			if ( ! w4os_empty( $account['w4os_uuid'] ) ) {
-				$count['wp_linked']++;
+				++$count['wp_linked'];
 			}
 			if ( ! isset( $account['PrincipalID'] ) ) {
 				$account['PrincipalID'] = null;
 			}
 
 			if ( ! w4os_empty( $account['PrincipalID'] ) ) {
-				$count['grid_accounts']++;
+				++$count['grid_accounts'];
 				if ( $account['PrincipalID'] == $account['w4os_uuid'] || ! empty( $account['ID'] ) ) {
-					$count['sync']++;
+					++$count['sync'];
 				} else {
 					// error_log("grid only " . print_r($account, true));
 					$count['grid_only'] += 1;
@@ -1438,7 +1434,7 @@ class W4OS3_Avatar extends W4OS {
 				$account['PrincipalID'] = null;
 				// if(isset($account['w4os_uuid']) &! w4os_empty($account['w4os_uuid'])) {
 				if ( ! empty( $account['ID'] ) ) {
-					$count['wp_only']++;
+					++$count['wp_only'];
 				} else {
 					$count['grid_only'] += 1;
 				}
@@ -1529,7 +1525,7 @@ class W4OS3_Avatar extends W4OS {
 
 		update_option( 'w4os_sync_users', null );
 
-		$accounts      = W4OS3_Avatar::get_avatars_ids_and_uuids();
+		$accounts      = self::get_avatars_ids_and_uuids();
 		$messages      = array();
 		$users_created = array();
 		$users_updated = array();

@@ -203,7 +203,7 @@ class W4OS_Model extends W4OS {
 		$m            = 0;
 		$random_model = rand( 1, count( $models ) );
 		foreach ( $models as $model ) {
-			$m++;
+			++$m;
 			$checked = ( $m == $random_model ) ? 'checked' : '';
 			// if($model_name == W4OS_DEFAULT_AVATAR) $checked = " checked"; else $checked="";
 			$model_name = $model->FirstName . ' ' . $model->LastName;
@@ -238,7 +238,6 @@ class W4OS_Model extends W4OS {
 
 		return $content;
 	}
-
 }
 
 $this->loaders[] = new W4OS_Model();

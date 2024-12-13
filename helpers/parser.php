@@ -267,7 +267,7 @@ function hostScan( $hostname, $port, $xmlcontent ) {
 					)
 				);
 
-				  // We don't want land for sale in popular places.
+					// We don't want land for sale in popular places.
 				if ( $parcelforsale == 'false' ) {
 					$SearchDB->insert(
 						'popularplaces',

@@ -50,7 +50,6 @@ class W4OS3_Settings extends W4OS {
 
 		$this->actions = array();
 		$this->filters = array();
-
 	}
 
 	/**
@@ -106,7 +105,6 @@ class W4OS3_Settings extends W4OS {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -152,7 +150,6 @@ class W4OS3_Settings extends W4OS {
 			( empty( $hook['accepted_args'] ) ) && $hook['accepted_args'] = 1;
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
-
 	}
 
 	static function legacy_admin_menu() {
@@ -164,11 +161,10 @@ class W4OS3_Settings extends W4OS {
 			'w4os', // slug
 			'', // callable function
 			// plugin_dir_path(__FILE__) . 'options.php', // slug
-			// null,	// callable function
+			// null,    // callable function
 			plugin_dir_url( __DIR__ ) . 'images/w4os-logo-16x16.png', // icon url,
 			2 // position
 		);
-
 	}
 
 	static function legacy_admin_submenus() {

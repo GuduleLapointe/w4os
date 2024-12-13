@@ -5,7 +5,7 @@ if ( get_option( 'w4os_provide_search' ) && ! empty( get_option( 'w4os_search_ur
 	if ( ! wp_next_scheduled( 'w4os_search_parser_cron' ) ) {
 		add_action(
 			'init',
-			function() {
+			function () {
 				wp_schedule_event( time(), 'every_five_minutes', 'w4os_search_parser_cron' );
 			}
 		);

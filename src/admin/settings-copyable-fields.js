@@ -1,10 +1,10 @@
 import "./settings-copyable-fields.scss";
 
 jQuery( document ).ready(
-	function($) {
+	function ($) {
 		// Find all input fields inside elements with class 'copyable'
 		$( '.copyable .rwmb-input input' ).each(
-			function() {
+			function () {
 				var inputField = $( this );
 				var copyIcon   = $( '<span>', { class: 'dashicons dashicons-admin-page copy-icon', click: copyText } );
 

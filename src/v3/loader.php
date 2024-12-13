@@ -69,7 +69,7 @@ class W4OS {
 		/**
 		 * General plugin constants
 		 */
-		define( 'W4OS_DIR', wp_normalize_path( dirname( dirname( __FILE__ ) ) ) );
+		define( 'W4OS_DIR', wp_normalize_path( dirname( __DIR__ ) ) );
 		define( 'W4OS_SLUG', basename( W4OS_DIR ) );
 		define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 		$plugin_data = get_file_data(
@@ -113,11 +113,10 @@ class W4OS {
 		define( 'W4OS_NOTFOUND_IMG', '201ce950-aa38-46d8-a8f1-4396e9d6be00' );
 		define( 'W4OS_NOTFOUND_PROFILEPIC', '201ce950-aa38-46d8-a8f1-4396e9d6be00' );
 
-
 		// define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
 		define( 'OPENSIM_GRID_NAME', self::get_option( 'grid_name' ) );
 		define( 'W4OS_LOGIN_PAGE', get_home_url( null, get_option( 'w4os_profile_slug' ) ) );
-		define( 'W4OS_GRID_LOGIN_URI', W4OS::login_uri() );
+		define( 'W4OS_GRID_LOGIN_URI', self::login_uri() );
 		if ( empty( get_option( 'w4os_assets_slug' ) ) ) {
 			update_option( 'w4os_assets_slug', 'assets' );
 		}
@@ -125,7 +124,7 @@ class W4OS {
 		if ( get_option( 'w4os_profile_page' ) == 'provide' ) {
 			define( 'W4OS_PROFILE_URL', get_home_url( null, get_option( 'w4os_profile_slug' ) ) );
 		}
-		define( 'W4OS_GRID_INFO', W4OS::grid_info() );
+		define( 'W4OS_GRID_INFO', self::grid_info() );
 
 		define(
 			'W4OS_WEB_ASSETS_SERVER_URI',
@@ -139,7 +138,6 @@ class W4OS {
 		if ( ! get_option( 'w4os_login_page' ) ) {
 			update_option( 'w4os_login_page', 'profile' );
 		}
-
 	}
 
 	private function load_dependencies() {
@@ -172,14 +170,14 @@ class W4OS {
 		/**
 		 * Specific plugin classes.
 		 */
-	  require_once W4OS_DIR . '/includes/class-settings.php';
- 		require_once W4OS_DIR . '/includes/class-avatar.php';
+		require_once W4OS_DIR . '/includes/class-settings.php';
+		require_once W4OS_DIR . '/includes/class-avatar.php';
 		require_once W4OS_DIR . '/includes/class-model.php';
 
 		/**
 		 * External libraries.
 		 */
- 		require_once W4OS_DIR . '/vendor/autoload.php';
+		require_once W4OS_DIR . '/vendor/autoload.php';
 
 		/**
 		 * Database updates
@@ -251,7 +249,6 @@ class W4OS {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -282,7 +279,7 @@ class W4OS {
 	}
 
 	function register_hooks() {
-		if(is_array($this->filters)) {
+		if ( is_array( $this->filters ) ) {
 			foreach ( $this->filters as $hook ) {
 				$hook = array_merge(
 					array(
@@ -296,7 +293,7 @@ class W4OS {
 			}
 		}
 
-		if(is_array($this->actions)) {
+		if ( is_array( $this->actions ) ) {
 			foreach ( $this->actions as $hook ) {
 				$hook = array_merge(
 					array(
@@ -326,13 +323,13 @@ class W4OS {
 
 	// Replaced by W4OS3::is_new_post() in W4OS3 class
 	// static function is_new_post( $args = null ) {
-	// 	global $pagenow;
-	// 	// make sure we are on the backend
-	// 	if ( ! is_admin() ) {
-	// 		return false;
-	// 	}
-	// 	return in_array( $pagenow, array( 'post-new.php' ) );
-	// 	// return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
+	// global $pagenow;
+	// make sure we are on the backend
+	// if ( ! is_admin() ) {
+	// return false;
+	// }
+	// return in_array( $pagenow, array( 'post-new.php' ) );
+	// return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
 	// }
 
 	static function get_option( $option, $default = false ) {
@@ -363,14 +360,14 @@ class W4OS {
 		$grid_info = get_option( 'w4os_grid_info' );
 
 		if ( $rechecknow || get_option( 'w4os_check_urls_now' ) ) {
-			return W4OS::fetch_grid_info( true );
+			return self::fetch_grid_info( true );
 		}
 
 		if ( ! empty( $grid_info ) ) {
 			return json_decode( $grid_info, true );
 		}
 
-		return W4OS::fetch_grid_info();
+		return self::fetch_grid_info();
 	}
 
 	static function fetch_grid_info( $rechecknow = false ) {
@@ -412,7 +409,6 @@ class W4OS {
 		update_option( 'w4os_grid_info', json_encode( $grid_info ) );
 		return $grid_info;
 	}
-
 }
 
 $w4os_loader = new W4OS();

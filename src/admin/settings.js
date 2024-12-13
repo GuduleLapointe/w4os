@@ -1,7 +1,7 @@
 import "./settings.scss";
 
 jQuery( document ).ready(
-	function($) {
+	function ($) {
 		var provideSearch    = $( '#w4os_provide_search' );
 		var searchURLField   = $( '#w4os_search_url' );
 		var registerURLField = $( '#w4os_search_register' );
@@ -20,7 +20,7 @@ jQuery( document ).ready(
 
 		provideSearch.on(
 			'change',
-			function() {
+			function () {
 				var isProvideChecked = provideSearch.prop( 'checked' );
 				var readonly         = false;
 

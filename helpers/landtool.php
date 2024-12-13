@@ -102,7 +102,7 @@ function buy_land_prep( $method_name, $params, $app_data ) {
 xmlrpc_server_register_method( $xmlrpc_server, 'buyLandPrep', 'buy_land' );
 
 function buy_land( $method_name, $params, $app_data ) {
-	 $req         = $params[0];
+	$req          = $params[0];
 	$agentid      = $req['agentId'];
 	$sessionid    = $req['secureSessionId'];
 	$amount       = $req['currencyBuy'];

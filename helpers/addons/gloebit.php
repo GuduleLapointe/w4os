@@ -13,7 +13,7 @@
  */
 
 if ( CURRENCY_PROVIDER != 'gloebit' ) {
-	 die();
+	die();
 }
 /**
  * Set to true to activate sandbox mode, during initial installation and tests.

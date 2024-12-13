@@ -73,31 +73,29 @@ function opensim_sanitize_uri( $url, $gatekeeperURL = null, $array_outout = fals
 		$split  = explode( ' ', $split[1] );
 		$port   = $split[0];
 		$region = $split[1];
-	} else {
-		if ( preg_match( '/[a-z].*\.[a-z]/', $split[0] ) ) {
+	} elseif ( preg_match( '/[a-z].*\.[a-z]/', $split[0] ) ) {
 			$host = array_shift( $split );
-			if ( preg_match( '/^[0-9]+$/', $split[0] ) ) {
-				$port = array_shift( $split );
-			} else {
-				$port = 8002;
-			}
-			$region = preg_replace( ':^/*:', '', @$split[0] );
-		} elseif ( function_exists( 'w4os_grid_login_uri' ) ) {
-			$host = parse_url( w4os_grid_login_uri(), PHP_URL_HOST );
-			$port = parse_url( w4os_grid_login_uri(), PHP_URL_HOST );
-			if ( preg_match( '/^[0-9]+$/', $split[0] ) ) {
-				array_shift( $split );
-			}
-			$region = preg_replace( ':^/*:', '', @$split[0] );
+		if ( preg_match( '/^[0-9]+$/', $split[0] ) ) {
+			$port = array_shift( $split );
 		} else {
-			if ( empty( $gatekeeperURL ) ) {
-				return false;
-			}
-			$region = $split[2];
-			$split  = explode( ':', preg_replace( '#.*://([^/]+)/?.*#', '$1', $gatekeeperURL ) );
-			$host   = $split[0];
-			$port   = $split[1];
+			$port = 8002;
 		}
+			$region = preg_replace( ':^/*:', '', @$split[0] );
+	} elseif ( function_exists( 'w4os_grid_login_uri' ) ) {
+		$host = parse_url( w4os_grid_login_uri(), PHP_URL_HOST );
+		$port = parse_url( w4os_grid_login_uri(), PHP_URL_HOST );
+		if ( preg_match( '/^[0-9]+$/', $split[0] ) ) {
+			array_shift( $split );
+		}
+		$region = preg_replace( ':^/*:', '', @$split[0] );
+	} else {
+		if ( empty( $gatekeeperURL ) ) {
+			return false;
+		}
+		$region = $split[2];
+		$split  = explode( ':', preg_replace( '#.*://([^/]+)/?.*#', '$1', $gatekeeperURL ) );
+		$host   = $split[0];
+		$port   = $split[1];
 	}
 	if ( empty( $host ) & ! empty( $gatekeeperURL ) ) {
 		$split = explode( ':', preg_replace( '#.*://([^/]+)/?.*#', '$1', $gatekeeperURL ) );
@@ -202,7 +200,7 @@ function opensim_format_tp( $uri, $format = TPLINK, $sep = "\n" ) {
 	if ( $format & TPLINK_APPTP ) {
 		$links[ TPLINK_APPTP ] = "secondlife:///app/teleport/$host:$port+$regionencoded/" . ( ( ! empty( $pos_sl ) ) ? "$pos_sl/" : '' );
 	}
-	// if ($format & TPLINK_MAP)		$links[TPLINK_MAP]		= "secondlife:///app/map/$host:$port+$regionencoded/$pos";
+	// if ($format & TPLINK_MAP)        $links[TPLINK_MAP]      = "secondlife:///app/map/$host:$port+$regionencoded/$pos";
 	$links = preg_replace( '#^[^[:alnum:]]*|[^[:alnum:]]+$#', '', $links );
 
 	return join( $sep, $links );

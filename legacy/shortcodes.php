@@ -88,7 +88,7 @@ function w4os_newusers_html( $atts = array(), $args = array() ) {
 			);
 		}
 		return;
-	};
+	}
 	if ( ! current_user_can( 'list_users' ) ) {
 		return;
 	}

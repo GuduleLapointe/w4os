@@ -17,7 +17,7 @@ function popular_places_block_init() {
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
 	}
-	$dir = dirname( __FILE__ );
+	$dir = __DIR__;
 
 	$index_js = 'popular-places/popular-places.js';
 	wp_register_script(

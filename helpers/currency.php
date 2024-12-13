@@ -313,7 +313,7 @@ function currency_xmlrpc_regionMoveMoney( $method_name, $params, $app_data ) {
 //
 xmlrpc_server_register_method( $xmlrpc_server, 'simulatorClaimUserRequest', 'currency_xmlrpc_claimUserRequest' );
 function currency_xmlrpc_claimUserRequest( $method_name, $params, $app_data ) {
-	 $req      = $params[0];
+	$req       = $params[0];
 	$agentid   = $req['agentId'];
 	$sessionid = $req['secureSessionId'];
 	$regionid  = $req['regionId'];

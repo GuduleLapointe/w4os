@@ -78,23 +78,23 @@ function w4os_count_users() {
 			$account['w4os_uuid'] = null;
 		}
 		if ( ! w4os_empty( $account['w4os_uuid'] ) ) {
-			$count['wp_linked']++;
+			++$count['wp_linked'];
 		}
 		if ( ! isset( $account['PrincipalID'] ) ) {
 			$account['PrincipalID'] = null;
 		}
 
 		if ( ! w4os_empty( $account['PrincipalID'] ) ) {
-			$count['grid_accounts']++;
+			++$count['grid_accounts'];
 			if ( $account['PrincipalID'] == $account['w4os_uuid'] ) {
-				$count['sync']++;
+				++$count['sync'];
 			} else {
 				$count['grid_only'] += 1;
 			}
 		} else {
 			$account['PrincipalID'] = null;
 			if ( isset( $account['w4os_uuid'] ) & ! w4os_empty( $account['w4os_uuid'] ) ) {
-				$count['wp_only']++;
+				++$count['wp_only'];
 			}
 		}
 	}
@@ -143,7 +143,7 @@ function w4os_create_user_login( $firstname = '', $lastname = '', $email = '' ) 
 		if ( ! get_user_by( 'user_login', $user_login ) ) {
 			return $user_login;
 		}
-		$i++;
+		++$i;
 	}
 	return false;
 }

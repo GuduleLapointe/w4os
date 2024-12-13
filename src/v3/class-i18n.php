@@ -46,7 +46,6 @@ class W4OS_I18n extends W4OS {
 			// 'accepted_args' => 2,
 			// ),
 		);
-
 	}
 
 	function w4os_load_textdomain() {
@@ -76,7 +75,6 @@ class W4OS_I18n extends W4OS {
 			false,
 			W4OS_SLUG . '/languages/'
 		);
-
 	}
 
 	/**
@@ -113,7 +111,6 @@ class W4OS_I18n extends W4OS {
 		$trigger_translate = array(
 			// __( 'Forgotten string', 'w4os' ),
 		);
-
 	}
 }
 

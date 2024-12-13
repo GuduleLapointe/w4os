@@ -182,7 +182,6 @@ class W4OS_Loader {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -257,7 +256,6 @@ class W4OS_Loader {
 		function baseurl_shortcode( $atts ) {
 
 			return site_url();
-
 		}
 	}
 

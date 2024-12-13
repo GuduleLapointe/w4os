@@ -97,7 +97,7 @@ class W4OS_Settings extends W4OS_Loader {
 			'w4os', // slug
 			'w4os_status_page', // callable function
 			// plugin_dir_path(__FILE__) . 'options.php', // slug
-			// null,	// callable function
+			// null,    // callable function
 			plugin_dir_url( W4OS_PLUGIN ) . 'images/opensimulator-logo-24x14.png', // icon url
 			2 // position
 		);
@@ -333,9 +333,9 @@ class W4OS_Settings extends W4OS_Loader {
 			return;
 		}
 
-		if ( isset ( $_POST['nonce_beta_features'] ) && wp_verify_nonce( $_POST['nonce_beta_features'], 'rwmb-save-beta_features' ) ) {
+		if ( isset( $_POST['nonce_beta_features'] ) && wp_verify_nonce( $_POST['nonce_beta_features'], 'rwmb-save-beta_features' ) ) {
 			$previous = get_option( 'w4os-enable-v3-beta', false );
-			$new = isset( $_POST['w4os-enable-v3-beta'] ) ? $_POST['w4os-enable-v3-beta'] : false;
+			$new      = isset( $_POST['w4os-enable-v3-beta'] ) ? $_POST['w4os-enable-v3-beta'] : false;
 			if ( $previous != $new ) {
 				update_option( 'w4os-enable-v3-beta', ( isset( $_POST['w4os-enable-v3-beta'] ) ? $_POST['w4os-enable-v3-beta'] : false ) );
 				// Force redirect to refresh menus

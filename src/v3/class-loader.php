@@ -50,7 +50,6 @@ class W4OS {
 
 		$this->actions = array();
 		$this->filters = array();
-
 	}
 
 	/**
@@ -106,7 +105,6 @@ class W4OS {
 		);
 
 		return $hooks;
-
 	}
 
 	/**
@@ -123,7 +121,5 @@ class W4OS {
 		foreach ( $this->actions as $hook ) {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
-
 	}
-
 }
