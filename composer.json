@@ -47,7 +47,9 @@
   "require-dev": {
     "magicoli/opensim-rest-php": "^1.0",
     "wp-coding-standards/wpcs": "^3.1",
-    "magicoli/php-bump-library": "^1.0"
+    "magicoli/php-bump-library": "^1.0",
+    "phpunit/phpunit": "^11.5",
+    "wp-phpunit/wp-phpunit": "^6.7"
   },
   "config": {
     "allow-plugins": {
