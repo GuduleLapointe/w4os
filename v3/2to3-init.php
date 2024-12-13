@@ -28,15 +28,20 @@ class W4OS3 {
     // }
 
     public function init() {
+        // Transitional. Add settings fields to the legacy settings page.
+        add_action( 'rwmb_meta_boxes', [ $this, 'register_legacy_settings_fields' ], 20 );
+        define( 'W4OS_ENABLE_V3', get_option( 'w4os-enable-v3-beta', false ) );
+
+        if( ! W4OS_ENABLE_V3 ) {
+            return;
+        }
+
         self::constants();
         self::includes();
 
         // Connect to the robust database and make it available to all classes.
         $this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
 
-        // Register hooks
-        
-        // add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
     }
 
     function db( $db = 'robust' ) {
@@ -52,7 +57,6 @@ class W4OS3 {
         define( 'W4OS_PLUGIN', basename(W4OS_PLUGIN_DIR) . '/w4os.php' );
         define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
         define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
-        define( 'W4OS_ENABLE_V3', W4OS3::get_option( 'enable-v3-features', false ) );
         define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
 
         define( 'W4OS_DB_ROBUST', array(
@@ -91,6 +95,31 @@ class W4OS3 {
             $ModelClass = new W4OS3_Model(); $ModelClass->init();
         }
     }
+
+    function register_legacy_settings_fields( $meta_boxes ) {
+		$prefix = 'w4os_';
+
+		$meta_boxes[] = array(
+			'title'          => __( 'Beta Features', 'w4os' ),
+			'id'             => 'beta_features',
+			'settings_pages' => array( 'w4os_settings' ),
+			'class'          => 'w4os-settings',
+			'fields'         => array(
+				array(
+					'name'        => __( 'Enable v3 Beta Features', 'w4os' ),
+					'id'          => 'w4os-enable-v3-beta',
+					'type'        => 'switch',
+					'desc'        => __( 'Warning: this could break your website and/or your OpenSimulator services.', 'w4os' ),
+                    'std'        => get_option( 'w4os-enable-v3-beta', false),
+                    'style'      => 'rounded',
+                    'save_field' => true,
+        ),
+			),
+		);
+
+		return $meta_boxes;
+	}
+
 
     // Replicate core add_submenu_page to simplify other classes code.
     public static function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback = '', $position = null ) {

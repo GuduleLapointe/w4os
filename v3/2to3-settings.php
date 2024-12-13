@@ -19,18 +19,18 @@ if ( ! defined( 'WPINC' ) ) {
 class W4OS3_Settings {
     public static function init() {
 		add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
-		add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ], 20 );
+		add_action( 'admin_menu', [ __CLASS__, 'add_submenus' ] );
     }
     
     public static function add_submenus() {
         W4OS3::add_submenu_page(
             'w4os',                         // Parent slug
             __( 'Beta Settings (v3 backports)', 'w4os' ),  // Page title
-            __( 'Beta Settings', 'w4os' ),        // Menu title
+            __( 'Settings (Beta)', 'w4os' ),        // Menu title
             'manage_options',               // Capability
             'settings',               // Menu slug
             [ 'W4OS3_Settings', 'render_settings_page' ],  // Callback
-            90,                             // Position
+            // 90,                             // Position
         );
     }
 

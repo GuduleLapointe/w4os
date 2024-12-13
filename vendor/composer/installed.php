@@ -3,7 +3,7 @@
         'name' => 'speculoos/w4os',
         'pretty_version' => 'dev-2.x-to-3.x',
         'version' => 'dev-2.x-to-3.x',
-        'reference' => 'c82b2784cee00e94db1ae92280e9cde5d02738d9',
+        'reference' => 'c8b23577a82b08b640960fcfe7d8e8e2ec0623f7',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -94,7 +94,7 @@
         'speculoos/w4os' => array(
             'pretty_version' => 'dev-2.x-to-3.x',
             'version' => 'dev-2.x-to-3.x',
-            'reference' => 'c82b2784cee00e94db1ae92280e9cde5d02738d9',
+            'reference' => 'c8b23577a82b08b640960fcfe7d8e8e2ec0623f7',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

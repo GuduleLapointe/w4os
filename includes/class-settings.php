@@ -47,7 +47,7 @@ class W4OS_Settings extends W4OS_Loader {
 			array(
 				'hook'     => 'mb_settings_pages',
 				'callback' => 'register_settings_pages',
-				'priority' => 20,
+				'priority' => 5,
 			),
 			array(
 				'hook'     => 'rwmb_meta_boxes',
@@ -111,8 +111,7 @@ class W4OS_Settings extends W4OS_Loader {
 			__( 'Shortcodes', 'w4os' ),
 			'manage_options',
 			'w4os-shortcodes',
-			array( $this, 'w4os_shortcodes_page' ),
-			8
+			array( $this, 'w4os_shortcodes_page' )
 		);
 	}
 
@@ -132,7 +131,6 @@ class W4OS_Settings extends W4OS_Loader {
 			'capability' => 'manage_options',
 			'style'      => 'no-boxes',
 			'icon_url'   => 'dashicons-admin-generic',
-			'position'   => 90,
 		);
 
 		return $settings_pages;
@@ -333,6 +331,16 @@ class W4OS_Settings extends W4OS_Loader {
 	function sanitize_options() {
 		if ( empty( $_POST ) ) {
 			return;
+		}
+
+		if ( isset ( $_POST['nonce_beta_features'] ) && wp_verify_nonce( $_POST['nonce_beta_features'], 'rwmb-save-beta_features' ) ) {
+			$previous = get_option( 'w4os-enable-v3-beta', false );
+			$new = isset( $_POST['w4os-enable-v3-beta'] ) ? $_POST['w4os-enable-v3-beta'] : false;
+			if ( $previous != $new ) {
+				update_option( 'w4os-enable-v3-beta', ( isset( $_POST['w4os-enable-v3-beta'] ) ? $_POST['w4os-enable-v3-beta'] : false ) );
+				// Force redirect to refresh menus
+				wp_safe_redirect( admin_url( 'admin.php?page=' . $_GET['page'] ) );
+			}
 		}
 
 		if ( isset( $_POST['nonce_grid-info'] ) && wp_verify_nonce( $_POST['nonce_grid-info'], 'rwmb-save-grid-info' ) ) {

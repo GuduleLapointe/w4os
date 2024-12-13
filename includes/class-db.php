@@ -1,24 +1,24 @@
-<?php
-if ( ! defined( 'W4OS_PLUGIN' ) ) {
-	die;
-}
+<?php if ( ! defined( 'W4OS_PLUGIN' ) ) {
+	die;}
 
-if( W4OS_ENABLE_V3 ) {
+if ( ! W4OS_ENABLE_V3 ) {
 	class W4OS_WPDB extends WPDB {
-		public function __construct( $dbuser, $dbpassword = null, $dbname = null, $dbhost = null, $dbport = null ) {
+		public function __construct( $dbuser, $dbpassword = null, $dbname = null, $dbhost = null ) {
 			if ( WP_DEBUG && WP_DEBUG_DISPLAY ) {
 				$this->show_errors();
 			}
 
-			// If args are passed as an array, extract them.
 			if ( is_array( $dbuser ) ) {
-				$credentials = WP_parse_args( $dbuser, array(
-					'user'     => null,
-					'pass'     => null,
-					'database' => null,
-					'host'     => null,
-					'port'     => null,
-				) );
+				$credentials = array_merge(
+					array(
+						'user'     => null,
+						'pass'     => null,
+						'database' => null,
+						'hostname' => null,
+						'port'     => null,
+					),
+					$dbuser
+				);
 				$dbuser      = $credentials['user'];
 				$dbpassword  = $credentials['pass'];
 				$dbname      = $credentials['database'];
@@ -37,11 +37,12 @@ if( W4OS_ENABLE_V3 ) {
 			$this->dbuser     = $dbuser;
 			$this->dbpassword = $dbpassword;
 			$this->dbname     = $dbname;
-			$this->dbhost     = $dbhost . ( empty( $dbport ) ? '' : ':' . $dbport );
+			$this->dbhost     = $dbhost;
 
 			// wp-config.php creation will manually connect when ready.
 
 			$this->db_connect();
 		}
+
 	}
 }

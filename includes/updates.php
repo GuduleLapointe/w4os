@@ -2,7 +2,7 @@
 	die;}
 
 if ( ! defined( 'W4OS_UPDATES' ) ) {
-	define( 'W4OS_UPDATES', 7 );
+	define( 'W4OS_UPDATES', 6 );
 }
 
 $w4os_updated = get_option( 'w4os_updated', get_option( 'w4os_upated' ) );
@@ -184,16 +184,17 @@ function w4os_update_6() {
 	return;
 }
 
-/*
- * Migrate Avatar Models settings to a subset of w4os-avatars settings.
- */
-function w4os_update_7() {
-	$models = get_option( 'w4os-models', array() );
-	error_log( 'w4os-models ' . print_r( $models, true ) );
-	$avatars = get_option( 'w4os-avatars', array() );
-	error_log( 'w4os-avatars ' . print_r( $avatars, true ) );
-	$avatars['models'] = $models;
-	update_option( 'w4os-avatars', $avatars );
-	delete_option( 'w4os-models' );
-	return true;
-}
+// Not ready yet, but keep it for when it's time to migrate.
+// /*
+//  * Migrate Avatar Models settings to a subset of w4os-avatars settings.
+//  */
+// function w4os_update_7() {
+// 	$models = get_option( 'w4os-models', array() );
+// 	error_log( 'w4os-models ' . print_r( $models, true ) );
+// 	$avatars = get_option( 'w4os-avatars', array() );
+// 	error_log( 'w4os-avatars ' . print_r( $avatars, true ) );
+// 	$avatars['models'] = $models;
+// 	update_option( 'w4os-avatars', $avatars );
+// 	delete_option( 'w4os-models' );
+// 	return true;
+// }
