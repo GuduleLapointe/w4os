@@ -34,6 +34,9 @@ class W4OS3_Model {
 					'updateAction'   => 'ajax_update_available_models_content',
 				)
 			);
+
+			W4OS3_Settings::enqueue_select2();
+
 		}
 	}
 
@@ -126,7 +129,7 @@ class W4OS3_Model {
 				array(
 					'name'        => __( 'Select Models', 'w4os' ),
 					'id'          => 'uuids',
-					'type'        => 'select_advanced',
+					'type'        => 'select2',
 					// 'type'        => 'autocomplete',
 					'placeholder' => __( 'Select one or more existing avatars', 'w4os' ),
 					'multiple'    => true,
@@ -360,5 +363,34 @@ class W4OS3_Model {
 		$models = $w4osdb->get_results( $sql, $format );
 
 		return $models;
+	}
+
+	public static function render_settings_field( $args ) {
+		// ...existing code...
+
+		switch ( $args['type'] ) {
+			// ...existing cases...
+
+			case 'select2':
+			case 'select_advanced':
+				$multiple_attr = $args['multiple'] ? 'multiple' : '';
+				$select_class = 'select2-field';
+				$placeholder = isset( $args['placeholder'] ) ? esc_attr( $args['placeholder'] ) : '';
+				$input_field = sprintf(
+					'<select id="%1$s" name="%2$s" class="%3$s" data-placeholder="%4$s" %5$s>
+						<option value="">%4$s</option>',
+					esc_attr( $args['id'] ),
+					esc_attr( $field_name ),
+					esc_attr( $select_class ),
+					$placeholder,
+					$multiple_attr
+				);
+				// ...existing code...
+				break;
+
+			// ...existing cases...
+		}
+
+		// ...existing code...
 	}
 }

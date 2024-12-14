@@ -34,7 +34,17 @@ class W4OS3_Settings {
 		);
 	}
 
+	public static function enqueue_select2() {
+		// Enqueue Select2 assets
+		wp_enqueue_style( 'select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', array(), '4.0.13' );
+		wp_enqueue_script( 'select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array( 'jquery' ), '4.0.13', true );
+	}
+
 	public static function register_settings() {
+		if ( ! W4OS_ENABLE_V3 ) {
+			return;
+		}
+
 		register_setting(
 			'w4os_settings_beta',         // Option group
 			'w4os_settings',                    // Option name
@@ -58,11 +68,6 @@ class W4OS3_Settings {
 				'short_description' => 'Display critical debug information on the front end.', // Added short description
 			)
 		);
-
-		if ( ! W4OS_ENABLE_V3 ) {
-			return;
-		}
-		// Add v3 settings below
 	}
 
 	public static function sanitize_options( $input ) {
@@ -145,6 +150,8 @@ class W4OS3_Settings {
 		$tabs            = isset( $all_tabs[ $page ] ) ? $all_tabs[ $page ] : array();
 		$current_tab     = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 		$current_section = 'w4os_settings_region_section_' . $current_tab;
+
+		W4OS3_Settings::enqueue_select2();
 
 		if ( file_exists( $page_template ) ) {
 			include $page_template;
@@ -284,26 +291,36 @@ class W4OS3_Settings {
 				break;
 			case 'select2':
 			case 'select_advanced':
-					$multiple_attr = $args['multiple'] ? 'multiple' : '';
-					$input_field = sprintf(
-						'<select id="%1$s" name="%2$s" %3$s>
-							<option value="">%4$s</option>',
-						esc_attr( $args['id'] ),
-						esc_attr( $field_name ),
-						$multiple_attr,
-						esc_html( $args['placeholder'] )
+				$multiple_attr = $args['multiple'] ? 'multiple' : '';
+				// Add a specific class for Select2 initialization
+				$select_class = 'select2-field';
+				$input_field = sprintf(
+					'<select id="%1$s" name="%2$s" class="%3$s" %4$s>
+					<script> jQuery( function($){
+						$( \'#%1$s\' ).select2( {
+							width: \'100%%\',
+							placeholder: \'%5$s\',
+							allowClear: true,
+						} );
+					} );
+					</script>',
+					esc_attr( $args['id'] ),
+					esc_attr( $field_name ),
+					esc_attr( $select_class ),
+					$multiple_attr,
+					esc_html( $args['placeholder'] ),
+				);
+				foreach ( $args['options'] as $option_value => $option_label ) {
+					$selected = ( is_array( $value ) && in_array( $option_value, $value ) ) ? 'selected' : '';
+					$input_field .= sprintf(
+						'<option value="%1$s" %2$s>%3$s</option>',
+						esc_attr( $option_value ),
+						$selected,
+						esc_html( $option_label )
 					);
-					foreach ( $args['options'] as $option_value => $option_label ) {
-						$selected = ( is_array( $value ) && in_array( $option_value, $value ) ) ? 'selected' : '';
-						$input_field .= sprintf(
-							'<option value="%1$s" %2$s>%3$s</option>',
-							esc_attr( $option_value ),
-							$selected,
-							esc_html( $option_label )
-						);
-					}
-					$input_field .= '</select>';
-					break;
+				}
+				$input_field .= '</select>';
+				break;
 			case 'checkbox':
 				$input_field = sprintf(
 					'<label>
