@@ -311,7 +311,6 @@ class W4OS3_Model {
 			$match = $atts['match'];
 			$name  = $atts['name'];
 			$uuids = $atts['uuids'];
-			error_log( '$atts[match] ' . print_r( $atts, true ) );
 		} elseif (
 			isset( $_REQUEST['page'] )
 			&& $_REQUEST['page'] == 'w4os-models'
@@ -319,13 +318,11 @@ class W4OS3_Model {
 			&& isset( $_POST['name'] )
 			&& isset( $_POST['uuids'] )
 		) {
-			error_log( '$_POST ' . print_r( $_POST, true ) );
 			$match = esc_attr( $_POST['match'] );
 			$name  = esc_attr( $_POST['name'] );
 			$uuids = array_map( 'esc_attr', $_POST['uuids'] );
 		} else {
 			$models = w4os_get_option( 'w4os-avatars:models', array() );
-			error_log( 'options ' . print_r( $models, true ) );
 			$match  = $models['match'] ?? 'any';
 			$name   = $models['name'] ?? 'Default';
 			$uuids  = $models['uuids'] ?? array();
@@ -336,7 +333,6 @@ class W4OS3_Model {
 
 		switch ( $match ) {
 			case 'uuid':
-				// error_log( 'UUID match ' . print_r( $uuids, true ) );
 				if ( ! empty( $uuids ) ) {
 					$conditions = "PrincipalID IN ('" . implode( "','", $uuids ) . "')";
 				} else {
