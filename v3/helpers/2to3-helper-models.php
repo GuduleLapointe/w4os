@@ -21,7 +21,6 @@ class W4OS3_Model {
 	}
 
 	function enqueue_models_ajax_update_script( $hook ) {
-		error_log( __METHOD__ . ' called' );
 		// Enqueue the script only on the specific settings page
 		if ( $hook === 'opensimulator_page_w4os-avatars' ) {
 			wp_enqueue_script( 'w4os-ajax-update-available-models', W4OS_PLUGIN_DIR_URL . 'v3/helpers/js/ajax-update-available-models.js', array( 'jquery' ), '1.0', true );
@@ -40,7 +39,6 @@ class W4OS3_Model {
 
 	// AJAX handler to update the available models content
 	public function ajax_update_available_models_content() {
-		error_log( __METHOD__ . ' called' );
 		// Verify the AJAX request
 		check_ajax_referer( 'ajax_update_available_models_content_nonce', 'nonce' );
 
@@ -313,6 +311,7 @@ class W4OS3_Model {
 			$match = $atts['match'];
 			$name  = $atts['name'];
 			$uuids = $atts['uuids'];
+			error_log( '$atts[match] ' . print_r( $atts, true ) );
 		} elseif (
 			isset( $_REQUEST['page'] )
 			&& $_REQUEST['page'] == 'w4os-models'
@@ -320,18 +319,24 @@ class W4OS3_Model {
 			&& isset( $_POST['name'] )
 			&& isset( $_POST['uuids'] )
 		) {
+			error_log( '$_POST ' . print_r( $_POST, true ) );
 			$match = esc_attr( $_POST['match'] );
 			$name  = esc_attr( $_POST['name'] );
 			$uuids = array_map( 'esc_attr', $_POST['uuids'] );
 		} else {
 			$models = w4os_get_option( 'w4os-avatars:models', array() );
+			error_log( 'options ' . print_r( $models, true ) );
 			$match  = $models['match'] ?? 'any';
 			$name   = $models['name'] ?? 'Default';
 			$uuids  = $models['uuids'] ?? array();
 		}
+		if( ! is_array( $uuids ) ) {
+			$uuids = array( $uuids );
+		}
 
 		switch ( $match ) {
 			case 'uuid':
+				// error_log( 'UUID match ' . print_r( $uuids, true ) );
 				if ( ! empty( $uuids ) ) {
 					$conditions = "PrincipalID IN ('" . implode( "','", $uuids ) . "')";
 				} else {

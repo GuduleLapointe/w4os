@@ -219,6 +219,15 @@ class W4OS3_Settings {
 		if ( empty( $value ) && isset( $args['default'] ) ) {
 			$value = $args['default'];
 		}
+
+		// Adjust field_name and value for multiple select fields
+		if ( isset( $args['multiple'] ) && $args['multiple'] ) {
+			$field_name .= '[]';
+			if ( ! is_array( $value ) ) {
+				$value = isset( $value ) ? array( $value ) : array();
+			}
+		}
+
 		switch ( $args['type'] ) {
 			case 'db_credentials':
 				// Grouped fields for database credentials
@@ -275,24 +284,26 @@ class W4OS3_Settings {
 				break;
 			case 'select2':
 			case 'select_advanced':
-				$input_field = sprintf(
-					'<select id="%1$s" name="%2$s" %3$s>
-                        <option value="">%4$s</option>',
-					esc_attr( $args['id'] ),
-					esc_attr( $field_name ),
-					$args['multiple'] ? 'multiple' : '',
-					esc_html( $args['placeholder'] )
-				);
-				foreach ( $args['options'] as $option_value => $option_label ) {
-					$input_field .= sprintf(
-						'<option value="%1$s" %2$s>%3$s</option>',
-						esc_attr( $option_value ),
-						selected( $value, $option_value, false ),
-						esc_html( $option_label )
+					$multiple_attr = $args['multiple'] ? 'multiple' : '';
+					$input_field = sprintf(
+						'<select id="%1$s" name="%2$s" %3$s>
+							<option value="">%4$s</option>',
+						esc_attr( $args['id'] ),
+						esc_attr( $field_name ),
+						$multiple_attr,
+						esc_html( $args['placeholder'] )
 					);
-				}
-				$input_field .= '</select>';
-				break;
+					foreach ( $args['options'] as $option_value => $option_label ) {
+						$selected = ( is_array( $value ) && in_array( $option_value, $value ) ) ? 'selected' : '';
+						$input_field .= sprintf(
+							'<option value="%1$s" %2$s>%3$s</option>',
+							esc_attr( $option_value ),
+							$selected,
+							esc_html( $option_label )
+						);
+					}
+					$input_field .= '</select>';
+					break;
 			case 'checkbox':
 				$input_field = sprintf(
 					'<label>
