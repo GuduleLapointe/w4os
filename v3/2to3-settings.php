@@ -269,6 +269,10 @@ class W4OS3_Settings {
 		
 		// $tabs            = apply_filters( 'w4os_settings_tabs', array() );
 		// $page_tabs       = isset( $tabs[ $menu_slug ] ) ? $tabs[ $menu_slug ] : array();
+		if( count( $page_tabs ) <= 1 ) {
+			// Not need for tabs navigation if there is only one tab.
+			return;
+		}
 		$tabs_navigation = '';
 		foreach ( $page_tabs as $tab => $tab_data ) {
 			$url              = $tab_data['url'] ?? admin_url( 'admin.php?page=' . $menu_slug . '&tab=' . $tab );
