@@ -1,0 +1,21 @@
+.wrap.w4os-settings {
+	margin: 10px 0
+}
+
+@media (min-width: 1200px) {
+	.wrap.w4os-settings {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		gap: 20px;
+	}
+
+	.wrap.w4os-settings #sidebar-content {
+		flex: 0 0 400px;
+		position: sticky;
+	}
+	.wrap.w4os-settings .main-content {
+		flex: 1 1 auto;
+	}
+}

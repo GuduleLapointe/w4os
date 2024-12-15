@@ -39,8 +39,8 @@ class W4OS_Model extends W4OS_Loader {
 				'callback' => 'enqueue_custom_settings_script',
 			),
 			array(
-				'hook'     => 'wp_ajax_update_available_models_content',
-				'callback' => 'update_available_models_content',
+				'hook'     => 'wp_ajax_update_models_preview_content',
+				'callback' => 'update_models_preview_content',
 			),
 		);
 
@@ -160,23 +160,23 @@ class W4OS_Model extends W4OS_Loader {
 				),
 				// array(
 				// 'name'     => __( 'Available Models', 'w4os' ),
-				// 'id'       => $prefix . 'available_models',
+				// 'id'       => $prefix . 'models_preview',
 				// 'type'     => 'custom_html',
-				// 'callback' => array( $this, 'available_models' ),
+				// 'callback' => array( $this, 'models_preview' ),
 				// ),
 			),
 		);
 
 		$meta_boxes[] = array(
-			'id'             => 'w4os-available-models-container',
+			'id'             => 'w4os-models-preview-container',
 			'settings_pages' => array( 'w4os-models' ),
 			'class'          => 'w4os-settings no-hints',
 			'fields'         => array(
 				array(
 					'name' => __( 'Available Models', 'w4os' ),
-					'id'   => $prefix . 'available_models_container',
+					'id'   => $prefix . 'models_preview_container',
 					'type' => 'custom_html',
-					'std'  => '<div class="available-models-container">' . $this->available_models() . '</div>',
+					'std'  => '<div class="available-models-container">' . $this->models_preview() . '</div>',
 				),
 			),
 		);
@@ -332,9 +332,9 @@ class W4OS_Model extends W4OS_Loader {
 		return $output;
 	}
 
-	public function available_models( $atts = array() ) {
+	public function models_preview( $atts = array() ) {
 		if ( W4OS_ENABLE_V3 ) {
-			return W4OS3_Model::available_models( $atts );
+			return W4OS3_Model::models_preview( $atts );
 		}
 
 		$content = '';
@@ -414,24 +414,24 @@ class W4OS_Model extends W4OS_Loader {
 				'w4osSettings',
 				array(
 					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
-					'nonce'          => wp_create_nonce( 'update_available_models_content_nonce' ), // Nonce for security
+					'nonce'          => wp_create_nonce( 'update_models_preview_content_nonce' ), // Nonce for security
 					'loadingMessage' => __( 'Refreshing list...', 'w4os' ),
-					'updateAction'   => 'update_available_models_content',
+					'updateAction'   => 'update_models_preview_content',
 				)
 			);
 		}
 	}
 
 	// AJAX handler to update the available models content
-	public function update_available_models_content() {
+	public function update_models_preview_content() {
 		if ( W4OS_ENABLE_V3 ) {
 			return;
 		}
 		// Verify the AJAX request
-		check_ajax_referer( 'update_available_models_content_nonce', 'nonce' );
+		check_ajax_referer( 'update_models_preview_content_nonce', 'nonce' );
 
-		// Check if the action parameter is set to 'update_available_models_content'
-		if ( isset( $_POST['action'] ) && $_POST['action'] === 'update_available_models_content' ) {
+		// Check if the action parameter is set to 'update_models_preview_content'
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'update_models_preview_content' ) {
 			// Sanitize the input values
 			$atts = array(
 				'match' => isset( $_POST['preview_match'] ) ? esc_attr( $_POST['preview_match'] ) : null,
@@ -440,7 +440,7 @@ class W4OS_Model extends W4OS_Loader {
 			);
 
 			// Generate the updated available models content
-			$output = $this->available_models( $atts );
+			$output = $this->models_preview( $atts );
 
 			// Send the updated content as the AJAX response
 			wp_send_json( $output );

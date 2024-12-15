@@ -10,28 +10,49 @@ class W4OS3_Model {
 	public function init() {
 		add_filter( 'w4os_settings_tabs', array( $this, 'register_tabs' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
-		add_action( 'wp_ajax_update_available_models_content', array( $this, 'ajax_update_available_models_content' ) );
+		add_action( 'wp_ajax_update_models_preview_content', array( $this, 'ajax_update_models_preview_content' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_models_ajax_update_script' ) );
+
+		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
 
 		// add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
 		// add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
 
 		// Update the action name to match the AJAX request
-		add_action( 'wp_ajax_ajax_update_available_models_content', array( $this, 'ajax_update_available_models_content' ) );
+		add_action( 'wp_ajax_ajax_update_models_preview_content', array( $this, 'ajax_update_models_preview_content' ) );
+	}
+
+	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
+		$settings['w4os-avatars']['tabs']['models'] = array(
+			'title' => __( 'Avatar Models', 'w4os' ),
+			'after-form' => self::preview_models_block(),
+			'sidebar-content' => '<p class="description"><p>' . join(
+				'</p><p>',
+				array(
+					__( 'If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will determine the initial outfit of the created avatar.', 'w4os' ),
+					__( 'The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the outfit, and add a profile picture.', 'w4os' ),
+					__( 'The avatars used for the models should never be real user accounts.', 'w4os' ),
+					__( 'The new avatar will wear the same outfit as the model at the time of registration.', 'w4os' ),
+					__( 'If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically added to the list.', 'w4os' ),
+				)
+			) . '</p></p>',
+
+		);
+		return $settings;
 	}
 
 	function enqueue_models_ajax_update_script( $hook ) {
 		// Enqueue the script only on the specific settings page
 		if ( $hook === 'opensimulator_page_w4os-avatars' ) {
-			wp_enqueue_script( 'w4os-ajax-update-available-models', W4OS_PLUGIN_DIR_URL . 'v3/helpers/js/ajax-update-available-models.js', array( 'jquery' ), '1.0', true );
+			wp_enqueue_script( 'w4os-ajax-update-available-models', W4OS_PLUGIN_DIR_URL . 'v3/helpers/js/ajax-update-available-models.js', array( 'jquery' ), '1.0.1', true );
 			wp_localize_script(
 				'w4os-ajax-update-available-models',
 				'w4osSettings',
 				array(
 					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
-					'nonce'          => wp_create_nonce( 'ajax_update_available_models_content_nonce' ), // Nonce for security
+					'nonce'          => wp_create_nonce( 'ajax_update_models_preview_content_nonce' ), // Nonce for security
 					'loadingMessage' => __( 'Refreshing list...', 'w4os' ),
-					'updateAction'   => 'ajax_update_available_models_content',
+					'updateAction'   => 'ajax_update_models_preview_content',
 				)
 			);
 
@@ -41,12 +62,12 @@ class W4OS3_Model {
 	}
 
 	// AJAX handler to update the available models content
-	public function ajax_update_available_models_content() {
+	public function ajax_update_models_preview_content() {
 		// Verify the AJAX request
-		check_ajax_referer( 'ajax_update_available_models_content_nonce', 'nonce' );
+		check_ajax_referer( 'ajax_update_models_preview_content_nonce', 'nonce' );
 
-		// Check if the action parameter is set to 'ajax_update_available_models_content'
-		if ( isset( $_POST['action'] ) && $_POST['action'] === 'ajax_update_available_models_content' ) {
+		// Check if the action parameter is set to 'ajax_update_models_preview_content'
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'ajax_update_models_preview_content' ) {
 			// Sanitize the input values
 			$atts = array(
 				'match' => isset( $_POST['preview_match'] ) ? esc_attr( $_POST['preview_match'] ) : null,
@@ -55,7 +76,7 @@ class W4OS3_Model {
 			);
 
 			// Generate the updated available models content
-			$output = $this->available_models( $atts );
+			$output = $this->models_preview( $atts );
 
 			// Send the updated content as the AJAX response
 			wp_send_json( $output );
@@ -140,14 +161,14 @@ class W4OS3_Model {
 						'relation' => 'or',
 					),
 				),
-				array(
-					'id'             => 'w4os-available-models-container',
-					'name'           => __( 'Available Models', 'w4os' ),
-					'settings_pages' => array( 'w4os-models' ),
-					'class'          => 'w4os-settings no-hints',
-					'type'           => 'custom_html',
-					'value'          => '<div class="available-models-container">' . self::available_models() . '</div>',
-				),
+				// array(
+				// 	'id'             => 'w4os-models-preview-container',
+				// 	'name'           => __( 'Models Preview', 'w4os' ),
+				// 	'settings_pages' => array( 'w4os-models' ),
+				// 	'class'          => 'w4os-settings no-hints',
+				// 	'type'           => 'custom_html',
+				// 	'value'          => '<div class="available-models-container">' . self::models_preview() . '</div>',
+				// ),
 			);
 
 			foreach ( $fields as $field ) {
@@ -173,11 +194,20 @@ class W4OS3_Model {
 		}
 	}
 
-	public static function available_models( $atts = array() ) {
+	public static function preview_models_block() {
+		$models_preview = self::models_preview();
+		return sprintf( '<div id="models-preview"><h2>%s</h2>
+				<div id="w4os-models-preview-container">%s</div>
+			</div>',
+			__( 'Models Preview', 'w4os' ),
+			$models_preview,
+		);
+	}
+
+	public static function models_preview( $atts = array() ) {
 		$content = '';
 
 		$models = self::get_models( $atts );
-
 		if ( empty( $models ) ) {
 			$content = '<divclass="models-list">' . __( 'No models found.', 'w4os' ) . '</div>';
 		} else {

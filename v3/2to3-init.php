@@ -89,7 +89,8 @@ class W4OS3 {
 		}
 
 		// Once all files are loaded, we start the classes.
-		W4OS3_Settings::init();
+		$Settings = new W4OS3_Settings();
+		$Settings->init();
 
 		if ( W4OS_ENABLE_V3 ) {
 			$AvatarClass = new W4OS3_Avatar();
@@ -263,6 +264,7 @@ class W4OS3 {
 		$ver    = empty( $ver ) ? W4OS_VERSION : $ver;
 		$src    = preg_match( '/^http/', $src ) ? $src : W4OS_PLUGIN_DIR_URL . $src;
 		$hook   = is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts';
+		error_log( 'Enqueueing style: ' . $handle . ' ' . $src );
 		if ( function_exists( 'wp_enqueue_style' ) ) {
 			wp_enqueue_style( $handle, $src, $deps, $ver, $media );
 			return;

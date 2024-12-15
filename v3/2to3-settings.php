@@ -17,21 +17,212 @@ if ( ! defined( 'WPINC' ) ) {
  * Add main settings page and submenu. Use templates to display the page.
  */
 class W4OS3_Settings {
-	public static function init() {
-		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
-		add_action( 'admin_menu', array( __CLASS__, 'add_submenus' ) );
+	protected $settings = array();
+
+	public function init() {
+		// add_action( 'admin_menu', array( __CLASS__, 'build_settings' ) );
+		add_action( 'admin_menu', array( $this, 'add_submenus' ) );
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+
+		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ) );
 	}
 
-	public static function add_submenus() {
-		W4OS3::add_submenu_page(
-			'w4os',                         // Parent slug
-			__( 'Settings', 'w4os' ) . ' (dev)',  // Page title
-			'(dev) ' . __( 'Settings', 'w4os' ),        // Menu title
-			'manage_options',               // Capability
-			'settings',               // Menu slug
-			array( 'W4OS3_Settings', 'render_settings_page' ),  // Callback
-			// 90,                             // Position
+	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
+		$settings['w4os-settings'] = array(
+			'parent_slug' => 'w4os',
+			'page_title'  => __( 'Settings', 'w4os' ) . ' (dev)',
+			'menu_title'  => '(dev) ' . __( 'Settings', 'w4os' ),
+			'capability'  => 'manage_options',
+			'menu_slug'   => 'w4os-settings',
+			'tabs' 		  => array(
+				'beta' => array(
+					'title'  => __( 'Beta Features', 'w4os' ),
+					'fields' => array(
+						'debug_html' => array(
+							'label' => __( 'Enable HTML debug', 'w4os' ),
+							'type'  => 'switch',
+							'description' => __( 'Warning: this might expose critical debug information on the front end.', 'w4os' ),
+						),
+					),
+				),
+			)
+			// 'callback'    => array( $this, 'render_settings_page' ),
+			// 'position'    => 90,
 		);
+		return $settings;
+	}
+
+	/**
+	 * Get settings from the filter.
+	 *
+	 * @param string $menu_slug The menu slug to get settings for.
+	 * @return array|bool The settings array or false if the menu slug is not found.
+	 * 
+	 * array $settings {
+	 * 		@type string $menu_slug
+	 *		@type string $page_title
+	 *		@type string $menu_title
+	 *		@type string $capability
+	 *		@type string $menu_slug
+	 *		@type string $option_name
+	 *		@type string $option_group
+	 *		@type string $page
+	 *		@type array $tabs
+	 * }
+	 */
+	public function get_settings( $menu_slug = '' ) {
+		$settings = apply_filters( 'w4os_settings', array() );
+		
+		if ( ! empty( $menu_slug ) ) {
+			$settings[ $menu_slug ] = wp_parse_args(
+				$settings[ $menu_slug ],
+				array(
+					'parent_slug' => 'w4os',
+					'page_title'  => esc_html( get_admin_page_title() ),
+					'menu_title'  => esc_html( get_admin_page_title() ),
+					'capability'  => 'manage_options',
+					'menu_slug'   => 'w4os-settings',
+					'option_name' => $menu_slug,
+					'option_group' => $menu_slug . '_group',
+					'page'		=> isset( $_GET['page'] ) ? esc_html( $_GET['page'] ) : $menu_slug,
+				)
+			);
+			return $settings[ $menu_slug ] ?? false;
+		}
+		return $settings;
+	}
+
+	public function add_submenus() {
+		$this->settings = self::get_settings();
+		foreach ( $this->settings as $setting ) {
+			$parent_slug = $setting['parent_slug'] ?? 'w4os';
+			$menu_slug = preg_match( '/^' . $parent_slug . '/', $parent_slug ) ? $setting['menu_slug'] : $parent_slug . '-' . $setting['menu_slug'];
+			add_submenu_page(
+				$setting['parent_slug'],
+				$setting['page_title'],
+				$setting['menu_title'],
+				$setting['capability'] ?? 'manage_options',
+				$setting['menu_slug'],
+				$setting['callback'] ?? array( $this, 'render_settings_page' ),
+				$setting['position'] ?? null,
+			);
+			// $this->register_settings( $menu_slug );
+		}
+	}
+
+	public function register_settings() {
+		if ( ! W4OS_ENABLE_V3 ) {
+			return;
+		}
+
+		// All settings pages must be registered to be allowed by options.php
+		$settings = self::get_settings();
+		foreach( $settings as $menu_slug => $setting ) {
+			$page_settings = self::get_settings( $menu_slug );
+			$page_settings = self::get_settings( $menu_slug );
+			if (! $page_settings ) {
+				error_log('No settings found for ' . $menu_slug);
+				continue;
+			}
+			$option_name = $page_settings['option_name'] ?? '';
+			$option_group = $page_settings['option_group'] ?? '';
+			$sanitize_callback = $page_settings['sanitize_callback'] ?? array( __CLASS__, 'sanitize_options' );
+			register_setting(
+				$option_group,         // Option group
+				$option_name,                    // Option name
+				array(
+					'type'              => 'array',
+					'default'           => array(),
+					'sanitize_callback' => $sanitize_callback,
+					'option_name' => $option_name,
+				)
+				// array( __CLASS__, 'sanitize_options' ),  // Sanitize callback
+			);
+		}
+
+		// The settings page content however can be defined only for the current page/tab
+		$page = $_GET['page'] ?? 'w4os-settings';
+		$menu_slug = sanitize_key( $page );
+
+		$page_settings = self::get_settings( $page );
+		$option_name = $page_settings['option_name'] ?? '';
+		$option_group = $page_settings['option_group'] ?? '';
+
+		if ( empty( $page_settings['tabs'] ) ) {
+			// Handle single settings pages, without tabs
+			// Not used for now, but might come in handy in the future
+			$fields = $page_settings['fields'] ?? array();
+			$section = $option_group . '_section';
+		} else {
+			$selected_tab = $_GET['tab'] ?? array_key_first( $page_settings['tabs'] );
+			if ( ! empty( $selected_tab && ! empty( $page_settings['tabs'][ $selected_tab ] ) ) ) {
+				$section = $option_group . '_section_' . $selected_tab;
+				$fields = $page_settings['tabs'][ $selected_tab ]['fields'] ?? array();
+			} else {
+				error_log('Invalid tab ' . $selected_tab);
+				return;
+			}
+		}
+
+		if( ! empty( $fields ) ) {
+			// Adding main section
+			add_settings_section(
+				$section,
+				null, // No title for the first section
+				array( __CLASS__, 'section_callback' ),
+				$page,
+				array(),
+			);
+	
+			foreach ( $fields as $field => $field_data ) {
+				$field_data = wp_parse_args(
+					$field_data,
+					array(
+						'id' 		  => $field,
+						'type'        => 'text',
+						'default'     => null,
+						'description' => null,
+						'option_name' => $option_name,
+						'tab'         => $selected_tab,
+					)
+				);
+				add_settings_field(
+					$field,
+					$field_data['label'],
+					array( __CLASS__, 'render_settings_field' ),
+					$option_name,
+					$section,
+					$field_data,
+				);
+			}
+		}
+
+		// TODO: process sections if any
+	}
+
+	public static function section_callback( $args = '' ) {
+		// This is a placeholder for a section callback.
+	}
+
+	public static function sanitize_options( $input, $menu_slug = false ) {
+		if ( ! $menu_slug ) {
+			return $input;
+		}
+
+		$options = get_option( $menu_slug, array() );
+		if ( ! is_array( $input ) ) {
+			return $options;
+		}
+
+		foreach ( $input as $key => $value ) {
+			// We don't want to clutter the options with temporary check values
+			if ( isset( $value['prevent-empty-array'] ) ) {
+				unset( $value['prevent-empty-array'] );
+			}
+			$options[ $key ] = $value;
+		}
+
+		return $options;
 	}
 
 	public static function enqueue_select2() {
@@ -40,86 +231,44 @@ class W4OS3_Settings {
 		wp_enqueue_script( 'select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array( 'jquery' ), '4.0.13', true );
 	}
 
-	public static function register_settings() {
-		if ( ! W4OS_ENABLE_V3 ) {
-			return;
-		}
+	// public static function enable_v3_features_callback() {
+	// 	$args = func_get_args();
 
-		register_setting(
-			'w4os_settings_beta',         // Option group
-			'w4os_settings',                    // Option name
-			array( __CLASS__, 'sanitize_options' ),  // Sanitize callback
-		);
+	// 	$value = W4OS3::get_option( 'w4os-enable-v3-beta' );
+	// 	printf(
+	// 		'<label>
+    //         <input type="checkbox" name="w4os_settings[w4os-enable-v3-beta]" value="1" %s />%s</label>',
+	// 		checked( 1, $value, false ),
+	// 		__( 'Enable beta v3 features', 'w4os' ),
+	// 	);
+	// 	echo '<p class="description">' . __( 'Warning: These features are in beta and may not be stable.', 'w4os' ) . '</p>';
+	// }
 
-		add_settings_section(
-			'w4os_section_beta',
-			null,
-			null,
-			'w4os_settings_beta'
-		);
-
-		add_settings_field(
-			'debug_html',
-			__( 'Debug', 'w4os' ),
-			array( __CLASS__, 'debug_callback' ),
-			'w4os_settings_beta',
-			'w4os_section_beta',
-			array(
-				'short_description' => 'Display critical debug information on the front end.', // Added short description
-			)
-		);
-	}
-
-	public static function sanitize_options( $input ) {
-		// Retrieve existing options
-		$options = W4OS::get_option( 'w4os_settings', array() );
-
-		// Sanitize the new input
-		$new_options                       = array();
-		$new_options['enable-v3-features'] = isset( $input['enable-v3-features'] ) ? true : false;
-		$new_options['debug_html']         = isset( $input['debug_html'] ) ? true : false;
-
-		// Merge new input with existing options
-		$options = array_merge( $options, $new_options );
-
-		return $options;
-	}
-
-	public static function enable_v3_features_callback() {
-		$args = func_get_args();
-
-		$value = W4OS3::get_option( 'enable-v3-features' );
-		printf(
-			'<label>
-            <input type="checkbox" name="w4os_settings[enable-v3-features]" value="1" %s />%s</label>',
-			checked( 1, $value, false ),
-			__( 'Enable beta v3 features', 'w4os' ),
-		);
-		echo '<p class="description">' . __( 'Warning: These features are in beta and may not be stable.', 'w4os' ) . '</p>';
-	}
-
-	public static function debug_callback() {
-		$value = W4OS3::get_option( 'debug_html' );
-		printf(
-			'<label>
-            <input type="checkbox" name="w4os_settings[debug_html]" value="1" %s />%s</label>',
-			checked( 1, $value, false ),
-			__( 'Enable HTML debug', 'w4os' ),
-		);
-		echo '<p class="description">' . __( 'Warning: This will display critical debug information on the front end.', 'w4os' ) . '</p>';
-	}
+	// public static function debug_callback() {
+	// 	$value = W4OS3::get_option( 'debug_html' );
+	// 	printf(
+	// 		'<label>
+    //         <input type="checkbox" name="w4os_settings[debug_html]" value="1" %s />%s</label>',
+	// 		checked( 1, $value, false ),
+	// 		__( 'Enable HTML debug', 'w4os' ),
+	// 	);
+	// 	echo '<p class="description">' . __( 'Warning: This will display critical debug information on the front end.', 'w4os' ) . '</p>';
+	// }
 
 	public static function get_tabs_html( $menu_slug = null, $default = 'default' ) {
 		if ( empty( $menu_slug ) ) {
 			$menu_slug = $_GET['page'];
 		}
 		$page_title      = esc_html( get_admin_page_title() );
-		$current_tab     = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'avatars';
 		$option_group    = $menu_slug . '_group';
-		$current_section = $option_group . '_section_' . $current_tab;
-
-		$tabs            = apply_filters( 'w4os_settings_tabs', array() );
-		$page_tabs       = isset( $tabs[ $menu_slug ] ) ? $tabs[ $menu_slug ] : array();
+		
+		$settings = apply_filters( 'w4os_settings', array() );
+		$page_tabs = $settings[$menu_slug]['tabs'] ?? array();
+		$selected_tab     = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : array_key_first( $page_tabs );
+		$current_section = $option_group . '_section_' . $selected_tab;
+		
+		// $tabs            = apply_filters( 'w4os_settings_tabs', array() );
+		// $page_tabs       = isset( $tabs[ $menu_slug ] ) ? $tabs[ $menu_slug ] : array();
 		$tabs_navigation = '';
 		foreach ( $page_tabs as $tab => $tab_data ) {
 			$url              = $tab_data['url'] ?? admin_url( 'admin.php?page=' . $menu_slug . '&tab=' . $tab );
@@ -127,7 +276,7 @@ class W4OS3_Settings {
 			$tabs_navigation .= sprintf(
 				'<a href="%s" class="nav-tab %s">%s</a>',
 				esc_url( $url ),
-				$current_tab === $tab ? 'nav-tab-active' : '',
+				$selected_tab === $tab ? 'nav-tab-active' : '',
 				esc_html( $title )
 			);
 		}
@@ -140,27 +289,60 @@ class W4OS3_Settings {
 		return 'no tabs';
 	}
 
-	public static function render_settings_page() {
-		$args            = func_get_args();
-		$page_title      = esc_html( get_admin_page_title() );
-		$menu_slug       = preg_replace( '/^.*_page_/', '', esc_html( get_current_screen()->id ) );
-		$page            = isset( $_GET['page'] ) ? esc_html( $_GET['page'] ) : '';
-		$page_template   = W4OS_TEMPLATES_DIR . 'admin-settings-page.php';
-		$all_tabs        = apply_filters( 'w4os_settings_tabs', array() );
-		$tabs            = isset( $all_tabs[ $page ] ) ? $all_tabs[ $page ] : array();
-		$current_tab     = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
-		$current_section = 'w4os_settings_region_section_' . $current_tab;
+	public function settings_error( $message, $type = 'error' ) {
+		$page_title = esc_html( get_admin_page_title() );
+		printf(
+			'<h1>%s</h1>',
+			$page_title,
+		);
+		w4os_admin_notice( $message, $type );
+		do_action( 'admin_notices' );
+	}
 
+	/**
+	 * This method is called by several classes defined in several scripts for several settings pages.
+	 * It uses only the values provided by w4os_settings filter.
+	 */
+	public function render_settings_page() {
+		$screen = get_current_screen();
+		if ( ! $screen || ! isset( $screen->id ) ) {
+			self::settings_error( __( 'This page is not available. You probably did nothing wrong, the developer did.', 'w4os' ), 'error' );
+			return;
+		}
+		$menu_slug    = preg_replace( '/^.*_page_/', '', sanitize_key( $screen->id ) );
+
+		$settings = self::get_settings( $menu_slug );
+		if ( ! $settings ) {
+			$this->settings_error( sprintf( __( 'No settings registered for %s.', 'w4os' ), $menu_slug ), 'error' );
+			return;
+		}
+
+		$page_title      = $settings['page_title'];
+		$page 		  	 = $settings['page'];
+		$page_template   = W4OS_TEMPLATES_DIR . 'admin-settings-page.php';
+		// $all_tabs        = apply_filters( 'w4os_settings_tabs', array() );
+		// $tabs            = isset( $all_tabs[ $page ] ) ? $all_tabs[ $page ] : array();
+		$tabs = $settings['tabs'] ?? array();
+		if( ! empty( $tabs ) ) {
+			$selected_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : array_key_first( $tabs );
+		} else {
+			$selected_tab = null;
+		}
+
+		// Main section, will be changed in the process if page contains more than one
+		$section = $menu_slug . ( $selected_tab ? '_' . $selected_tab : '' );
+		$section_title = $settings['section_title'] ?? '';
+
+		$option_name = $settings['option_name'];
+		$options_group = $settings['option_group'];
+		
 		W4OS3_Settings::enqueue_select2();
 
 		if ( file_exists( $page_template ) ) {
 			include $page_template;
 		} else {
-			printf(
-				'<h1>%s</h1><p>%s</p>',
-				__( 'No template available for this page.', 'w4os' ),
-				W4OS3::get_option( 'debug_html' ) ? $page_template : '',
-			);
+			self::settings_error( __( 'Template page missing.', 'w4os' ) );
+			return;
 		}
 	}
 
@@ -321,7 +503,10 @@ class W4OS3_Settings {
 				}
 				$input_field .= '</select>';
 				break;
+
+			case 'switch':
 			case 'checkbox':
+				$option_label = $args['options'] ? array_values( $args['options'] )[0] : __('Yes', 'w4os');
 				$input_field = sprintf(
 					'<label>
                         <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
@@ -330,7 +515,7 @@ class W4OS3_Settings {
 					esc_attr( $args['id'] ),
 					esc_attr( $field_name ),
 					checked( $value, '1', false ),
-					esc_html( $args['label'] )
+					esc_html( $option_label ),
 				);
 				break;
 

@@ -7,8 +7,12 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-echo '<form action="options.php" method="post">';
-settings_fields( 'w4os_settings_beta' );
-do_settings_sections( 'w4os_settings_beta' );
+printf( '<form action="options.php" method="post">
+	<input type="hidden" name="%s[%s][prevent-empty-array]" value="1">', 
+	esc_attr( $option_name ),
+	esc_attr( $selected_tab ),
+);
+settings_fields( $options_group );
+do_settings_sections( $menu_slug );
 submit_button();
 echo '</form>';

@@ -29,7 +29,7 @@ jQuery( document ).ready(
 
 			if (hasFieldsChanged()) {
 				var loadingMessage = w4osSettings.loadingMessage;
-				$( '#w4os-available-models-container .available-models-container' ).text( loadingMessage );
+				$( '#w4os-models-preview-container' ).text( loadingMessage );
 
 				var data = {
 					action: w4osSettings.updateAction,
@@ -44,7 +44,7 @@ jQuery( document ).ready(
 					w4osSettings.ajaxUrl,
 					data,
 					function (response) {
-							$( '#w4os-available-models-container .available-models-container' ).html( response );
+							$( '#w4os-models-preview-container' ).html( response );
 					}
 				);
 			}
