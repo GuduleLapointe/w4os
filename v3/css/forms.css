@@ -1,0 +1,21 @@
+.w4os-form p.submit {
+    text-align: right;
+}
+.w4os-form .button, 
+.w4os-form .button-primary, 
+.w4os-form .button-secondary {
+    display: inline-block;
+    text-decoration: none;
+    /* font-size: 13px; */
+    line-height: 2;
+    min-height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+}

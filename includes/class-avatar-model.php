@@ -387,14 +387,10 @@ class W4OS_Model extends W4OS_Loader {
 			$content = W4OS::sprintf_safe(
 				'<div class="clear"></div>
 				<p class=form-row>
-					<label>%s</label>
-					<p class="description">%s</p>
 					<ul class="models-list">
 						%s
 					</ul>
 				</p>',
-				__( 'Your initial appearance', 'w4os' ),
-				__( 'You can change it as often as you want in the virtual world.', 'w4os' ),
 				$options,
 			);
 		}

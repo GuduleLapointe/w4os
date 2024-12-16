@@ -391,7 +391,7 @@ function w4os_create_avatar( $user, $params ) {
 
 	$firstname = trim( $params['w4os_firstname'] );
 	$lastname  = trim( $params['w4os_lastname'] );
-	$model     = trim( $params['w4os_model'] );
+	$model     = trim( ( $params['w4os_model'] ?? '' ) );
 	if ( empty( $model ) ) {
 		$model = W4OS_DEFAULT_AVATAR;
 	}
@@ -706,12 +706,8 @@ function w4os_avatar_creation_form( $user ) {
 
 	global $w4osdb;
 
-	$content = "<p class='description'>"
-	. __( 'You need an avatar to explore our virtual world.', 'w4os' )
-	. ' ' . __( 'Choose a name below. This is how people will see you in-world. Once set, your avatar name cannot be changed.', 'w4os' ) . '</p>';
-
-	$content .= "<form class='edit-account wrap' action='' method='post'>";
-	$action   = 'w4os_create_avatar';
+	wp_enqueue_style( 'w4os-wp-forms', site_url( '/wp-admin/css/forms.min.css' ) );
+	wp_enqueue_style( 'w4os-forms', plugin_dir_url(__DIR__) . 'v3/css/forms.css', array(), time() );
 
 	if ( isset( $_REQUEST['w4os_firstname'] ) && isset( $_REQUEST['w4os_lastname'] ) ) {
 		$firstname = sanitize_text_field( $_REQUEST['w4os_firstname'] );
@@ -724,41 +720,73 @@ function w4os_avatar_creation_form( $user ) {
 		$firstname = ( isset( $namearray[0] ) ) ? ucfirst( $namearray[0] ) : '';
 		$lastname  = ( isset( $namearray[1] ) ) ? ucfirst( $namearray[1] ) : '';
 	}
-
 	$firstname = sanitize_text_field( preg_replace( '/[^[:alnum:]]/', '', $firstname ) );
 	$lastname  = sanitize_text_field( preg_replace( '/[^[:alnum:]]/', '', $lastname ) );
 
-	$content .= "
-  <div class='clear'></div>
-  <p class='form-row form-row-first'>
-    <label for='w4os_firstname'>" . __( 'Avatar first name', 'w4os' ) . "&nbsp;<span class='required'>*</span></label>
-    <input type='text' class='input-text' name='w4os_firstname' id='w4os_firstname' autocomplete='given-name' value='" . esc_attr( $firstname ) . "' required>
-  </p>
-  <p class='form-row form-row-last'>
-    <label for='w4os_lastname'>" . __( 'Avatar last name', 'w4os' ) . "&nbsp;<span class='required'>*</span></label>
-    <input type='text' class='input-text' name='w4os_lastname' id='w4os_lastname' autocomplete='family-name' value='" . esc_attr( $lastname ) . "' required>
-  </p>
-  <div class='clear'></div>
-  <p class='form-row form-row-wide'>
-    <label for='w4os_password_1'>" . __( 'Confirm your password', 'w4os' ) . "</label>
-    <span class='password-input'><input type='password' class='input-text' name='w4os_password_1' id='w4os_password_1' autocomplete='off' required><span class='show-password-input'></span></span>
-    <p class=description>" . __( 'Your in-world Avatar password is the same as your password on this website.', 'w4os' ) . '</p>
-  </p>
-  ';
+	$action   = 'w4os_create_avatar';
+	
+	$content = '<p>' . __( 'Choose a name below. This is how people will see you in-world.', 'w4os' ) . '</p>';
+	$content .= '<div class="w4os-form wrap">';
+	$content .= "<form class='edit-account' action='' method='post'>";
 
-	if ( W4OS_Model::get_models() ) {
-		$content .= ( new W4OS_Model() )->select_model_field();
-	}
+	$content .= sprintf( '<div class=wrap><table class="form-table">
+		<tr>
+			<th scope="row"><label for="w4os_firstname">%s</label></th>
+			<td><input type="text" class="regular-text" name="w4os_firstname" id="w4os_firstname" value="%s" required /></td>
+		</tr>
+		<tr>
+			<th><label for="w4os_lastname">%s</label></th>
+			<td><input type="text" class="regular-text" name="w4os_lastname" id="w4os_lastname" value="%s" required /></td>
+		</tr>
+		<tr>
+			<th><label for="w4os_password_1">%s</label></th>
+			<td>
+				<input type="password" class="regular-text" name="w4os_password_1" id="w4os_password_1" required />
+				<p class="description">%s</p>
+			</td>
+		</tr>
+		%s
+	</table></div>',
+		__( 'First name', 'w4os' ),
+		$firstname,
+		__( 'Last name', 'w4os' ),
+		$lastname,
+		__( 'Confirm your password', 'w4os' ),
+		__( 'Your in-world Avatar password is the same as your password on this website.', 'w4os' ),
+		( W4OS_Model::get_models() ) ? sprintf( '<tr>
+				<th><label for="w4os_model">%s</label></th>
+				<td>
+					<p>%s</p>
+					<p class="description">%s</p>
+				</td>
+			</tr><tr>
+				<td colspan=2>%s</td>
+			</tr>',
+			__( 'Model', 'w4os' ),
+			__( 'Choose the first outfit for your avatar.', 'w4os' ),
+			__( 'You can always change your appearance in-world.', 'w4os' ),
+			( new W4OS_Model() )->select_model_field(),
+		) : ''
+	);
+
+	// if ( W4OS_Model::get_models() ) {
+	//   $content .= ( new W4OS_Model() )->select_model_field();
+	// }
 	// $content .= '</p>';
-
-	$content .= "
-  <p>
-    <input type='hidden' name='user_id' value='$user->ID'>
-    <input type='hidden' name='action' value='$action'>
-    <button type='submit' class='woocommerce-Button button' name='w4os_update_avatar' value='$action'>" . __( 'Save' ) . '</button>
-  </p>';
+	
+	$content .= sprintf(
+		'<p class="submit">
+			<input type="hidden" name="user_id" value="%1$s">
+			<input type="hidden" name="action" value="%2$s">
+			<button type="submit" class="button button-primary" name="w4os_update_avatar" value="%2$s">%3$s</button>
+		</p>',
+		$user->ID,
+		$action,
+		__( 'Create Avatar', 'w4os' )
+	);
 
 	$content .= '  </form>';
+	$content .= '</div>';
 	return $content;
 }
 
@@ -1157,7 +1185,7 @@ function w4os_profile_fields_save( $user_id ) {
 		'action'                   => 'update_avatar',
 		'w4os_firstname'           => esc_attr( $_POST['w4os_firstname'] ),
 		'w4os_lastname'            => esc_attr( $_POST['w4os_lastname'] ),
-		'opensim_profileAllow_web' => ( esc_attr( $_POST['opensim_profileAllow_web'] ) == true ),
+		'opensim_profileAllow_web' => ( isset( $_POST['opensim_profileAllow_web'] ) ) ? ( esc_attr( $_POST['opensim_profileAllow_web'] ) == true ) : false,
 	);
 
 	update_user_meta( $user_id, 'w4os_firstname', $args['w4os_firstname'] );
