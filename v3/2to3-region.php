@@ -122,7 +122,7 @@ class W4OS3_Region {
 	 */
 	public function display_regions_list() {
 		// if ( ! class_exists( 'WP_List_Table' ) ) {
-		// require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+		// require_once ABSPATH . 'wp-admin/v2/class-wp-list-table.php';
 		// }
 
 		// Instantiate and display the list table

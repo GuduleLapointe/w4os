@@ -5,7 +5,7 @@
  * This class loads the classes and functions needed to test v3 features
  * while keeping v2 features available.
  *
- * It will replace both legacy/init.php and includes/loader.php when all
+ * It will replace both v1/init.php and v2/loader.php when all
  * new v3 features are validated, and all remaining v2 or legacy features
  * are ported to v3.
  */
@@ -264,7 +264,6 @@ class W4OS3 {
 		$ver    = empty( $ver ) ? W4OS_VERSION : $ver;
 		$src    = preg_match( '/^http/', $src ) ? $src : W4OS_PLUGIN_DIR_URL . $src;
 		$hook   = is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts';
-		error_log( 'Enqueueing style: ' . $handle . ' ' . $src );
 		if ( function_exists( 'wp_enqueue_style' ) ) {
 			wp_enqueue_style( $handle, $src, $deps, $ver, $media );
 			return;
@@ -272,7 +271,6 @@ class W4OS3 {
 		add_action(
 			$hook,
 			function () use ( $handle, $src, $deps, $ver, $media ) {
-				error_log( 'Enqueueing style: ' . $handle . ' ' . $src );
 				wp_enqueue_style( $handle, $src, $deps, $ver, $media );
 			}
 		);

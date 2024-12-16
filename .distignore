@@ -51,3 +51,7 @@ _config.yaml
 Gemfile
 /v3/
 .gitattributes
+_config.yaml
+_includes
+_layouts
+_sass

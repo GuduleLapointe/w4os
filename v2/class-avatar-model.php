@@ -404,7 +404,7 @@ class W4OS_Model extends W4OS_Loader {
 		}
 		// Enqueue the script only on the specific settings page
 		if ( $hook === 'opensimulator_page_w4os-models' ) {
-			wp_enqueue_script( 'w4os-settings-models', plugin_dir_url( __DIR__ ) . 'includes/admin/settings-models.js', array( 'jquery' ), '1.0', true );
+			wp_enqueue_script( 'w4os-settings-models', plugin_dir_url( __DIR__ ) . 'v2/admin/settings-models.js', array( 'jquery' ), '1.0', true );
 			wp_localize_script(
 				'w4os-settings-models',
 				'w4osSettings',

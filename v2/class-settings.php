@@ -120,7 +120,7 @@ class W4OS_Settings extends W4OS_Loader {
 				return;
 		}
 
-		require_once W4OS_DIR . '/admin/templates/shortcodes.php';
+		require_once W4OS_DIR . '/v2/admin-helpers/templates/shortcodes.php';
 	}
 
 	function register_settings_pages( $settings_pages ) {

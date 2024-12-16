@@ -83,48 +83,48 @@ class W4OS_Loader {
 		 * Template overrides
 		 */
 		// require_once W4OS_DIR . '/templates/templates.php';
-		require_once W4OS_DIR . '/includes/class-helpers-assets.php';
+		require_once W4OS_DIR . '/v2/class-helpers-assets.php';
 
 		if ( is_admin() ) {
-			require_once W4OS_DIR . '/admin/admin-loader.php';
+			require_once W4OS_DIR . '/v2/admin-helpers/admin-loader.php';
 		}
 		/**
 		 * The standard plugin classes.
 		 */
 		require_once W4OS_DIR . '/helpers/includes/functions.php';
-		require_once W4OS_DIR . '/includes/class-w4os.php';
-		require_once W4OS_DIR . '/includes/class-db.php';
-		require_once W4OS_DIR . '/includes/class-i18n.php';
-		require_once W4OS_DIR . '/includes/class-settings.php';
-		require_once W4OS_DIR . '/includes/class-tos.php';
+		require_once W4OS_DIR . '/v2/class-w4os.php';
+		require_once W4OS_DIR . '/v2/class-db.php';
+		require_once W4OS_DIR . '/v2/class-i18n.php';
+		require_once W4OS_DIR . '/v2/class-settings.php';
+		require_once W4OS_DIR . '/v2/class-tos.php';
 		// require_once W4OS_DIR . '/admin/class-admin.php';
 		// require_once W4OS_DIR . '/public/class-public.php';
 
 		/**
 		 * Specific plugin classes.
 		 */
-		require_once W4OS_DIR . '/includes/class-avatar-model.php';
-		require_once W4OS_DIR . '/includes/class-avatar-profile.php';
-		require_once W4OS_DIR . '/includes/class-helpers.php';
+		require_once W4OS_DIR . '/v2/class-avatar-model.php';
+		require_once W4OS_DIR . '/v2/class-avatar-profile.php';
+		require_once W4OS_DIR . '/v2/class-helpers.php';
 		if ( function_exists( 'xmlrpc_encode_request' ) ) {
 			// TODO: more accurate dependencies checking
-			require_once W4OS_DIR . '/includes/class-helpers-economy.php';
-			require_once W4OS_DIR . '/includes/class-helpers-search.php';
+			require_once W4OS_DIR . '/v2/class-helpers-economy.php';
+			require_once W4OS_DIR . '/v2/class-helpers-search.php';
 		}
-		require_once W4OS_DIR . '/includes/class-helpers-guide.php';
-		require_once W4OS_DIR . '/includes/class-helpers-offline.php';
+		require_once W4OS_DIR . '/v2/class-helpers-guide.php';
+		require_once W4OS_DIR . '/v2/class-helpers-offline.php';
 
 		/**
 		 * Database updates
 		 */
 
-		require_once W4OS_DIR . '/includes/updates.php';
+		require_once W4OS_DIR . '/v2/updates.php';
 
 		// if(is_plugin_active('woocommerce/woocommerce.php')) {
-		// require_once W4OS_DIR . '/includes/modules/class-woocommerce.php';
+		// require_once W4OS_DIR . '/v2/modules/class-woocommerce.php';
 		// $this->loaders[] = new W4OS_WooCommerce();
 		//
-		// require_once W4OS_DIR . '/includes/modules/class-woocommerce-payment.php';
+		// require_once W4OS_DIR . '/v2/modules/class-woocommerce-payment.php';
 		// $this->loaders[] = new W4OS_WooCommerce_Payment();
 		// }
 	}

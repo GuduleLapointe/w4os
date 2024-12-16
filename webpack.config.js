@@ -6,9 +6,9 @@ const CopyPlugin    = require( "copy-webpack-plugin" );
 const config = {
 	...defaultConfig,
 	entry: {
-		'../includes/admin/admin': './src/admin/index.js',
-		'../includes/admin/settings-models': './src/admin/models.js',
-		'../includes/public/public': './src/public/index.js',
+		'../v2/admin/admin': './src/admin/index.js',
+		'../v2/admin/settings-models': './src/admin/models.js',
+		'../v2/public/public': './src/public/index.js',
 		'../blocks/avatar-profile/avatar-profile': './src/blocks/avatar-profile/index.js',
 		'../blocks/grid-info/grid-info': './src/blocks/grid-info/index.js',
 		'../blocks/grid-status/grid-status': './src/blocks/grid-status/index.js',

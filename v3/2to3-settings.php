@@ -510,7 +510,7 @@ class W4OS3_Settings {
 
 			case 'switch':
 			case 'checkbox':
-				$option_label = $args['options'] ? array_values( $args['options'] )[0] : __('Yes', 'w4os');
+				$option_label = isset($args['options']) && is_array($args['options']) ? array_values( $args['options'] )[0] : __('Yes', 'w4os');
 				$input_field = sprintf(
 					'<label>
                         <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />

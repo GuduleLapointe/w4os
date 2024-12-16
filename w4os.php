@@ -61,9 +61,9 @@ if ( defined( 'W4OS_SLUG' ) ) {
 		define( 'W4OS_ENABLE_V3', false );
 	}
 
-	// Legacy v2 inits. Both will be removed when v3 is ready.
-	require_once plugin_dir_path( __FILE__ ) . 'legacy/init.php';
-	require_once plugin_dir_path( __FILE__ ) . 'includes/loader.php';
+	// Legacy v1 and v2 inits. Both should be removed when v3 transition is complete.
+	require_once plugin_dir_path( __FILE__ ) . 'v1/init.php';
+	require_once plugin_dir_path( __FILE__ ) . 'v2/loader.php';
 
 	// Plugin updater. Should definitively be moved to init class.
 	if ( file_exists( plugin_dir_path( __FILE__ ) . 'lib/package-updater.php' ) ) {
@@ -72,6 +72,6 @@ if ( defined( 'W4OS_SLUG' ) ) {
 
 	// Legacy admin init.
 	if ( is_admin() ) {
-		require_once plugin_dir_path( __FILE__ ) . 'legacy/admin/admin-init.php';
+		require_once plugin_dir_path( __FILE__ ) . 'v1/admin/admin-init.php';
 	}
 }
