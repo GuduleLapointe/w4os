@@ -379,11 +379,11 @@ function w4os_create_avatar( $user, $params ) {
 	global $w4osdb;
 
 	$errors = false;
-	// w4os_notice(print_r($_REQUEST, true), "code");
+	// w4os_user_notice(print_r($_REQUEST, true), "code");
 	$uuid = w4os_profile_sync( $user ); // refresh opensim data for this user
 	if ( $uuid ) {
 		if ( $params['action'] == 'w4os_create_avatar' ) {
-			w4os_notice( __( 'This user already has an avatar.', 'w4os' ), 'fail' ) . '<pre>' . print_r( $params, true ) . '</pre>';
+			w4os_user_notice( __( 'This user already has an avatar.', 'w4os' ), 'fail' ) . '<pre>' . print_r( $params, true ) . '</pre>';
 		}
 		return $uuid;
 	}
@@ -392,54 +392,55 @@ function w4os_create_avatar( $user, $params ) {
 	$firstname = trim( $params['w4os_firstname'] );
 	$lastname  = trim( $params['w4os_lastname'] );
 	$model     = trim( ( $params['w4os_model'] ?? '' ) );
+	$password = stripcslashes( $params['w4os_password_1'] );
+	
 	if ( empty( $model ) ) {
 		$model = W4OS_DEFAULT_AVATAR;
 	}
 
 	// Check required fields
-	if ( ! $firstname ) {
+	if ( empty($firstname ) || empty( $lastname ) ) {
 		$errors = true;
-		w4os_notice( __( 'First name required', 'w4os' ), 'fail' ); }
-	if ( ! $lastname ) {
-		$errors = true;
-		w4os_notice( __( 'Last name required', 'w4os' ), 'fail' ); }
-	if ( ! current_user_can( 'edit_user', $user->ID ) ) {
-		if ( ! $params['w4os_password_1'] ) {
-			$errors = true;
-			w4os_notice( __( 'Password required', 'w4os' ), 'error' ); } elseif ( ! wp_check_password( $params['w4os_password_1'], $user->user_pass ) ) {
-						$errors = true;
-						w4os_notice( __( 'The password does not match.', 'w4os' ), 'error' ); }
+		w4os_user_notice( __( 'First and Last names are required', 'w4os' ), 'fail' ); 
 	}
+	if ( empty ( $password ) ) {
+		$errors = true;
+		w4os_user_notice( __( 'Password required', 'w4os' ), 'error' );
+	} else if ( ! wp_check_password( $params['w4os_password_1'], $user->user_pass ) ) {
+		$errors = true;
+		w4os_user_notice( __( 'The password does not match.', 'w4os' ), 'error' ); 
+	}
+
 	if ( $errors == true ) {
 		return false;
 	}
+
 	$required = array( 'w4os_firstname', 'w4os_lastname', 'w4os_password_1' );
 
-	$password = stripcslashes( $params['w4os_password_1'] );
 	// if ( ! w4os_is_strong ($password)) return false; // We now only rely on WP password requirements
 
 	if ( in_array( strtolower( $firstname ), array_map( 'strtolower', W4OS_DEFAULT_RESTRICTED_NAMES ) ) ) {
-		w4os_notice( W4OS::sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$firstname" ), 'error' );
+		w4os_user_notice( W4OS::sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$firstname" ), 'error' );
 		return false;
 	}
 	if ( in_array( strtolower( $lastname ), array_map( 'strtolower', W4OS_DEFAULT_RESTRICTED_NAMES ) ) ) {
-		w4os_notice( W4OS::sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$lastname" ), 'error' );
+		w4os_user_notice( W4OS::sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$lastname" ), 'error' );
 		return false;
 	}
 	if ( ! preg_match( '/^[a-zA-Z0-9]*$/', $firstname . $lastname ) ) {
-		w4os_notice( __( 'Names can only contain alphanumeric characters', 'w4os' ), 'error' );
+		w4os_user_notice( __( 'Names can only contain alphanumeric characters', 'w4os' ), 'error' );
 		return false;
 	}
 	// Check if there is already an avatar with this name
 	$check_uuid = $w4osdb->get_var( "SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$firstname' AND LastName = '$lastname'" );
 	if ( $check_uuid ) {
-		w4os_notice( W4OS::sprintf_safe( __( 'There is already a grid user named %s', 'w4os' ), "$firstname $lastname" ), 'fail' );
+		w4os_user_notice( W4OS::sprintf_safe( __( 'There is already a grid user named %s', 'w4os' ), "$firstname $lastname" ), 'fail' );
 		return false;
 	}
 	$newavatar_uuid = w4os_gen_uuid();
 	$check_uuid     = $w4osdb->get_var( "SELECT PrincipalID FROM UserAccounts WHERE PrincipalID = '$newavatar_uuid'" );
 	if ( $check_uuid ) {
-		w4os_notice( __( 'This should never happen! Generated a random UUID that already existed. Sorry. Try again.', 'w4os' ), 'fail' );
+		w4os_user_notice( __( 'This should never happen! Generated a random UUID that already existed. Sorry. Try again.', 'w4os' ), 'fail' );
 		return false;
 	}
 
@@ -465,7 +466,7 @@ function w4os_create_avatar( $user, $params ) {
 		)
 	);
 	if ( ! $result ) {
-		w4os_notice( __( 'Error while creating user', 'w4os' ), 'fail' );
+		w4os_user_notice( __( 'Error while creating user', 'w4os' ), 'fail' );
 	}
 	if ( $result ) {
 		$result = $w4osdb->insert(
@@ -479,7 +480,7 @@ function w4os_create_avatar( $user, $params ) {
 		);
 	}
 	if ( ! $result ) {
-		w4os_notice( __( 'Error while setting password', 'w4os' ), 'fail' );
+		w4os_user_notice( __( 'Error while setting password', 'w4os' ), 'fail' );
 	}
 
 	if ( $result ) {
@@ -495,7 +496,7 @@ function w4os_create_avatar( $user, $params ) {
 		);
 	}
 	if ( ! $result ) {
-		w4os_notice( __( 'Error while setting home region', 'w4os' ), 'fail' );
+		w4os_user_notice( __( 'Error while setting home region', 'w4os' ), 'fail' );
 	}
 
 	$model_firstname = strstr( $model, ' ', true );
@@ -517,7 +518,7 @@ function w4os_create_avatar( $user, $params ) {
 		);
 	}
 	if ( ! $result ) {
-		w4os_notice( __( 'Error while creating user inventory', 'w4os' ), 'fail' );
+		w4os_user_notice( __( 'Error while creating user inventory', 'w4os' ), 'fail' );
 	}
 
 	$bodyparts_uuid       = w4os_gen_uuid();
@@ -568,7 +569,7 @@ function w4os_create_avatar( $user, $params ) {
 				);
 			}
 			if ( ! $result ) {
-				w4os_notice( __( "Error while adding folder $folder", 'w4os' ), 'fail' );
+				w4os_user_notice( __( "Error while adding folder $folder", 'w4os' ), 'fail' );
 			}
 			if ( ! $result ) {
 				break;
@@ -597,10 +598,10 @@ function w4os_create_avatar( $user, $params ) {
 
 	if ( $result ) {
 		$model = $w4osdb->get_results( "SELECT Name, Value FROM Avatars WHERE PrincipalID = '$model_uuid'" );
-		// w4os_notice(print_r($result, true), 'code');
+		// w4os_user_notice(print_r($result, true), 'code');
 		// foreach($result as $row) {
-		// w4os_notice(print_r($row, true), 'code');
-		// w4os_notice($row->Name . " = " . $row->Value);
+		// w4os_user_notice(print_r($row, true), 'code');
+		// w4os_user_notice($row->Name . " = " . $row->Value);
 		// }
 
 		// foreach($avatars_prefs as $var => $val) {
@@ -645,14 +646,14 @@ function w4os_create_avatar( $user, $params ) {
 				if ( ! empty( $newitems ) ) {
 					foreach ( $newitems as $newitem ) {
 						// $destinventoryid = w4os_gen_uuid();
-						// w4os_notice("Creating inventory item '$Name' for $firstname");
+						// w4os_user_notice("Creating inventory item '$Name' for $firstname");
 						$newitem['parentFolderID'] = $bodyparts_model_uuid;
 						$newitem['avatarID']       = $newavatar_uuid;
 						$result                    = $w4osdb->insert( 'inventoryitems', $newitem );
 						if ( ! $result ) {
-							w4os_notice( __( 'Error while adding inventory item', 'w4os' ), 'fail' );
+							w4os_user_notice( __( 'Error while adding inventory item', 'w4os' ), 'fail' );
 						}
-						// w4os_notice(print_r($newitem, true), 'code');
+						// w4os_user_notice(print_r($newitem, true), 'code');
 						// echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
 
 						// Adding aliases in "Current Outfit" folder to avoid FireStorm error message
@@ -663,11 +664,11 @@ function w4os_create_avatar( $user, $params ) {
 						$outfit_link['parentFolderID'] = $currentoutfit_uuid;
 						$result                        = $w4osdb->insert( 'inventoryitems', $outfit_link );
 						if ( ! $result ) {
-							w4os_notice( __( 'Error while adding inventory outfit link', 'w4os' ), 'fail' );
+							w4os_user_notice( __( 'Error while adding inventory outfit link', 'w4os' ), 'fail' );
 						}
 					}
 					// } else {
-					// w4os_notice("Not creating inventory item '$Name' for $firstname");
+					// w4os_user_notice("Not creating inventory item '$Name' for $firstname");
 				}
 				$result = $w4osdb->insert(
 					'Avatars',
@@ -678,22 +679,26 @@ function w4os_create_avatar( $user, $params ) {
 					)
 				);
 				if ( ! $result ) {
-					w4os_notice( __( 'Error while adding avatar', 'w4os' ), 'fail' );
+					w4os_user_notice( __( 'Error while adding avatar', 'w4os' ), 'fail' );
 				}
 			}
 		}
 	}
 
 	if ( ! $result ) {
-		w4os_notice( __( 'Errors occurred while creating the user', 'w4os' ), 'fail' );
-		// w4os_notice($sql, 'code');
+		w4os_user_notice( __( 'Errors occurred while creating the user', 'w4os' ), 'fail' );
+		// w4os_user_notice($sql, 'code');
 		return false;
 	}
 
-	w4os_notice( W4OS::sprintf_safe( __( 'Avatar %s created successfully.', 'w4os' ), "$firstname $lastname" ), 'success' );
+	w4os_user_notice( W4OS::sprintf_safe( __( 'Avatar %s created successfully.', 'w4os' ), "$firstname $lastname" ), 'success' );
 
 	$check_uuid = w4os_profile_sync( $user ); // refresh opensim data for this user
 	return $newavatar_uuid;
+}
+
+function w4os_avatar_update_error( $message ) {
+	return "<div class='error'><p>$message</p></div>";
 }
 
 function w4os_avatar_creation_form( $user ) {
@@ -704,6 +709,19 @@ function w4os_avatar_creation_form( $user ) {
 		return;
 	}
 
+	if ( isset ($_POST['w4os_update_avatar'] ) && isset( $_POST['user_id'] ) ) {
+		// Verify nonce
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'w4os_create_avatar' ) ) {
+			w4os_user_notice( __( 'Security check failed', 'w4os' ), 'fail' );
+			return false;
+			// return w4os_avatar_update_error( __( 'Security check failed', 'w4os' ), 'fail' );
+			// wp_die( 'Security check' );
+		}
+		w4os_profile_fields_save( $_POST['user_id'] );
+		wp_redirect( home_url( $_SERVER['REQUEST_URI'] ) );
+		die('Redirecting...');
+	}
+	
 	global $w4osdb;
 
 	wp_enqueue_style( 'w4os-wp-forms', site_url( '/wp-admin/css/forms.min.css' ) );
@@ -724,10 +742,11 @@ function w4os_avatar_creation_form( $user ) {
 	$lastname  = sanitize_text_field( preg_replace( '/[^[:alnum:]]/', '', $lastname ) );
 
 	$action   = 'w4os_create_avatar';
-	
+	$nonce = wp_create_nonce( $action );
+
 	$content = '<p>' . __( 'Choose a name below. This is how people will see you in-world.', 'w4os' ) . '</p>';
 	$content .= '<div class="w4os-form wrap">';
-	$content .= "<form class='edit-account' action='' method='post'>";
+	$content .= "<form class='edit-account' method='post'>";
 
 	$content .= sprintf( '<div class=wrap><table class="form-table">
 		<tr>
@@ -778,11 +797,13 @@ function w4os_avatar_creation_form( $user ) {
 		'<p class="submit">
 			<input type="hidden" name="user_id" value="%1$s">
 			<input type="hidden" name="action" value="%2$s">
+			<input type="hidden" name="nonce" value="%4$s">
 			<button type="submit" class="button button-primary" name="w4os_update_avatar" value="%2$s">%3$s</button>
 		</p>',
 		$user->ID,
 		$action,
-		__( 'Create Avatar', 'w4os' )
+		__( 'Create Avatar', 'w4os' ),
+		$nonce
 	);
 
 	$content .= '  </form>';
@@ -1173,6 +1194,7 @@ function w4os_user_profile_fields( $user ) {
 add_action( 'personal_options_update', 'w4os_profile_fields_save' );
 add_action( 'edit_user_profile_update', 'w4os_profile_fields_save' );
 function w4os_profile_fields_save( $user_id ) {
+
 	if ( $user_id != wp_get_current_user()->ID & ! current_user_can( 'edit_user', $user_id ) ) {
 		return;
 	}
@@ -1186,6 +1208,7 @@ function w4os_profile_fields_save( $user_id ) {
 		'w4os_firstname'           => esc_attr( $_POST['w4os_firstname'] ),
 		'w4os_lastname'            => esc_attr( $_POST['w4os_lastname'] ),
 		'opensim_profileAllow_web' => ( isset( $_POST['opensim_profileAllow_web'] ) ) ? ( esc_attr( $_POST['opensim_profileAllow_web'] ) == true ) : false,
+		'w4os_password_1'          => esc_attr( $_POST['w4os_password_1'] ),
 	);
 
 	update_user_meta( $user_id, 'w4os_firstname', $args['w4os_firstname'] );

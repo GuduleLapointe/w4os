@@ -143,6 +143,71 @@ function w4os_get_transient_admin_notices() {
 }
 add_action( 'admin_head', 'w4os_get_transient_admin_notices' );
 
+function w4os_user_notice( $notice, $class = 'info', $dismissible = true, $key = null ) {
+	if ( empty( $notice ) ) {
+		return;
+	}
+	if ( is_admin() ) {
+		w4os_transient_admin_notice( $notice, $class, $dismissible, __FUNCTION__ );
+	} else {
+		w4os_transient_user_notice( $notice, $class, $dismissible, __FUNCTION__ );
+	}
+}
+
+function w4os_transient_user_notice ( $notice, $class = 'info', $dismissible = true, $key = null ) {
+	if ( empty( $notice ) ) {
+		return;
+	}
+	$transient_key = sanitize_title( W4OS_PLUGIN_NAME . '_user_notices' );
+
+	$queue = get_transient( $transient_key );
+	if ( ! is_array( $queue ) ) {
+		$queue = array( $queue );
+	}
+
+	$hash           = hash( 'md5', $notice );
+	$queue[ $hash ] = array(
+		'notice'      => $notice,
+		'class'       => $class,
+		'dismissible' => $dismissible,
+	);
+	set_transient( $transient_key, $queue );
+}
+
+function w4os_get_user_notices( $echo = false ) {
+	$transient_key = sanitize_title( W4OS_PLUGIN_NAME . '_user_notices' );
+	$queue         = get_transient( $transient_key );
+	$notices = [];
+	foreach ( $queue as $hash => $notice ) {
+		if ( ! is_array( $notice ) ) {
+			continue;
+		}
+		$notice = wp_parse_args(
+			$notice,
+			array(
+				'notice'      => '',
+				'class'       => 'info',
+				'dismissible' => true,
+			)
+		);
+		error_log( 'Notice ' . $notice['class'] . ': ' . $notice['notice'] );
+		$notices[$hash] = sprintf(
+			'<div class="notice notice-%1$s %2$s">%3$s</p>',
+			sanitize_key( $notice['class'] ),
+			( $notice['dismissible'] ) ? 'is-dismissible' : '',
+			'<p>' . esc_attr( $notice['notice'] ) . '</p>',
+		);
+	}
+	$html = empty( $notices ) ? '' : '<div class="notices w4os-user-notices">' . join( '', $notices ) . '</div>';
+
+	delete_transient( $transient_key );
+	if( $echo ) {
+		echo $html;
+	} else {
+		return $html;
+	}
+}
+
 function w4os_fast_xml( $url ) {
 	// Exit silently if required php modules are missing
 	if ( ! function_exists( 'curl_init' ) ) {

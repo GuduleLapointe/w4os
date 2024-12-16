@@ -63,7 +63,6 @@ if ( ! preg_match( "/<table class='avatar-profile-table'>|\[et_pb_w4os_avatar_pr
 	// }
 }
 
-$page_content = wp_cache_get( 'w4os_notices' ) . $page_content;
-wp_cache_delete( 'w4os_notices' );
+echo w4os_get_user_notices();
 
 echo $page_content;
