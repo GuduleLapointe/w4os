@@ -66,7 +66,6 @@ class W4OS3_Region {
 	}
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
-		// error_log( 'Registering settings for Regions ' . print_r( $values, true )  . ' args ' . print_r( $args, true ) );
 		$settings['w4os-regions'] = array(
 			'parent_slug' => 'w4os',
 			'page_title'  => __( 'Regions', 'w4os' ) . ' (dev)',
@@ -260,7 +259,6 @@ class W4OS3_Region {
 	 * Format Region hop URL for list table.
 	 */
 	public function region_tp_link( $item ) {
-		// error_log( 'Region hop URL callback ' . print_r( $item, true ) );
 		$regionName = $item->regionName;
 		$gateway    = get_option( 'w4os_login_uri' );
 		if ( empty( $gateway ) ) {

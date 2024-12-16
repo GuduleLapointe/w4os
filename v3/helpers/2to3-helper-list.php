@@ -378,8 +378,12 @@ add_action(
 				if ( empty( $items ) ) {
 					return;
 				}
-				$page_url = ( isset( $_GET['page'] ) ) ? admin_url( 'admin.php?page=' . $_GET['page'] ) : $_SERVER['REQUEST_URI'];
-
+				// Determine the page URL, return early if not set
+				if ( isset( $_GET['page'] ) ) {
+					$page_url = admin_url( 'admin.php?page=' . $_GET['page'] );
+				} else {
+					return; // Stop processing if page URL can't be determined
+				}
 				// Determine the current filter and key
 				$current_filter = '';
 				$current_key = '';
@@ -451,18 +455,33 @@ add_action(
 			 */
 			function extra_tablenav( $which ) {
 				if ( $which === 'top' ) {
-					 // Add filter menus next to bulk actions
-					 foreach ( $this->admin_columns as $key => $column ) {
+					// Add filter menus next to bulk actions
+					$filters = array();
+					$filters_ids = array(); // Initialize array to be used by Clear Filters button
+					foreach ( $this->admin_columns as $key => $column ) {
 						if ( isset( $column['filterable'] ) && $column['filterable'] === true ) {
 							// Get unique values for the column
 							$options = $this->get_unique_column_values( $key, $column );
-
+							
+							$menu_id = esc_attr( 'filter_' . $key );
 							$title = isset( $column['plural'] ) ? $column['plural'] : $column['title'];
 							if ( ! empty( $options ) ) {
+								if ( count ( $options ) == 1 ) {
+									// Skip single value filters
+									continue;
+								}
+								$filter = '';
 								$selected = isset( $_GET[ 'filter_' . $key ] ) ? sanitize_text_field( $_GET[ 'filter_' . $key ] ) : '';
-								echo ' <label for="filter_' . esc_attr( $key ) . '" class="screen-reader-text">' . esc_html__( 'Filter by ' . $column['title'], 'w4os' ) . '</label>';
-								echo '<select name="filter_' . esc_attr( $key ) . '" id="filter_' . esc_attr( $key ) . '">';
-								echo '<option value="">' . esc_html__( sprintf( __('All %s', 'w4os'), $title ) ) . '</option>';
+								$filter .= sprintf(
+									'<label for="%s" class="screen-reader-text">%s</label>
+									<select name="%s" id="filter_%s">
+									<option value="">%s</option>',
+									$menu_id,
+									esc_html__( 'Filter by ' . $column['title'], 'w4os' ),
+									$menu_id,
+									esc_attr( $key ),
+									esc_html__( sprintf( __('All %s', 'w4os'), $title ) )
+								);
 								foreach ( $options as $value ) {
 									if ( $value === '' ) {
 										continue;
@@ -470,24 +489,39 @@ add_action(
 									$option_value = esc_attr( $value );
 									$option_label = esc_html( $value );
 									$is_selected  = selected( $selected, $value, false );
-									echo '<option value="' . $option_value . '" ' . $is_selected . '>' . $option_label . '</option>';
+									$filter .= '<option value="' . $option_value . '" ' . $is_selected . '>' . $option_label . '</option>';
 								}
-								echo '</select> ';
+								$filter .= '</select>';
+
+								$filters[] = $filter;
+								$filters_ids[] = $menu_id;
 							}
 						}
 					}
-					// Add submit button for filters
 					
-					echo " "; submit_button( __( 'Filter', 'w4os' ), 'button', 'filter_action', false );
+					if( ! empty( $filters ) ) {
+						echo '<div class="alignleft actions w4os-filter-actions">';
+						echo implode( ' ', $filters );
+						// Add filters submit button
+						submit_button( __( 'Filter', 'w4os' ), 'button', 'filter_action', false );
 
-					// Add 'Clear Filters' button to reset filter inputs and submit the form
-					echo ' <button type="button" class="button" onclick="
-						var form = this.form;
-						form.querySelectorAll(\'select, input[name^=filter_], input[name=\'s\']\').forEach(function(el) {
-							el.value = \'\';
-						});
-						form.submit();
-					">' . __( 'Clear Filters', 'w4os' ) . '</button>';
+						// Add filters clear button
+						$filters_ids_js = str_replace('"', "'", json_encode( $filters_ids ) );
+						$clear_filters_button = sprintf(
+							'<button type="button" class="button" onclick="
+							var form=this.form; 
+							var filterMenus=%s; 
+							filterMenus.forEach(function(menuId){ 
+								var select=form.querySelector(\'#\' + menuId); 
+								if(select){ select.value=\'\'; } 
+							}); 
+							form.submit();">%s</button>',
+							$filters_ids_js,
+							__( 'Reset Filters', 'w4os' )
+						);
+						echo " " . $clear_filters_button;
+						echo '</div>';
+					}
 				}
 			}
 
