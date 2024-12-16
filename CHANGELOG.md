@@ -1,6 +1,10 @@
 ## Changelog
 
-### Unreleased (2.9.0-dev.1349)
+### Unreleased (2.9.0-dev.1362)
+- fix avatar registration fail on other pages than canonical profile (issue #72)
+- fix password verification on profile avatar registration form
+- fix user notices not displayed on profile page
+- fix avatar registration form layout
 - transitional release
 - progressively integrate upcoming v3 features as beta
 - do not enabe v3 beta features in production environment
