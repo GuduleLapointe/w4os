@@ -135,7 +135,7 @@ class W4OS3_Region {
 				'plural'        => 'Regions',
 				'ajax'          => false,
 				'query'         => "SELECT * FROM (
-				SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name
+				SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name, sizeX * sizeY AS size
 				FROM `regions`
 				LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID
 			) AS subquery",
@@ -162,19 +162,20 @@ class W4OS3_Region {
 						'title'           => __( 'Teleport', 'w4os' ),
 						'render_callback' => array( $this, 'region_tp_link' ),
 					),
-					'serverURI'     => array(
-						'title'           => __( 'Simulator URI', 'w4os' ),
-						'render_callback' => array( $this, 'server_uri' ),
-						'size'            => '10%',
-					),
 					'serverPort'    => array(
 						'title'           => __( 'Internal Port', 'w4os' ),
-						'render_callback' => array( $this, 'server_port_column' ),
 						'size'            => '8%',
+					),
+					'size' 	   => array(
+						'title'           => __( 'Size', 'w4os' ),
+						'sortable'        => true,
+						'size'            => '8%',
+						'render_callback' => array( $this, 'format_region_size' ),
+						'views'           => 'callback',
 					),
 					'status'        => array(
 						'title'           => __( 'Status', 'w4os' ),
-						'render_callback' => array( $this, 'region_status' ),
+						'render_callback' => array( $this, 'format_region_status' ),
 						'sortable'        => true,
 						'sort_column'     => 'callback',
 						'size'            => '8%',
@@ -217,9 +218,21 @@ class W4OS3_Region {
 	}
 
 	/**
+	 * Format the Region size.
+	 */
+	public function format_region_size( $item ) {
+		if ( empty ( $item->size ) ) {
+			return null;
+		}
+
+		$size = $item->sizeX . '×' . $item->sizeY;
+		return $size;
+	}
+
+	/**
 	 * Check if Region is online by trying to connect to the server URI.
 	 */
-	public function region_status( $item ) {
+	public function format_region_status( $item ) {
 		$server_uri = $item->serverURI;
 		if ( empty( $server_uri ) ) {
 			return 'Unknown';
