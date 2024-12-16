@@ -96,7 +96,7 @@ class W4OS3_Avatar {
 				'ajax'          => false,
 				'table'         => 'UserAccounts',
 				'query'         => "SELECT * FROM (
-				SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName 
+				SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
 				FROM UserAccounts 
 				LEFT JOIN userprofile ON PrincipalID = userUUID 
 				LEFT JOIN GridUser ON PrincipalID = UserID
@@ -123,7 +123,7 @@ class W4OS3_Avatar {
 					),
 					'avatar_type' => array(
 						'title'           => __( 'Type', 'w4os' ),
-						'render_callback' => array( $this, 'avatar_type' ),
+						'render_callback' => array( $this, 'format_avatar_type' ),
 						'sortable'        => true,
 						'sort_column'     => 'callback',
 						'size'            => '10%',
@@ -132,7 +132,7 @@ class W4OS3_Avatar {
 					'active'      => array(
 						'title'           => __( 'Active', 'w4os' ),
 						'type'            => 'boolean',
-						'render_callback' => array( $this, 'active_column' ),
+						'render_callback' => array( $this, 'format_active' ),
 						'sortable'        => true,
 						'sort_column'     => 'callback',
 						'size'            => '8%',
@@ -141,16 +141,16 @@ class W4OS3_Avatar {
 					'Online'      => array(
 						'title'           => __( 'Online', 'w4os' ),
 						'type'            => 'boolean',
-						'render_callback' => array( $this, 'online_status' ),
+						'render_callback' => array( $this, 'format_online_status' ),
 						'sortable'        => true,
 						'sort_column'     => 'callback',
 						'size'            => '8%',
 						'views'           => 'callback', // Add subsubsub links based on the rendered value
 					),
-					'Login'       => array(
+					'last_seen'       => array(
 						'title'           => __( 'Last Seen', 'w4os' ),
 						'type'            => 'date',
-						'render_callback' => array( $this, 'last_seen' ),
+						'render_callback' => array( $this, 'format_last_seen' ),
 						'size'            => '10%',
 						'sortable'        => true,
 						'order'           => 'DESC',
@@ -160,7 +160,7 @@ class W4OS3_Avatar {
 						'type'     => 'date',
 						'size'     => '10%',
 						'sortable' => true,
-						'render_callback' => array( $this, 'Created' ),
+						'render_callback' => array( $this, 'format_created' ),
 					),
 				),
 			)
@@ -211,25 +211,52 @@ class W4OS3_Avatar {
 		return __( 'Unknown Avatar', 'w4os' );
 	}
 
-	/**
-	 * Avatar type
-	 */
 	public function avatar_type( $item ) {
 		$models = W4OS3_Model::get_models();
 		$email  = $item->Email;
 		if ( W4OS3_Model::is_model( $item ) ) {
-			return __( 'Default Model', 'w4os' );
+			return 'model';
 		}
 		if ( empty( $email ) ) {
-			return __( 'Service Account', 'w4os' );
+			return 'service';
 		}
-		return __( 'User Avatar', 'w4os' );
+		return 'user';
+	}
+
+	/**
+	 * Avatar type
+	 */
+	public function format_avatar_type( $item ) {
+		$type = $this->avatar_type( $item );
+		switch ( $type ) {
+			case 'model':
+				return __( 'Default Model', 'w4os' );
+			case 'service':
+				return __( 'Service Account', 'w4os' );
+			case 'user':
+				return __( 'User Avatar', 'w4os' );
+			default:
+				return __( 'Unknown', 'w4os' );
+		}
+		// $models = W4OS3_Model::get_models();
+		// $email  = $item->Email;
+		// if ( W4OS3_Model::is_model( $item ) ) {
+		// 	return __( 'Default Model', 'w4os' );
+		// }
+		// if ( empty( $email ) ) {
+		// 	return __( 'Service Account', 'w4os' );
+		// }
+		// return __( 'User Avatar', 'w4os' );
 	}
 
 	/**
 	 * Format the active column.
 	 */
-	public function active_column( $item ) {
+	public function format_active( $item ) {
+		$avatar_type = $this->avatar_type( $item );
+		if ( $avatar_type === 'model' || $avatar_type === 'service' ) {
+			return null;
+		}
 		$active = intval( $item->active );
 		if ( $active === 1 ) {
 			return 'Active';
@@ -240,9 +267,13 @@ class W4OS3_Avatar {
 	/**
 	 * Format the online column.
 	 */
-	public function online_status( $item ) {
+	public function format_online_status( $item ) {
+		$avatar_type = $this->avatar_type( $item );
+		if ( $avatar_type === 'model' || $avatar_type === 'service' ) {
+			return null;
+		}
 		if ( empty( $item->Online ) ) {
-			return '';
+			return null;
 		}
 		return W4OS3::is_true( $item->Online ) ? 'Online' : 'Offline';
 	}
@@ -266,24 +297,17 @@ class W4OS3_Avatar {
 	/**
 	 * Format the last seen date.
 	 */
-	public function last_seen( $item ) {
-		$time = max( $item->Login, $item->Logout );
-		// $time = max( intval($item->Login), intval($item->Created) );
-		if ( empty( $time ) ) {
-			return '';
-		}
-		return esc_html( W4OS3::date( $time ) );
+	public function format_last_seen( $item ) {
+		// No need to filter empty values, W4OS3::date() will return an empty string
+		return esc_html( W4OS3::date( $item->last_seen ) );
 	}
 
 	/**
 	 * Format the created date.
 	 */
-	public function Created( $item ) {
-		$created = $item->Created;
-		if ( empty( $created ) ) {
-			return '';
-		}
-		return esc_html( W4OS3::date( $created ) );
+	public function format_created( $item ) {
+		// No need to filter empty values, W4OS3::date() will return an empty string
+		return esc_html( W4OS3::date( $item->Created ) );
 	}
 
 	/**
