@@ -150,7 +150,7 @@ class W4OS3_Avatar {
 					'Login'       => array(
 						'title'           => __( 'Last Seen', 'w4os' ),
 						'type'            => 'date',
-						'render_callback' => array( $this, 'Login' ),
+						'render_callback' => array( $this, 'last_seen' ),
 						'size'            => '10%',
 						'sortable'        => true,
 						'order'           => 'DESC',
@@ -160,6 +160,7 @@ class W4OS3_Avatar {
 						'type'     => 'date',
 						'size'     => '10%',
 						'sortable' => true,
+						'render_callback' => array( $this, 'Created' ),
 					),
 				),
 			)
@@ -266,12 +267,23 @@ class W4OS3_Avatar {
 	 * Format the last seen date.
 	 */
 	public function last_seen( $item ) {
-		$last_seen = intval( $item->last_seen );
-		if ( $last_seen === 0 ) {
-			return 'Never';
+		$time = max( $item->Login, $item->Logout );
+		// $time = max( intval($item->Login), intval($item->Created) );
+		if ( empty( $time ) ) {
+			return '';
 		}
-		$last_seen = W4OS3::date( $last_seen );
-		return esc_html( $last_seen );
+		return esc_html( W4OS3::date( $time ) );
+	}
+
+	/**
+	 * Format the created date.
+	 */
+	public function Created( $item ) {
+		$created = $item->Created;
+		if ( empty( $created ) ) {
+			return '';
+		}
+		return esc_html( W4OS3::date( $created ) );
 	}
 
 	/**
