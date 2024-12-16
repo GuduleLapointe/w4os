@@ -146,6 +146,8 @@ function w4os_add_crossorigin( $tag, $handle ) {
 	return $tag;
 }
 
+w4os_check_requirements();
+
 /**
  * Rewrite rules after any version update or if explicitely requested
  */

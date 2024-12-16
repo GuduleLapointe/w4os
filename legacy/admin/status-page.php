@@ -9,48 +9,6 @@ $count = w4os_count_users();
 ?><div class="w4os-status-page wrap">
 	<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 	<p><?php echo W4OS_PLUGIN_NAME . ' ' . W4OS_VERSION; ?></p>
-	<?php
-	$errors             = array();
-	$php_missing_module = __( "%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support resources for specific instructions.", 'w4os' );
-	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
-		$errors[] = sprintf(
-			$php_missing_module,
-			'PHP xml-rpc',
-		);
-	}
-	if ( ! function_exists( 'curl_init' ) ) {
-		$errors[] = sprintf(
-			$php_missing_module,
-			'PHP curl',
-		);
-	}
-	if ( ! extension_loaded( 'imagick' ) ) {
-		$errors[] = sprintf(
-			$php_missing_module,
-			'ImageMagick',
-		);
-	}
-	$permalink_structure = get_option( 'permalink_structure' );
-	if ( empty( $permalink_structure ) ) {
-		// TRANSLATORS: The text inside the square brackets [] will be linked to the WordPress permalink settings page.
-		$errors[] = preg_replace(
-			'/\[(.*)\]/',
-			'<a href="' . admin_url( 'options-permalink.php' ) . '">$1</a>',
-			__( "Permalinks are not enabled. Choose any permalink structure other than 'Plain' in the [permalink settings page].</a>", 'w4os' ),
-		);
-	}
-	if ( ! empty( $errors ) ) {
-		printf(
-			'<style>
-		</style>'
-		);
-		printf(
-			'<div class="warning error notice notice-error"><h3>%s</h3><ul class=warning-list><li>%s</li></ul></div>',
-			__( 'Requirements not met for w4os plugin', 'w4os' ),
-			join( '</li><li>', $errors ),
-		);
-	}
-	?>
 	<div class=content>
 	<?php if ( W4OS_DB_CONNECTED ) { ?>
 		<div class=column>

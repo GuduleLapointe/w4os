@@ -793,3 +793,44 @@ function w4os_camelcase( $string ) {
 	}
 	return str_replace( ' ', '', ucwords( str_replace( '-', ' ', sanitize_title( $string ) ) ) );
 }
+
+function w4os_check_requirements() {
+	$errors             = array();
+	$php_missing_module = __( "%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support resources for specific instructions.", 'w4os' );
+	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
+		$errors[] = sprintf(
+			$php_missing_module,
+			'PHP xml-rpc',
+		);
+	}
+	if ( ! function_exists( 'curl_init' ) ) {
+		$errors[] = sprintf(
+			$php_missing_module,
+			'PHP curl',
+		);
+	}
+	if ( ! extension_loaded( 'imagick' ) ) {
+		$errors[] = sprintf(
+			$php_missing_module,
+			'ImageMagick',
+		);
+	}
+	$permalink_structure = get_option( 'permalink_structure' );
+	if ( empty( $permalink_structure ) ) {
+		// TRANSLATORS: %s will be replaced by permalink page link.
+		$errors[] = sprintf(
+			__( "Permalinks are not enabled. They are required for proper operations. Choose any permalink structure other than 'Plain' in %s.</a>", 'w4os' ),
+			'<a href="' . admin_url( 'options-permalink.php' ) . '">' . __( 'Permalink settings page', 'w4os' ) . '</a>',
+		);
+	}
+	if ( ! empty( $errors ) ) {
+		w4os_admin_notice(
+			sprintf(
+				'<strong>%s</strong><ul class=warning-list><li>%s</li></ul>',
+				__( 'Requirements not met for w4os plugin', 'w4os' ),
+				join( '</li><li>', $errors ),
+			),
+			'error',
+		);
+	}
+}
