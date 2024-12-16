@@ -395,6 +395,9 @@ add_action(
 					sort( $column_values );
 
 					foreach ( $column_values as $value ) {
+						if (empty($value)) {
+							continue;
+						}
 						$count = 0;
 						foreach ( $items as $item ) {
 							if ( $item->$view_column === $value ) {

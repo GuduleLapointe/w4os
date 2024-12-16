@@ -109,7 +109,7 @@ class W4OS3_Avatar {
 						'order'      => 'ASC', // optional, defaults to 'ASC'
 						'searchable' => true, // optional, defaults to false
 						// 'search_column' => 'avatarName', // optional, defaults to column key, use 'callback' to use render_callback value
-						'filterable' => true, // optional, defaults to false, enable action links filter
+						// 'filterable' => false, // deprecated, use 'views' instead
 						// 'render_callback' => [ $this, 'avatar_name_column' ], // optional, defaults to 'column_' . $key
 						'size'       => null, // optional, defaults to null (auto)
 					),
@@ -118,7 +118,6 @@ class W4OS3_Avatar {
 						// 'type' => 'email',
 						'sortable'   => true,
 						'searchable' => true,
-						'filterable' => true,
 						// 'size' => '20%',
 					),
 					'avatar_type' => array(
