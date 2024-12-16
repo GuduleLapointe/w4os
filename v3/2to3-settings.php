@@ -73,7 +73,7 @@ class W4OS3_Settings {
 	public function get_settings( $menu_slug = '' ) {
 		$settings = apply_filters( 'w4os_settings', array() );
 		
-		if ( ! empty( $menu_slug ) ) {
+		if ( ! empty( $menu_slug ) && isset( $settings[ $menu_slug ] ) ) {
 			$settings[ $menu_slug ] = wp_parse_args(
 				$settings[ $menu_slug ],
 				array(
