@@ -177,6 +177,9 @@ function w4os_transient_user_notice ( $notice, $class = 'info', $dismissible = t
 function w4os_get_user_notices( $echo = false ) {
 	$transient_key = sanitize_title( W4OS_PLUGIN_NAME . '_user_notices' );
 	$queue         = get_transient( $transient_key );
+	if ( empty( $queue ) ) {
+		return;
+	}
 	$notices = [];
 	foreach ( $queue as $hash => $notice ) {
 		if ( ! is_array( $notice ) ) {
