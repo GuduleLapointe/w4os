@@ -147,20 +147,28 @@ class W4OS3_Region {
 						'order'           => 'ASC', // optional, defaults to 'ASC'
 						'searchable'      => true, // optional, defaults to false
 						'search_column'   => 'regionName', // optional, defaults to column key, use 'callback' to use render_callback value
-						'filterable'      => true, // optional, defaults to false, enable action links filter
+						// 'filterable'      => false, // optional, defaults to false, enable filter menu
 						'render_callback' => array( $this, 'region_name_column' ), // optional, defaults to 'column_' . $key
 						'size'            => null, // optional, defaults to null (auto)
 					),
 					'owner_name'    => array(
-						'title'      => __( 'Owner', 'w4os' ),
+						'title'      => _n( 'Owner', 'Owners', 1, 'w4os' ),
+						'plural'	 => _n( 'Owner', 'Owners', 2, 'w4os' ), // Optional, defaults to singular form
 						'sortable'   => true,
 						'searchable' => true,
-						'order'      => 'ASC',
 						'filterable' => true,
+						'order'      => 'ASC',
 					),
 					'teleport_link' => array(
 						'title'           => __( 'Teleport', 'w4os' ),
 						'render_callback' => array( $this, 'region_tp_link' ),
+					),
+					'serverURI'    => array(
+						'title'           => _n( 'Simulator', 'Simulators', 1, 'w4os' ),
+						'plural'          => _n( 'Simulator', 'Simulators', 2, 'w4os' ),
+						'render_callback' => array( $this, 'format_server_uri' ),
+						'sortable'		=> true,
+						'filterable'	=> true,
 					),
 					'serverPort'    => array(
 						'title'           => __( 'Internal Port', 'w4os' ),
@@ -195,9 +203,10 @@ class W4OS3_Region {
 		$regionsTable->styles();
 		?>
 
-		<?php $regionsTable->views(); ?>
 		<div class="wrap w4os-list w4os-list-regions">
-			<form method="post">
+			<?php $regionsTable->views(); ?>
+			<form method="get">
+				<input type="hidden" name="page" value="w4os-regions">
 				<?php
 					$regionsTable->search_box( 'Search Regions', 's' ); // Add search box
 					$regionsTable->display();
@@ -279,7 +288,7 @@ class W4OS3_Region {
 	/**
 	 * Format the server URI column in a lighter way.
 	 */
-	public function server_uri( $item ) {
+	public function format_server_uri( $item ) {
 		$server_uri = $item->serverURI;
 		if ( empty( $server_uri ) ) {
 			return;

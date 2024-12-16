@@ -194,8 +194,32 @@ add_action(
 					}
 				}
 
+				// Handle filters for 'filterable' and 'views' columns
+				foreach ( $this->admin_columns as $key => $column ) {
+					$filter_key = 'filter_' . $key;
+					if ( isset( $column['filterable'] ) && $column['filterable'] === true ) {
+						if ( isset( $_GET[ $filter_key ] ) && $_GET[ $filter_key ] !== '' ) {
+							$filter_value = sanitize_text_field( $_GET[ $filter_key ] );
+
+							if ( isset( $column['render_callback'] ) && is_callable( $column['render_callback'] ) ) {
+								$this->php_filters[] = array(
+									'column' => $key,
+									'value'  => $filter_value,
+								);
+							} else {
+								// Add SQL condition
+								$conditions[] = $this->db->prepare( "`$key` = %s", $filter_value );
+							}
+						}
+					}
+				}
+
 				if ( ! empty( $conditions ) ) {
-					$query .= ' WHERE ' . implode( ' AND ', $conditions );
+					if ( stripos( $query, 'WHERE' ) !== false ) {
+						$query .= ' AND ' . implode( ' AND ', $conditions );
+					} else {
+						$query .= ' WHERE ' . implode( ' AND ', $conditions );
+					}
 				}
 
 				$orderby     = null;
@@ -356,11 +380,13 @@ add_action(
 				}
 				$page_url = ( isset( $_GET['page'] ) ) ? admin_url( 'admin.php?page=' . $_GET['page'] ) : $_SERVER['REQUEST_URI'];
 
-				// Determine the current filter by scanning $_GET for 'filter_' parameters
+				// Determine the current filter and key
 				$current_filter = '';
+				$current_key = '';
 				foreach ( $this->views_columns as $column => $enable_views ) {
 					if ( ! empty( $_GET[ 'filter_' . $column ] ) ) {
 						$current_filter = sanitize_text_field( $_GET[ 'filter_' . $column ] );
+						$current_key = $column;
 						break;
 					}
 				}
@@ -404,10 +430,13 @@ add_action(
 								$count++;
 							}
 						}
+						// Determine if this view is current
+						$filter_url = add_query_arg( array( 'filter_' . $column => $value ), $page_url );
+						$is_current = ( $current_key === $column && $current_filter === $value ) ? 'current' : '';
 						$views[ $value ] = sprintf(
 							'<a href="%s" class="%s">%s <span class="count">(%s)</span></a>',
-							esc_url( add_query_arg( array( 'filter_' . $column => $value ) ) ),
-							( $current_filter === $value ) ? 'current' : '',
+							esc_url( $filter_url ),
+							$is_current,
 							esc_html( $value ),
 							$count
 						);
@@ -422,8 +451,78 @@ add_action(
 			 */
 			function extra_tablenav( $which ) {
 				if ( $which === 'top' ) {
-					// Tbc
+					 // Add filter menus next to bulk actions
+					 foreach ( $this->admin_columns as $key => $column ) {
+						if ( isset( $column['filterable'] ) && $column['filterable'] === true ) {
+							// Get unique values for the column
+							$options = $this->get_unique_column_values( $key, $column );
+
+							$title = isset( $column['plural'] ) ? $column['plural'] : $column['title'];
+							if ( ! empty( $options ) ) {
+								$selected = isset( $_GET[ 'filter_' . $key ] ) ? sanitize_text_field( $_GET[ 'filter_' . $key ] ) : '';
+								echo ' <label for="filter_' . esc_attr( $key ) . '" class="screen-reader-text">' . esc_html__( 'Filter by ' . $column['title'], 'w4os' ) . '</label>';
+								echo '<select name="filter_' . esc_attr( $key ) . '" id="filter_' . esc_attr( $key ) . '">';
+								echo '<option value="">' . esc_html__( sprintf( __('All %s', 'w4os'), $title ) ) . '</option>';
+								foreach ( $options as $value ) {
+									if ( $value === '' ) {
+										continue;
+									}
+									$option_value = esc_attr( $value );
+									$option_label = esc_html( $value );
+									$is_selected  = selected( $selected, $value, false );
+									echo '<option value="' . $option_value . '" ' . $is_selected . '>' . $option_label . '</option>';
+								}
+								echo '</select> ';
+							}
+						}
+					}
+					// Add submit button for filters
+					
+					echo " "; submit_button( __( 'Filter', 'w4os' ), 'button', 'filter_action', false );
+
+					// Add 'Clear Filters' button to reset filter inputs and submit the form
+					echo ' <button type="button" class="button" onclick="
+						var form = this.form;
+						form.querySelectorAll(\'select, input[name^=filter_], input[name=\'s\']\').forEach(function(el) {
+							el.value = \'\';
+						});
+						form.submit();
+					">' . __( 'Clear Filters', 'w4os' ) . '</button>';
 				}
+			}
+
+			/**
+			 * Get unique values for a column to populate filter dropdowns.
+			 */
+			protected function get_unique_column_values( $key, $column ) {
+				$values = array();
+				$query = $this->query;
+				// Remove LIMIT clause if present
+				$query = preg_replace( '/LIMIT\s+\d+(\s*,\s*\d+)?$/i', '', $query );
+
+				// Remove ORDER BY clause if present
+				$query = preg_replace( '/ORDER\s+BY\s+.*$/i', '', $query );
+
+				if ( isset( $column['render_callback'] ) && is_callable( $column['render_callback'] ) ) {
+					// Fetch all items and use render callback to get unique values
+					$results = $this->db->get_results( $query );
+					foreach ( $results as $item ) {
+						$value = call_user_func( $column['render_callback'], $item );
+						if ( $value !== '' && ! in_array( $value, $values, true ) ) {
+							$values[] = $value;
+						}
+					}
+				} else {
+					// Get unique values directly from the database for this column
+					$results = $this->db->get_col( "SELECT DISTINCT `$key` FROM ({$query}) AS subquery" );
+					foreach ( $results as $value ) {
+						if ( $value !== '' && ! in_array( $value, $values, true ) ) {
+							$values[] = $value;
+						}
+					}
+				}
+				sort( $values );
+				return $values;
 			}
 		}
 	}
