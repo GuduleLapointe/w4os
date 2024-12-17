@@ -52,3 +52,7 @@ _config.yaml export-ignore
 Gemfile export-ignore
 /v3/ export-ignore
 .gitattributes export-ignore
+_config.yaml export-ignore
+_includes export-ignore
+_layouts export-ignore
+_sass export-ignore

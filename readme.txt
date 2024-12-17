@@ -210,7 +210,9 @@ or not. In either case, idk&idc.
 
 == Changelog ==
 
-= Unreleased (2.9.0-dev.1362) =
+= Unreleased (2.9.0-dev.1377) =
+* fix requirements alert shown only on w4os status page
+* fix #52 don't load templates.php for feeds and admin pages
 * fix avatar registration fail on other pages than canonical profile (issue #72)
 * fix password verification on profile avatar registration form
 * fix user notices not displayed on profile page
