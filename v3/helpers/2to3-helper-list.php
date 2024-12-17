@@ -483,7 +483,7 @@ add_action(
 									esc_html__( sprintf( __('All %s', 'w4os'), $title ) )
 								);
 								foreach ( $options as $value ) {
-									if ( $value === '' ) {
+									if ( trim($value) === '' ) {
 										continue;
 									}
 									$option_value = esc_attr( $value );
