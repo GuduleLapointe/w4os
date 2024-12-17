@@ -243,14 +243,14 @@ class W4OS3 {
 		$src    = preg_match( '/^http/', $src ) ? $src : W4OS_PLUGIN_DIR_URL . $src;
 		$hook   = is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts';
 		if ( function_exists( 'wp_enqueue_script' ) ) {
-			error_log( 'Enqueueing script: ' . $handle . ' ' . $src );
+			// error_log( 'Enqueueing script: ' . $handle . ' ' . $src );
 			wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
 			return;
 		}
 		add_action(
 			$hook,
 			function () use ( $handle, $src, $deps, $ver, $in_footer ) {
-				error_log( 'Hook Enqueueing script: ' . $handle . ' ' . $src );
+				// error_log( 'Hook Enqueueing script: ' . $handle . ' ' . $src );
 				wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
 			}
 		);
