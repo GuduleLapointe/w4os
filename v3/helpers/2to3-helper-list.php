@@ -453,7 +453,7 @@ add_action(
 			/**
 			 * Add extra markup in the toolbars before or after the list (filter buttons, filter menus, pagination, etc.)
 			 */
-			function extra_tablenav( $which ) {
+			protected function extra_tablenav( $which ) {
 				if ( $which === 'top' ) {
 					// Add filter menus next to bulk actions
 					$filters = array();
@@ -474,7 +474,7 @@ add_action(
 								$selected = isset( $_GET[ 'filter_' . $key ] ) ? sanitize_text_field( $_GET[ 'filter_' . $key ] ) : '';
 								$filter .= sprintf(
 									'<label for="%s" class="screen-reader-text">%s</label>
-									<select name="%s" id="filter_%s">
+									<select name="%s" id="%s" class="filter-field">
 									<option value="">%s</option>',
 									$menu_id,
 									esc_html__( 'Filter by ' . $column['title'], 'w4os' ),
@@ -505,22 +505,16 @@ add_action(
 						// Add filters submit button
 						submit_button( __( 'Filter', 'w4os' ), 'button', 'filter_action', false );
 
-						// Add filters clear button
-						$filters_ids_js = str_replace('"', "'", json_encode( $filters_ids ) );
+						// Add filters clear button with 'reset-filters' class and remove onclick
 						$clear_filters_button = sprintf(
-							'<button type="button" class="button" onclick="
-							var form=this.form; 
-							var filterMenus=%s; 
-							filterMenus.forEach(function(menuId){ 
-								var select=form.querySelector(\'#\' + menuId); 
-								if(select){ select.value=\'\'; } 
-							}); 
-							form.submit();">%s</button>',
-							$filters_ids_js,
+							'<button type="button" class="button reset-filters">%s</button>',
 							__( 'Reset Filters', 'w4os' )
 						);
 						echo " " . $clear_filters_button;
+
 						echo '</div>';
+
+						W4OS3::enqueue_script( 'w4os-filter-actions', 'v3/helpers/js/admin-list-filter-actions.js' );
 					}
 				}
 			}
