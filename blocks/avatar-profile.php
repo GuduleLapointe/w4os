@@ -176,10 +176,10 @@ function w4os_avatar_profile( $atts = array() ) {
 }
 
 function w4os_avatar_profile_html( $atts = array(), $args = array() ) {
-	if( ! function_exists( 'w4os_profile_display' ) ) {
+	if ( ! function_exists( 'w4os_profile_display' ) ) {
 		return '';
 	}
-	
+
 	$atts         = wp_parse_args(
 		array_filter( $atts ),
 		w4os_avatar_profile_defaults(),

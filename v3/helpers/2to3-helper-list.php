@@ -386,11 +386,11 @@ add_action(
 				}
 				// Determine the current filter and key
 				$current_filter = '';
-				$current_key = '';
+				$current_key    = '';
 				foreach ( $this->views_columns as $column => $enable_views ) {
 					if ( ! empty( $_GET[ 'filter_' . $column ] ) ) {
 						$current_filter = sanitize_text_field( $_GET[ 'filter_' . $column ] );
-						$current_key = $column;
+						$current_key    = $column;
 						break;
 					}
 				}
@@ -425,7 +425,7 @@ add_action(
 					sort( $column_values );
 
 					foreach ( $column_values as $value ) {
-						if (empty($value)) {
+						if ( empty( $value ) ) {
 							continue;
 						}
 						$count = 0;
@@ -435,8 +435,8 @@ add_action(
 							}
 						}
 						// Determine if this view is current
-						$filter_url = add_query_arg( array( 'filter_' . $column => $value ), $page_url );
-						$is_current = ( $current_key === $column && $current_filter === $value ) ? 'current' : '';
+						$filter_url      = add_query_arg( array( 'filter_' . $column => $value ), $page_url );
+						$is_current      = ( $current_key === $column && $current_filter === $value ) ? 'current' : '';
 						$views[ $value ] = sprintf(
 							'<a href="%s" class="%s">%s <span class="count">(%s)</span></a>',
 							esc_url( $filter_url ),
@@ -456,23 +456,23 @@ add_action(
 			protected function extra_tablenav( $which ) {
 				if ( $which === 'top' ) {
 					// Add filter menus next to bulk actions
-					$filters = array();
+					$filters     = array();
 					$filters_ids = array(); // Initialize array to be used by Clear Filters button
 					foreach ( $this->admin_columns as $key => $column ) {
 						if ( isset( $column['filterable'] ) && $column['filterable'] === true ) {
 							// Get unique values for the column
 							$options = $this->get_unique_column_values( $key, $column );
-							
+
 							$menu_id = esc_attr( 'filter_' . $key );
-							$title = isset( $column['plural'] ) ? $column['plural'] : $column['title'];
+							$title   = isset( $column['plural'] ) ? $column['plural'] : $column['title'];
 							if ( ! empty( $options ) ) {
-								if ( count ( $options ) == 1 ) {
+								if ( count( $options ) == 1 ) {
 									// Skip single value filters
 									continue;
 								}
-								$filter = '';
+								$filter   = '';
 								$selected = isset( $_GET[ 'filter_' . $key ] ) ? sanitize_text_field( $_GET[ 'filter_' . $key ] ) : '';
-								$filter .= sprintf(
+								$filter  .= sprintf(
 									'<label for="%s" class="screen-reader-text">%s</label>
 									<select name="%s" id="%s" class="filter-field">
 									<option value="">%s</option>',
@@ -480,26 +480,26 @@ add_action(
 									esc_html__( 'Filter by ' . $column['title'], 'w4os' ),
 									$menu_id,
 									esc_attr( $key ),
-									esc_html__( sprintf( __('All %s', 'w4os'), $title ) )
+									esc_html__( sprintf( __( 'All %s', 'w4os' ), $title ) )
 								);
 								foreach ( $options as $value ) {
-									if ( trim($value) === '' ) {
+									if ( trim( $value ) === '' ) {
 										continue;
 									}
 									$option_value = esc_attr( $value );
 									$option_label = esc_html( $value );
 									$is_selected  = selected( $selected, $value, false );
-									$filter .= '<option value="' . $option_value . '" ' . $is_selected . '>' . $option_label . '</option>';
+									$filter      .= '<option value="' . $option_value . '" ' . $is_selected . '>' . $option_label . '</option>';
 								}
 								$filter .= '</select>';
 
-								$filters[] = $filter;
+								$filters[]     = $filter;
 								$filters_ids[] = $menu_id;
 							}
 						}
 					}
-					
-					if( ! empty( $filters ) ) {
+
+					if ( ! empty( $filters ) ) {
 						echo '<div class="alignleft actions w4os-filter-actions">';
 						echo implode( ' ', $filters );
 						// Add filters submit button
@@ -510,7 +510,7 @@ add_action(
 							'<button type="button" class="button reset-filters">%s</button>',
 							__( 'Reset Filters', 'w4os' )
 						);
-						echo " " . $clear_filters_button;
+						echo ' ' . $clear_filters_button;
 
 						echo '</div>';
 
@@ -524,7 +524,7 @@ add_action(
 			 */
 			protected function get_unique_column_values( $key, $column ) {
 				$values = array();
-				$query = $this->query;
+				$query  = $this->query;
 				// Remove LIMIT clause if present
 				$query = preg_replace( '/LIMIT\s+\d+(\s*,\s*\d+)?$/i', '', $query );
 

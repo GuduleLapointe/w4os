@@ -82,35 +82,35 @@ if ( get_option( 'w4os_profile_page' ) == 'provide' ) {
 define( 'W4OS_GRID_INFO', w4os_get_grid_info() );
 
 function w4os_is_front_end() {
-	# Exclude admin and feeds
+	// Exclude admin and feeds
 	if ( is_admin() || is_feed() ) {
 		return false;
 	}
-	# Exclude cron
+	// Exclude cron
 	if ( defined( 'DOING_CRON' ) ) {
 		return false;
 	}
-	# Exclude ajax, autosave, script debug, wp debug, etc.
+	// Exclude ajax, autosave, script debug, wp debug, etc.
 	if ( defined( 'DOING_AJAX' ) || defined( 'DOING_AUTOSAVE' ) ) {
 		return false;
 	}
-	if ( defined( 'WP_IMPORTING' ) || defined( 'WP_INSTALLING' ) || defined( 'WP_REPAIRING' ) 
-	|| defined( 'WP_SETUP_CONFIG' ) || defined( 'WP_UNINSTALL_PLUGIN' ) || defined( 'WP_INSTALL_PLUGIN' ) 
-	|| defined( 'WP_LOAD_IMPORTERS' ) || defined( 'WP_INSTALLING_NETWORK' ) 
-	|| defined( 'WP_INSTALLING_UPDATER' ) || defined( 'WP_INSTALLING_UPDATES' ) || defined( 'WP_INSTALLING_AUTO_UPDATER' ) || defined( 'WP_INSTALLING_AUTO_UPDATE' ) 
+	if ( defined( 'WP_IMPORTING' ) || defined( 'WP_INSTALLING' ) || defined( 'WP_REPAIRING' )
+	|| defined( 'WP_SETUP_CONFIG' ) || defined( 'WP_UNINSTALL_PLUGIN' ) || defined( 'WP_INSTALL_PLUGIN' )
+	|| defined( 'WP_LOAD_IMPORTERS' ) || defined( 'WP_INSTALLING_NETWORK' )
+	|| defined( 'WP_INSTALLING_UPDATER' ) || defined( 'WP_INSTALLING_UPDATES' ) || defined( 'WP_INSTALLING_AUTO_UPDATER' ) || defined( 'WP_INSTALLING_AUTO_UPDATE' )
 	|| defined( 'WP_INSTALLING_AUTO_UPDATES' ) || defined( 'WP_INSTALLING_AUTO_UPDATE_CORE' ) ) {
 		return false;
 	}
 
-	if (preg_match ( '/\.js?/', $_SERVER['REQUEST_URI'] ) ) {
+	if ( preg_match( '/\.js?/', $_SERVER['REQUEST_URI'] ) ) {
 		return false;
 	}
 
-	# Include front-end
+	// Include front-end
 	return true;
 }
 
-# Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.
+// Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.
 if ( w4os_is_front_end() ) {
 	require_once dirname( __DIR__ ) . '/templates/templates.php';
 }

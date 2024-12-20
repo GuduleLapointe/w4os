@@ -23,3 +23,7 @@ src/blocks/popular-places/style.js
 src/blocks/web-search/editor.js
 src/blocks/web-search/index.js
 src/blocks/web-search/style.js
+lib/package-updater.php
+lib/plugin-update-checker/*
+lib/wp-package-updater/*
+v3/helpers/js/admin-list-filter-actions.js

@@ -41,32 +41,32 @@ class W4OS3_Avatar {
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-avatars'] = array(
-			'parent_slug' => 'w4os',
-			'page_title'  => __( 'Avatars', 'w4os' ) . ' (dev)',
-			'menu_title'  => '(dev) ' . __( 'Avatars', 'w4os' ),
+			'parent_slug'       => 'w4os',
+			'page_title'        => __( 'Avatars', 'w4os' ) . ' (dev)',
+			'menu_title'        => '(dev) ' . __( 'Avatars', 'w4os' ),
 			// 'capability'  => 'manage_options',
-			'menu_slug'   => 'w4os-avatars',
+			'menu_slug'         => 'w4os-avatars',
 			// 'callback'    => array( $this, 'render_settings_page' ),
 			// 'position'    => 3,
 			'sanitize_callback' => array( $this, 'sanitize_options' ),
-			'tabs'        => array(
+			'tabs'              => array(
 				'avatars'  => array(
-					'title' => __( 'List', 'w4os' ), // Added 'Avatars' tab
+					'title'    => __( 'List', 'w4os' ), // Added 'Avatars' tab
 					'callback' => array( $this, 'display_avatars_list' ),
 				),
 				'settings' => array(
-					'title' => __( 'Settings', 'w4os' ),
+					'title'  => __( 'Settings', 'w4os' ),
 					'fields' => array(
-						'create_wp_account' => array(
+						'create_wp_account'      => array(
 							'label'       => __( 'Create WP accounts', 'w4os' ),
 							'type'        => 'checkbox',
-							'options'       => [ __( 'Create website accounts for avatars.', 'w4os' ) ],
+							'options'     => array( __( 'Create website accounts for avatars.', 'w4os' ) ),
 							'description' => __( 'This will create a WordPress account for avatars that do not have one. The password will synced between site and OpenSimulator.', 'w4os' ),
 						),
 						'allow_multiple_avatars' => array(
 							'label'       => __( 'Allow multiple avatars', 'w4os' ),
 							'type'        => 'checkbox',
-							'options'       => [ __( 'Allow users to create multiple avatars.', 'w4os' ) ],
+							'options'     => array( __( 'Allow users to create multiple avatars.', 'w4os' ) ),
 							'description' => __( 'This will allow users to have more than one avatar on the site.', 'w4os' )
 							. ' ' . __( 'Disabling the option can only be enforced for avatars created through the website.', 'w4os' ),
 						),
@@ -146,7 +146,7 @@ class W4OS3_Avatar {
 						'size'            => '8%',
 						'views'           => 'callback', // Add subsubsub links based on the rendered value
 					),
-					'last_seen'       => array(
+					'last_seen'   => array(
 						'title'           => __( 'Last Seen', 'w4os' ),
 						'type'            => 'date',
 						'render_callback' => array( $this, 'format_last_seen' ),
@@ -155,10 +155,10 @@ class W4OS3_Avatar {
 						'order'           => 'DESC',
 					),
 					'Created'     => array(
-						'title'    => __( 'Created', 'w4os' ),
-						'type'     => 'date',
-						'size'     => '10%',
-						'sortable' => true,
+						'title'           => __( 'Created', 'w4os' ),
+						'type'            => 'date',
+						'size'            => '10%',
+						'sortable'        => true,
 						'render_callback' => array( $this, 'format_created' ),
 					),
 				),
@@ -182,7 +182,7 @@ class W4OS3_Avatar {
 
 	/**
 	 * Sanitize the options for this specific page.
-	 * 
+	 *
 	 * The calling page is not available in this method, so we need to use the option name to get the options.
 	 */
 	public static function sanitize_options( $input ) {
@@ -240,10 +240,10 @@ class W4OS3_Avatar {
 		// $models = W4OS3_Model::get_models();
 		// $email  = $item->Email;
 		// if ( W4OS3_Model::is_model( $item ) ) {
-		// 	return __( 'Default Model', 'w4os' );
+		// return __( 'Default Model', 'w4os' );
 		// }
 		// if ( empty( $email ) ) {
-		// 	return __( 'Service Account', 'w4os' );
+		// return __( 'Service Account', 'w4os' );
 		// }
 		// return __( 'User Avatar', 'w4os' );
 	}

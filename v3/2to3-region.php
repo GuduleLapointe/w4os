@@ -67,38 +67,38 @@ class W4OS3_Region {
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-regions'] = array(
-			'parent_slug' => 'w4os',
-			'page_title'  => __( 'Regions', 'w4os' ) . ' (dev)',
-			'menu_title'  => '(dev) ' . __( 'Regions', 'w4os' ),
+			'parent_slug'       => 'w4os',
+			'page_title'        => __( 'Regions', 'w4os' ) . ' (dev)',
+			'menu_title'        => '(dev) ' . __( 'Regions', 'w4os' ),
 			// 'capability'  => 'manage_options',
-			'menu_slug'   => 'w4os-regions',
+			'menu_slug'         => 'w4os-regions',
 			// 'callback'    => array( $this, 'render_settings_page' ),
 			// 'position'    => 3,
 			'sanitize_callback' => array( $this, 'sanitize_options' ),
-			'tabs' => array(
+			'tabs'              => array(
 				'regions'  => array(
-					'title' => __( 'List', 'w4os' ), // Added 'Regions' tab
+					'title'    => __( 'List', 'w4os' ), // Added 'Regions' tab
 					'callback' => array( $this, 'display_regions_list' ),
 				),
 				'settings' => array(
-					'title' => __( 'Settings', 'w4os' ),
+					'title'  => __( 'Settings', 'w4os' ),
 					'fields' => array(
 						array(
-							'id'          => 'make_coffee',
-							'title'        => __( 'Make Coffee', 'w4os' ),
-							'type'        => 'checkbox',
-							'label'       => __( 'Make coffee after boot', 'w4os' ),
-							// 'options'	 => array(
-							// 	1 => __('Yes, please', 'w4os'),
+							'id'    => 'make_coffee',
+							'title' => __( 'Make Coffee', 'w4os' ),
+							'type'  => 'checkbox',
+							'label' => __( 'Make coffee after boot', 'w4os' ),
+							// 'options'     => array(
+							// 1 => __('Yes, please', 'w4os'),
 							// ),
 							// 'description' => __( 'This is a placeholder parameter.', 'w4os' ),
 						),
 						// array(
-						// 	'id'          => 'w4os_settings_region_settings_field_2',
-						// 	'name'        => __( 'First Tab Field 2', 'w4os' ),
-						// 	'type'        => 'checkbox',
-						// 	'label'       => __( 'Enable settings option 2.', 'w4os' ),
-						// 	'description' => __( 'This is a placeholder parameter.', 'w4os' ),
+						// 'id'          => 'w4os_settings_region_settings_field_2',
+						// 'name'        => __( 'First Tab Field 2', 'w4os' ),
+						// 'type'        => 'checkbox',
+						// 'label'       => __( 'Enable settings option 2.', 'w4os' ),
+						// 'description' => __( 'This is a placeholder parameter.', 'w4os' ),
 						// ),
 					),
 				),
@@ -109,7 +109,7 @@ class W4OS3_Region {
 
 	/**
 	 * Sanitize the options for this specific page.
-	 * 
+	 *
 	 * The calling page is not available in this method, so we need to use the option name to get the options.
 	 */
 	public static function sanitize_options( $input ) {
@@ -152,7 +152,7 @@ class W4OS3_Region {
 					),
 					'owner_name'    => array(
 						'title'      => _n( 'Owner', 'Owners', 1, 'w4os' ),
-						'plural'	 => _n( 'Owner', 'Owners', 2, 'w4os' ), // Optional, defaults to singular form
+						'plural'     => _n( 'Owner', 'Owners', 2, 'w4os' ), // Optional, defaults to singular form
 						'sortable'   => true,
 						'searchable' => true,
 						'filterable' => true,
@@ -162,18 +162,18 @@ class W4OS3_Region {
 						'title'           => __( 'Teleport', 'w4os' ),
 						'render_callback' => array( $this, 'region_tp_link' ),
 					),
-					'serverURI'    => array(
+					'serverURI'     => array(
 						'title'           => _n( 'Simulator', 'Simulators', 1, 'w4os' ),
 						'plural'          => _n( 'Simulator', 'Simulators', 2, 'w4os' ),
 						'render_callback' => array( $this, 'format_server_uri' ),
-						'sortable'		=> true,
-						'filterable'	=> true,
+						'sortable'        => true,
+						'filterable'      => true,
 					),
 					'serverPort'    => array(
-						'title'           => __( 'Internal Port', 'w4os' ),
-						'size'            => '8%',
+						'title' => __( 'Internal Port', 'w4os' ),
+						'size'  => '8%',
 					),
-					'size' 	   => array(
+					'size'          => array(
 						'title'           => __( 'Size', 'w4os' ),
 						'sortable'        => true,
 						'size'            => '8%',
@@ -229,7 +229,7 @@ class W4OS3_Region {
 	 * Format the Region size.
 	 */
 	public function format_region_size( $item ) {
-		if ( empty ( $item->size ) ) {
+		if ( empty( $item->size ) ) {
 			return null;
 		}
 

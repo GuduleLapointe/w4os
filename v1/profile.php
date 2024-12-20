@@ -392,23 +392,23 @@ function w4os_create_avatar( $user, $params ) {
 	$firstname = trim( $params['w4os_firstname'] );
 	$lastname  = trim( $params['w4os_lastname'] );
 	$model     = trim( ( $params['w4os_model'] ?? '' ) );
-	$password = stripcslashes( $params['w4os_password_1'] );
-	
+	$password  = stripcslashes( $params['w4os_password_1'] );
+
 	if ( empty( $model ) ) {
 		$model = W4OS_DEFAULT_AVATAR;
 	}
 
 	// Check required fields
-	if ( empty($firstname ) || empty( $lastname ) ) {
+	if ( empty( $firstname ) || empty( $lastname ) ) {
 		$errors = true;
-		w4os_user_notice( __( 'First and Last names are required', 'w4os' ), 'fail' ); 
+		w4os_user_notice( __( 'First and Last names are required', 'w4os' ), 'fail' );
 	}
-	if ( empty ( $password ) ) {
+	if ( empty( $password ) ) {
 		$errors = true;
 		w4os_user_notice( __( 'Password required', 'w4os' ), 'error' );
-	} else if ( ! wp_check_password( $params['w4os_password_1'], $user->user_pass ) ) {
+	} elseif ( ! wp_check_password( $params['w4os_password_1'], $user->user_pass ) ) {
 		$errors = true;
-		w4os_user_notice( __( 'The password does not match.', 'w4os' ), 'error' ); 
+		w4os_user_notice( __( 'The password does not match.', 'w4os' ), 'error' );
 	}
 
 	if ( $errors == true ) {
@@ -709,7 +709,7 @@ function w4os_avatar_creation_form( $user ) {
 		return;
 	}
 
-	if ( isset ($_POST['w4os_update_avatar'] ) && isset( $_POST['user_id'] ) ) {
+	if ( isset( $_POST['w4os_update_avatar'] ) && isset( $_POST['user_id'] ) ) {
 		// Verify nonce
 		if ( ! wp_verify_nonce( $_POST['nonce'], 'w4os_create_avatar' ) ) {
 			w4os_user_notice( __( 'Security check failed', 'w4os' ), 'fail' );
@@ -719,13 +719,13 @@ function w4os_avatar_creation_form( $user ) {
 		}
 		w4os_profile_fields_save( $_POST['user_id'] );
 		wp_redirect( home_url( $_SERVER['REQUEST_URI'] ) );
-		die('Redirecting...');
+		die( 'Redirecting...' );
 	}
-	
+
 	global $w4osdb;
 
 	wp_enqueue_style( 'w4os-wp-forms', site_url( '/wp-admin/css/forms.min.css' ) );
-	wp_enqueue_style( 'w4os-forms', plugin_dir_url(__DIR__) . 'v3/css/forms.css', array(), time() );
+	wp_enqueue_style( 'w4os-forms', plugin_dir_url( __DIR__ ) . 'v3/css/forms.css', array(), time() );
 
 	if ( isset( $_REQUEST['w4os_firstname'] ) && isset( $_REQUEST['w4os_lastname'] ) ) {
 		$firstname = sanitize_text_field( $_REQUEST['w4os_firstname'] );
@@ -741,14 +741,15 @@ function w4os_avatar_creation_form( $user ) {
 	$firstname = sanitize_text_field( preg_replace( '/[^[:alnum:]]/', '', $firstname ) );
 	$lastname  = sanitize_text_field( preg_replace( '/[^[:alnum:]]/', '', $lastname ) );
 
-	$action   = 'w4os_create_avatar';
-	$nonce = wp_create_nonce( $action );
+	$action = 'w4os_create_avatar';
+	$nonce  = wp_create_nonce( $action );
 
-	$content = '<p>' . __( 'Choose a name below. This is how people will see you in-world.', 'w4os' ) . '</p>';
+	$content  = '<p>' . __( 'Choose a name below. This is how people will see you in-world.', 'w4os' ) . '</p>';
 	$content .= '<div class="w4os-form wrap">';
 	$content .= "<form class='edit-account' method='post'>";
 
-	$content .= sprintf( '<div class=wrap><table class="form-table">
+	$content .= sprintf(
+		'<div class=wrap><table class="form-table">
 		<tr>
 			<th scope="row"><label for="w4os_firstname">%s</label></th>
 			<td><input type="text" class="regular-text" name="w4os_firstname" id="w4os_firstname" value="%s" required /></td>
@@ -772,7 +773,8 @@ function w4os_avatar_creation_form( $user ) {
 		$lastname,
 		__( 'Confirm your password', 'w4os' ),
 		__( 'Your in-world Avatar password is the same as your password on this website.', 'w4os' ),
-		( W4OS_Model::get_models() ) ? sprintf( '<tr>
+		( W4OS_Model::get_models() ) ? sprintf(
+			'<tr>
 				<th><label for="w4os_model">%s</label></th>
 				<td>
 					<p>%s</p>
@@ -789,10 +791,10 @@ function w4os_avatar_creation_form( $user ) {
 	);
 
 	// if ( W4OS_Model::get_models() ) {
-	//   $content .= ( new W4OS_Model() )->select_model_field();
+	// $content .= ( new W4OS_Model() )->select_model_field();
 	// }
 	// $content .= '</p>';
-	
+
 	$content .= sprintf(
 		'<p class="submit">
 			<input type="hidden" name="user_id" value="%1$s">

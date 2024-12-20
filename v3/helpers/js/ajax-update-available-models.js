@@ -50,16 +50,16 @@ jQuery( document ).ready(
 			}
 		}
 
-		 // Function to update the enabled/disabled state of fields based on 'match' value
+		// Function to update the enabled/disabled state of fields based on 'match' value
 		function updateFieldStates() {
-			var currentMatch = $('input[name="w4os-avatars[models][match]"]:checked').val();
+			var currentMatch = $( 'input[name="w4os-avatars[models][match]"]:checked' ).val();
 
 			if (currentMatch === 'uuid') {
-                $('#name').closest('tr').hide();
-                $('#uuids').closest('tr').show();
+				$( '#name' ).closest( 'tr' ).hide();
+				$( '#uuids' ).closest( 'tr' ).show();
 			} else {
-                $('#uuids').closest('tr').hide();
-                $('#name').closest('tr').show();
+				$( '#uuids' ).closest( 'tr' ).hide();
+				$( '#name' ).closest( 'tr' ).show();
 			}
 		}
 

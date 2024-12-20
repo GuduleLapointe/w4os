@@ -7,8 +7,9 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-printf( '<form action="options.php" method="post">
-	<input type="hidden" name="%s[%s][prevent-empty-array]" value="1">', 
+printf(
+	'<form action="options.php" method="post">
+	<input type="hidden" name="%s[%s][prevent-empty-array]" value="1">',
 	esc_attr( $option_name ),
 	esc_attr( $selected_tab ),
 );

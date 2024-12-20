@@ -24,8 +24,8 @@ class W4OS3_Model {
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-avatars']['tabs']['models'] = array(
-			'title' => __( 'Avatar Models', 'w4os' ),
-			'after-form' => self::preview_models_block(),
+			'title'           => __( 'Avatar Models', 'w4os' ),
+			'after-form'      => self::preview_models_block(),
 			'sidebar-content' => '<p class="description"><p>' . join(
 				'</p><p>',
 				array(
@@ -85,7 +85,7 @@ class W4OS3_Model {
 			wp_send_json_error( 'Invalid action' );
 		}
 	}
-	
+
 
 	function register_tabs( $tabs ) {
 
@@ -162,12 +162,12 @@ class W4OS3_Model {
 					),
 				),
 				// array(
-				// 	'id'             => 'w4os-models-preview-container',
-				// 	'name'           => __( 'Models Preview', 'w4os' ),
-				// 	'settings_pages' => array( 'w4os-models' ),
-				// 	'class'          => 'w4os-settings no-hints',
-				// 	'type'           => 'custom_html',
-				// 	'value'          => '<div class="available-models-container">' . self::models_preview() . '</div>',
+				// 'id'             => 'w4os-models-preview-container',
+				// 'name'           => __( 'Models Preview', 'w4os' ),
+				// 'settings_pages' => array( 'w4os-models' ),
+				// 'class'          => 'w4os-settings no-hints',
+				// 'type'           => 'custom_html',
+				// 'value'          => '<div class="available-models-container">' . self::models_preview() . '</div>',
 				// ),
 			);
 
@@ -196,7 +196,8 @@ class W4OS3_Model {
 
 	public static function preview_models_block() {
 		$models_preview = self::models_preview();
-		return sprintf( '<div id="models-preview"><h2>%s</h2>
+		return sprintf(
+			'<div id="models-preview"><h2>%s</h2>
 				<div id="w4os-models-preview-container">%s</div>
 			</div>',
 			__( 'Models Preview', 'w4os' ),
@@ -360,7 +361,7 @@ class W4OS3_Model {
 			$name   = $models['name'] ?? 'Default';
 			$uuids  = $models['uuids'] ?? array();
 		}
-		if( ! is_array( $uuids ) ) {
+		if ( ! is_array( $uuids ) ) {
 			$uuids = array( $uuids );
 		}
 
@@ -404,9 +405,9 @@ class W4OS3_Model {
 			case 'select2':
 			case 'select_advanced':
 				$multiple_attr = $args['multiple'] ? 'multiple' : '';
-				$select_class = 'select2-field';
-				$placeholder = isset( $args['placeholder'] ) ? esc_attr( $args['placeholder'] ) : '';
-				$input_field = sprintf(
+				$select_class  = 'select2-field';
+				$placeholder   = isset( $args['placeholder'] ) ? esc_attr( $args['placeholder'] ) : '';
+				$input_field   = sprintf(
 					'<select id="%1$s" name="%2$s" class="%3$s" data-placeholder="%4$s" %5$s>
 						<option value="">%4$s</option>',
 					esc_attr( $args['id'] ),

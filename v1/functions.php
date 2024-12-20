@@ -154,7 +154,7 @@ function w4os_user_notice( $notice, $class = 'info', $dismissible = true, $key =
 	}
 }
 
-function w4os_transient_user_notice ( $notice, $class = 'info', $dismissible = true, $key = null ) {
+function w4os_transient_user_notice( $notice, $class = 'info', $dismissible = true, $key = null ) {
 	if ( empty( $notice ) ) {
 		return;
 	}
@@ -180,7 +180,7 @@ function w4os_get_user_notices( $echo = false ) {
 	if ( empty( $queue ) ) {
 		return;
 	}
-	$notices = [];
+	$notices = array();
 	foreach ( $queue as $hash => $notice ) {
 		if ( ! is_array( $notice ) ) {
 			continue;
@@ -194,7 +194,7 @@ function w4os_get_user_notices( $echo = false ) {
 			)
 		);
 		error_log( 'Notice ' . $notice['class'] . ': ' . $notice['notice'] );
-		$notices[$hash] = sprintf(
+		$notices[ $hash ] = sprintf(
 			'<div class="notice notice-%1$s %2$s">%3$s</p>',
 			sanitize_key( $notice['class'] ),
 			( $notice['dismissible'] ) ? 'is-dismissible' : '',
@@ -204,7 +204,7 @@ function w4os_get_user_notices( $echo = false ) {
 	$html = empty( $notices ) ? '' : '<div class="notices w4os-user-notices">' . join( '', $notices ) . '</div>';
 
 	delete_transient( $transient_key );
-	if( $echo ) {
+	if ( $echo ) {
 		echo $html;
 	} else {
 		return $html;
@@ -359,7 +359,9 @@ function w4os_grid_status() {
 function w4os_grid_status_text() {
 	global $w4osdb;
 	// If w4os is not yet configured, calls to $w4osdb would crash
-	if ( ! $w4osdb ) return false;
+	if ( ! $w4osdb ) {
+		return false;
+	}
 
 	$status = wp_cache_get( 'gridstatus', 'w4os' );
 	if ( false === $status ) {
