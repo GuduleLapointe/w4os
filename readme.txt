@@ -210,7 +210,8 @@ or not. In either case, idk&idc.
 
 == Changelog ==
 
-= Unreleased (2.9.0-dev.1377) =
+= Unreleased (2.9.0-dev.1379) =
+* fix crash on fresh install caused by calls to opensim db while it is not yet configured
 * fix requirements alert shown only on w4os status page
 * fix #52 don't load templates.php for feeds and admin pages
 * fix avatar registration fail on other pages than canonical profile (issue #72)
