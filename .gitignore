@@ -8,16 +8,9 @@
 *.asset.php
 .DS_Store
 .gpt-po/key*
-/helpers/bin/
-/helpers/composer.json
-/helpers/composer.lock
-/helpers/destinations
-/helpers/.git*
 /helpers/includes/*.example.php
 /helpers/install-library.sh
 /helpers/.libignore
-/helpers/*-load.php
-/helpers/tools/
 htaccess
 *.map
 /node_modules/
@@ -35,3 +28,4 @@ tmp/
 /vendor/magicoli/opensim-rest-php/src/
 wp-cli.local.yml
 *.zip
+.vscode/

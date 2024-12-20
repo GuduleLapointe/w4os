@@ -1,11 +1,11 @@
-=== w4os - OpenSimulator Web Interface (dev) ===
+=== w4os - OpenSimulator Web Interface ===
 Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.7.1
-Stable tag: 2.8
+Stable tag: 2.9.0
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -53,7 +53,7 @@ The free version from WordPress plugins directory and the [paid version](https:/
 
 * OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
 * Latest WordPdress release
-* PHP 8.x or later (8.2 recommended), and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
+* PHP 7.3 or later, and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
 
 == Installation ==
 
@@ -210,22 +210,32 @@ or not. In either case, idk&idc.
 
 == Changelog ==
 
-= Unreleased (2.9.0-beta.1383) =
-* fix crash on fresh install caused by calls to opensim db while it is not y\
-et configured
+= 2.9.0 =
+* fix crash on fresh install caused by calls to opensim db while it is not yet configured
 * fix avatar-profile shortcode crashing php on fresh install
-* fix vendor/ folder missing in dist
-* fix avatar registration fail on other pages than canonical profile (issue \
-#72)
+* fix avatar registration fail on other pages than canonical profile (issue #72)
 * fix password verification on profile avatar registration form
-* fix minor PHP warnings on fresh install
-* fix requirements alert shown only on w4os status page
-* fix #52 don't load templates.php for feeds and admin pages
 * fix user notices not displayed on profile page
 * fix avatar registration form layout
+* fix requirements alert shown only on w4os status page
+* fix minor PHP warnings on fresh install
+* don't load templates.php for feeds and admin pages (fix #52)
 
 Transitional release, progressively integrate upcoming v3 features as beta
 Do not enabe v3 beta features in production environment
+
+v3 beta features (available in github or w4os website releases):
+
+* option in classic settings to enable v3 beta features
+* new v3 settings page (limited, main options still in classic settings page)
+* new v3 avatars admin page, including
+  - avatar list: sortable, filterable, searchable
+  - avatar settings (placeholder, not implemented)
+  - avatar model settings, replacing classic avatar models settings page
+* new v3 regions admin page, including
+  - region list: sortable, filterable, searchable
+  - region settings (placeholder, not implemented)
+* ensure backwards compatibility if v3 features are not enabled
 
 = 2.8 =
 * fix database credential not shown in settings

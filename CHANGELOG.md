@@ -1,19 +1,31 @@
 ## Changelog
 
-### Unreleased (2.9.0-beta.1383)
-- fix vendor/ folder missing in dist
-- fix minor PHP warnings on fresh install
+### 2.9.0
 - fix crash on fresh install caused by calls to opensim db while it is not yet configured
-- fix requirements alert shown only on w4os status page
-- fix #52 don't load templates.php for feeds and admin pages
+- fix avatar-profile shortcode crashing php on fresh install
 - fix avatar registration fail on other pages than canonical profile (issue #72)
 - fix password verification on profile avatar registration form
 - fix user notices not displayed on profile page
 - fix avatar registration form layout
-- fix avatar-profile shortcode crashing php on fresh install
+- fix requirements alert shown only on w4os status page
+- fix minor PHP warnings on fresh install
+- don't load templates.php for feeds and admin pages (fix #52)
 
 Transitional release, progressively integrate upcoming v3 features as beta
 Do not enabe v3 beta features in production environment
+
+v3 beta features (available in github or w4os website releases):
+
+- option in classic settings to enable v3 beta features
+- new v3 settings page (limited, main options still in classic settings page)
+- new v3 avatars admin page, including
+  - avatar list: sortable, filterable, searchable
+  - avatar settings (placeholder, not implemented)
+  - avatar model settings, replacing classic avatar models settings page
+- new v3 regions admin page, including
+  - region list: sortable, filterable, searchable
+  - region settings (placeholder, not implemented)
+- ensure backwards compatibility if v3 features are not enabled
 
 ### 2.8
 - fix database credential not shown in settings

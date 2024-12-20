@@ -1,4 +1,4 @@
-# w4os - OpenSimulator Web Interface (dev)
+# w4os - OpenSimulator Web Interface
 
 ![Stable 2.8](https://badgen.net/badge/Stable/2.8/00aa00)
 ![WordPress 5.3.0 - 6.7.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.7.1/3858e9)
@@ -49,7 +49,7 @@ The free version from WordPress plugins directory and the [paid version](https:/
 
 - OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
 - Latest WordPdress release
-- PHP 8.x or later (8.2 recommended), and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
+- PHP 7.3 or later, and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
 
 ## Troubleshooting
 
