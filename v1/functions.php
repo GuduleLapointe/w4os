@@ -342,7 +342,7 @@ function w4os_grid_status() {
 	if ( false === $status ) {
 		$login_uri = w4os_grid_login_uri();
 		$parts     = wp_parse_url( w4os_grid_login_uri() );
-		if ( $parts['host'] ) {
+		if ( isset( $parts['host'] ) ) {
 			$fp     = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
 			$status = ( $fp ) ? __( 'Online', 'w4os' ) : __( 'Offline', 'w4os' );
 		} else {
@@ -358,6 +358,8 @@ function w4os_grid_status() {
 
 function w4os_grid_status_text() {
 	global $w4osdb;
+	// If w4os is not yet configured, calls to $w4osdb would crash
+	if ( ! $w4osdb ) return false;
 
 	$status = wp_cache_get( 'gridstatus', 'w4os' );
 	if ( false === $status ) {
@@ -626,6 +628,10 @@ function w4os_grid_name() {
 }
 
 function w4os_grid_running() {
+	$login_uri = w4os_grid_login_uri();
+	if ( empty( $login_uri ) ) {
+		return false;
+	}
 	$url         = w4os_grid_login_uri() . '/get_grid_info';
 	$headers     = @get_headers( $url, true );
 	$status_code = preg_replace( '/.* ([0-9]+) .*/', '$1', $headers['0'] );
