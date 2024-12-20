@@ -38,7 +38,6 @@ webpack.config.js export-ignore
 wp-cli.local.yml export-ignore
 yarn.lock export-ignore
 tests export-ignore
-/vendor/ export-ignore
 /node_modules/ export-ignore
 *.sql export-ignore
 *.tar.gz export-ignore

@@ -1,6 +1,8 @@
 ## Changelog
 
-### Unreleased (2.9.0-dev.1379)
+### Unreleased (2.9.0-beta.1383)
+- fix vendor/ folder missing in dist
+- fix minor PHP warnings on fresh install
 - fix crash on fresh install caused by calls to opensim db while it is not yet configured
 - fix requirements alert shown only on w4os status page
 - fix #52 don't load templates.php for feeds and admin pages
@@ -8,9 +10,10 @@
 - fix password verification on profile avatar registration form
 - fix user notices not displayed on profile page
 - fix avatar registration form layout
-- transitional release
-- progressively integrate upcoming v3 features as beta
-- do not enabe v3 beta features in production environment
+- fix avatar-profile shortcode crashing php on fresh install
+
+Transitional release, progressively integrate upcoming v3 features as beta
+Do not enabe v3 beta features in production environment
 
 ### 2.8
 - fix database credential not shown in settings
