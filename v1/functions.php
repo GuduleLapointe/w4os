@@ -358,6 +358,8 @@ function w4os_grid_status() {
 
 function w4os_grid_status_text() {
 	global $w4osdb;
+	// If w4os is not yet configured, calls to $w4osdb would crash
+	if ( ! $w4osdb ) return false;
 
 	$status = wp_cache_get( 'gridstatus', 'w4os' );
 	if ( false === $status ) {
