@@ -2,6 +2,21 @@
 	margin: 10px 0
 }
 
+.wrap.w4os-settings .w4os-credentials {
+	margin-bottom: 10px;
+}
+
+.wrap.w4os-settings .w4os-credentials > label:first-child {
+	font-weight: bold;
+	display: inline-block;
+	width: 7rem;
+}
+
+ /* set input number size to 5 em */
+.wrap.w4os-settings .w4os-credentials input[type=number] {
+	width: 5rem;
+}
+
 @media (min-width: 1200px) {
 	.wrap.w4os-settings {
 		display: flex;

@@ -25,6 +25,7 @@ class W4OS3_Settings {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ) );
+		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings_beta' ), 20 );
 	}
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
@@ -34,20 +35,22 @@ class W4OS3_Settings {
 			'menu_title'  => '(dev) ' . __( 'Settings', 'w4os' ),
 			'capability'  => 'manage_options',
 			'menu_slug'   => 'w4os-settings',
-			'tabs'        => array(
-				'beta' => array(
-					'title'  => __( 'Beta Features', 'w4os' ),
-					'fields' => array(
-						'debug_html' => array(
-							'label'       => __( 'Enable HTML debug', 'w4os' ),
-							'type'        => 'switch',
-							'description' => __( 'Warning: this might expose critical debug information on the front end.', 'w4os' ),
-						),
-					),
+			'sanitize_callback' => array( $this, 'sanitize_options' ),
+		);
+		return $settings;
+	}
+	
+	public function register_w4os_settings_beta( $settings, $args = array(), $atts = array() ) {
+		$settings['w4os-settings']['tabs']['beta'] = array(
+			'title'  => __( 'Beta Features', 'w4os' ),
+			'priority' => 9,
+			'fields' => array(
+				'debug_html' => array(
+					'label'       => __( 'Enable HTML debug', 'w4os' ),
+					'type'        => 'switch',
+					'description' => __( 'Warning: this might expose critical debug information on the front end.', 'w4os' ),
 				),
 			),
-			// 'callback'    => array( $this, 'render_settings_page' ),
-			// 'position'    => 90,
 		);
 		return $settings;
 	}
@@ -204,7 +207,7 @@ class W4OS3_Settings {
 		// This is a placeholder for a section callback.
 	}
 
-	public static function sanitize_options( $input, $menu_slug = false ) {
+	public static function sanitize_options( $input, $menu_slug = 'w4os-settings' ) {
 		if ( ! $menu_slug ) {
 			return $input;
 		}
@@ -229,6 +232,8 @@ class W4OS3_Settings {
 		// Enqueue Select2 assets
 		wp_enqueue_style( 'select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', array(), '4.0.13' );
 		wp_enqueue_script( 'select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array( 'jquery' ), '4.0.13', true );
+		
+		W4OS3::enqueue_script( 'v3-admin-settings', 'v3/js/admin-settings.js' );
 	}
 
 	// public static function enable_v3_features_callback() {
@@ -422,41 +427,118 @@ class W4OS3_Settings {
 		}
 
 		switch ( $args['type'] ) {
+			case 'instance_credentials':
 			case 'db_credentials':
 				// Grouped fields for database credentials
+				$login_uri = get_option( 'w4os_login_uri', home_url() );
+				$default_host = parse_url( $login_uri, PHP_URL_HOST ) ?? 'yourgrid.org';
 				$creds       = WP_parse_args(
 					$value,
 					array(
-						'user'     => null,
-						'pass'     => null,
-						'database' => null,
-						'host'     => null,
-						'port'     => null,
+						'type' => ( $args['id'] == 'robust' ) ? 'robust' : null,
+						'use_defaults' => ( $args['id'] == 'robust' ) ? false : true,
+						'host' => null,
+						'port' => 8002,
+						'db' => array(
+							'type' => 'mysql',
+							'host' => 'localhost',
+							'port' => '3306',
+							'name' => 'opensim',
+							'user' => 'opensim',
+							'pass' => null,
+						),
+						'console'	=> array(
+							'host' => $default_host,
+							'port' => null,
+							'user' => null,
+							'pass' => null,
+						),
 					)
 				);
-				$input_field = sprintf(
-					'<label for="%1$s_user">%2$s</label>
-					<input type="text" id="%1$s_user" name="%3$s[user]" value="%4$s" />
-					<label for="%1$s_pass">%5$s</label>
-					<input type="password" id="%1$s_pass" name="%3$s[pass]" value="%6$s" />
-					<label for="%1$s_database">%7$s</label>
-					<input type="text" id="%1$s_database" name="%3$s[database]" value="%8$s" />
-					<label for="%1$s_host">%9$s</label>
-					<input type="text" id="%1$s_host" name="%3$s[host]" value="%10$s" />
-					<label for="%1$s_port">%11$s</label>
-					<input type="text" id="%1$s_port" name="%3$s[port]" value="%12$s" />',
+
+				$input_field = '';
+
+				if( $creds['type'] !== 'robust' ) {
+					$input_field .= sprintf(
+						'<div class="w4os-credentials  credentials-use-defaults">
+							<label class="use-defaults">
+								<input type="hidden" name="%2$s[use_defaults]" value="0" />
+								<input type="checkbox" id="%1$s_use_defaults" name="%2$s[use_defaults]" class="use-defaults" value="1" %3$s />
+								%4$s
+							</label>
+						</div>',
+						esc_attr( $args['id'] ),
+						$field_name,
+						checked( $creds['use_defaults'], true, false ),
+						esc_html__( 'Use defaults' )
+					);							
+				}
+
+				$input_field .= sprintf(
+					'<div class="w4os-credentials  credentials-host">
+						<label class="section-label">%2$s</label>
+						<input type="text" id="%1$s-host" name="%3$s[host]" placeholder="%4$s" value="%5$s" />
+						<input type="number" id="%1$s-port" name="%3$s[port]" placeholder="%6$s" value="%7$s" min="1" />
+					</div>
+					',
 					esc_attr( $args['id'] ),
-					esc_html__( 'User', 'w4os' ),
-					esc_attr( $field_name ),
-					esc_attr( $creds['user'] ),
-					esc_html__( 'Password', 'w4os' ),
-					esc_attr( $creds['pass'] ),
-					esc_html__( 'Database', 'w4os' ),
-					esc_attr( $creds['database'] ),
-					esc_html__( 'Host', 'w4os' ),
+					esc_html__( 'Service URI' , 'w4os' ),
+					$field_name,
+					esc_html__( 'Hostname', 'w4os' ),
 					esc_attr( $creds['host'] ),
 					esc_html__( 'Port', 'w4os' ),
-					esc_attr( $creds['port'] )
+					esc_attr( $creds['port'] ),
+				);
+				$input_field .= sprintf(
+					'<div class="w4os-credentials  credentials-db">
+						<label class="section-label">%2$s</label>
+						<input type="text" id="%1$s-db-host" name="%3$s[db][host]" placeholder="%4$s" value="%5$s" />
+						<input type="number" id="%1$s-db-port" name="%3$s[db][port]" placeholder="%6$s" value="%7$s" min="1" />
+						<input type="text" id="%1$s-db-name" name="%3$s[db][name]" placeholder="%8$s" value="%9$s" />
+						<input type="text" id="%1$s-db-user" name="%3$s[db][user]" placeholder="%10$s" value="%11$s" />
+						<input type="password" id="%1$s-db-pass" name="%3$s[db][pass]" placeholder="%12$s" value="%13$s" />
+					</div>',
+					esc_attr( $args['id'] ),
+					esc_html__( 'Database', 'w4os' ),
+					$field_name,
+					esc_html__( 'Hostname', 'w4os' ),
+					esc_attr( $creds['db']['host'] ),
+					esc_html__( 'Port', 'w4os' ),
+					esc_attr( $creds['db']['port'] ),
+					esc_html__( 'Database name', 'w4os' ),
+					esc_attr( $creds['db']['name'] ),
+					esc_html__( 'User', 'w4os' ),
+					esc_attr( $creds['db']['user'] ),
+					esc_html__( 'Password', 'w4os' ),
+					esc_attr( $creds['db']['pass'] )
+				);
+				if( $args['type'] === 'db_credentials' ) {
+					break;
+				}
+				// Add a console credentials field
+					// ConsoleUser = "Test"
+					// ConsolePass = "secret"
+					// console_port = 0
+
+				$input_field .= sprintf(
+					'<div class="w4os-credentials  credentials-console">
+					<label>%2$s</label>
+					<input type="text" id="%1$s-console-host" name="%3$s[console][host]" value="%4$s" placeholder="%5$s" readonly />
+					<input type="number" id="%1$s-console-port" name="%3$s[console][port]" value="%6$s" min=1 placeholder="%7$s" style="width:5rem" />
+					<input type="text" id="%1$s-console-user" name="%3$s[console][user]" value="%8$s" placeholder="%9$s" />
+					<input type="password" id="%1$s-console-pass" name="%3$s[console][pass]" value="%10$s" placeholder="%11$s" />
+					</div>',
+					esc_attr( $args['id'] ),
+					esc_html__( 'Console', 'w4os' ),
+					$field_name,
+					esc_attr( $creds['console']['host'] ),
+					esc_html__( 'Hostname', 'w4os' ),
+					esc_attr( $creds['console']['port'] ),
+					esc_html__( 'Port', 'w4os' ),
+					esc_attr( $creds['console']['user'] ),
+					esc_html__( 'User', 'w4os' ),
+					esc_attr( $creds['console']['pass'] ),
+					esc_html__( 'Password', 'w4os' ),
 				);
 				break;
 			case 'button_group':
@@ -512,15 +594,16 @@ class W4OS3_Settings {
 			case 'checkbox':
 				$option_label = isset( $args['options'] ) && is_array( $args['options'] ) ? array_values( $args['options'] )[0] : __( 'Yes', 'w4os' );
 				$input_field  = sprintf(
-					'<label>
-                        <input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s />
-                        %4$s
-                    </label>',
-					esc_attr( $args['id'] ),
-					esc_attr( $field_name ),
-					checked( $value, '1', false ),
-					esc_html( $option_label ),
-				);
+						'<input type="hidden" name="%1$s" value="0" />
+						<label>
+							<input type="checkbox" id="%2$s" name="%1$s" value="1" %3$s />
+							%4$s
+						</label>',
+						esc_attr( $field_name ),
+						esc_attr( $args['id'] ),
+						checked( $value, '1', false ),
+						esc_html( $option_label )
+					);
 				break;
 
 			case 'custom_html':
@@ -545,7 +628,7 @@ class W4OS3_Settings {
 		if ( ! empty( $args['description'] ) ) {
 			printf(
 				'<p class="description">%s</p>',
-				esc_html( $args['description'] )
+				$args['description'],
 			);
 		}
 	}
