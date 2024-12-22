@@ -292,6 +292,34 @@ class W4OS3 {
 		$value = strtolower( $value );
 		return $value === 'true' || $value === 'yes' || $value === true || $value === 1 || $value === '1';
 	}
+
+	/**
+	 * Complete standard empty() function with NULL key.
+	 */
+	public static function empty( $var ) {
+		if ( ! $var ) {
+			return true;
+		}
+		if ( empty( $var ) ) {
+			return true;
+		}
+		$null_keys = array(
+			'00000000-0000-0000-0000-000000000000',
+			'00000000-0000-0000-0000-000000000001',
+			W4OS_NULL_KEY,
+		);
+		if ( in_array( $var, $null_keys ) ) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Check if a string is a valid UUID.
+	 */
+	public static function is_uuid( $uuid ) {
+		return preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid );
+	}
 }
 
 $w4os3 = new W4OS3();

@@ -317,15 +317,16 @@ add_action(
 				if ( $which === 'top' || $which === 'bottom' ) {
 					?>
 				<label class="screen-reader-text" for="bulk-action-selector-<?php echo $which; ?>"><?php _e( 'Select bulk action', 'w4os' ); ?></label>
-				<select name="action" id="bulk-action-selector-<?php echo "$which"; ?>" disabled>
+				<select name="action" id="bulk-action-selector-<?php echo "$which"; ?>" >
 					<option value=""><?php _e( 'Bulk Actions', 'w4os' ); ?></option>
-					<option value="start"><?php _e( 'Start', 'w4os' ); ?></option>
-					<option value="restart"><?php _e( 'Restart', 'w4os' ); ?></option>
-					<option value="stop"><?php _e( 'Stop', 'w4os' ); ?></option>
-					<option value="disable"><?php _e( 'Disable', 'w4os' ); ?></option>
+					<option value="message" disabled><?php _e( 'Message', 'w4os' ); ?></option>
+					<option value="start"  disabled><?php _e( 'Start', 'w4os' ); ?></option>
+					<option value="restart"  disabled><?php _e( 'Restart', 'w4os' ); ?></option>
+					<option value="stop"  disabled><?php _e( 'Stop', 'w4os' ); ?></option>
+					<option value="disable"  disabled><?php _e( 'Disable', 'w4os' ); ?></option>
 				</select>
 					<?php
-					submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false, array( 'disabled' => '1' ) );
+					submit_button( __( 'Apply', 'w4os' ), 'button', 'submit', false, array( 'disabled' => false ) );
 				}
 			}
 

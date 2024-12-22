@@ -52,10 +52,26 @@
 
 class W4OS3_Region {
 	private $db;
+	private $uuid;
+	private $item;
+	private $data;
+	private $main_query = "SELECT * FROM (
+		SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name, sizeX * sizeY AS size
+		FROM `regions`
+		LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID
+	) AS subquery";
 
-	public function __construct() {
+	private $name;
+	private $owner_name;
+	private $owner_uuid;
+
+	public function __construct( $mixed = null ) {
 		// Initialize the custom database connection with credentials
 		$this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
+
+		if( ! W4OS3::empty( $mixed ) ) {
+			$this->fetch_region_data( $mixed );
+		}
 	}
 
 	/**
@@ -133,11 +149,7 @@ class W4OS3_Region {
 				'singular'      => 'Region',
 				'plural'        => 'Regions',
 				'ajax'          => false,
-				'query'         => "SELECT * FROM (
-				SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name, sizeX * sizeY AS size
-				FROM `regions`
-				LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID
-			) AS subquery",
+				'query'         => $this->main_query,
 				'admin_columns' => array(
 					'regionName'    => array(
 						'title'           => __( 'Region Name', 'w4os' ),
@@ -147,7 +159,7 @@ class W4OS3_Region {
 						'searchable'      => true, // optional, defaults to false
 						'search_column'   => 'regionName', // optional, defaults to column key, use 'callback' to use render_callback value
 						// 'filterable'      => false, // optional, defaults to false, enable filter menu
-						'render_callback' => array( $this, 'region_name_column' ), // optional, defaults to 'column_' . $key
+						'render_callback' => array( $this, 'format_region_name' ), // optional, defaults to 'column_' . $key
 						'size'            => null, // optional, defaults to null (auto)
 					),
 					'owner_name'    => array(
@@ -159,7 +171,7 @@ class W4OS3_Region {
 						'order'      => 'ASC',
 					),
 					'teleport_link' => array(
-						'title'           => __( 'Teleport', 'w4os' ),
+						'title'           => __( 'Region URI', 'w4os' ),
 						'render_callback' => array( $this, 'region_tp_link' ),
 					),
 					'serverURI'     => array(
@@ -226,6 +238,92 @@ class W4OS3_Region {
 	}
 
 	/**
+	 * Fetch the Region data from the custom database.
+	 * 
+	 * @param mixed $mixed The UUID of the Region or the Region data.
+	 * @return void
+	 */
+	public function fetch_region_data( $mixed ) {
+		if ( W4OS3::empty( $mixed ) ) {
+			return;
+		}
+		
+		if ( is_object( $mixed ) ) {
+			$this->uuid = $mixed->uuid;
+			$this->item = $mixed;
+		} else if ( is_string( $mixed ) && W4OS3::is_uuid( $mixed ) ) {
+			$this->uuid = $mixed;
+			$query = $this->main_query . " WHERE uuid = %s";
+			$this->item = $this->db->get_row( $this->db->prepare( $query, $this->uuid ) );
+		} else {
+			return;
+		}
+	}
+
+	/**
+	 * Get region name
+	 */
+	public function get_name() {
+		if ( empty( $this->item ) ) {
+			return;
+		}
+		return $this->item->regionName;
+	}
+
+	/**
+	 * Get region teleport link
+	 */
+	public function get_tp_link( $string = null ) {
+		if ( empty( $this->item ) ) {
+			return;
+		}
+		$regionName = $this->item->regionName;
+		$gateway    = get_option( 'w4os_login_uri' );
+		if ( empty( $gateway ) ) {
+			return __( 'Gateway not set', 'w4os' );
+		}
+		// Strip protocol from $gateway
+		$gateway = trailingslashit( preg_replace( '/^https?:\/\//', '', $gateway ) );
+		$string  = ( empty( $string ) ) ? null : $string;
+		$link    = w4os_hop( $gateway . $regionName, $string );
+		return $link;
+	}
+
+	/**
+	 * Get region actions
+	 */
+	public function get_actions() {
+		$actions = array(
+			'details'   => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'details', $this->uuid, __('Details', 'w4os') ),
+			'message' => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, __('Message', 'w4os') ),
+			'teleport' => $this->get_tp_link( __('Teleport', 'w4os') ),
+			// 'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s">Edit</a>', $_REQUEST['page'], 'edit', $this->uuid ),
+			// 'delete' => sprintf( '<a href="?page=%s&action=%s&region=%s">Delete</a>', $_REQUEST['page'], 'delete', $this->uuid ),
+		);
+		return $actions;
+	}
+
+	/**
+	 * Format the Region name column.
+	 */
+	public function format_region_name( $item ) {
+		$region = new W4OS3_Region( $item );
+		// $name = $region->get_name();
+		// $status = $region->get_status();
+		// $actions = $region->get_actions();
+
+		// $regionName = $item->regionName;
+		// $regon_id = $item->uuid;
+		$name = $region->get_name();
+		$actions = $region->get_actions();
+		$actions_container = '';
+		if( ! empty( $actions ) ) {
+			$actions_container = '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
+		}
+		return trim( '<strong>' . $name . '</strong> ' . $actions_container );;
+	}
+
+	/**
 	 * Format the Region size.
 	 */
 	public function format_region_size( $item ) {
@@ -267,6 +365,7 @@ class W4OS3_Region {
 		// Strip protocol from $gateway
 		$gateway = trailingslashit( preg_replace( '/^https?:\/\//', '', $gateway ) );
 		$string  = trim( $gateway . $regionName );
+		return $string;
 		$link    = w4os_hop( $gateway . $regionName, $string );
 		return $link;
 	}
