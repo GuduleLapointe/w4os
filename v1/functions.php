@@ -337,21 +337,36 @@ function w4os_get_asset_url( $uuid = W4OS_NULL_KEY, $format = W4OS_ASSETS_DEFAUL
 	return ( $asset_server_uri ) ? "$asset_server_uri/$uuid$format" : false;
 }
 
-function w4os_grid_status() {
-	$status = wp_cache_get( 'grid_online_status', 'w4os' );
-	if ( false === $status ) {
+function w4os_grid_status( $login_uri = null ) {
+	$status = w4os_grid_online( $login_uri );
+	if ( $status === true ) {
+		return __( 'Online', 'w4os' );
+	} elseif ( $status === false ) {
+		return __( 'Offline', 'w4os' );
+	} else {
+		return $status;
+	}
+}
+
+function w4os_grid_online( $login_uri = null ) {
+	$cache_key = 'grid_online_status' . ( empty( $login_uri ) ? '' : '_' . $login_uri );
+	if ( empty( $login_uri ) ) {
 		$login_uri = w4os_grid_login_uri();
-		$parts     = wp_parse_url( w4os_grid_login_uri() );
+	}
+
+	$status = wp_cache_get( $cache_key, 'w4os' );
+	if ( false === $status ) {
+		$login_uri = $login_uri;
+		$parts     = wp_parse_url( $login_uri );
 		if ( isset( $parts['host'] ) ) {
 			$fp     = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
-			$status = ( $fp ) ? __( 'Online', 'w4os' ) : __( 'Offline', 'w4os' );
+			return ( $fp ) ? true : false;
 		} else {
-			$status = sprintf(
+			return sprintf(
 				__( 'Invalid Login URI', 'w4os' ),
 				$login_uri,
 			);
 		}
-		wp_cache_add( 'grid_online_status', $status, 'w4os' );
 	}
 	return $status;
 }
@@ -640,15 +655,17 @@ function w4os_grid_running() {
 	return ( $status_code == 200 );
 }
 
-function w4os_status_icon( $bool = null ) {
-	if ( $bool == true ) {
+function w4os_status_icon( $bool = null, $ignore_null = false ) {
+	if ( $bool === true ) {
 		$status_icon = 'yes';
-	} elseif ( $bool == false ) {
+	} elseif ( $bool === false ) {
 		$status_icon = 'warning';
+	} else if ( $ignore_null ) {
+		return;
 	} else {
 		$status_icon = 'no';
 	}
-	return sprintf( '<span class="w4os-url-status w4os-url-status-%1$s dashicons dashicons-%1$s"></span>', $status_icon );
+	return sprintf( '<span class="w4os-status-icon w4os-url-status w4os-url-status-%1$s dashicons dashicons-%1$s"></span>', $status_icon );
 }
 
 function w4os_format_ini( $array ) {

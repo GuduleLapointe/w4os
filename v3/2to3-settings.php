@@ -308,6 +308,37 @@ class W4OS3_Settings {
 		do_action( 'admin_notices' );
 	}
 
+	public static function check_connections ( $creds ) {
+		// Check url is online
+		$grid_status = w4os_grid_online( $creds['host'] . ':' . $creds['port'] );
+		
+		// Check database credentials
+		@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
+		if( $db_conn && ! $db_conn->connect_error ) {
+			$db_status = true;
+			$db_conn->close();
+		} else {
+			$db_status = false;
+		}
+
+		if ( empty( $creds['console']['port'] ) || empty ( $creds['console']['host'] ) || empty( $creds['console']['user'] ) || empty( $creds['console']['pass'] ) ) {
+			$console_status = null;
+		} else {
+			// Temporarily, only check if url is accessible
+			$console_status = w4os_grid_online( $creds['console']['host'] . ':' . $creds['console']['port'] );
+
+			// $console = new W4OS_RestAdmin( $creds['console']['host'], $creds['console']['port'], $creds['console']['user'], $creds['console']['pass'] );
+			// $result = $console->SendCommand( 'help' );
+			// error_log( 'Console result: ' . print_r( $result, true ) );
+			// $console_status = $result ? true : false;
+		}
+
+		$creds['status'] = $grid_status;
+		$creds['db']['status'] = $db_status;
+		$creds['console']['status'] = $console_status;
+		return $creds;
+	}
+
 	/**
 	 * This method is called by several classes defined in several scripts for several settings pages.
 	 * It uses only the values provided by w4os_settings filter.
@@ -456,6 +487,8 @@ class W4OS3_Settings {
 					)
 				);
 
+				$creds = self::check_connections( $creds );
+
 				$input_field = '';
 
 				if( $creds['type'] !== 'robust' ) {
@@ -479,6 +512,7 @@ class W4OS3_Settings {
 						<label class="section-label">%2$s</label>
 						<input type="text" id="%1$s-host" name="%3$s[host]" placeholder="%4$s" value="%5$s" />
 						<input type="number" id="%1$s-port" name="%3$s[port]" placeholder="%6$s" value="%7$s" min="1" />
+						%8$s
 					</div>
 					',
 					esc_attr( $args['id'] ),
@@ -488,6 +522,7 @@ class W4OS3_Settings {
 					esc_attr( $creds['host'] ),
 					esc_html__( 'Port', 'w4os' ),
 					esc_attr( $creds['port'] ),
+					w4os_status_icon( $creds['status'] ),
 				);
 				$input_field .= sprintf(
 					'<div class="w4os-credentials  credentials-db">
@@ -497,6 +532,7 @@ class W4OS3_Settings {
 						<input type="text" id="%1$s-db-name" name="%3$s[db][name]" placeholder="%8$s" value="%9$s" />
 						<input type="text" id="%1$s-db-user" name="%3$s[db][user]" placeholder="%10$s" value="%11$s" />
 						<input type="password" id="%1$s-db-pass" name="%3$s[db][pass]" placeholder="%12$s" value="%13$s" />
+						%14$s
 					</div>',
 					esc_attr( $args['id'] ),
 					esc_html__( 'Database', 'w4os' ),
@@ -510,7 +546,8 @@ class W4OS3_Settings {
 					esc_html__( 'User', 'w4os' ),
 					esc_attr( $creds['db']['user'] ),
 					esc_html__( 'Password', 'w4os' ),
-					esc_attr( $creds['db']['pass'] )
+					esc_attr( $creds['db']['pass'] ),
+					w4os_status_icon( $creds['db']['status'] ),
 				);
 				if( $args['type'] === 'db_credentials' ) {
 					break;
@@ -527,6 +564,7 @@ class W4OS3_Settings {
 					<input type="number" id="%1$s-console-port" name="%3$s[console][port]" value="%6$s" min=1 placeholder="%7$s" style="width:5rem" />
 					<input type="text" id="%1$s-console-user" name="%3$s[console][user]" value="%8$s" placeholder="%9$s" />
 					<input type="password" id="%1$s-console-pass" name="%3$s[console][pass]" value="%10$s" placeholder="%11$s" />
+					%12$s
 					</div>',
 					esc_attr( $args['id'] ),
 					esc_html__( 'Console', 'w4os' ),
@@ -539,6 +577,7 @@ class W4OS3_Settings {
 					esc_html__( 'User', 'w4os' ),
 					esc_attr( $creds['console']['pass'] ),
 					esc_html__( 'Password', 'w4os' ),
+					w4os_status_icon( $creds['console']['status'] ),
 				);
 				break;
 			case 'button_group':

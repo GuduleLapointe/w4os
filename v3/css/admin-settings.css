@@ -17,6 +17,12 @@
 	width: 5rem;
 }
 
+.wrap.w4os-settings .w4os-status-icon {
+	float: left;
+	width: 1rem;
+	margin: 0.3rem 0 0 -1.5rem ;
+}
+
 @media (min-width: 1200px) {
 	.wrap.w4os-settings {
 		display: flex;
