@@ -717,7 +717,7 @@ function w4os_demask( $mask, $values, $additionalvalue ) {
 	return array_filter( $array );
 }
 
-function w4os_hop( $url = null, $string = null ) {
+function w4os_hop( $url = null, $string = null, $format = true ) {
 	if ( empty( $url ) ) {
 		return;
 	}
@@ -725,6 +725,9 @@ function w4os_hop( $url = null, $string = null ) {
 		$url = get_option( 'w4os_login_uri' );
 	}
 	$url = preg_replace( '#.*://#', '', $url );
+	if ( ! $format ) {
+		return $url;
+	}
 	if ( empty( $string ) ) {
 		$string = $url;
 	}
