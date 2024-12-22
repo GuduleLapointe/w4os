@@ -109,9 +109,10 @@ class W4OS_Instance {
                     'label'       => __( 'Robust', 'w4os' ),
                     'type'        => 'instance_credentials',
                     'description' => sprintf(
-                        __( 'Main ROBUST database credentials set in %s and console credentials set in %s.', 'w4os' ),
-                        '<code>[DatabaseService]</code>',
+                        __( 'Main ROBUST credentials set in %s, %s and %s.', 'w4os' ),
+                        '<code>[Const]</code>',
                         '<code>[Network]</code>',
+                        '<code>[DatabaseService]</code>',
                     ),
                     'default' => array(
                         'host' => $default_host,
@@ -123,7 +124,7 @@ class W4OS_Instance {
                     'label'       => __( 'Assets Service', 'w4os' ),
                     'type'        => 'db_credentials',
                     'description' => sprintf(
-                        __( 'Leave "Use defaults" checked unless different credentials are set in %s.', 'w4os' ),
+                        __( 'Leave checked unless different credentials are set in %s.', 'w4os' ),
                         '<code>[AssetService]</code>',
                     ),
                     'default' => array(
@@ -136,7 +137,7 @@ class W4OS_Instance {
                     'label'       => __( 'User Profiles Service', 'w4os' ),
                     'type'        => 'db_credentials',
                     'description' => sprintf(
-                        __( 'Leave "Use defaults" checked unless different credentials are set in %s.', 'w4os' ),
+                        __( 'Leave checked unless different credentials are set in %s.', 'w4os' ),
                         '<code>[UserProfilesService]</code>',
                     ),
                     'default' => array(
