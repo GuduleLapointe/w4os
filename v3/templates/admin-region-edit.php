@@ -1,6 +1,9 @@
 <?php
 if( is_object( $region ) ) {
-    $title = $region->get_name();
+    $title = sprintf(
+        __('Region: %s', 'w4os' ),
+        esc_html( $region->get_name() ),
+    );
 
     printf( '<h1 class="wp-heading-inline">%s</h1>', $title );
 
