@@ -377,7 +377,13 @@ class W4OS3_Region {
 	}
 
 	/**
-	 * Get region parcels
+	 * Get region parcels.
+	 * 
+	 * TODO: use Console instead, if possible.
+	 * 
+	 * The collector method is not satisfying, 
+	 *	- it seems not always able to get the all the parcels.
+	 *  - it gets often rejected by the simulator as spam.
 	 */
 	public function get_parcels( $output_html = null ) {
 		$server_uri = $this->item->serverURI;
@@ -410,6 +416,7 @@ class W4OS3_Region {
 		}
 		$parcels = $region_data[0]->xpath('./data/parceldata/parcel');
 
+		// TODO: use list api instead.
 		$output_html = array();
 		foreach( $parcels as $parcel_data ) {
 			$args = (array) $parcel_data;
@@ -593,6 +600,11 @@ class W4OS_Parcel {
 		}
 	}
 
+	/**
+	 * Display the parcel details.
+	 * 
+	 * (Already) deprecated. Will use list api instead.
+	 */
 	public function display() {
 		// Display the parcel data
 		$image = ( ! W4OS3::empty($this->image) ) ? sprintf( '<img src="%s" alt="%s">', w4os_get_asset_url( $this->image ), $this->name ) : '';
