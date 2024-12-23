@@ -24,6 +24,8 @@ class W4OS3 {
 	public $robust_db;
 	public $assets_db;
 	public $profile_db;
+	private $console = null;
+	private $ini = array();
 
 	// public function __construct() {
 	// Safety only, this class should not be instantiated.
@@ -46,6 +48,159 @@ class W4OS3 {
 		$this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
 		$this->assets_db = $this->robust_db;
 		$this->profile_db = $this->robust_db;
+
+		$this->ini = $this->get_ini_config();
+	}
+
+	/**
+	 * Get config from console and convert to an array of sections and key-value pairs.
+	 */
+	public function get_ini_config( $instance = 'robust' ) {
+		$ini = array();
+		if ( ! $this->get_console_config( $instance ) ) {
+			return $ini;
+		}
+
+		$response = $this->console( $instance, 'config get' );
+		if ( $response === false ) {
+			return $ini;
+		}
+		if ( $response ) {
+			// $ini = implode( "\n", $response );
+			$config = self::normalize_ini( $response );
+			$ini = parse_ini_string( $config, true );
+			if ( $ini ) {
+				return $ini;
+			} else {
+				return new WP_Error( 'config_parse_error', 'Failed to parse config' );
+			}
+		} else if ( is_wp_error( $response ) ) {
+			$error = new WP_Error( 'console_command_failed', $response->getMessage() );
+			error_log( 'Error ' . print_r( $error, true ) );
+			return $error;
+		} else {
+			$error = 'Unknown error ' . print_r( $response, true );
+			error_log( 'get_ini_config Error ' . $error );
+			return $error;
+		}
+	}
+	
+	/**
+	 * Normalize an INI string. Make sure each value is encosed in quotes.
+	 */
+	public static function normalize_ini( $ini ) {
+		if ( is_array( $ini ) ) {
+			$lines = $ini;
+		} else {
+			$lines = explode( "\n", $ini );
+		}
+		$ini = '';
+		foreach ( $lines as $line ) {
+			$line = trim( $line );
+			if ( empty( $line ) ) {
+				continue;
+			}
+			$parts = explode( '=', $line );
+			if ( count( $parts ) < 2 ) {
+				$ini .= "$line\n";
+				continue;
+			}
+			// use first part as key, the rest as value
+			$key = array_shift( $parts );
+			$value = implode( '=', $parts );
+			if ( preg_match( '/^"/', $value ) ) {
+				$ini .= "$key = $value\n";
+			} else {
+				$ini .= "$key = \"$value\"\n";
+			}
+		}
+		return $ini;
+	}
+
+	 public function console( $instance = 'robust', $command = null ) {
+		if ( ! $this->get_console_config( $instance ) ) {
+			return false;
+		}
+
+		$console = $this->console_connect( $instance );
+		if ( $console === false ) {
+			return false;
+		}
+
+		if( ! $this->console || is_wp_error( $this->console ) ) {
+			return $this->console;
+		}
+
+		if ( $this->console && ! empty( $command ) ) {
+			$response = $this->console->sendCommand( $command );
+			if ( is_opensim_rest_error( $response ) ) {
+				$error = new WP_Error( 'console_command_failed', $response->getMessage() );
+			} else {
+				return $response;
+			}
+		}
+	}
+	
+	private function get_console_config( $instance = 'robust' ) {
+		$connections = W4OS3::get_option( 'w4os-settings:connections', array() );
+
+		$console_prefs = $connections[$instance]['console'] ?? false;
+		if ( ! $console_prefs ) {
+			return false;
+		}
+		if ( empty ( $console_prefs['host'] ) || empty( $console_prefs['port'] ) || empty( $console_prefs['user'] ) || empty( $console_prefs['pass'] ) ) {
+			return false;
+		}
+
+		$config = array_filter( array(
+			'uri' 	   => $console_prefs['host'] . ':' . $console_prefs['port'],
+			'ConsoleUser' => $console_prefs['user'],
+			'ConsolePass' => $console_prefs['pass'],
+		) );
+
+		return $config;
+	}
+
+	public function console_connect( $instance = 'robust' ) {
+		if ( $this->console !== null ) {
+			return $this->console;
+		}
+
+		// $connections = W4OS3::get_option( 'w4os-settings:connections', array() );
+		// $console_prefs = $connections[$instance]['console'] ?? false;
+		// if ( ! $console_prefs ) {
+		// 	return new WP_Error( 'no_console_prefs', sprintf( __( 'No console preferences not set for %s.', 'w4os'), $instance ) );
+		// }
+		// if ( empty ( $console_prefs['host'] ) || empty( $console_prefs['port'] ) || empty( $console_prefs['user'] ) || empty( $console_prefs['pass'] ) ) {
+		// 	return new WP_Error( 'incomplete_console_prefs', sprintf( __( 'Incomplete console prefs found for %s.', 'w4os'), $instance ) );
+		// }
+		// $rest_args = array(
+		// 	'uri' 	   => $console_prefs['host'] . ':' . $console_prefs['port'],
+		// 	'ConsoleUser' => $console_prefs['user'],
+		// 	'ConsolePass' => $console_prefs['pass'],
+		// );
+		$rest_args = $this->get_console_config( $instance );
+		if ( empty( $rest_args ) ) {
+			error_log("Console not set for $instance, that's OK");
+			return;
+		}
+
+		$rest = new OpenSim_Rest( $rest_args );
+		if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
+			$error = new WP_Error( 'console_connection_failed', $rest->error->getMessage() );
+			$this->console = $error;
+			return $error;
+		} else {
+			$response = $rest->sendCommand( 'show info' );
+			if ( is_opensim_rest_error( $response ) ) {
+				$error = new WP_Error( 'console_command_failed', $response->getMessage() );
+				$this->console = $error;
+				return $error;
+			} else {
+				$this->console = $rest;
+				return $response;
+			}
+		}
 	}
 
 	function db( $db = 'robust' ) {
@@ -86,7 +241,7 @@ class W4OS3 {
 		
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
-		require_once W4OS_INCLUDES_DIR . 'helpers/opensimulator-remote-console.php';
+		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 		
 		// Load v3 features if enabled
 		if ( W4OS_ENABLE_V3 ) {

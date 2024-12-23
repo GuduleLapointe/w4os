@@ -294,10 +294,10 @@ class W4OS3_Region {
 	 */
 	public function get_actions() {
 		$actions = array(
-			'details'   => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'details', $this->uuid, __('Details', 'w4os') ),
+			'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, __('Edit', 'w4os') ),
+			'view'   => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'view', $this->uuid, __('View', 'w4os') ),
 			'message' => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, __('Message', 'w4os') ),
 			'teleport' => $this->get_tp_link( __('Teleport', 'w4os') ),
-			// 'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s">Edit</a>', $_REQUEST['page'], 'edit', $this->uuid ),
 			// 'delete' => sprintf( '<a href="?page=%s&action=%s&region=%s">Delete</a>', $_REQUEST['page'], 'delete', $this->uuid ),
 		);
 		return $actions;
