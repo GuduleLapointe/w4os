@@ -140,6 +140,20 @@ class W4OS3_Region {
 		// require_once ABSPATH . 'wp-admin/v2/class-wp-list-table.php';
 		// }
 
+		if( isset( $_GET['action'] ) && $_GET['action'] === 'edit' && ! empty( $_GET['region'] ) ) {
+			$region = new W4OS3_Region( $_GET['region'] );
+			
+			$template = W4OS_INCLUDES_DIR . 'templates/admin-region-edit.php';
+			if( file_exists( $template ) ) {
+				require_once( $template );
+			} else {
+				error_log( __FUNCTION__ . ' template missing ' . $template );
+			}
+
+			return;
+			// $region = new W4OS3_Region( $_GET['region'] );
+			// $region->edit_region();
+		}
 		// Instantiate and display the list table
 
 		$regionsTable = new W4OS_List_Table(
@@ -172,7 +186,7 @@ class W4OS3_Region {
 					),
 					'teleport_link' => array(
 						'title'           => __( 'Region URI', 'w4os' ),
-						'render_callback' => array( $this, 'region_tp_link' ),
+						'render_callback' => array( $this, 'region_tp_uri' ),
 					),
 					'serverURI'     => array(
 						'title'           => _n( 'Simulator', 'Simulators', 1, 'w4os' ),
@@ -271,36 +285,58 @@ class W4OS3_Region {
 	}
 
 	/**
-	 * Get region teleport link
+	 * Get region teleport uri
 	 */
-	public function get_tp_link( $string = null ) {
+	public function get_tp_uri( $string = null ) {
 		if ( empty( $this->item ) ) {
 			return;
 		}
-		$regionName = $this->item->regionName;
-		$gateway    = get_option( 'w4os_login_uri' );
-		if ( empty( $gateway ) ) {
-			return __( 'Gateway not set', 'w4os' );
-		}
-		// Strip protocol from $gateway
-		$gateway = trailingslashit( preg_replace( '/^https?:\/\//', '', $gateway ) );
-		$string  = ( empty( $string ) ) ? null : $string;
-		$link    = w4os_hop( $gateway . $regionName, $string );
-		return $link;
+		return $this->region_tp_uri( $this->item );
+	}
+
+	/**
+	 * Get region teleport link
+	 */
+	public function get_tp_link( $string = null ) {
+		$url = $this->get_tp_uri();
+		return empty( $url ) ? null : w4os_hop($url, $string);
 	}
 
 	/**
 	 * Get region actions
 	 */
-	public function get_actions() {
+	public function get_actions( $context = null ) {
+		switch( $context ) {
+			case 'page-title':
+				$classes[] = 'page-title-action';
+				break;
+
+			default:
+				$classes[] = esc_attr($context) . '-action';
+		}
 		$actions = array(
-			'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, __('Edit', 'w4os') ),
-			'view'   => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'view', $this->uuid, __('View', 'w4os') ),
-			'message' => sprintf( '<a href="?page=%s&action=%s&region=%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, __('Message', 'w4os') ),
-			'teleport' => $this->get_tp_link( __('Teleport', 'w4os') ),
+			'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, implode(' ', $classes), __('Edit', 'w4os') ),
+			// 'view'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'view', $this->uuid, implode(' ', $classes), __('View', 'w4os') ),
+			'message' => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, implode(' ', $classes), __('Message', 'w4os') ),
+			'teleport' => sprintf( '<a href="%s" class="%s">%s</a>', $this->get_tp_uri(), implode(' ', $classes),  __('Teleport', 'w4os' ) ),
 			// 'delete' => sprintf( '<a href="?page=%s&action=%s&region=%s">Delete</a>', $_REQUEST['page'], 'delete', $this->uuid ),
 		);
 		return $actions;
+	}
+
+	/**
+	 * Get region parcels
+	 */
+	public function get_parcels( $output_html = null ) {
+		$parcels = array(
+			__('Not yet implemented', 'w4os'),
+		);
+		if ( $output_html ) {
+			return '<ul><li>' . implode( '</li><li>', $parcels ) . '</li></ul>';
+		}
+
+		// Return
+		return $parcels;
 	}
 
 	/**
@@ -356,7 +392,7 @@ class W4OS3_Region {
 	/**
 	 * Format Region hop URL for list table.
 	 */
-	public function region_tp_link( $item ) {
+	public function region_tp_uri( $item ) {
 		$regionName = $item->regionName;
 		$gateway    = get_option( 'w4os_login_uri' );
 		if ( empty( $gateway ) ) {
@@ -366,8 +402,6 @@ class W4OS3_Region {
 		$gateway = trailingslashit( preg_replace( '/^https?:\/\//', '', $gateway ) );
 		$string  = trim( $gateway . $regionName );
 		return $string;
-		$link    = w4os_hop( $gateway . $regionName, $string );
-		return $link;
 	}
 
 	/**

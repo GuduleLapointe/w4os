@@ -246,6 +246,13 @@ class W4OS3_Settings {
 		$settings        = apply_filters( 'w4os_settings', array() );
 		$page_tabs       = $settings[ $menu_slug ]['tabs'] ?? array();
 		$selected_tab    = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : array_key_first( $page_tabs );
+		if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' ) {
+			$page_tabs['edit'] = array(
+				'title' => __( 'Edit', 'w4os' ),
+				'url'   => '#',
+			);
+			$selected_tab = 'edit';
+		}
 		$current_section = $option_group . '_section_' . $selected_tab;
 
 		// $tabs            = apply_filters( 'w4os_settings_tabs', array() );
