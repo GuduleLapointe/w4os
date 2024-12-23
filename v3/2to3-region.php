@@ -79,6 +79,24 @@ class W4OS3_Region {
 	 */
 	public function init() {
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
+
+		$this->constants();
+	}
+
+	private function constants() {
+		define( 'W4OS_REGION_FLAGS', array(
+			4 => __( 'Region Online', 'w4os' ),
+			1 => __( 'Default Region', 'w4os' ),
+			1024 => __( 'Default HG Region', 'w4os' ),
+			2 => __( 'Fallback Region', 'w4os' ),
+			256 => __( 'Authenticate', 'w4os' ),
+			512 => __( 'Hyperlink', 'w4os' ),
+			32 => __( 'Locked Out', 'w4os' ),
+			8 => __( 'No Direct Login', 'w4os' ),
+			64 => __( 'No Move', 'w4os' ),
+			16 => __( 'Persistent', 'w4os' ),
+			128 => __( 'Reservation', 'w4os' ),
+		) );
 	}
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
@@ -302,6 +320,40 @@ class W4OS3_Region {
 		return empty( $url ) ? null : w4os_hop($url, $string);
 	}
 
+	public static function format_flags( $bitwise = null ) {
+		$matches = self::match_flags( $bitwise );
+		if (empty($matches)) {
+			return;
+		}
+
+		// asort( $matches );
+
+		$output_html = '<ul class="region-flags">';
+		foreach ( $matches as $flag ) {
+			$output_html .= '<li>' . esc_html( $flag ) . '</li>';
+		}
+		$output_html .= '</ul>';
+
+		return $output_html;
+	}
+
+	public static function match_flags( $bitwise ) {
+		$matches = array();
+		foreach (W4OS_REGION_FLAGS as $flag => $label) {
+			if ($bitwise & $flag) {
+				$matches[$flag] = $label;
+			}
+		}
+		return $matches;
+	}
+
+	public function flags( $bitwise = null ) {
+		if( $bitwise === null ) {
+			$bitwise = $this->item->flags;
+		}
+		return self::match_flags( $bitwise );
+	}
+
 	/**
 	 * Get region actions
 	 */
@@ -317,7 +369,7 @@ class W4OS3_Region {
 		$actions = array(
 			'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, implode(' ', $classes), __('Edit', 'w4os') ),
 			// 'view'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'view', $this->uuid, implode(' ', $classes), __('View', 'w4os') ),
-			'message' => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, implode(' ', $classes), __('Message', 'w4os') ),
+			// 'message' => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, implode(' ', $classes), __('Message Region', 'w4os') ),
 			'teleport' => sprintf( '<a href="%s" class="%s">%s</a>', $this->get_tp_uri(), implode(' ', $classes),  __('Teleport', 'w4os' ) ),
 			// 'delete' => sprintf( '<a href="?page=%s&action=%s&region=%s">Delete</a>', $_REQUEST['page'], 'delete', $this->uuid ),
 		);
@@ -351,12 +403,22 @@ class W4OS3_Region {
 		// $regionName = $item->regionName;
 		// $regon_id = $item->uuid;
 		$name = $region->get_name();
+		$flags = $region->flags( $region->item->flags &~ 4 &~ 16 ); // Any flag except Online and Persistent
+		$states = empty( $flags ) ? '' : ' — ' . implode( ', ', $flags );
+
 		$actions = $region->get_actions();
 		$actions_container = '';
 		if( ! empty( $actions ) ) {
 			$actions_container = '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
+			$title_link = admin_url( 'admin.php?page=w4os-regions&action=edit&region=' . $item->uuid );
 		}
-		return trim( '<strong>' . $name . '</strong> ' . $actions_container );;
+		return sprintf(
+			'<strong><a href="%s">%s</a> %s</strong> %s',
+			$title_link,
+			$name,
+			$states,
+			$actions_container
+		);
 	}
 
 	/**
