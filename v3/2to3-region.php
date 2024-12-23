@@ -380,15 +380,48 @@ class W4OS3_Region {
 	 * Get region parcels
 	 */
 	public function get_parcels( $output_html = null ) {
-		$parcels = array(
-			__('Not yet implemented', 'w4os'),
-		);
-		if ( $output_html ) {
-			return '<ul><li>' . implode( '</li><li>', $parcels ) . '</li></ul>';
+		$server_uri = $this->item->serverURI;
+		if ( empty( $server_uri ) ) {
+			return 'Unknown';
 		}
 
-		// Return
-		return $parcels;
+		$transient_key = 'w4os_collector_' . $server_uri;
+		$collector = $server_uri . '?method=collector';
+
+		$content = get_transient( $transient_key );
+
+		if ( ! $content ) {
+			$content = @file_get_contents( $collector );
+			if ( empty( $content ) ) {
+				error_log( 'No content' );
+				return 'Offline';
+			}
+			set_transient( $transient_key, $content, 60 * 60 );			
+		}
+
+		$xml = simplexml_load_string( $content );
+		if ( ! $xml ) {
+			return 'not an xml';
+		}
+
+		$region_data = $xml->xpath("/regiondata/region[info/uuid='{$this->uuid}']");
+		if( ! $region_data ) {
+			return 'No region data found for ' . $this->uuid;
+		}
+		$parcels = $region_data[0]->xpath('./data/parceldata/parcel');
+
+		$output_html = array();
+		foreach( $parcels as $parcel_data ) {
+			$args = (array) $parcel_data;
+			$args['regionURI'] = $this->get_tp_uri();
+			// $parcel_data->regionURI = $this->get_tp_uri();
+			$parcel = new W4OS_Parcel( $args );
+			$output_html[] = $parcel->display();
+		}
+
+		if ( ! empty($output_html) ) {
+			return '<ul class="parcels"><li>' . implode( '</li><li>', $output_html ) . '</li></ul>';
+		}
 	}
 
 	/**
@@ -490,5 +523,88 @@ class W4OS3_Region {
 		$server_uri = preg_replace( '/^https?:\/\//', '', $server_uri );
 
 		return esc_html( $server_uri );
+	}
+}
+
+/**
+ * Parcel class
+ * 
+ * Sample parcel SimpleXMLElement Object
+		(
+			[@attributes] => Array
+				(
+					[showinsearch] => true
+					[scripts] => true
+					[build] => true
+					[public] => true
+					[category] => 6
+					[forsale] => false
+					[salesprice] => 0
+				)
+		
+			[name] => Way's backup
+			[description] => SimpleXMLElement Object
+				(
+				)
+		
+			[uuid] => 3728f4a2-6b3a-43e3-98c7-38e1f38bd77e
+			[area] => 65536
+			[location] => 128/128/0
+			[infouuid] => 00d22000-00d3-2000-8000-000080000000
+			[dwell] => 6
+			[image] => 67ee8590-066c-49e9-8a26-92e9869b1d02
+			[owner] => SimpleXMLElement Object
+				(
+					[uuid] => 0208b609-b205-495f-9399-56f456a86d62
+					[name] => Way Forest
+				)
+		
+		)
+ */
+
+class W4OS_Parcel {
+	private $db;
+	private $uuid;
+	private $data;
+
+	public function __construct( $args = null ) {
+		if(empty( $args ) ) {
+			return new WP_Error( 'no_parcel_data', 'No parcel data' );
+		}
+		if( empty( $args['uuid'] ) || empty( $args['name'] ) || empty( $args['location'] ) || empty( $args['regionURI'] ) ) {
+			error_log( 'Incomplete parcel data ' . print_r( $args, true ) );
+			return new WP_Error( 'incomplete_parcel_data', 'Incomplete parcel data' );
+		}
+
+		if ( is_array( $args ) ) {
+			$this->data = (object) $args;
+			$this->uuid = $args['uuid'];
+			$this->infouuid = $args['infouuid']; // Still don't know how to use this
+			$this->name = $args['name'];
+			$this->owner = $args['owner']['name' ] ?? '';
+			$this->image = $args['image'];
+			$this->location = $args['location'];
+			$this->description = $args['description'];
+			$this->regionURI = $args['regionURI'];
+			$this->area = $args['area'];
+			$this->tp_uri = $this->regionURI . '/' . $this->location;
+			$this->tp_link = w4os_hop( $this->tp_uri, $this->tp_uri );
+			error_log( 'Parcel ' . print_r( $this, true ) );
+		}
+	}
+
+	public function display() {
+		// Display the parcel data
+		$image = ( ! W4OS3::empty($this->image) ) ? sprintf( '<img src="%s" alt="%s">', w4os_get_asset_url( $this->image ), $this->name ) : '';
+		$output = '<div class="parcel">';
+		$output .= $image;
+		$output .= '<h2>' . $this->name . '</h2>';
+		$output .= '<p class="description">' . $this->description . '</p>';
+		$owner = ( $this->owner ) ? '<p class="owner">Owner: ' . $this->owner . '</p>' : '';
+		$output .= '<p class="teleport">Teleport: ' . $this->tp_link . '</p>';
+		$output .= '<p class="area">Area: ' . $this->area . '</p>';
+		$output .= '</div>';
+		// Display the parcel data
+		return $output;
 	}
 }

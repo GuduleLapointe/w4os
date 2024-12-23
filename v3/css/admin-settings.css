@@ -35,6 +35,30 @@
 	border-left-color: #d63638;
 }
 
+ul.parcels {
+	clear: both;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	gap: 20px;
+}
+
+ul.parcels div.parcel {
+	flex: auto;
+	width: 470px;
+	/* min-width: 520px; */
+}
+
+ul.parcels div.parcel > img {
+	float: left;
+	margin-right: 10px;
+	max-width: 128px;
+	aspect-ratio: 4/3;
+}
+ul.parcels div.parcel > h2 {
+	margin-top: 0;
+}
+
 @media (min-width: 1200px) {
 	.wrap.w4os-settings {
 		display: flex;
