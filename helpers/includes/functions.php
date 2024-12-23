@@ -195,7 +195,7 @@ function opensim_format_tp( $uri, $format = TPLINK, $sep = "\n" ) {
 		$links[ TPLINK_V3HG ] = "secondlife://http|!!$host|$port+$region";
 	}
 	if ( $format & TPLINK_HOP ) {
-		$links[ TPLINK_HOP ] = "hop://$host:$port/$regionencoded/$pos_mandatory";
+		$links[ TPLINK_HOP ] = "hop://$host:$port/$region" . ( empty( $pos ) ? '' : "/$pos" );
 	}
 	if ( $format & TPLINK_APPTP ) {
 		$links[ TPLINK_APPTP ] = "secondlife:///app/teleport/$host:$port+$regionencoded/" . ( ( ! empty( $pos_sl ) ) ? "$pos_sl/" : '' );
