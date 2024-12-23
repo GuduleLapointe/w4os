@@ -24,7 +24,7 @@ if( is_object( $region ) ) {
     // 1024 => __( 'Default HG Region', 'w4os' ),
     $check_flags = $region->item->flags;
     // $check_flags = $region->item->flags & ( 1 + 8 + 128 + 256 + 512 + 1024); // All but region online
-    $check_flags = $check_flags ^ 4; // All but region online and persistent;
+    $check_flags = $check_flags &~ 4; // All but region online and persistent;
 
     $data = array_filter( array(
         __('Status', 'w4os' ) => $region->format_region_status( $region->item )
