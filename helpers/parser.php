@@ -32,7 +32,7 @@ function hostCheck( $hostname, $port ) {
 	$failcounter = 0;
 	$interval    = 600; // Wait at least 10 minutes before scanning the same host
 
-	$xml = file_get_contents( "http://$hostname:$port/?method=collector" );
+	@$xml = file_get_contents( "http://$hostname:$port/?method=collector" );
 	if ( empty( $xml ) ) {
 		// error_log( "$hostname:$port unreachable" );
 		$fails       = $SearchDB->prepareAndExecute(
