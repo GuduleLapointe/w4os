@@ -719,23 +719,22 @@ function w4os_demask( $mask, $values, $additionalvalue ) {
 
 function w4os_hop( $url = null, $string = null, $format = true ) {
 	if ( empty( $url ) ) {
+		// $url = get_option( 'w4os_login_uri' );
 		return;
 	}
-	if ( ! get_option( $url ) ) {
-		$url = get_option( 'w4os_login_uri' );
-	}
-	$url = preg_replace( '#.*://#', '', $url );
+	$url = opensim_format_tp( $url, TPLINK_HOP );
+	
 	if ( ! $format ) {
 		return $url;
 	}
-	if ( empty( $string ) ) {
-		$string = $url;
-	}
-	$class = 'hop';
+	
+	$string = ( empty( $string ) ) ? $url : $string;
+	$classes[] = 'hop';
 	if ( preg_match( ':/app/agent/:', $url ) ) {
-		$class .= ' profile';
+		$classes[] = 'profile';
 	}
-	return sprintf( '<a class="%3$s" href="hop://%1$s">%2$s</a>', esc_attr( $url ), $string, $class );
+
+	return sprintf( '<a class="%3$s" href="hop://%1$s">%2$s</a>', esc_attr( $url ), $string, implode(' ', $classes) );
 }
 
 function w4os_age( $time ) {
