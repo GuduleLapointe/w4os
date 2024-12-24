@@ -467,7 +467,7 @@ class W4OS3 {
 		$null_keys = array(
 			'00000000-0000-0000-0000-000000000000',
 			'00000000-0000-0000-0000-000000000001',
-			W4OS_NULL_KEY,
+			// W4OS_NULL_KEY, // Not yet defined when this function is called early.
 		);
 		if ( in_array( $var, $null_keys ) ) {
 			return true;
