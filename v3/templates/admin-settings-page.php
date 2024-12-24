@@ -31,7 +31,7 @@ if ( ! isset( $menu_slug ) ) {
 }
 
 $option_name = $option_name ?? $menu_slug;
-$option_group = $option_group ?? $menu_slug . ( empty($selected_tab) ? '' : '_' . $selected_tab ) . '_group';
+$option_group = $option_group ?? $menu_slug . '_group';
 
 W4OS3::enqueue_style( 'w4os-admin-settings', 'v3/css/admin-settings.css' );
 ?>
@@ -48,11 +48,6 @@ W4OS3::enqueue_style( 'w4os-admin-settings', 'v3/css/admin-settings.css' );
 	<body>
 		<?php do_action( 'admin_notices' ); ?>
 		<div class="wrap w4os-settings <?php echo esc_attr( $menu_slug ); ?>">
-			<?php
-			if ( ! empty( $tab_data['sidebar-content'] ) ) {
-				printf( '<div id="sidebar-content">%s</div>', $tab_data['sidebar-content'] );
-			}
-			?>
 			<div class="main-content">
 				<?php
 				if ( ! empty( $tab_data['before-form'] ) ) {
@@ -71,6 +66,11 @@ W4OS3::enqueue_style( 'w4os-admin-settings', 'v3/css/admin-settings.css' );
 				}
 				?>
 			</div>
+			<?php
+			if ( ! empty( $tab_data['sidebar-content'] ) ) {
+				printf( '<div id="sidebar-content">%s</div>', $tab_data['sidebar-content'] );
+			}
+			?>
 		</div>
 	</body>
 </div>

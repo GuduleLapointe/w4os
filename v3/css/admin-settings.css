@@ -75,8 +75,8 @@ ul.parcels div.parcel > h3 {
 	.wrap.w4os-settings {
 		display: flex;
 		flex-wrap: wrap;
-		flex-direction: row-reverse;
-		justify-content: space-between;
+		flex-direction: row;
+		/* justify-content: space-between; */
 		gap: 20px;
 	}
 
