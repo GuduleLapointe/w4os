@@ -13,7 +13,7 @@ printf(
 	esc_attr( $option_name ),
 	esc_attr( $selected_tab ),
 );
-settings_fields( $options_group );
+settings_fields( $option_group );
 do_settings_sections( $menu_slug );
 submit_button();
 echo '</form>';

@@ -414,7 +414,7 @@ class W4OS3_Settings {
 		$section_title = $settings['section_title'] ?? '';
 
 		$option_name   = $settings['option_name'];
-		$options_group = $settings['option_group'];
+		$option_group = $settings['option_group'];
 
 		self::enqueue_select2();
 

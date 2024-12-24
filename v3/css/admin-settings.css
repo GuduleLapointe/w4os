@@ -81,7 +81,8 @@ ul.parcels div.parcel > h3 {
 	}
 
 	.wrap.w4os-settings #sidebar-content {
-		flex: 0 0 400px;
+		/* flex: 0 0 400px; */
+		flex: 1 1 400px;
 		position: sticky;
 	}
 	.wrap.w4os-settings .main-content {

@@ -46,9 +46,35 @@ if( is_object( $region ) ) {
         // __('Last Seen', 'w4os' ) => $region->last_seen( $region->item ),
     ) );
 
+    if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' ) {
+        $menu_slug = $_GET['page'];
+        $option_name = $menu_slug;
+        $option_group = $menu_slug . '_group';
+
+        $settings        = apply_filters( 'w4os_settings', array() );
+        // $page_tabs       = $settings[ $menu_slug ]['tabs'] ?? array();
+        // $page_tabs['edit'] = array(
+        //     'title' => __( 'Edit Region', 'w4os' ),
+        //     'url'   => '#',
+        // );
+        $selected_tab = 'edit';
+    }
+    $current_section = $option_group . '_section_' . $selected_tab;
+
     if ( ! empty( $data )) {
         echo '<div class="w4os-region-data">';
         echo '<div class="column">';
+        printf(
+            '<form action="options.php" method="post">
+            <input type="hidden" name="%s[%s][prevent-empty-array]" value="1">',
+            esc_attr( $option_name ),
+            esc_attr( $selected_tab ),
+        );
+        settings_fields( $option_group );
+        do_settings_sections( $menu_slug );
+        submit_button();
+        echo '</form>';
+
         echo '<table class="form-table">';
         foreach( $data as $key => $value ) {
             if( ! is_string($value) ) {

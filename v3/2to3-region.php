@@ -74,6 +74,8 @@ class W4OS3_Region {
 
 		if( ! W4OS3::empty( $mixed ) ) {
 			$this->fetch_region_data( $mixed );
+		} else if ( isset( $_GET['region'] ) ) {
+			$this->fetch_region_data( $_GET['region'] );
 		}
 	}
 
@@ -88,7 +90,7 @@ class W4OS3_Region {
 
 	private function constants() {
 		define( 'W4OS_REGION_FLAGS', array(
-			4 => __( 'Region Online', 'w4os' ),
+			// 4 => __( 'Region Online', 'w4os' ), // Not reliable, fake positives
 			1 => __( 'Default Region', 'w4os' ),
 			1024 => __( 'Default HG Region', 'w4os' ),
 			2 => __( 'Fallback Region', 'w4os' ),
@@ -141,20 +143,76 @@ class W4OS3_Region {
 				),
 			),
 		);
-		// if ( $_GET['page'] === 'w4os-regions' && $_GET['action'] === 'edit' ) {
-		// 	$settings['w4os-regions']['tabs']['edit'] = array(
-		// 		'title'    => __( 'Edit (improved)', 'w4os' ),
-		// 		'fields'   => array(
-		// 			'edit1' => array(
-		// 				'id'    => 'edit1',
-		// 				'title' => __( 'Edit Field 1', 'w4os' ),
-		// 				'type'  => 'text',
-		// 				'label' => __( 'Edit field 1', 'w4os' ),
-		// 			),
-		// 		)
-		// 	);
+		if ( $_GET['page'] === 'w4os-regions' && $_GET['action'] === 'edit' && ! empty( $_GET['region'] ) ) {
+			$_GET['tab'] = 'edit';
+			$settings['w4os-regions']['tabs']['edit'] = array(
+				'title'    => __( 'Edit (improved)', 'w4os' ),
+				'sidebar-content'  => $this->get_parcels(),
+				'fields'   => array(
+					'regionuuid' => array(
+						'id'    => 'regionuuid',
+						'title' => __( 'Region UUID', 'w4os' ),
+						'type'  => 'custom_html',
+						'label' => __( 'Region UUID', 'w4os' ),
+						'value' => $_GET['region'] . '<input type="hidden" name="regionuuid" value="' . $_GET['region'] . '">',
+					),
+					'edit1' => array(
+						'id'    => 'edit1',
+						'title' => __( 'Edit Field 1', 'w4os' ),
+						'type'  => 'text',
+						'label' => __( 'Edit field 1', 'w4os' ),
+					),
+					'status' => array(
+						'id'    => 'status',
+						'label' => __( 'Status', 'w4os' ),
+						'type'  => 'custom_html',
+						'value' => $this->format_region_status( $this->item )
+						. sprintf( ' (%s %s)', __( 'last seen', 'w4os' ), $this->last_seen( $this->item ) )
+						. $this->format_flags( $this->item->flags ),
+					),
+					'owner' => array(
+						'id'    => 'owner',
+						'label' => __( 'Owner', 'w4os' ),
+						'type'  => 'custom_html',
+						'value' => $this->owner_name( $this->item ),
+					),
+					'teleport' => array(
+						'id'    => 'teleport',
+						'label' => __( 'Teleport', 'w4os' ),
+						'type'  => 'custom_html',
+						'value' => $this->get_tp_link(),
+					),
+					'map' => array(
+						'id'    => 'map',
+						'label' => __( 'Map', 'w4os' ),
+						'type'  => 'custom_html',
+						'value' => ( ! W4OS3::empty( $this->item->regionMapTexture ) ) ? sprintf(
+							'<img src="%1$s" class="asset asset-%3$d region-map" alt="%2$s" loading="lazy" width="%3$d" height="%4$d">',
+							w4os_get_asset_url( $this->item->regionMapTexture ),
+							sprintf( __( '%s region map', 'w4os' ), esc_attr( $this->item->regionName ) ),
+							$this->item->sizeX ?? 256,
+							$this->item->sizeY ?? 256,
+						) : '',
+					),
+				),
+				// __('Status', 'w4os' ) => $region->format_region_status( $region->item )
+				// . sprintf( ' (%s %s)', __('last seen', 'w4os' ), $region->last_seen( $region->item ) )
+				// . $region->format_flags( $check_flags ),
+				// __('Owner', 'w4os' ) => $region->owner_name( $region->item ),
+				// __('Teleport', 'w4os' ) => $region->get_tp_link(),
+				// __('Map', 'w4os' ) => ( ! W4OS3::empty( $map_uuid ) ) ? sprintf(
+				// 	'<img src="%1$s" class="asset asset-%3$d region-map" alt="%2$s" loading="lazy" width="%3$d" height="%4$d">',
+				// 	w4os_get_asset_url( $map_uuid ),
+				// 	sprintf( __( '%s region map', 'w4os' ), esc_attr( $title ) ),
+				// 	$region->item->sizeX ?? 256,
+				// 	$region->item->sizeY ?? 256,
+				// ) : '',
+		
+			);
 
-		// }
+			error_log( 'tabs ' . print_r( $settings['w4os-regions']['tabs'], true ) );
+		}
+
 		return $settings;
 	}
 
