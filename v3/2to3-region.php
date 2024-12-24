@@ -141,6 +141,20 @@ class W4OS3_Region {
 				),
 			),
 		);
+		// if ( $_GET['page'] === 'w4os-regions' && $_GET['action'] === 'edit' ) {
+		// 	$settings['w4os-regions']['tabs']['edit'] = array(
+		// 		'title'    => __( 'Edit (improved)', 'w4os' ),
+		// 		'fields'   => array(
+		// 			'edit1' => array(
+		// 				'id'    => 'edit1',
+		// 				'title' => __( 'Edit Field 1', 'w4os' ),
+		// 				'type'  => 'text',
+		// 				'label' => __( 'Edit field 1', 'w4os' ),
+		// 			),
+		// 		)
+		// 	);
+
+		// }
 		return $settings;
 	}
 
@@ -375,6 +389,9 @@ class W4OS3_Region {
 			default:
 				$classes[] = esc_attr($context) . '-action';
 		}
+		// if($this->console) {
+		// 	error_log("console enabled");
+		// }
 		$actions = array(
 			'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, implode(' ', $classes), __('Edit', 'w4os') ),
 			// 'view'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'view', $this->uuid, implode(' ', $classes), __('View', 'w4os') ),
@@ -619,7 +636,7 @@ class W4OS_Parcel {
 		$image = ( ! W4OS3::empty($this->image) ) ? sprintf( '<img src="%s" alt="%s">', w4os_get_asset_url( $this->image ), $this->name ) : '';
 		$output = '<div class="parcel">';
 		$output .= $image;
-		$output .= '<h2>' . $this->name . '</h2>';
+		$output .= '<h3>' . $this->name . '</h3>';
 		$output .= '<p class="description">' . $this->description . '</p>';
 		$owner = ( $this->owner ) ? '<p class="owner">Owner: ' . $this->owner . '</p>' : '';
 		$output .= '<p class="teleport">Teleport: ' . $this->tp_link . '</p>';

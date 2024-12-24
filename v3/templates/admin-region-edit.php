@@ -44,10 +44,11 @@ if( is_object( $region ) ) {
         ) : '',
         __('Size', 'w4os' ) => $region->format_region_size( $region->item ),
         // __('Last Seen', 'w4os' ) => $region->last_seen( $region->item ),
-        __('Parcels', 'w4os' ) => $region->get_parcels(),
     ) );
 
     if ( ! empty( $data )) {
+        echo '<div class="w4os-region-data">';
+        echo '<div class="column">';
         echo '<table class="form-table">';
         foreach( $data as $key => $value ) {
             if( ! is_string($value) ) {
@@ -57,5 +58,9 @@ if( is_object( $region ) ) {
             printf( '<tr><th>%s</th><td>%s</td></tr>', $key, $value );
         }
         echo '</table>';
+        echo '</div><div class="column w4os-parcels-data">';
+        echo '<h2>' . __('Parcels', 'w4os' ) . '</h2>';
+        echo $region->get_parcels();
+        echo '</div></div>';
     }
 }
