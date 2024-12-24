@@ -89,11 +89,17 @@ class W4OS3 {
 	 * Normalize an INI string. Make sure each value is encosed in quotes.
 	 */
 	public static function normalize_ini( $ini ) {
+		if ( ! $ini || is_wp_error( $ini ) ) {
+			return false;
+		}
 		if ( is_array( $ini ) ) {
 			$lines = $ini;
-		} else {
+		} else if ( is_string( $ini ) ) {
 			$lines = explode( "\n", $ini );
+		} else {
+			return false;
 		}
+
 		$ini = '';
 		foreach ( $lines as $line ) {
 			$line = trim( $line );
