@@ -217,6 +217,15 @@ class W4OS3_Settings {
 			return $options;
 		}
 
+		if (isset($input['edit']['sim_credentials'])) {
+			$credential_option = get_option( 'w4os-credentials', array() );
+			$creds = $input['edit']['sim_credentials'];
+			$server_uri = $creds['host'] . ':' . $creds['port'];
+
+			W4OS3::update_credentials( $server_uri, $creds );
+			unset( $input['edit']['sim_credentials'] );
+		}
+
 		foreach ( $input as $key => $value ) {
 			// We don't want to clutter the options with temporary check values
 			if ( isset( $value['prevent-empty-array'] ) ) {
@@ -332,13 +341,17 @@ class W4OS3_Settings {
 		}
 		
 		// Check database credentials
-		@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
-		if( $db_conn && ! $db_conn->connect_error ) {
-			$creds['db']['status'] = true;
-			$db_conn->close();
+		if ( ! empty( $creds['db']['host'] ) && ! empty( $creds['db']['user'] ) && ! empty( $creds['db']['pass'] && ! empty( $creds['db']['name'] ) ) ) {
+			@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
+			if( $db_conn && ! $db_conn->connect_error ) {
+				$creds['db']['status'] = true;
+				$db_conn->close();
+			} else {
+				$creds['db']['status'] = false;
+				$creds['db']['error'] = $db_conn->connect_error ?? __( 'Unknown DB connection error', 'w4os' );
+			}
 		} else {
-			$creds['db']['status'] = false;
-			$creds['db']['error'] = $db_conn->connect_error ?? __( 'Unknown DB connection error', 'w4os' );
+			$creds['db']['status'] = null;
 		}
 
 		// Check console credentials
@@ -509,7 +522,7 @@ class W4OS3_Settings {
 					$value,
 					array(
 						'type' => ( $args['id'] == 'robust' ) ? 'robust' : null,
-						'use_defaults' => ( $args['id'] == 'robust' ) ? false : true,
+						'use_defaults' => ( $args['id'] == 'robust' ) ? false : ( $value['use_default'] ?? true ),
 						'host' => null,
 						'port' => 8002,
 						'db' => array(

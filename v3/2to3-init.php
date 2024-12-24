@@ -481,6 +481,64 @@ class W4OS3 {
 	public static function is_uuid( $uuid ) {
 		return preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid );
 	}
+
+	public static function update_credentials( $serverURI, $credentials ) {
+		$options = get_option( 'w4os-credentials' );
+		$options[ $serverURI ] = $credentials;
+		update_option( 'w4os-credentials', $options );
+	}
+
+	public static function get_credentials( $instance ) {
+		if ( is_string( $instance ) ) {
+			$parts = parse_url( $instance );
+			$serverURI = $parts['host'] . ':' . $parts['port'];
+			$options = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
+			$server_credentials = $options[ $serverURI ] ?? array();
+		} else {
+			$server_credentials = array();
+		}
+
+		$credentials = wp_parse_args(
+			$server_credentials,
+			array(
+				'host' => null,
+				'port' => null,
+				'use_default' => false,
+				'console' => array(
+					'host' => null,
+					'port' => null,
+					'user' => null,
+					'pass' => null,
+				),
+				'db' => array(
+					'host' => null,
+					'port' => null,
+					'name' => null,
+					'user' => null,
+					'pass' => null,
+				),
+			)
+		);
+		return $credentials;
+	}
+
+    /**
+     * Calculate a unique site key. Uuse to encrypt and decrypt sensitive data like connection credentials.
+     * 
+     * - unique and persistent (i.e. the same key is generated every time).
+     * - not stored in the database, generated on the fly.
+     * - depends on W4OS_LOGIN_URI and an additional secret key specific to the plugin.
+     * 
+     * @return string The site key
+     */
+    private function set_key() {
+        $login_uri = get_option( 'w4os_login_uri', home_url() );
+		error_log( 'Login URI: ' . $login_uri );
+		$grid_info = w4os_get_grid_info();
+		error_log( 'Grid info: ' . print_r( $grid_info, true ) );
+        return md5($login_uri . 'w4os');
+    }
+
 }
 
 $w4os3 = new W4OS3();

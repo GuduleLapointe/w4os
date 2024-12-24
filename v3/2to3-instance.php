@@ -22,7 +22,6 @@ class W4OS_Instance {
     private $secret_key;
 
     public function __construct() {
-        $this->secret_key = $this->get_grid_key();
     }
 
     public function init() {
@@ -74,20 +73,6 @@ class W4OS_Instance {
         $v3_settings = get_option( 'w4os-settings', array() );
         $v3_settings['connections'] = wp_parse_args( $connections, ($v3_settings['connections'] ?? array()) );
         // error_log( "v3_settings: " . print_r( $v3_settings, true ) );
-    }
-
-    /**
-     * Calculate a unique site key. Uuse to encrypt and decrypt sensitive data like connection credentials.
-     * 
-     * - unique and persistent (i.e. the same key is generated every time).
-     * - not stored in the database, generated on the fly.
-     * - depends on W4OS_LOGIN_URI and an additional secret key specific to the plugin.
-     * 
-     * @return string The site key
-     */
-    private function get_grid_key() {
-        $login_uri = get_option( 'w4os_login_uri', home_url() );
-        return md5($login_uri . 'w4os');
     }
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {

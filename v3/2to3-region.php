@@ -159,32 +159,26 @@ class W4OS3_Region {
 			// unset( $actions['teleport'] );
 			$region_title .= ' ' . implode( ' ', $actions );
 			$region_title .= '<p><code>' . $_GET['region'] . '</code><input type="hidden" name="regionuuid" value="' . $_GET['region'] . '"></p>';
-			$server_uri = $this->format_server_uri( $this->item, true );
-			$server_parts = parse_url( $server_uri );
-			$server_host = $server_parts['host'];
-			$server_port = $server_parts['port'];
-			$server_credentials = array(
-				'host' => $server_host,
-				'port' => $server_port,
-				'use_default' => false,
-				'console' => array(
-					'host' => $server_host,
-					'port' => 8099,
-					'user' => 'Test',
-					'pass' => 'secret',
+			// $server_uri = $this->format_server_uri( $this->item, true );
+			$parts = parse_url( $this->item->serverURI );
+			$sim_credentials = wp_parse_args( 
+				array(
+					'host' => $parts['host'] ?? '',
+					'port' => $parts['port'] ?? '',
 				),
+				W4OS3::get_credentials( $this->item->serverURI ),
 			);
+			error_log("sim_credentials: " . print_r($sim_credentials, true));
 			$settings['w4os-regions']['tabs']['edit'] = array(
 				'title'    => __( 'Edit (improved)', 'w4os' ),
-				'sidebar-content'  => $this->get_parcels(),
+				'sidebar-content'  => '<h3>' . __('Parcels', 'w4os') . '</h3>' . $this->get_parcels(),
 				'before-form' => $region_title,
 				'fields'   => array(
 					'sim_credentials' => array(
 						// 'id'    => 'edit1',
 						'type'  => 'instance_credentials',
 						'label' => __( 'Simulator Credentials', 'w4os' ),
-						'value' => $server_credentials,
-						// 'default' => $server_credentials,
+						'value' => $sim_credentials,
 					),
 					'status' => array(
 						'id'    => 'status',
