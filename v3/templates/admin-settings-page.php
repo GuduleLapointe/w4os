@@ -11,7 +11,7 @@ if ( $callback && ! is_callable( $callback ) ) {
 }
 
 $try_templates = array(
-	W4OS_TEMPLATES_DIR . "admin-$menu_slug-content-$selected_tab.php",
+	W4OS_TEMPLATES_DIR . "admin-$menu_slug-$selected_tab-content.php",
 	W4OS_TEMPLATES_DIR . "admin-$menu_slug-content.php",
 	W4OS_TEMPLATES_DIR . 'admin-settings-content.php',
 );
@@ -21,6 +21,17 @@ foreach ( $try_templates as $try_template ) {
 		break;
 	}
 }
+
+// make sure required vars are set
+if ( ! isset( $menu_slug ) ) {
+	w4os_admin_notice( __( 'Required parameters missing for this page.', 'w4os' ), 'error' );
+	error_log( sprintf ( 'Required parameters missing, menu_slug not defined - %s.', $_SERVER['REQUEST_URI'] ) );
+	do_action( 'admin_notices' );
+	return;
+}
+
+$option_name = $option_name ?? $menu_slug;
+$option_group = $option_group ?? $menu_slug . ( empty($selected_tab) ? '' : '_' . $selected_tab ) . '_group';
 
 W4OS3::enqueue_style( 'w4os-admin-settings', 'v3/css/admin-settings.css' );
 ?>
