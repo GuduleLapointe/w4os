@@ -126,7 +126,7 @@ class W4OS3 {
 	}
 
 	 public function console( $instance = 'robust', $command = null ) {
-		if ( ! $this->get_console_config( $instance ) ) {
+		if ( ! is_array( $instance ) && ! $this->get_console_config( $instance ) ) {
 			return false;
 		}
 
@@ -150,9 +150,13 @@ class W4OS3 {
 	}
 	
 	private function get_console_config( $instance = 'robust' ) {
-		$connections = W4OS3::get_option( 'w4os-settings:connections', array() );
+		if ( is_array( $instance ) ) {
+			$console_prefs = $instance;
+		} else {
+			$connections = W4OS3::get_option( 'w4os-settings:connections', array() );
+			$console_prefs = $connections[$instance]['console'] ?? false;
+		}
 
-		$console_prefs = $connections[$instance]['console'] ?? false;
 		if ( ! $console_prefs ) {
 			return false;
 		}
@@ -174,19 +178,6 @@ class W4OS3 {
 			return $this->console;
 		}
 
-		// $connections = W4OS3::get_option( 'w4os-settings:connections', array() );
-		// $console_prefs = $connections[$instance]['console'] ?? false;
-		// if ( ! $console_prefs ) {
-		// 	return new WP_Error( 'no_console_prefs', sprintf( __( 'No console preferences not set for %s.', 'w4os'), $instance ) );
-		// }
-		// if ( empty ( $console_prefs['host'] ) || empty( $console_prefs['port'] ) || empty( $console_prefs['user'] ) || empty( $console_prefs['pass'] ) ) {
-		// 	return new WP_Error( 'incomplete_console_prefs', sprintf( __( 'Incomplete console prefs found for %s.', 'w4os'), $instance ) );
-		// }
-		// $rest_args = array(
-		// 	'uri' 	   => $console_prefs['host'] . ':' . $console_prefs['port'],
-		// 	'ConsoleUser' => $console_prefs['user'],
-		// 	'ConsolePass' => $console_prefs['pass'],
-		// );
 		$rest_args = $this->get_console_config( $instance );
 		if ( empty( $rest_args ) ) {
 			error_log("Console not set for $instance, that's OK");
@@ -484,12 +475,45 @@ class W4OS3 {
 		return preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid );
 	}
 
+	public static function connectionstring_to_array( $connectionstring ) {
+		$parts = explode( ';', $connectionstring );
+		$creds = array();
+		foreach ( $parts as $part ) {
+			$pair = explode( '=', $part );
+			$creds[ $pair[0] ] = $pair[1] ?? '';
+		}
+		return $creds;
+	}
+
 	public static function update_credentials( $serverURI, $credentials ) {
+		$console_enabled = W4OS3::validate_console_creds( $credentials['console'] );
+		$credentials['console']['enabled'] = $console_enabled;
+		if ( $console_enabled ) {
+			$session = new W4OS3();
+			$command = 'config get DatabaseService ConnectionString';
+			$result = $session->console( $credentials['console'], 'config get DatabaseService ConnectionString' );
+			if ( $result ) {
+				$result = array_shift( $result );
+				$result = explode( ' : ', $result );
+				$result = array_pop( $result );
+				// $result = preg_replace( '/.*Data Source=', 'host=', $result );
+				$data = self::connectionstring_to_array( $result );
+				$db = array_filter( array(
+					'host' => $data['Data Source'],
+					'port' => $data['Port'] ?? 3306,
+					'name' => $data['Database'],
+					'user' => $data['User ID'],
+					'pass' => $data['Password'],
+				) );
+				if ( $db['host'] == 'localhost' && $credentials['host'] !=  $_SERVER['SERVER_ADDR'] ) {
+					$db['host'] = $credentials['host'];
+				}
+				$credentials['db'] = $db;
+				$credentials['db']['enabled'] = self::validate_db_credentials( $credentials['db'] );
+			}
+		}
 		$options = self::decrypt( get_option( 'w4os-credentials' ) );
 		$options[ $serverURI ] = self::encrypt( $credentials );
-		// $data = self::encrypt( $options );
-		// error_log( __FUNCTION__ . ' encrypted ' . print_r( $data, true ) );
-		// $data = $options;
 		update_option( 'w4os-credentials', $options );
 	}
 
@@ -659,6 +683,50 @@ class W4OS3 {
 		curl_close( $ch );
 		$xml = simplexml_load_string( $html );
 		return $xml;
+	}
+
+	/**
+	 * Validate arbitrary console credentials.
+	 * 
+	 * Used to validate console credentials before saving them.
+	 */
+	public static function validate_console_creds( $console_creds ) {
+		if ( ! $console_creds ) {
+			return false;
+		}
+		$rest_args = array(
+			'uri' 	   => $console_creds['host'] . ':' . $console_creds['port'],
+			'ConsoleUser' => $console_creds['user'],
+			'ConsolePass' => $console_creds['pass'],
+		);
+		if( empty( $rest_args['uri'] ) || empty( $rest_args['ConsoleUser'] ) || empty( $rest_args['ConsolePass'] ) ) {
+			return false;
+		}
+		$rest = new OpenSim_Rest( $rest_args );
+		if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
+			return $rest->error->getMessage();
+		} else {
+			$response = $rest->sendCommand( 'show info' );
+			if ( is_opensim_rest_error( $response ) ) {
+				return $response->getMessage();
+			} else {
+				return true;
+			}
+		}
+	}
+
+	public static function validate_db_credentials( $db_creds ) {
+		if ( empty( $db_creds['host'] ) || empty( $db_creds['user'] ) || empty( $db_creds['pass'] ) || empty( $db_creds['name'] ) ) {
+			error_log( __FUNCTION__ . ' missing arguments ' . print_r( $db_creds, true ) );
+			return null;
+		}
+		@$db_conn = new mysqli( $db_creds['host'], $db_creds['user'], $db_creds['pass'], $db_creds['name'], $db_creds['port'] );
+		if( $db_conn && ! $db_conn->connect_error ) {
+			$db_conn->close();
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
