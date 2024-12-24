@@ -56,7 +56,10 @@ class W4OS3_Region {
 	private $item;
 	private $data;
 	private $main_query = "SELECT * FROM (
-		SELECT regions.*, CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name, sizeX * sizeY AS size
+		SELECT regions.*,
+		CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name,
+		sizeX * sizeY AS size,
+		(SELECT COUNT(*) FROM Presence WHERE Presence.RegionID = regions.uuid) AS presence
 		FROM `regions`
 		LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID
 	) AS subquery";
@@ -212,6 +215,12 @@ class W4OS3_Region {
 						'render_callback' => array( $this, 'format_server_uri' ),
 						'sortable'        => true,
 						'filterable'      => true,
+					),
+					'presence' => array(
+						'title'           => __( 'Presence', 'w4os' ),
+						'size'            => '8%',
+						'sortable'		=> true,
+						'order'			=> 'DESC',
 					),
 					'serverPort'    => array(
 						'title' => __( 'Internal Port', 'w4os' ),
@@ -370,7 +379,7 @@ class W4OS3_Region {
 			'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, implode(' ', $classes), __('Edit', 'w4os') ),
 			// 'view'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'view', $this->uuid, implode(' ', $classes), __('View', 'w4os') ),
 			// 'message' => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, implode(' ', $classes), __('Message Region', 'w4os') ),
-			'teleport' => sprintf( '<a href="%s" class="%s">%s</a>', $this->get_tp_uri(), implode(' ', $classes),  __('Teleport', 'w4os' ) ),
+			'teleport' => sprintf( '<a href="%s" class="%s">%s</a>', opensim_format_tp( $this->get_tp_uri(), TPLINK_HOP ), implode(' ', $classes),  __('Teleport', 'w4os' ) ),
 			// 'delete' => sprintf( '<a href="?page=%s&action=%s&region=%s">Delete</a>', $_REQUEST['page'], 'delete', $this->uuid ),
 		);
 		return $actions;
@@ -596,7 +605,7 @@ class W4OS_Parcel {
 			$this->area = $args['area'];
 			$this->tp_uri = $this->regionURI . '/' . $this->location;
 			$this->tp_link = w4os_hop( $this->tp_uri, $this->tp_uri );
-			error_log( 'Parcel ' . print_r( $this, true ) );
+			// error_log( 'Parcel ' . print_r( $this, true ) );
 		}
 	}
 

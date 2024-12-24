@@ -734,7 +734,7 @@ function w4os_hop( $url = null, $string = null, $format = true ) {
 		$classes[] = 'profile';
 	}
 
-	return sprintf( '<a class="%3$s" href="hop://%1$s">%2$s</a>', esc_attr( $url ), $string, implode(' ', $classes) );
+	return sprintf( '<a class="%3$s" href="%1$s">%2$s</a>', esc_attr( $url ), $string, implode(' ', $classes) );
 }
 
 function w4os_age( $time ) {
