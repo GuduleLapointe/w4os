@@ -143,24 +143,48 @@ class W4OS3_Region {
 				),
 			),
 		);
-		if ( $_GET['page'] === 'w4os-regions' && $_GET['action'] === 'edit' && ! empty( $_GET['region'] ) ) {
+		$get = wp_parse_args( $_GET, array(
+			'page'   => null,
+			'action' => null,
+			'region' => null,
+		) );
+		if ( $get['page'] === 'w4os-regions' && $get['action'] === 'edit' && ! W4OS3::empty( $get['region'] ) ) {
 			$_GET['tab'] = 'edit';
+			$region_title = sprintf( 
+				'<h1 class="wp-heading-inline">%s</h1>', 
+				sprintf( __('Region: %s', 'w4os'), $this->item->regionName ),
+			);
+			$actions = $this->get_actions( 'page-title' );
+			unset( $actions['edit'] );
+			// unset( $actions['teleport'] );
+			$region_title .= ' ' . implode( ' ', $actions );
+			$region_title .= '<p><code>' . $_GET['region'] . '</code><input type="hidden" name="regionuuid" value="' . $_GET['region'] . '"></p>';
+			$server_uri = $this->format_server_uri( $this->item, true );
+			$server_parts = parse_url( $server_uri );
+			$server_host = $server_parts['host'];
+			$server_port = $server_parts['port'];
+			$server_credentials = array(
+				'host' => $server_host,
+				'port' => $server_port,
+				'use_default' => false,
+				'console' => array(
+					'host' => $server_host,
+					'port' => 8099,
+					'user' => 'Test',
+					'pass' => 'secret',
+				),
+			);
 			$settings['w4os-regions']['tabs']['edit'] = array(
 				'title'    => __( 'Edit (improved)', 'w4os' ),
 				'sidebar-content'  => $this->get_parcels(),
+				'before-form' => $region_title,
 				'fields'   => array(
-					'regionuuid' => array(
-						'id'    => 'regionuuid',
-						'title' => __( 'Region UUID', 'w4os' ),
-						'type'  => 'custom_html',
-						'label' => __( 'Region UUID', 'w4os' ),
-						'value' => $_GET['region'] . '<input type="hidden" name="regionuuid" value="' . $_GET['region'] . '">',
-					),
-					'edit1' => array(
-						'id'    => 'edit1',
-						'title' => __( 'Edit Field 1', 'w4os' ),
-						'type'  => 'text',
-						'label' => __( 'Edit field 1', 'w4os' ),
+					'sim_credentials' => array(
+						// 'id'    => 'edit1',
+						'type'  => 'instance_credentials',
+						'label' => __( 'Simulator Credentials', 'w4os' ),
+						'value' => $server_credentials,
+						// 'default' => $server_credentials,
 					),
 					'status' => array(
 						'id'    => 'status',
@@ -169,6 +193,12 @@ class W4OS3_Region {
 						'value' => $this->format_region_status( $this->item )
 						. sprintf( ' (%s %s)', __( 'last seen', 'w4os' ), $this->last_seen( $this->item ) )
 						. $this->format_flags( $this->item->flags ),
+					),
+					'simulator' => array(
+						'id'    => 'serverURI',
+						'label' => __( 'Simulator', 'w4os' ),
+						'type'  => 'custom_html',
+						'value' => $this->format_server_uri( $this->item ),
 					),
 					'owner' => array(
 						'id'    => 'owner',
@@ -210,7 +240,6 @@ class W4OS3_Region {
 		
 			);
 
-			error_log( 'tabs ' . print_r( $settings['w4os-regions']['tabs'], true ) );
 		}
 
 		return $settings;
@@ -605,13 +634,26 @@ class W4OS3_Region {
 	/**
 	 * Format the server URI column in a lighter way.
 	 */
-	public function format_server_uri( $item ) {
+	public function format_server_uri( $item, $use_dns = true ) {
 		$server_uri = $item->serverURI;
 		if ( empty( $server_uri ) ) {
 			return;
 		}
-		$server_uri = untrailingslashit( $server_uri );
-		$server_uri = preg_replace( '/^https?:\/\//', '', $server_uri );
+
+		$parts = parse_url( $server_uri );
+		$hostname = $parts['host'];
+		
+		if ( $use_dns ) {
+			$hostname = gethostbyaddr( $parts['host'] );
+			$hostname = empty($hostname) ? $parts['host'] : $hostname;
+			// count dots and fallback to $parts['host'] if no dots or more than 5
+			$dot_count = substr_count( $hostname, '.' );
+			if ( $dot_count === 0 || $dot_count > 4 ) {
+				$hostname = $parts['host'];
+			}
+		}
+
+		$server_uri = $hostname . ':' . $parts['port'];
 
 		return esc_html( $server_uri );
 	}

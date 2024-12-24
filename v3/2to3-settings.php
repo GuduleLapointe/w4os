@@ -414,7 +414,7 @@ class W4OS3_Settings {
 		$section_title = $settings['section_title'] ?? '';
 
 		$option_name   = $settings['option_name'];
-		$option_group = $settings['option_group'];
+		$options_group = $settings['option_group'];
 
 		self::enqueue_select2();
 
@@ -485,6 +485,8 @@ class W4OS3_Settings {
 		$field_name = "{$option_name}[{$tab}][{$args['id']}]";
 		$option     = get_option( $option_name, array() );
 		$value      = isset( $option[ $tab ][ $args['id'] ] ) ? $option[ $tab ][ $args['id'] ] : '';
+		$value = isset( $args['value'] ) ? $args['value'] : $value;
+
 		if ( empty( $value ) && isset( $args['default'] ) ) {
 			$value = $args['default'];
 		}
