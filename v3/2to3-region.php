@@ -168,7 +168,6 @@ class W4OS3_Region {
 				),
 				W4OS3::get_credentials( $this->item->serverURI ),
 			);
-			error_log("sim_credentials: " . print_r($sim_credentials, true));
 			$settings['w4os-regions']['tabs']['edit'] = array(
 				'title'    => __( 'Edit (improved)', 'w4os' ),
 				'sidebar-content'  => '<h3>' . __('Parcels', 'w4os') . '</h3>' . $this->get_parcels(),

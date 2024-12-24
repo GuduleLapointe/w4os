@@ -212,6 +212,10 @@ function w4os_get_user_notices( $echo = false ) {
 }
 
 function w4os_fast_xml( $url ) {
+	if( class_exists( 'W4OS3' ) ) {
+		return W4OS3::fast_xml( $url );
+	}
+
 	// Exit silently if required php modules are missing
 	if ( ! function_exists( 'curl_init' ) ) {
 		return null;
@@ -230,6 +234,10 @@ function w4os_fast_xml( $url ) {
 }
 
 function w4os_get_grid_info( $rechecknow = false ) {
+	if( class_exists( 'W4OS3' ) ) {
+		return W4OS3::grid_info( $rechecknow );
+	}
+
 	$grid_info = get_option( 'w4os_grid_info' );
 
 	if ( $rechecknow || get_option( 'w4os_check_urls_now' ) ) {

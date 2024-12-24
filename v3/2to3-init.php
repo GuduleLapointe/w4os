@@ -26,6 +26,7 @@ class W4OS3 {
 	public $profile_db;
 	private $console = null;
 	private $ini = array();
+	private static $key;
 
 	// public function __construct() {
 	// Safety only, this class should not be instantiated.
@@ -40,9 +41,10 @@ class W4OS3 {
 		if ( ! W4OS_ENABLE_V3 ) {
 			return;
 		}
-
+		
 		self::constants();
 		self::includes();
+		$this->set_key();
 
 		// Connect to the robust database and make it available to all classes.
 		$this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
@@ -483,17 +485,22 @@ class W4OS3 {
 	}
 
 	public static function update_credentials( $serverURI, $credentials ) {
-		$options = get_option( 'w4os-credentials' );
-		$options[ $serverURI ] = $credentials;
+		$options = self::decrypt( get_option( 'w4os-credentials' ) );
+		$options[ $serverURI ] = self::encrypt( $credentials );
+		// $data = self::encrypt( $options );
+		// error_log( __FUNCTION__ . ' encrypted ' . print_r( $data, true ) );
+		// $data = $options;
 		update_option( 'w4os-credentials', $options );
 	}
 
 	public static function get_credentials( $instance ) {
+		$key = self::$key;
+
 		if ( is_string( $instance ) ) {
 			$parts = parse_url( $instance );
 			$serverURI = $parts['host'] . ':' . $parts['port'];
 			$options = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
-			$server_credentials = $options[ $serverURI ] ?? array();
+			$server_credentials = self::decrypt( $options[ $serverURI ] ?? array() );
 		} else {
 			$server_credentials = array();
 		}
@@ -519,6 +526,7 @@ class W4OS3 {
 				),
 			)
 		);
+
 		return $credentials;
 	}
 
@@ -533,12 +541,125 @@ class W4OS3 {
      */
     private function set_key() {
         $login_uri = get_option( 'w4os_login_uri', home_url() );
-		error_log( 'Login URI: ' . $login_uri );
-		$grid_info = w4os_get_grid_info();
-		error_log( 'Grid info: ' . print_r( $grid_info, true ) );
-        return md5($login_uri . 'w4os');
+		$grid_info = self::grid_info();
+		$combine = array( $login_uri, $grid_info['gridnick'], $grid_info['platform'] );
+		$key = md5(sanitize_title( implode( ' ', $combine ) ) );
+		self::$key = $key;
     }
 
+	/**
+	 * Encrypt data with self::$key, in such a way that it can be decrypted later with the same key
+	 */
+
+	public static function encrypt( $data ) {
+		if ( ! extension_loaded( 'openssl' ) || ! function_exists( 'openssl_encrypt' ) ) {
+			// Return data unencrypted or handle error
+			return $data;
+		}
+		$key = self::$key;
+		if ( ! is_string( $data ) ) {
+			$data = json_encode( $data );
+		}
+		$iv = openssl_random_pseudo_bytes(16);
+		$encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
+		return base64_encode($encrypted . '::' . $iv);
+	}
+
+	/**
+	 * Decrypt data with self::$key, encrypted with self::encrypt
+	 */
+	public static function decrypt( $data ) {
+		if ( ! extension_loaded( 'openssl' ) || ! function_exists( 'openssl_decrypt' ) ) {
+			// Return raw data if OpenSSL is not available
+			return $data;
+		}
+		if ( ! is_string( $data ) ) {
+			return $data;
+		}
+		if ( ! preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $data) ) {
+			return $data;
+		}
+		$key = self::$key;
+		list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
+		$data = openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
+		$decode = json_decode( $data, true );
+		if ( json_last_error() === JSON_ERROR_NONE ) {
+			return $decode;
+		}
+		return $data;
+	}
+
+	public static function grid_info( $force = false ) {
+		$transient_key = 'w4os_grid_info';
+		$grid_info = get_transient( $transient_key );
+		if ( $grid_info && ! $force ) {
+			return $grid_info;
+		}
+
+		$local_uri       = 'http://localhost:8002';
+		$check_login_uri = ( get_option( 'w4os_login_uri' ) ) ? 'http://' . get_option( 'w4os_login_uri' ) : $local_uri;
+		$check_login_uri = preg_replace( '+http://http+', 'http', $check_login_uri );
+
+		$xml = W4OS3::fast_xml( $check_login_uri . '/get_grid_info' );
+	
+		if ( ! $xml ) {
+			return false;
+		}
+
+		if ( $check_login_uri == $local_uri ) {
+			w4os_admin_notice( __( 'A local Robust server has been found. Please check Login URI and Grid Name configuration.', 'w4os' ), 'success' );
+		}
+	
+		$grid_info = (array) $xml;
+		if ( get_option( 'w4os_provide_search', false ) ) {
+			$grid_info['SearchURL'] = get_option( 'w4os_search_url' ) . '?gk=http://' . get_option( 'w4os_login_uri' );
+		}
+	
+		if ( 'provide' === get_option( 'w4os_profile_page' ) && empty( $grid_info['profile'] ) && defined( 'W4OS_PROFILE_URL' ) ) {
+			$grid_info['profile'] = W4OS_PROFILE_URL;
+		}
+		if ( ! empty( $grid_info['login'] ) ) {
+			update_option( 'w4os_login_uri', preg_replace( '+/*$+', '', preg_replace( '+https*://+', '', $grid_info['login'] ) ) );
+		}
+		if ( ! empty( $grid_info['gridname'] ) ) {
+			update_option( 'w4os_grid_name', $grid_info['gridname'] );
+		}
+		// if ( isset( $grid_info['OfflineMessageURL'] ) ) {
+		// update_option( 'w4os_offline_helper_uri', $grid_info['OfflineMessageURL'] );
+		// }
+	
+		if ( isset( $urls ) && is_array( $urls ) ) {
+			w4os_get_urls_statuses( $urls, get_option( 'w4os_check_urls_now' ) );
+		}
+	
+		update_option( 'w4os_grid_info', json_encode( $grid_info ) );
+		set_transient( $transient_key, $grid_info, 60 * 60 * 24 );
+
+		return $grid_info;
+	}
+
+	/**
+	 * Fast XML function.
+	 * 
+	 * Not sure what makes it fast, but it's used in several places.
+	 */
+	public static function fast_xml( $url ) {
+		// Exit silently if required php modules are missing
+		if ( ! function_exists( 'curl_init' ) ) {
+			return null;
+		}
+		if ( ! function_exists( 'simplexml_load_string' ) ) {
+			return null;
+		}
+	
+		$ch = curl_init();
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+		$html = curl_exec( $ch );
+		curl_close( $ch );
+		$xml = simplexml_load_string( $html );
+		return $xml;
+	}
 }
 
 $w4os3 = new W4OS3();
