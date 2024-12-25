@@ -84,7 +84,7 @@ class W4OS3_Region {
 				error_log( 'simdb error ' . $this->simdb->get_error_message() );
 			} else if ( $this->simdb ) {
 				$tables = $this->simdb->get_results( 'show tables' );
-				if ( count( $tables ) === 0 ) {
+				if ( ! $tables || count( $tables ) === 0 ) {
 					$this->simdb = false;
 				}
 			}
