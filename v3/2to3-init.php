@@ -492,7 +492,7 @@ class W4OS3 {
 			$session = new W4OS3();
 			$command = 'config get DatabaseService ConnectionString';
 			$result = $session->console( $credentials['console'], 'config get DatabaseService ConnectionString' );
-			if ( $result ) {
+			if ( $result && is_array( $result ) ) {
 				$result = array_shift( $result );
 				$result = explode( ' : ', $result );
 				$result = array_pop( $result );
@@ -509,9 +509,11 @@ class W4OS3 {
 					$db['host'] = $credentials['host'];
 				}
 				$credentials['db'] = $db;
-				$credentials['db']['enabled'] = self::validate_db_credentials( $credentials['db'] );
 			}
 		}
+
+		$credentials['db']['enabled'] = self::validate_db_credentials( $credentials['db'] );
+
 		$options = self::decrypt( get_option( 'w4os-credentials' ) );
 		$options[ $serverURI ] = self::encrypt( $credentials );
 		update_option( 'w4os-credentials', $options );

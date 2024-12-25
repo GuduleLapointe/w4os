@@ -218,21 +218,7 @@ class W4OS3_Region {
 						) : '',
 					),
 				),
-				// __('Status', 'w4os' ) => $region->format_region_status( $region->item )
-				// . sprintf( ' (%s %s)', __('last seen', 'w4os' ), $region->last_seen( $region->item ) )
-				// . $region->format_flags( $check_flags ),
-				// __('Owner', 'w4os' ) => $region->owner_name( $region->item ),
-				// __('Teleport', 'w4os' ) => $region->get_tp_link(),
-				// __('Map', 'w4os' ) => ( ! W4OS3::empty( $map_uuid ) ) ? sprintf(
-				// 	'<img src="%1$s" class="asset asset-%3$d region-map" alt="%2$s" loading="lazy" width="%3$d" height="%4$d">',
-				// 	w4os_get_asset_url( $map_uuid ),
-				// 	sprintf( __( '%s region map', 'w4os' ), esc_attr( $title ) ),
-				// 	$region->item->sizeX ?? 256,
-				// 	$region->item->sizeY ?? 256,
-				// ) : '',
-		
 			);
-
 		}
 
 		return $settings;
@@ -309,6 +295,12 @@ class W4OS3_Region {
 						'render_callback' => array( $this, 'format_server_uri' ),
 						'sortable'        => true,
 						'filterable'      => true,
+					),
+					'serverControl' => array(
+						'title'           => __( 'Control', 'w4os' ),
+						'size'            => '6%',
+						'sortable'        => true,
+						'render_callback' => array( $this, 'format_server_control' ),
 					),
 					'presence' => array(
 						'title'           => __( 'Presence', 'w4os' ),
@@ -649,6 +641,30 @@ class W4OS3_Region {
 		$server_uri = $hostname . ':' . $parts['port'];
 
 		return esc_html( $server_uri );
+	}
+
+	public function format_server_control( $item ) {
+		$server_uri = $item->serverURI;
+		if ( empty( $server_uri ) ) {
+			return;
+		}
+		$icons = array();
+
+		$credentials = W4OS3::get_credentials( $server_uri );
+		error_log( 'Server credentials ' . print_r( $credentials, true ) );
+		// if ( $credentials['rest']['enabled'] ?? false ) {
+		// 	$icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';
+		// }
+		if ( $credentials['console']['enabled'] ?? false ) {
+			$icons['console'] = '<span class="dashicons dashicons-desktop"></span>';
+			$icons['console'] = '<span class="dashicons dashicons-analytics"></span>';
+			$icons['console'] = '<span class="dashicons dashicons-embed-generic"></span>';
+		}
+		if ( $credentials['db']['enabled'] ?? false ) {
+			$icons['db'] = '<span class="dashicons dashicons-database"></span>';
+		}
+		
+		return implode( ' ', $icons );
 	}
 }
 
