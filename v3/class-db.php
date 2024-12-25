@@ -10,10 +10,26 @@ if ( W4OS_ENABLE_V3 ) {
 				$this->show_errors();
 			}
 
-			// If args are passed as an array, extract them.
-			if ( is_array( $dbuser ) ) {
+			$args = func_get_args();
+			if( count( $args ) == 1 && is_string( $args[0] ) ) {
+				// If a single string is passed, assume it's service URI.
+				$url_parts = parse_url( $args[0] );
+				$serviceURI = $url_parts['host'] . ( empty( $url_parts['port'] ) ? '' : ':' . $url_parts['port'] );
+				$credentials = W4OS3::get_credentials( $serviceURI );
+
+				$db_enabled = $credentials['db']['enabled'] ?? false;
+				if( ! $db_enabled ) {
+					return false;
+				}
+
+				$dbuser      = $credentials['db']['user'];
+				$dbpassword  = $credentials['db']['pass'];
+				$dbname      = $credentials['db']['name'];
+				$dbhost      = $credentials['db']['host'] . ( empty( $credentials['db']['port'] ) ? '' : ':' . $credentials['db']['port'] );
+			} else if ( is_array( $args[0] ) ) {
+				// If args are passed as an array, extract them.
 				$credentials = WP_parse_args(
-					$dbuser,
+					$args[0],
 					array(
 						'user'     => null,
 						'pass'     => null,

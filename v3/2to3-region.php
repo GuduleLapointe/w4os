@@ -52,6 +52,7 @@
 
 class W4OS3_Region {
 	private $db;
+	private $simdb = false;
 	private $uuid;
 	private $item;
 	private $data;
@@ -76,6 +77,17 @@ class W4OS3_Region {
 			$this->fetch_region_data( $mixed );
 		} else if ( isset( $_GET['region'] ) ) {
 			$this->fetch_region_data( $_GET['region'] );
+		}
+		if( ! empty( $this->item->serverURI ) ) {
+			$this->simdb = new W4OS_WPDB( $this->item->serverURI );
+			if( is_wp_error( $this->simdb ) ) {
+				error_log( 'simdb error ' . $this->simdb->get_error_message() );
+			} else if ( $this->simdb ) {
+				$tables = $this->simdb->get_results( 'show tables' );
+				if ( count( $tables ) === 0 ) {
+					$this->simdb = false;
+				}
+			}
 		}
 	}
 
@@ -489,40 +501,72 @@ class W4OS3_Region {
 			return 'Unknown';
 		}
 
-		$transient_key = 'w4os_collector_' . $server_uri;
-		$collector = $server_uri . '?method=collector';
+		$regionURI = $this->get_tp_uri();
 
-		$content = get_transient( $transient_key );
-
-		if ( ! $content ) {
-			$content = @file_get_contents( $collector );
-			if ( empty( $content ) ) {
-				error_log( 'No content' );
-				return 'Offline';
+		if( $this->simdb ) {
+			$query = $this->simdb->prepare(
+				"SELECT * FROM land WHERE RegionUUID = %s",
+				$this->uuid,
+			);
+			$results = $this->simdb->get_results( $query );
+			if ( ! $results ) {
+				return false;
 			}
-			set_transient( $transient_key, $content, 60 * 60 );			
-		}
 
-		$xml = simplexml_load_string( $content );
-		if ( ! $xml ) {
-			return 'not an xml';
-		}
+			foreach( $results as $row ) {
+				$row->regionURI = $regionURI;
+				$row->sizeX = $this->item->sizeX;
+				$row->sizeY = $this->item->sizeY;
+				$parcels[] = new W4OS_Parcel( $row );
+			}
 
-		$region_data = $xml->xpath("/regiondata/region[info/uuid='{$this->uuid}']");
-		if( ! $region_data ) {
-			return 'No region data found for ' . $this->uuid;
-		}
-		$parcels = $region_data[0]->xpath('./data/parceldata/parcel');
+		} else {
+			$transient_key = 'w4os_collector_' . $server_uri;
+			$collector = $server_uri . '?method=collector';
+	
+			$content = get_transient( $transient_key );
+	
+			if ( ! $content ) {
+				$content = @file_get_contents( $collector );
+				if ( empty( $content ) ) {
+					error_log( 'No content' );
+					return 'Offline';
+				}
+				set_transient( $transient_key, $content, 60 * 60 );			
+			}
+	
+			$xml = simplexml_load_string( $content );
+			if ( ! $xml ) {
+				return 'not an xml';
+			}
+	
+			$region_data = $xml->xpath("/regiondata/region[info/uuid='{$this->uuid}']");
+			if( ! $region_data ) {
+				return 'No region data found for ' . $this->uuid;
+			}
+			$data = $region_data[0]->xpath('./data/parceldata/parcel');
 
+			foreach( $data as $parcel_data ) {
+				$args = (array) $parcel_data;
+				$args['regionURI'] = $regionURI;
+				$args['regionSizeX'] = $this->item->sizeX;
+				$args['regionSizeY'] = $this->item->sizeY;
+				$parcels[] = new W4OS_Parcel( $args );
+			}
+		}
+		
 		// TODO: use list api instead.
 		$output_html = array();
-		foreach( $parcels as $parcel_data ) {
-			$args = (array) $parcel_data;
-			$args['regionURI'] = $this->get_tp_uri();
-			// $parcel_data->regionURI = $this->get_tp_uri();
-			$parcel = new W4OS_Parcel( $args );
+		foreach( $parcels as $parcel ) {
 			$output_html[] = $parcel->display();
 		}
+		// foreach( $parcels as $parcel_data ) {
+		// 	$args = (array) $parcel_data;
+		// 	$args['regionURI'] = $this->get_tp_uri();
+		// 	// $parcel_data->regionURI = $this->get_tp_uri();
+		// 	$parcel = new W4OS_Parcel( $args );
+		// 	$output_html[] = $parcel->display();
+		// }
 
 		if ( ! empty($output_html) ) {
 			return '<ul class="parcels"><li>' . implode( '</li><li>', $output_html ) . '</li></ul>';
@@ -651,7 +695,7 @@ class W4OS3_Region {
 		$icons = array();
 
 		$credentials = W4OS3::get_credentials( $server_uri );
-		error_log( 'Server credentials ' . print_r( $credentials, true ) );
+		// error_log( 'Server credentials ' . print_r( $credentials, true ) );
 		// if ( $credentials['rest']['enabled'] ?? false ) {
 		// 	$icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';
 		// }
@@ -708,18 +752,56 @@ class W4OS_Parcel {
 	private $db;
 	private $uuid;
 	private $data;
+	private $name;
+	private $infouuid;
+	private $owner;
+	private $image;
+	private $location;
+	private $description;
+	private $regionURI;
+	private $area;
+	private $tp_uri;
+	private $tp_link;
+	private $regionSizeX = 0;
+	private $regionSizeY = 0;
 
 	public function __construct( $args = null ) {
 		if(empty( $args ) ) {
 			return new WP_Error( 'no_parcel_data', 'No parcel data' );
 		}
-		if( empty( $args['uuid'] ) || empty( $args['name'] ) || empty( $args['location'] ) || empty( $args['regionURI'] ) ) {
-			error_log( 'Incomplete parcel data ' . print_r( $args, true ) );
-			return new WP_Error( 'incomplete_parcel_data', 'Incomplete parcel data' );
-		}
 
-		if ( is_array( $args ) ) {
-			$this->data = (object) $args;
+		if( is_object( $args ) ) {
+			// Row from simulator db query
+			$row = $args;
+
+			if( empty( $row->UUID ) || empty($row->Name) || empty( $row->OwnerUUID ) ) {
+				error_log( 'Incomplete parcel data ' . print_r( $args, true ) );
+				return new WP_Error( 'incomplete_parcel_data', 'Incomplete parcel data' );
+			}
+
+			// $this->data = (object) $args;
+			$this->uuid = $row->UUID;
+			$this->infouuid = null; // Isn't available in land table
+			$this->name = $row->Name;
+			$this->owner = $row->OwnerUUID; // TODO: fetch name
+			$this->image = $row->SnapshotUUID;
+			$this->location = ''; // TODO: find a way to get the landing point
+			if( isset( $row->Bitmap ) ) {
+				$this->location = $this->parseParcelCenterFromBitmap( $row->Bitmap );
+			}
+			$this->description = $row->Description;
+			$this->regionURI = $row->regionURI;
+			$this->area = $row->Area;
+			$this->regionSizeX = isset($row->regionSizeX) ? (int)$row->regionSizeX : 256;
+			$this->regionSizeY = isset($row->regionSizeX) ? (int)$row->regionSizeX : 256;
+		} else if ( is_array( $args ) ) {
+			// Data from collector XML result
+			if( empty( $args['uuid'] ) || empty( $args['name'] ) || empty( $args['location'] ) || empty( $args['regionURI'] ) ) {
+				error_log( 'Incomplete parcel data ' . print_r( $args, true ) );
+				return new WP_Error( 'incomplete_parcel_data', 'Incomplete parcel data' );
+			}	
+			
+			// $this->data = (object) $args;
 			$this->uuid = $args['uuid'];
 			$this->infouuid = $args['infouuid']; // Still don't know how to use this
 			$this->name = $args['name'];
@@ -729,10 +811,59 @@ class W4OS_Parcel {
 			$this->description = $args['description'];
 			$this->regionURI = $args['regionURI'];
 			$this->area = $args['area'];
-			$this->tp_uri = $this->regionURI . '/' . $this->location;
-			$this->tp_link = w4os_hop( $this->tp_uri, $this->tp_uri );
-			// error_log( 'Parcel ' . print_r( $this, true ) );
+			$this->regionSizeX = (int) $args['regionSizeX'] ?? 256;
+			$this->regionSizeY = (int) $args['regionSizeX'] ?? 256;
 		}
+		if( ! empty ( $this->regionURI ) ) {
+			$this->tp_uri = $this->regionURI . ( $this->location ? '/' . $this->location : '' );
+			$this->tp_link = w4os_hop( $this->tp_uri, $this->tp_uri );
+		}
+	}
+
+	/**
+	 * 
+	 * Return the parcel data as an array if found, false if not found.
+	 */
+	private function parseParcelCenterFromBitmap( $bitmap ) {
+		$data = base64_decode( $bitmap, true );
+		if ( $data === false ) {
+			$data = $bitmap;
+		}
+		if ( empty( $data ) ) {
+			return false;
+		}
+		
+		$positions = array();
+		$m = 4; // 4 meters per pixel
+		$div = $this->regionSizeY > 0 ? ( $this->regionSizeY / 4 ) : 64; // bits per row
+		for ( $i = 0; $i < strlen( $data ); $i++ ) {
+			$byte = ord( $data[$i] );
+			for ( $b = 0; $b < 8; $b++ ) {
+				if ( ( $byte >> $b ) & 1 ) {
+					$index = ( $i * 8 ) + $b;
+					$y = floor( $index / $div );
+					$x = $index % $div;
+					$positions[] = array(
+						'x' => ( $x * $m ) + ( $m / 2 ),
+						'y' => ( $y * $m ) + ( $m / 2 ),
+					);
+				}
+			}
+		}
+		if ( empty( $positions ) ) {
+			return false;
+		}
+		$sumX = $sumY = 0;
+		foreach ( $positions as $p ) {
+			$sumX += $p['x'];
+			$sumY += $p['y'];
+		}
+		$count = count( $positions );
+		$centerX = round( $sumX / $count );
+		$centerY = round( $sumY / $count );
+		
+		// TODO: calculate altitude from terrain map. Use 21 as default for now.
+		return "{$centerX}/{$centerY}/21";
 	}
 
 	/**

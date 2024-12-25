@@ -41,10 +41,11 @@ class W4OS3 {
 		if ( ! W4OS_ENABLE_V3 ) {
 			return;
 		}
+
+		$this->set_key(); // Make sure to call first, so key is available for other functions.
 		
 		self::constants();
 		self::includes();
-		$this->set_key();
 
 		// Connect to the robust database and make it available to all classes.
 		$this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
@@ -521,6 +522,11 @@ class W4OS3 {
 
 	public static function get_credentials( $instance ) {
 		$key = self::$key;
+
+		if( empty ($key ) ) {
+			error_log( __FUNCTION__ . ' called before key is set, abort' );
+			return false;
+		}
 
 		if ( is_string( $instance ) ) {
 			$parts = parse_url( $instance );
