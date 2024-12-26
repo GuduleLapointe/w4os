@@ -126,7 +126,7 @@ class W4OS3 {
 		return $ini;
 	}
 
-	 public function console( $instance = 'robust', $command = null ) {
+	public function console( $instance = 'robust', $command = null ) {
 		if ( ! is_array( $instance ) && ! $this->get_console_config( $instance ) ) {
 			return false;
 		}
@@ -237,7 +237,7 @@ class W4OS3 {
 		// First we include all the files
 		require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
 		require_once W4OS_INCLUDES_DIR . 'class-db.php';
-		require_once W4OS_INCLUDES_DIR . '2to3-instance.php';
+		require_once W4OS_INCLUDES_DIR . '2to3-service.php';
 		
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
@@ -253,7 +253,7 @@ class W4OS3 {
 		// Once all files are loaded, we start the classes.
 		$Settings = new W4OS3_Settings();
 		$Settings->init();
-		$Instances = new W4OS_Instance();
+		$Instances = new W4OS3_Service();
 		$Instances->init();
 		
 		if ( W4OS_ENABLE_V3 ) {

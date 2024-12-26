@@ -1,6 +1,6 @@
 <?php
 /**
- * Instance class
+ * Service class
  * 
  * Defines the connection parameters and the methods to connect to the
  * OpenSimulator instances (grid services and simulators).
@@ -18,10 +18,27 @@
  * @since 2.9.1
  */
 
-class W4OS_Instance {
-    private $secret_key;
+class W4OS3_Service {
+    private $serviceURI;
+    private $credentials;
+    private $serviceType;
+
+    public $db_enabled;
+    public $console_enabled;
+    private $console;
 
     public function __construct() {
+        $args = func_get_args();
+
+        if ( is_array( $args ) && count( $args ) == 1 ) {
+            // Single argument is the service URI
+            $this->serviceURI = $args[0];
+            $this->credentials = W4OS3::get_credentials( $this->serviceURI );
+            $this->db_enabled = $this->credentials['db']['enabled'] ?? false;
+            if ( $this->credentials['console']['enabled'] ?? false ) {
+                $this->init_console();
+            }
+        }
     }
 
     public function init() {
@@ -135,4 +152,63 @@ class W4OS_Instance {
         );
 		return $settings;
     }
+
+    public function init_console() {
+        if($this->console) {
+            return $this->console;
+        }
+
+        $console_creds = $this->credentials['console'];
+        if ( empty( $console_creds ) ) {
+            return false;
+        }
+        $rest_args = array(
+			'uri' 	   => $console_creds['host'] . ':' . $console_creds['port'],
+			'ConsoleUser' => $console_creds['user'],
+			'ConsolePass' => $console_creds['pass'],
+		);
+
+		$rest = new OpenSim_Rest( $rest_args );
+		if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
+            error_log( __FUNCTION__ . ' ' . $rest->error->getMessage() );
+            $this->console = false;
+			return $rest->error;
+		} else {
+			$response = $rest->sendCommand( 'show info' );
+			if ( is_opensim_rest_error( $response ) ) {
+                $error = new WP_Error( 'console_command_failed', $response->getMessage() );
+				$this->console = false;
+				return $error;
+			} else {
+				$this->console = $rest;
+				return $response;
+			}
+		}
+    }
+
+    public function console( $command = null ) {
+        if ( empty( $this->serviceURI ) || empty( $this->credentials ) ) {
+            error_log( __FUNCTION__ . ' missing arguments to use console.' );
+            return false;
+        }
+
+        if ( ! $this->init_console() ) {
+            error_log( __FUNCTION__ . ' console initialization failed.' );
+            return false;
+        }
+        if ( is_wp_error( $this->console ) ) {
+            error_log( "console error: " . $this->console->get_error_message() );
+            return false;
+        }
+        if ( $this->console && ! empty( $command ) ) {
+			$response = $this->console->sendCommand( $command );
+			if ( is_opensim_rest_error( $response ) ) {
+				$error = new WP_Error( 'console_command_failed', $response->getMessage() );
+                error_log( "console error: " . $error->get_error_message() );
+                return $error;
+			} else {
+				return $response;
+			}
+		}
+	}
 }

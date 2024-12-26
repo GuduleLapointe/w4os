@@ -68,6 +68,14 @@ class W4OS3_Region {
 	private $name;
 	private $owner_name;
 	private $owner_uuid;
+	private $serverURI;
+	private $sizeX;
+	private $sizeY;
+	private $flags;
+	private $last_seen;
+	private $presence;
+	private $parcels;
+
 
 	public function __construct( $mixed = null ) {
 		// Initialize the custom database connection with credentials
@@ -90,13 +98,13 @@ class W4OS3_Region {
 			}
 		}
 	}
-
+	
 	/**
 	 * Initialize the class. Register actions and filters.
 	 */
 	public function init() {
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
-
+		
 		$this->constants();
 	}
 
@@ -117,6 +125,10 @@ class W4OS3_Region {
 	}
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
+		if( ! $this->parcels ) {
+			$this->parcels = $this->get_parcels();
+		}
+
 		$settings['w4os-regions'] = array(
 			'parent_slug'       => 'w4os',
 			'page_title'        => __( 'Regions', 'w4os' ) . ' (dev)',
@@ -182,7 +194,7 @@ class W4OS3_Region {
 			);
 			$settings['w4os-regions']['tabs']['edit'] = array(
 				'title'    => __( 'Edit (improved)', 'w4os' ),
-				'sidebar-content'  => '<h3>' . __('Parcels', 'w4os') . '</h3>' . $this->get_parcels(),
+				'sidebar-content'  => '<h3>' . __('Parcels', 'w4os') . '</h3>' . $this->parcels,
 				'before-form' => $region_title,
 				'fields'   => array(
 					'sim_credentials' => array(
@@ -496,12 +508,29 @@ class W4OS3_Region {
 	 *  - it gets often rejected by the simulator as spam.
 	 */
 	public function get_parcels( $output_html = null ) {
+		if ( empty( $this->item ) ) {
+			return;
+		}
 		$server_uri = $this->item->serverURI;
 		if ( empty( $server_uri ) ) {
 			return 'Unknown';
 		}
 
 		$regionURI = $this->get_tp_uri();
+
+		$cache_key = 'w4os_get_parcels_' . $regionURI;
+		$output = wp_cache_get( $cache_key );
+		if( $output ) {
+			return $output;
+		}
+		$parcels = array();
+
+		// Parcel data from console are not organized in a way that can be used here.
+		// $sim = new W4OS3_Service( $server_uri );
+		// // $result = $sim->console( 'connect Welcome' );
+		// $result = $sim->console( 'change region ' . $this->regionName );
+		// $result = $sim->console( 'land show' );
+		// error_log( 'result: ' . print_r( $result, true ) );
 
 		if( $this->simdb ) {
 			$query = $this->simdb->prepare(
@@ -569,8 +598,11 @@ class W4OS3_Region {
 		// }
 
 		if ( ! empty($output_html) ) {
-			return '<ul class="parcels"><li>' . implode( '</li><li>', $output_html ) . '</li></ul>';
+			$output = '<ul class="parcels"><li>' . implode( '</li><li>', $output_html ) . '</li></ul>';
 		}
+
+		wp_cache_set( $cache_key, $output );
+		return $output;
 	}
 
 	/**
@@ -700,8 +732,8 @@ class W4OS3_Region {
 		// 	$icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';
 		// }
 		if ( $credentials['console']['enabled'] ?? false ) {
-			$icons['console'] = '<span class="dashicons dashicons-desktop"></span>';
-			$icons['console'] = '<span class="dashicons dashicons-analytics"></span>';
+			// $icons['console'] = '<span class="dashicons dashicons-desktop"></span>';
+			// $icons['console'] = '<span class="dashicons dashicons-analytics"></span>';
 			$icons['console'] = '<span class="dashicons dashicons-embed-generic"></span>';
 		}
 		if ( $credentials['db']['enabled'] ?? false ) {
