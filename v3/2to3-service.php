@@ -27,7 +27,7 @@ class W4OS3_Service {
     private static $dbs;      // make sure each db is initialized only once
 
     private $console;
-    private $db;
+    public $db;
 
     public function __construct() {
         $args = func_get_args();
@@ -168,7 +168,7 @@ class W4OS3_Service {
         if ( empty( $db_creds ) ) {
             return false;
         }
-        if ( ! $db_creds['enabled'] ) {
+        if ( empty( $db_creds['enabled'] ) ) {
             return false;
         }
 
@@ -240,7 +240,7 @@ class W4OS3_Service {
      * Check if db is enabled.
      */
     public function db_connected() {
-        return ( $this->db && $this->db !== false );
+        return ( $this->db->ready ?? false );
     }
 
     /**

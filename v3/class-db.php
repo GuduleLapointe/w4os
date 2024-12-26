@@ -48,19 +48,38 @@ if ( W4OS_ENABLE_V3 ) {
 			if ( function_exists( 'mysqli_connect' ) ) {
 				$this->use_mysqli = true;
 
+				// Set mysqli connection timeout to 5 seconds
+				ini_set('mysqli.connect_timeout', 1);
+
 				if ( defined( 'WP_USE_EXT_MYSQL' ) ) {
 					$this->use_mysqli = ! WP_USE_EXT_MYSQL;
 				}
 			}
 
+			// Actual db_connect() attempt can take forever is remote connection is not allowed.
+			// So, we should first make a quick test to verify the remote port is accessible
+			// before attempting to connect to the database.
+
+			$url_parts = parse_url( $dbhost );
+			$test_host = $url_parts['host'];
+			$test_port = $url_parts['port'] ?? 3306;
+			$socket = @fsockopen( $test_host, $test_port, $errno, $errstr, 1 );
+			if ( ! $socket ) {
+				$error = "Failed to connect to the database server: $errstr";
+				error_log( $error );
+				// If the port is not accessible, we should not attempt to connect to the database.
+				return new WP_Error( 'db_connect_error', $error );
+			}
+			
 			$this->dbuser     = $dbuser;
 			$this->dbpassword = $dbpassword;
 			$this->dbname     = $dbname;
-			$this->dbhost     = $dbhost . ( empty( $dbport ) ? '' : ':' . $dbport );
-
-			// wp-config.php creation will manually connect when ready.
+			$this->dbhost     = $dbhost;
 
 			$this->db_connect();
+			if ( ! $this->ready ) {
+				error_log( sprintf( __CLASS__ . ' Error connecting to db %s at %s: %s', $this->dbname, $this->dbhost, $this->last_error ) );
+			}
 		}
 	}
 }

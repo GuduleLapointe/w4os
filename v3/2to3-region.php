@@ -77,7 +77,7 @@ class W4OS3_Region {
 
 	private $console_connected = false;
 	private $db_connected = false;
-
+	private $db = false;
 
 	public function __construct( $args = null ) {
 		// error_log( __METHOD__ );
@@ -92,7 +92,9 @@ class W4OS3_Region {
 			if ( empty ($this->server) && $this->server !== false ) {
 				$this->server = new W4OS3_Service( $this->item->serverURI );
 				$this->console_connected = $this->server->console_connected();
-				$this->db_connected = $this->server->db_connected();
+				// $this->db_connected = $this->server->db_connected();
+				$this->db = $this->server->db ?? false;
+				$this->db_connected = $this->db->ready ?? false;
 			}
 		}
 	}
@@ -530,14 +532,12 @@ class W4OS3_Region {
 		// $result = $sim->console( 'land show' );
 		// error_log( 'result: ' . print_r( $result, true ) );
 
-		if( $this->db_connected ) {
-			$simdb = $this->server->init_db();
-
-			$query = $simdb->prepare(
+		if ( $this->db && $this->db->ready ) {
+			$query = $this->db->prepare(
 				"SELECT * FROM land WHERE RegionUUID = %s",
 				$this->uuid,
 			);
-			$results = $simdb->get_results( $query );
+			$results = $this->db->get_results( $query );
 			if ( ! $results ) {
 				return false;
 			}
