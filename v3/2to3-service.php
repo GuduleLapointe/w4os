@@ -201,7 +201,7 @@ class W4OS3_Service {
         if ( empty( $console_creds ) ) {
             return false;
         }
-        if ( ! $console_creds['enabled'] ) {
+        if ( empty( $console_creds['enabled'] ) ) {
             return false;
         }
 
