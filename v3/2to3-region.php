@@ -51,8 +51,6 @@
 
 
 class W4OS3_Region {
-	private $db;
-	private $simdb = false;
 	private $uuid;
 	private $item;
 	private $data;
@@ -69,6 +67,7 @@ class W4OS3_Region {
 	private $owner_name;
 	private $owner_uuid;
 	private $serverURI;
+	private $server;
 	private $sizeX;
 	private $sizeY;
 	private $flags;
@@ -76,25 +75,24 @@ class W4OS3_Region {
 	private $presence;
 	private $parcels;
 
+	private $console_connected = false;
+	private $db_connected = false;
 
-	public function __construct( $mixed = null ) {
-		// Initialize the custom database connection with credentials
-		$this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
 
-		if( ! W4OS3::empty( $mixed ) ) {
-			$this->fetch_region_data( $mixed );
+	public function __construct( $args = null ) {
+		// error_log( __METHOD__ );
+
+		if( ! W4OS3::empty( $args ) ) {
+			$this->fetch_region_data( $args );
 		} else if ( isset( $_GET['region'] ) ) {
 			$this->fetch_region_data( $_GET['region'] );
 		}
+
 		if( ! empty( $this->item->serverURI ) ) {
-			$this->simdb = new W4OS_WPDB( $this->item->serverURI );
-			if( is_wp_error( $this->simdb ) ) {
-				error_log( 'simdb error ' . $this->simdb->get_error_message() );
-			} else if ( $this->simdb ) {
-				$tables = $this->simdb->get_results( 'show tables' );
-				if ( ! $tables || count( $tables ) === 0 ) {
-					$this->simdb = false;
-				}
+			if ( empty ($this->server) && $this->server !== false ) {
+				$this->server = new W4OS3_Service( $this->item->serverURI );
+				$this->console_connected = $this->server->console_connected();
+				$this->db_connected = $this->server->db_connected();
 			}
 		}
 	}
@@ -282,7 +280,7 @@ class W4OS3_Region {
 		// Instantiate and display the list table
 
 		$regionsTable = new W4OS_List_Table(
-			$this->db,
+			W4OS3::$robust_db,
 			'regions',
 			array(
 				'singular'      => 'Region',
@@ -380,32 +378,32 @@ class W4OS3_Region {
 
 	public function owner_name( $item ) {
 		$uuid = $item->owner_uuid;
-		if ( ! $this->db ) {
+		if ( ! W4OS3::$robust_db ) {
 			return "not found ($uuid)";
 		}
 		$query  = "SELECT CONCAT(FirstName, ' ', LastName) AS Name FROM UserAccounts WHERE PrincipalID = %s";
-		$result = $this->db->get_var( $this->db->prepare( $query, $uuid ) );
+		$result = W4OS3::$robust_db->get_var( W4OS3::$robust_db->prepare( $query, $uuid ) );
 		return esc_html( $result );
 	}
 
 	/**
 	 * Fetch the Region data from the custom database.
 	 * 
-	 * @param mixed $mixed The UUID of the Region or the Region data.
+	 * @param mixed $args The UUID of the Region or the Region data.
 	 * @return void
 	 */
-	public function fetch_region_data( $mixed ) {
-		if ( W4OS3::empty( $mixed ) ) {
+	public function fetch_region_data( $args ) {
+		if ( W4OS3::empty( $args ) ) {
 			return;
 		}
 		
-		if ( is_object( $mixed ) ) {
-			$this->uuid = $mixed->uuid;
-			$this->item = $mixed;
-		} else if ( is_string( $mixed ) && W4OS3::is_uuid( $mixed ) ) {
-			$this->uuid = $mixed;
+		if ( is_object( $args ) ) {
+			$this->uuid = $args->uuid;
+			$this->item = $args;
+		} else if ( is_string( $args ) && W4OS3::is_uuid( $args ) ) {
+			$this->uuid = $args;
 			$query = $this->main_query . " WHERE uuid = %s";
-			$this->item = $this->db->get_row( $this->db->prepare( $query, $this->uuid ) );
+			$this->item = W4OS3::$robust_db->get_row( W4OS3::$robust_db->prepare( $query, $this->uuid ) );
 		} else {
 			return;
 		}
@@ -532,12 +530,14 @@ class W4OS3_Region {
 		// $result = $sim->console( 'land show' );
 		// error_log( 'result: ' . print_r( $result, true ) );
 
-		if( $this->simdb ) {
-			$query = $this->simdb->prepare(
+		if( $this->db_connected ) {
+			$simdb = $this->server->init_db();
+
+			$query = $simdb->prepare(
 				"SELECT * FROM land WHERE RegionUUID = %s",
 				$this->uuid,
 			);
-			$results = $this->simdb->get_results( $query );
+			$results = $simdb->get_results( $query );
 			if ( ! $results ) {
 				return false;
 			}
@@ -548,7 +548,6 @@ class W4OS3_Region {
 				$row->sizeY = $this->item->sizeY;
 				$parcels[] = new W4OS_Parcel( $row );
 			}
-
 		} else {
 			$transient_key = 'w4os_collector_' . $server_uri;
 			$collector = $server_uri . '?method=collector';
@@ -720,7 +719,13 @@ class W4OS3_Region {
 	}
 
 	public function format_server_control( $item ) {
-		$server_uri = $item->serverURI;
+		if ( $this->server ) {
+			$region = $this;
+		} else {
+			$region = new W4OS3_Region( $item );
+			// $this->server = new W4OS3_Service( $server_uri );
+		}
+		$server_uri = $region->item->serverURI;
 		if ( empty( $server_uri ) ) {
 			return;
 		}
@@ -732,12 +737,14 @@ class W4OS3_Region {
 		// 	$icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';
 		// }
 		if ( $credentials['console']['enabled'] ?? false ) {
+			$disabled = $region->console_connected ? '' : 'disabled';
 			// $icons['console'] = '<span class="dashicons dashicons-desktop"></span>';
 			// $icons['console'] = '<span class="dashicons dashicons-analytics"></span>';
-			$icons['console'] = '<span class="dashicons dashicons-embed-generic"></span>';
+			$icons['console'] = '<span class="dashicons dashicons-embed-generic ' . $disabled .'"></span>';
 		}
 		if ( $credentials['db']['enabled'] ?? false ) {
-			$icons['db'] = '<span class="dashicons dashicons-database"></span>';
+			$disabled = $region->db_connected ? '' : 'disabled';
+			$icons['db'] = '<span class="dashicons dashicons-database ' . $disabled .'"></span>';
 		}
 		
 		return implode( ' ', $icons );

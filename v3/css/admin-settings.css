@@ -71,6 +71,10 @@ ul.parcels div.parcel > h3 {
 	margin-top: 0;
 }
 
+.dashicons.disabled {
+	opacity: 0.5;
+}
+
 @media (min-width: 1200px) {
 	.wrap.w4os-settings {
 		display: flex;

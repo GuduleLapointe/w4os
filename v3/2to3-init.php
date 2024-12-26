@@ -21,9 +21,9 @@ if ( ! defined( 'WPINC' ) ) {
  * This class loads the classes and functions needed to test v3 features
  */
 class W4OS3 {
-	public $robust_db;
-	public $assets_db;
-	public $profile_db;
+	public static $robust_db;
+	public static $assets_db;
+	public static $profile_db;
 	private $console = null;
 	private $ini = array();
 	private static $key;
@@ -48,10 +48,14 @@ class W4OS3 {
 		self::includes();
 
 		// Connect to the robust database and make it available to all classes.
-		$this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
-		$this->assets_db = $this->robust_db;
-		$this->profile_db = $this->robust_db;
+		// $this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
+		// $this->assets_db = $this->robust_db;
+		// $this->profile_db = $this->robust_db;
 
+		// self::$robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
+		// self::$assets_db = self::$robust_db;
+		// self::$profile_db = self::$robust_db;
+		
 		$this->ini = $this->get_ini_config();
 	}
 
@@ -253,10 +257,14 @@ class W4OS3 {
 		// Once all files are loaded, we start the classes.
 		$Settings = new W4OS3_Settings();
 		$Settings->init();
-		$Instances = new W4OS3_Service();
-		$Instances->init();
+
+		self::$robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
+		self::$assets_db = self::$robust_db;
+		self::$profile_db = self::$robust_db;
 		
 		if ( W4OS_ENABLE_V3 ) {
+			$Instances = new W4OS3_Service();
+			$Instances->init();
 			$AvatarClass = new W4OS3_Avatar();
 			$AvatarClass->init();
 			$RegionClass = new W4OS3_Region();
