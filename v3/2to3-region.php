@@ -703,7 +703,8 @@ class W4OS3_Region {
 		$parts = parse_url( $server_uri );
 		$hostname = $parts['host'];
 		
-		if ( $use_dns ) {
+		// use DNS if use_dns is true and hostname is an IP4 or IP6 address
+		if ( $use_dns && filter_var( $hostname, FILTER_VALIDATE_IP ) ) {
 			$hostname = gethostbyaddr( $parts['host'] );
 			$hostname = empty($hostname) ? $parts['host'] : $hostname;
 			// count dots and fallback to $parts['host'] if no dots or more than 5
