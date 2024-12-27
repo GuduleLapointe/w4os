@@ -686,20 +686,48 @@ class W4OS3_Settings {
 				$input_field .= '</select>';
 				break;
 
+			case 'page_select2':
+				$input_field = sprintf(
+					'<select id="%1$s" name="%2$s" class="select2-field">
+						<option value="">%3$s</option>',
+					esc_attr( $args['id'] ),
+					esc_attr( $field_name ),
+					esc_html( $args['placeholder'] ),
+				);
+				$pages = self::get_pages();
+				foreach ( $pages as $page_id => $page_title ) {
+					$selected = selected( $value, $page_id, false );
+					$input_field .= sprintf(
+						'<option value="%1$s" %2$s>%3$s</option>',
+						esc_attr( $page_id ),
+						$selected,
+						esc_html( $page_title )
+					);
+				}
+				$input_field .= '</select>';
+				break;
+
 			case 'switch':
 			case 'checkbox':
-				$option_label = isset( $args['options'] ) && is_array( $args['options'] ) ? array_values( $args['options'] )[0] : __( 'Yes', 'w4os' );
-				$input_field  = sprintf(
-						'<input type="hidden" name="%1$s" value="0" />
-						<label>
-							<input type="checkbox" id="%2$s" name="%1$s" value="1" %3$s />
-							%4$s
+			case 'checkboxes':
+				if( empty ($options ) ) {
+					$options = array( '1' => __( 'Yes', 'w4os' ) );
+				}
+				$fields = array();
+				foreach ( $args['options'] as $option_value => $option_label ) {
+					$fields[]= sprintf(
+						'<label>
+							<input type="checkbox" id="%1$s" name="%2$s" value="%3$s" %4$s />
+							%5$s
 						</label>',
-						esc_attr( $field_name ),
 						esc_attr( $args['id'] ),
-						checked( $value, '1', false ),
+						esc_attr( $field_name ),
+						esc_attr( $option_value ),
+						checked( $value, $option_value, false ),
 						esc_html( $option_label )
 					);
+				}
+				$input_field = join( '<br>', $fields );
 				break;
 
 			case 'custom_html':
@@ -728,4 +756,51 @@ class W4OS3_Settings {
 			);
 		}
 	}
+
+	/**
+	 * Get pages
+	 */
+	public static function get_pages() {
+		$pages = get_pages();
+		$page_list = array();
+		foreach ( $pages as $page ) {
+			$page_list[ $page->ID ] = $page->post_title;
+		}
+		return $page_list;
+	}
+
+	/**
+     * Get all pages containing a specific shortcode
+     *
+     * @param string $shortcode The shortcode to search for.
+     * @return array Array of WP_Post objects.
+	 * 
+	 * @since 2.9.1
+     */
+    public static function get_pages_with_shortcode($shortcode) {
+        global $wpdb;
+        $shortcode = esc_sql($shortcode);
+        $query = "
+        SELECT ID, post_title FROM {$wpdb->posts}
+        WHERE post_type = 'page' 
+        AND post_status = 'publish'
+        AND post_content LIKE '%[" . $shortcode . "]%'
+        ";
+        $results = $wpdb->get_results($query);
+
+        // Filter out translated pages if WPML is active
+        if (function_exists('icl_object_id')) {
+            $original_results = [];
+            foreach ($results as $page) {
+                $original_id = icl_object_id($page->ID, 'page', true, wpml_get_default_language());
+                if ($original_id == $page->ID) {
+                    $original_results[] = $page;
+                }
+            }
+            return $original_results;
+        }
+
+        return $results;
+    }
+
 }
