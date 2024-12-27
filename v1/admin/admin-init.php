@@ -409,7 +409,7 @@ add_action(
 					'os_config'   => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'register = %s' ) ) ),
 				),
 				'password'          => array(
-					'name'        => __( 'Password revovery', 'w4os' ),
+					'name'        => __( 'Password recovery', 'w4os' ),
 					'description' => __( 'Link to lost password page.', 'w4os' ),
 					'recommended' => wp_lostpassword_url(),
 					'os_config'   => array( 'Robust.HG.ini' => array( '[GridInfoService]' => array( 'password = %s' ) ) ),
