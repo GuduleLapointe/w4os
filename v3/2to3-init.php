@@ -251,7 +251,7 @@ class W4OS3 {
 		if ( W4OS_ENABLE_V3 ) {
 			// Include v3 feature files
 			require_once W4OS_INCLUDES_DIR . '2to3-avatar.php';
-			require_once W4OS_INCLUDES_DIR . '2to3-region.php';
+			// require_once W4OS_INCLUDES_DIR . '2to3-region.php';
 		}
 
 		// Once all files are loaded, we start the classes.
@@ -267,10 +267,10 @@ class W4OS3 {
 			$Instances->init();
 			$AvatarClass = new W4OS3_Avatar();
 			$AvatarClass->init();
-			$RegionClass = new W4OS3_Region();
-			$RegionClass->init();
 			$ModelClass = new W4OS3_Model();
 			$ModelClass->init();
+			// $RegionClass = new W4OS3_Region();
+			// $RegionClass->init();
 		}
 	}
 
