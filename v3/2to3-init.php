@@ -25,7 +25,7 @@ class W4OS3 {
 	public static $assets_db;
 	public static $profile_db;
 	private $console = null;
-	private $ini = array();
+	public static $ini = null;
 	private static $key;
 
 	// public function __construct() {
@@ -56,29 +56,34 @@ class W4OS3 {
 		// self::$assets_db = self::$robust_db;
 		// self::$profile_db = self::$robust_db;
 		
-		$this->ini = $this->get_ini_config();
+		$this->get_ini_config();
 	}
 
 	/**
 	 * Get config from console and convert to an array of sections and key-value pairs.
 	 */
 	public function get_ini_config( $instance = 'robust' ) {
+		if( self::$ini ) {
+			return self::$ini;
+		}
 		$ini = array();
 		if ( ! $this->get_console_config( $instance ) ) {
+			error_log( __FUNCTION__ . ' no console config' );
 			return $ini;
 		}
 
 		$response = $this->console( $instance, 'config get' );
 		if ( $response === false ) {
+			error_log( __FUNCTION__ . ' response false');
 			return $ini;
 		}
 		if ( $response ) {
 			// $ini = implode( "\n", $response );
 			$config = self::normalize_ini( $response );
 			$ini = parse_ini_string( $config, true );
-			if ( $ini ) {
-				return $ini;
-			} else {
+			if ( ! $ini ) {
+				$error = 'Failed to parse config';
+				error_log( __FUNCTION__ . ' ' . $error );
 				return new WP_Error( 'config_parse_error', 'Failed to parse config' );
 			}
 		} else if ( is_wp_error( $response ) ) {
@@ -90,6 +95,9 @@ class W4OS3 {
 			error_log( 'get_ini_config Error ' . $error );
 			return $error;
 		}
+
+		self::$ini = $ini;
+		return $ini;
 	}
 	
 	/**
