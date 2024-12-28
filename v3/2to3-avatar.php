@@ -66,7 +66,7 @@ class W4OS3_Avatar {
 						'allow_multiple_avatars' => array(
 							'label'       => __( 'Allow multiple avatars', 'w4os' ),
 							'type'        => 'checkbox',
-							'options'     => array( __( 'Allow users to create multiple avatars.', 'w4os' ) ),
+							'options'     => array( __( 'Allow more than one avatar for a single email address.', 'w4os' ) ),
 							'description' => __( 'This will allow users to have more than one avatar on the site.', 'w4os' )
 							. ' ' . __( 'Disabling the option can only be enforced for avatars created through the website.', 'w4os' ),
 						),
@@ -74,6 +74,46 @@ class W4OS3_Avatar {
 				),
 			),
 		);
+		if( empty( $settings['w4os-settings']['tabs']['pages']['title'] ) ) {
+			$settings['w4os-settings']['tabs']['pages']['title'] = __( 'Pages', 'w4os' );
+		}
+		$settings['w4os-settings']['tabs']['pages']['fields'] = array_merge(
+			$settings['w4os-settings']['tabs']['pages']['fields'] ?? array(),
+			array(
+				'profile' => array(
+					'label'    => __( 'Profile Page', 'w4os' ),
+					'type'     => 'page_select2',
+					'placeholder' => __( 'Select the page to be used as profile page.', 'w4os' ),
+					// 'default' => w4os::get_option( 'profile-page' ),
+				),
+				'registration' => array(
+					'label'    => __( 'Registration', 'w4os' ),
+					'type'     => 'page_select2_url',
+					'default' => W4OS3::$ini['GridInfoService']['register'],
+					'value' => W4OS3::$ini['GridInfoService']['register'],
+					'options' => array( 
+						'use-profile' => ' ' . __( 'Use profile page', 'w4os' ),
+						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
+					),
+					'placeholder' => __( 'Select the page to be used as registration page.', 'w4os' ),
+					// 'readonly' => true,
+					// 'default' => w4os::get_option( 'registration-page' ),
+				),
+				'password' => array(
+					'label'    => __( 'Password Recovery', 'w4os' ),
+					'type'     => 'page_select2_url',
+					'value' => W4OS3::$ini['GridInfoService']['password'],
+					'options' => array( 
+						'use-profile' => ' ' . __( 'Use profile page', 'w4os' ),
+						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
+					),
+					'placeholder' => __( 'Select the page to be used as password reset page.', 'w4os' ),
+					'readonly' => ! empty( W4OS3::$ini['GridInfoService']['password'] ),
+					// 'default' => w4os::get_option( 'password-page' ),
+				),
+			),
+		);
+		error_log( 'W4OS3::$ini = ' . print_r( W4OS3::$ini, true ) );
 		return $settings;
 	}
 

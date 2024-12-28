@@ -36,6 +36,11 @@ class W4OS3_Settings {
 			'capability'  => 'manage_options',
 			'menu_slug'   => 'w4os-settings',
 			'sanitize_callback' => array( $this, 'sanitize_options' ),
+			// 'tabs' => array(
+			// 	'pages' => array(
+			// 		'title' => __( 'Pages', 'w4os' ),
+			// 	),
+			// )
 		);
 		return $settings;
 	}
@@ -707,6 +712,52 @@ class W4OS3_Settings {
 				$input_field .= '</select>';
 				break;
 
+			case 'page_select2_url':
+				$pages = self::get_pages_urls();
+				if( is_array ( $args['options'] ) ) {
+					$options = $args['options'];
+					if( empty ( $pages ) ) {
+						$pages = $args['options'];
+					} else {
+						$pages = array_merge(
+							$args['options'],
+							self::get_pages_urls()
+						);
+					}						
+				}
+				error_log('Pages: ' . print_r( $pages, true ) );
+
+				// Create dropdown for existing pages
+				$input_field = sprintf(
+					'<select id="%1$s_select" name="%2$s[select]" class="select2-field">' .
+						'<option value="">%3$s</option>',
+					esc_attr( $args['id'] . '_page' ),
+					esc_attr( $field_name ),
+					esc_html__( 'Select a page', 'w4os' )
+				);
+				foreach ( $pages as $page_url => $page_title ) {
+					$selected = ( ! empty( $value['select'] ) && $value['select'] == $page_url ) ? 'selected' : '';
+					$input_field .= sprintf(
+						'<option value="%1$s" %2$s>%3$s</option>',
+						esc_attr( $page_url ),
+						$selected,
+						esc_html( $page_title )
+					);
+				}
+				$input_field .= '</select>';
+
+				// Custom URL input
+				$custom_url = ! empty( $value['custom'] ) ? esc_attr( $value['custom'] ) : '';
+				$input_field .= sprintf(
+					' <input type="url" id="%1$s" name="%2$s[custom]" value="%3$s" placeholder="%4$s" class="regular-text" />',
+					esc_attr( $args['id'] . '_custom' ),
+					esc_attr( $field_name ),
+					esc_attr( is_array( $value ) ? $value['select'] : $value ),
+					esc_html__( 'Or enter a custom URL...', 'w4os' )
+				);
+
+				break;
+
 			case 'switch':
 			case 'checkbox':
 			case 'checkboxes':
@@ -741,7 +792,7 @@ class W4OS3_Settings {
 			case 'text':
 			default:
 				$input_field = sprintf(
-					'<input type="text" id="%1$s" name="%2$s" value="%3$s" />',
+					'<input type="text" id="%1$s" name="%2$s" value="%3$s" class="regular-text" />',
 					esc_attr( $args['id'] ),
 					esc_attr( $field_name ),
 					esc_attr( $value )
@@ -765,6 +816,19 @@ class W4OS3_Settings {
 		$page_list = array();
 		foreach ( $pages as $page ) {
 			$page_list[ $page->ID ] = $page->post_title;
+		}
+		return $page_list;
+	}
+
+	/**
+	 * Get pages urls
+	 */
+	public static function get_pages_urls() {
+		$pages = get_pages();
+		$page_list = array();
+		foreach ( $pages as $page ) {
+			$url = get_permalink( $page->ID );
+			$page_list[ $url ] = $page->post_title;
 		}
 		return $page_list;
 	}
