@@ -25,6 +25,7 @@ class W4OS3 {
 	public static $assets_db;
 	public static $profile_db;
 	private $console = null;
+	public static $use_console = null;
 	public static $ini = null;
 	private static $key;
 
@@ -210,6 +211,7 @@ class W4OS3 {
 				return $error;
 			} else {
 				$this->console = $rest;
+				self::$use_console = ( $this->console && ! is_wp_error( $this->console ) );
 				return $response;
 			}
 		}

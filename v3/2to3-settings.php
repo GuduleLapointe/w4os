@@ -492,6 +492,8 @@ class W4OS3_Settings {
 				// 'options' => [],
 				// 'default' => null,
 				'description' => null,
+				'readonly'    => false,
+				'disabled'    => false,
 			// 'option_name' => null,
 			// 'tab' => null, // Added tab
 			)
@@ -506,6 +508,8 @@ class W4OS3_Settings {
 		$option     = get_option( $option_name, array() );
 		$value      = isset( $option[ $tab ][ $args['id'] ] ) ? $option[ $tab ][ $args['id'] ] : '';
 		$value = isset( $args['value'] ) ? $args['value'] : $value;
+		$readonly = ( $args['readonly'] ) ? 'readonly' : '';
+		$disabled = ( $args['disabled'] ) ? 'disabled' : '';
 
 		if ( empty( $value ) && isset( $args['default'] ) ) {
 			$value = $args['default'];
@@ -557,15 +561,16 @@ class W4OS3_Settings {
 					$input_field .= sprintf(
 						'<div class="w4os-credentials  credentials-use-defaults">
 							<label class="use-defaults">
-								<input type="hidden" name="%2$s[use_defaults]" value="0" />
-								<input type="checkbox" id="%1$s_use_defaults" name="%2$s[use_defaults]" class="use-defaults" value="1" %3$s />
+								<input type="hidden" name="%2$s[use_defaults]" value="0" %5$s />
+								<input type="checkbox" id="%1$s_use_defaults" name="%2$s[use_defaults]" class="use-defaults" value="1" %3$s %5$s />
 								%4$s
 							</label>
 						</div>',
 						esc_attr( $args['id'] ),
 						$field_name,
 						checked( $creds['use_defaults'], true, false ),
-						esc_html__( 'Use defaults' )
+						esc_html__( 'Use defaults' ),
+						( $readonly || $disabled ) ? 'disabled' : '',
 					);							
 				}
 
@@ -573,8 +578,8 @@ class W4OS3_Settings {
 					$input_field .= sprintf(
 						'<div class="w4os-credentials  credentials-host">
 							<label class="section-label">%2$s</label>
-							<input type="text" id="%1$s-host" name="%3$s[host]" placeholder="%4$s" value="%5$s" />
-							<input type="number" id="%1$s-port" name="%3$s[port]" placeholder="%6$s" value="%7$s" min="1" />
+							<input type="text" id="%1$s-host" name="%3$s[host]" placeholder="%4$s" value="%5$s" %10$s />
+							<input type="number" id="%1$s-port" name="%3$s[port]" placeholder="%6$s" value="%7$s" min="1" %10$s />
 							%8$s %9$s
 						</div>
 						',
@@ -587,15 +592,16 @@ class W4OS3_Settings {
 						esc_attr( $creds['port'] ),
 						w4os_status_icon( $creds['status'] ),
 						self::format_error( $creds['error'] ),
+						$readonly,
 					);
 
 					$input_field .= sprintf(
 						'<div class="w4os-credentials  credentials-console">
 						<label>%2$s</label>
-						<input type="text" id="%1$s-console-host" name="%3$s[console][host]" value="%4$s" placeholder="%5$s" />
-						<input type="number" id="%1$s-console-port" name="%3$s[console][port]" value="%6$s" min=1 placeholder="%7$s" style="width:5rem" />
-						<input type="text" id="%1$s-console-user" name="%3$s[console][user]" value="%8$s" placeholder="%9$s" />
-						<input type="password" id="%1$s-console-pass" name="%3$s[console][pass]" value="%10$s" placeholder="%11$s" />
+						<input type="text" id="%1$s-console-host" name="%3$s[console][host]" value="%4$s" placeholder="%5$s" %14$s />
+						<input type="number" id="%1$s-console-port" name="%3$s[console][port]" value="%6$s" min=1 placeholder="%7$s" style="width:5rem" %14$s />
+						<input type="text" id="%1$s-console-user" name="%3$s[console][user]" value="%8$s" placeholder="%9$s" %14$s />
+						<input type="password" id="%1$s-console-pass" name="%3$s[console][pass]" value="%10$s" placeholder="%11$s" %14$s />
 						%12$s %13$s
 						</div>',
 						esc_attr( $args['id'] ),
@@ -611,17 +617,20 @@ class W4OS3_Settings {
 						esc_html__( 'Password', 'w4os' ),
 						w4os_status_icon( $creds['console']['status'] ),
 						self::format_error( $creds['console']['error'] ),
+						$readonly,
 					);
 				}
+
+				$dbreadonly = ( W4OS3::$use_console ) ? 'readonly' : '';
 
 				$input_field .= sprintf(
 					'<div class="w4os-credentials  credentials-db">
 						<label class="section-label">%2$s</label>
-						<input type="text" id="%1$s-db-host" name="%3$s[db][host]" placeholder="%4$s" value="%5$s" />
-						<input type="number" id="%1$s-db-port" name="%3$s[db][port]" placeholder="%6$s" value="%7$s" min="1" />
-						<input type="text" id="%1$s-db-name" name="%3$s[db][name]" placeholder="%8$s" value="%9$s" />
-						<input type="text" id="%1$s-db-user" name="%3$s[db][user]" placeholder="%10$s" value="%11$s" />
-						<input type="password" id="%1$s-db-pass" name="%3$s[db][pass]" placeholder="%12$s" value="%13$s" />
+						<input type="text" id="%1$s-db-host" name="%3$s[db][host]" placeholder="%4$s" value="%5$s" %16$s />
+						<input type="number" id="%1$s-db-port" name="%3$s[db][port]" placeholder="%6$s" value="%7$s" min="1" %16$s />
+						<input type="text" id="%1$s-db-name" name="%3$s[db][name]" placeholder="%8$s" value="%9$s" %16$s />
+						<input type="text" id="%1$s-db-user" name="%3$s[db][user]" placeholder="%10$s" value="%11$s" %16$s />
+						<input type="password" id="%1$s-db-pass" name="%3$s[db][pass]" placeholder="%12$s" value="%13$s" %16$s />
 						%14$s %15$s
 					</div>',
 					esc_attr( $args['id'] ),
@@ -639,6 +648,7 @@ class W4OS3_Settings {
 					esc_attr( $creds['db']['pass'] ),
 					w4os_status_icon( $creds['db']['status'] ),
 					self::format_error( $creds['db']['error'] ),
+					$dbreadonly,
 				);
 
 				break;
@@ -647,14 +657,15 @@ class W4OS3_Settings {
 				foreach ( $args['options'] as $option_value => $option_label ) {
 					$input_field .= sprintf(
 						'<label>
-                            <input type="radio" id="%1$s_%2$s" name="%3$s" value="%2$s" %4$s />
+                            <input type="radio" id="%1$s_%2$s" name="%3$s" value="%2$s" %4$s %6$s />
                             %5$s
                         </label>',
 						esc_attr( $args['id'] ),
 						esc_attr( $option_value ),
 						esc_attr( $field_name ),
 						checked( $value, $option_value, false ),
-						esc_html( $option_label )
+						esc_html( $option_label ),
+						$readonly,
 					);
 				}
 				break;
@@ -664,7 +675,7 @@ class W4OS3_Settings {
 				// Add a specific class for Select2 initialization
 				$select_class = 'select2-field';
 				$input_field  = sprintf(
-					'<select id="%1$s" name="%2$s" class="%3$s" %4$s>
+					'<select id="%1$s" name="%2$s" class="%3$s" %4$s %6$s />
 					<script> jQuery( function($){
 						$( \'#%1$s\' ).select2( {
 							width: \'100%%\',
@@ -678,6 +689,7 @@ class W4OS3_Settings {
 					esc_attr( $select_class ),
 					$multiple_attr,
 					esc_html( $args['placeholder'] ),
+					( $readonly || $disabled ) ? 'disabled' : '',
 				);
 				foreach ( $args['options'] as $option_value => $option_label ) {
 					$selected     = ( is_array( $value ) && in_array( $option_value, $value ) ) ? 'selected' : '';
@@ -693,11 +705,12 @@ class W4OS3_Settings {
 
 			case 'page_select2':
 				$input_field = sprintf(
-					'<select id="%1$s" name="%2$s" class="select2-field">
+					'<select id="%1$s" name="%2$s" class="select2-field" %4$s />
 						<option value="">%3$s</option>',
 					esc_attr( $args['id'] ),
 					esc_attr( $field_name ),
 					esc_html( $args['placeholder'] ),
+					( $readonly || $disabled ) ? 'disabled' : '',
 				);
 				$pages = self::get_pages();
 				foreach ( $pages as $page_id => $page_title ) {
@@ -725,15 +738,15 @@ class W4OS3_Settings {
 						);
 					}						
 				}
-				error_log('Pages: ' . print_r( $pages, true ) );
 
 				// Create dropdown for existing pages
 				$input_field = sprintf(
-					'<select id="%1$s_select" name="%2$s[select]" class="select2-field">' .
-						'<option value="">%3$s</option>',
+					'<select id="%1$s_select" name="%2$s[select]" class="select2-field" %4$s />' .
+						'<option value="" %4$s>%3$s</option>',
 					esc_attr( $args['id'] . '_page' ),
 					esc_attr( $field_name ),
-					esc_html__( 'Select a page', 'w4os' )
+					esc_html__( 'Select a page', 'w4os' ),
+					( $readonly || $disabled ) ? 'disabled' : '',
 				);
 				foreach ( $pages as $page_url => $page_title ) {
 					$selected = ( ! empty( $value['select'] ) && $value['select'] == $page_url ) ? 'selected' : '';
@@ -749,11 +762,12 @@ class W4OS3_Settings {
 				// Custom URL input
 				$custom_url = ! empty( $value['custom'] ) ? esc_attr( $value['custom'] ) : '';
 				$input_field .= sprintf(
-					' <input type="url" id="%1$s" name="%2$s[custom]" value="%3$s" placeholder="%4$s" class="regular-text" />',
+					' <input type="url" id="%1$s" name="%2$s[custom]" value="%3$s" placeholder="%4$s" class="regular-text" %5$s />',
 					esc_attr( $args['id'] . '_custom' ),
 					esc_attr( $field_name ),
 					esc_attr( is_array( $value ) ? $value['select'] : $value ),
-					esc_html__( 'Or enter a custom URL...', 'w4os' )
+					esc_html__( 'Or enter a custom URL...', 'w4os' ),
+					$readonly,
 				);
 
 				break;
@@ -768,14 +782,15 @@ class W4OS3_Settings {
 				foreach ( $args['options'] as $option_value => $option_label ) {
 					$fields[]= sprintf(
 						'<label>
-							<input type="checkbox" id="%1$s" name="%2$s" value="%3$s" %4$s />
+							<input type="checkbox" id="%1$s" name="%2$s" value="%3$s" %4$s %6$s />
 							%5$s
 						</label>',
 						esc_attr( $args['id'] ),
 						esc_attr( $field_name ),
 						esc_attr( $option_value ),
 						checked( $value, $option_value, false ),
-						esc_html( $option_label )
+						esc_html( $option_label ),
+						$readonly,
 					);
 				}
 				$input_field = join( '<br>', $fields );
@@ -792,10 +807,11 @@ class W4OS3_Settings {
 			case 'text':
 			default:
 				$input_field = sprintf(
-					'<input type="text" id="%1$s" name="%2$s" value="%3$s" class="regular-text" />',
+					'<input type="text" id="%1$s" name="%2$s" value="%3$s" class="regular-text" %4$s />',
 					esc_attr( $args['id'] ),
 					esc_attr( $field_name ),
-					esc_attr( $value )
+					esc_attr( $value ),
+					$readonly,
 				);
 		}
 

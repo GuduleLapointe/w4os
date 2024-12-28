@@ -96,7 +96,7 @@ class W4OS3_Avatar {
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as registration page.', 'w4os' ),
-					// 'readonly' => true,
+					'readonly' =>  W4OS3::$use_console,
 					// 'default' => w4os::get_option( 'registration-page' ),
 				),
 				'password' => array(
@@ -108,12 +108,12 @@ class W4OS3_Avatar {
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as password reset page.', 'w4os' ),
-					'readonly' => ! empty( W4OS3::$ini['GridInfoService']['password'] ),
+					'readonly' => W4OS3::$use_console,
 					// 'default' => w4os::get_option( 'password-page' ),
 				),
 			),
 		);
-		error_log( 'W4OS3::$ini = ' . print_r( W4OS3::$ini, true ) );
+
 		return $settings;
 	}
 

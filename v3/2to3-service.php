@@ -136,6 +136,7 @@ class W4OS3_Service {
                         'port' => $default_port,
                         'db' => array_merge( $default_db_creds, array( 'name' => 'assets' ) )
                     ),
+                    'readonly' => W4OS3::$use_console,
                 ),
                 'profiles' => array(
                     'label'       => __( 'User Profiles Service', 'w4os' ),
@@ -149,6 +150,7 @@ class W4OS3_Service {
                         'port' => '8002',
                         'db' => array_merge( $default_db_creds, array( 'name' => 'profiles' ) )
                     ),
+                    'readonly' => W4OS3::$use_console,
                 ),
                         ),
         );
