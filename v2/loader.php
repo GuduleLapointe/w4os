@@ -212,29 +212,32 @@ class W4OS_Loader {
 	}
 
 	function register_hooks() {
-
-		foreach ( $this->filters as $hook ) {
-			$hook = array_merge(
-				array(
-					'component'     => $this,
-					'priority'      => 10,
-					'accepted_args' => 1,
-				),
-				$hook
-			);
-			add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+		if ( is_array( $this->filters ) ) {
+			foreach ( $this->filters as $hook ) {
+				$hook = array_merge(
+					array(
+						'component'     => $this,
+						'priority'      => 10,
+						'accepted_args' => 1,
+					),
+					$hook
+				);
+				add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+			}
 		}
 
-		foreach ( $this->actions as $hook ) {
-			$hook = array_merge(
-				array(
-					'component'     => $this,
-					'priority'      => 10,
-					'accepted_args' => 1,
-				),
-				$hook
-			);
-			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+		if( is_array( $this->actions ) ) {
+			foreach ( $this->actions as $hook ) {
+				$hook = array_merge(
+					array(
+						'component'     => $this,
+						'priority'      => 10,
+						'accepted_args' => 1,
+					),
+					$hook
+				);
+				add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+			}
 		}
 	}
 
