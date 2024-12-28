@@ -39,28 +39,18 @@ class W4OS3 {
 		// Transitional. Add settings fields to the legacy settings page.
 		add_action( 'rwmb_meta_boxes', array( $this, 'register_legacy_settings_fields' ), 20 );
 		define( 'W4OS_ENABLE_V3', get_option( 'w4os-enable-v3-beta', false ) );
-
 		if ( ! W4OS_ENABLE_V3 ) {
 			return;
 		}
 
-		$connections = W4OS3::get_option( 'w4os-settings:connections', array() );
-		
-		self::$console_enabled = $connections['robust']['console']['enabled'] ?? false;
 		$this->set_key(); // Make sure to call first, so key is available for other functions.
-		
+
+		$robust_creds = self::get_credentials( 'robust' );
+		self::$console_enabled = $robust_creds['console']['enabled'] ?? false;
+
 		self::constants();
 		self::includes();
 
-		// Connect to the robust database and make it available to all classes.
-		// $this->robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
-		// $this->assets_db = $this->robust_db;
-		// $this->profile_db = $this->robust_db;
-
-		// self::$robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
-		// self::$assets_db = self::$robust_db;
-		// self::$profile_db = self::$robust_db;
-		
 		$this->get_ini_config();
 	}
 
@@ -508,9 +498,12 @@ class W4OS3 {
 	}
 
 	public static function update_credentials( $serverURI, $credentials ) {
+		
 		$console_enabled = W4OS3::validate_console_creds( $credentials['console'] );
-		$credentials['console']['enabled'] = $console_enabled;
+
+		$credentials['console']['enabled'] = ( $console_enabled ) ? true : false;
 		if ( $console_enabled ) {
+			$credentials['console']['enabled'] = true;
 			$session = new W4OS3();
 			$command = 'config get DatabaseService ConnectionString';
 			$result = $session->console( $credentials['console'], 'config get DatabaseService ConnectionString' );
@@ -536,13 +529,20 @@ class W4OS3 {
 
 		$credentials['db']['enabled'] = self::validate_db_credentials( $credentials['db'] );
 
+		error_log( __FUNCTION__ . ' ' . $serverURI . ' ' . print_r( $credentials, true ) );
+
 		$options = self::decrypt( get_option( 'w4os-credentials' ) );
+		$options = get_option( 'w4os-credentials' );
 		$options[ $serverURI ] = self::encrypt( $credentials );
 		update_option( 'w4os-credentials', $options );
 	}
 
 	public static function get_credentials( $instance ) {
 		$key = self::$key;
+
+		if( $instance == 'robust' ) {
+			$instance = get_option( 'w4os_login_uri' );
+		}
 
 		if( empty ($key ) ) {
 			error_log( __FUNCTION__ . ' called before key is set, abort' );
@@ -552,8 +552,8 @@ class W4OS3 {
 		if ( is_string( $instance ) ) {
 			$parts = parse_url( $instance );
 			$serverURI = $parts['host'] . ':' . $parts['port'];
-			$options = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
-			$server_credentials = self::decrypt( $options[ $serverURI ] ?? array() );
+			$cred_options = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
+			$server_credentials = self::decrypt( $cred_options[ $serverURI ] ?? array() );
 		} else {
 			$server_credentials = array();
 		}
@@ -744,7 +744,8 @@ class W4OS3 {
 			if ( is_opensim_rest_error( $response ) ) {
 				return $response->getMessage();
 			} else {
-				return true;
+				$console_creds['enabled'] = true;
+				return $console_creds;
 			}
 		}
 	}

@@ -222,21 +222,21 @@ class W4OS3_Settings {
 			return $options;
 		}
 
-		if( isset( $input['connections'] ) ) {
+		if( isset( $input['connections']['robust'] ) ) {
 			// $credentials = $input['connections'];
 			$creds = $input['connections']['robust'] ?? array();
 			if( ! empty( $creds ) ) {
 				$creds['type'] = 'robust';
 				$server_uri = $creds['host'] . ':' . $creds['port'];
 			}
-			// unset( $input['connections'] );
+			unset( $input['connections'] );
 		} else if( isset( $input['edit']['sim_credentials'] ) ) {
 			$creds = $input['edit']['sim_credentials'];
 			$creds['type'] = 'simulator';
 			unset( $input['edit']['sim_credentials'] );
 		}
+
 		if ( ! empty( $creds ) ) {
-			$credential_option = get_option( 'w4os-credentials', array() );
 			$server_uri = $creds['host'] . ':' . $creds['port'];
 
 			W4OS3::update_credentials( $server_uri, $creds );
@@ -778,8 +778,8 @@ class W4OS3_Settings {
 			case 'switch':
 			case 'checkbox':
 			case 'checkboxes':
-				if( empty ($options ) ) {
-					$options = array( '1' => __( 'Yes', 'w4os' ) );
+				if( empty ($args['options'] ) ) {
+					$args['options'] = array( '1' => __( 'Yes', 'w4os' ) );
 				}
 				$fields = array();
 				foreach ( $args['options'] as $option_value => $option_label ) {

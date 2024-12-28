@@ -77,6 +77,7 @@ class W4OS3_Avatar {
 		if( empty( $settings['w4os-settings']['tabs']['pages']['title'] ) ) {
 			$settings['w4os-settings']['tabs']['pages']['title'] = __( 'Pages', 'w4os' );
 		}
+		
 		$settings['w4os-settings']['tabs']['pages']['fields'] = array_merge(
 			$settings['w4os-settings']['tabs']['pages']['fields'] ?? array(),
 			array(
