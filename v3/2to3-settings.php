@@ -222,13 +222,24 @@ class W4OS3_Settings {
 			return $options;
 		}
 
-		if (isset($input['edit']['sim_credentials'])) {
-			$credential_option = get_option( 'w4os-credentials', array() );
+		if( isset( $input['connections'] ) ) {
+			// $credentials = $input['connections'];
+			$creds = $input['connections']['robust'] ?? array();
+			if( ! empty( $creds ) ) {
+				$creds['type'] = 'robust';
+				$server_uri = $creds['host'] . ':' . $creds['port'];
+			}
+			// unset( $input['connections'] );
+		} else if( isset( $input['edit']['sim_credentials'] ) ) {
 			$creds = $input['edit']['sim_credentials'];
+			$creds['type'] = 'simulator';
+			unset( $input['edit']['sim_credentials'] );
+		}
+		if ( ! empty( $creds ) ) {
+			$credential_option = get_option( 'w4os-credentials', array() );
 			$server_uri = $creds['host'] . ':' . $creds['port'];
 
 			W4OS3::update_credentials( $server_uri, $creds );
-			unset( $input['edit']['sim_credentials'] );
 		}
 
 		foreach ( $input as $key => $value ) {
@@ -621,7 +632,7 @@ class W4OS3_Settings {
 					);
 				}
 
-				$dbreadonly = ( W4OS3::$use_console ) ? 'readonly' : '';
+				$dbreadonly = ( W4OS3::$console_enabled || ( isset( $creds['console']['enabled'] ) && $creds['console']['enabled'] ) ) ? 'readonly' : '';
 
 				$input_field .= sprintf(
 					'<div class="w4os-credentials  credentials-db">
@@ -726,18 +737,10 @@ class W4OS3_Settings {
 				break;
 
 			case 'page_select2_url':
-				$pages = self::get_pages_urls();
-				if( is_array ( $args['options'] ) ) {
-					$options = $args['options'];
-					if( empty ( $pages ) ) {
-						$pages = $args['options'];
-					} else {
-						$pages = array_merge(
-							$args['options'],
-							self::get_pages_urls()
-						);
-					}						
-				}
+				$pages = array_merge(
+					$args['options'] ?? array(),
+					self::get_pages_urls(),
+				);
 
 				// Create dropdown for existing pages
 				$input_field = sprintf(

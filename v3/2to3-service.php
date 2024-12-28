@@ -55,43 +55,6 @@ class W4OS3_Service {
      * @return void
      */
     private function settings_transition() {
-        $w4os_login_uri = get_option( 'w4os_login_uri', home_url() ) ?? 'localhost:8002';
-        $parts = parse_url( $w4os_login_uri );
-        $host = $parts['host'] ?? 'localhost';
-        $port = $parts['port'] ?? 8002;
-        $robust_uri = $host . ':' . $port;
-        $db_creds = array(
-            'type'     => 'mysql',
-            'host'     => get_option( 'w4os_db_host', 'localhost' ),
-            'port'     => get_option( 'w4os_db_port', '3306' ),
-            'name'     => get_option( 'w4os_db_database', 'opensim' ),
-            'user'     => get_option( 'w4os_db_user', 'opensim' ),
-            'pass'     => get_option( 'w4os_db_pass' ),
-        );
-        $connections = array(
-            'robust' => array(
-                'host' => $host,
-                'port' => $port,
-                'uri' => $robust_uri,
-                'db'  => array(
-                    'type' => $db_creds['type'],
-                    'host' => $db_creds['host'],
-                    'port' => $db_creds['port'],
-                    'name' => $db_creds['name'],
-                    'user' => $db_creds['user'],
-                    'pass' => $db_creds['pass'],
-                ),
-            ),
-            'assets' => array(
-                'use_defaults' => true,
-            ),
-            'profiles' => array(
-                'use_defaults' => true,
-            ),
-        );
-        $v3_settings = get_option( 'w4os-settings', array() );
-        $v3_settings['connections'] = wp_parse_args( $connections, ($v3_settings['connections'] ?? array()) );
-        // error_log( "v3_settings: " . print_r( $v3_settings, true ) );
     }
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
@@ -106,6 +69,7 @@ class W4OS3_Service {
             'user' => get_option( 'w4os_db_user', 'opensim' ),
             'pass' => get_option( 'w4os_db_pass' ),
         );
+        
         $settings['w4os-settings']['tabs']['connections'] = array(
             'title'  => __( 'Connections', '≠w4os' ),
             'fields' => array(
@@ -123,6 +87,7 @@ class W4OS3_Service {
                         'port' => $default_port,
                         'db'   => $default_db_creds,
                     ),
+                    'value' => W4OS3::get_credentials( $login_uri ),
                 ),
                 'assets' => array(
                     'label'       => __( 'Assets Service', 'w4os' ),
@@ -136,7 +101,7 @@ class W4OS3_Service {
                         'port' => $default_port,
                         'db' => array_merge( $default_db_creds, array( 'name' => 'assets' ) )
                     ),
-                    'readonly' => W4OS3::$use_console,
+                    'readonly' => W4OS3::$console_enabled,
                 ),
                 'profiles' => array(
                     'label'       => __( 'User Profiles Service', 'w4os' ),
@@ -150,7 +115,7 @@ class W4OS3_Service {
                         'port' => '8002',
                         'db' => array_merge( $default_db_creds, array( 'name' => 'profiles' ) )
                     ),
-                    'readonly' => W4OS3::$use_console,
+                    'readonly' => W4OS3::$console_enabled,
                 ),
                         ),
         );

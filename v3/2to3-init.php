@@ -25,7 +25,8 @@ class W4OS3 {
 	public static $assets_db;
 	public static $profile_db;
 	private $console = null;
-	public static $use_console = null;
+	public static $console_enabled = null;
+	public static $db_enabled = null;
 	public static $ini = null;
 	private static $key;
 
@@ -43,6 +44,9 @@ class W4OS3 {
 			return;
 		}
 
+		$connections = W4OS3::get_option( 'w4os-settings:connections', array() );
+		
+		self::$console_enabled = $connections['robust']['console']['enabled'] ?? false;
 		$this->set_key(); // Make sure to call first, so key is available for other functions.
 		
 		self::constants();
@@ -84,16 +88,16 @@ class W4OS3 {
 			$ini = parse_ini_string( $config, true );
 			if ( ! $ini ) {
 				$error = 'Failed to parse config';
-				error_log( __FUNCTION__ . ' ' . $error );
+				// error_log( __FUNCTION__ . ' ' . $error );
 				return new WP_Error( 'config_parse_error', 'Failed to parse config' );
 			}
 		} else if ( is_wp_error( $response ) ) {
 			$error = new WP_Error( 'console_command_failed', $response->getMessage() );
-			error_log( 'Error ' . print_r( $error, true ) );
+			error_log( __FUNCTION__ . ' Error ' . print_r( $error, true ) );
 			return $error;
 		} else {
 			$error = 'Unknown error ' . print_r( $response, true );
-			error_log( 'get_ini_config Error ' . $error );
+			error_log( __FUNCTION__ . ' Error ' . $error );
 			return $error;
 		}
 
@@ -211,7 +215,6 @@ class W4OS3 {
 				return $error;
 			} else {
 				$this->console = $rest;
-				self::$use_console = ( $this->console && ! is_wp_error( $this->console ) );
 				return $response;
 			}
 		}
@@ -576,6 +579,11 @@ class W4OS3 {
 				),
 			)
 		);
+
+		// Use localhost for database connection if the server is on the same host.
+		if ( $_SERVER['SERVER_ADDR'] == gethostbyname( $credentials['db']['host'] ) ) {
+			$credentials['db']['host'] = 'localhost';
+		}
 
 		return $credentials;
 	}
