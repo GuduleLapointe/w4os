@@ -139,8 +139,11 @@ class W4OS_Settings extends W4OS_Loader {
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
+		// if ( ! W4OS_ENABLE_V3 ) {
+		// }
+
 		// Grid Info
-		$meta_boxes[] = array(
+		$meta_boxes['grid'] = array(
 			'title'          => __( 'Grid Info', 'w4os' ),
 			'name'           => __( 'Grid Info', 'w4os' ),
 			'desc'           => __( 'Grid Info', 'w4os' ),
@@ -152,9 +155,9 @@ class W4OS_Settings extends W4OS_Loader {
 				array(
 					'name'        => __( 'Login URI', 'w4os' ),
 					'id'          => $prefix . 'login_uri',
-					'type'        => 'url',
+					'type'        => W4OS_ENABLE_V3 ? 'custom_html' : 'url',
 					'std'         => w4os_grid_login_uri(),
-					'required'    => true,
+					'required'    => ! W4OS_ENABLE_V3,
 					'save_field'  => false,
 					'placeholder' => 'http://yourgrid.org:8002',
 				),
@@ -174,138 +177,140 @@ class W4OS_Settings extends W4OS_Loader {
 			),
 		);
 
-		// Database
-		$meta_boxes[] = array(
-			'id'             => 'robust-db',
-			'settings_pages' => array( 'w4os_settings' ),
-			'class'          => 'w4os-settings',
-			'visible'        => array(
-				'when'     => array( array( 'w4os_login_uri', '!=', '' ) ),
-				'relation' => 'or',
-			),
-			'fields'         => array(
-				array(
-					'id'   => $prefix . 'db_connected',
-					'type' => 'hidden',
-					'std'  => W4OS_DB_CONNECTED,
+		if( ! W4OS_ENABLE_V3) {
+			// Database
+			$meta_boxes['db'] = array(
+				'id'             => 'robust-db',
+				'settings_pages' => array( 'w4os_settings' ),
+				'class'          => 'w4os-settings',
+				'visible'        => array(
+					'when'     => array( array( 'w4os_login_uri', '!=', '' ) ),
+					'relation' => 'or',
 				),
-				array(
-					'name'       => __( 'ROBUST Database', 'w4os' ),
-					'id'         => $prefix . 'robust-db',
-					'type'       => 'w4osdb_field_type',
-					'save_field' => false,
-					'std'        => array(
-						'is_main'     => true,
-						'use_default' => false,
-						'type'        => get_option( 'w4os_db_type', 'mysql' ),
-						'port'        => get_option( 'w4os_db_port', 3306 ),
-						'host'        => get_option( 'w4os_db_host', 'localhost' ),
-						'database'    => get_option( 'w4os_db_database', 'robust' ),
-						'user'        => get_option( 'w4os_db_user', 'opensim' ),
-						'pass'        => get_option( 'w4os_db_pass' ),
+				'fields'         => array(
+					array(
+						'id'   => $prefix . 'db_connected',
+						'type' => 'hidden',
+						'std'  => W4OS_DB_CONNECTED,
+					),
+					array(
+						'name'       => __( 'ROBUST Database', 'w4os' ),
+						'id'         => $prefix . 'robust-db',
+						'type'       => W4OS_ENABLE_V3 ? 'hidden' : 'w4osdb_field_type',
+						'save_field' => false,
+						'std'        => array(
+							'is_main'     => true,
+							'use_default' => false,
+							'type'        => get_option( 'w4os_db_type', 'mysql' ),
+							'port'        => get_option( 'w4os_db_port', 3306 ),
+							'host'        => get_option( 'w4os_db_host', 'localhost' ),
+							'database'    => get_option( 'w4os_db_database', 'robust' ),
+							'user'        => get_option( 'w4os_db_user', 'opensim' ),
+							'pass'        => get_option( 'w4os_db_pass' ),
+						),
 					),
 				),
-			),
-		);
-
-		// Users
-		$meta_boxes[] = array(
-			'title'          => __( 'Grid Users', 'w4os' ),
-			'id'             => 'grid-users',
-			'settings_pages' => array( 'w4os_settings' ),
-			'class'          => 'w4os-settings',
-			'visible'        => array(
-				'when'     => array( array( 'w4os_db_connected', '=', '1' ) ),
-				'relation' => 'or',
-			),
-			'fields'         => array(
-				array(
-					'name'       => __( 'Profile Page', 'w4os' ),
-					'id'         => $prefix . 'profile_page_options',
-					'type'       => 'group',
-					'save_field' => false,
-					'fields'     => array(
-						array(
-							'name'       => __( 'URL', 'w4os' ),
-							'id'         => 'url',
-							'type'       => 'custom_html',
-							'callback'   => 'W4OS_Profile::url',
-							'class'      => get_page_by_path( W4OS_Profile::slug() ) ? '' : 'field-error',
-							'desc'       => W4OS::sprintf_safe(
-								preg_replace(
-									'/\[(.*)\]/',
-									'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
-									(
-										get_page_by_path( W4OS_Profile::slug() )
-										? __( 'A profile page exists with permalink set as %1$s, as defined in [permalinks settings].', 'w4os' )
-										: __( 'A profile page must be created with permalink set as %1$s, as defined in [permalinks settings].', 'w4os' )
+			);
+			// Users
+			$meta_boxes['users'] = array(
+				'title'          => __( 'Grid Users', 'w4os' ),
+				'id'             => 'grid-users',
+				'settings_pages' => array( 'w4os_settings' ),
+				'class'          => 'w4os-settings',
+				'visible'        => array(
+					'when'     => array( array( 'w4os_db_connected', '=', '1' ) ),
+					'relation' => 'or',
+				),
+				'fields'         => array(
+					array(
+						'name'       => __( 'Profile Page', 'w4os' ),
+						'id'         => $prefix . 'profile_page_options',
+						'type'       => 'group',
+						'save_field' => false,
+						'fields'     => array(
+							array(
+								'name'       => __( 'URL', 'w4os' ),
+								'id'         => 'url',
+								'type'       => 'custom_html',
+								'callback'   => 'W4OS_Profile::url',
+								'class'      => get_page_by_path( W4OS_Profile::slug() ) ? '' : 'field-error',
+								'desc'       => W4OS::sprintf_safe(
+									preg_replace(
+										'/\[(.*)\]/',
+										'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
+										(
+											get_page_by_path( W4OS_Profile::slug() )
+											? __( 'A profile page exists with permalink set as %1$s, as defined in [permalinks settings].', 'w4os' )
+											: __( 'A profile page must be created with permalink set as %1$s, as defined in [permalinks settings].', 'w4os' )
+										),
 									),
+									'<code>' . W4OS_Profile::slug() . '</code>',
 								),
-								'<code>' . W4OS_Profile::slug() . '</code>',
+								'save_field' => false,
 							),
-							'save_field' => false,
-						),
-						array(
-							'name'       => __( 'Public Profile Page', 'w4os' ),
-							'id'         => 'provide',
-							'type'       => 'switch',
-							'desc'       => W4OS::sprintf_safe(
-								__( 'Provide avatars with a public web profile page in the following format: %1$s.', 'w4os' ),
-								'<code>' . W4OS_Profile::url( 'John', 'Smith' ) . '</code>',
+							array(
+								'name'       => __( 'Public Profile Page', 'w4os' ),
+								'id'         => 'provide',
+								'type'       => W4OS_ENABLE_V3 ? 'hidden' : 'switch',
+								'desc'       => W4OS::sprintf_safe(
+									__( 'Provide avatars with a public web profile page in the following format: %1$s.', 'w4os' ),
+									'<code>' . W4OS_Profile::url( 'John', 'Smith' ) . '</code>',
+								),
+								'style'      => 'rounded',
+								'std'        => empty( get_option( 'w4os_profile_page' ) ) ? 'provide' : ( get_option( 'w4os_profile_page' ) == 'provide' ),
+								'save_field' => false,
 							),
-							'style'      => 'rounded',
-							'std'        => empty( get_option( 'w4os_profile_page' ) ) ? 'provide' : ( get_option( 'w4os_profile_page' ) == 'provide' ),
-							'save_field' => false,
-						),
-						array(
-							'name'       => __( 'Login Page', 'w4os' ),
-							'id'         => 'login_page',
-							'type'       => 'switch',
-							'desc'       => __( 'Use profile page as login page.', 'w4os' ),
-							'style'      => 'rounded',
-							'save_field' => false,
-							'std'        => empty( get_option( 'w4os_login_page' ) ) ? 'profile' : ( get_option( 'w4os_login_page' ) == 'profile' ),
-							'visible'    => array(
-								'when'     => array( array( 'provide', '=', 1 ) ),
-								'relation' => 'or',
+							array(
+								'name'       => __( 'Login Page', 'w4os' ),
+								'id'         => 'login_page',
+								'type'       => W4OS_ENABLE_V3 ? 'hidden' : 'switch',
+								'desc'       => __( 'Use profile page as login page.', 'w4os' ),
+								'style'      => 'rounded',
+								'save_field' => false,
+								'std'        => empty( get_option( 'w4os_login_page' ) ) ? 'profile' : ( get_option( 'w4os_login_page' ) == 'profile' ),
+								'visible'    => array(
+									'when'     => array( array( 'provide', '=', 1 ) ),
+									'relation' => 'or',
+								),
 							),
-						),
-						array(
-							'name'       => __( 'Instructions', 'w4os' ),
-							'id'         => 'instructions',
-							'type'       => 'switch',
-							'desc'       => __( 'Show configuration instructions to new users on their profile page.', 'w4os' ),
-							'style'      => 'rounded',
-							'std'        => w4os_option_exists( 'w4os_configuration_instructions' ) ? get_option( 'w4os_configuration_instructions' ) : true,
-							'save_field' => false,
+							array(
+								'name'       => __( 'Instructions', 'w4os' ),
+								'id'         => 'instructions',
+								'type'       => 'switch',
+								'desc'       => __( 'Show configuration instructions to new users on their profile page.', 'w4os' ),
+								'style'      => 'rounded',
+								'std'        => w4os_option_exists( 'w4os_configuration_instructions' ) ? get_option( 'w4os_configuration_instructions' ) : true,
+								'save_field' => false,
+							),
 						),
 					),
-				),
-				array(
-					'name'       => __( 'Replace User Names', 'w4os' ),
-					'id'         => $prefix . 'userlist_replace_name',
-					'type'       => 'switch',
-					'desc'       => __( 'Show avatar name instead of user name in users list.', 'w4os' ),
-					'style'      => 'rounded',
-					'std'        => w4os_option_exists( 'w4os_userlist_replace_name' ) ? get_option( 'w4os_userlist_replace_name' ) : true,
-					'save_field' => false,
-				),
-				array(
-					'name'       => __( 'Exclude from stats', 'w4os' ),
-					'id'         => $prefix . 'exclude',
-					'type'       => 'checkbox_list',
-					'desc'       => __( 'Accounts without email address are usually test or service accounts, created from the console. Uncheck only if you have real avatars without email address.', 'w4os' ),
-					'options'    => array(
-						'models'    => __( 'Models', 'w4os' ),
-						'nomail'    => __( 'Accounts without mail address', 'w4os' ),
-						'hypergrid' => __( 'Hypergrid visitors', 'w4os' ),
+					array(
+						'name'       => __( 'Replace User Names', 'w4os' ),
+						'id'         => $prefix . 'userlist_replace_name',
+						'type'       => 'switch',
+						'desc'       => __( 'Show avatar name instead of user name in users list.', 'w4os' ),
+						'style'      => 'rounded',
+						'std'        => w4os_option_exists( 'w4os_userlist_replace_name' ) ? get_option( 'w4os_userlist_replace_name' ) : true,
+						'save_field' => false,
 					),
-					'std'        => $this->get_exclude_options(),
-					'inline'     => true,
-					'save_field' => false,
+					array(
+						'name'       => __( 'Exclude from stats', 'w4os' ),
+						'id'         => $prefix . 'exclude',
+						'type'       => 'checkbox_list',
+						'desc'       => __( 'Accounts without email address are usually test or service accounts, created from the console. Uncheck only if you have real avatars without email address.', 'w4os' ),
+						'options'    => array(
+							'models'    => __( 'Models', 'w4os' ),
+							'nomail'    => __( 'Accounts without mail address', 'w4os' ),
+							'hypergrid' => __( 'Hypergrid visitors', 'w4os' ),
+						),
+						'std'        => $this->get_exclude_options(),
+						'inline'     => true,
+						'save_field' => false,
+					),
 				),
-			),
-		);
+			);
+		}
+
 
 		$this->get_exclude_options();
 
