@@ -93,6 +93,7 @@ class W4OS3_Avatar {
 					'default' => W4OS3::$ini['GridInfoService']['register'] ?? '',
 					'value' => W4OS3::$ini['GridInfoService']['register'] ?? '',
 					'options' => array( 
+						'' => ' ' . __( 'Custom URL', 'w4os' ),
 						'use-profile' => ' ' . __( 'Use profile page', 'w4os' ),
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
@@ -105,6 +106,7 @@ class W4OS3_Avatar {
 					'type'     => 'page_select2_url',
 					'value' => W4OS3::$ini['GridInfoService']['password'] ?? '',
 					'options' => array( 
+						'' => ' ' . __( 'Custom URL', 'w4os' ),
 						'use-profile' => ' ' . __( 'Use profile page', 'w4os' ),
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),

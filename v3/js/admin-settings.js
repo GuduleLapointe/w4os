@@ -19,4 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
         cb.addEventListener('change', toggleFields);
         toggleFields();
     });
+
+    const combineSelects = document.querySelectorAll('.select2-combined');
+    combineSelects.forEach(selectEl => {
+        selectEl.addEventListener('change', event => {
+            const relatedId = selectEl.id.replace('_dropdown', '');
+            const relatedEl = document.getElementById(relatedId);
+            if (relatedEl) {
+                relatedEl.value = event.target.value;
+            }
+        });
+    });
 });
+

@@ -43,7 +43,7 @@ class W4OS_Tos extends W4OS_Loader {
 				'tos_page_id' => array(
 					'label'        => __( 'Terms of Service page', 'w4os' ),
 					'id'          => 'tos_page_url',
-					'value'	   => $this->url(),
+					// 'value'	   => $this->url(),
 					'type'        => 'page_select2_url',
 					'description'        => '<ul><li>' . join(
 						'</li><li>',

@@ -249,6 +249,7 @@ class W4OS3_Settings {
 			}
 			$options[ $key ] = $value;
 		}
+		error_log( 'options ' . print_r( $options, true ) );
 
 		return $options;
 	}
@@ -741,18 +742,19 @@ class W4OS3_Settings {
 					$args['options'] ?? array(),
 					self::get_pages_urls(),
 				);
+				// $value = is_array($value) ? $value['select'] : $value;
 
 				// Create dropdown for existing pages
 				$input_field = sprintf(
-					'<select id="%1$s_select" name="%2$s[select]" class="select2-field" %4$s />' .
-						'<option value="" %4$s>%3$s</option>',
-					esc_attr( $args['id'] . '_page' ),
-					esc_attr( $field_name ),
+					'<select id="%1$s" name="%1s" class="select2-field select2-combined" %3$s />' .
+						'<option value="" %3$s>%2$s</option>',
+					esc_attr( $args['id'] ) . '_dropdown',
 					esc_html__( 'Select a page', 'w4os' ),
 					( $readonly || $disabled ) ? 'disabled' : '',
 				);
 				foreach ( $pages as $page_url => $page_title ) {
-					$selected = ( ! empty( $value['select'] ) && $value['select'] == $page_url ) ? 'selected' : '';
+					// $selected = $value == $page_url ? 'selected' : '';
+					$selected = ( ( ! empty( $value['select'] ) && $value['select'] == $page_url ) || $value == $page_url ) ? 'selected' : '';
 					$input_field .= sprintf(
 						'<option value="%1$s" %2$s>%3$s</option>',
 						esc_attr( $page_url ),
@@ -765,8 +767,8 @@ class W4OS3_Settings {
 				// Custom URL input
 				$custom_url = ! empty( $value['custom'] ) ? esc_attr( $value['custom'] ) : '';
 				$input_field .= sprintf(
-					' <input type="url" id="%1$s" name="%2$s[custom]" value="%3$s" placeholder="%4$s" class="regular-text" %5$s />',
-					esc_attr( $args['id'] . '_custom' ),
+					' <input type="url" id="%1$s" name="%2$s" value="%3$s" placeholder="%4$s" class="regular-text" %5$s />',
+					esc_attr( $args['id'] ),
 					esc_attr( $field_name ),
 					esc_attr( is_array( $value ) ? $value['select'] : $value ),
 					esc_html__( 'Or enter a custom URL...', 'w4os' ),
