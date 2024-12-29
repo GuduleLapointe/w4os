@@ -63,7 +63,7 @@ class W4OS3 {
 		}
 		$ini = array();
 		if ( ! $this->get_console_config( $instance ) ) {
-			error_log( __FUNCTION__ . ' no console config' );
+			// Console is not configured, ignore it.
 			return $ini;
 		}
 
@@ -581,7 +581,7 @@ class W4OS3 {
 		);
 
 		// Use localhost for database connection if the server is on the same host.
-		if ( $_SERVER['SERVER_ADDR'] == gethostbyname( $credentials['db']['host'] ) ) {
+		if ( isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] == gethostbyname( $credentials['db']['host'] ) ) {
 			$credentials['db']['host'] = 'localhost';
 		}
 
