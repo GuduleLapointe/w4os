@@ -153,7 +153,7 @@ class W4OS3_Avatar {
 						'searchable' => true, // optional, defaults to false
 						// 'search_column' => 'avatarName', // optional, defaults to column key, use 'callback' to use render_callback value
 						// 'filterable' => false, // deprecated, use 'views' instead
-						// 'render_callback' => [ $this, 'avatar_name_column' ], // optional, defaults to 'column_' . $key
+						'render_callback' => [ $this, 'format_name' ], // optional, defaults to 'column_' . $key
 						'size'       => null, // optional, defaults to null (auto)
 					),
 					'Email'       => array(
@@ -253,7 +253,11 @@ class W4OS3_Avatar {
 		return __( 'Unknown Avatar', 'w4os' );
 	}
 
-	public function avatar_type( $item ) {
+	public function avatar_type( $item = null ) {
+		if( empty( $item ) ) {
+			$item = $this->item;
+		}
+
 		$models = W4OS3_Model::get_models();
 		$email  = $item->Email;
 		if ( W4OS3_Model::is_model( $item ) ) {
@@ -265,6 +269,67 @@ class W4OS3_Avatar {
 		return 'user';
 	}
 
+	/**
+	 * Format the name column.
+	 */
+	public function format_name( $item ) {
+		$type = $this->avatar_type( $item );
+		$name = $this->get_name( $item );
+		if ( $type === 'user' ) {
+			$actions = array(
+				// 'edit' => sprintf(
+				// 	'<a href="%s" title="%s">%s</a>',
+				// 	admin_url( 'user-edit.php?user_id=' . $item->PrincipalID ),
+				// 	__( 'Edit this user', 'w4os' ),
+				// 	__( 'Edit', 'w4os' )
+				// ),
+				'profile' => sprintf(
+					'<a href="%s" title="%s">%s</a>',
+					$this->profile_url( $item ),
+					__( 'View profile page', 'w4os' ),
+					__( 'Profile', 'w4os' )
+				),
+			);
+		} else {
+			return $this->get_name( $item );
+		}
+		$special_accounts = array();
+		$user_level = self::user_level( $item );
+		if ( ! empty( $user_level ) ) {
+			$special_accounts[] = $user_level;
+		}
+		// if ( $item->UserLevel > 0 || $name === 'Way Forest' ) {
+		// 	error_log( 'item ' . print_r( $item, true ) );
+		// 	$special_accounts[] = 'God';
+		// }
+		$output = sprintf(
+			'<strong><a href="%1$s" target="_blank">%2$s</a> %3$s</strong>%4$s',
+			$this->profile_url( $item ),
+			$this->get_name( $item ),
+			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts ),
+			( empty( $actions )) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>'
+			// $this->profile_url( $item ),
+		);
+		return $output;
+	}
+
+	public static function user_level( $item ) {
+		if ( is_numeric( $item )) {
+			$level = intval( $item );
+		} else {
+			$level = intval( $item->UserLevel );
+		}
+		if ( $level >= 200 ) {
+			return __( 'God', 'w4os' );
+		} else if ( $level >= 150 ) {
+			return __( 'Liaison', 'w4os' );
+		} else if ( $level >= 100 ) {
+			return __( 'Customer Service', 'w4os' );
+		} else if ( $level >= 1 ) {
+			return __( 'God-like', 'w4os' );
+		}
+	}
+	
 	/**
 	 * Avatar type
 	 */
@@ -280,15 +345,6 @@ class W4OS3_Avatar {
 			default:
 				return __( 'Unknown', 'w4os' );
 		}
-		// $models = W4OS3_Model::get_models();
-		// $email  = $item->Email;
-		// if ( W4OS3_Model::is_model( $item ) ) {
-		// return __( 'Default Model', 'w4os' );
-		// }
-		// if ( empty( $email ) ) {
-		// return __( 'Service Account', 'w4os' );
-		// }
-		// return __( 'User Avatar', 'w4os' );
 	}
 
 	/**
@@ -382,5 +438,20 @@ class W4OS3_Avatar {
 			}
 		}
 		return $avatars;
+	}
+
+	public static function profile_url( $item = null ) {
+		$slug     = get_option( 'w4os_profile_slug', 'profile' );
+		$base_url = get_home_url( null, $slug );
+		$firstname = $item->FirstName;
+		$lastname  = $item->LastName;
+
+		if ( empty( $firstname ) || empty( $lastname ) ) {
+			return $base_url;
+		} else {
+			$firstname = sanitize_title( $firstname );
+			$lastname  = sanitize_title( $lastname );
+			return $base_url . '/' . $firstname . '.' . $lastname;
+		}
 	}
 }
