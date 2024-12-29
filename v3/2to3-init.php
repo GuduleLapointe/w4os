@@ -763,6 +763,32 @@ class W4OS3 {
 			return false;
 		}
 	}
+
+	public static function img( $img_uuid, $atts = array() ) {
+		if( W4OS3::empty( $img_uuid ) ) {
+			return;
+		}
+		if( ! W4OS3::is_uuid( $img_uuid ) ) {
+			return;
+		}
+		$asset_url = w4os_get_asset_url( $img_uuid );
+		if( empty( $asset_url ) ) {
+			return;
+		}
+		$class = $atts['class'] ?? '';
+		$class = is_array( $class ) ? implode( ' ', $class ) : $class;
+		$width = ( isset( $atts['width'] ) ) ? 'width="' . $atts['width'] . '"' : '';
+		$height = ( isset( $atts['height'] ) ) ? 'height="' . $atts['height'] . '"' : '';
+		$attributes = trim( $width . ' ' . $height );
+		$alt = $atts['alt'] ?? '';
+		return sprintf(
+			'<img src="%s" class="%s" alt="%s" %s>',
+			$asset_url,
+			$class,
+			$alt,
+			$attributes,
+		);
+	}
 }
 
 $w4os3 = new W4OS3();

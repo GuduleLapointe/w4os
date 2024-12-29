@@ -30,5 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    document.querySelectorAll('[data-modal-target]').forEach(trigger => {
+        trigger.addEventListener('click', event => {
+            event.preventDefault();
+            const dlg = document.getElementById(trigger.getAttribute('data-modal-target'));
+            if (dlg) dlg.showModal();
+        });
+    });
 });
 
+function closeModal() {
+    const dlg = document.querySelector('dialog[open]');
+    if (dlg) dlg.close();
+}

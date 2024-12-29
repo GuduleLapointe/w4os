@@ -60,15 +60,29 @@ ul.parcels div.parcel {
 	/* min-width: 520px; */
 }
 
+img.profile,
 ul.parcels div.parcel > img {
 	float: left;
 	margin-right: 10px;
 	max-width: 128px;
 	aspect-ratio: 4/3;
 }
+img.profile {
+	max-width: 512px;
+}
+.w4os-modal img.profile {
+	max-width: 256px;
+}
 ul.parcels div.parcel > h2,
 ul.parcels div.parcel > h3 {
 	margin-top: 0;
+}
+
+.w4os-modal {
+	min-width: 480px;
+	max-width: 80%;
+	border:none;
+	border-radius:10px;
 }
 
 .dashicons.disabled {

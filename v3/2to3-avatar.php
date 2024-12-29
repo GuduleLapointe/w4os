@@ -273,6 +273,8 @@ class W4OS3_Avatar {
 	 * Format the name column.
 	 */
 	public function format_name( $item ) {
+		$PrincipalID = $item->PrincipalID;
+
 		$type = $this->avatar_type( $item );
 		$name = $this->get_name( $item );
 		if ( $type === 'user' ) {
@@ -298,21 +300,29 @@ class W4OS3_Avatar {
 		if ( ! empty( $user_level ) ) {
 			$special_accounts[] = $user_level;
 		}
-		// if ( $item->UserLevel > 0 || $name === 'Way Forest' ) {
-		// 	error_log( 'item ' . print_r( $item, true ) );
-		// 	$special_accounts[] = 'God';
-		// }
+		$profile_html = $this->profile_html( $item );
 		$output = sprintf(
-			'<strong><a href="%1$s" target="_blank">%2$s</a> %3$s</strong>%4$s',
-			$this->profile_url( $item ),
+			'<strong><a href="#" data-modal-target="modal-%1$s">%2$s</a> %3$s</strong>',
+			$PrincipalID,
 			$this->get_name( $item ),
-			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts ),
-			( empty( $actions )) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>'
-			// $this->profile_url( $item ),
+			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts )
 		);
+		$output .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
+		$output .= $this->modal( $PrincipalID, $profile_html, $this->profile_url( $item ) );
 		return $output;
 	}
 
+	public function modal( $id, $content, $url = null ) {
+		return sprintf(
+			'<dialog id="modal-%s" class="w4os-modal">
+				<button type="button" onclick="closeModal()" style="float:right;">×</button>
+				%s %s
+			</dialog>',
+			$id,
+			$content,
+			( empty($url) ) ? '' : '<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="button">Open in new tab</a>',
+		);
+	}
 	public static function user_level( $item ) {
 		if ( is_numeric( $item )) {
 			$level = intval( $item );
@@ -412,7 +422,7 @@ class W4OS3_Avatar {
 	 * Format the server URI column in a lighter way.
 	 */
 	public function server_uri( $item ) {
-		$server_uri = $item->serverURI;
+		$server_uri = $item->serverURI ?? '';
 		if ( empty( $server_uri ) ) {
 			return;
 		}
@@ -453,5 +463,37 @@ class W4OS3_Avatar {
 			$lastname  = sanitize_title( $lastname );
 			return $base_url . '/' . $firstname . '.' . $lastname;
 		}
+	}
+
+	public function profile_html( $item ) {
+		// return '<div class="w4os-avatar-profile">Debug Profile content</div>';
+		$profile_url = $this->profile_url( $item );
+		$avatarName  = $item->avatarName;
+
+		if( $avatarName == 'Way Forest' ) {
+			error_log( 'item ' . print_r( $item, true ) );
+		}
+		$profileImage = $item->profileImage;
+		$img = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
+
+		$data = array(
+			__( 'Born', 'w4os' )        => w4os_age( $item->Created ),
+			__( 'Last Seen', 'w4os' )	=> $this->format_last_seen( $item ),
+			__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->FirstName . ' ' . $partner->LastName ),
+			__( 'Wants to', 'w4os' )    => join( ', ', w4os_demask( $item->profileWantToMask, $wants, $item->profileWantToText ) ),
+			__( 'Languages', 'w4os' )   => $item->profileLanguages,
+			__( 'About', 'w4os' )		=> $item->profileAboutText ?? '',
+			__( 'Real Life', 'w4os' )   => trim( $item->profileFirstImageHtml . ' ' . wpautop( $item->profileFirstText ) ),
+		);
+
+		$data = array_filter( $data );
+
+		$output[] = '<h2>' . $avatarName . '</h2>';
+		$output[] = W4OS3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
+		foreach( $data as $key => $value ) {
+			$output[] = '<p><strong>' . $key . '</strong>: ' . $value . '</p>';
+		}
+		$output = '<div class="w4os-avatar-profile">' . implode( ' ', $output ) . '</div>';
+		return $output;
 	}
 }
