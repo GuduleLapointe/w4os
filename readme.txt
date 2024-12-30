@@ -3,9 +3,9 @@ Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
-Requires PHP: 7.3
+Requires PHP: 8.3.6
 Tested up to: 6.7.1
-Stable tag: 2.9.0
+Stable tag: 2.9.1
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -210,6 +210,20 @@ or not. In either case, idk&idc.
 
 == Changelog ==
 
+= 2.9.1 =
+* fix admin header shown in SL viewer embed and modal
+* fix permissions issues with $option_group
+* fix crash if W4OS_NULL_KEY is called too early
+* fix hop teleport links
+
+v3 beta features (available from github or w4os website releases):
+* new Connections settings page
+* new encrypt simulators credentials
+* enhanced Avatars list with modal profile preview
+* enhanced fetch database credentials from console if console is enabled
+* enhanced fetch ini config from console if available
+* enhanced settings API
+
 = 2.9.0 =
 * fix crash on fresh install caused by calls to opensim db while it is not yet configured
 * fix avatar-profile shortcode crashing php on fresh install
@@ -224,8 +238,7 @@ or not. In either case, idk&idc.
 Transitional release, progressively integrate upcoming v3 features as beta
 Do not enabe v3 beta features in production environment
 
-v3 beta features (available in github or w4os website releases):
-
+v3 beta features (available from github or w4os website releases):
 * option in classic settings to enable v3 beta features
 * new v3 settings page (limited, main options still in classic settings page)
 * new v3 avatars admin page, including

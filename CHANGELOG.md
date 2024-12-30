@@ -1,5 +1,19 @@
 ## Changelog
 
+### 2.9.1
+- fix admin header shown in SL viewer embed and modal
+- fix permissions issues with $option_group
+- fix crash if W4OS_NULL_KEY is called too early
+- fix hop teleport links
+
+v3 beta features (available from github or w4os website releases):
+- new Connections settings page
+- new encrypt simulators credentials
+- enhanced Avatars list with modal profile preview
+- enhanced fetch database credentials from console if console is enabled
+- enhanced fetch ini config from console if available
+- enhanced settings API
+
 ### 2.9.0
 - fix crash on fresh install caused by calls to opensim db while it is not yet configured
 - fix avatar-profile shortcode crashing php on fresh install
