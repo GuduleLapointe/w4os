@@ -38,6 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (dlg) dlg.showModal();
         });
     });
+
+    document.querySelectorAll('dialog.w4os-modal').forEach(dlg => {
+        dlg.addEventListener('click', evt => {
+            if (evt.target === dlg) {
+                closeModal();
+            }
+        });
+    });
 });
 
 function closeModal() {
