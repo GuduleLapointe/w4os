@@ -1,5 +1,7 @@
 ## Changelog
 
+### 2.9.2
+
 ### 2.9.1
 - fix admin header shown in SL viewer embed and modal
 - fix permissions issues with $option_group
@@ -28,8 +30,7 @@ v3 beta features (available from github or w4os website releases):
 Transitional release, progressively integrate upcoming v3 features as beta
 Do not enabe v3 beta features in production environment
 
-v3 beta features (available in github or w4os website releases):
-
+v3 beta features (available from github or w4os website releases):
 - option in classic settings to enable v3 beta features
 - new v3 settings page (limited, main options still in classic settings page)
 - new v3 avatars admin page, including

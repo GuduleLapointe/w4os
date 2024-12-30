@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 8.3.6
 Tested up to: 6.7.1
-Stable tag: 2.9.1
+Stable tag: 2.9.2
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -209,6 +209,8 @@ or not. In either case, idk&idc.
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.9.2 =
 
 = 2.9.1 =
 * fix admin header shown in SL viewer embed and modal
