@@ -791,6 +791,18 @@ class W4OS3 {
 	}
 
 	public static function modal( $id, $url = null, $content = null ) {
+		$footer_buttons = array(
+			( empty( $url ) ) ? '' : sprintf(
+				'<a href="%s" rel="noopener noreferrer" class="button">%s</a>',
+				$url,
+				__('Open page', 'w4os' ),
+			),
+		);
+		$footer_buttons = array_filter( $footer_buttons );
+		$footer = ( empty( $footer_buttons ) ) ? '' : sprintf(
+			'<div class="modal-footer clear">%s</div>',
+			implode( '', $footer_buttons ),
+		);
 		if ( ! empty( $content ) ) {
 			return sprintf(
 				'<dialog id="modal-%s" class="w4os-modal">
@@ -800,13 +812,7 @@ class W4OS3 {
 				</dialog>',
 				$id,
 				$content,
-				( empty($url) ) ? '' : sprintf(
-					'<div class="modal-footer clear">
-						<a href="%s" target="_blank" rel="noopener noreferrer" class="button">%s</a>
-					</div>',
-					$url,
-					__('Open page', 'w4os' ),
-				),
+				$footer,
 			);
 		} else if ( ! empty( $url ) ) {
 			// add modal=true and embed=true to url arguments
@@ -816,9 +822,11 @@ class W4OS3 {
 				'<dialog id="modal-%s" class="w4os-modal">
 					<button type="button" onclick="closeModal()" style="float:right;">×</button>
 					<iframe src="%s"></iframe>
+					%s
 				</dialog>',
 				$id,
 				$url,
+				$footer,
 			);
 		}
 	}
