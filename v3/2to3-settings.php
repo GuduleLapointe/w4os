@@ -30,26 +30,26 @@ class W4OS3_Settings {
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-settings'] = array(
-			'parent_slug' => 'w4os',
-			'page_title'  => __( 'Settings', 'w4os' ) . ' (dev)',
-			'menu_title'  => '(dev) ' . __( 'Settings', 'w4os' ),
-			'capability'  => 'manage_options',
-			'menu_slug'   => 'w4os-settings',
+			'parent_slug'       => 'w4os',
+			'page_title'        => __( 'Settings', 'w4os' ) . ' (dev)',
+			'menu_title'        => '(dev) ' . __( 'Settings', 'w4os' ),
+			'capability'        => 'manage_options',
+			'menu_slug'         => 'w4os-settings',
 			'sanitize_callback' => array( $this, 'sanitize_options' ),
 			// 'tabs' => array(
-			// 	'pages' => array(
-			// 		'title' => __( 'Pages', 'w4os' ),
-			// 	),
+			// 'pages' => array(
+			// 'title' => __( 'Pages', 'w4os' ),
+			// ),
 			// )
 		);
 		return $settings;
 	}
-	
+
 	public function register_w4os_settings_beta( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-settings']['tabs']['beta'] = array(
-			'title'  => __( 'Beta Features', 'w4os' ),
+			'title'    => __( 'Beta Features', 'w4os' ),
 			'priority' => 9,
-			'fields' => array(
+			'fields'   => array(
 				'debug_html' => array(
 					'label'       => __( 'Enable HTML debug', 'w4os' ),
 					'type'        => 'switch',
@@ -222,16 +222,16 @@ class W4OS3_Settings {
 			return $options;
 		}
 
-		if( isset( $input['connections']['robust'] ) ) {
+		if ( isset( $input['connections']['robust'] ) ) {
 			// $credentials = $input['connections'];
 			$creds = $input['connections']['robust'] ?? array();
-			if( ! empty( $creds ) ) {
+			if ( ! empty( $creds ) ) {
 				$creds['type'] = 'robust';
-				$server_uri = $creds['host'] . ':' . $creds['port'];
+				$server_uri    = $creds['host'] . ':' . $creds['port'];
 			}
 			unset( $input['connections'] );
-		} else if( isset( $input['edit']['sim_credentials'] ) ) {
-			$creds = $input['edit']['sim_credentials'];
+		} elseif ( isset( $input['edit']['sim_credentials'] ) ) {
+			$creds         = $input['edit']['sim_credentials'];
 			$creds['type'] = 'simulator';
 			unset( $input['edit']['sim_credentials'] );
 		}
@@ -258,7 +258,7 @@ class W4OS3_Settings {
 		// Enqueue Select2 assets
 		wp_enqueue_style( 'select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', array(), '4.0.13' );
 		wp_enqueue_script( 'select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array( 'jquery' ), '4.0.13', true );
-		
+
 		W4OS3::enqueue_script( 'v3-admin-settings', 'v3/js/admin-settings.js' );
 	}
 
@@ -269,15 +269,15 @@ class W4OS3_Settings {
 		$page_title   = esc_html( get_admin_page_title() );
 		$option_group = $menu_slug . '_group';
 
-		$settings        = apply_filters( 'w4os_settings', array() );
-		$page_tabs       = $settings[ $menu_slug ]['tabs'] ?? array();
-		$selected_tab    = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : array_key_first( $page_tabs );
+		$settings     = apply_filters( 'w4os_settings', array() );
+		$page_tabs    = $settings[ $menu_slug ]['tabs'] ?? array();
+		$selected_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : array_key_first( $page_tabs );
 		if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' ) {
 			$page_tabs['edit'] = array(
 				'title' => __( 'Edit', 'w4os' ),
 				'url'   => '#',
 			);
-			$selected_tab = 'edit';
+			$selected_tab      = 'edit';
 		}
 		$current_section = $option_group . '_section_' . $selected_tab;
 
@@ -317,30 +317,30 @@ class W4OS3_Settings {
 		do_action( 'admin_notices' );
 	}
 
-	public static function check_connections ( $creds ) {
-		$creds = wp_parse_args(
+	public static function check_connections( $creds ) {
+		$creds            = wp_parse_args(
 			$creds,
 			array(
 				'status' => null,
-				'error' => null,
+				'error'  => null,
 			),
 		);
-		$creds['db'] = wp_parse_args(
+		$creds['db']      = wp_parse_args(
 			$creds['db'],
 			array(
 				'status' => null,
-				'error' => null,
+				'error'  => null,
 			),
 		);
 		$creds['console'] = wp_parse_args(
 			$creds['console'],
 			array(
 				'status' => null,
-				'error' => null,
+				'error'  => null,
 			),
 		);
 
-		if( $creds['use_defaults'] ?? false ){
+		if ( $creds['use_defaults'] ?? false ) {
 			return $creds;
 		}
 
@@ -349,24 +349,24 @@ class W4OS3_Settings {
 			$creds['status'] = null;
 		} else {
 			$creds['status'] = w4os_grid_online( $creds['host'] . ':' . $creds['port'] );
-			if( ! $creds['status'] ) {
+			if ( ! $creds['status'] ) {
 				$creds['error'] = sprintf(
 					__( 'Could not connect to %s', 'w4os' ),
 					$creds['host'] . ':' . $creds['port']
 				);
 			}
 		}
-		
+
 		// Check database credentials
 		// TODO: replace with W4OS3::validate_db_credentials
 		if ( ! empty( $creds['db']['host'] ) && ! empty( $creds['db']['user'] ) && ! empty( $creds['db']['pass'] && ! empty( $creds['db']['name'] ) ) ) {
 			@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
-			if( $db_conn && ! $db_conn->connect_error ) {
+			if ( $db_conn && ! $db_conn->connect_error ) {
 				$creds['db']['status'] = true;
 				$db_conn->close();
 			} else {
 				$creds['db']['status'] = false;
-				$creds['db']['error'] = $db_conn->connect_error ?? __( 'Unknown DB connection error', 'w4os' );
+				$creds['db']['error']  = $db_conn->connect_error ?? __( 'Unknown DB connection error', 'w4os' );
 			}
 		} else {
 			$creds['db']['status'] = null;
@@ -374,25 +374,25 @@ class W4OS3_Settings {
 
 		// Check console credentials
 		// TODO: replace with W4OS3::validate_console_credentials
-		if ( empty( $creds['console']['port'] ) || empty ( $creds['console']['host'] ) || empty( $creds['console']['user'] ) || empty( $creds['console']['pass'] ) ) {
+		if ( empty( $creds['console']['port'] ) || empty( $creds['console']['host'] ) || empty( $creds['console']['user'] ) || empty( $creds['console']['pass'] ) ) {
 			$creds['console']['status'] = null;
 		} else {
 			$rest_args = array(
-				'uri' 	   => $creds['console']['host'] . ':' . $creds['console']['port'],
+				'uri'         => $creds['console']['host'] . ':' . $creds['console']['port'],
 				'ConsoleUser' => $creds['console']['user'],
 				'ConsolePass' => $creds['console']['pass'],
 			);
-			$rest = new OpenSim_Rest( $rest_args );
+			$rest      = new OpenSim_Rest( $rest_args );
 			if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
-				$creds['console']['error'] = $rest->error->getMessage();
+				$creds['console']['error']  = $rest->error->getMessage();
 				$creds['console']['status'] = false;
 			} else {
 				$responseLines = $rest->sendCommand( 'show info' );
 				if ( is_opensim_rest_error( $responseLines ) ) {
-					$creds['console']['error'] = $responseLines->getMessage();
+					$creds['console']['error']  = $responseLines->getMessage();
 					$creds['console']['status'] = false;
 				} else {
-					$creds['console']['status'] = true;
+					$creds['console']['status']   = true;
 					$creds['console']['response'] = join( "\n", $responseLines );
 				}
 			}
@@ -519,9 +519,9 @@ class W4OS3_Settings {
 		$field_name = "{$option_name}[{$tab}][{$args['id']}]";
 		$option     = get_option( $option_name, array() );
 		$value      = isset( $option[ $tab ][ $args['id'] ] ) ? $option[ $tab ][ $args['id'] ] : '';
-		$value = isset( $args['value'] ) ? $args['value'] : $value;
-		$readonly = ( $args['readonly'] ) ? 'readonly' : '';
-		$disabled = ( $args['disabled'] ) ? 'disabled' : '';
+		$value      = isset( $args['value'] ) ? $args['value'] : $value;
+		$readonly   = ( $args['readonly'] ) ? 'readonly' : '';
+		$disabled   = ( $args['disabled'] ) ? 'disabled' : '';
 
 		if ( empty( $value ) && isset( $args['default'] ) ) {
 			$value = $args['default'];
@@ -539,16 +539,16 @@ class W4OS3_Settings {
 			case 'instance_credentials':
 			case 'db_credentials':
 				// Grouped fields for database credentials
-				$login_uri = get_option( 'w4os_login_uri', home_url() );
+				$login_uri    = get_option( 'w4os_login_uri', home_url() );
 				$default_host = parse_url( $login_uri, PHP_URL_HOST ) ?? 'yourgrid.org';
-				$creds       = WP_parse_args(
+				$creds        = WP_parse_args(
 					$value,
 					array(
-						'type' => ( $args['id'] == 'robust' ) ? 'robust' : null,
+						'type'         => ( $args['id'] == 'robust' ) ? 'robust' : null,
 						'use_defaults' => ( $args['id'] == 'robust' ) ? false : ( $value['use_default'] ?? true ),
-						'host' => null,
-						'port' => 8002,
-						'db' => array(
+						'host'         => null,
+						'port'         => 8002,
+						'db'           => array(
 							'type' => 'mysql',
 							'host' => 'localhost',
 							'port' => '3306',
@@ -556,7 +556,7 @@ class W4OS3_Settings {
 							'user' => 'opensim',
 							'pass' => null,
 						),
-						'console'	=> array(
+						'console'      => array(
 							'host' => $default_host,
 							'port' => null,
 							'user' => null,
@@ -569,7 +569,7 @@ class W4OS3_Settings {
 
 				$input_field = '';
 
-				if( $creds['type'] !== 'robust' ) {
+				if ( $creds['type'] !== 'robust' ) {
 					$input_field .= sprintf(
 						'<div class="w4os-credentials  credentials-use-defaults">
 							<label class="use-defaults">
@@ -583,10 +583,10 @@ class W4OS3_Settings {
 						checked( $creds['use_defaults'], true, false ),
 						esc_html__( 'Use defaults' ),
 						( $readonly || $disabled ) ? 'disabled' : '',
-					);							
+					);
 				}
 
-				if( $args['type'] !== 'db_credentials' ) {
+				if ( $args['type'] !== 'db_credentials' ) {
 					$input_field .= sprintf(
 						'<div class="w4os-credentials  credentials-host">
 							<label class="section-label">%2$s</label>
@@ -596,7 +596,7 @@ class W4OS3_Settings {
 						</div>
 						',
 						esc_attr( $args['id'] ),
-						esc_html__( 'Service URI' , 'w4os' ),
+						esc_html__( 'Service URI', 'w4os' ),
 						$field_name,
 						esc_html__( 'Hostname', 'w4os' ),
 						esc_attr( $creds['host'] ),
@@ -724,9 +724,9 @@ class W4OS3_Settings {
 					esc_html( $args['placeholder'] ),
 					( $readonly || $disabled ) ? 'disabled' : '',
 				);
-				$pages = self::get_pages();
+				$pages       = self::get_pages();
 				foreach ( $pages as $page_id => $page_title ) {
-					$selected = selected( $value, $page_id, false );
+					$selected     = selected( $value, $page_id, false );
 					$input_field .= sprintf(
 						'<option value="%1$s" %2$s>%3$s</option>',
 						esc_attr( $page_id ),
@@ -754,7 +754,7 @@ class W4OS3_Settings {
 				);
 				foreach ( $pages as $page_url => $page_title ) {
 					// $selected = $value == $page_url ? 'selected' : '';
-					$selected = ( ( ! empty( $value['select'] ) && $value['select'] == $page_url ) || $value == $page_url ) ? 'selected' : '';
+					$selected     = ( ( ! empty( $value['select'] ) && $value['select'] == $page_url ) || $value == $page_url ) ? 'selected' : '';
 					$input_field .= sprintf(
 						'<option value="%1$s" %2$s>%3$s</option>',
 						esc_attr( $page_url ),
@@ -765,7 +765,7 @@ class W4OS3_Settings {
 				$input_field .= '</select>';
 
 				// Custom URL input
-				$custom_url = ! empty( $value['custom'] ) ? esc_attr( $value['custom'] ) : '';
+				$custom_url   = ! empty( $value['custom'] ) ? esc_attr( $value['custom'] ) : '';
 				$input_field .= sprintf(
 					' <input type="url" id="%1$s" name="%2$s" value="%3$s" placeholder="%4$s" class="regular-text" %5$s />',
 					esc_attr( $args['id'] ),
@@ -780,12 +780,12 @@ class W4OS3_Settings {
 			case 'switch':
 			case 'checkbox':
 			case 'checkboxes':
-				if( empty ($args['options'] ) ) {
+				if ( empty( $args['options'] ) ) {
 					$args['options'] = array( '1' => __( 'Yes', 'w4os' ) );
 				}
 				$fields = array();
 				foreach ( $args['options'] as $option_value => $option_label ) {
-					$fields[]= sprintf(
+					$fields[] = sprintf(
 						'<label>
 							<input type="checkbox" id="%1$s" name="%2$s" value="%3$s" %4$s %6$s />
 							%5$s
@@ -833,7 +833,7 @@ class W4OS3_Settings {
 	 * Get pages
 	 */
 	public static function get_pages() {
-		$pages = get_pages();
+		$pages     = get_pages();
 		$page_list = array();
 		foreach ( $pages as $page ) {
 			$page_list[ $page->ID ] = $page->post_title;
@@ -845,47 +845,46 @@ class W4OS3_Settings {
 	 * Get pages urls
 	 */
 	public static function get_pages_urls() {
-		$pages = get_pages();
+		$pages     = get_pages();
 		$page_list = array();
 		foreach ( $pages as $page ) {
-			$url = get_permalink( $page->ID );
+			$url               = get_permalink( $page->ID );
 			$page_list[ $url ] = $page->post_title;
 		}
 		return $page_list;
 	}
 
 	/**
-     * Get all pages containing a specific shortcode
-     *
-     * @param string $shortcode The shortcode to search for.
-     * @return array Array of WP_Post objects.
-	 * 
+	 * Get all pages containing a specific shortcode
+	 *
+	 * @param string $shortcode The shortcode to search for.
+	 * @return array Array of WP_Post objects.
+	 *
 	 * @since 2.9.1
-     */
-    public static function get_pages_with_shortcode($shortcode) {
-        global $wpdb;
-        $shortcode = esc_sql($shortcode);
-        $query = "
+	 */
+	public static function get_pages_with_shortcode( $shortcode ) {
+		global $wpdb;
+		$shortcode = esc_sql( $shortcode );
+		$query     = "
         SELECT ID, post_title FROM {$wpdb->posts}
         WHERE post_type = 'page' 
         AND post_status = 'publish'
         AND post_content LIKE '%[" . $shortcode . "]%'
         ";
-        $results = $wpdb->get_results($query);
+		$results   = $wpdb->get_results( $query );
 
-        // Filter out translated pages if WPML is active
-        if (function_exists('icl_object_id')) {
-            $original_results = [];
-            foreach ($results as $page) {
-                $original_id = icl_object_id($page->ID, 'page', true, wpml_get_default_language());
-                if ($original_id == $page->ID) {
-                    $original_results[] = $page;
-                }
-            }
-            return $original_results;
-        }
+		// Filter out translated pages if WPML is active
+		if ( function_exists( 'icl_object_id' ) ) {
+			$original_results = array();
+			foreach ( $results as $page ) {
+				$original_id = icl_object_id( $page->ID, 'page', true, wpml_get_default_language() );
+				if ( $original_id == $page->ID ) {
+					$original_results[] = $page;
+				}
+			}
+			return $original_results;
+		}
 
-        return $results;
-    }
-
+		return $results;
+	}
 }

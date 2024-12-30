@@ -180,7 +180,7 @@ function opensim_format_tp( $uri, $format = TPLINK, $sep = "\n" ) {
 	extract( $uri_parts );
 
 	$regionencoded = urlencode( $region );
-	$region_hop = str_replace( ' ', '%20', $region );
+	$region_hop    = str_replace( ' ', '%20', $region );
 	$pos_mandatory = ( empty( $pos ) ) ? '128/128/25' : $pos;
 	$links         = array();
 	if ( $format & TPLINK_TXT ) {

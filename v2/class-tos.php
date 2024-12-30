@@ -16,17 +16,17 @@ class W4OS_Tos extends W4OS_Loader {
 	public function __construct() {
 		$this->tos_page_id = W4OS::get_option( 'w4os_tos_page_id' );
 	}
-	
+
 	public function url() {
 		return get_permalink( $this->tos_page_id );
 	}
 
 	public function init() {
-		if( W4OS_ENABLE_V3 ) {
+		if ( W4OS_ENABLE_V3 ) {
 			add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ) );
 		}
 		add_filter( 'rwmb_meta_boxes', array( $this, 'register_settings_fields' ) );
-		
+
 		if ( $this->tos_page_id ) {
 			add_action( 'register_form', array( $this, 'tos_checkbox' ) );
 			add_action( 'woocommerce_register_form', array( $this, 'wc_tos_checkbox' ) );
@@ -41,16 +41,16 @@ class W4OS_Tos extends W4OS_Loader {
 			$settings['w4os-settings']['tabs']['pages']['fields'] ?? array(),
 			array(
 				'tos_page_id' => array(
-					'label'        => __( 'Terms of Service page', 'w4os' ),
+					'label'       => __( 'Terms of Service page', 'w4os' ),
 					'id'          => 'tos_page_url',
-					// 'value'	   => $this->url(),
+					// 'value'     => $this->url(),
 					'type'        => 'page_select2_url',
-					'description'        => '<ul><li>' . join(
+					'description' => '<ul><li>' . join(
 						'</li><li>',
 						array(
 							__( 'Select the page containing the terms of service to add a TOS consent checkbox on the user registration page.', 'w4os' ),
 							__( 'Leave blank to disable the checkbox or if it is handled by another plugin.', 'w4os' ),
-							// __( 'Note: It is crucial to have a well-crafted and legally accurate TOS page for your website.', 'w4os' ) . ' ' . 
+							// __( 'Note: It is crucial to have a well-crafted and legally accurate TOS page for your website.', 'w4os' ) . ' ' .
 							__( 'We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page.', 'w4os' ),
 						)
 					) . '</li></ul>',

@@ -76,56 +76,59 @@ class W4OS3_Region {
 	private $parcels;
 
 	private $console_connected = false;
-	private $db_connected = false;
-	private $db = false;
+	private $db_connected      = false;
+	private $db                = false;
 
 	public function __construct( $args = null ) {
 		// error_log( __METHOD__ );
 
-		if( ! W4OS3::empty( $args ) ) {
+		if ( ! W4OS3::empty( $args ) ) {
 			$this->fetch_region_data( $args );
-		} else if ( isset( $_GET['region'] ) ) {
+		} elseif ( isset( $_GET['region'] ) ) {
 			$this->fetch_region_data( $_GET['region'] );
 		}
 
-		if( ! empty( $this->item->serverURI ) ) {
-			if ( empty ($this->server) && $this->server !== false ) {
-				$this->server = new W4OS3_Service( $this->item->serverURI );
+		if ( ! empty( $this->item->serverURI ) ) {
+			if ( empty( $this->server ) && $this->server !== false ) {
+				$this->server            = new W4OS3_Service( $this->item->serverURI );
 				$this->console_connected = $this->server->console_connected();
 				// $this->db_connected = $this->server->db_connected();
-				$this->db = $this->server->db ?? false;
+				$this->db           = $this->server->db ?? false;
 				$this->db_connected = $this->db->ready ?? false;
 			}
 		}
 	}
-	
+
 	/**
 	 * Initialize the class. Register actions and filters.
 	 */
 	public function init() {
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
-		
+
 		$this->constants();
 	}
 
 	private function constants() {
-		define( 'W4OS_REGION_FLAGS', array(
-			// 4 => __( 'Region Online', 'w4os' ), // Not reliable, fake positives
-			1 => __( 'Default Region', 'w4os' ),
-			1024 => __( 'Default HG Region', 'w4os' ),
-			2 => __( 'Fallback Region', 'w4os' ),
-			256 => __( 'Authenticate', 'w4os' ),
-			512 => __( 'Hyperlink', 'w4os' ),
-			32 => __( 'Locked Out', 'w4os' ),
-			8 => __( 'No Direct Login', 'w4os' ),
-			64 => __( 'No Move', 'w4os' ),
-			16 => __( 'Persistent', 'w4os' ),
-			128 => __( 'Reservation', 'w4os' ),
-		) );
+		define(
+			'W4OS_REGION_FLAGS',
+			array(
+				// 4 => __( 'Region Online', 'w4os' ), // Not reliable, fake positives
+				1    => __( 'Default Region', 'w4os' ),
+				1024 => __( 'Default HG Region', 'w4os' ),
+				2    => __( 'Fallback Region', 'w4os' ),
+				256  => __( 'Authenticate', 'w4os' ),
+				512  => __( 'Hyperlink', 'w4os' ),
+				32   => __( 'Locked Out', 'w4os' ),
+				8    => __( 'No Direct Login', 'w4os' ),
+				64   => __( 'No Move', 'w4os' ),
+				16   => __( 'Persistent', 'w4os' ),
+				128  => __( 'Reservation', 'w4os' ),
+			)
+		);
 	}
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
-		if( ! $this->parcels ) {
+		if ( ! $this->parcels ) {
 			$this->parcels = $this->get_parcels();
 		}
 
@@ -167,25 +170,28 @@ class W4OS3_Region {
 				),
 			),
 		);
-		$get = wp_parse_args( $_GET, array(
-			'page'   => null,
-			'action' => null,
-			'region' => null,
-		) );
+		$get = wp_parse_args(
+			$_GET,
+			array(
+				'page'   => null,
+				'action' => null,
+				'region' => null,
+			)
+		);
 		if ( $get['page'] === 'w4os-regions' && $get['action'] === 'edit' && ! W4OS3::empty( $get['region'] ) ) {
-			$_GET['tab'] = 'edit';
-			$region_title = sprintf( 
-				'<h1 class="wp-heading-inline">%s</h1>', 
-				sprintf( __('Region: %s', 'w4os'), $this->item->regionName ),
+			$_GET['tab']  = 'edit';
+			$region_title = sprintf(
+				'<h1 class="wp-heading-inline">%s</h1>',
+				sprintf( __( 'Region: %s', 'w4os' ), $this->item->regionName ),
 			);
-			$actions = $this->get_actions( 'page-title' );
+			$actions      = $this->get_actions( 'page-title' );
 			unset( $actions['edit'] );
 			// unset( $actions['teleport'] );
 			$region_title .= ' ' . implode( ' ', $actions );
 			$region_title .= '<p><code>' . $_GET['region'] . '</code><input type="hidden" name="regionuuid" value="' . $_GET['region'] . '"></p>';
 			// $server_uri = $this->format_server_uri( $this->item, true );
-			$parts = parse_url( $this->item->serverURI );
-			$sim_credentials = wp_parse_args( 
+			$parts                                    = parse_url( $this->item->serverURI );
+			$sim_credentials                          = wp_parse_args(
 				array(
 					'host' => $parts['host'] ?? '',
 					'port' => $parts['port'] ?? '',
@@ -193,17 +199,17 @@ class W4OS3_Region {
 				W4OS3::get_credentials( $this->item->serverURI ),
 			);
 			$settings['w4os-regions']['tabs']['edit'] = array(
-				'title'    => __( 'Edit (improved)', 'w4os' ),
-				'sidebar-content'  => '<h3>' . __('Parcels', 'w4os') . '</h3>' . $this->parcels,
-				'before-form' => $region_title,
-				'fields'   => array(
+				'title'           => __( 'Edit (improved)', 'w4os' ),
+				'sidebar-content' => '<h3>' . __( 'Parcels', 'w4os' ) . '</h3>' . $this->parcels,
+				'before-form'     => $region_title,
+				'fields'          => array(
 					'sim_credentials' => array(
 						// 'id'    => 'edit1',
 						'type'  => 'instance_credentials',
 						'label' => __( 'Simulator Credentials', 'w4os' ),
 						'value' => $sim_credentials,
 					),
-					'status' => array(
+					'status'          => array(
 						'id'    => 'status',
 						'label' => __( 'Status', 'w4os' ),
 						'type'  => 'custom_html',
@@ -211,25 +217,25 @@ class W4OS3_Region {
 						. sprintf( ' (%s %s)', __( 'last seen', 'w4os' ), $this->last_seen( $this->item ) )
 						. $this->format_flags( $this->item->flags ),
 					),
-					'simulator' => array(
+					'simulator'       => array(
 						'id'    => 'serverURI',
 						'label' => __( 'Simulator', 'w4os' ),
 						'type'  => 'custom_html',
 						'value' => $this->format_server_uri( $this->item ),
 					),
-					'owner' => array(
+					'owner'           => array(
 						'id'    => 'owner',
 						'label' => __( 'Owner', 'w4os' ),
 						'type'  => 'custom_html',
 						'value' => $this->owner_name( $this->item ),
 					),
-					'teleport' => array(
+					'teleport'        => array(
 						'id'    => 'teleport',
 						'label' => __( 'Teleport', 'w4os' ),
 						'type'  => 'custom_html',
 						'value' => $this->get_tp_link(),
 					),
-					'map' => array(
+					'map'             => array(
 						'id'    => 'map',
 						'label' => __( 'Map', 'w4os' ),
 						'type'  => 'custom_html',
@@ -265,12 +271,12 @@ class W4OS3_Region {
 		// require_once ABSPATH . 'wp-admin/v2/class-wp-list-table.php';
 		// }
 
-		if( isset( $_GET['action'] ) && $_GET['action'] === 'edit' && ! empty( $_GET['region'] ) ) {
+		if ( isset( $_GET['action'] ) && $_GET['action'] === 'edit' && ! empty( $_GET['region'] ) ) {
 			$region = new W4OS3_Region( $_GET['region'] );
-			
+
 			$template = W4OS_INCLUDES_DIR . 'templates/admin-region-edit.php';
-			if( file_exists( $template ) ) {
-				require_once( $template );
+			if ( file_exists( $template ) ) {
+				require_once $template;
 			} else {
 				error_log( __FUNCTION__ . ' template missing ' . $template );
 			}
@@ -326,11 +332,11 @@ class W4OS3_Region {
 						'sortable'        => true,
 						'render_callback' => array( $this, 'format_server_control' ),
 					),
-					'presence' => array(
-						'title'           => __( 'Presence', 'w4os' ),
-						'size'            => '8%',
-						'sortable'		=> true,
-						'order'			=> 'DESC',
+					'presence'      => array(
+						'title'    => __( 'Presence', 'w4os' ),
+						'size'     => '8%',
+						'sortable' => true,
+						'order'    => 'DESC',
 					),
 					'serverPort'    => array(
 						'title' => __( 'Internal Port', 'w4os' ),
@@ -390,7 +396,7 @@ class W4OS3_Region {
 
 	/**
 	 * Fetch the Region data from the custom database.
-	 * 
+	 *
 	 * @param mixed $args The UUID of the Region or the Region data.
 	 * @return void
 	 */
@@ -398,13 +404,13 @@ class W4OS3_Region {
 		if ( W4OS3::empty( $args ) ) {
 			return;
 		}
-		
+
 		if ( is_object( $args ) ) {
 			$this->uuid = $args->uuid;
 			$this->item = $args;
-		} else if ( is_string( $args ) && W4OS3::is_uuid( $args ) ) {
+		} elseif ( is_string( $args ) && W4OS3::is_uuid( $args ) ) {
 			$this->uuid = $args;
-			$query = $this->main_query . " WHERE uuid = %s";
+			$query      = $this->main_query . ' WHERE uuid = %s';
 			$this->item = W4OS3::$robust_db->get_row( W4OS3::$robust_db->prepare( $query, $this->uuid ) );
 		} else {
 			return;
@@ -436,12 +442,12 @@ class W4OS3_Region {
 	 */
 	public function get_tp_link( $string = null ) {
 		$url = $this->get_tp_uri();
-		return empty( $url ) ? null : w4os_hop($url, $string);
+		return empty( $url ) ? null : w4os_hop( $url, $string );
 	}
 
 	public static function format_flags( $bitwise = null ) {
 		$matches = self::match_flags( $bitwise );
-		if (empty($matches)) {
+		if ( empty( $matches ) ) {
 			return;
 		}
 
@@ -458,16 +464,16 @@ class W4OS3_Region {
 
 	public static function match_flags( $bitwise ) {
 		$matches = array();
-		foreach (W4OS_REGION_FLAGS as $flag => $label) {
-			if ($bitwise & $flag) {
-				$matches[$flag] = $label;
+		foreach ( W4OS_REGION_FLAGS as $flag => $label ) {
+			if ( $bitwise & $flag ) {
+				$matches[ $flag ] = $label;
 			}
 		}
 		return $matches;
 	}
 
 	public function flags( $bitwise = null ) {
-		if( $bitwise === null ) {
+		if ( $bitwise === null ) {
 			$bitwise = $this->item->flags;
 		}
 		return self::match_flags( $bitwise );
@@ -477,22 +483,22 @@ class W4OS3_Region {
 	 * Get region actions
 	 */
 	public function get_actions( $context = null ) {
-		switch( $context ) {
+		switch ( $context ) {
 			case 'page-title':
 				$classes[] = 'page-title-action';
 				break;
 
 			default:
-				$classes[] = esc_attr($context) . '-action';
+				$classes[] = esc_attr( $context ) . '-action';
 		}
 		// if($this->console) {
-		// 	error_log("console enabled");
+		// error_log("console enabled");
 		// }
 		$actions = array(
-			'edit'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, implode(' ', $classes), __('Edit', 'w4os') ),
+			'edit'     => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'edit', $this->uuid, implode( ' ', $classes ), __( 'Edit', 'w4os' ) ),
 			// 'view'   => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'view', $this->uuid, implode(' ', $classes), __('View', 'w4os') ),
 			// 'message' => sprintf( '<a href="?page=%s&action=%s&region=%s" class="%s">%s</a>', $_REQUEST['page'], 'message', $this->uuid, implode(' ', $classes), __('Message Region', 'w4os') ),
-			'teleport' => sprintf( '<a href="%s" class="%s">%s</a>', opensim_format_tp( $this->get_tp_uri(), TPLINK_HOP ), implode(' ', $classes),  __('Teleport', 'w4os' ) ),
+			'teleport' => sprintf( '<a href="%s" class="%s">%s</a>', opensim_format_tp( $this->get_tp_uri(), TPLINK_HOP ), implode( ' ', $classes ), __( 'Teleport', 'w4os' ) ),
 			// 'delete' => sprintf( '<a href="?page=%s&action=%s&region=%s">Delete</a>', $_REQUEST['page'], 'delete', $this->uuid ),
 		);
 		return $actions;
@@ -500,11 +506,11 @@ class W4OS3_Region {
 
 	/**
 	 * Get region parcels.
-	 * 
+	 *
 	 * TODO: use Console instead, if possible.
-	 * 
-	 * The collector method is not satisfying, 
-	 *	- it seems not always able to get the all the parcels.
+	 *
+	 * The collector method is not satisfying,
+	 *  - it seems not always able to get the all the parcels.
 	 *  - it gets often rejected by the simulator as spam.
 	 */
 	public function get_parcels( $output_html = null ) {
@@ -519,8 +525,8 @@ class W4OS3_Region {
 		$regionURI = $this->get_tp_uri();
 
 		$cache_key = 'w4os_get_parcels_' . $regionURI;
-		$output = wp_cache_get( $cache_key );
-		if( $output ) {
+		$output    = wp_cache_get( $cache_key );
+		if ( $output ) {
 			return $output;
 		}
 		$parcels = array();
@@ -533,8 +539,8 @@ class W4OS3_Region {
 		// error_log( 'result: ' . print_r( $result, true ) );
 
 		if ( $this->db && $this->db->ready ) {
-			$query = $this->db->prepare(
-				"SELECT * FROM land WHERE RegionUUID = %s",
+			$query   = $this->db->prepare(
+				'SELECT * FROM land WHERE RegionUUID = %s',
 				$this->uuid,
 			);
 			$results = $this->db->get_results( $query );
@@ -542,61 +548,61 @@ class W4OS3_Region {
 				return false;
 			}
 
-			foreach( $results as $row ) {
+			foreach ( $results as $row ) {
 				$row->regionURI = $regionURI;
-				$row->sizeX = $this->item->sizeX;
-				$row->sizeY = $this->item->sizeY;
-				$parcels[] = new W4OS_Parcel( $row );
+				$row->sizeX     = $this->item->sizeX;
+				$row->sizeY     = $this->item->sizeY;
+				$parcels[]      = new W4OS_Parcel( $row );
 			}
 		} else {
 			$transient_key = 'w4os_collector_' . $server_uri;
-			$collector = $server_uri . '?method=collector';
-	
+			$collector     = $server_uri . '?method=collector';
+
 			$content = get_transient( $transient_key );
-	
+
 			if ( ! $content ) {
 				$content = @file_get_contents( $collector );
 				if ( empty( $content ) ) {
 					error_log( 'No content' );
 					return 'Offline';
 				}
-				set_transient( $transient_key, $content, 60 * 60 );			
+				set_transient( $transient_key, $content, 60 * 60 );
 			}
-	
+
 			$xml = simplexml_load_string( $content );
 			if ( ! $xml ) {
 				return 'not an xml';
 			}
-	
-			$region_data = $xml->xpath("/regiondata/region[info/uuid='{$this->uuid}']");
-			if( ! $region_data ) {
+
+			$region_data = $xml->xpath( "/regiondata/region[info/uuid='{$this->uuid}']" );
+			if ( ! $region_data ) {
 				return 'No region data found for ' . $this->uuid;
 			}
-			$data = $region_data[0]->xpath('./data/parceldata/parcel');
+			$data = $region_data[0]->xpath( './data/parceldata/parcel' );
 
-			foreach( $data as $parcel_data ) {
-				$args = (array) $parcel_data;
-				$args['regionURI'] = $regionURI;
+			foreach ( $data as $parcel_data ) {
+				$args                = (array) $parcel_data;
+				$args['regionURI']   = $regionURI;
 				$args['regionSizeX'] = $this->item->sizeX;
 				$args['regionSizeY'] = $this->item->sizeY;
-				$parcels[] = new W4OS_Parcel( $args );
+				$parcels[]           = new W4OS_Parcel( $args );
 			}
 		}
-		
+
 		// TODO: use list api instead.
 		$output_html = array();
-		foreach( $parcels as $parcel ) {
+		foreach ( $parcels as $parcel ) {
 			$output_html[] = $parcel->display();
 		}
 		// foreach( $parcels as $parcel_data ) {
-		// 	$args = (array) $parcel_data;
-		// 	$args['regionURI'] = $this->get_tp_uri();
-		// 	// $parcel_data->regionURI = $this->get_tp_uri();
-		// 	$parcel = new W4OS_Parcel( $args );
-		// 	$output_html[] = $parcel->display();
+		// $args = (array) $parcel_data;
+		// $args['regionURI'] = $this->get_tp_uri();
+		// $parcel_data->regionURI = $this->get_tp_uri();
+		// $parcel = new W4OS_Parcel( $args );
+		// $output_html[] = $parcel->display();
 		// }
 
-		if ( ! empty($output_html) ) {
+		if ( ! empty( $output_html ) ) {
 			$output = '<ul class="parcels"><li>' . implode( '</li><li>', $output_html ) . '</li></ul>';
 		}
 
@@ -615,15 +621,15 @@ class W4OS3_Region {
 
 		// $regionName = $item->regionName;
 		// $regon_id = $item->uuid;
-		$name = $region->get_name();
-		$flags = $region->flags( $region->item->flags &~ 4 &~ 16 ); // Any flag except Online and Persistent
+		$name   = $region->get_name();
+		$flags  = $region->flags( $region->item->flags & ~ 4 & ~ 16 ); // Any flag except Online and Persistent
 		$states = empty( $flags ) ? '' : ' — ' . implode( ', ', $flags );
 
-		$actions = $region->get_actions();
+		$actions           = $region->get_actions();
 		$actions_container = '';
-		if( ! empty( $actions ) ) {
+		if ( ! empty( $actions ) ) {
 			$actions_container = '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
-			$title_link = admin_url( 'admin.php?page=w4os-regions&action=edit&region=' . $item->uuid );
+			$title_link        = admin_url( 'admin.php?page=w4os-regions&action=edit&region=' . $item->uuid );
 		}
 		return sprintf(
 			'<strong><a href="%s">%s</a> %s</strong> %s',
@@ -700,13 +706,13 @@ class W4OS3_Region {
 			return;
 		}
 
-		$parts = parse_url( $server_uri );
+		$parts    = parse_url( $server_uri );
 		$hostname = $parts['host'];
-		
+
 		// use DNS if use_dns is true and hostname is an IP4 or IP6 address
 		if ( $use_dns && filter_var( $hostname, FILTER_VALIDATE_IP ) ) {
 			$hostname = gethostbyaddr( $parts['host'] );
-			$hostname = empty($hostname) ? $parts['host'] : $hostname;
+			$hostname = empty( $hostname ) ? $parts['host'] : $hostname;
 			// count dots and fallback to $parts['host'] if no dots or more than 5
 			$dot_count = substr_count( $hostname, '.' );
 			if ( $dot_count === 0 || $dot_count > 4 ) {
@@ -735,26 +741,26 @@ class W4OS3_Region {
 		$credentials = W4OS3::get_credentials( $server_uri );
 		// error_log( 'Server credentials ' . print_r( $credentials, true ) );
 		// if ( $credentials['rest']['enabled'] ?? false ) {
-		// 	$icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';
+		// $icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';
 		// }
 		if ( $credentials['console']['enabled'] ?? false ) {
 			$disabled = $region->console_connected ? '' : 'disabled';
 			// $icons['console'] = '<span class="dashicons dashicons-desktop"></span>';
 			// $icons['console'] = '<span class="dashicons dashicons-analytics"></span>';
-			$icons['console'] = '<span class="dashicons dashicons-embed-generic ' . $disabled .'"></span>';
+			$icons['console'] = '<span class="dashicons dashicons-embed-generic ' . $disabled . '"></span>';
 		}
 		if ( $credentials['db']['enabled'] ?? false ) {
-			$disabled = $region->db_connected ? '' : 'disabled';
-			$icons['db'] = '<span class="dashicons dashicons-database ' . $disabled .'"></span>';
+			$disabled    = $region->db_connected ? '' : 'disabled';
+			$icons['db'] = '<span class="dashicons dashicons-database ' . $disabled . '"></span>';
 		}
-		
+
 		return implode( ' ', $icons );
 	}
 }
 
 /**
  * Parcel class
- * 
+ *
  * Sample parcel SimpleXMLElement Object
 		(
 			[@attributes] => Array
@@ -767,12 +773,12 @@ class W4OS3_Region {
 					[forsale] => false
 					[salesprice] => 0
 				)
-		
+
 			[name] => Way's backup
 			[description] => SimpleXMLElement Object
 				(
 				)
-		
+
 			[uuid] => 3728f4a2-6b3a-43e3-98c7-38e1f38bd77e
 			[area] => 65536
 			[location] => 128/128/0
@@ -784,7 +790,7 @@ class W4OS3_Region {
 					[uuid] => 0208b609-b205-495f-9399-56f456a86d62
 					[name] => Way Forest
 				)
-		
+
 		)
  */
 
@@ -806,62 +812,62 @@ class W4OS_Parcel {
 	private $regionSizeY = 0;
 
 	public function __construct( $args = null ) {
-		if(empty( $args ) ) {
+		if ( empty( $args ) ) {
 			return new WP_Error( 'no_parcel_data', 'No parcel data' );
 		}
 
-		if( is_object( $args ) ) {
+		if ( is_object( $args ) ) {
 			// Row from simulator db query
 			$row = $args;
 
-			if( empty( $row->UUID ) || empty($row->Name) || empty( $row->OwnerUUID ) ) {
+			if ( empty( $row->UUID ) || empty( $row->Name ) || empty( $row->OwnerUUID ) ) {
 				error_log( 'Incomplete parcel data ' . print_r( $args, true ) );
 				return new WP_Error( 'incomplete_parcel_data', 'Incomplete parcel data' );
 			}
 
 			// $this->data = (object) $args;
-			$this->uuid = $row->UUID;
+			$this->uuid     = $row->UUID;
 			$this->infouuid = null; // Isn't available in land table
-			$this->name = $row->Name;
-			$this->owner = $row->OwnerUUID; // TODO: fetch name
-			$this->image = $row->SnapshotUUID;
+			$this->name     = $row->Name;
+			$this->owner    = $row->OwnerUUID; // TODO: fetch name
+			$this->image    = $row->SnapshotUUID;
 			$this->location = ''; // TODO: find a way to get the landing point
-			if( isset( $row->Bitmap ) ) {
+			if ( isset( $row->Bitmap ) ) {
 				$this->location = $this->parseParcelCenterFromBitmap( $row->Bitmap );
 			}
 			$this->description = $row->Description;
-			$this->regionURI = $row->regionURI;
-			$this->area = $row->Area;
-			$this->regionSizeX = isset($row->regionSizeX) ? (int)$row->regionSizeX : 256;
-			$this->regionSizeY = isset($row->regionSizeX) ? (int)$row->regionSizeX : 256;
-		} else if ( is_array( $args ) ) {
+			$this->regionURI   = $row->regionURI;
+			$this->area        = $row->Area;
+			$this->regionSizeX = isset( $row->regionSizeX ) ? (int) $row->regionSizeX : 256;
+			$this->regionSizeY = isset( $row->regionSizeX ) ? (int) $row->regionSizeX : 256;
+		} elseif ( is_array( $args ) ) {
 			// Data from collector XML result
-			if( empty( $args['uuid'] ) || empty( $args['name'] ) || empty( $args['location'] ) || empty( $args['regionURI'] ) ) {
+			if ( empty( $args['uuid'] ) || empty( $args['name'] ) || empty( $args['location'] ) || empty( $args['regionURI'] ) ) {
 				error_log( 'Incomplete parcel data ' . print_r( $args, true ) );
 				return new WP_Error( 'incomplete_parcel_data', 'Incomplete parcel data' );
-			}	
-			
+			}
+
 			// $this->data = (object) $args;
-			$this->uuid = $args['uuid'];
-			$this->infouuid = $args['infouuid']; // Still don't know how to use this
-			$this->name = $args['name'];
-			$this->owner = $args['owner']['name' ] ?? '';
-			$this->image = $args['image'];
-			$this->location = $args['location'];
+			$this->uuid        = $args['uuid'];
+			$this->infouuid    = $args['infouuid']; // Still don't know how to use this
+			$this->name        = $args['name'];
+			$this->owner       = $args['owner']['name'] ?? '';
+			$this->image       = $args['image'];
+			$this->location    = $args['location'];
 			$this->description = $args['description'];
-			$this->regionURI = $args['regionURI'];
-			$this->area = $args['area'];
+			$this->regionURI   = $args['regionURI'];
+			$this->area        = $args['area'];
 			$this->regionSizeX = (int) $args['regionSizeX'] ?? 256;
 			$this->regionSizeY = (int) $args['regionSizeX'] ?? 256;
 		}
-		if( ! empty ( $this->regionURI ) ) {
-			$this->tp_uri = $this->regionURI . ( $this->location ? '/' . $this->location : '' );
+		if ( ! empty( $this->regionURI ) ) {
+			$this->tp_uri  = $this->regionURI . ( $this->location ? '/' . $this->location : '' );
 			$this->tp_link = w4os_hop( $this->tp_uri, $this->tp_uri );
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * Return the parcel data as an array if found, false if not found.
 	 */
 	private function parseParcelCenterFromBitmap( $bitmap ) {
@@ -872,17 +878,17 @@ class W4OS_Parcel {
 		if ( empty( $data ) ) {
 			return false;
 		}
-		
+
 		$positions = array();
-		$m = 4; // 4 meters per pixel
-		$div = $this->regionSizeY > 0 ? ( $this->regionSizeY / 4 ) : 64; // bits per row
+		$m         = 4; // 4 meters per pixel
+		$div       = $this->regionSizeY > 0 ? ( $this->regionSizeY / 4 ) : 64; // bits per row
 		for ( $i = 0; $i < strlen( $data ); $i++ ) {
-			$byte = ord( $data[$i] );
+			$byte = ord( $data[ $i ] );
 			for ( $b = 0; $b < 8; $b++ ) {
 				if ( ( $byte >> $b ) & 1 ) {
-					$index = ( $i * 8 ) + $b;
-					$y = floor( $index / $div );
-					$x = $index % $div;
+					$index       = ( $i * 8 ) + $b;
+					$y           = floor( $index / $div );
+					$x           = $index % $div;
 					$positions[] = array(
 						'x' => ( $x * $m ) + ( $m / 2 ),
 						'y' => ( $y * $m ) + ( $m / 2 ),
@@ -898,27 +904,27 @@ class W4OS_Parcel {
 			$sumX += $p['x'];
 			$sumY += $p['y'];
 		}
-		$count = count( $positions );
+		$count   = count( $positions );
 		$centerX = round( $sumX / $count );
 		$centerY = round( $sumY / $count );
-		
+
 		// TODO: calculate altitude from terrain map. Use 21 as default for now.
 		return "{$centerX}/{$centerY}/21";
 	}
 
 	/**
 	 * Display the parcel details.
-	 * 
+	 *
 	 * (Already) deprecated. Will use list api instead.
 	 */
 	public function display() {
 		// Display the parcel data
-		$image = ( ! W4OS3::empty($this->image) ) ? sprintf( '<img src="%s" alt="%s">', w4os_get_asset_url( $this->image ), $this->name ) : '';
-		$output = '<div class="parcel">';
+		$image   = ( ! W4OS3::empty( $this->image ) ) ? sprintf( '<img src="%s" alt="%s">', w4os_get_asset_url( $this->image ), $this->name ) : '';
+		$output  = '<div class="parcel">';
 		$output .= $image;
 		$output .= '<h3>' . $this->name . '</h3>';
 		$output .= '<p class="description">' . $this->description . '</p>';
-		$owner = ( $this->owner ) ? '<p class="owner">Owner: ' . $this->owner . '</p>' : '';
+		$owner   = ( $this->owner ) ? '<p class="owner">Owner: ' . $this->owner . '</p>' : '';
 		$output .= '<p class="teleport">Teleport: ' . $this->tp_link . '</p>';
 		$output .= '<p class="area">Area: ' . $this->area . '</p>';
 		$output .= '</div>';

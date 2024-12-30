@@ -12,7 +12,7 @@
 	width: 7rem;
 }
 
- /* set input number size to 5 em */
+/* set input number size to 5 em */
 .wrap.w4os-settings .w4os-credentials input[type=number] {
 	width: 5rem;
 }

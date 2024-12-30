@@ -226,7 +226,7 @@ class W4OS_Loader {
 			}
 		}
 
-		if( is_array( $this->actions ) ) {
+		if ( is_array( $this->actions ) ) {
 			foreach ( $this->actions as $hook ) {
 				$hook = array_merge(
 					array(

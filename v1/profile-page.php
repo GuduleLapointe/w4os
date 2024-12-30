@@ -264,10 +264,10 @@ add_action(
 		}
 
 		$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
-		$modal = isset( $_REQUEST['modal'] ) ? ( $_REQUEST['modal'] ? true: false ) : false;
+		$modal      = isset( $_REQUEST['modal'] ) ? ( $_REQUEST['modal'] ? true : false ) : false;
 
 		if ( $modal || strpos( $user_agent, ' - SecondLife/' ) !== false ) {
-			add_filter('show_admin_bar', '__return_false');
+			add_filter( 'show_admin_bar', '__return_false' );
 			return plugin_dir_path( __DIR__ ) . 'templates/page-profile-viewer.php';
 			die();
 		}

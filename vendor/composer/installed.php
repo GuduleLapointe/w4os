@@ -3,7 +3,7 @@
         'name' => 'speculoos/w4os',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'afac3bd43c64b4939130c8b9a84f592ae2a94853',
+        'reference' => '2c2e6e11f54ffcd8d73fcf55148ad00751936a53',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'meta-box/mb-admin-columns' => array(
             'pretty_version' => 'master',
             'version' => 'dev-master',
-            'reference' => NULL,
+            'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../meta-box/mb-admin-columns',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'meta-box/mb-settings-page' => array(
             'pretty_version' => 'master',
             'version' => 'dev-master',
-            'reference' => NULL,
+            'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../meta-box/mb-settings-page',
             'aliases' => array(),
@@ -58,7 +58,7 @@
         'meta-box/meta-box-columns' => array(
             'pretty_version' => 'master',
             'version' => 'dev-master',
-            'reference' => NULL,
+            'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../meta-box/meta-box-columns',
             'aliases' => array(),
@@ -67,7 +67,7 @@
         'meta-box/meta-box-conditional-logic' => array(
             'pretty_version' => 'master',
             'version' => 'dev-master',
-            'reference' => NULL,
+            'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../meta-box/meta-box-conditional-logic',
             'aliases' => array(),
@@ -76,7 +76,7 @@
         'meta-box/meta-box-group' => array(
             'pretty_version' => 'master',
             'version' => 'dev-master',
-            'reference' => NULL,
+            'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../meta-box/meta-box-group',
             'aliases' => array(),
@@ -94,7 +94,7 @@
         'speculoos/w4os' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'afac3bd43c64b4939130c8b9a84f592ae2a94853',
+            'reference' => '2c2e6e11f54ffcd8d73fcf55148ad00751936a53',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

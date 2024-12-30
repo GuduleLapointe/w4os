@@ -177,7 +177,7 @@ class W4OS_Settings extends W4OS_Loader {
 			),
 		);
 
-		if( ! W4OS_ENABLE_V3) {
+		if ( ! W4OS_ENABLE_V3 ) {
 			// Database
 			$meta_boxes['db'] = array(
 				'id'             => 'robust-db',
@@ -310,7 +310,6 @@ class W4OS_Settings extends W4OS_Loader {
 				),
 			);
 		}
-
 
 		$this->get_exclude_options();
 

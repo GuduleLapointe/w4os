@@ -74,44 +74,44 @@ class W4OS3_Avatar {
 				),
 			),
 		);
-		if( empty( $settings['w4os-settings']['tabs']['pages']['title'] ) ) {
+		if ( empty( $settings['w4os-settings']['tabs']['pages']['title'] ) ) {
 			$settings['w4os-settings']['tabs']['pages']['title'] = __( 'Pages', 'w4os' );
 		}
-		
+
 		$settings['w4os-settings']['tabs']['pages']['fields'] = array_merge(
 			$settings['w4os-settings']['tabs']['pages']['fields'] ?? array(),
 			array(
-				'profile' => array(
-					'label'    => __( 'Profile Page', 'w4os' ),
-					'type'     => 'page_select2',
+				'profile'      => array(
+					'label'       => __( 'Profile Page', 'w4os' ),
+					'type'        => 'page_select2',
 					'placeholder' => __( 'Select the page to be used as profile page.', 'w4os' ),
 					// 'default' => w4os::get_option( 'profile-page' ),
 				),
 				'registration' => array(
-					'label'    => __( 'Registration', 'w4os' ),
-					'type'     => 'page_select2_url',
-					'default' => W4OS3::$ini['GridInfoService']['register'] ?? '',
-					'value' => W4OS3::$ini['GridInfoService']['register'] ?? '',
-					'options' => array( 
-						'' => ' ' . __( 'Custom URL', 'w4os' ),
+					'label'       => __( 'Registration', 'w4os' ),
+					'type'        => 'page_select2_url',
+					'default'     => W4OS3::$ini['GridInfoService']['register'] ?? '',
+					'value'       => W4OS3::$ini['GridInfoService']['register'] ?? '',
+					'options'     => array(
+						''            => ' ' . __( 'Custom URL', 'w4os' ),
 						'use-profile' => ' ' . __( 'Use profile page', 'w4os' ),
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as registration page.', 'w4os' ),
-					'readonly' =>  W4OS3::$console_enabled,
+					'readonly'    => W4OS3::$console_enabled,
 					// 'default' => w4os::get_option( 'registration-page' ),
 				),
-				'password' => array(
-					'label'    => __( 'Password Recovery', 'w4os' ),
-					'type'     => 'page_select2_url',
-					'value' => W4OS3::$ini['GridInfoService']['password'] ?? '',
-					'options' => array( 
-						'' => ' ' . __( 'Custom URL', 'w4os' ),
+				'password'     => array(
+					'label'       => __( 'Password Recovery', 'w4os' ),
+					'type'        => 'page_select2_url',
+					'value'       => W4OS3::$ini['GridInfoService']['password'] ?? '',
+					'options'     => array(
+						''            => ' ' . __( 'Custom URL', 'w4os' ),
 						'use-profile' => ' ' . __( 'Use profile page', 'w4os' ),
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as password reset page.', 'w4os' ),
-					'readonly' => W4OS3::$console_enabled,
+					'readonly'    => W4OS3::$console_enabled,
 					// 'default' => w4os::get_option( 'password-page' ),
 				),
 			),
@@ -146,15 +146,15 @@ class W4OS3_Avatar {
 			) AS subquery",
 				'admin_columns' => array(
 					'avatarName'  => array(
-						'title'      => __( 'Avatar Name', 'w4os' ),
-						'sortable'   => true, // optional, defaults to false
+						'title'           => __( 'Avatar Name', 'w4os' ),
+						'sortable'        => true, // optional, defaults to false
 						// 'sort_column' => 'avatarName', // optional, defaults to column key, use 'callback' to use render_callback value
-						'order'      => 'ASC', // optional, defaults to 'ASC'
-						'searchable' => true, // optional, defaults to false
+						'order'           => 'ASC', // optional, defaults to 'ASC'
+						'searchable'      => true, // optional, defaults to false
 						// 'search_column' => 'avatarName', // optional, defaults to column key, use 'callback' to use render_callback value
 						// 'filterable' => false, // deprecated, use 'views' instead
-						'render_callback' => [ $this, 'format_name' ], // optional, defaults to 'column_' . $key
-						'size'       => null, // optional, defaults to null (auto)
+						'render_callback' => array( $this, 'format_name' ), // optional, defaults to 'column_' . $key
+						'size'            => null, // optional, defaults to null (auto)
 					),
 					'Email'       => array(
 						'title'      => __( 'Email', 'w4os' ),
@@ -254,7 +254,7 @@ class W4OS3_Avatar {
 	}
 
 	public function avatar_type( $item = null ) {
-		if( empty( $item ) ) {
+		if ( empty( $item ) ) {
 			$item = $this->item;
 		}
 
@@ -280,10 +280,10 @@ class W4OS3_Avatar {
 		if ( $type === 'user' ) {
 			$actions = array(
 				// 'edit' => sprintf(
-				// 	'<a href="%s" title="%s">%s</a>',
-				// 	admin_url( 'user-edit.php?user_id=' . $item->PrincipalID ),
-				// 	__( 'Edit this user', 'w4os' ),
-				// 	__( 'Edit', 'w4os' )
+				// '<a href="%s" title="%s">%s</a>',
+				// admin_url( 'user-edit.php?user_id=' . $item->PrincipalID ),
+				// __( 'Edit this user', 'w4os' ),
+				// __( 'Edit', 'w4os' )
 				// ),
 				'profile' => sprintf(
 					'<a href="%s" title="%s">%s</a>',
@@ -296,39 +296,39 @@ class W4OS3_Avatar {
 			return $this->get_name( $item );
 		}
 		$special_accounts = array();
-		$user_level = self::user_level( $item );
+		$user_level       = self::user_level( $item );
 		if ( ! empty( $user_level ) ) {
 			$special_accounts[] = $user_level;
 		}
 		$profile_html = $this->profile_html( $item );
-		$output = sprintf(
+		$output       = sprintf(
 			'<strong><a href="#" data-modal-target="modal-%1$s">%2$s</a> %3$s</strong>',
 			$PrincipalID,
 			$this->get_name( $item ),
 			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts )
 		);
-		$output .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
-		$output .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ) ); // , $profile_html );
+		$output      .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
+		$output      .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ) ); // , $profile_html );
 		return $output;
 	}
 
 	public static function user_level( $item ) {
-		if ( is_numeric( $item )) {
+		if ( is_numeric( $item ) ) {
 			$level = intval( $item );
 		} else {
 			$level = intval( $item->UserLevel );
 		}
 		if ( $level >= 200 ) {
 			return __( 'God', 'w4os' );
-		} else if ( $level >= 150 ) {
+		} elseif ( $level >= 150 ) {
 			return __( 'Liaison', 'w4os' );
-		} else if ( $level >= 100 ) {
+		} elseif ( $level >= 100 ) {
 			return __( 'Customer Service', 'w4os' );
-		} else if ( $level >= 1 ) {
+		} elseif ( $level >= 1 ) {
 			return __( 'God-like', 'w4os' );
 		}
 	}
-	
+
 	/**
 	 * Avatar type
 	 */
@@ -440,8 +440,8 @@ class W4OS3_Avatar {
 	}
 
 	public static function profile_url( $item = null ) {
-		$slug     = get_option( 'w4os_profile_slug', 'profile' );
-		$base_url = get_home_url( null, $slug );
+		$slug      = get_option( 'w4os_profile_slug', 'profile' );
+		$base_url  = get_home_url( null, $slug );
 		$firstname = $item->FirstName;
 		$lastname  = $item->LastName;
 
@@ -460,14 +460,14 @@ class W4OS3_Avatar {
 		$avatarName  = $item->avatarName;
 
 		// if( $avatarName == 'Way Forest' ) {
-		// 	error_log( 'item ' . print_r( $item, true ) );
+		// error_log( 'item ' . print_r( $item, true ) );
 		// }
 		$profileImage = $item->profileImage;
-		$img = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
+		$img          = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
 
-		if( ! empty( $item->profileFirstImage . $item->profileFirstText ) ) {
+		if ( ! empty( $item->profileFirstImage . $item->profileFirstText ) ) {
 			$profileFirstImage = W4OS3::img( $item->profileFirstImage, array( 'alt' => $avatarName ) );
-			$reallife = sprintf (
+			$reallife          = sprintf(
 				'<div class="firstlife" style="clear:both !important;">%s %s</div>',
 				$profileFirstImage,
 				wpautop( $item->profileFirstText ),
@@ -475,21 +475,27 @@ class W4OS3_Avatar {
 		}
 
 		$data = array(
-			__( 'Born', 'w4os' )        => w4os_age( $item->Created ),
-			__( 'Last Seen', 'w4os' )	=> $this->format_last_seen( $item ),
-			__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->FirstName . ' ' . $partner->LastName ),
-			__( 'Wants to', 'w4os' )    => join( ', ', $this->wants( $item ) ),
+			__( 'Born', 'w4os' )      => w4os_age( $item->Created ),
+			__( 'Last Seen', 'w4os' ) => $this->format_last_seen( $item ),
+			__( 'Partner', 'w4os' )   => ( empty( $partner ) ) ? null : trim( $partner->FirstName . ' ' . $partner->LastName ),
+			__( 'Wants to', 'w4os' )  => join( ', ', $this->wants( $item ) ),
 			__( 'Skills', 'w4os' )    => join( ', ', $this->skills( $item ) ),
-			__( 'Languages', 'w4os' )   => $item->profileLanguages,
-			__( 'About', 'w4os' )		=> empty( $item->profileAboutText ) ? '' : wpautop( $item->profileAboutText ),
+			__( 'Languages', 'w4os' ) => $item->profileLanguages,
+			__( 'About', 'w4os' )     => empty( $item->profileAboutText ) ? '' : wpautop( $item->profileAboutText ),
 			// __( 'Real Life', 'w4os' )   => $reallife,
 		);
 
 		$data = array_filter( $data );
 
 		$output[] = '<h2>' . $avatarName . '</h2>';
-		$output[] = W4OS3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
-		foreach( $data as $key => $value ) {
+		$output[] = W4OS3::img(
+			$profileImage,
+			array(
+				'alt'   => $avatarName,
+				'class' => 'profile',
+			)
+		);
+		foreach ( $data as $key => $value ) {
 			$output[] = '<p><strong>' . $key . '</strong>: ' . $value . '</p>';
 		}
 		$output = '<div class="w4os-avatar-profile">' . implode( ' ', $output ) . '</div>';
@@ -500,37 +506,45 @@ class W4OS3_Avatar {
 		if ( empty( $mask ) ) {
 			$mask = $item->profileWantToMask ?? null;
 		}
-		if ( empty ( $additionalvalue ) ) {
+		if ( empty( $additionalvalue ) ) {
 			$additional = $item->profileWantToText ?? null;
 		}
 
-		return w4os_demask( $mask, array(
-			__( 'Build', 'w4os' ),
-			__( 'Explore', 'w4os' ),
-			__( 'Meet', 'w4os' ),
-			__( 'Group', 'w4os' ),
-			__( 'Buy', 'w4os' ),
-			__( 'Sell', 'w4os' ),
-			__( 'Be Hired', 'w4os' ),
-			__( 'Hire', 'w4os' ),
-		), $additionalvalue );
+		return w4os_demask(
+			$mask,
+			array(
+				__( 'Build', 'w4os' ),
+				__( 'Explore', 'w4os' ),
+				__( 'Meet', 'w4os' ),
+				__( 'Group', 'w4os' ),
+				__( 'Buy', 'w4os' ),
+				__( 'Sell', 'w4os' ),
+				__( 'Be Hired', 'w4os' ),
+				__( 'Hire', 'w4os' ),
+			),
+			$additionalvalue
+		);
 	}
 
 	public static function skills( $item = null, $mask = null, $additionalvalue = null ) {
 		if ( empty( $mask ) ) {
 			$mask = $item->profileWantToMask ?? null;
 		}
-		if ( empty ( $additionalvalue ) ) {
+		if ( empty( $additionalvalue ) ) {
 			$additional = $item->profileSkillsText ?? null;
 		}
 
-		return w4os_demask( $mask, array(
-			__( 'Textures', 'w4os' ),
-			__( 'Architecture', 'w4os' ),
-			__( 'Event Planning', 'w4os' ),
-			__( 'Modeling', 'w4os' ),
-			__( 'Scripting', 'w4os' ),
-			__( 'Custom Characters', 'w4os' ),
-		), $additionalvalue );
+		return w4os_demask(
+			$mask,
+			array(
+				__( 'Textures', 'w4os' ),
+				__( 'Architecture', 'w4os' ),
+				__( 'Event Planning', 'w4os' ),
+				__( 'Modeling', 'w4os' ),
+				__( 'Scripting', 'w4os' ),
+				__( 'Custom Characters', 'w4os' ),
+			),
+			$additionalvalue
+		);
 	}
 }

@@ -24,10 +24,10 @@ class W4OS3 {
 	public static $robust_db;
 	public static $assets_db;
 	public static $profile_db;
-	private $console = null;
+	private $console               = null;
 	public static $console_enabled = null;
-	public static $db_enabled = null;
-	public static $ini = null;
+	public static $db_enabled      = null;
+	public static $ini             = null;
 	private static $key;
 
 	// public function __construct() {
@@ -45,7 +45,7 @@ class W4OS3 {
 
 		$this->set_key(); // Make sure to call first, so key is available for other functions.
 
-		$robust_creds = self::get_credentials( 'robust' );
+		$robust_creds          = self::get_credentials( 'robust' );
 		self::$console_enabled = $robust_creds['console']['enabled'] ?? false;
 
 		self::constants();
@@ -58,7 +58,7 @@ class W4OS3 {
 	 * Get config from console and convert to an array of sections and key-value pairs.
 	 */
 	public function get_ini_config( $instance = 'robust' ) {
-		if( self::$ini ) {
+		if ( self::$ini ) {
 			return self::$ini;
 		}
 		$ini = array();
@@ -69,19 +69,19 @@ class W4OS3 {
 
 		$response = $this->console( $instance, 'config get' );
 		if ( $response === false ) {
-			error_log( __FUNCTION__ . ' response false');
+			error_log( __FUNCTION__ . ' response false' );
 			return $ini;
 		}
 		if ( $response ) {
 			// $ini = implode( "\n", $response );
 			$config = self::normalize_ini( $response );
-			$ini = parse_ini_string( $config, true );
+			$ini    = parse_ini_string( $config, true );
 			if ( ! $ini ) {
 				$error = 'Failed to parse config';
 				// error_log( __FUNCTION__ . ' ' . $error );
 				return new WP_Error( 'config_parse_error', 'Failed to parse config' );
 			}
-		} else if ( is_wp_error( $response ) ) {
+		} elseif ( is_wp_error( $response ) ) {
 			$error = new WP_Error( 'console_command_failed', $response->getMessage() );
 			error_log( __FUNCTION__ . ' Error ' . print_r( $error, true ) );
 			return $error;
@@ -94,7 +94,7 @@ class W4OS3 {
 		self::$ini = $ini;
 		return $ini;
 	}
-	
+
 	/**
 	 * Normalize an INI string. Make sure each value is encosed in quotes.
 	 */
@@ -104,7 +104,7 @@ class W4OS3 {
 		}
 		if ( is_array( $ini ) ) {
 			$lines = $ini;
-		} else if ( is_string( $ini ) ) {
+		} elseif ( is_string( $ini ) ) {
 			$lines = explode( "\n", $ini );
 		} else {
 			return false;
@@ -122,7 +122,7 @@ class W4OS3 {
 				continue;
 			}
 			// use first part as key, the rest as value
-			$key = array_shift( $parts );
+			$key   = array_shift( $parts );
 			$value = implode( '=', $parts );
 			if ( preg_match( '/^"/', $value ) ) {
 				$ini .= "$key = $value\n";
@@ -143,7 +143,7 @@ class W4OS3 {
 			return false;
 		}
 
-		if( ! $this->console || is_wp_error( $this->console ) ) {
+		if ( ! $this->console || is_wp_error( $this->console ) ) {
 			return $this->console;
 		}
 
@@ -156,27 +156,29 @@ class W4OS3 {
 			}
 		}
 	}
-	
+
 	private function get_console_config( $instance = 'robust' ) {
 		if ( is_array( $instance ) ) {
 			$console_prefs = $instance;
 		} else {
-			$connections = W4OS3::get_option( 'w4os-settings:connections', array() );
-			$console_prefs = $connections[$instance]['console'] ?? false;
+			$connections   = self::get_option( 'w4os-settings:connections', array() );
+			$console_prefs = $connections[ $instance ]['console'] ?? false;
 		}
 
 		if ( ! $console_prefs ) {
 			return false;
 		}
-		if ( empty ( $console_prefs['host'] ) || empty( $console_prefs['port'] ) || empty( $console_prefs['user'] ) || empty( $console_prefs['pass'] ) ) {
+		if ( empty( $console_prefs['host'] ) || empty( $console_prefs['port'] ) || empty( $console_prefs['user'] ) || empty( $console_prefs['pass'] ) ) {
 			return false;
 		}
 
-		$config = array_filter( array(
-			'uri' 	   => $console_prefs['host'] . ':' . $console_prefs['port'],
-			'ConsoleUser' => $console_prefs['user'],
-			'ConsolePass' => $console_prefs['pass'],
-		) );
+		$config = array_filter(
+			array(
+				'uri'         => $console_prefs['host'] . ':' . $console_prefs['port'],
+				'ConsoleUser' => $console_prefs['user'],
+				'ConsolePass' => $console_prefs['pass'],
+			)
+		);
 
 		return $config;
 	}
@@ -188,19 +190,19 @@ class W4OS3 {
 
 		$rest_args = $this->get_console_config( $instance );
 		if ( empty( $rest_args ) ) {
-			error_log("Console not set for $instance, that's OK");
+			error_log( "Console not set for $instance, that's OK" );
 			return;
 		}
 
 		$rest = new OpenSim_Rest( $rest_args );
 		if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
-			$error = new WP_Error( 'console_connection_failed', $rest->error->getMessage() );
+			$error         = new WP_Error( 'console_connection_failed', $rest->error->getMessage() );
 			$this->console = $error;
 			return $error;
 		} else {
 			$response = $rest->sendCommand( 'show info' );
 			if ( is_opensim_rest_error( $response ) ) {
-				$error = new WP_Error( 'console_command_failed', $response->getMessage() );
+				$error         = new WP_Error( 'console_command_failed', $response->getMessage() );
 				$this->console = $error;
 				return $error;
 			} else {
@@ -245,11 +247,11 @@ class W4OS3 {
 		require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
 		require_once W4OS_INCLUDES_DIR . 'class-db.php';
 		require_once W4OS_INCLUDES_DIR . '2to3-service.php';
-		
+
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
-		
+
 		// Load v3 features if enabled
 		if ( W4OS_ENABLE_V3 ) {
 			// Include v3 feature files
@@ -261,10 +263,10 @@ class W4OS3 {
 		$Settings = new W4OS3_Settings();
 		$Settings->init();
 
-		self::$robust_db = new W4OS_WPDB( W4OS_DB_ROBUST );
-		self::$assets_db = self::$robust_db;
+		self::$robust_db  = new W4OS_WPDB( W4OS_DB_ROBUST );
+		self::$assets_db  = self::$robust_db;
 		self::$profile_db = self::$robust_db;
-		
+
 		if ( W4OS_ENABLE_V3 ) {
 			$Instances = new W4OS3_Service();
 			$Instances->init();
@@ -479,7 +481,7 @@ class W4OS3 {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Check if a string is a valid UUID.
 	 */
@@ -491,36 +493,38 @@ class W4OS3 {
 		$parts = explode( ';', $connectionstring );
 		$creds = array();
 		foreach ( $parts as $part ) {
-			$pair = explode( '=', $part );
+			$pair              = explode( '=', $part );
 			$creds[ $pair[0] ] = $pair[1] ?? '';
 		}
 		return $creds;
 	}
 
 	public static function update_credentials( $serverURI, $credentials ) {
-		
-		$console_enabled = W4OS3::validate_console_creds( $credentials['console'] );
+
+		$console_enabled = self::validate_console_creds( $credentials['console'] );
 
 		$credentials['console']['enabled'] = ( $console_enabled ) ? true : false;
 		if ( $console_enabled ) {
 			$credentials['console']['enabled'] = true;
-			$session = new W4OS3();
-			$command = 'config get DatabaseService ConnectionString';
-			$result = $session->console( $credentials['console'], 'config get DatabaseService ConnectionString' );
+			$session                           = new W4OS3();
+			$command                           = 'config get DatabaseService ConnectionString';
+			$result                            = $session->console( $credentials['console'], 'config get DatabaseService ConnectionString' );
 			if ( $result && is_array( $result ) ) {
 				$result = array_shift( $result );
 				$result = explode( ' : ', $result );
 				$result = array_pop( $result );
 				// $result = preg_replace( '/.*Data Source=', 'host=', $result );
 				$data = self::connectionstring_to_array( $result );
-				$db = array_filter( array(
-					'host' => $data['Data Source'],
-					'port' => $data['Port'] ?? 3306,
-					'name' => $data['Database'],
-					'user' => $data['User ID'],
-					'pass' => $data['Password'],
-				) );
-				if ( $db['host'] == 'localhost' && $credentials['host'] !=  $_SERVER['SERVER_ADDR'] ) {
+				$db   = array_filter(
+					array(
+						'host' => $data['Data Source'],
+						'port' => $data['Port'] ?? 3306,
+						'name' => $data['Database'],
+						'user' => $data['User ID'],
+						'pass' => $data['Password'],
+					)
+				);
+				if ( $db['host'] == 'localhost' && $credentials['host'] != $_SERVER['SERVER_ADDR'] ) {
 					$db['host'] = $credentials['host'];
 				}
 				$credentials['db'] = $db;
@@ -531,8 +535,8 @@ class W4OS3 {
 
 		error_log( __FUNCTION__ . ' ' . $serverURI . ' ' . print_r( $credentials, true ) );
 
-		$options = self::decrypt( get_option( 'w4os-credentials' ) );
-		$options = get_option( 'w4os-credentials' );
+		$options               = self::decrypt( get_option( 'w4os-credentials' ) );
+		$options               = get_option( 'w4os-credentials' );
 		$options[ $serverURI ] = self::encrypt( $credentials );
 		update_option( 'w4os-credentials', $options );
 	}
@@ -540,19 +544,19 @@ class W4OS3 {
 	public static function get_credentials( $instance ) {
 		$key = self::$key;
 
-		if( $instance == 'robust' ) {
+		if ( $instance == 'robust' ) {
 			$instance = get_option( 'w4os_login_uri' );
 		}
 
-		if( empty ($key ) ) {
+		if ( empty( $key ) ) {
 			error_log( __FUNCTION__ . ' called before key is set, abort' );
 			return false;
 		}
 
 		if ( is_string( $instance ) ) {
-			$parts = parse_url( $instance );
-			$serverURI = $parts['host'] . ':' . $parts['port'];
-			$cred_options = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
+			$parts              = parse_url( $instance );
+			$serverURI          = $parts['host'] . ':' . $parts['port'];
+			$cred_options       = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
 			$server_credentials = self::decrypt( $cred_options[ $serverURI ] ?? array() );
 		} else {
 			$server_credentials = array();
@@ -561,16 +565,16 @@ class W4OS3 {
 		$credentials = wp_parse_args(
 			$server_credentials,
 			array(
-				'host' => null,
-				'port' => null,
+				'host'        => null,
+				'port'        => null,
 				'use_default' => false,
-				'console' => array(
+				'console'     => array(
 					'host' => null,
 					'port' => null,
 					'user' => null,
 					'pass' => null,
 				),
-				'db' => array(
+				'db'          => array(
 					'host' => null,
 					'port' => null,
 					'name' => null,
@@ -581,34 +585,33 @@ class W4OS3 {
 		);
 
 		// Use localhost for database connection if the server is on the same host.
-		if ( isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] == gethostbyname( $credentials['db']['host'] ) ) {
+		if ( isset( $_SERVER['SERVER_ADDR'] ) && $_SERVER['SERVER_ADDR'] == gethostbyname( $credentials['db']['host'] ) ) {
 			$credentials['db']['host'] = 'localhost';
 		}
 
 		return $credentials;
 	}
 
-    /**
-     * Calculate a unique site key. Uuse to encrypt and decrypt sensitive data like connection credentials.
-     * 
-     * - unique and persistent (i.e. the same key is generated every time).
-     * - not stored in the database, generated on the fly.
-     * - depends on W4OS_LOGIN_URI and an additional secret key specific to the plugin.
-     * 
-     * @return string The site key
-     */
-    private function set_key() {
-        $login_uri = get_option( 'w4os_login_uri', home_url() );
+	/**
+	 * Calculate a unique site key. Uuse to encrypt and decrypt sensitive data like connection credentials.
+	 *
+	 * - unique and persistent (i.e. the same key is generated every time).
+	 * - not stored in the database, generated on the fly.
+	 * - depends on W4OS_LOGIN_URI and an additional secret key specific to the plugin.
+	 *
+	 * @return string The site key
+	 */
+	private function set_key() {
+		$login_uri = get_option( 'w4os_login_uri', home_url() );
 		$grid_info = self::grid_info();
-		$combine = array( $login_uri, $grid_info['gridnick'], $grid_info['platform'] );
-		$key = md5(sanitize_title( implode( ' ', $combine ) ) );
+		$combine   = array( $login_uri, $grid_info['gridnick'], $grid_info['platform'] );
+		$key       = md5( sanitize_title( implode( ' ', $combine ) ) );
 		self::$key = $key;
-    }
+	}
 
 	/**
 	 * Encrypt data with self::$key, in such a way that it can be decrypted later with the same key
 	 */
-
 	public static function encrypt( $data ) {
 		if ( ! extension_loaded( 'openssl' ) || ! function_exists( 'openssl_encrypt' ) ) {
 			// Return data unencrypted or handle error
@@ -618,9 +621,9 @@ class W4OS3 {
 		if ( ! is_string( $data ) ) {
 			$data = json_encode( $data );
 		}
-		$iv = openssl_random_pseudo_bytes(16);
-		$encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
-		return base64_encode($encrypted . '::' . $iv);
+		$iv        = openssl_random_pseudo_bytes( 16 );
+		$encrypted = openssl_encrypt( $data, 'aes-256-cbc', $key, 0, $iv );
+		return base64_encode( $encrypted . '::' . $iv );
 	}
 
 	/**
@@ -634,13 +637,13 @@ class W4OS3 {
 		if ( ! is_string( $data ) ) {
 			return $data;
 		}
-		if ( ! preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $data) ) {
+		if ( ! preg_match( '/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $data ) ) {
 			return $data;
 		}
-		$key = self::$key;
-		list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
-		$data = openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
-		$decode = json_decode( $data, true );
+		$key                       = self::$key;
+		list($encrypted_data, $iv) = explode( '::', base64_decode( $data ), 2 );
+		$data                      = openssl_decrypt( $encrypted_data, 'aes-256-cbc', $key, 0, $iv );
+		$decode                    = json_decode( $data, true );
 		if ( json_last_error() === JSON_ERROR_NONE ) {
 			return $decode;
 		}
@@ -649,7 +652,7 @@ class W4OS3 {
 
 	public static function grid_info( $force = false ) {
 		$transient_key = 'w4os_grid_info';
-		$grid_info = get_transient( $transient_key );
+		$grid_info     = get_transient( $transient_key );
 		if ( $grid_info && ! $force ) {
 			return $grid_info;
 		}
@@ -658,8 +661,8 @@ class W4OS3 {
 		$check_login_uri = ( get_option( 'w4os_login_uri' ) ) ? 'http://' . get_option( 'w4os_login_uri' ) : $local_uri;
 		$check_login_uri = preg_replace( '+http://http+', 'http', $check_login_uri );
 
-		$xml = W4OS3::fast_xml( $check_login_uri . '/get_grid_info' );
-	
+		$xml = self::fast_xml( $check_login_uri . '/get_grid_info' );
+
 		if ( ! $xml ) {
 			return false;
 		}
@@ -667,12 +670,12 @@ class W4OS3 {
 		if ( $check_login_uri == $local_uri ) {
 			w4os_admin_notice( __( 'A local Robust server has been found. Please check Login URI and Grid Name configuration.', 'w4os' ), 'success' );
 		}
-	
+
 		$grid_info = (array) $xml;
 		if ( get_option( 'w4os_provide_search', false ) ) {
 			$grid_info['SearchURL'] = get_option( 'w4os_search_url' ) . '?gk=http://' . get_option( 'w4os_login_uri' );
 		}
-	
+
 		if ( 'provide' === get_option( 'w4os_profile_page' ) && empty( $grid_info['profile'] ) && defined( 'W4OS_PROFILE_URL' ) ) {
 			$grid_info['profile'] = W4OS_PROFILE_URL;
 		}
@@ -685,11 +688,11 @@ class W4OS3 {
 		// if ( isset( $grid_info['OfflineMessageURL'] ) ) {
 		// update_option( 'w4os_offline_helper_uri', $grid_info['OfflineMessageURL'] );
 		// }
-	
+
 		if ( isset( $urls ) && is_array( $urls ) ) {
 			w4os_get_urls_statuses( $urls, get_option( 'w4os_check_urls_now' ) );
 		}
-	
+
 		update_option( 'w4os_grid_info', json_encode( $grid_info ) );
 		set_transient( $transient_key, $grid_info, 60 * 60 * 24 );
 
@@ -698,7 +701,7 @@ class W4OS3 {
 
 	/**
 	 * Fast XML function.
-	 * 
+	 *
 	 * Not sure what makes it fast, but it's used in several places.
 	 */
 	public static function fast_xml( $url ) {
@@ -709,7 +712,7 @@ class W4OS3 {
 		if ( ! function_exists( 'simplexml_load_string' ) ) {
 			return null;
 		}
-	
+
 		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -721,7 +724,7 @@ class W4OS3 {
 
 	/**
 	 * Validate arbitrary console credentials.
-	 * 
+	 *
 	 * Used to validate console credentials before saving them.
 	 */
 	public static function validate_console_creds( $console_creds ) {
@@ -729,11 +732,11 @@ class W4OS3 {
 			return false;
 		}
 		$rest_args = array(
-			'uri' 	   => $console_creds['host'] . ':' . $console_creds['port'],
+			'uri'         => $console_creds['host'] . ':' . $console_creds['port'],
 			'ConsoleUser' => $console_creds['user'],
 			'ConsolePass' => $console_creds['pass'],
 		);
-		if( empty( $rest_args['uri'] ) || empty( $rest_args['ConsoleUser'] ) || empty( $rest_args['ConsolePass'] ) ) {
+		if ( empty( $rest_args['uri'] ) || empty( $rest_args['ConsoleUser'] ) || empty( $rest_args['ConsolePass'] ) ) {
 			return false;
 		}
 		$rest = new OpenSim_Rest( $rest_args );
@@ -756,7 +759,7 @@ class W4OS3 {
 			return null;
 		}
 		@$db_conn = new mysqli( $db_creds['host'], $db_creds['user'], $db_creds['pass'], $db_creds['name'], $db_creds['port'] );
-		if( $db_conn && ! $db_conn->connect_error ) {
+		if ( $db_conn && ! $db_conn->connect_error ) {
 			$db_conn->close();
 			return true;
 		} else {
@@ -765,22 +768,22 @@ class W4OS3 {
 	}
 
 	public static function img( $img_uuid, $atts = array() ) {
-		if( W4OS3::empty( $img_uuid ) ) {
+		if ( self::empty( $img_uuid ) ) {
 			return;
 		}
-		if( ! W4OS3::is_uuid( $img_uuid ) ) {
+		if ( ! self::is_uuid( $img_uuid ) ) {
 			return;
 		}
 		$asset_url = w4os_get_asset_url( $img_uuid );
-		if( empty( $asset_url ) ) {
+		if ( empty( $asset_url ) ) {
 			return;
 		}
-		$class = $atts['class'] ?? '';
-		$class = is_array( $class ) ? implode( ' ', $class ) : $class;
-		$width = ( isset( $atts['width'] ) ) ? 'width="' . $atts['width'] . '"' : '';
-		$height = ( isset( $atts['height'] ) ) ? 'height="' . $atts['height'] . '"' : '';
+		$class      = $atts['class'] ?? '';
+		$class      = is_array( $class ) ? implode( ' ', $class ) : $class;
+		$width      = ( isset( $atts['width'] ) ) ? 'width="' . $atts['width'] . '"' : '';
+		$height     = ( isset( $atts['height'] ) ) ? 'height="' . $atts['height'] . '"' : '';
 		$attributes = trim( $width . ' ' . $height );
-		$alt = $atts['alt'] ?? '';
+		$alt        = $atts['alt'] ?? '';
 		return sprintf(
 			'<img src="%s" class="%s" alt="%s" %s>',
 			$asset_url,
@@ -795,11 +798,11 @@ class W4OS3 {
 			( empty( $url ) ) ? '' : sprintf(
 				'<a href="%s" rel="noopener noreferrer" class="button">%s</a>',
 				$url,
-				__('Open page', 'w4os' ),
+				__( 'Open page', 'w4os' ),
 			),
 		);
 		$footer_buttons = array_filter( $footer_buttons );
-		$footer = ( empty( $footer_buttons ) ) ? '' : sprintf(
+		$footer         = ( empty( $footer_buttons ) ) ? '' : sprintf(
 			'<div class="modal-footer clear">%s</div>',
 			implode( '', $footer_buttons ),
 		);
@@ -814,7 +817,7 @@ class W4OS3 {
 				$content,
 				$footer,
 			);
-		} else if ( ! empty( $url ) ) {
+		} elseif ( ! empty( $url ) ) {
 			// add modal=true and embed=true to url arguments
 			$url = add_query_arg( array( 'modal' => 'true' ), $url );
 			// Use display $url content as modal content

@@ -212,7 +212,7 @@ function w4os_get_user_notices( $echo = false ) {
 }
 
 function w4os_fast_xml( $url ) {
-	if( class_exists( 'W4OS3' ) ) {
+	if ( class_exists( 'W4OS3' ) ) {
 		return W4OS3::fast_xml( $url );
 	}
 
@@ -234,7 +234,7 @@ function w4os_fast_xml( $url ) {
 }
 
 function w4os_get_grid_info( $rechecknow = false ) {
-	if( class_exists( 'W4OS3' ) ) {
+	if ( class_exists( 'W4OS3' ) ) {
 		return W4OS3::grid_info( $rechecknow );
 	}
 
@@ -367,7 +367,7 @@ function w4os_grid_online( $login_uri = null ) {
 		$login_uri = $login_uri;
 		$parts     = wp_parse_url( $login_uri );
 		if ( isset( $parts['host'] ) ) {
-			$fp     = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
+			$fp = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
 			return ( $fp ) ? true : false;
 		} else {
 			return sprintf(
@@ -668,7 +668,7 @@ function w4os_status_icon( $bool = null, $ignore_null = false ) {
 		$status_icon = 'yes';
 	} elseif ( $bool === false ) {
 		$status_icon = 'warning';
-	} else if ( $ignore_null ) {
+	} elseif ( $ignore_null ) {
 		return;
 	} else {
 		$status_icon = 'no';
@@ -731,18 +731,18 @@ function w4os_hop( $url = null, $string = null, $format = true ) {
 		return;
 	}
 	$url = opensim_format_tp( $url, TPLINK_HOP );
-	
+
 	if ( ! $format ) {
 		return $url;
 	}
-	
-	$string = ( empty( $string ) ) ? $url : $string;
+
+	$string    = ( empty( $string ) ) ? $url : $string;
 	$classes[] = 'hop';
 	if ( preg_match( ':/app/agent/:', $url ) ) {
 		$classes[] = 'profile';
 	}
 
-	return sprintf( '<a class="%3$s" href="%1$s">%2$s</a>', esc_attr( $url ), $string, implode(' ', $classes) );
+	return sprintf( '<a class="%3$s" href="%1$s">%2$s</a>', esc_attr( $url ), $string, implode( ' ', $classes ) );
 }
 
 function w4os_age( $time ) {
