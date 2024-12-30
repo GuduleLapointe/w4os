@@ -117,9 +117,10 @@ class W4OS3_Service {
                     ),
                     'readonly' => W4OS3::$console_enabled,
                 ),
-                        ),
+            ),
         );
-		return $settings;
+
+        return $settings;
     }
 
     public function init_db() {
