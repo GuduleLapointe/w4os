@@ -308,21 +308,10 @@ class W4OS3_Avatar {
 			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts )
 		);
 		$output .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
-		$output .= $this->modal( $PrincipalID, $profile_html, $this->profile_url( $item ) );
+		$output .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ), $profile_html );
 		return $output;
 	}
 
-	public function modal( $id, $content, $url = null ) {
-		return sprintf(
-			'<dialog id="modal-%s" class="w4os-modal">
-				<button type="button" onclick="closeModal()" style="float:right;">×</button>
-				%s %s
-			</dialog>',
-			$id,
-			$content,
-			( empty($url) ) ? '' : '<a href="' . $url . '" target="_blank" rel="noopener noreferrer" class="button">Open in new tab</a>',
-		);
-	}
 	public static function user_level( $item ) {
 		if ( is_numeric( $item )) {
 			$level = intval( $item );
@@ -465,25 +454,35 @@ class W4OS3_Avatar {
 		}
 	}
 
-	public function profile_html( $item ) {
+	public function profile_html( $item = null ) {
 		// return '<div class="w4os-avatar-profile">Debug Profile content</div>';
 		$profile_url = $this->profile_url( $item );
 		$avatarName  = $item->avatarName;
 
-		if( $avatarName == 'Way Forest' ) {
-			error_log( 'item ' . print_r( $item, true ) );
-		}
+		// if( $avatarName == 'Way Forest' ) {
+		// 	error_log( 'item ' . print_r( $item, true ) );
+		// }
 		$profileImage = $item->profileImage;
 		$img = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
+
+		if( ! empty( $item->profileFirstImage . $item->profileFirstText ) ) {
+			$profileFirstImage = W4OS3::img( $item->profileFirstImage, array( 'alt' => $avatarName ) );
+			$reallife = sprintf (
+				'<div class="firstlife" style="clear:both !important;">%s %s</div>',
+				$profileFirstImage,
+				wpautop( $item->profileFirstText ),
+			);
+		}
 
 		$data = array(
 			__( 'Born', 'w4os' )        => w4os_age( $item->Created ),
 			__( 'Last Seen', 'w4os' )	=> $this->format_last_seen( $item ),
 			__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->FirstName . ' ' . $partner->LastName ),
-			__( 'Wants to', 'w4os' )    => join( ', ', w4os_demask( $item->profileWantToMask, $wants, $item->profileWantToText ) ),
+			__( 'Wants to', 'w4os' )    => join( ', ', $this->wants( $item ) ),
+			__( 'Skills', 'w4os' )    => join( ', ', $this->skills( $item ) ),
 			__( 'Languages', 'w4os' )   => $item->profileLanguages,
-			__( 'About', 'w4os' )		=> $item->profileAboutText ?? '',
-			__( 'Real Life', 'w4os' )   => trim( $item->profileFirstImageHtml . ' ' . wpautop( $item->profileFirstText ) ),
+			__( 'About', 'w4os' )		=> empty( $item->profileAboutText ) ? '' : wpautop( $item->profileAboutText ),
+			// __( 'Real Life', 'w4os' )   => $reallife,
 		);
 
 		$data = array_filter( $data );
@@ -495,5 +494,43 @@ class W4OS3_Avatar {
 		}
 		$output = '<div class="w4os-avatar-profile">' . implode( ' ', $output ) . '</div>';
 		return $output;
+	}
+
+	public static function wants( $item = null, $mask = null, $additionalvalue = null ) {
+		if ( empty( $mask ) ) {
+			$mask = $item->profileWantToMask ?? null;
+		}
+		if ( empty ( $additionalvalue ) ) {
+			$additional = $item->profileWantToText ?? null;
+		}
+
+		return w4os_demask( $mask, array(
+			__( 'Build', 'w4os' ),
+			__( 'Explore', 'w4os' ),
+			__( 'Meet', 'w4os' ),
+			__( 'Group', 'w4os' ),
+			__( 'Buy', 'w4os' ),
+			__( 'Sell', 'w4os' ),
+			__( 'Be Hired', 'w4os' ),
+			__( 'Hire', 'w4os' ),
+		), $additionalvalue );
+	}
+
+	public static function skills( $item = null, $mask = null, $additionalvalue = null ) {
+		if ( empty( $mask ) ) {
+			$mask = $item->profileWantToMask ?? null;
+		}
+		if ( empty ( $additionalvalue ) ) {
+			$additional = $item->profileSkillsText ?? null;
+		}
+
+		return w4os_demask( $mask, array(
+			__( 'Textures', 'w4os' ),
+			__( 'Architecture', 'w4os' ),
+			__( 'Event Planning', 'w4os' ),
+			__( 'Modeling', 'w4os' ),
+			__( 'Scripting', 'w4os' ),
+			__( 'Custom Characters', 'w4os' ),
+		), $additionalvalue );
 	}
 }

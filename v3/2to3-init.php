@@ -789,6 +789,39 @@ class W4OS3 {
 			$attributes,
 		);
 	}
+
+	public static function modal( $id, $url = null, $content = null ) {
+		if ( ! empty( $content ) ) {
+			return sprintf(
+				'<dialog id="modal-%s" class="w4os-modal">
+					<button type="button" class="modal-close" onclick="closeModal()">×</button>
+					%s
+					%s
+				</dialog>',
+				$id,
+				$content,
+				( empty($url) ) ? '' : sprintf(
+					'<div class="modal-footer clear">
+						<a href="%s" target="_blank" rel="noopener noreferrer" class="button">%s</a>
+					</div>',
+					$url,
+					__('Open page', 'w4os' ),
+				),
+			);
+		} else if ( ! empty( $url ) ) {
+			// add modal=true and embed=true to url arguments
+			$url = add_query_arg( array( 'modal' => 'true' ), $url );
+			// Use display $url content as modal content
+			return sprintf(
+				'<dialog id="modal-%s" class="w4os-modal">
+					<button type="button" onclick="closeModal()" style="float:right;">×</button>
+					<iframe src="%s"></iframe>
+				</dialog>',
+				$id,
+				$url,
+			);
+		}
+	}
 }
 
 $w4os3 = new W4OS3();
