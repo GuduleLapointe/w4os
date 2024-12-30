@@ -508,7 +508,7 @@ function set_helpers_locale( $locale = null, $domain = 'messages' ) {
 
 	$variants = array_unique( $variants );
 	if ( ! setlocale( LC_ALL, $variants ) ) {
-		error_log( "setlocale() failed: none of  '" . join( ', ', $variants ) . "' does exist in this environment or setlocale() is not available on this platform" );
+		// error_log( "setlocale() failed: none of  '" . join( ', ', $variants ) . "' does exist in this environment or setlocale() is not available on this platform" );
 		setlocale( LC_ALL, 0 );
 		return 0;
 	}
