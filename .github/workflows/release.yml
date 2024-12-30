@@ -53,7 +53,7 @@ jobs:
           PLUGIN_NAME="${PLUGIN_NAME}"
 
           # Create a temporary directory with the plugin name
-          mkdir -p "${PLUGIN_NAME}"
+          TMP_DIR=$(mktemp -d)
 
           # Generate exclusion arguments
           EXCLUDES=""
@@ -67,15 +67,14 @@ jobs:
           EXCLUDES="$EXCLUDES --exclude=.github/"
           EXCLUDES="$EXCLUDES --exclude=.env"
           EXCLUDES="$EXCLUDES --exclude=README.md"
+          EXCLUDES="$EXCLUDES --exclude=${PLUGIN_NAME}/"
 
           # Copy files into the temporary directory
-          rsync -av $EXCLUDES ./ "${PLUGIN_NAME}/"
-
-          # Create the ZIP archive containing the plugin directory
-          zip -r "${RELEASE_ZIP}" "${PLUGIN_NAME}"
-
-          # Remove the temporary plugin directory
-          rm -rf "${PLUGIN_NAME}"
+          rsync -av $EXCLUDES ./ "$TMP_DIR/${PLUGIN_NAME}"
+          cd "$TMP_DIR"
+          zip -r "${OLDPWD}/${RELEASE_ZIP}" "${PLUGIN_NAME}"
+          cd "$OLDPWD"
+          rm -rf "$TMP_DIR"
 
           # Verify that the ZIP file was created
           if [ ! -f "${RELEASE_ZIP}" ]; then
