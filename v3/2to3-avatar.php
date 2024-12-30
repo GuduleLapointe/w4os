@@ -308,7 +308,7 @@ class W4OS3_Avatar {
 			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts )
 		);
 		$output      .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
-		$output      .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ) ); // , $profile_html );
+		$output      .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ), $profile_html );
 		return $output;
 	}
 
