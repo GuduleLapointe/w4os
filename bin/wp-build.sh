@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH=$(dirname "$0"):$PATH
+
 if [ -f .phpcfbignore ]
 then
   ignore=$(cat .phpcfbignore | tr "\n" ",")

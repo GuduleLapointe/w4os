@@ -12,7 +12,7 @@ TMP=/tmp/$PGM.$$
 phpbin=$(wp --info | grep "^PHP binary:" | cut -f 2)
 min=$($phpbin --version | head -1 | cut -d " " -f 2 | sed "s/[a-z-].*//i")
 
-phpcs -p . --standard=PHPCompatibility --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors
+phpcs -p . --standard=PHPCompatibility --report=csv --ignore=$ignore,*js,*css --runtime-set testVersion ${version}- > $TMP.errors
 if [ $? -eq 0 ]
 then
   min=$version
