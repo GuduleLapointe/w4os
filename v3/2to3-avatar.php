@@ -584,7 +584,8 @@ class W4OS3_Avatar {
 	}
 
 	public function profile_preview( $item = null ) {
-		// return '<div class="w4os-avatar-profile">Debug Profile content</div>';
+		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
+
 		$profile_url = $this->profile_url( $item );
 		$avatarName  = $item->avatarName;
 
@@ -688,7 +689,7 @@ class W4OS3_Avatar {
 		}
 
 		global $wpdb, $w4osdb;
-
+		
 		$content            = '';
 		$can_list_users     = ( current_user_can( 'list_users' ) ) ? 'true' : 'false';
 		$current_user_email = wp_get_current_user()->user_email;
@@ -731,6 +732,7 @@ class W4OS3_Avatar {
 		// }
 
 		$content .= w4os_array2table( $profile, 'avatar-profile-table' );
+
 		if ( $echo ) {
 			echo $content;
 		} else {
