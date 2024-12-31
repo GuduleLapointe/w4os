@@ -883,8 +883,10 @@ function w4os_profile_display( $user, $args = array() ) {
 		if ( ! $avatar->UUID ) {
 			return false;
 		}
+	} else if ( is_string( $user ) ) {
+		$avatar = new W4OS_Avatar( null, $user );
 	} else {
-		$avatar = new W4OS_Avatar( $user->ID );
+		$avatar = new W4OS_Avatar( $user );
 	}
 
 	$content = '';

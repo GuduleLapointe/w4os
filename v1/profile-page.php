@@ -44,6 +44,14 @@ function w4os_get_user_by_avatar_name( $firstname = '', $lastname = '' ) {
 		} else {
 			return false;
 		}
+	} else if ( empty( $lastname ) && ! empty( $firstname ) ) {
+		$parts = explode( '.', $firstname );
+		if ( count( $parts ) > 1 ) {
+			$firstname = $parts[0];
+			$lastname  = $parts[1];
+		}
+	} else if ( empty( $firstname . $lastname ) ) {
+		return false;
 	}
 
 	$user_query = new WP_User_Query(
@@ -196,7 +204,6 @@ add_action(
 		$query_lastname  = get_query_var( 'profile_lastname' );
 		$query_name = get_query_var( 'name' );
 		if( ! empty( $query_name ) && preg_match('/\./', $query_name) ) {
-			error_log(' using name ' . $query_name);
 			$query_name = explode( '.', $query_name );
 			$query_firstname = $query_name[0];
 			$query_lastname = $query_name[1];

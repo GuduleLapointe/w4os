@@ -2,13 +2,17 @@
 add_filter( 'show_admin_bar', '__return_false' );
 
 if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
-	W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
 	if ( W4OS_ENABLE_V3 ) {
+		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
 		$avatar = new W4OS3_Avatar( $_GET['name'] );
 		$page_title = $avatar->AvatarName;
 		$content = $avatar->profile_page();
 	} else {
-		$content = w4os_profile_display( $_GET['name'] );
+		$user = w4os_get_user_by_avatar_name( $_GET['name'] );
+		$content = w4os_profile_display( $user->ID );
+		
+		$avatar = new W4OS_Avatar( $user->ID );
+		$page_title = ( empty( $avatar->AvatarName ) ) ? __( 'Avatar not found', 'w4os' ) : $avatar->AvatarName;
 	}
 
 	$classes = "w4os page-template-profile page wp-custom-logo wp-embed-responsive";
@@ -27,7 +31,6 @@ if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 			<div id="primary" class="content-area">
 				<main id="main" class="site-main" role="main">
 					<?php
-					error_log( ' GET ' . print_r( $_GET, true ) );
 					if( ! empty( $content ) ) {
 						echo '<header class="entry-header alignwide">';
 						echo '<h1 class="entry-title">' . $page_title . '</h1>';
