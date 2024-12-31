@@ -1,3 +1,10 @@
+.w4os img,
+.w4os iframe,
+.w4os object,
+.w4os embed {
+    max-width: 100%;
+}
+
 img.profile,
 ul.parcels div.parcel > img {
 	float: left;

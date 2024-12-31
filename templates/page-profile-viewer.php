@@ -2,6 +2,7 @@
 add_filter( 'show_admin_bar', '__return_false' );
 
 if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
+	W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
 	if ( W4OS_ENABLE_V3 ) {
 		$avatar = new W4OS3_Avatar( $_GET['name'] );
 		$page_title = $avatar->AvatarName;
@@ -10,12 +11,12 @@ if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 		$content = w4os_profile_display( $_GET['name'] );
 	}
 
-	$classes = "page-template-profile page wp-custom-logo wp-embed-responsive";
+	$classes = "w4os page-template-profile page wp-custom-logo wp-embed-responsive";
 }
 ?><!doctype html>
 <html <?php language_attributes(); ?>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>" />
+	<meta charset="<?php bloginfo( 'charset' ); ?>" w4os />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php wp_head(); ?>
 </head>

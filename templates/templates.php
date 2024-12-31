@@ -16,10 +16,15 @@ add_action( 'template_include', 'w4os_template_include' );
 function w4os_template_include( $template ) {
 	global $wp_query;
 	$template_slug  = str_replace( '.php', '', basename( $template ) );
+	$localized_post_id = W4OS::get_localized_post_id();
 	if ( $template_slug == 'template-canvas' && $wp_query->query['pagename'] == 'profile' ) {
-		$custom = W4OS_DIR . '/templates/page-profile-viewer.php';
+		if ( empty( $localized_post_id ) ) {
+			$localized_post_id = get_page_by_path( 'profile' )->ID;
+			$custom = W4OS_DIR . '/templates/page-profile-viewer.php';
+		} else {
+			return $template;
+		}
 	} else {
-		$localized_post_id = W4OS::get_localized_post_id();
 		if ( empty( $localized_post_id ) ) {
 			// error_log( 'template slug ' . $template_slug );
 			$query_page = $wp_query->query['pagename'];

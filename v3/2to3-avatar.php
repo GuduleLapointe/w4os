@@ -105,7 +105,6 @@ class W4OS3_Avatar {
 			$this->profilePartner     = $avatar_row->profilePartner;
 			$this->Email			  = $avatar_row->Email;
 
-			error_log( 'data ' . print_r( $avatar_row, true ) );
 			$this->data      = $avatar_row; // Dev only, shoudn't be use once the class is fully implemented
 		}
 	}
@@ -594,9 +593,8 @@ class W4OS3_Avatar {
 		// }
 		$profileImage = $item->profileImage;
 		$img          = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
-
 		if ( ! empty( $item->profileFirstImage . $item->profileFirstText ) ) {
-			$profileFirstImage = W4OS3::img( $item->profileFirstImage, array( 'alt' => $avatarName ) );
+			$profileFirstImage = W4OS3::img( $item->profileFirstImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
 			$reallife          = sprintf(
 				'<div class="firstlife" style="clear:both !important;">%s %s</div>',
 				$profileFirstImage,
@@ -701,10 +699,10 @@ class W4OS3_Avatar {
 			// $this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
 		}
 
-		W4OS3::enqueue_style( 'w4os-admin-settings', 'v3/css/profile.css' );
+		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
 		
-		$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName ) );
-		$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName ) );
+		$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
+		$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
 
 		if ( ! w4os_empty( $this->profilePartner ) ) {
 			$partner = new W4OS3_Avatar( $this->profilePartner );
