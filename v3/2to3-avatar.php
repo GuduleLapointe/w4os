@@ -28,12 +28,106 @@ class W4OS3_Avatar {
 	private $db;
 	public static $slug;
 	public static $profile_page_url;
+	public $UUID;
+	public $FirstName;
+	public $LastName;
+	private $data;
 	
+	private static $base_query = "SELECT * FROM (
+		SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
+		FROM UserAccounts 
+		LEFT JOIN userprofile ON PrincipalID = userUUID 
+		LEFT JOIN GridUser ON PrincipalID = UserID
+	) AS subquery";
+
 	public function __construct() {
 		// Initialize the custom database connection with credentials
 		$this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
 		self::$slug     = get_option( 'w4os_profile_slug', 'profile' );
 		self::$profile_page_url = get_home_url( null, self::$slug );
+
+		$args = func_get_args();
+		if ( ! empty( $args[0] ) ) {
+			$this->initialize_avatar( $args[0] );
+		}
+	}
+
+	/**
+	 * Initialize the avatar object.
+	 */
+	private function initialize_avatar( $args ) {
+		if ( ! $this->db ) {
+			return false;
+		}
+		if( empty( $args ) ) {
+			return false;
+		}
+
+		$query = self::$base_query;
+
+		if( W4OS3::is_uuid( $args ) ) {
+			$uuid = $args;
+			$query .= " WHERE PrincipalID = %s";
+			$sql = $this->db->prepare( $query, array( $uuid ) );
+			$avatar_row = $this->db->get_row( $sql );
+		} else if ( is_string( $args ) ) {
+			$name = preg_replace('/\s+/', '.', $args);
+			$parts = explode('.', $name);
+			if ( count($parts) < 2 ) {
+				return false;
+			}
+			$firstname = $parts[0];
+			$lastname = $parts[1];
+
+			$query .= " WHERE FirstName = %s AND LastName = %s";
+			$sql = $this->db->prepare( $query, array ( $firstname, $lastname ) );
+			$avatar_row = $this->db->get_row( $sql );
+		} else {
+			return false;
+		}
+
+		if ( $avatar_row ) {
+			$this->UUID = $avatar_row->PrincipalID;
+			$this->FirstName = $avatar_row->FirstName;
+			$this->LastName  = $avatar_row->LastName;
+			$this->AvatarName = trim( "$this->FirstName $this->LastName" );
+			$this->Created = $avatar_row->Created;
+
+			// $this->Created = esc_attr(get_the_author_meta( 'w4os_created', $id ));
+			$this->AvatarSlug         = strtolower( "$this->FirstName.$this->LastName" );
+			$this->AvatarHGName       = $this->AvatarSlug . '@' . esc_attr( get_option( 'w4os_login_uri' ) );
+			$this->ProfilePictureUUID = $avatar_row->ProfilePictureUUID ?? W4OS_NULL_KEY;
+			$this->profileLanguages   = $avatar_row->profileLanguages;
+			$this->profileAboutText   = $avatar_row->profileAboutText;
+			$this->profileImage	   	  = $avatar_row->profileImage;
+			$this->profileFirstImage  = $avatar_row->profileFirstImage;
+			$this->profileFirstText   = $avatar_row->profileFirstText;
+			$this->profilePartner     = $avatar_row->profilePartner;
+			$this->Email			  = $avatar_row->Email;
+
+			error_log( 'data ' . print_r( $avatar_row, true ) );
+			$this->data      = $avatar_row; // Dev only, shoudn't be use once the class is fully implemented
+		}
+	}
+
+	public function uuid() {
+		return $this->UUID ?? false;
+	}
+
+	public function FirstName() {
+		return $this->FirstName ?? '';
+	}
+
+	public function LastName() {
+		return $this->LastName ?? '';
+	}
+
+	public function Name() {
+		return trim( $this->FirstName . ' ' . $this->LastName );
+	}
+
+	public function Email() {
+		return $this->Email ?? '';
 	}
 	
 	/**
@@ -43,11 +137,13 @@ class W4OS3_Avatar {
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
 		// Add rewrite rules for the profile page as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
 		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
-
+		
 		// DEBUG ONLY force flush permalink rules
 		add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
+		
+		add_filter( 'query_vars', array( $this, 'add_profile_query_vars' ) );
 	}
-
+	
 	/**
 	 * Add rewrite rules for the profile page.
 	 * as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
@@ -68,6 +164,14 @@ class W4OS3_Avatar {
 			$target,
 			'top'
 		);
+	}
+
+	public function add_profile_query_vars( $vars ) {
+		$vars[] = 'profile_firstname';
+		$vars[] = 'profile_lastname';
+		$vars[] = 'profile_args';
+		// $vars[] = 'name';
+		return $vars;
 	}
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
@@ -169,12 +273,7 @@ class W4OS3_Avatar {
 				'plural'        => 'Avatars',
 				'ajax'          => false,
 				'table'         => 'UserAccounts',
-				'query'         => "SELECT * FROM (
-				SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
-				FROM UserAccounts 
-				LEFT JOIN userprofile ON PrincipalID = userUUID 
-				LEFT JOIN GridUser ON PrincipalID = UserID
-			) AS subquery",
+				'query'         => self::$base_query,
 				'admin_columns' => array(
 					'avatarName'  => array(
 						'title'           => __( 'Avatar Name', 'w4os' ),
@@ -331,7 +430,7 @@ class W4OS3_Avatar {
 		if ( ! empty( $user_level ) ) {
 			$special_accounts[] = $user_level;
 		}
-		$profile_html = $this->profile_html( $item );
+		$profile_preview = $this->profile_preview( $item );
 		$output       = sprintf(
 			'<strong><a href="#" data-modal-target="modal-%1$s">%2$s</a> %3$s</strong>',
 			$PrincipalID,
@@ -339,7 +438,7 @@ class W4OS3_Avatar {
 			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts )
 		);
 		$output      .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
-		$output      .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ), $profile_html );
+		$output      .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ), $profile_preview );
 		return $output;
 	}
 
@@ -485,7 +584,7 @@ class W4OS3_Avatar {
 		}
 	}
 
-	public function profile_html( $item = null ) {
+	public function profile_preview( $item = null ) {
 		// return '<div class="w4os-avatar-profile">Debug Profile content</div>';
 		$profile_url = $this->profile_url( $item );
 		$avatarName  = $item->avatarName;
@@ -533,7 +632,10 @@ class W4OS3_Avatar {
 		return $output;
 	}
 
-	public static function wants( $item = null, $mask = null, $additionalvalue = null ) {
+	public function wants( $item = null, $mask = null, $additionalvalue = null ) {
+		if( empty( $item ) && ! empty( $this->data ) ) {
+			$item = $this->data;
+		}
 		if ( empty( $mask ) ) {
 			$mask = $item->profileWantToMask ?? null;
 		}
@@ -557,9 +659,12 @@ class W4OS3_Avatar {
 		);
 	}
 
-	public static function skills( $item = null, $mask = null, $additionalvalue = null ) {
+	public function skills( $item = null, $mask = null, $additionalvalue = null ) {
+		if( empty( $item ) && ! empty( $this->data ) ) {
+			$item = $this->data;
+		}
 		if ( empty( $mask ) ) {
-			$mask = $item->profileWantToMask ?? null;
+			$mask = $item->profileSkillsMask ?? null;
 		}
 		if ( empty( $additionalvalue ) ) {
 			$additional = $item->profileSkillsText ?? null;
@@ -577,5 +682,61 @@ class W4OS3_Avatar {
 			),
 			$additionalvalue
 		);
+	}
+
+	public function profile_page( $echo = false, $args = array() ) {
+		if ( ! W4OS_DB_CONNECTED ) {
+			return __( 'Profiles are not available at the moment.', 'w4os' );
+		}
+
+		global $wpdb, $w4osdb;
+
+		$content            = '';
+		$can_list_users     = ( current_user_can( 'list_users' ) ) ? 'true' : 'false';
+		$current_user_email = wp_get_current_user()->user_email;
+		// Should not fetch this again, it should be saved in _construct, TO CHECK
+		if( ! $this->UUID ) {
+			error_log( __METHOD__ . ' called without UUID' );
+			return false;
+			// $this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
+		}
+
+		W4OS3::enqueue_style( 'w4os-admin-settings', 'v3/css/profile.css' );
+		
+		$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName ) );
+		$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName ) );
+
+		if ( ! w4os_empty( $this->profilePartner ) ) {
+			$partner = new W4OS3_Avatar( $this->profilePartner );
+		}
+		$profileAboutText = ( isset( $this->profileAboutText ) ) ? wpautop( $this->profileAboutText ) : null;
+		$profile          = array_filter(
+			array(
+				__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
+				// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
+				// __('HG Name', 'w4os') => $this->HGName, // To implement
+				// __('Avatar Display Name', 'w4os') => $this->DisplayName, // To implement
+				__( 'About', 'w4os' )       => $this->profileImageHtml . $profileAboutText,
+				// __('Profile picture', 'w4os') => $this->profileImageHtml,
+				__( 'Born', 'w4os' )        => w4os_age( $this->Created ),
+				__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->AvatarName ),
+				__( 'Wants to', 'w4os' )    => $this->wants(),
+				__( 'Skills', 'w4os' )      => $this->skills(),
+				__( 'Languages', 'w4os' )   => $this->profileLanguages,
+				__( 'Real Life', 'w4os' )   => trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) ),
+			)
+		);
+
+		// TODO: new method to check avatar ownership
+		// if ( wp_get_current_user()->ID == $this->ID ) {
+		// 		$profile[ __( 'Change password', 'w4os' ) ] = '<a href="' . wp_lostpassword_url() . '">' . __( 'Password reset link', 'w4os' ) . '</a>';
+		// }
+
+		$content .= w4os_array2table( $profile, 'avatar-profile-table' );
+		if ( $echo ) {
+			echo $content;
+		} else {
+			return $content;
+		}
 	}
 }

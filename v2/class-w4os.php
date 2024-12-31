@@ -13,7 +13,7 @@ class W4OS {
 		if ( empty( $post_id ) ) {
 			$post_id = get_the_id();
 		}
-
+		// error_log( __FILE__ . ' ' . __LINE__ . ' post_id ' . $post_id );
 		// Check for WPML
 		if ( function_exists( 'icl_object_id' ) ) {
 			$default_language = apply_filters( 'wpml_default_language', null );

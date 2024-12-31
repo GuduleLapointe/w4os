@@ -485,8 +485,17 @@ class W4OS3 {
 	/**
 	 * Check if a string is a valid UUID.
 	 */
-	public static function is_uuid( $uuid ) {
-		return preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid );
+	public static function is_uuid( $uuid, $accept_null = true ) {
+		if ( ! is_string( $uuid ) ) {
+			return false;
+		}
+		if ( ! preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid ) ) {
+			return false;
+		}
+		if ( ! $accept_null && W4OS3::empty( $uuid ) ) {
+			return false;
+		}
+		return true;
 	}
 
 	public static function connectionstring_to_array( $connectionstring ) {

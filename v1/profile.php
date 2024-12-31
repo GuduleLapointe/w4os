@@ -23,6 +23,31 @@ class W4OS_Avatar extends WP_User {
 			return;
 		}
 
+		if ( W4OS_ENABLE_V3 ) {
+			$args = array_filter(
+				array(
+					'id'     => $id,
+					'name'   => $name,
+					'site_id' => $site_id,
+				)
+			);
+			$avatar = new W4OS_Avatar( $args );
+			if ( $avatar->UUID ) {
+				$this->ID = $avatar->ID;
+				$this->data = $avatar->data;
+				$this->UUID = $avatar->UUID;
+				$this->FirstName = $avatar->FirstName;
+				$this->LastName = $avatar->LastName;
+				$this->AvatarName = $avatar->AvatarName;
+				$this->AvatarSlug = $avatar->AvatarSlug;
+				$this->AvatarHGName = $avatar->AvatarHGName;
+				$this->ProfilePictureUUID = $avatar->ProfilePictureUUID;
+				return;
+			} else {
+				return false;
+			}
+		}
+
 		if ( ! empty( $id ) && ! is_numeric( $id ) ) {
 			$name = $id;
 			$id   = 0;
@@ -387,7 +412,6 @@ function w4os_create_avatar( $user, $params ) {
 		}
 		return $uuid;
 	}
-	// echo  "<pre>" . $user->user_pass . "\n" . print_r($user, true) . "</pre>";
 
 	$firstname = trim( $params['w4os_firstname'] );
 	$lastname  = trim( $params['w4os_lastname'] );
@@ -653,8 +677,6 @@ function w4os_create_avatar( $user, $params ) {
 						if ( ! $result ) {
 							w4os_user_notice( __( 'Error while adding inventory item', 'w4os' ), 'fail' );
 						}
-						// w4os_user_notice(print_r($newitem, true), 'code');
-						// echo "<pre>" . print_r($newitem, true) . "</pre>"; exit;
 
 						// Adding aliases in "Current Outfit" folder to avoid FireStorm error message
 						$outfit_link                   = $newitem;
@@ -838,7 +860,7 @@ function w4os_profile_display( $user, $args = array() ) {
 		$title = '';
 	}
 
-	if ( $user->ID == 0 ) {
+	if ( isset( $user->ID ) && $user->ID == 0 ) {
 		$wp_login_url = wp_login_url();
 		// $content =  "<p class='avatar not-connected'>" . W4OS::sprintf_safe(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
 		$content = '<div class=w4os-login>' . wp_login_form( array( 'echo' => false ) ) . '</div>';
@@ -846,8 +868,24 @@ function w4os_profile_display( $user, $args = array() ) {
 	}
 
 	global $w4osdb;
+	$args = wp_parse_args(
+		$args,
+		array(
+			'mini' => false,
+		)
+	);
 	extract( $args );
-	$avatar = new W4OS_Avatar( $user->ID );
+
+	if ( W4OS_ENABLE_V3 && is_string( $user ) && ! is_numeric( $user ) ) {
+		// Probably an avatar name
+		$name = $user;
+		$avatar = new W4OS3_Avatar( $name );
+		if ( ! $avatar->UUID ) {
+			return false;
+		}
+	} else {
+		$avatar = new W4OS_Avatar( $user->ID );
+	}
 
 	$content = '';
 	if ( $avatar->UUID ) {

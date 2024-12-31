@@ -31,7 +31,21 @@ if ( ! W4OS_ENABLE_V3 ) {
 	}
 }
 
-function w4os_get_avatar_by_name( $firstname = '', $lastname = '' ) {
+function w4os_get_user_by_avatar_name( $firstname = '', $lastname = '' ) {
+	if( W4OS_ENABLE_V3 ) {
+		$avatar = new W4OS3_Avatar( "$firstname.$lastname" );
+		if ( ! $avatar->UUID ) {
+			return false;
+		}
+		$email = $avatar->Email() ?? false;
+		$user  = ( $email ) ? get_user_by( 'email', $email ) : false;
+		if ( $user ) {
+			return $user;
+		} else {
+			return false;
+		}
+	}
+
 	$user_query = new WP_User_Query(
 		array(
 			'meta_query' => array(
@@ -181,7 +195,7 @@ add_action(
 		$query_firstname = get_query_var( 'profile_firstname' );
 		$query_lastname  = get_query_var( 'profile_lastname' );
 		$query_name = get_query_var( 'name' );
-		if( ! empty( $query_name ) ) {
+		if( ! empty( $query_name ) && preg_match('/\./', $query_name) ) {
 			error_log(' using name ' . $query_name);
 			$query_name = explode( '.', $query_name );
 			$query_firstname = $query_name[0];
@@ -202,7 +216,7 @@ add_action(
 		} else {
 
 			// if ( $query_firstname != '' && $query_lastname != '' ) {
-			$user = w4os_get_avatar_by_name( $query_firstname, $query_lastname );
+			$user = w4os_get_user_by_avatar_name( $query_firstname, $query_lastname );
 			if ( $user ) {
 				$avatar         = new W4OS_Avatar( $user );
 				$avatar_profile = $avatar->profile_page();

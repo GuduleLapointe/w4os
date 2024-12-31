@@ -32,7 +32,7 @@ if ( ! preg_match( "/<table class='avatar-profile-table'>|\[et_pb_w4os_avatar_pr
 
 	} else {
 		// display request for a given user
-		$user = w4os_get_avatar_by_name( $query_firstname, $query_lastname );
+		$user = w4os_get_user_by_avatar_name( $query_firstname, $query_lastname );
 		// if(! $user || empty($user)) return get_404_template();
 		$avatar         = new W4OS_Avatar( $user );
 		$avatar_profile = $avatar->profile_page();
