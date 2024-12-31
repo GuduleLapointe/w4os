@@ -26,17 +26,48 @@
 
 class W4OS3_Avatar {
 	private $db;
-
+	public static $slug;
+	public static $profile_page_url;
+	
 	public function __construct() {
 		// Initialize the custom database connection with credentials
 		$this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
+		self::$slug     = get_option( 'w4os_profile_slug', 'profile' );
+		self::$profile_page_url = get_home_url( null, self::$slug );
 	}
-
+	
 	/**
 	 * Initialize the class. Register actions and filters.
 	 */
 	public function init() {
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
+		// Add rewrite rules for the profile page as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
+		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
+
+		// DEBUG ONLY force flush permalink rules
+		add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
+	}
+
+	/**
+	 * Add rewrite rules for the profile page.
+	 * as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
+	 */
+	public function add_rewrite_rules() {
+		$target = 'index.php?pagename=' . self::$slug . '&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]';
+
+		// Rewrite rule for $profile_page_url/$firstname.$lastname
+		add_rewrite_rule(
+			'^' . self::$slug . '/([^/]+)\.([^/\.\?&]+)(\?.*)?$',
+			$target,
+			'top'
+		);
+
+		// Rewrite rule for $profile_page_url/?name=$firstname.$lastname
+		add_rewrite_rule(
+			'^' . self::$slug . '/\?name=([^\.&]+)\.([^\.&]+)(&.*)?$',
+			$target,
+			'top'
+		);
 	}
 
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
@@ -441,16 +472,16 @@ class W4OS3_Avatar {
 
 	public static function profile_url( $item = null ) {
 		$slug      = get_option( 'w4os_profile_slug', 'profile' );
-		$base_url  = get_home_url( null, $slug );
+		$profile_page_url  = get_home_url( null, $slug );
 		$firstname = $item->FirstName;
 		$lastname  = $item->LastName;
 
 		if ( empty( $firstname ) || empty( $lastname ) ) {
-			return $base_url;
+			return $profile_page_url;
 		} else {
 			$firstname = sanitize_title( $firstname );
 			$lastname  = sanitize_title( $lastname );
-			return $base_url . '/' . $firstname . '.' . $lastname;
+			return $profile_page_url . '/' . $firstname . '.' . $lastname;
 		}
 	}
 

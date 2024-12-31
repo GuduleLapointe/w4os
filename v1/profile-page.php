@@ -4,30 +4,31 @@
 define( 'W4OS_PROFILE_PATTERN', '^' . esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ) . '/([a-zA-Z][a-zA-Z9]*)[ \.+-]([a-zA-Z][a-zA-Z9]*)(/.*)?$' );
 define( 'W4OS_PROFILE_SELF_PATTERN', '^' . esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ) . '/?$' );
 
-add_action(
-	'init',
-	function () {
-		add_rewrite_rule(
-			W4OS_PROFILE_PATTERN,
-			'index.php?pagename=' . esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ) . '&post_tyoe=user&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]',
-			'top'
-		);
-		add_rewrite_rule(
-			W4OS_PROFILE_SELF_PATTERN,
-			'index.php?pagename=' . esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ) . '&post_tyoe=user&profile_args=$matches[1]',
-			'top'
-		);
-	}
-);
-update_option( 'w4os_flush_rewrite_rules', true );
-flush_rewrite_rules();
+if ( ! W4OS_ENABLE_V3 ) {
+	add_action(
+		'init',
+		function () {
+			add_rewrite_rule(
+				W4OS_PROFILE_PATTERN,
+				'index.php?pagename=' . esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ) . '&post_tyoe=user&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]',
+				'top'
+			);
+			add_rewrite_rule(
+				W4OS_PROFILE_SELF_PATTERN,
+				'index.php?pagename=' . esc_attr( get_option( 'w4os_profile_slug', 'profile' ) ) . '&post_tyoe=user&profile_args=$matches[1]',
+				'top'
+			);
+		}
+	);
 
-add_filter( 'query_vars', 'w4os_profile_query_vars' );
-function w4os_profile_query_vars( $query_vars ) {
-	$query_vars[] = 'profile_firstname';
-	$query_vars[] = 'profile_lastname';
-	$query_vars[] = 'profile_args';
-	return $query_vars;
+	add_filter( 'query_vars', 'w4os_profile_query_vars' );
+	function w4os_profile_query_vars( $query_vars ) {
+		$query_vars[] = 'profile_firstname';
+		$query_vars[] = 'profile_lastname';
+		$query_vars[] = 'profile_args';
+		$query_vars[] = 'name';
+		return $query_vars;
+	}
 }
 
 function w4os_get_avatar_by_name( $firstname = '', $lastname = '' ) {
@@ -179,7 +180,14 @@ add_action(
 
 		$query_firstname = get_query_var( 'profile_firstname' );
 		$query_lastname  = get_query_var( 'profile_lastname' );
-
+		$query_name = get_query_var( 'name' );
+		if( ! empty( $query_name ) ) {
+			error_log(' using name ' . $query_name);
+			$query_name = explode( '.', $query_name );
+			$query_firstname = $query_name[0];
+			$query_lastname = $query_name[1];
+		}
+		
 		if ( empty( $query_firstname ) || empty( $query_lastname ) ) {
 			if ( is_user_logged_in() ) {
 				$uuid = w4os_profile_sync( wp_get_current_user() );
