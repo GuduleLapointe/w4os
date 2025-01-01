@@ -314,6 +314,7 @@ class W4OS3 {
 		if ( W4OS_ENABLE_V3 ) {
 			// Include v3 feature files
 			require_once W4OS_INCLUDES_DIR . '2to3-avatar.php';
+			require_once W4OS_INCLUDES_DIR . 'class-flux.php';
 			// require_once W4OS_INCLUDES_DIR . '2to3-region.php';
 		}
 
@@ -332,6 +333,8 @@ class W4OS3 {
 			$AvatarClass->init();
 			$ModelClass = new W4OS3_Model();
 			$ModelClass->init();
+			$FluxClass = new W4OS3_Flux();
+			$FluxClass->init();
 			// $RegionClass = new W4OS3_Region();
 			// $RegionClass->init();
 		}
