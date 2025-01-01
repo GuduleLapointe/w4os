@@ -574,6 +574,73 @@ class W4OS3_Avatar {
 		return $avatars;
 	}
 
+	public function get_profile_url() {
+		return self::profile_url( $this->data );
+	}
+
+	/**
+	 * Create a thumb image from profileImage. Store it in transient.
+	 * Crop it as a square and resize to max 100px.
+	 * 
+	 */
+	public function get_thumb() {
+		$transient_key = 'w4os-avatar-thumb-' . $this->UUID;
+		$thumb_html = get_transient( $transient_key );
+		if ( $thumb_html && is_string( $thumb_html ) ) {
+			return $thumb_html;
+		}
+
+		$imageUUID = $this->profileImage;
+		error_log( 'Create thumb for ' . $imageUUID );
+		if ( ! empty( $imageUUID ) ) {
+			$imageURL = w4os_get_asset_url( $imageUUID );
+			$upload_dir = w4os_upload_dir('cache/thumbs');
+			$local_file = $upload_dir . '/' . basename( $imageUUID ) . '-thumb.jpg';
+
+			$response = wp_remote_get( $imageURL );
+			if ( ! is_wp_error( $response ) ) {
+				$contents = wp_remote_retrieve_body( $response );
+				file_put_contents( $local_file, $contents );
+				$thumb = wp_get_image_editor( $local_file );
+				if ( ! is_wp_error( $thumb ) ) {
+					$crop_size = min( $thumb->get_size()['width'], $thumb->get_size()['height'] ) / 2;
+					$x = ( $thumb->get_size()['width'] - $crop_size ) / 2;
+					$y = ( $thumb->get_size()['height'] - $crop_size ) / 2;
+					$thumb->crop( $x, $y, $crop_size, $crop_size );
+					$thumb->resize( 160, 160, true );
+					$thumb->save( $local_file );
+					$thumb_url = str_replace( ABSPATH, site_url( '/' ), $local_file );
+				}
+			}
+		}
+		if( empty( $thumb_url ) ) {
+			$thumb_html = '';
+		} else {
+			$thumb_html = '<img class="w4os-avatar-thumb" src="' . $thumb_url . '" alt="' . $this->AvatarName . '">';
+		}
+
+		// Do not store transient yet, we are still testing
+		set_transient( $transient_key, $thumb_html, 24 * HOUR_IN_SECONDS );
+		return $thumb_html;
+	}
+
+	public function profile_link() {
+		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
+
+		$profile_url = $this->get_profile_url();
+		$avatarName  = $this->AvatarName;
+		$profileImage = $this->profileImage;
+		// $img          = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
+		$img = W4OS3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
+		return sprintf(
+			'<a href="%s" title="%s">%s%s</a>',
+			$profile_url,
+			__( 'View profile page', 'w4os' ),
+			$img,
+			$avatarName
+		);
+	}
+
 	public static function profile_url( $item = null ) {
 		$slug      = get_option( 'w4os_profile_slug', 'profile' );
 		$profile_page_url  = get_home_url( null, $slug );
@@ -747,6 +814,11 @@ class W4OS3_Avatar {
 		// }
 
 		$content .= w4os_array2table( $profile, 'avatar-profile-table' );
+
+		if( $thatsme ) {
+			$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
+			$content .= $flux->display_flux();
+		}
 
 		if ( $echo ) {
 			echo $content;
