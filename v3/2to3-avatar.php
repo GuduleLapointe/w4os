@@ -65,8 +65,10 @@ class W4OS3_Avatar {
 
 		$query = self::$base_query;
 
-		if( W4OS3::is_uuid( $args ) ) {
-			$uuid = $args;
+		$uuid = ( W4OS3::is_uuid( $args ) ) ? $args : ( isset( $args['uuid'] ) ? $args['uuid'] : false );
+
+		if( $uuid !== false ) {
+			// $uuid = $args;
 			$query .= " WHERE PrincipalID = %s";
 			$sql = $this->db->prepare( $query, array( $uuid ) );
 			$avatar_row = $this->db->get_row( $sql );
@@ -107,6 +109,10 @@ class W4OS3_Avatar {
 
 			$this->data      = $avatar_row; // Dev only, shoudn't be use once the class is fully implemented
 		}
+	}
+
+	public function get_data() {
+		return $this->data;
 	}
 
 	public function uuid() {

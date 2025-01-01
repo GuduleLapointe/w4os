@@ -24,17 +24,26 @@ class W4OS_Avatar extends WP_User {
 		}
 
 		if ( W4OS_ENABLE_V3 ) {
+			if ( W4OS3::is_uuid( $id ) ) {
+				$uuid = $id;
+				$id = null;
+			}
 			$args = array_filter(
 				array(
 					'id'     => $id,
+					'uuid'     => $uuid ?? null,
 					'name'   => $name,
 					'site_id' => $site_id,
 				)
 			);
-			$avatar = new W4OS_Avatar( $args );
+			$avatar = new W4OS3_Avatar( $args );
+			
 			if ( $avatar->UUID ) {
-				$this->ID = $avatar->ID;
-				$this->data = $avatar->data;
+				$user = get_user_by( 'email', $avatar->Email );
+				$id = $user->ID;
+
+				$this->ID = $user->ID;
+				$this->data = $avatar->get_data();
 				$this->UUID = $avatar->UUID;
 				$this->FirstName = $avatar->FirstName;
 				$this->LastName = $avatar->LastName;
@@ -372,13 +381,13 @@ function w4os_update_avatar( $user, $params ) {
 			}
 
 		case 'w4os_create_avatar':
-			// $uuid = w4os_profile_sync($user); // refresh opensim data for this user
 			$uuid = w4os_create_avatar( $user, $params );
 			break;
 	}
 
+	
 	if ( $uuid && ! w4os_empty( $uuid ) ) {
-		$avatar = new W4OS_Avatar( $user->ID );
+		$avatar = new W4OS_Avatar( $uuid );
 		$avatar->add_role( 'grid_user' );
 		/*
 		In-world profiles are always public, so are web profiles */
@@ -1258,8 +1267,10 @@ function w4os_profile_fields_save( $user_id ) {
 		'w4os_firstname'           => esc_attr( $_POST['w4os_firstname'] ),
 		'w4os_lastname'            => esc_attr( $_POST['w4os_lastname'] ),
 		'opensim_profileAllow_web' => ( isset( $_POST['opensim_profileAllow_web'] ) ) ? ( esc_attr( $_POST['opensim_profileAllow_web'] ) == true ) : false,
-		'w4os_password_1'          => esc_attr( $_POST['w4os_password_1'] ),
 	);
+	if( !empty($_POST['w4os_password_1']) ) {
+		$args['w4os_password_1'] = esc_attr( $_POST['w4os_password_1'] );
+	}
 
 	update_user_meta( $user_id, 'w4os_firstname', $args['w4os_firstname'] );
 	update_user_meta( $user_id, 'w4os_lastname', $args['w4os_lastname'] );
