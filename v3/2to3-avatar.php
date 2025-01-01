@@ -692,7 +692,7 @@ class W4OS3_Avatar {
 		
 		$content            = '';
 		$can_list_users     = ( current_user_can( 'list_users' ) ) ? 'true' : 'false';
-		$current_user_email = wp_get_current_user()->user_email;
+
 		// Should not fetch this again, it should be saved in _construct, TO CHECK
 		if( ! $this->UUID ) {
 			error_log( __METHOD__ . ' called without UUID' );
@@ -701,7 +701,14 @@ class W4OS3_Avatar {
 		}
 
 		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
-		
+
+		if ( $this->Email == wp_get_current_user()->user_email ) {
+			$thatsme = true;
+		} else {
+			$session_avatar = W4OS3::session_avatar();
+			$thatsme = $session_avatar ? ( $session_avatar->UUID == $this->UUID ) : false;
+		}
+
 		$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
 		$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
 
@@ -712,6 +719,8 @@ class W4OS3_Avatar {
 		$profile          = array_filter(
 			array(
 				__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
+				// __( 'That\'s me in the spotlight', 'w4os' ) => $thatsme,
+				// __( 'Email', 'w4os' )       => $this->Email,
 				// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
 				// __('HG Name', 'w4os') => $this->HGName, // To implement
 				// __('Avatar Display Name', 'w4os') => $this->DisplayName, // To implement

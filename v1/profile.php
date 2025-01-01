@@ -99,18 +99,27 @@ class W4OS_Avatar extends WP_User {
 			return __( 'Profiles are not available at the moment.', 'w4os' );
 		}
 
+		// TODO: check why UUID is not already set as it should be in _construct
+		if ( ! $this->UUID ) {
+			$this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
+		}
+		
+		if ( W4OS_ENABLE_V3 ) {
+			error_log( 'W4OS_ENABLE_V3, convert avatar ' . $this->UUID );
+			$v3avatar = new W4OS3_Avatar( $this->UUID );
+			return $v3avatar->profile_page( $echo, $args );
+		}
+		
 		global $wpdb, $w4osdb;
 
 		$content            = '';
 		$can_list_users     = ( current_user_can( 'list_users' ) ) ? 'true' : 'false';
 		$current_user_email = wp_get_current_user()->user_email;
-		// Should not fetch this again, it should be saved in _construct, TO CHECK
-		$this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
-
+		
 		$avatar_query = "SELECT *
-      FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
-      WHERE active = 1 AND Email != ''
-      AND PrincipalID = '$this->UUID';";
+		FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
+		WHERE active = 1 AND Email != ''
+		AND PrincipalID = '$this->UUID';";
 		/*
 		In-world profiles are always public, so are web profiles */
 		// AND ( profileAllowPublish = 1 OR $can_list_users OR Email = '$current_user_email')

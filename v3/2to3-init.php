@@ -29,6 +29,8 @@ class W4OS3 {
 	public static $db_enabled      = null;
 	public static $ini             = null;
 	private static $key;
+	private static $avatar = null;
+	private static $user = null;
 
 	// public function __construct() {
 	// Safety only, this class should not be instantiated.
@@ -52,6 +54,61 @@ class W4OS3 {
 		self::includes();
 
 		$this->get_ini_config();
+
+		add_action( 'init', array( $this, 'viewer_session_auth' ) );
+	}
+
+	/**
+	 * Detect if the current page is called by a viewer (e.g. like FireStorm or Singularity, or any other SecondLife compatible viewer).
+	 */
+	public function viewer_session_auth() {
+		if ( self::$avatar !== null ) {
+			return ( self::$avatar ) ? true : false;
+		}
+
+		$session = null;
+		if ( ! self::$robust_db ) {
+			$session = false;
+		} else if ( ! isset( $_GET['session_id'] ) ) {
+			$session = false;
+		} else if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			$viewer = preg_match( '/SecondLife|OpenSim/', $_SERVER['HTTP_USER_AGENT'] );
+			if ( ! $viewer ) {
+				$session = false;
+			} else {
+				$parts = explode( '?', $_GET['session_id'] );
+				$session_id = $parts[0];
+				if( ! W4OS3::is_uuid( $session_id, false ) ) {
+					$session = false;
+				} else {
+					$sql = sprintf (
+						"SELECT UserID FROM Presence WHERE SessionID = '%s'",
+						esc_sql( $session_id )
+					);
+					$result = self::$robust_db->get_results( $sql );
+					
+					$avatar_uuid = ( $result ) ? $result[0]->UserID : false;
+					if ( ! $avatar_uuid ) {
+						$session = false;
+					} else {
+						$session = true;
+						$avatar = new W4OS3_Avatar( $avatar_uuid );
+						$user = ( $avatar->Email ) ? get_user_by( 'email', $avatar->Email ) : false;
+						self::$avatar = ( $avatar ) ? $avatar : false;
+						self::$user = ( $user ) ? $user : false;
+					}
+				}
+			}
+		}
+
+		return $session;
+	}
+
+	/**
+	 * Get viewer session avatar.
+	 */
+	public static function session_avatar() {
+		return self::$avatar;
 	}
 
 	/**
@@ -226,6 +283,7 @@ class W4OS3 {
 		define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
 		define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
 		define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
+		define( 'W4OS_NULL_KEY' , '00000000-0000-0000-0000-000000000000' );
 
 		define(
 			'W4OS_DB_ROBUST',
