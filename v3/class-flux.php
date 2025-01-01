@@ -28,6 +28,7 @@ class W4OS3_Flux {
         add_action( 'init', array( $this, 'register_post_type' ) );
         add_action( 'admin_menu', array( $this, 'register_admin_submenus' ) );
         add_action( 'admin_head', array( $this, 'set_active_submenu' ) );
+        add_action( 'save_post_flux_post', array( $this, 'save_post' ), 10, 3 );
     }
 
     /**
@@ -105,5 +106,14 @@ class W4OS3_Flux {
         // $avatar = get_avatar( $avatar_uuid, 96 );
         // $content = $avatar . $content;
         return $content;
+    }
+
+    public function save_post( $post_id, $post, $update ) {
+        if ( 'flux_post' !== $post->post_type ) return;
+        $content = trim( wp_strip_all_tags( $post->post_content ) );
+        $title   = wp_trim_words( $content, 10, '...' );
+        if ( get_post_field( 'post_title', $post_id ) !== $title ) {
+            wp_update_post( array( 'ID' => $post_id, 'post_title' => $title ) );
+        }
     }
 }
