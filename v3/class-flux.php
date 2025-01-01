@@ -26,35 +26,74 @@ class W4OS3_Flux {
 
     function init() {
         add_action( 'init', array( $this, 'register_post_type' ) );
+        add_action( 'admin_menu', array( $this, 'register_admin_submenus' ) );
+        add_action( 'admin_head', array( $this, 'set_active_submenu' ) );
     }
 
     /**
      * Register post type
      */
     function register_post_type() {
-        register_post_type( 'flux_post', array(
-            'labels' => array(
-                'name' => __( 'Flux Posts', 'w4os' ),
-                'singular_name' => __( 'Flux Post', 'w4os' ),
-                'add_new' => __( 'Add New', 'w4os' ),
-                'add_new_item' => __( 'Add New Flux Post', 'w4os' ),
-                'edit_item' => __( 'Edit Flux Post', 'w4os' ),
-                'new_item' => __( 'New Flux Post', 'w4os' ),
-                'view_item' => __( 'View Flux Post', 'w4os' ),
-                'search_items' => __( 'Search Flux Posts', 'w4os' ),
-                'not_found' => __( 'No Flux Posts found', 'w4os' ),
-                'not_found_in_trash' => __( 'No Flux Posts found in Trash', 'w4os' ),
-                'parent_item_colon' => __( 'Parent Flux Post:', 'w4os' ),
-                'menu_name' => __( 'Flux Posts', 'w4os' ),
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'rewrite' => array( 'slug' => 'flux' ),
-            'supports' => array( 'title', 'editor', 'author', 'thumbnail' ),
-            'taxonomies' => array(),
-            'menu_position' => 5,
-            'menu_icon' => 'dashicons-format-status',
-        ) );
+        $labels = array(
+            'name' => __( 'Flux Posts', 'w4os' ),
+            'singular_name' => __( 'Flux Post', 'w4os' ),
+            'add_new' => __( 'Add New', 'w4os' ),
+            'add_new_item' => __( 'Add New Flux Post', 'w4os' ),
+            'edit_item' => __( 'Edit Flux Post', 'w4os' ),
+            'new_item' => __( 'New Flux Post', 'w4os' ),
+            'view_item' => __( 'View Flux Post', 'w4os' ),
+            'search_items' => __( 'Search Flux Posts', 'w4os' ),
+            'not_found' => __( 'No Flux Posts found', 'w4os' ),
+            'not_found_in_trash' => __( 'No Flux Posts found in Trash', 'w4os' ),
+            'parent_item_colon' => __( 'Parent Flux Post:', 'w4os' ),
+            'menu_name' => __( 'Flux Posts', 'w4os' ),
+        );
+
+        $flux_url_prefix = get_option( 'w4os-settings:flux-prefix', 'flux' );
+
+        $args = array(
+            'labels'             => $labels,
+            'public'             => true,
+            'publicly_queryable' => true,
+            'show_ui'            => true,
+            'show_in_menu'       => false, // Ensure it does not create a separate main menu item
+            'query_var'          => true,
+            'rewrite'            => array( 'slug' => $flux_url_prefix ),
+            'capability_type'    => 'post',
+            'has_archive'        => $flux_url_prefix,
+            'hierarchical'       => false,
+            'menu_position'      => null,
+            'supports'           => array( 'editor', 'author' ),
+            // 'show_in_rest'       => true,
+            'show_in_admin_bar'  => true, // Ensure it shows in the admin bar
+            'taxonomies'         => array( 'flux_category' )
+        );
+
+        register_post_type( 'flux_post', $args );
+    }
+
+    public function register_admin_submenus() {
+        add_submenu_page(
+            'w4os',
+            __( 'Flux', 'w4os' ),
+            '(dev) ' . __( 'Flux', 'w4os' ),
+            'manage_options',
+            'edit.php?post_type=flux_post',
+            null,
+            // 1
+        );
+    }
+    
+    /**
+     * Set active submenu for flux posts
+     */
+    public function set_active_submenu() {
+        global $parent_file, $submenu_file, $current_screen;
+
+        if ( $current_screen->post_type === 'flux_post' ) {
+            $parent_file = 'w4os';
+            $submenu_file = 'edit.php?post_type=flux_post';
+        }
     }
 
     /**
@@ -67,6 +106,4 @@ class W4OS3_Flux {
         // $content = $avatar . $content;
         return $content;
     }
-
 }
-
