@@ -105,7 +105,6 @@ class W4OS_Avatar extends WP_User {
 		}
 		
 		if ( W4OS_ENABLE_V3 ) {
-			error_log( 'W4OS_ENABLE_V3, convert avatar ' . $this->UUID );
 			$v3avatar = new W4OS3_Avatar( $this->UUID );
 			return $v3avatar->profile_page( $echo, $args );
 		}
