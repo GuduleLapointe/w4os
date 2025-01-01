@@ -17,7 +17,7 @@ function w4os_template_include( $template ) {
 	global $wp_query;
 	$template_slug  = str_replace( '.php', '', basename( $template ) );
 	$localized_post_id = W4OS::get_localized_post_id();
-	if ( $template_slug == 'template-canvas' && $wp_query->query['pagename'] == 'profile' ) {
+	if ( $template_slug == 'template-canvas' && isset($wp_query->query['pagename']) && $wp_query->query['pagename'] == 'profile' ) {
 		if ( empty( $localized_post_id ) ) {
 			$localized_post_id = get_page_by_path( 'profile' )->ID;
 			$custom = W4OS_DIR . '/templates/page-profile-viewer.php';
@@ -27,14 +27,14 @@ function w4os_template_include( $template ) {
 	} else {
 		if ( empty( $localized_post_id ) ) {
 			// error_log( 'template slug ' . $template_slug );
-			$query_page = $wp_query->query['pagename'];
+			$query_page = $wp_query->query['pagename'] ?? '';
 			$page = get_page_by_path( $query_page );
-			$localized_post_id = $page->ID;
+			$localized_post_id = $page->ID ?? null;
 			// return $template; // Although there's no reason this happens
 		}
 		$original = get_post( $localized_post_id );
 	
-		$post_name = w4os_get_page_slug( $original->post_name );
+		$post_name = isset($original->post_name) ?? w4os_get_page_slug( $original->post_name );
 		// error_log( 'post_name ' . $post_name );
 		// error_log("original $localized_post_id post_name $post_name");
 		$post_type_slug = get_post_type();

@@ -1,6 +1,8 @@
 <?php
 add_filter( 'show_admin_bar', '__return_false' );
 
+$classes = "w4os profile-viewer page-template-profile page";
+
 if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 	if ( W4OS_ENABLE_V3 ) {
 		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
@@ -14,8 +16,6 @@ if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 		$avatar = new W4OS_Avatar( $user->ID );
 		$page_title = ( empty( $avatar->AvatarName ) ) ? __( 'Avatar not found', 'w4os' ) : $avatar->AvatarName;
 	}
-
-	$classes = "w4os page-template-profile page wp-custom-logo wp-embed-responsive";
 }
 ?><!doctype html>
 <html <?php language_attributes(); ?>
