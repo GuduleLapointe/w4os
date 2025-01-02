@@ -48,8 +48,23 @@ class W4OS3_Avatar {
 
 		$args = func_get_args();
 		if ( ! empty( $args[0] ) ) {
+			error_log( 'Initialize avatar with ' . $args[0] );
 			$this->initialize_avatar( $args[0] );
 		}
+	}
+
+	/**
+	 * Initialize the class. Register actions and filters.
+	 */
+	public function init() {
+		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
+		// Add rewrite rules for the profile page as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
+		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
+		
+		// DEBUG ONLY force flush permalink rules
+		add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
+		
+		add_filter( 'query_vars', array( $this, 'add_profile_query_vars' ) );
 	}
 
 	/**
@@ -134,21 +149,7 @@ class W4OS3_Avatar {
 	public function Email() {
 		return $this->Email ?? '';
 	}
-	
-	/**
-	 * Initialize the class. Register actions and filters.
-	 */
-	public function init() {
-		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
-		// Add rewrite rules for the profile page as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
-		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
-		
-		// DEBUG ONLY force flush permalink rules
-		add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
-		
-		add_filter( 'query_vars', array( $this, 'add_profile_query_vars' ) );
-	}
-	
+
 	/**
 	 * Add rewrite rules for the profile page.
 	 * as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
