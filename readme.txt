@@ -3,7 +3,7 @@ Contributors: gudulelapointe,magicoli69
 Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
-Requires PHP: 8.3.6
+Requires PHP: 7.3
 Tested up to: 6.7.1
 Stable tag: 2.9.1
 License: AGPLv3
@@ -21,7 +21,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 
 = Features =
 
-- **Avatar creation**:
+* **Avatar creation**:
   - Opensimulator section in standard wp account page
   - Avatar tab in account dashboard on WooCommerce websites
   - Avatar and website passwords are synchronized
@@ -29,21 +29,21 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - **Public avatar profile**: excerpt of the avatar's profile
   - **Avatar Models**: default outfits to choose from on registration
   - **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
-- **Search Engine**: enable in-world search
+* **Search Engine**: enable in-world search
   - **places**
   - **land for sale**
   - **classifieds**
   - **events** (2do.directory integration)
-- Shortcodes
+* Shortcodes
   - **Grid info**: `[grid-info]` shortcode, Gutenberg block and Divi module
   - **Grid status**: `[grid-status]` shortcode, Gutenberg block and Divi module
   - **Grid status**: `[popular-places]` shortcode, Gutenberg block and Divi module
   - **Profile page**: `[avatar-profile]`  shortcode, Gutenberg block and Divi module
-- **Web assets server**: the needed bridge to display in-world images on a website
-- **Currency helpers**: integration with Podex, Gloebit and core money module
-- **Offline messages e-mail forwarding**
-- Manual and cron Grid/WP users sync
-- Auth with avatar credentials (if no matching wp account, create one)
+* **Web assets server**: the needed bridge to display in-world images on a website
+* **Currency helpers**: integration with Podex, Gloebit and core money module
+* **Offline messages e-mail forwarding**
+* Manual and cron Grid/WP users sync
+* Auth with avatar credentials (if no matching wp account, create one)
 
 = Paid version =
 
@@ -61,17 +61,17 @@ The free version from WordPress plugins directory and the [paid version](https:/
 
 Please check [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.
 
-- Choose MySQL storage
-- To allow default outfits on registration and web user profiles, you must enable user profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and [UserProfiles] sections)
-- Start  the simulator, create the first (admin) avatar and a first region, and connect in-world to make sure the grid is working properly
+* Choose MySQL storage
+* To allow default outfits on registration and web user profiles, you must enable user profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and [UserProfiles] sections)
+* Start  the simulator, create the first (admin) avatar and a first region, and connect in-world to make sure the grid is working properly
 
 = WordPress installation =
 
 Please check [WordPress](https://wordpress.org/) documentation to install and configure WordPress.
 
-- Permalinks need to be enabled (set to any other choice than the default "Plain" setting)
-- PHP minimum version: 7.3
-- The PHP modules curl, xml, xml-rpc and imagick are needed to allow full functionalty of the plugin (and they are also recommended for WordPress anyway). Without these plugins, some important functionalties will not be available.
+* Permalinks need to be enabled (set to any other choice than the default "Plain" setting)
+* PHP minimum version: 7.3
+* The PHP modules curl, xml, xml-rpc and imagick are needed to allow full functionalty of the plugin (and they are also recommended for WordPress anyway). Without these plugins, some important functionalties will not be available.
 
 = Plugin installation and configuration =
 
@@ -95,8 +95,8 @@ Models are displayed on new avatar registration form, to allow chosing an initia
 
 Model avatars can only be used for this purpose. **Under no circumstances** should an avatar belonging to a user be used as a model.
 
-- Visit `OpenSimulator > Settings > Avatar Models` and confirm or customize the naming structure for your models. It will be use to select automatically avatars to display as models in registration form
-- From robust console, create a user named according to these settings (for example, "Female Default", Default John", ...).
+* Visit `OpenSimulator > Settings > Avatar Models` and confirm or customize the naming structure for your models. It will be use to select automatically avatars to display as models in registration form
+* From robust console, create a user named according to these settings (for example, "Female Default", Default John", ...).
     ```
     R.O.B.U.S.T. # create user Default John
     Password: ************************ (use a strong password)
@@ -110,7 +110,7 @@ Model avatars can only be used for this purpose. **Under no circumstances** shou
   - The rest of the name will be displayed in the form, so make it relevant
   - You can leave Email and User ID blank
   - **Leave Model Name blank** (you are creating a model, not using an existing model to create a user)
-- Connect in-world as each avatar and change outfit
+* Connect in-world as each avatar and change outfit
   - Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items
   - Take a snapshot to set model avatar profile picture
   - Disconnect the model avatar after modifications, to make sure changes will be taken in account immediately
@@ -127,31 +127,31 @@ See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) fo
 
 = Medium term =
 
-- Destinations guide
-- Web search
-- Multiple avatars for same WordPress user
-- Improve avatar profile
+* Destinations guide
+* Web search
+* Multiple avatars for same WordPress user
+* Improve avatar profile
   - Switch to allow web profile
   - Better basic layout
   - Web edit profile
-- 2do HYPEvents project integration <https://2do.pm>
-- Gudz Teleport Board project integration (based on user picks)
-- Admin Use sim/grid configuration file to fetch settings if on the same host
-- Admin create users
-- Admin create models (from current own avatar appearance)
+* 2do HYPEvents project integration <https://2do.pm>
+* Gudz Teleport Board project integration (based on user picks)
+* Admin Use sim/grid configuration file to fetch settings if on the same host
+* Admin create users
+* Admin create models (from current own avatar appearance)
 
 = Long term =
 
-- Robust console connection
+* Robust console connection
   - Admin Start / Stop regions
   - Admin Create region
   - User's own regions control (create, start, stop, backup)
-- WooCommerce integration
+* WooCommerce integration
   - paid accounts
   - regions orders
   - other pay-for services
-- Deactivate (recommended) or delete (experimental) grid user when deleting wp account
-- Split code between OpenSimulator and WordPress specific codes
+* Deactivate (recommended) or delete (experimental) grid user when deleting wp account
+* Split code between OpenSimulator and WordPress specific codes
 
 == Frequently Asked Questions ==
 
@@ -209,6 +209,17 @@ or not. In either case, idk&idc.
 4. Web assets server settings
 
 == Changelog ==
+
+= Unreleased =
+* fix profile custom template not always working
+* fix arrays passed as if they were strings in w4os_array2table
+* fix crash on profile save
+
+v3 beta
+* new enabled feed tab on avatar profile
+* new viewer session authentication (for profile feed post)
+* fix avatar profile
+* enable viewer web_profile_url format (with ?name= argument)
 
 = 2.9.1 =
 * fix admin header shown in SL viewer embed and modal
@@ -392,7 +403,7 @@ Stable release, includes updates from 2.4.2 to 2.4.7, mainly:
 * fix wrong event time in in-world search (UTC shown instead of grid time)
 * fix w4os_profile_sync() fatal error when profiles are disabled
 * fix fatal error when wp object is passed as user_id
-- minor fixes (profile page title, profile image, profile text display)
+* minor fixes (profile page title, profile image, profile text display)
 
 = 2.3.9 =
 * new search helper

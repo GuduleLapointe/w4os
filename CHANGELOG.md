@@ -1,5 +1,16 @@
 ## Changelog
 
+### Unreleased
+- fix profile custom template not always working
+- fix arrays passed as if they were strings in w4os_array2table
+- fix crash on profile save
+
+v3 beta
+- new enabled feed tab on avatar profile
+- new viewer session authentication (for profile feed post)
+- fix avatar profile
+- enable viewer web_profile_url format (with ?name= argument)
+
 ### 2.9.1
 - fix admin header shown in SL viewer embed and modal
 - fix permissions issues with $option_group
@@ -28,8 +39,7 @@ v3 beta features (available from github or w4os website releases):
 Transitional release, progressively integrate upcoming v3 features as beta
 Do not enabe v3 beta features in production environment
 
-v3 beta features (available in github or w4os website releases):
-
+v3 beta features (available from github or w4os website releases):
 - option in classic settings to enable v3 beta features
 - new v3 settings page (limited, main options still in classic settings page)
 - new v3 avatars admin page, including

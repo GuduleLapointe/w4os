@@ -2,7 +2,7 @@
 
 ![Stable 2.9.1](https://badgen.net/badge/Stable/2.9.1/00aa00)
 ![WordPress 5.3.0 - 6.7.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.7.1/3858e9)
-![Requires PHP 8.3.6](https://badgen.net/badge/PHP/8.3.6/7884bf)
+![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
 ![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
 
 WordPress interface for OpenSimulator (w4os).
