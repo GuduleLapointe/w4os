@@ -12,40 +12,65 @@ function w4os_get_page_slug( $page_slug ) {
 	return $page_slug;
 }
 
-add_action( 'template_include', 'w4os_template_include' );
-function w4os_template_include( $template ) {
+add_action( 'template_redirect', 'w4os_template_redirect', 5 );
+function w4os_template_redirect() {
 	global $wp_query;
-	$template_slug  = str_replace( '.php', '', basename( $template ) );
-	$localized_post_id = W4OS::get_localized_post_id();
-	if ( $template_slug == 'template-canvas' && isset($wp_query->query['pagename']) && $wp_query->query['pagename'] == 'profile' ) {
-		if ( empty( $localized_post_id ) ) {
-			$localized_post_id = get_page_by_path( 'profile' )->ID;
-			$custom = W4OS_DIR . '/templates/page-profile-viewer.php';
-		} else {
-			return $template;
-		}
-	} else {
-		if ( empty( $localized_post_id ) ) {
-			// error_log( 'template slug ' . $template_slug );
-			$query_page = $wp_query->query['pagename'] ?? '';
-			$page = get_page_by_path( $query_page );
-			$localized_post_id = $page->ID ?? null;
-			// return $template; // Although there's no reason this happens
-		}
-		$original = get_post( $localized_post_id );
+	$pagename = $wp_query->query['pagename'] ?? '';
+	$viewer = preg_match( '/SecondLife|OpenSim/', $_SERVER['HTTP_USER_AGENT'] );
 	
-		$post_name = isset($original->post_name) ?? w4os_get_page_slug( $original->post_name );
-		// error_log( 'post_name ' . $post_name );
-		// error_log("original $localized_post_id post_name $post_name");
-		$post_type_slug = get_post_type();
-		$custom         = W4OS_DIR . "/templates/$template_slug-$post_name.php";
+	if ( $pagename === 'profile' && ( $viewer || isset( $wp_query->query['name'] ) ) ) {
+		$custom = W4OS_DIR . '/templates/page-profile-viewer.php';	
+		if ( file_exists( $custom ) ) {
+			include $custom;
+			exit;
+		}
 	}
-
-	if ( file_exists( $custom ) ) {
-		return $custom;
-	}
-	return $template;
 }
+
+/**
+ * Use template for viewer profile.
+ * Replaced by template_redirect hook.
+ * Code kept temporarily until we're sure it's not needed anymore.
+ */
+// add_action( 'template_include', 'w4os_template_include' );
+// function w4os_template_include( $template ) {
+// 	global $wp_query;
+// 	$pagename = $wp_query->query['pagename'] ?? '';
+//	
+// 	$template_slug  = str_replace( '.php', '', basename( $template ) );
+// 	$localized_post_id = W4OS::get_localized_post_id();
+// 	if ( $template_slug == 'template-canvas' && isset($wp_query->query['pagename']) && $wp_query->query['pagename'] == 'profile' ) {
+// 		error_log( 'template-canvas profile' );
+// 		if ( empty( $localized_post_id ) ) {
+// 			error_log ( 'empty localized_post_id' );
+// 			$localized_post_id = get_page_by_path( 'profile' )->ID;
+// 			$custom = W4OS_DIR . '/templates/page-profile-viewer.php';
+// 		} else {
+// 			error_log ( 'localized_post_id ' . $localized_post_id . " returning unchanged $template" );
+// 			return $template;
+// 		}
+// 	} else {
+// 		if ( empty( $localized_post_id ) ) {
+// 			// error_log( 'template slug ' . $template_slug );
+// 			$query_page = $wp_query->query['pagename'] ?? '';
+// 			$page = get_page_by_path( $query_page );
+// 			$localized_post_id = $page->ID ?? null;
+// 			// return $template; // Although there's no reason this happens
+// 		}
+// 		$original = get_post( $localized_post_id );
+//	
+// 		$post_name = isset($original->post_name) ?? w4os_get_page_slug( $original->post_name );
+// 		// error_log( 'post_name ' . $post_name );
+// 		// error_log("original $localized_post_id post_name $post_name");
+// 		$post_type_slug = get_post_type();
+// 		$custom         = W4OS_DIR . "/templates/$template_slug-$post_name.php";
+// 	}
+//
+// 	if ( file_exists( $custom ) ) {
+// 		return $custom;
+// 	}
+// 	return $template;
+// }
 
 add_filter( 'the_content', 'w4os_the_content' );
 function w4os_the_content( $content ) {

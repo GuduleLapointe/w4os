@@ -48,7 +48,6 @@ class W4OS3_Avatar {
 
 		$args = func_get_args();
 		if ( ! empty( $args[0] ) ) {
-			error_log( 'Initialize avatar with ' . $args[0] );
 			$this->initialize_avatar( $args[0] );
 		}
 	}
@@ -156,7 +155,7 @@ class W4OS3_Avatar {
 	 */
 	public function add_rewrite_rules() {
 		$target = 'index.php?pagename=' . self::$slug . '&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]';
-
+		
 		// Rewrite rule for $profile_page_url/$firstname.$lastname
 		add_rewrite_rule(
 			'^' . self::$slug . '/([^/]+)\.([^/\.\?&]+)(\?.*)?$',

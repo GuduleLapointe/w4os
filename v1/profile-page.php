@@ -177,6 +177,13 @@ add_filter(
 	}
 );
 
+/**
+ * TODO: separate hooks to handle page and document titles.
+ * 
+ * Templates should be fully handled by templates/templates.php
+ * However, this hook also handles the profiles correct page title 
+ * and document title, so it cannot be disabled yet.
+ */
 add_action(
 	'template_include',
 	function ( $template ) {
@@ -185,7 +192,6 @@ add_action(
 			return $template;
 		}
 		// echo "post_name " . $wp_query->queried_object->post_name;
-
 		if ( isset( $_REQUEST['w4os_update_avatar'] ) ) {
 			$user = get_user_by( 'ID', $_REQUEST['user_id'] );
 			$uuid = w4os_update_avatar(
