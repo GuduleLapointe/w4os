@@ -1101,7 +1101,17 @@ function w4os_grid_profile_url( $user_or_id ) {
 		return;
 	}
 
-	return W4OS::sprintf_safe( 'hop://%s/app/agent/%s/about', W4OS_GRID_LOGIN_URI, $user->UUID );
+	$link = W4OS::sprintf_safe( '/app/agent/%s/about', $user->UUID );
+	if ( W4OS_ENABLE_V3 && W4OS3::in_world_call() ) {
+		// SLURL not supported from within profile tab, not sure it is in embedded web browser either
+		return false;
+		// $link = 'secondlife://' . $link;
+		// error_log( 'replacing link with ' . $link );
+		// return $link;
+	}
+
+	$link = 'hop://' . W4OS_GRID_LOGIN_URI . $link;
+	return $link;
 }
 
 function w4os_web_profile_url( $user_or_id ) {

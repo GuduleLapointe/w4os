@@ -731,7 +731,7 @@ function w4os_demask( $mask, $values, $additionalvalue ) {
 function w4os_hop( $url = null, $string = null, $format = true ) {
 	if ( empty( $url ) ) {
 		// $url = get_option( 'w4os_login_uri' );
-		return;
+		return $string;
 	}
 	$url = opensim_format_tp( $url, TPLINK_HOP );
 
