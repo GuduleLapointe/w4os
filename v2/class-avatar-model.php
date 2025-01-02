@@ -208,9 +208,9 @@ class W4OS_Model extends W4OS_Loader {
 			) . '</li></ul>';
 	}
 
-	static function get_avatars( $format = OBJECT ) {
+	static function get_avatars( $args = array(), $format = OBJECT ) {
 		if ( W4OS_ENABLE_V3 ) {
-			return W4OS3_Avatar::get_avatars( $format );
+			return W4OS3_Avatar::get_avatars( array(), $format );
 		}
 
 		global $w4osdb;

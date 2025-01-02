@@ -562,15 +562,33 @@ class W4OS3_Avatar {
 		return esc_html( $server_uri );
 	}
 
-	static function get_avatars( $format = OBJECT ) {
+	static function get_avatars( $args = array(), $format = OBJECT ) {
 		global $w4osdb;
 		if ( empty( $w4osdb ) ) {
 			return false;
 		}
 
-		$avatars = array();
+		if( ! isset ( $args['active'] ) ) {
+			$args['active'] = true;
+		}
 
-		$sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE active = true';
+		foreach( $args as $arg => $value ) {
+			switch( $arg ) {
+				case 'Email':
+					$conditions[] = $w4osdb->prepare( 'Email = %s', $value );
+					break;
+				case 'active':
+					$conditions[] = 'active = ' . ( $value ? 'true' : 'false' );
+					break;
+			}
+		}
+
+		$avatars = array();
+		$sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts';
+		if( ! empty( $conditions )) {
+			$sql .= ' WHERE ' . implode( ' AND ', $conditions );
+		}
+
 		$result = $w4osdb->get_results( $sql, $format );
 		if ( is_array( $result ) ) {
 			foreach ( $result as $avatar ) {

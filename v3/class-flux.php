@@ -106,18 +106,93 @@ class W4OS3_Flux {
      * Render author metabox
      */
     function render_author_metabox( $post ) {
+        $content = '';
+        $args = array();
+
+        $user_email = get_the_author_meta( 'user_email' );
+        if ( ! $user_email ) {
+            // Use current wp user email instead
+            $user_email = wp_get_current_user()->user_email;
+        }
+        $args['Email'] = $user_email;
+        $args = array_filter( $args );
+
+        $avatars = W4OS3_Avatar::get_avatars( array( 'Email' => $user_email ) );
+
+        // Allow admin to select any avatar
+        if ( current_user_can( 'manage_options' ) ) {
+            $avatars = array_merge(
+                $avatars,
+                W4OS3_Avatar::get_avatars()
+            );
+        }
+        
         $avatar_uuid = get_post_meta( $post->ID, '_avatar_uuid', true );
         $avatar_name = get_post_meta( $post->ID, '_avatar_name', true );
-        $avatar = new W4OS3_Avatar( $avatar_uuid );
 
-        $profile_url = $avatar->get_profile_url();
-
-        $avatar_url = $profile_url . '/' . $avatar_uuid;
-        $content = sprintf(
-            '<p>%s</p>',
-            $avatar->profile_link(),
+        if ( $avatar_uuid ) {
+            // Make sure current value is in the list
+            $avatars = wp_parse_args(
+                $avatars,
+                array(
+                    $avatar_uuid => $avatar_name
+                )
+            );
+        } else {
+            $avatar_uuid = key( $avatars );
+            $avatar_name = current( $avatars );
+        }
+        
+        // Build a select2 dropdown with avatars
+        $content .= sprintf(
+            '<select name="avatar_uuid" id="avatar_uuid" class="select2-field" %s>',
+            ( count( $avatars ) <= 1 ) ? 'disabled' : '',
         );
+        // $content .= '<option value="">' . __( 'Select an avatar', 'w4os' ) . '</option>';
+        foreach( $avatars as $uuid => $name ) {
+            $content .= sprintf(
+                '<option value="%s" %s>%s</option>',
+                $uuid,
+                ( $uuid === $avatar_uuid ) ? ' selected' : '',
+                $name,
+            );
+        }
+        $content .= '</select>';
+        
+        if( $avatar_uuid ) {
+            $avatar = new W4OS3_Avatar( $avatar_uuid );
+            
+            $profile_url = $avatar->get_profile_url();
+            
+            $avatar_url = $profile_url . '/' . $avatar_uuid;
+            $content .= sprintf(
+                '<p>%s</p>',
+                $avatar->profile_link(),
+            );
+        }
+        
+        W4OS3_Settings::enqueue_select2();
         echo $content;
+    }
+
+    public function format_author() {
+        $avatar_uuid = get_post_meta( $post->ID, '_avatar_uuid', true );
+        $avatar_name = get_post_meta( $post->ID, '_avatar_name', true );
+        if ( ! $avatar_uuid ) {
+            return 'could not find author'; // DEBUG
+        }
+
+        $avatar = new W4OS3_Avatar( $avatar_uuid );
+            
+        $profile_url = $avatar->get_profile_url();
+        
+        $avatar_url = $profile_url . '/' . $avatar_uuid;
+        $content .= sprintf(
+            '<a href="%s">%s</a>',
+            $avatar_url,
+            $avatar_name,
+        );
+        return $content;
     }
 
     public function register_admin_submenus() {
@@ -191,6 +266,11 @@ class W4OS3_Flux {
         $title   = wp_trim_words( $content, 10, '...' );
         if ( get_post_field( 'post_title', $post_id ) !== $title ) {
             wp_update_post( array( 'ID' => $post_id, 'post_title' => $title ) );
+        }
+        if ( isset( $_POST['avatar_uuid'] ) ) {
+            update_post_meta( $post_id, '_avatar_uuid', sanitize_text_field( $_POST['avatar_uuid'] ) );
+            $avatar = new W4OS3_Avatar( $_POST['avatar_uuid'] );
+            update_post_meta( $post_id, '_avatar_name', $avatar->get_name( $_POST['avatar_uuid'] ) );
         }
     }
 

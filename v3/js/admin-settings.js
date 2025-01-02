@@ -42,6 +42,14 @@ document.addEventListener(
 			}
 		);
 
+		// Enable select2 for fields with class select2-field
+		const select2Fields = document.querySelectorAll( '.select2-field' );
+		select2Fields.forEach(
+			selectEl => {
+				jQuery( selectEl ).select2();
+			}
+		);
+
 		document.querySelectorAll( '[data-modal-target]' ).forEach(
 			trigger => {
 				trigger.addEventListener(
