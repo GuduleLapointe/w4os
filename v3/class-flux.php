@@ -295,7 +295,10 @@ class W4OS3_Flux {
         return $post_id->get_error_message();
     }
 
-    public function get_flux_posts() {
+    /**
+     * Get flux posts with pagination.
+     */
+    public function get_flux_posts( $flux_paged = 1, $posts_per_page = 10 ) {
         if( ! $this->avatar_uuid ) {
             return;
         }
@@ -306,14 +309,20 @@ class W4OS3_Flux {
                     'key' => '_avatar_uuid',
                     'value' => $this->avatar_uuid,
                 )
-            )
+            ),
+            'paged' => $flux_paged,
+            'posts_per_page' => $posts_per_page,
         );
         $flux_posts = get_posts( $args );
         return $flux_posts;
     }
 
+    /**
+     * Display flux posts with pagination.
+     */
     public function display_flux() {
-        $flux_posts = $this->get_flux_posts();
+        $flux_paged = isset($_GET['flux_paged']) ? intval($_GET['flux_paged']) : 1;
+        $flux_posts = $this->get_flux_posts( $flux_paged );
         $content = '';
 
         $content .= $this->new_flux_form();
@@ -342,6 +351,22 @@ class W4OS3_Flux {
                 $message
             );
         }
+
+        // Add pagination
+        $total_posts = wp_count_posts('flux_post')->publish;
+        $total_pages = ceil($total_posts / 10);
+        if ( $total_pages > 1 ) {
+            $current_page = max(1, $flux_paged);
+            $base = add_query_arg( 'flux_paged', '%#%' );
+            $pagination = paginate_links( array(
+                'base' => esc_url( $base ),
+                'format' => '',
+                'current' => $current_page,
+                'total' => $total_pages,
+            ));
+            $content .= '<div class="flux-pagination">' . $pagination . '</div>';
+        }
+
         if ( ! empty( $content ) ) {
             $content = '<div class="flux">' . $content . '</div>';
         }
