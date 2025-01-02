@@ -8,6 +8,9 @@ function w4os_array2table( $array, $class = '', $level = 1 ) {
 	if ( $level == 1 ) {
 		$result = '';
 		foreach ( $array as $key => $value ) {
+			if ( is_array( $value )) {
+				$value = join( ', ', $value );
+			}
 			$result .= '<tr><td class=gridvar>' . __( $key, 'w4os' ) . "</td><td class=gridvalue>$value</td></tr>";
 		}
 		if ( ! empty( $result ) ) {
