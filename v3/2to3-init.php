@@ -58,6 +58,11 @@ class W4OS3 {
 		add_action( 'init', array( $this, 'viewer_session_auth' ) );
 	}
 
+	public static function in_world_call() {
+		$viewer = preg_match( '/SecondLife|OpenSim/', $_SERVER['HTTP_USER_AGENT'] );
+		return ( $viewer ) ? true : false;
+	}
+
 	/**
 	 * Detect if the current page is called by a viewer (e.g. like FireStorm or Singularity, or any other SecondLife compatible viewer).
 	 */
@@ -73,7 +78,7 @@ class W4OS3 {
 			$session = false;
 		} else if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			$viewer = preg_match( '/SecondLife|OpenSim/', $_SERVER['HTTP_USER_AGENT'] );
-			if ( ! $viewer ) {
+			if ( ! self::in_world_call() ) {
 				$session = false;
 			} else {
 				$parts = explode( '?', $_GET['session_id'] );

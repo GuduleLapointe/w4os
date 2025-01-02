@@ -324,9 +324,15 @@ class W4OS3_Flux {
         $content = '';
 
         $content .= $this->new_flux_form();
+        $in_world_call = W4OS3::in_world_call();
 
         foreach( $flux_posts as $flux_post ) {
             // $content .= '<div class="flux-post">';
+            if ( $in_world_call ) {
+                $message = preg_replace('/<a (.*?)>/', '<a $1 target="_blank">', $flux_post->post_content);
+            } else {
+                $message = $flux_post->post_content;
+            }
             $content .= sprintf(
                 '<div class="flux-post" id="flux-post-%d">
                     <div class=thumb>%s</div>
@@ -340,14 +346,8 @@ class W4OS3_Flux {
                 $this->thumb,
                 $this->avatar->AvatarName,
                 $flux_post->post_date,
-                $flux_post->post_content
+                $message
             );
-            // Sow avatar name, post date and post content
-            // $content .= 
-            // $content .= '<p>' . $this->avatar->AvatarName . '</p>';
-            // $content .= '<p>' . $flux_post->post_date . '</p>';
-            // $content .= '<p>' . $flux_post->post_content . '</p>';
-            // $content .= '</div>';
         }
         if ( ! empty( $content ) ) {
             $content = '<div class="flux">' . $content . '</div>';
