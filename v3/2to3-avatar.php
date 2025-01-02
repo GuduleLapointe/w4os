@@ -61,8 +61,8 @@ class W4OS3_Avatar {
 		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
 		
 		// DEBUG ONLY force flush permalink rules
-		add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
-		
+		// add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
+
 		add_filter( 'query_vars', array( $this, 'add_profile_query_vars' ) );
 	}
 
@@ -210,6 +210,12 @@ class W4OS3_Avatar {
 							'description' => __( 'This will allow users to have more than one avatar on the site.', 'w4os' )
 							. ' ' . __( 'Disabling the option can only be enforced for avatars created through the website.', 'w4os' ),
 						),
+						'override_author' => array(
+							'label'       => __( 'Override author', 'w4os' ),
+							'type'        => 'checkbox',
+							'options'     => array( __( 'Use profile as author page.', 'w4os' ) ),
+							'description' => __( 'This will allow avatars to be set as post authors.', 'w4os' ),
+						)
 					),
 				),
 			),
