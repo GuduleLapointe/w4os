@@ -21,30 +21,33 @@ img.profile {
 
 img.w4os-avatar-thumb {
 	width: 48px;
-	height: 48px;
+	/* height: 48px; */
+	aspect-ratio: 1/1;
 	border-radius: 50%;
-	margin: 10px 0;
+	margin: 5px 0;
 }
 
 .flux {
 	margin: 10px 0;
+	padding: 10px;
 }
 
 #new-flux-post-form input,
 #new-flux-post-form textarea,
 #new-flux-post-form button {
 	padding: 10px;
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 #new-flux-post-form #flux-post-content {
 	width: 100%;
 }
 
+/* 
 #new-flux-post-form button,
 #new-flux-post-form input[type="submit"] {
-	/* border-radius: 10px; */
-}
+} 
+*/
 
 .flux-post {
 	display: flex;
@@ -65,9 +68,11 @@ img.w4os-avatar-thumb {
 
 .flux-post > .content > .name,
 .flux-post > .content > .date {
-	font-size: 0.8em;
 	margin: 0;
 	display: inline-block;
+}
+.flux-post > .content > .date {
+	font-size: 0.8em;
 }
 .flux-post > .content > .name {
 	font-weight: bold;
@@ -77,5 +82,6 @@ img.w4os-avatar-thumb {
 	border-radius: 5px;
 	border: solid 1px #ccc;
 	padding: 10px;
+	margin: 0;
 	width: auto;
 }

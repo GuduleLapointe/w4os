@@ -145,6 +145,17 @@ class W4OS3_Flux {
     }
 
     public function new_flux_form() {
+        $avatar = $this->avatar ?? false;
+        if ( $avatar && $avatar->Email == wp_get_current_user()->user_email ) {
+			$thatsme = true;
+		} else {
+			$session_avatar = W4OS3::session_avatar();
+			$thatsme = $session_avatar ? ( $session_avatar->UUID == $avatar->UUID ) : false;
+		}
+        if ( ! $thatsme ) {
+            return;
+        }
+
         $content = '';
         $content .= '<form id="new-flux-post-form" method="post">';
         if( $this->avatar_uuid ) {

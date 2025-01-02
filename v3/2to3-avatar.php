@@ -775,13 +775,6 @@ class W4OS3_Avatar {
 
 		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
 
-		if ( $this->Email == wp_get_current_user()->user_email ) {
-			$thatsme = true;
-		} else {
-			$session_avatar = W4OS3::session_avatar();
-			$thatsme = $session_avatar ? ( $session_avatar->UUID == $this->UUID ) : false;
-		}
-
 		$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
 		$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
 
@@ -815,10 +808,10 @@ class W4OS3_Avatar {
 
 		$content .= w4os_array2table( $profile, 'avatar-profile-table' );
 
-		if( $thatsme ) {
+		// if( $thatsme ) {
 			$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
 			$content .= $flux->display_flux();
-		}
+		// }
 
 		if ( $echo ) {
 			echo $content;

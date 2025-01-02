@@ -117,7 +117,8 @@ class W4OS_Avatar extends WP_User {
 			$v3avatar = new W4OS3_Avatar( $this->UUID );
 			return $v3avatar->profile_page( $echo, $args );
 		}
-		
+
+
 		global $wpdb, $w4osdb;
 
 		$content            = '';
@@ -210,6 +211,10 @@ class W4OS_Avatar extends WP_User {
 
 			// $content .= w4os_array2table((array)$avatar_row);
 			$content .= w4os_array2table( $profile, 'avatar-profile-table' );
+
+			if( W4OS_ENABLE_V3 ) {
+				// $content .= $avatar->profile_page( false, $args );
+			}
 
 		} else {
 			return false;
