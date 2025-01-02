@@ -49,6 +49,9 @@ class W4OS3_Flux {
         add_filter( 'manage_edit-flux_post_sortable_columns', array( $this, 'make_author_column_sortable' ) );
         add_action( 'pre_get_posts', array( $this, 'orderby_author' ) );
         add_action( 'pre_get_posts', array ( $this,'extend_admin_search' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_infinite_scroll_script' ) );
+        add_action( 'wp_ajax_load_more_flux_posts', array( $this, 'load_more_flux_posts' ) );
+        add_action( 'wp_ajax_nopriv_load_more_flux_posts', array( $this, 'load_more_flux_posts' ) );
     }
 
     /**
@@ -328,6 +331,7 @@ class W4OS3_Flux {
         $content .= $this->new_flux_form();
         $in_world_call = W4OS3::in_world_call();
 
+        $content .= '<div id="flux-posts-container">';
         foreach( $flux_posts as $flux_post ) {
             // $content .= '<div class="flux-post">';
             if ( $in_world_call ) {
@@ -351,26 +355,96 @@ class W4OS3_Flux {
                 $message
             );
         }
+        $content .= '</div>';
 
         // Add pagination
         $total_posts = wp_count_posts('flux_post')->publish;
         $total_pages = ceil($total_posts / 10);
         if ( $total_pages > 1 ) {
-            $current_page = max(1, $flux_paged);
-            $base = add_query_arg( 'flux_paged', '%#%' );
-            $pagination = paginate_links( array(
-                'base' => esc_url( $base ),
-                'format' => '',
-                'current' => $current_page,
-                'total' => $total_pages,
-            ));
-            $content .= '<div class="flux-pagination">' . $pagination . '</div>';
+            $content .= '<div class="flux-pagination" style="display: none;"></div>';
         }
+
+        // Add a loading indicator
+        $content .= '<div id="flux-loading" style="display: none;">' . __( 'Loading more posts...', 'w4os' ) . '</div>';
 
         if ( ! empty( $content ) ) {
             $content = '<div class="flux">' . $content . '</div>';
         }
         return $content;
+    }
+
+    /**
+     * Enqueue Infinite Scroll JavaScript
+     */
+    public function enqueue_infinite_scroll_script() {
+        if ( is_page() ) { // Adjust the condition as needed
+            wp_enqueue_script(
+                'infinite-scroll',
+                plugins_url( 'v3/js/flux.js', __FILE__ ),
+                array( 'jquery' ),
+                '1.0',
+                true
+            );
+            wp_localize_script( 'infinite-scroll', 'flux_params', array(
+                'ajax_url' => admin_url( 'admin-ajax.php' ),
+                'flux_paged' => 2,
+                'posts_per_page' => 10,
+                'avatar_uuid' => isset( $this->avatar_uuid ) ? $this->avatar_uuid : '',
+            ));
+        }
+    }
+
+    /**
+     * AJAX Handler to Load More Flux Posts
+     */
+    public function load_more_flux_posts() {
+        $paged = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
+        $posts_per_page = isset( $_POST['posts_per_page'] ) ? intval( $_POST['posts_per_page'] ) : 10;
+        $avatar_uuid = isset( $_POST['avatar_uuid'] ) ? sanitize_text_field( $_POST['avatar_uuid'] ) : '';
+
+        if ( ! $avatar_uuid ) {
+            wp_send_json_error( 'No avatar UUID provided.' );
+        }
+
+        $args = array(
+            'post_type' => 'flux_post',
+            'meta_query' => array(
+                array(
+                    'key' => '_avatar_uuid',
+                    'value' => $avatar_uuid,
+                )
+            ),
+            'paged' => $paged,
+            'posts_per_page' => $posts_per_page,
+        );
+
+        $flux_posts = get_posts( $args );
+
+        if ( empty( $flux_posts ) ) {
+            wp_send_json_error( 'No more posts.' );
+        }
+
+        ob_start();
+        foreach( $flux_posts as $flux_post ) {
+            // ...existing display code...
+            if ( W4OS3::in_world_call() ) {
+                $message = preg_replace('/<a (.*?)>/', '<a $1 target="_blank">', $flux_post->post_content);
+            } else {
+                $message = $flux_post->post_content;
+            }
+            ?>
+            <div class="flux-post" id="flux-post-<?php echo esc_attr( $flux_post->ID ); ?>">
+                <div class="thumb"><?php echo esc_html( $this->thumb ); ?></div>
+                <div class="content">
+                    <p class="name"><?php echo esc_html( $this->avatar->AvatarName ); ?></p>
+                    <p class="date"><?php echo esc_html( $flux_post->post_date ); ?></p>
+                    <p class="message"><?php echo wp_kses_post( $message ); ?></p>
+                </div>
+            </div>
+            <?php
+        }
+        $content = ob_get_clean();
+        wp_send_json_success( $content );
     }
 
     public function add_author_column( $columns ) {

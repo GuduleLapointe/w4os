@@ -799,43 +799,38 @@ class W4OS3_Avatar {
 
 		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
 
-		$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
-		$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
-
-		if ( ! w4os_empty( $this->profilePartner ) ) {
-			$partner = new W4OS3_Avatar( $this->profilePartner );
+		if ( empty( $_GET['name'] ) ) {
+			$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
+			$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
+	
+			if ( ! w4os_empty( $this->profilePartner ) ) {
+				$partner = new W4OS3_Avatar( $this->profilePartner );
+			}
+			$profileAboutText = ( isset( $this->profileAboutText ) ) ? wpautop( $this->profileAboutText ) : null;
+			$profile          = array_filter(
+				array(
+					__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
+					// __( 'That\'s me in the spotlight', 'w4os' ) => $thatsme,
+					// __( 'Email', 'w4os' )       => $this->Email,
+					// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
+					// __('HG Name', 'w4os') => $this->HGName, // To implement
+					// __('Avatar Display Name', 'w4os') => $this->DisplayName, // To implement
+					__( 'About', 'w4os' )       => $this->profileImageHtml . $profileAboutText,
+					// __('Profile picture', 'w4os') => $this->profileImageHtml,
+					__( 'Born', 'w4os' )        => w4os_age( $this->Created ),
+					__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->AvatarName ),
+					__( 'Wants to', 'w4os' )    => $this->wants(),
+					__( 'Skills', 'w4os' )      => $this->skills(),
+					__( 'Languages', 'w4os' )   => $this->profileLanguages,
+					__( 'Real Life', 'w4os' )   => trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) ),
+				)
+			);
+	
+			$content .= w4os_array2table( $profile, 'avatar-profile-table' );
 		}
-		$profileAboutText = ( isset( $this->profileAboutText ) ) ? wpautop( $this->profileAboutText ) : null;
-		$profile          = array_filter(
-			array(
-				__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
-				// __( 'That\'s me in the spotlight', 'w4os' ) => $thatsme,
-				// __( 'Email', 'w4os' )       => $this->Email,
-				// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
-				// __('HG Name', 'w4os') => $this->HGName, // To implement
-				// __('Avatar Display Name', 'w4os') => $this->DisplayName, // To implement
-				__( 'About', 'w4os' )       => $this->profileImageHtml . $profileAboutText,
-				// __('Profile picture', 'w4os') => $this->profileImageHtml,
-				__( 'Born', 'w4os' )        => w4os_age( $this->Created ),
-				__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->AvatarName ),
-				__( 'Wants to', 'w4os' )    => $this->wants(),
-				__( 'Skills', 'w4os' )      => $this->skills(),
-				__( 'Languages', 'w4os' )   => $this->profileLanguages,
-				__( 'Real Life', 'w4os' )   => trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) ),
-			)
-		);
 
-		// TODO: new method to check avatar ownership
-		// if ( wp_get_current_user()->ID == $this->ID ) {
-		// 		$profile[ __( 'Change password', 'w4os' ) ] = '<a href="' . wp_lostpassword_url() . '">' . __( 'Password reset link', 'w4os' ) . '</a>';
-		// }
-
-		$content .= w4os_array2table( $profile, 'avatar-profile-table' );
-
-		// if( $thatsme ) {
-			$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
-			$content .= $flux->display_flux();
-		// }
+		$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
+		$content .= $flux->display_flux();
 
 		if ( $echo ) {
 			echo $content;
