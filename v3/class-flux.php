@@ -237,26 +237,19 @@ class W4OS3_Flux {
         if( $this->avatar_uuid ) {
             $content .= '<input type="hidden" name="avatar_uuid" value="' . $this->avatar_uuid . '">';
         }
+        // Add status message element
         $content .= sprintf(
             '<textarea name="flux-post-content" id="flux-post-content" class="autogrow" placeholder="%s"></textarea>',
             __( 'Your message...', 'w4os' )
         );
-        
-        $content .= '<script>
-            (function() {
-                var textarea = document.getElementById("flux-post-content");
-                textarea.addEventListener("input", function(){
-                    this.style.height = "auto";
-                    this.style.height = (this.scrollHeight) + "px";
-                });
-                textarea.addEventListener("keydown", function(e){
-                    if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault();
-                        this.form.submit();
-                    }
-                });
-            })();
-        </script>';
+        $content .= sprintf(
+            '<div id="submit-status" style="display:none;">%s</div>',
+            __( 'Spreading your wisdom to the world...', 'w4os' ),
+        );
+
+        // Enqueue flux.js to load in the footer
+        W4OS3::enqueue_script( 'v3-flux', 'v3/js/flux.js', array(), false, true );
+
         $content .= '</form>';
         return $content;
     }
