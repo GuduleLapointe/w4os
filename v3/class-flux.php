@@ -44,6 +44,11 @@ class W4OS3_Flux {
         add_action( 'save_post_flux_post', array( $this, 'save_post' ), 10, 3 );
         add_action('init', array($this, 'maybe_save_new_flux_post'));
         add_action( 'add_meta_boxes', array( $this, 'add_metaboxes' ) );
+        add_filter( 'manage_flux_post_posts_columns', array( $this, 'add_author_column' ) );
+        add_action( 'manage_flux_post_posts_custom_column', array( $this, 'render_author_column' ), 10, 2 );
+        add_filter( 'manage_edit-flux_post_sortable_columns', array( $this, 'make_author_column_sortable' ) );
+        add_action( 'pre_get_posts', array( $this, 'orderby_author' ) );
+        add_action( 'pre_get_posts', array ( $this,'extend_admin_search' ) );
     }
 
     /**
@@ -175,22 +180,18 @@ class W4OS3_Flux {
         echo $content;
     }
 
-    public function format_author() {
-        $avatar_uuid = get_post_meta( $post->ID, '_avatar_uuid', true );
-        $avatar_name = get_post_meta( $post->ID, '_avatar_name', true );
+    public function format_author( $post_id ) {
+        $avatar_uuid = get_post_meta( $post_id, '_avatar_uuid', true );
+        $avatar_name = get_post_meta( $post_id, '_avatar_name', true );
         if ( ! $avatar_uuid ) {
-            return 'could not find author'; // DEBUG
+            return 'No author';
         }
-
         $avatar = new W4OS3_Avatar( $avatar_uuid );
-            
         $profile_url = $avatar->get_profile_url();
-        
-        $avatar_url = $profile_url . '/' . $avatar_uuid;
-        $content .= sprintf(
+        $content = sprintf(
             '<a href="%s">%s</a>',
-            $avatar_url,
-            $avatar_name,
+            esc_url( $profile_url ),
+            esc_html( $avatar_name )
         );
         return $content;
     }
@@ -352,5 +353,51 @@ class W4OS3_Flux {
             $content = '<div class="flux">' . $content . '</div>';
         }
         return $content;
+    }
+
+    public function add_author_column( $columns ) {
+        $columns['flux_author'] = __( 'Author', 'w4os' );
+        return $columns;
+    }
+
+    public function render_author_column( $column, $post_id ) {
+        if ( 'flux_author' === $column ) {
+            echo $this->format_author( $post_id );
+        }
+    }
+
+    public function make_author_column_sortable( $columns ) {
+        $columns['flux_author'] = 'flux_author';
+        return $columns;
+    }
+
+    public function orderby_author( $query ) {
+        if ( ! is_admin() || ! $query->is_main_query() ) return;
+        if ( 'flux_author' === $query->get( 'orderby' ) ) {
+            $query->set( 'meta_key', '_avatar_name' );
+            $query->set( 'orderby', 'meta_value' );
+        }
+    }
+
+    function extend_admin_search( $query ) {
+        if ( 'flux_post' !== $query->get( 'post_type' ) ) {
+            return;
+        }
+        
+        $custom_fields = array( '_avatar_name' );
+        $search_term = $query->query_vars['s'];
+        $query->query_vars['s'] = '';
+    
+        if ( $search_term != '' ) {
+            $meta_query = array( 'relation' => 'OR' );
+            foreach( $custom_fields as $custom_field ) {
+                array_push( $meta_query, array(
+                    'key' => $custom_field,
+                    'value' => $search_term,
+                    'compare' => 'LIKE'
+                ));
+            }
+            $query->set( 'meta_query', $meta_query );
+        };
     }
 }
