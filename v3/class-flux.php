@@ -378,13 +378,13 @@ class W4OS3_Flux {
      */
     public function enqueue_infinite_scroll_script() {
         if ( is_page() ) { // Adjust the condition as needed
-            wp_enqueue_script(
-                'infinite-scroll',
-                plugins_url( 'v3/js/flux.js', __FILE__ ),
-                array( 'jquery' ),
-                '1.0',
-                true
-            );
+            // wp_enqueue_script(
+            //     'infinite-scroll',
+            //     plugins_url( 'v3/js/flux.js', __FILE__ ),
+            //     array( 'jquery' ),
+            //     '1.0',
+            //     true
+            // );
             wp_localize_script( 'infinite-scroll', 'flux_params', array(
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
                 'flux_paged' => 2,

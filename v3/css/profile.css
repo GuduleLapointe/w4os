@@ -28,9 +28,15 @@ img.profile {
 	clear: both;
 }
 
+.profile-header {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}
+
 .profile-header img {
+	float: none;
 	max-width: 256px;
-	margin-right: 20px;
 	/* border-radius: 50%; */
 }
 
@@ -52,6 +58,23 @@ img.profile {
 	background: white;
 	border-bottom: none;
 }
+
+/* ul.profile-info, ul.profile-info > li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.profile-info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 20px;
+	margin-bottom: 1em;
+}
+.profile-info > li {
+	font-size: 0.9em;
+} */
 
 img.w4os-avatar-thumb {
 	width: 48px;

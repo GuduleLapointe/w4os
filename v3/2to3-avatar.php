@@ -790,14 +790,14 @@ class W4OS3_Avatar {
 		return $thumb_html;
 	}
 
-	public function profile_link() {
+	public function profile_link( $include_picture = false ) {
 		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
 
 		$profile_url = $this->get_profile_url();
 		$avatarName  = $this->AvatarName;
 		$profileImage = $this->profileImage;
 		// $img          = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
-		$img = W4OS3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
+		$img = ( $include_picture ) ? W4OS3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) ) : '';
 		return sprintf(
 			'<a href="%s" title="%s">%s%s</a>',
 			$profile_url,
@@ -845,7 +845,7 @@ class W4OS3_Avatar {
 		$data = array(
 			__( 'Born', 'w4os' )      => w4os_age( $item->Created ),
 			__( 'Last Seen', 'w4os' ) => $this->format_last_seen( $item ),
-			__( 'Partner', 'w4os' )   => ( empty( $partner ) ) ? null : trim( $partner->FirstName . ' ' . $partner->LastName ),
+			__( 'Partner', 'w4os' )   => ( empty( $partner ) ) ? null : trim( $partner->profile_link() ),
 			__( 'Wants to', 'w4os' )  => join( ', ', $this->wants( $item ) ),
 			__( 'Skills', 'w4os' )    => join( ', ', $this->skills( $item ) ),
 			__( 'Languages', 'w4os' ) => $item->profileLanguages,
@@ -934,12 +934,16 @@ class W4OS3_Avatar {
 
 		// Should not fetch this again, it should be saved in _construct, TO CHECK
 		if( ! $this->UUID ) {
-			error_log( __METHOD__ . ' called without UUID' );
+			// Happens sometimes in cron tasks, no worry
+			// error_log( __METHOD__ . ' called without UUID' );
 			return false;
 			// $this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
 		}
 
 		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
+		W4OS3::enqueue_script( 'w4os-profile', 'v3/js/profile.js' );
+
+		$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
 
 		if ( empty( $_GET['name'] ) ) {
 			$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
@@ -951,75 +955,75 @@ class W4OS3_Avatar {
 			
 			$header = '<div class="profile-header">'
 			. $this->profileImageHtml
+			. '<div>'
 			. '<h2>' . $this->AvatarName . '</h2>'
-			. w4os_age( $this->Created )
-			. '</div>';
+			. w4os_age( $this->Created );
+
+			$info = array(
+				empty( $partner ) ? null : sprintf( __( 'Partner: %s', 'w4os' ), trim( $partner->profile_link() ) ),
+				empty( $this->skills() ) ? '' : sprintf( __( 'Skills: %s', 'w4os' ), join( ', ', $this->skills() ) ),
+				empty( $this->wants() ) ? '' : sprintf( __( 'Wants to: %s', 'w4os' ), join( ', ', $this->wants() ) ),
+				empty( $this->profileLanguages ) ? '' : sprintf( __( 'Languages: %s', 'w4os' ), $this->profileLanguages ),
+			);
+			$info = ( empty( $info ) ) ? '' :  '<div class="profile-info"><ul><li>' . join( '</li><li>', array_filter( $info ) ) . '</li></ul></div>';
+
+			$header .= $info . '</div></div>';
+
+			$text = ( empty( $this->profileAboutText ) ) ? '' : wpautop( $this->profileAboutText );
+			$about = '<div class="profile-about" id="profile-about">' . $text . '</div>';
+			$reallife = empty( $this->profileFirstImageHtml . $this->profileFirstText ) ? '' : trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) );
+			$reallife = empty( $reallife ) ? '' : '<div class="profile-firstlife" id="profile-firstlife">' . $reallife . '</div>';
 
 			$tabs = array(
-				'flux'    => __( 'Flux', 'w4os' ),
-				'about' => __( 'About', 'w4os' ),
-				'firstlife' => __( 'Real Life', 'w4os' ),
+				'flux'    => array(
+					'title' => __( 'Flux', 'w4os' ),
+					'content' => $flux->display_flux(),
+				),
+				'about'   => array(
+					'title' => __( 'About', 'w4os' ),
+					'content' => $about,
+				),
+				'firstlife' => array(
+					'title' => __( 'Real Life', 'w4os' ),
+					'content' => $reallife,
+				),
 			);
 			$default_tab = 'flux';
-			$tabnav = '<div class="profile-tabs">';
-			foreach( $tabs as $tab => $title ) {
-				$active = ( $tab == $default_tab ) ? 'active' : '';
+			$tabnav = '<div class="profile-tabs" data-tabs="profile-tabs">';
+			$sections = array();
+			foreach( $tabs as $tab_key => $tab ) {
+				$active = ( $tab_key == $default_tab ) ? 'active' : '';
+				$title = $tab['title'];
+				$content = $tab['content'];
 				$tabnav .= sprintf(
-					'<a href="#%1$s" class="profile-tab %2$s">%3$s</a> ',
-					$tab,
+					'<a href="#%1$s" class="profile-tab %2$s" data-tab="%1$s">%3$s</a> ',
+					$tab_key,
 					$active,
 					$title,
+				);
+				$sections[] = sprintf(
+					'<div class="tab-section" id="tab-%1$s" style="display:%2$s">%3$s</div>',
+					$tab_key,
+					$active ? 'block' : 'none',
+					$content,
 				);
 			}
 			$tabnav .= '</div>';
 
-			$profileAboutText = ( isset( $this->profileAboutText ) ) ? wpautop( $this->profileAboutText ) : null;
-
-			$about = array(
-				empty( $partner ) ? null : sprintf( __( 'Partner: %s', 'w4os' ), trim( $partner->AvatarName ) ),
-				empty( $this->wants() ) ? '' : sprintf( __( 'Wants to: %s', 'w4os' ), $this->wants() ),
-				empty( $this->skills() ) ? '' : sprintf( __( 'Skills: %s', 'w4os' ), $this->skills() ),
-				empty( $this->profileLanguages ) ? '' : sprintf( __( 'Languages: %s', 'w4os' ), $this->profileLanguages ),
-			);
-			$about = '<div class="profile-about"><p>' . join( '</p><p>', array_filter( $about ) ) . '</p></div>';
-			
-			$reallife = array(
-				empty( $this->profileFirstImageHtml . $this->profileFirstText ) ? '' : $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ),
-			);
-
 			$content = sprintf(
-				'<div class="profile-content" id="profile-%1$s">%2$s%3$s%4$s</div>',
+				'<div class="profile-content" id="profile-%1$s" data-tabs-content="profile-tabs">%2$s</div>',
 				$this->UUID,
-				$header,
-				$tabnav,
-				$about,
+				join("\n", array(
+					$header,
+					$tabnav,
+					join("\n", $sections),
+				))
 			);
-			$header . $tabnav . $about;
-
-			// $profile          = array_filter(
-			// 	array(
-			// 		__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
-			// 		// __( 'That\'s me in the spotlight', 'w4os' ) => $thatsme,
-			// 		// __( 'Email', 'w4os' )       => $this->Email,
-			// 		// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
-			// 		// __('HG Name', 'w4os') => $this->HGName, // To implement
-			// 		// __('Avatar Display Name', 'w4os') => $this->DisplayName, // To implement
-			// 		__( 'About', 'w4os' )       => $this->profileImageHtml . $profileAboutText,
-			// 		// __('Profile picture', 'w4os') => $this->profileImageHtml,
-			// 		__( 'Born', 'w4os' )        => w4os_age( $this->Created ),
-			// 		__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->AvatarName ),
-			// 		__( 'Wants to', 'w4os' )    => $this->wants(),
-			// 		__( 'Skills', 'w4os' )      => $this->skills(),
-			// 		__( 'Languages', 'w4os' )   => $this->profileLanguages,
-			// 		__( 'Real Life', 'w4os' )   => trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) ),
-			// 	)
-			// );
-	
-			// $content .= w4os_array2table( $profile, 'avatar-profile-table' );
+			// $header . $tabnav . $about;
+		} else {
+			$content = $flux->display_flux();
 		}
 
-		$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
-		$content .= $flux->display_flux();
 
 		if ( $echo ) {
 			echo $content;
