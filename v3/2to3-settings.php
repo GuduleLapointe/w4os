@@ -249,7 +249,6 @@ class W4OS3_Settings {
 			}
 			$options[ $key ] = $value;
 		}
-		error_log( 'options ' . print_r( $options, true ) );
 
 		return $options;
 	}
@@ -511,21 +510,28 @@ class W4OS3_Settings {
 			)
 		);
 
-		// Retrieve $option_name and $tab from args
-		$option_name = isset( $args['option_name'] ) ? sanitize_key( $args['option_name'] ) : '';
-		$tab         = isset( $args['tab'] ) ? sanitize_key( $args['tab'] ) : 'settings';
+		// Retrieve options main name and $tab from args
+		$prefs_name = isset( $args['option_name'] ) ? sanitize_key( $args['option_name'] ) : '';
+		$tab        = isset( $args['tab'] ) ? sanitize_key( $args['tab'] ) : 'settings';
 
 		// Construct the field name to match the options array structure
-		$field_name = "{$option_name}[{$tab}][{$args['id']}]";
-		$option     = get_option( $option_name, array() );
-		$value      = isset( $option[ $tab ][ $args['id'] ] ) ? $option[ $tab ][ $args['id'] ] : '';
-		$value      = isset( $args['value'] ) ? $args['value'] : $value;
+		$field_name = "{$prefs_name}[{$tab}][{$args['id']}]";
+
+		$prefs      = get_option( $prefs_name, array() );
+		if( isset( $args['value'] ) ) {
+			$value = $args['value'];
+		} else if ( isset( $prefs[ $tab ][ $args['id'] ] ) ) {
+			$value = $prefs[ $tab ][ $args['id'] ];
+		} else {
+			$value =  isset( $args['default'] ) ? $args['default'] : '';
+		}
+
 		$readonly   = ( $args['readonly'] ) ? 'readonly' : '';
 		$disabled   = ( $args['disabled'] ) ? 'disabled' : '';
 
-		if ( empty( $value ) && isset( $args['default'] ) ) {
-			$value = $args['default'];
-		}
+		// if ( empty( $value ) && isset( $args['default'] ) ) {
+		// 	$value = $args['default'];
+		// }
 
 		// Adjust field_name and value for multiple select fields
 		if ( isset( $args['multiple'] ) && $args['multiple'] ) {
@@ -782,6 +788,8 @@ class W4OS3_Settings {
 			case 'checkboxes':
 				if ( empty( $args['options'] ) ) {
 					$args['options'] = array( '1' => __( 'Yes', 'w4os' ) );
+				} else if( key( $args['options'] ) === 0 ) {
+					$args['options'] = array_combine( range( 1, count( $args['options'] ) ), $args['options'] );
 				}
 				$fields = array();
 				foreach ( $args['options'] as $option_value => $option_label ) {

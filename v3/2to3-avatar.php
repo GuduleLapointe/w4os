@@ -69,7 +69,7 @@ class W4OS3_Avatar {
 		add_action( 'template_include', array( $this, 'template_include' ) );
 		add_filter( 'the_title', array( $this, 'the_title' ) );
 		add_filter( 'pre_get_document_title', array( $this, 'document_title' ) );
-		// add_filter( 'document_title_parts', array( $this, 'document_title_parts' ) );
+		// add_filter( 'document_title_parts', array( $this, 'document_title_parts' ) ); // Keep it for reference, probably not needed with pre_get_document_title filter above
 	}
 
 	/**
@@ -89,7 +89,6 @@ class W4OS3_Avatar {
 		$pagename = W4OS::get_localized_post_slug();
 
 		if( $pagename === self::$slug ) {
-			error_log( 'is profile page' );
 			$this->is_profile_page = true;
 		} else {
 			return;
@@ -99,8 +98,6 @@ class W4OS3_Avatar {
 		$query_lastname  = get_query_var( 'profile_lastname' );
 		$query_name = get_query_var( 'name' );
 		$pattern = '^' . self::$slug . '/([^/]+)\.([^/\.\?&]+)(\?.*)?';
-		$url_name = preg_replace('/' . $pattern . '/', '$1.$2', $_SERVER['REQUEST_URI']);
-		
 		
 		if( ! empty( $query_name ) && preg_match('/\./', $query_name) ) {
 			$query_name = explode( '.', $query_name );
@@ -120,7 +117,6 @@ class W4OS3_Avatar {
 				$page_title = __( 'Log in', 'w4os' );
 			}
 		} else {
-			error_log( '$this->AvatarName ' . $this->AvatarName );
 			$avatar = new W4OS3_Avatar( "$query_firstname.$query_lastname" );
 			if( $avatar->UUID ) {
 				$page_title  = $avatar->AvatarName;
@@ -132,6 +128,22 @@ class W4OS3_Avatar {
 		$this->profile = ( $avatar ) ? $avatar : false;
 		$this->page_title = $page_title;
 		$this->head_title = $page_title . ' – ' . get_bloginfo( 'name' );
+	}
+
+	static function get_option( $option, $default = false ) {
+		// if( ! preg_match( '/:/', $option )) {
+		// 	$option = 'w4os-avatars:' . $option;
+		// }
+		
+		$settings = W4OS3::get_option( 'w4os-avatars:settings', array() );
+		if ( isset( $settings[$option] ) ) {
+			$value = $settings[$option];
+			error_log( "got $option = " . $value );
+		} else {
+			$value = $default;
+			error_log( "got no $option value, using default " . $default );
+		}
+		return $value;
 	}
 
 	/**
@@ -166,15 +178,16 @@ class W4OS3_Avatar {
 		return $title;
 	}
 
-	public function document_title_parts( $title ) {
-		if ( ! $this->is_profile_page ) {
-			return $title;
-		}
-		if ( $this->head_title ) {
-			$title['title'] = $this->head_title;
-		}
-		return $title;
-	}
+	// Keep it for reference, probably not needed with pre_get_document_title filter above
+	// public function document_title_parts( $title ) {
+	// 	if ( ! $this->is_profile_page ) {
+	// 		return $title;
+	// 	}
+	// 	if ( $this->head_title ) {
+	// 		$title['title'] = $this->head_title;
+	// 	}
+	// 	return $title;
+	// }
 
 	/**
 	 * Initialize the avatar object.
@@ -480,6 +493,17 @@ class W4OS3_Avatar {
 	 * The calling page is not available in this method, so we need to use the option name to get the options.
 	 */
 	public static function sanitize_options( $input ) {
+		if( isset( $input['settings'])) {
+			$input['settings'] = wp_parse_args(
+				$input['settings'],
+				array(
+					'create_wp_account' => false,
+					// 'allow_multiple_avatars' => false,
+					// 'override_author' => false,
+					'hide_profile_title' => false,
+				)
+			);
+		}
 		return W4OS3_Settings::sanitize_options( $input, 'w4os-avatars' );
 	}
 
