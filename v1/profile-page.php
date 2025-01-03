@@ -184,9 +184,13 @@ add_filter(
  * However, this hook also handles the profiles correct page title 
  * and document title, so it cannot be disabled yet.
  */
+
 add_action(
 	'template_include',
 	function ( $template ) {
+		if ( W4OS_ENABLE_V3 ) {
+			return $template;
+		}
 		global $wp_query;
 		if ( isset( $wp_query->queried_object->post_name ) && $wp_query->queried_object->post_name != get_option( 'w4os_profile_slug' ) ) {
 			return $template;

@@ -109,7 +109,7 @@ class W4OS_Avatar extends WP_User {
 		}
 
 		// TODO: check why UUID is not already set as it should be in _construct
-		if ( ! $this->UUID ) {
+		if ( $this->ID && ! $this->UUID ) {
 			$this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
 		}
 		

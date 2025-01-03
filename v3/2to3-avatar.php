@@ -32,6 +32,7 @@ class W4OS3_Avatar {
 	public $FirstName;
 	public $LastName;
 	private $data;
+	private $is_profile_page = false;
 	
 	private static $base_query = "SELECT * FROM (
 		SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
@@ -64,6 +65,115 @@ class W4OS3_Avatar {
 		// add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
 
 		add_filter( 'query_vars', array( $this, 'add_profile_query_vars' ) );
+		
+		add_action( 'template_include', array( $this, 'template_include' ) );
+		add_filter( 'the_title', array( $this, 'the_title' ) );
+		add_filter( 'pre_get_document_title', array( $this, 'document_title' ) );
+		// add_filter( 'document_title_parts', array( $this, 'document_title_parts' ) );
+	}
+
+	/**
+	 * Template include filter to setup profile page.
+	 */
+	public function template_include( $template ) {
+		$this->setup_profile();
+		return $template;
+	}
+
+	/**
+	 * Set page title for profile page.
+	 */
+	public function setup_profile() {
+		global $wp_query;
+
+		$pagename = W4OS::get_localized_post_slug();
+
+		if( $pagename === self::$slug ) {
+			error_log( 'is profile page' );
+			$this->is_profile_page = true;
+		} else {
+			return;
+		}
+
+		$query_firstname = get_query_var( 'profile_firstname' );
+		$query_lastname  = get_query_var( 'profile_lastname' );
+		$query_name = get_query_var( 'name' );
+		$pattern = '^' . self::$slug . '/([^/]+)\.([^/\.\?&]+)(\?.*)?';
+		$url_name = preg_replace('/' . $pattern . '/', '$1.$2', $_SERVER['REQUEST_URI']);
+		
+		
+		if( ! empty( $query_name ) && preg_match('/\./', $query_name) ) {
+			$query_name = explode( '.', $query_name );
+			$query_firstname = $query_name[0];
+			$query_lastname = $query_name[1];
+		}
+
+		if ( empty( $query_firstname ) || empty( $query_lastname ) ) {
+			if ( is_user_logged_in() ) {
+				$uuid = w4os_profile_sync( wp_get_current_user() );
+				if ( $uuid ) {
+						$page_title = __( 'My Profile', 'w4os' );
+				} else {
+					$page_title = __( 'Create My Avatar', 'w4os' );
+				}
+			} else {
+				$page_title = __( 'Log in', 'w4os' );
+			}
+		} else {
+			error_log( '$this->AvatarName ' . $this->AvatarName );
+			$avatar = new W4OS3_Avatar( "$query_firstname.$query_lastname" );
+			if( $avatar->UUID ) {
+				$page_title  = $avatar->AvatarName;
+			} else {
+				$not_found  = true;
+				$page_title = __( 'Avatar not found', 'w4os' );
+			}
+		}
+		$this->profile = ( $avatar ) ? $avatar : false;
+		$this->page_title = $page_title;
+		$this->head_title = $page_title . ' – ' . get_bloginfo( 'name' );
+	}
+
+	/**
+	 * Disable title if requested page is profile
+	 * 
+	 * Get the original pagename if this one is a translation
+	 * Compare original pagename and self::$slug
+	 */
+	public function the_title( $title ) {
+		if ( ! $this->is_profile_page ) {
+			return $title;
+		}
+		$pagename = get_query_var( 'pagename' );
+		$original_pagename = W4OS::get_localized_post_slug();
+		// if( $pagename === self::$slug || $original_pagename === self::$slug ) {
+		// 	return '';
+		// }
+		if( $this->page_title ) {
+			return $this->page_title;
+		}
+
+		return $title;
+	}
+
+	public function document_title( $title ) {
+		if ( ! $this->is_profile_page ) {
+			return $title;
+		}
+		if( $this->head_title ) {
+			return $this->head_title;
+		}
+		return $title;
+	}
+
+	public function document_title_parts( $title ) {
+		if ( ! $this->is_profile_page ) {
+			return $title;
+		}
+		if ( $this->head_title ) {
+			$title['title'] = $this->head_title;
+		}
+		return $title;
 	}
 
 	/**
@@ -158,17 +268,17 @@ class W4OS3_Avatar {
 		
 		// Rewrite rule for $profile_page_url/$firstname.$lastname
 		add_rewrite_rule(
-			'^' . self::$slug . '/([^/]+)\.([^/\.\?&]+)(\?.*)?$',
+			'^' . self::$slug . '/(.+?)\.(.+?)(\?.*)?$',
 			$target,
 			'top'
 		);
 
 		// Rewrite rule for $profile_page_url/?name=$firstname.$lastname
-		add_rewrite_rule(
-			'^' . self::$slug . '/\?name=([^\.&]+)\.([^\.&]+)(&.*)?$',
-			$target,
-			'top'
-		);
+		// add_rewrite_rule(
+		// 	'^' . self::$slug . '/\?name=([^\.&]+)\.([^\.&]+)(&.*)?$',
+		// 	$target,
+		// 	'top'
+		// );
 	}
 
 	public function add_profile_query_vars( $vars ) {
@@ -806,27 +916,74 @@ class W4OS3_Avatar {
 			if ( ! w4os_empty( $this->profilePartner ) ) {
 				$partner = new W4OS3_Avatar( $this->profilePartner );
 			}
-			$profileAboutText = ( isset( $this->profileAboutText ) ) ? wpautop( $this->profileAboutText ) : null;
-			$profile          = array_filter(
-				array(
-					__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
-					// __( 'That\'s me in the spotlight', 'w4os' ) => $thatsme,
-					// __( 'Email', 'w4os' )       => $this->Email,
-					// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
-					// __('HG Name', 'w4os') => $this->HGName, // To implement
-					// __('Avatar Display Name', 'w4os') => $this->DisplayName, // To implement
-					__( 'About', 'w4os' )       => $this->profileImageHtml . $profileAboutText,
-					// __('Profile picture', 'w4os') => $this->profileImageHtml,
-					__( 'Born', 'w4os' )        => w4os_age( $this->Created ),
-					__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->AvatarName ),
-					__( 'Wants to', 'w4os' )    => $this->wants(),
-					__( 'Skills', 'w4os' )      => $this->skills(),
-					__( 'Languages', 'w4os' )   => $this->profileLanguages,
-					__( 'Real Life', 'w4os' )   => trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) ),
-				)
+			
+			$header = '<div class="profile-header">'
+			. $this->profileImageHtml
+			. '<h2>' . $this->AvatarName . '</h2>'
+			. w4os_age( $this->Created )
+			. '</div>';
+
+			$tabs = array(
+				'flux'    => __( 'Flux', 'w4os' ),
+				'about' => __( 'About', 'w4os' ),
+				'firstlife' => __( 'Real Life', 'w4os' ),
 			);
+			$default_tab = 'flux';
+			$tabnav = '<div class="profile-tabs">';
+			foreach( $tabs as $tab => $title ) {
+				$active = ( $tab == $default_tab ) ? 'active' : '';
+				$tabnav .= sprintf(
+					'<a href="#%1$s" class="profile-tab %2$s">%3$s</a> ',
+					$tab,
+					$active,
+					$title,
+				);
+			}
+			$tabnav .= '</div>';
+
+			$profileAboutText = ( isset( $this->profileAboutText ) ) ? wpautop( $this->profileAboutText ) : null;
+
+			$about = array(
+				empty( $partner ) ? null : sprintf( __( 'Partner: %s', 'w4os' ), trim( $partner->AvatarName ) ),
+				empty( $this->wants() ) ? '' : sprintf( __( 'Wants to: %s', 'w4os' ), $this->wants() ),
+				empty( $this->skills() ) ? '' : sprintf( __( 'Skills: %s', 'w4os' ), $this->skills() ),
+				empty( $this->profileLanguages ) ? '' : sprintf( __( 'Languages: %s', 'w4os' ), $this->profileLanguages ),
+			);
+			$about = '<div class="profile-about"><p>' . join( '</p><p>', array_filter( $about ) ) . '</p></div>';
+			
+			$reallife = array(
+				empty( $this->profileFirstImageHtml . $this->profileFirstText ) ? '' : $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ),
+			);
+
+			$content = sprintf(
+				'<div class="profile-content" id="profile-%1$s">%2$s%3$s%4$s</div>',
+				$this->UUID,
+				$header,
+				$tabnav,
+				$about,
+			);
+			$header . $tabnav . $about;
+
+			// $profile          = array_filter(
+			// 	array(
+			// 		__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
+			// 		// __( 'That\'s me in the spotlight', 'w4os' ) => $thatsme,
+			// 		// __( 'Email', 'w4os' )       => $this->Email,
+			// 		// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
+			// 		// __('HG Name', 'w4os') => $this->HGName, // To implement
+			// 		// __('Avatar Display Name', 'w4os') => $this->DisplayName, // To implement
+			// 		__( 'About', 'w4os' )       => $this->profileImageHtml . $profileAboutText,
+			// 		// __('Profile picture', 'w4os') => $this->profileImageHtml,
+			// 		__( 'Born', 'w4os' )        => w4os_age( $this->Created ),
+			// 		__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->AvatarName ),
+			// 		__( 'Wants to', 'w4os' )    => $this->wants(),
+			// 		__( 'Skills', 'w4os' )      => $this->skills(),
+			// 		__( 'Languages', 'w4os' )   => $this->profileLanguages,
+			// 		__( 'Real Life', 'w4os' )   => trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) ),
+			// 	)
+			// );
 	
-			$content .= w4os_array2table( $profile, 'avatar-profile-table' );
+			// $content .= w4os_array2table( $profile, 'avatar-profile-table' );
 		}
 
 		$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );

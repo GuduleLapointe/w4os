@@ -62,6 +62,13 @@ class W4OS {
 		return $post_id;
 	}
 
+	public static function get_localized_post_slug( $post_id = null ) {
+		$localized_post_id = self::get_localized_post_id( $post_id );
+		$original          = get_post( $localized_post_id );
+		$post_name         = isset( $original->post_name ) ? $original->post_name : null;
+		return $post_name;
+	}
+
 	public static function sprintf_safe( $format, ...$args ) {
 		try {
 			// Attempt to format the string using sprintf

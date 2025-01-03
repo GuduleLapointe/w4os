@@ -19,6 +19,40 @@ img.profile {
 	/* max-width: 256px; */
 }
 
+.profile-content {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.profile-content > * {
+	clear: both;
+}
+
+.profile-header img {
+	max-width: 256px;
+	margin-right: 20px;
+	/* border-radius: 50%; */
+}
+
+.profile-tabs {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	border-bottom: solid 1px #ccc;
+}
+.profile-tabs a {
+	padding: 5px 10px;
+	text-decoration: none;
+	color: #333;
+	border: solid 1px #ccc;
+	margin-bottom: -1px;
+	background: #f6f7f7;
+}
+.profile-tabs a.active {
+	background: white;
+	border-bottom: none;
+}
+
 img.w4os-avatar-thumb {
 	width: 48px;
 	/* height: 48px; */
