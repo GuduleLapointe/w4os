@@ -959,18 +959,18 @@ class W4OS3_Avatar {
 			. '<h2>' . $this->AvatarName . '</h2>'
 			. w4os_age( $this->Created );
 
-			$info = array(
-				empty( $partner ) ? null : sprintf( __( 'Partner: %s', 'w4os' ), trim( $partner->profile_link() ) ),
+			$info = array_filter ( array(
+				empty( $partner ) ? '' : sprintf( __( 'Partner: %s', 'w4os' ), trim( $partner->profile_link() ) ),
 				empty( $this->skills() ) ? '' : sprintf( __( 'Skills: %s', 'w4os' ), join( ', ', $this->skills() ) ),
 				empty( $this->wants() ) ? '' : sprintf( __( 'Wants to: %s', 'w4os' ), join( ', ', $this->wants() ) ),
 				empty( $this->profileLanguages ) ? '' : sprintf( __( 'Languages: %s', 'w4os' ), $this->profileLanguages ),
-			);
+			) );
 			$info = ( empty( $info ) ) ? '' :  '<div class="profile-info"><ul><li>' . join( '</li><li>', array_filter( $info ) ) . '</li></ul></div>';
 
 			$header .= $info . '</div></div>';
 
 			$text = ( empty( $this->profileAboutText ) ) ? '' : wpautop( $this->profileAboutText );
-			$about = '<div class="profile-about" id="profile-about">' . $text . '</div>';
+			$about = empty($text) ? '' : '<div class="profile-about" id="profile-about">' . $text . '</div>';
 			$reallife = empty( $this->profileFirstImageHtml . $this->profileFirstText ) ? '' : trim( $this->profileFirstImageHtml . ' ' . wpautop( $this->profileFirstText ) );
 			$reallife = empty( $reallife ) ? '' : '<div class="profile-firstlife" id="profile-firstlife">' . $reallife . '</div>';
 
@@ -995,6 +995,9 @@ class W4OS3_Avatar {
 				$active = ( $tab_key == $default_tab ) ? 'active' : '';
 				$title = $tab['title'];
 				$content = $tab['content'];
+				if(empty($content)) {
+					continue;
+				}
 				$tabnav .= sprintf(
 					'<a href="#%1$s" class="profile-tab %2$s" data-tab="%1$s">%3$s</a> ',
 					$tab_key,
