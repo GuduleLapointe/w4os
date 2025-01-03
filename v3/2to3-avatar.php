@@ -138,10 +138,8 @@ class W4OS3_Avatar {
 		$settings = W4OS3::get_option( 'w4os-avatars:settings', array() );
 		if ( isset( $settings[$option] ) ) {
 			$value = $settings[$option];
-			error_log( "got $option = " . $value );
 		} else {
 			$value = $default;
-			error_log( "got no $option value, using default " . $default );
 		}
 		return $value;
 	}
@@ -156,11 +154,11 @@ class W4OS3_Avatar {
 		if ( ! $this->is_profile_page ) {
 			return $title;
 		}
-		$pagename = get_query_var( 'pagename' );
-		$original_pagename = W4OS::get_localized_post_slug();
-		// if( $pagename === self::$slug || $original_pagename === self::$slug ) {
-		// 	return '';
-		// }
+
+		if( self::get_option( 'hide_profile_title', true ) ) {
+			return null;
+		}
+
 		if( $this->page_title ) {
 			return $this->page_title;
 		}
@@ -325,20 +323,30 @@ class W4OS3_Avatar {
 							'type'        => 'checkbox',
 							'options'     => array( __( 'Create website accounts for avatars.', 'w4os' ) ),
 							'description' => __( 'This will create a WordPress account for avatars that do not have one. The password will synced between site and OpenSimulator.', 'w4os' ),
+							'default'	  => true,
 						),
 						'allow_multiple_avatars' => array(
 							'label'       => __( 'Allow multiple avatars', 'w4os' ),
 							'type'        => 'checkbox',
 							'options'     => array( __( 'Allow more than one avatar for a single email address.', 'w4os' ) ),
-							'description' => __( 'This will allow users to have more than one avatar on the site.', 'w4os' )
+							'description' => '(not implemented) ' . __( 'This will allow users to have more than one avatar on the site.', 'w4os' )
 							. ' ' . __( 'Disabling the option can only be enforced for avatars created through the website.', 'w4os' ),
+							'readonly'    => true,
 						),
 						'override_author' => array(
 							'label'       => __( 'Override author', 'w4os' ),
 							'type'        => 'checkbox',
-							'options'     => array( __( 'Use profile as author page.', 'w4os' ) ),
-							'description' => __( 'This will allow avatars to be set as post authors.', 'w4os' ),
-						)
+							'options'     => array( __( 'Override author with avatar when relevant.', 'w4os' ) ),
+							'description' => '(not implemented) ' . __( 'This will allow, for example, to define avatars as authors of messages.', 'w4os' ),
+							'readonly'	  => true,
+						),
+						'hide_profile_title' => array(
+							'label'       => __( 'Hide profile title', 'w4os' ),
+							'type'        => 'checkbox',
+							'options'     => array( __( 'Hide profile page title.', 'w4os' ) ),
+							'description' => __( 'The title is already displayed in the profile page content.', 'w4os' ),
+							'default'	 => true,
+						),
 					),
 				),
 			),
