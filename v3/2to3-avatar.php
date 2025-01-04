@@ -705,6 +705,23 @@ class W4OS3_Avatar {
 		return esc_html( $server_uri );
 	}
 
+	static function get_user_avatar( $user_id = null ) {
+		if ( empty( $user_id ) ) {
+			$user = wp_get_current_user();
+		} else {
+			$user = get_user_by( 'ID', $user_id );
+		}
+
+		$avatars = self::get_avatars( array( 'Email' => $user->user_email ) );
+		if ( empty( $avatars ) ) {
+			return false;
+		}
+		$key    = key( $avatars );
+		$avatar = new W4OS3_Avatar( $key );
+
+		return $avatar;
+	}
+
 	static function get_avatars( $args = array(), $format = OBJECT ) {
 		global $w4osdb;
 		if ( empty( $w4osdb ) ) {
@@ -806,6 +823,23 @@ class W4OS3_Avatar {
 			$img,
 			$avatarName
 		);
+	}
+
+	public function profile_picture( $echo = false ) {
+		$avatarName = $this->AvatarName ?? '';
+		$html       = W4OS3::empty( $this->profileImage ) ? '' : W4OS3::img(
+			$this->profileImage,
+			array(
+				'alt'   => $avatarName,
+				'class' => 'profile',
+			)
+		);
+
+		if ( $echo ) {
+			echo $html;
+		} else {
+			return $html;
+		}
 	}
 
 	public static function profile_url( $item = null ) {
