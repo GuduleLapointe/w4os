@@ -44,12 +44,17 @@ class W4OS3_Flux {
 		add_action( 'save_post_flux_post', array( $this, 'save_post' ), 10, 3 );
 		add_action( 'init', array( $this, 'maybe_save_new_flux_post' ) );
 		add_action( 'add_meta_boxes', array( $this, 'add_metaboxes' ) );
+
+		// Manage columns
 		add_filter( 'manage_flux_post_posts_columns', array( $this, 'add_author_column' ) );
 		add_action( 'manage_flux_post_posts_custom_column', array( $this, 'render_author_column' ), 10, 2 );
 		add_filter( 'manage_edit-flux_post_sortable_columns', array( $this, 'make_author_column_sortable' ) );
 		add_action( 'pre_get_posts', array( $this, 'orderby_author' ) );
 		add_action( 'pre_get_posts', array( $this, 'extend_admin_search' ) );
+
+		// This should not be done here but inside functions requiring it with W4OS3::enqueue_script
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_infinite_scroll_script' ) );
+
 		add_action( 'wp_ajax_load_more_flux_posts', array( $this, 'load_more_flux_posts' ) );
 		add_action( 'wp_ajax_nopriv_load_more_flux_posts', array( $this, 'load_more_flux_posts' ) );
 	}
@@ -463,8 +468,14 @@ class W4OS3_Flux {
 	}
 
 	public function add_author_column( $columns ) {
-		$columns['flux_author'] = __( 'Author', 'w4os' );
-		return $columns;
+		$new_columns = array();
+		foreach ( $columns as $key => $value ) {
+			$new_columns[$key] = $value;
+			if ( 'title' === $key ) {
+				$new_columns['flux_author'] = __( 'Author', 'w4os' );
+			}
+		}
+		return $new_columns;
 	}
 
 	public function render_author_column( $column, $post_id ) {
