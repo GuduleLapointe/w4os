@@ -704,9 +704,29 @@ class W4OS3_Avatar {
 		return esc_html( $server_uri );
 	}
 
+	static function get_user_avatar( $user_id = null ) {
+		if( empty( $user_id ) ) {
+			$user = wp_get_current_user();
+		} else {
+			$user = get_user_by( 'ID', $user_id );
+		}
+
+		$avatars = self::get_avatars( array( 'Email' => $user->user_email ) );
+		if( empty( $avatars )) {
+			return false;
+		}
+		$key = key( $avatars );
+		$avatar = new W4OS3_Avatar( $key );
+
+		return $avatar;
+	}
+
 	static function get_avatars( $args = array(), $format = OBJECT ) {
 		global $w4osdb;
 		if ( empty( $w4osdb ) ) {
+			return false;
+		}
+		if ( ! is_array( $args ) ) {
 			return false;
 		}
 
@@ -797,7 +817,7 @@ class W4OS3_Avatar {
 		$avatarName  = $this->AvatarName;
 		$profileImage = $this->profileImage;
 		// $img          = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
-		$img = ( $include_picture ) ? W4OS3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) ) : '';
+		$img = ( $include_picture ) ? $this->profile_picture() : '';
 		return sprintf(
 			'<a href="%s" title="%s">%s%s</a>',
 			$profile_url,
@@ -805,6 +825,17 @@ class W4OS3_Avatar {
 			$img,
 			$avatarName
 		);
+	}
+
+	public function profile_picture( $echo = false ) {
+		$avatarName  = $this->AvatarName ?? '';
+		$html = W4OS3::empty( $this->profileImage ) ? '' : W4OS3::img( $this->profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
+
+		if ( $echo ) {
+			echo $html;
+		} else {
+			return $html;
+		}
 	}
 
 	public static function profile_url( $item = null ) {
@@ -991,6 +1022,7 @@ class W4OS3_Avatar {
 			$default_tab = 'flux';
 			$tabnav = '<div class="profile-tabs" data-tabs="profile-tabs">';
 			$sections = array();
+			$tab_count = 0;
 			foreach( $tabs as $tab_key => $tab ) {
 				$active = ( $tab_key == $default_tab ) ? 'active' : '';
 				$title = $tab['title'];
@@ -998,6 +1030,7 @@ class W4OS3_Avatar {
 				if(empty($content)) {
 					continue;
 				}
+				$tab_count++;
 				$tabnav .= sprintf(
 					'<a href="#%1$s" class="profile-tab %2$s" data-tab="%1$s">%3$s</a> ',
 					$tab_key,
@@ -1012,6 +1045,9 @@ class W4OS3_Avatar {
 				);
 			}
 			$tabnav .= '</div>';
+			if ( $tab_count <= 1 ) {
+				$tabnav = '';
+			}
 
 			$content = sprintf(
 				'<div class="profile-content" id="profile-%1$s" data-tabs-content="profile-tabs">%2$s</div>',

@@ -898,15 +898,26 @@ function w4os_profile_display( $user, $args = array() ) {
 	);
 	extract( $args );
 
-	if ( W4OS_ENABLE_V3 && is_string( $user ) && ! is_numeric( $user ) ) {
-		// Probably an avatar name
-		$name = $user;
-		$avatar = new W4OS3_Avatar( $name );
-		if ( ! $avatar->UUID ) {
+	if ( W4OS_ENABLE_V3 ) {
+		if( is_string( $user ) && ! is_numeric( $user ) ) {
+			// Probably an avatar name
+			$name = $user;
+			$avatar = new W4OS3_Avatar( $name );
+			if ( ! $avatar->UUID ) {
+				return false;
+			}
+		} else if ( $user->ID ) {
+			$avatar = W4OS3_Avatar::get_user_avatar( $user->ID );
+			if ( empty( $avatar ) ) {
+				return false;
+			}
+		} else {
 			return false;
 		}
 	} else if ( is_string( $user ) ) {
 		$avatar = new W4OS_Avatar( null, $user );
+	} elseif ( $user->ID ) {
+		$avatar = new W4OS_Avatar( $user->ID );
 	} else {
 		$avatar = new W4OS_Avatar( $user );
 	}
