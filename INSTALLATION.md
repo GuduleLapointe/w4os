@@ -1,5 +1,11 @@
 ## Installation
 
+### Requirements
+
+- OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
+- Latest WordPdress release
+- PHP 7.3 or later, and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
+
 ### OpenSimulator installation
 
 Please check [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.
@@ -59,4 +65,8 @@ Model avatars can only be used for this purpose. **Under no circumstances** shou
   - Disconnect the model avatar after modifications, to make sure changes will be taken in account immediately
 
 The models will appear in new avatar registration form, with their profile picture.
+
+### Troubleshooting
+
+See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
 

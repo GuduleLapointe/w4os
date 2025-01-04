@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.7.1
-Stable tag: 2.9.3
+Stable tag: 2.9.4
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -220,6 +220,11 @@ or not. In either case, idk&idc.
 4. Web assets server settings
 
 == Changelog ==
+
+= 2.9.4 =
+* fix avatar mini profile block crashing
+* fix all menu titles replaced in some themes on profile page
+* fix profile tabs empty (regression interoduced in 796a1c2f)
 
 = 2.9.3 =
 * fix profile not displayed in block (regression)

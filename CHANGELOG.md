@@ -1,11 +1,15 @@
 ## Changelog
 
+### 2.9.4
+- fix avatar mini profile block crashing
+- fix all menu titles replaced in some themes on profile page
+- fix profile tabs empty (regression interoduced in 796a1c2f)
+
 ### 2.9.3
 - fix profile not displayed in block (regression)
 - fix profile custom template not always working
 - fix arrays passed as if they were strings in w4os_array2table
-- fix crash on profile save
-- disable unsupported SLURL in profile tab
+- fix crash on wp core profile save
 
 v3 beta features
 - new activity feed, allow avatars to post statuses on their profile page

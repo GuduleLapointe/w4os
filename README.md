@@ -41,19 +41,20 @@ See Features and Roadmap sections for current and upcoming functionalties.
 - Manual and cron Grid/WP users sync
 - Auth with avatar credentials (if no matching wp account, create one)
 
+### v3 Preview features
+
+Some v3 features are already available, but still in testing. So they are not included
+in the WordPress directory release. To try the new features, you must:
+- Download the latest release from https://github.com/GuduleLapointe/w4os/releases
+- Check "Enable v3 Betat Features" in Admin > OpenSimulator > Settings
+- A couple of new menus will appear, including Settings, Avatars and Flux
+
+Be careful, do not enable beta in a production environment.
+And please give us feedback for everything going well or bad.
+
 ### Paid version
 
 The free version from WordPress plugins directory and the [paid version](https://magiiic.com/wordpress/plugins/w4os/) are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
-
-## Requirements
-
-- OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
-- Latest WordPdress release
-- PHP 7.3 or later, and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
-
-## Troubleshooting
-
-See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
 
 ## Roadmap
 
@@ -61,22 +62,22 @@ See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) fo
 
 ### Medium term
 
-- Destinations guide
-- Web search
-- Multiple avatars for same WordPress user
+- [x] Destinations guide
+- [x] Web search
+- [-] Multiple avatars for same WordPress user (v3)
 - Improve avatar profile
   - Switch to allow web profile
-  - Better basic layout
+  [x]  Better basic layout
   - Web edit profile
 - 2do HYPEvents project integration <https://2do.pm>
 - Gudz Teleport Board project integration (based on user picks)
-- Admin Use sim/grid configuration file to fetch settings if on the same host
+[-] Admin Use sim/grid configuration file to fetch settings if on the same host (v3)
 - Admin create users
 - Admin create models (from current own avatar appearance)
 
 ### Long term
 
-- Robust console connection
+[x] Robust console connection (v3)
   - Admin Start / Stop regions
   - Admin Create region
   - User's own regions control (create, start, stop, backup)
@@ -108,11 +109,11 @@ somewhat handled for a small standalone grid, but never in hypergrid context.
 There is no process to force a foreign grid to update its cache, and probably
 never will.
 
-### Shouldn't I copy the helpers/ directory in the root of my webiste ?
+### Should I copy the helpers/ directory in the root of my webiste ?
 
-No, you don't need to and you shouldn't. The /helpers/ is virtual, it is served
-as any other page of your website. Like there the /about/ URL website doesn't
-match a /about/ folder your webste directory. Even if there is a helpers/
+No, you don't need to and you shouldn't. The /helpers/ path is virtual, like
+for most pages of your website. The same way as the /about/ URL website doesn't
+match a /about/ folder your website directory. Even if there is a helpers/
 directory in w4os plugin, it has the same name for convenience, but he could
 have been named anything. It's content is not accessed directly, it is used by
 the plugin to generate the answers. On the opposite, if there was an actual
