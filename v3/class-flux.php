@@ -58,9 +58,9 @@ class W4OS3_Flux {
 		add_action( 'wp_ajax_load_more_flux_posts', array( $this, 'load_more_flux_posts' ) );
 		add_action( 'wp_ajax_nopriv_load_more_flux_posts', array( $this, 'load_more_flux_posts' ) );
 
-		// add_filter( 'get_the_author', array( $this, 'get_the_author' ) );
-		// add_filter( 'the_title', array( $this, 'the_title' ), 10, 2 );
-		// add_filter( 'the_date', array( $this, 'the_date' ), 10, 2 );
+		add_filter( 'the_title', array( $this, 'the_title' ), 10, 2 );
+		add_filter( 'the_content', array( $this, 'the_content' ) );
+		add_filter( 'get_the_archive_title', array( $this, 'the_archive_title' ) );
 	}
 
 	/**
@@ -125,7 +125,7 @@ class W4OS3_Flux {
 		$content = '';
 		$args    = array();
 
-		$user_email = get_get_the_author_meta( 'user_email' );
+		$user_email = get_the_author_meta( 'user_email' );
 		if ( ! $user_email ) {
 			// Use current wp user email instead
 			$user_email = wp_get_current_user()->user_email;
@@ -534,21 +534,43 @@ class W4OS3_Flux {
 		return $title;
 	}
 
-	public function the_date( $date, $format ) {
-		if ( 'flux_post' === get_post_type() && in_the_loop() ) {
-			return '';
-		}
-		return $date;
-	}
-	
-	public function get_the_author( $author ) {
+	public function the_content( $content ) {
 		if ( 'flux_post' === get_post_type() && in_the_loop() ) {
 			$post_id     = get_the_ID();
-			$avatar_name = 'keep this ' . get_post_meta( $post_id, '_avatar_name', true ) . ' and also keep this';
-			if ( ! empty( $avatar_name ) ) {
-				return esc_html( $avatar_name );
+			$avatar_uuid = get_post_meta( $post_id, '_avatar_uuid', true );
+			if( empty( $avatar_uuid ) ) {
+				return $content;
 			}
+			$avatar	  = new W4OS3_Avatar( $avatar_uuid );
+			if ( ! $avatar ) {
+				return $content;
+			}
+
+			W4OS3::enqueue_style( 'flux-posts-style', 'v3/css/flux-posts.css' );
+			W4OS3::enqueue_style( 'flux-posts-style', 'v3/css/profile.css' );
+
+			$post_date   = get_the_date( '', $post_id ) . ' ' . get_the_time( '', $post_id );
+			$timestamp = get_the_time( 'U', $post_id );
+			$post_date   = W4OS3::format_date( $timestamp, 'DATE_TIME' );
+
+			$post_meta = sprintf(
+				'<p class="flux-meta">
+					<span class="flux-author">%s</span>
+					<span class="flux-date">%s</span>
+				</p>',
+				$avatar->profile_link(),
+				esc_html( $post_date ?? 'No date' )
+			);
+
+			$content = $post_meta . $content;
 		}
-		return $author;
+		return $content;
+	}
+
+	public function the_archive_title( $title ) {
+		if ( is_post_type_archive( 'flux_post' ) ) {
+			$title = __( 'Flux', 'w4os' );
+		}
+		return $title;
 	}
 }

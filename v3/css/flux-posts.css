@@ -1,0 +1,17 @@
+.single-flux_post .byline,
+.single-flux_post .posted-on,
+.single-flux_post .wp-block-post-date,
+.single-flux_post .wp-block-group:has( > .wp-block-post-author-name ),
+.flux_post .byline,
+.flux_post .posted-on,
+.flux_post .wp-block-post-date,
+.flux_post .wp-block-group:has( > .wp-block-post-author-name ) {
+	display: none;
+}
+
+.flux-author {
+    font-weight: bold;
+}
+.flux-date {
+    font-size: 0.9em;
+}

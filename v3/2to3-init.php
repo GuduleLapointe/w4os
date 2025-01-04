@@ -482,6 +482,31 @@ class W4OS3 {
 		return wp_date( $format, $timestamp, $timezone );
 	}
 
+	static function format_date( $timestamp, $format = 'MEDIUM', $timetype_str = 'NONE' ) {
+		switch( $format ) {
+			case 'MEDIUM':
+				$format = get_option( 'date_format' );
+				$date = date_i18n( $format, $timestamp );
+				break;
+
+			case 'LONG':
+			case 'DATE_TIME':
+				$date = sprintf (
+					__( '%s at %s', 'w4os' ),
+					date_i18n( get_option( 'date_format' ), $timestamp ),
+					date_i18n( get_option( 'time_format' ), $timestamp )
+				);
+				break;
+
+			default:
+				$format = get_option( 'date_format' );
+				$date = date_i18n( $format, $timestamp );
+		}
+
+		return $date;
+		// return date_i18n( $format, $timestamp );
+	}
+
 	/**
 	 * Rewrite of wp_enqueue_scripts to allow minimal syntax in scripts.
 	 */
