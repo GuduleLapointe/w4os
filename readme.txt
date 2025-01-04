@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.7.1
-Stable tag: 2.9.1
+Stable tag: 2.9.3
 License: AGPLv3
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -210,16 +210,17 @@ or not. In either case, idk&idc.
 
 == Changelog ==
 
-= Unreleased =
+= 2.9.3 =
+* fix profile not displayed in block (regression)
 * fix profile custom template not always working
 * fix arrays passed as if they were strings in w4os_array2table
-* fix crash on profile save
+* fix crash on wp core profile save
 
-v3 beta
-* new enabled feed tab on avatar profile
-* new viewer session authentication (for profile feed post)
-* fix avatar profile
-* enable viewer web_profile_url format (with ?name= argument)
+v3 beta features
+* new activity feed, allow avatars to post statuses on their profile page
+* new profile page, including tabs and activity feed
+* new in-world feed profile tab
+* handles GridInfoService web_profile_url (with ?name= argument)
 
 = 2.9.1 =
 * fix admin header shown in SL viewer embed and modal
