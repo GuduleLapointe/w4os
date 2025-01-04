@@ -30,7 +30,7 @@ class W4OS3 {
 	public static $ini             = null;
 	private static $key;
 	private static $avatar = null;
-	private static $user = null;
+	private static $user   = null;
 
 	// public function __construct() {
 	// Safety only, this class should not be instantiated.
@@ -74,33 +74,33 @@ class W4OS3 {
 		$session = null;
 		if ( ! self::$robust_db ) {
 			$session = false;
-		} else if ( ! isset( $_GET['session_id'] ) ) {
+		} elseif ( ! isset( $_GET['session_id'] ) ) {
 			$session = false;
-		} else if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+		} elseif ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			$viewer = preg_match( '/SecondLife|OpenSim/', $_SERVER['HTTP_USER_AGENT'] );
 			if ( ! self::in_world_call() ) {
 				$session = false;
 			} else {
-				$parts = explode( '?', $_GET['session_id'] );
+				$parts      = explode( '?', $_GET['session_id'] );
 				$session_id = $parts[0];
-				if( ! W4OS3::is_uuid( $session_id, false ) ) {
+				if ( ! self::is_uuid( $session_id, false ) ) {
 					$session = false;
 				} else {
-					$sql = sprintf (
+					$sql    = sprintf(
 						"SELECT UserID FROM Presence WHERE SessionID = '%s'",
 						esc_sql( $session_id )
 					);
 					$result = self::$robust_db->get_results( $sql );
-					
+
 					$avatar_uuid = ( $result ) ? $result[0]->UserID : false;
 					if ( ! $avatar_uuid ) {
 						$session = false;
 					} else {
-						$session = true;
-						$avatar = new W4OS3_Avatar( $avatar_uuid );
-						$user = ( $avatar->Email ) ? get_user_by( 'email', $avatar->Email ) : false;
+						$session      = true;
+						$avatar       = new W4OS3_Avatar( $avatar_uuid );
+						$user         = ( $avatar->Email ) ? get_user_by( 'email', $avatar->Email ) : false;
 						self::$avatar = ( $avatar ) ? $avatar : false;
-						self::$user = ( $user ) ? $user : false;
+						self::$user   = ( $user ) ? $user : false;
 					}
 				}
 			}
@@ -288,7 +288,7 @@ class W4OS3 {
 		define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
 		define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
 		define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
-		define( 'W4OS_NULL_KEY' , '00000000-0000-0000-0000-000000000000' );
+		define( 'W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000' );
 
 		define(
 			'W4OS_DB_ROBUST',
@@ -392,21 +392,21 @@ class W4OS3 {
 	static function get_option( $option, $default = false ) {
 		if ( is_array( $option ) && isset( $option[1] ) ) {
 			$option_group = $option[0];
-			$option      = $option[1];
+			$option       = $option[1];
 		} else {
 			$option_group = 'w4os-settings';
 		}
-		
+
 		if ( preg_match( '/:/', $option ) ) {
 			$option_group = strstr( $option, ':', true );
 			$option       = trim( strstr( $option, ':' ), ':' );
 		}
-		
+
 		$options = get_option( $option_group );
 		if ( $options && isset( $options[ $option ] ) ) {
 			return $options[ $option ];
 		}
-		
+
 		// Fallback to v2 settings untill v3 settings are all implemented.
 		if ( $option_group == 'w4os-settings' ) {
 			$options = get_option( 'w4os_settings' );
@@ -421,7 +421,7 @@ class W4OS3 {
 	static function update_option( $option, $value, $autoload = null ) {
 		if ( is_array( $option ) && isset( $option[1] ) ) {
 			$option_group = $option[0];
-			$option      = $option[1];
+			$option       = $option[1];
 		} elseif ( preg_match( '/:/', $option ) ) {
 			$option_group = strstr( $option, ':', true );
 			$option       = trim( strstr( $option, ':' ), ':' );
@@ -563,7 +563,7 @@ class W4OS3 {
 		if ( ! preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid ) ) {
 			return false;
 		}
-		if ( ! $accept_null && W4OS3::empty( $uuid ) ) {
+		if ( ! $accept_null && self::empty( $uuid ) ) {
 			return false;
 		}
 		return true;

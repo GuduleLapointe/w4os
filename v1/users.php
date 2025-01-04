@@ -338,12 +338,12 @@ function w4os_profile_sync( $user_or_id, $uuid = null ) {
 	if ( w4os_empty( $uuid ) ) {
 		$uuid = $avatar_row->PrincipalID;
 	}
-	
+
 	if ( w4os_empty( $uuid ) ) {
 		w4os_profile_dereference( $user );
 		return false;
 	}
-	
+
 	$user->add_role( 'grid_user' );
 
 	update_user_meta( $user->ID, 'w4os_uuid', $uuid );

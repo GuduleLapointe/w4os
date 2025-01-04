@@ -26,30 +26,30 @@ class W4OS_Avatar extends WP_User {
 		if ( W4OS_ENABLE_V3 ) {
 			if ( W4OS3::is_uuid( $id ) ) {
 				$uuid = $id;
-				$id = null;
+				$id   = null;
 			}
-			$args = array_filter(
+			$args   = array_filter(
 				array(
-					'id'     => $id,
-					'uuid'     => $uuid ?? null,
-					'name'   => $name,
+					'id'      => $id,
+					'uuid'    => $uuid ?? null,
+					'name'    => $name,
 					'site_id' => $site_id,
 				)
 			);
 			$avatar = new W4OS3_Avatar( $args );
-			
+
 			if ( $avatar->UUID ) {
 				$user = get_user_by( 'email', $avatar->Email );
-				$id = $user->ID;
+				$id   = $user->ID;
 
-				$this->ID = $user->ID;
-				$this->data = $avatar->get_data();
-				$this->UUID = $avatar->UUID;
-				$this->FirstName = $avatar->FirstName;
-				$this->LastName = $avatar->LastName;
-				$this->AvatarName = $avatar->AvatarName;
-				$this->AvatarSlug = $avatar->AvatarSlug;
-				$this->AvatarHGName = $avatar->AvatarHGName;
+				$this->ID                 = $user->ID;
+				$this->data               = $avatar->get_data();
+				$this->UUID               = $avatar->UUID;
+				$this->FirstName          = $avatar->FirstName;
+				$this->LastName           = $avatar->LastName;
+				$this->AvatarName         = $avatar->AvatarName;
+				$this->AvatarSlug         = $avatar->AvatarSlug;
+				$this->AvatarHGName       = $avatar->AvatarHGName;
 				$this->ProfilePictureUUID = $avatar->ProfilePictureUUID;
 				return;
 			} else {
@@ -112,19 +112,18 @@ class W4OS_Avatar extends WP_User {
 		if ( $this->ID && ! $this->UUID ) {
 			$this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
 		}
-		
+
 		if ( W4OS_ENABLE_V3 ) {
 			$v3avatar = new W4OS3_Avatar( $this->UUID );
 			return $v3avatar->profile_page( $echo, $args );
 		}
-
 
 		global $wpdb, $w4osdb;
 
 		$content            = '';
 		$can_list_users     = ( current_user_can( 'list_users' ) ) ? 'true' : 'false';
 		$current_user_email = wp_get_current_user()->user_email;
-		
+
 		$avatar_query = "SELECT *
 		FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
 		WHERE active = 1 AND Email != ''
@@ -212,10 +211,9 @@ class W4OS_Avatar extends WP_User {
 			// $content .= w4os_array2table((array)$avatar_row);
 			$content .= w4os_array2table( $profile, 'avatar-profile-table' );
 
-			if( W4OS_ENABLE_V3 ) {
+			if ( W4OS_ENABLE_V3 ) {
 				// $content .= $avatar->profile_page( false, $args );
 			}
-
 		} else {
 			return false;
 		}
@@ -390,7 +388,6 @@ function w4os_update_avatar( $user, $params ) {
 			break;
 	}
 
-	
 	if ( $uuid && ! w4os_empty( $uuid ) ) {
 		$avatar = new W4OS_Avatar( $uuid );
 		$avatar->add_role( 'grid_user' );
@@ -899,14 +896,14 @@ function w4os_profile_display( $user, $args = array() ) {
 	extract( $args );
 
 	if ( W4OS_ENABLE_V3 ) {
-		if( is_string( $user ) && ! is_numeric( $user ) ) {
+		if ( is_string( $user ) && ! is_numeric( $user ) ) {
 			// Probably an avatar name
-			$name = $user;
+			$name   = $user;
 			$avatar = new W4OS3_Avatar( $name );
 			if ( ! $avatar->UUID ) {
 				return false;
 			}
-		} else if ( $user->ID ) {
+		} elseif ( $user->ID ) {
 			$avatar = W4OS3_Avatar::get_user_avatar( $user->ID );
 			if ( empty( $avatar ) ) {
 				return false;
@@ -914,7 +911,7 @@ function w4os_profile_display( $user, $args = array() ) {
 		} else {
 			return false;
 		}
-	} else if ( is_string( $user ) ) {
+	} elseif ( is_string( $user ) ) {
 		$avatar = new W4OS_Avatar( null, $user );
 	} elseif ( $user->ID ) {
 		$avatar = new W4OS_Avatar( $user->ID );
@@ -1294,7 +1291,7 @@ function w4os_profile_fields_save( $user_id ) {
 		'w4os_lastname'            => esc_attr( $_POST['w4os_lastname'] ),
 		'opensim_profileAllow_web' => ( isset( $_POST['opensim_profileAllow_web'] ) ) ? ( esc_attr( $_POST['opensim_profileAllow_web'] ) == true ) : false,
 	);
-	if( !empty($_POST['w4os_password_1']) ) {
+	if ( ! empty( $_POST['w4os_password_1'] ) ) {
 		$args['w4os_password_1'] = esc_attr( $_POST['w4os_password_1'] );
 	}
 

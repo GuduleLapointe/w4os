@@ -13,22 +13,22 @@ add_filter( 'show_admin_bar', '__return_false' );
 		<div id="content" class="site-content">
 			<div id="primary" class="content-area">
 				<main id="main" class="site-main" role="main">
-                    <header class="entry-header alignwide">
-                        <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-                    </header><!-- .entry-header -->
+					<header class="entry-header alignwide">
+						<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+					</header><!-- .entry-header -->
 
-                    <?php
-                    if ( W4OS_ENABLE_V3 ) {
-                        if( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
-                            $avatar = new W4OS3_Avatar( $_GET['name'] );
-                            $avatar->profile_page( true );
-                        } else {
-                            echo w4os_profile_display( $_GET['name'] );
-                        }
-                    } else {
-                        echo w4os_profile_display( $_GET['name'] );
-                    }
-                    ?>
+					<?php
+					if ( W4OS_ENABLE_V3 ) {
+						if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
+							$avatar = new W4OS3_Avatar( $_GET['name'] );
+							$avatar->profile_page( true );
+						} else {
+							echo w4os_profile_display( $_GET['name'] );
+						}
+					} else {
+						echo w4os_profile_display( $_GET['name'] );
+					}
+					?>
 				</div><!-- #main -->
 			</div><!-- #primary -->
 		</div><!-- #content -->

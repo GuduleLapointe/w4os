@@ -28,3 +28,4 @@ lib/plugin-update-checker/*
 lib/wp-package-updater/*
 v3/helpers/js/admin-list-filter-actions.js
 v3/js/admin-settings.js
+*.js

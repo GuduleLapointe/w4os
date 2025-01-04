@@ -517,20 +517,20 @@ class W4OS3_Settings {
 		// Construct the field name to match the options array structure
 		$field_name = "{$prefs_name}[{$tab}][{$args['id']}]";
 
-		$prefs      = get_option( $prefs_name, array() );
-		if( isset( $args['value'] ) ) {
+		$prefs = get_option( $prefs_name, array() );
+		if ( isset( $args['value'] ) ) {
 			$value = $args['value'];
-		} else if ( isset( $prefs[ $tab ][ $args['id'] ] ) ) {
+		} elseif ( isset( $prefs[ $tab ][ $args['id'] ] ) ) {
 			$value = $prefs[ $tab ][ $args['id'] ];
 		} else {
-			$value =  isset( $args['default'] ) ? $args['default'] : '';
+			$value = isset( $args['default'] ) ? $args['default'] : '';
 		}
 
-		$readonly   = ( $args['readonly'] ) ? 'readonly' : '';
-		$disabled   = ( $args['disabled'] ) ? 'disabled' : '';
+		$readonly = ( $args['readonly'] ) ? 'readonly' : '';
+		$disabled = ( $args['disabled'] ) ? 'disabled' : '';
 
 		// if ( empty( $value ) && isset( $args['default'] ) ) {
-		// 	$value = $args['default'];
+		// $value = $args['default'];
 		// }
 
 		// Adjust field_name and value for multiple select fields
@@ -788,7 +788,7 @@ class W4OS3_Settings {
 			case 'checkboxes':
 				if ( empty( $args['options'] ) ) {
 					$args['options'] = array( '1' => __( 'Yes', 'w4os' ) );
-				} else if( key( $args['options'] ) === 0 ) {
+				} elseif ( key( $args['options'] ) === 0 ) {
 					$args['options'] = array_combine( range( 1, count( $args['options'] ) ), $args['options'] );
 				}
 				$fields = array();

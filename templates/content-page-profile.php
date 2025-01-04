@@ -53,8 +53,6 @@ if ( ! preg_match( "/<table class='avatar-profile-table'>|\[et_pb_w4os_avatar_pr
 			$page_content .= $avatar_profile;
 			$page_title    = $avatar_name;
 			$head_title    = W4OS::sprintf_safe( __( "%s's profile", 'w4os' ), $avatar_name );
-		// } else {
-		// 	$page_content = 'no profile';
 		}
 	}
 

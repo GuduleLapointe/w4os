@@ -2,7 +2,7 @@
 .w4os iframe,
 .w4os object,
 .w4os embed {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 img.profile,
@@ -141,10 +141,10 @@ body.profile-viewer .flux {
 	width: 100%;
 }
 
-/* 
+/*
 #new-flux-post-form button,
 #new-flux-post-form input[type="submit"] {
-} 
+}
 */
 
 .flux-post {
