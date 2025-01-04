@@ -29,7 +29,7 @@ document.addEventListener(
 
                                 // Show corresponding content
                                 const target        = this.getAttribute( 'data-tab' );
-                                const contentToShow = container.parentElement.querySelector( `#tab - ${target}` );
+                                const contentToShow = container.parentElement.querySelector( `#tab-${target}` );
                                 if (contentToShow) {
                                     contentToShow.style.display = 'block';
                                 }
@@ -41,7 +41,7 @@ document.addEventListener(
 			const activeTab = container.querySelector( '.profile-tab.active' );
 			if (activeTab) {
 				const target        = activeTab.getAttribute( 'data-tab' );
-				const contentToShow = container.parentElement.querySelector( `#tab - ${target}` );
+				const contentToShow = container.parentElement.querySelector( `#tab-${target}` );
 				if (contentToShow) {
 					contentToShow.style.display = 'block';
 				}
