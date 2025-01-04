@@ -59,6 +59,7 @@ class W4OS3_Flux {
 		add_action( 'wp_ajax_nopriv_load_more_flux_posts', array( $this, 'load_more_flux_posts' ) );
 
 		add_filter( 'the_title', array( $this, 'the_title' ), 10, 2 );
+		add_filter( 'get_the_title', array( $this, 'the_title' ), 10, 2 );
 		add_filter( 'the_content', array( $this, 'the_content' ) );
 		add_filter( 'get_the_archive_title', array( $this, 'the_archive_title' ) );
 	}
@@ -529,7 +530,7 @@ class W4OS3_Flux {
 
 	public function the_title( $title, $post_id ) {
 		if ( 'flux_post' === get_post_type( $post_id ) && in_the_loop() ) {
-			return '';
+			return false;
 		}
 		return $title;
 	}

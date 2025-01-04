@@ -70,6 +70,8 @@ class W4OS3_Avatar {
 		add_filter( 'the_title', array( $this, 'the_title' ) );
 		add_filter( 'pre_get_document_title', array( $this, 'document_title' ) );
 		// add_filter( 'document_title_parts', array( $this, 'document_title_parts' ) ); // Keep it for reference, probably not needed with pre_get_document_title filter above
+		add_filter( 'body_class', array( $this, 'body_class' ) );
+		add_filter( 'post_class', array( $this, 'post_class' ) );
 	}
 
 	/**
@@ -1068,5 +1070,19 @@ class W4OS3_Avatar {
 		} else {
 			return $content;
 		}
+	}
+
+	public function body_class( $classes ) {
+		if ( $this->is_profile_page ) {
+			$classes[] = 'profile-page';
+		}
+		return $classes;
+	}
+
+	public function post_class( $classes ) {
+		if ( $this->is_profile_page ) {
+			$classes[] = 'profile-post';
+		}
+		return $classes;
 	}
 }

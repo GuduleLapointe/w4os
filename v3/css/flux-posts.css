@@ -6,6 +6,7 @@
 .flux_post .byline,
 .flux_post .posted-on,
 .flux_post .wp-block-post-date,
+.flux_post header,
 .flux_post .post-meta,
 .flux_post .wp-block-group:has( > .wp-block-post-author-name ) {
 	display: none;

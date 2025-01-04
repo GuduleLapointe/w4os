@@ -1,7 +1,7 @@
 <?php
 add_filter( 'show_admin_bar', '__return_false' );
 
-$classes = 'w4os profile-viewer page-template-profile page';
+$classes = 'w4os profile-viewer profile-page page';
 
 if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 	if ( W4OS_ENABLE_V3 ) {

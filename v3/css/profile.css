@@ -5,6 +5,10 @@
 	max-width: 100%;
 }
 
+.profile-post header {
+	display: none;
+}
+
 img.profile,
 ul.parcels div.parcel > img {
 	float: left;
