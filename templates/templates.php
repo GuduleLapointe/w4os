@@ -16,7 +16,7 @@ add_action( 'template_redirect', 'w4os_template_redirect', 5 );
 function w4os_template_redirect() {
 	global $wp_query;
 	$pagename = $wp_query->query['pagename'] ?? '';
-	$viewer   = preg_match( '/SecondLife|OpenSim/', $_SERVER['HTTP_USER_AGENT'] );
+	$viewer   = isset( $_SERVER['HTTP_USER_AGENT']) ? preg_match( '/SecondLife|OpenSim/', $_SERVER['HTTP_USER_AGENT'] ) : false;
 
 	if ( $pagename === 'profile' && ( $viewer || isset( $wp_query->query['name'] ) ) ) {
 		$custom = W4OS_DIR . '/templates/page-profile-viewer.php';

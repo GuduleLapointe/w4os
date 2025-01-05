@@ -236,7 +236,7 @@ class W4OS3_Flux {
 		$avatar = $this->avatar ?? false;
 		if ( $avatar && $avatar->Email == wp_get_current_user()->user_email ) {
 			$thatsme = true;
-		} else {
+		} else if ( $avatar ) {
 			$session_avatar = W4OS3::session_avatar();
 			$thatsme        = $session_avatar ? ( $session_avatar->UUID == $avatar->UUID ) : false;
 		}
@@ -322,7 +322,7 @@ class W4OS3_Flux {
 	 * Get flux posts with pagination.
 	 */
 	public function get_flux_posts( $flux_paged = 1, $posts_per_page = 10 ) {
-		if ( ! $this->avatar_uuid ) {
+		if ( ! isset( $this->avatar_uuid ) ) {
 			return;
 		}
 		$args       = array(
@@ -345,7 +345,7 @@ class W4OS3_Flux {
 	 */
 	public function display_flux() {
 		$flux_paged = isset( $_GET['flux_paged'] ) ? intval( $_GET['flux_paged'] ) : 1;
-		$flux_posts = $this->get_flux_posts( $flux_paged );
+		$flux_posts = $this->get_flux_posts( $flux_paged ) ?? array();
 		$content    = '';
 
 		$content      .= $this->new_flux_form();

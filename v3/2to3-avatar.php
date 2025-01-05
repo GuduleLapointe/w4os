@@ -31,6 +31,7 @@ class W4OS3_Avatar {
 	public $UUID;
 	public $FirstName;
 	public $LastName;
+	public $profile_url;
 	private $data;
 	private $is_profile_page = false;
 	
@@ -100,11 +101,18 @@ class W4OS3_Avatar {
 		$query_lastname  = get_query_var( 'profile_lastname' );
 		$query_name = get_query_var( 'name' );
 		$pattern = '^' . self::$slug . '/([^/]+)\.([^/\.\?&]+)(\?.*)?';
-		
+
 		if( ! empty( $query_name ) && preg_match('/\./', $query_name) ) {
-			$query_name = explode( '.', $query_name );
-			$query_firstname = $query_name[0];
-			$query_lastname = $query_name[1];
+			$parts = explode('@', $query_name);
+			if( count( $parts ) > 1 ) {
+				$grid = $parts[1];
+				$query_name = $parts[0];
+
+				die();
+			}
+			$parts = explode( '.', $query_name );
+			$query_firstname = $parts[0];
+			$query_lastname = $parts[1];
 		}
 
 		if ( empty( $query_firstname ) || empty( $query_lastname ) ) {
@@ -180,7 +188,7 @@ class W4OS3_Avatar {
 		}
 		return $title;
 	}
-
+	
 	// Keep it for reference, probably not needed with pre_get_document_title filter above
 	// public function document_title_parts( $title ) {
 	// 	if ( ! $this->is_profile_page ) {
@@ -204,7 +212,7 @@ class W4OS3_Avatar {
 		}
 
 		$query = self::$base_query;
-
+		
 		if( W4OS3::is_uuid($args ) ) {
 			$uuid = $args;
 		} else if ( is_array( $args ) ) {
@@ -227,17 +235,31 @@ class W4OS3_Avatar {
 			$sql = $this->db->prepare( $query, array( $uuid ) );
 			$avatar_row = $this->db->get_row( $sql );
 		} else if ( is_string( $args ) ) {
-			$name = preg_replace('/\s+/', '.', $args);
+			$parts = explode( '@', $args );
+			$grid = $parts[1] ?? null;
+			$name = preg_replace('/\s+/', '.', $parts[0]);
 			$parts = explode('.', $name);
 			if ( count($parts) < 2 ) {
 				return false;
 			}
 			$firstname = $parts[0];
 			$lastname = $parts[1];
-
-			$query .= " WHERE FirstName = %s AND LastName = %s";
-			$sql = $this->db->prepare( $query, array ( $firstname, $lastname ) );
-			$avatar_row = $this->db->get_row( $sql );
+			if( isset( $grid ) ) {
+				$grid_info = W4OS3::grid_info( $grid );
+				// $avatar_row = new stdClass();
+				$this->UUID = W4OS_NULL_KEY;
+				$this->FirstName = $firstname;
+				$this->LastName = $lastname;
+				$this->AvatarName = trim( "$this->FirstName $this->LastName" );
+				$this->AvatarHGName = "$firstname.$lastname@$grid";
+				$this->externalProfileURL = self::get_profile_url();
+				$this->grid_info = $grid_info;
+				return;
+			} else {
+				$query .= " WHERE FirstName = %s AND LastName = %s";
+				$sql = $this->db->prepare( $query, array ( $firstname, $lastname ) );
+				$avatar_row = $this->db->get_row( $sql );
+			}
 		} else {
 			return false;
 		}
@@ -800,7 +822,6 @@ class W4OS3_Avatar {
 		}
 
 		$imageUUID = $this->profileImage;
-		error_log( 'Create thumb for ' . $imageUUID );
 		if ( ! empty( $imageUUID ) ) {
 			$imageURL = w4os_get_asset_url( $imageUUID );
 			$upload_dir = w4os_upload_dir('cache/thumbs');
@@ -868,10 +889,40 @@ class W4OS3_Avatar {
 	}
 
 	public static function profile_url( $item = null ) {
+		if ( ! empty( $item->externalProfileURL ) ) {
+			return $item->externalProfileURL;
+		}
 		$slug      = get_option( 'w4os_profile_slug', 'profile' );
 		$profile_page_url  = get_home_url( null, $slug );
-		$firstname = $item->FirstName;
-		$lastname  = $item->LastName;
+		if( empty( $item && ! empty( $_GET['name'] ) ) ) {
+			$name = $_GET['name'];
+			$parts = explode( '@', $name );
+			$name_parts = explode( '.', $parts[0] );
+			$firstname = $name_parts[0];
+			$lastname = $name_parts[1];
+			$grid = $parts[1] ?? null;
+			if( ! empty( $grid ) ) {
+				$grid_info = W4OS3::grid_info( $grid );
+				if( $grid_info && isset( $grid_info['web_profile_url'] ) ) {
+					$profile_page_url = $grid_info['web_profile_url'];
+					if( $profile_page_url ) {
+						$profile_page_url = add_query_arg( array( 'name' => "$firstname.$lastname" ), $profile_page_url );
+						$profile_page_url = remove_query_arg( 'session_id', $profile_page_url );
+						// error_log( __FUNCTION__ . "($firstname.$lastname@$grid) = $profile_page_url" );
+						return $profile_page_url;
+					} else {
+						error_log( __FUNCTION__ . "($firstname.$lastname@$grid) not found" );
+						return false;
+					}
+				} else if ( ! $grid_info ) {
+					error_log( __FUNCTION__ . '() grid info not found for ' . $grid );
+				}
+				return false;
+			}
+		} else {
+			$firstname = $item->FirstName;
+			$lastname  = $item->LastName;
+		}
 
 		if ( empty( $firstname ) || empty( $lastname ) ) {
 			return $profile_page_url;
@@ -985,6 +1036,17 @@ class W4OS3_Avatar {
 	public function profile_page( $echo = false, $args = array() ) {
 		if ( ! W4OS_DB_CONNECTED ) {
 			return __( 'Profiles are not available at the moment.', 'w4os' );
+		}
+
+		// Redirect if external
+		if ( ! empty( $this->externalProfileURL ) ) {
+			echo "Redirectiong...";
+			wp_redirect( $this->externalProfileURL );
+			printf( 
+				__( 'External profile page, redirecting to %s', 'w4os' ),
+				'<a href="' . $this->externalProfileURL . '">' . $this->externalProfileURL . '</a>',
+			);
+			exit;
 		}
 
 		global $wpdb, $w4osdb;

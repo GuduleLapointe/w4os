@@ -9,15 +9,24 @@ if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 		$avatar      = new W4OS3_Avatar( $_GET['name'] );
 		$page_title  = sprintf(
 			__( '%s\'s flux', 'w4os' ),
-			$avatar->AvatarName
+			$avatar->AvatarName ?? $_GET['name'],
 		);
-		$profile_url = $avatar->get_profile_url();
-		$actions[]   = sprintf(
+		if( empty( $avatar->externalProfileURL ) ) {
+			// $page_title = $avatar->AvatarHGName ?? $avatar->AvatarName;
+			$profile_url = false;
+			$content = '<center>' . sprintf(
+				__( 'Feed not available on %s', 'w4os' ),
+				$avatar->grid_info['gridname'] ?? preg_replace( '/^.*@/', '', $_GET['name'],
+			) ) . '</center>';
+		} else {
+			$profile_url = $avatar->get_profile_url();
+			$content     = $avatar->profile_page();
+		}
+		$actions[]   = empty( $profile_url ) ? '' : sprintf(
 			'<a href="%s" class="page-title-action" target="_blank">%s</a>',
 			$profile_url,
 			__( 'Open profile page', 'w4os' )
 		);
-		$content     = $avatar->profile_page();
 	} else {
 		$user    = w4os_get_user_by_avatar_name( $_GET['name'] );
 		$content = w4os_profile_display( $user->ID );
