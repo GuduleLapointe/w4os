@@ -485,6 +485,26 @@ class W4OS3 {
 		return wp_date( $format, $timestamp, $timezone );
 	}
 
+	static function sanitize_uri( $login_uri ) {
+		if ( empty( $login_uri ) ) {
+			return;
+		}
+	
+		$login_uri = ( preg_match( '/^https?:\/\//', $login_uri ) ) ? $login_uri : 'http://' . $login_uri;
+	
+		$parts = wp_parse_args(
+			wp_parse_url( $login_uri ),
+			array(
+				'scheme' => 'http',
+				'port'   => preg_match('/osgrid\.org/', $login_uri) ? 80 : 8002,
+			),
+		);
+	
+		$login_uri = $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
+	
+		return $login_uri;
+	}
+
 	static function format_date( $timestamp, $format = 'MEDIUM', $timetype_str = 'NONE' ) {
 		switch( $format ) {
 			case 'MEDIUM':
@@ -662,6 +682,7 @@ class W4OS3 {
 		}
 
 		if ( is_string( $instance ) ) {
+			$instance = self::sanitize_uri( $instance );
 			$parts              = parse_url( $instance );
 			$serverURI          = $parts['host'] . ':' . $parts['port'];
 			$cred_options       = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
