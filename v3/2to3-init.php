@@ -313,6 +313,7 @@ class W4OS3 {
 
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
+		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-userless-auth.php';
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 
 		// Load v3 features if enabled
@@ -332,6 +333,8 @@ class W4OS3 {
 		self::$profile_db = self::$robust_db;
 
 		if ( W4OS_ENABLE_V3 ) {
+			$UserlessAuth = new UserlessAuth();
+			$UserlessAuth->init();
 			$Instances = new W4OS3_Service();
 			$Instances->init();
 			$AvatarClass = new W4OS3_Avatar();

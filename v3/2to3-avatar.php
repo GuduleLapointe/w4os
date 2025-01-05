@@ -108,6 +108,8 @@ class W4OS3_Avatar {
 		}
 
 		if ( empty( $query_firstname ) || empty( $query_lastname ) ) {
+			// $user = get_current_user();
+			// if ( $user ) {
 			if ( is_user_logged_in() ) {
 				$uuid = w4os_profile_sync( wp_get_current_user() );
 				if ( $uuid ) {
@@ -127,7 +129,7 @@ class W4OS3_Avatar {
 				$page_title = __( 'Avatar not found', 'w4os' );
 			}
 		}
-		$this->profile = ( $avatar ) ? $avatar : false;
+		$this->profile = $avatar ?? false;
 		$this->page_title = $page_title;
 		$this->head_title = $page_title . ' – ' . get_bloginfo( 'name' );
 	}
@@ -203,7 +205,21 @@ class W4OS3_Avatar {
 
 		$query = self::$base_query;
 
-		$uuid = ( W4OS3::is_uuid( $args ) ) ? $args : ( isset( $args['uuid'] ) ? $args['uuid'] : false );
+		if( W4OS3::is_uuid($args ) ) {
+			$uuid = $args;
+		} else if ( is_array( $args ) ) {
+			$uuid = ( W4OS3::is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
+		} else if( is_object( $args )) {
+			$user = $args;
+			$avatars = W4OS3_Avatar::get_avatars_by_email( $user->user_email );
+			if( count( $avatars ) > 0 ) {
+				$uuid = key( $avatars );
+			} else {
+				$uuid = false;
+			}
+		} else {
+			$uuid = false;
+		}
 
 		if( $uuid !== false ) {
 			// $uuid = $args;
@@ -722,6 +738,13 @@ class W4OS3_Avatar {
 		$avatar = new W4OS3_Avatar( $key );
 
 		return $avatar;
+	}
+
+	static function get_avatars_by_email( $email ) {
+		if ( empty( $email ) ) {
+			return array();
+		}
+		return self::get_avatars( array( 'Email' => $email ) );
 	}
 
 	static function get_avatars( $args = array(), $format = OBJECT ) {
