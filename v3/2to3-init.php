@@ -779,16 +779,22 @@ class W4OS3 {
 		return $data;
 	}
 
-	public static function grid_info( $force = false ) {
-		$transient_key = 'w4os_grid_info';
+	public static function grid_info( $gateway_uri = null, $force = false ) {
+		$local_uri       = 'http://localhost:8002';
+		if( empty( $gateway_uri ) ) {
+			$gateway_uri = get_option( 'w4os_login_uri', $local_uri );
+			$transient_key = 'w4os_grid_info';
+		} else {
+			$transient_key = 'w4os_grid_info_' . sanitize_key( $gateway_uri );
+		}
 		$grid_info     = get_transient( $transient_key );
 		if ( $grid_info && ! $force ) {
 			return $grid_info;
 		}
 
-		$local_uri       = 'http://localhost:8002';
-		$check_login_uri = ( get_option( 'w4os_login_uri' ) ) ? 'http://' . get_option( 'w4os_login_uri' ) : $local_uri;
-		$check_login_uri = preg_replace( '+http://http+', 'http', $check_login_uri );
+		// $check_login_uri = ( get_option( 'w4os_login_uri' ) ) ? 'http://' . get_option( 'w4os_login_uri' ) : $local_uri;
+		// $check_login_uri = preg_replace( '+http://http+', 'http', $check_login_uri );
+		$check_login_uri = 'http://' . preg_replace( '+.*://+', '', $gateway_uri );
 
 		$xml = self::fast_xml( $check_login_uri . '/get_grid_info' );
 
