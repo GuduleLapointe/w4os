@@ -224,6 +224,10 @@ or not. In either case, idk&idc.
 = 2.9.4 =
 * fix avatar mini profile block crashing
 * fix all menu titles replaced in some themes on profile page
+
+v3 beta features
+* enhancement better flux single post and archive display
+* flux author column after title
 * fix profile tabs empty (regression interoduced in 796a1c2f)
 
 = 2.9.3 =
