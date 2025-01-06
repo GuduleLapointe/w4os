@@ -56,6 +56,9 @@ class W4OS3 {
 		$this->get_ini_config();
 
 		add_action( 'init', array( $this, 'viewer_session_auth' ) );
+
+		// Allow 'w4os/avatar-menu' block within 'core/navigation'
+        add_filter( 'allowed_block_types_all', array( $this, 'w4os_allowed_navigation_blocks' ), 10, 2 );
 	}
 
 	public static function in_world_call() {
@@ -314,6 +317,7 @@ class W4OS3 {
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-userless-auth.php';
+		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-usermenu.php';
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 
 		// Load v3 features if enabled
@@ -335,6 +339,8 @@ class W4OS3 {
 		if ( W4OS_ENABLE_V3 ) {
 			$UserlessAuth = new UserlessAuth();
 			$UserlessAuth->init();
+			$UserMenu = new W4OS3_UserMenu();
+			$UserMenu->init();
 			$Instances = new W4OS3_Service();
 			$Instances->init();
 			$AvatarClass = new W4OS3_Avatar();
@@ -346,6 +352,18 @@ class W4OS3 {
 			// $RegionClass = new W4OS3_Region();
 			// $RegionClass->init();
 		}
+	}
+
+	public static function account_url() {
+		$account_slug = get_option( 'w4os_account_url', 'account' );
+		// Check if page exists
+		$page = get_page_by_path( $account_slug );
+		$account_url = ( $page ) ? get_permalink( $page->ID ) : false;
+		if ( empty( $account_url ) ) {
+			// Return default wordpress user profile page
+			return get_edit_user_link();
+		}
+		return $account_url;
 	}
 
 	function register_legacy_settings_fields( $meta_boxes ) {
@@ -539,14 +557,12 @@ class W4OS3 {
 		$src    = preg_match( '/^http/', $src ) ? $src : W4OS_PLUGIN_DIR_URL . $src;
 		$hook   = is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts';
 		if ( function_exists( 'wp_enqueue_script' ) ) {
-			// error_log( 'Enqueueing script: ' . $handle . ' ' . $src );
 			wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
 			return;
 		}
 		add_action(
 			$hook,
 			function () use ( $handle, $src, $deps, $ver, $in_footer ) {
-				// error_log( 'Hook Enqueueing script: ' . $handle . ' ' . $src );
 				wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
 			}
 		);
@@ -968,6 +984,23 @@ class W4OS3 {
 			);
 		}
 	}
+
+	/**
+     * Allow 'w4os/avatar-menu' within 'core/navigation' blocks.
+     *
+     * @param array|string $allowed_blocks Array of allowed block types or '*' for all.
+     * @param array        $block The current block being processed.
+     * @return array|string Modified array of allowed block types.
+     */
+    public function w4os_allowed_navigation_blocks( $allowed_blocks, $block ) {
+        if ( isset( $block['blockName'] ) && $block['blockName'] === 'core/navigation' ) {
+            if ( is_array( $allowed_blocks ) ) {
+                // Add your custom block to the allowed blocks array
+                $allowed_blocks[] = 'w4os/avatar-menu';
+            }
+        }
+        return $allowed_blocks;
+    }
 }
 
 $w4os3 = new W4OS3();
