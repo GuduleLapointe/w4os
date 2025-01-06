@@ -144,4 +144,28 @@ class UserlessAuth {
         }
         return new WP_User(0);
     }
+
+    /**
+     * Hide admin bar for temporary users, return unchanged value for real users.
+     */
+    public function show_admin_bar( $show ) {
+        if (self::$user->ID === -1) {
+            return false;
+        }
+        return $show;
+    }
+
+    /**
+     * Change default logout URL for temporary users and redirect to $login_page
+     */
+    public function logout_url($logout_url, $redirect) {
+        if (self::$user->ID === -1) {
+            $login_page = home_url('/account');
+            $logout_url = add_query_arg('logout', 'true', $login_page);
+            $logout_url = add_query_arg('redirect_to', urlencode($login_page), $logout_url);
+            $logout_url = wp_nonce_url($logout_url, 'logout_action');
+            return $logout_url;
+            // return wp_nonce_url($login_page . '?logout=true', 'logout_action');
+        }
+    }
 }
