@@ -111,15 +111,23 @@ class UserlessAuth {
         }
 
         // Display login form
-        return '<form method="post">
+        return '<form method="post" class="w4os-login-form login-form" id="w4os-login-form" style="display:flex;gap:20px;flex-wrap:wrap;">
                     ' . wp_nonce_field('login_action') . '
-                    <label>First Name:</label>
-                    <input type="text" name="first_name" value="John" required>
-                    <label>Last Name:</label>
-                    <input type="text" name="last_name" value="Doe" required>
-                    <label>Password:</label>
-                    <input type="password" name="password" value="test123" required>
-                    <button type="submit" name="submit">Login</button>
+                    <p class="login-firstname">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" name="first_name" value="John" required>
+                    </p>
+                    <p class="login-lastname">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" name="last_name" value="Doe" class="input" required>
+                    </p>
+                    <p class="login-password">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" value="test123" class="input" required>
+                    </p>
+                    <p>
+                        <button type="submit" name="submit">Login</button>
+                    <p>
                 </form>';
     }
 
