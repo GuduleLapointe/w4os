@@ -169,11 +169,11 @@ class UserlessAuth {
     }
 
     public function wp_logout() {
-        if( $this->was_userless ) {
+        if( isset( $this->was_userless ) && $this->was_userless ) {
             $redirect = $_REQUEST['redirect_to'] ?? $this->get_login_page();
             wp_redirect( $redirect);
+            exit;
         }
-        exit;
     }
 
     public function is_authenticated() {
@@ -204,7 +204,7 @@ class UserlessAuth {
         if (self::$user->ID === -1) {
             $logout_url = add_query_arg(['logout' => 'true'], $this->get_login_page() );
             $logout_url = wp_nonce_url($logout_url, 'logout_action');
-            return $logout_url;
         }
+        return $logout_url;
     }
 }
