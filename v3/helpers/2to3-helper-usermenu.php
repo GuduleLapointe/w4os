@@ -183,6 +183,28 @@ class W4OS3_UserMenu {
         }
     }
 
+    private function menu_visible( $slug ) {
+        if( empty ( $this->menu_visibility ) ) {
+            return true;
+        }
+        if( empty( $slug ) ) {
+            return true;
+        }
+        // Check if the menu item's slug exists in the visibility mapping
+        $which_users = $this->menu_visibility[$slug] ?? null;
+        if ( ! empty( $which_users ) ) {
+
+            if ($which_users === 'logged_in' && ! is_user_logged_in()) {
+                return false;
+            }
+
+            if ($which_users === 'logged_out' && is_user_logged_in()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
     /**
      * Replace placeholders in menu item titles with dynamic content and enforce visibility.
      *
@@ -229,7 +251,7 @@ class W4OS3_UserMenu {
             $current_user = wp_get_current_user();
             return $current_user->display_name;
         }
-        return __('Avatar Profile', 'w4os');
+        return __('Avatar profile', 'w4os');
     }
 
     /**
@@ -322,14 +344,31 @@ class W4OS3_UserMenu {
     }
 
     function render_block($attributes) {
+        // Make sure placeholders and visibility settings are up to date
+        $this->save_placeholders();
         $menu = apply_filters('w4os_avatar_menu', array());
         // TODO: include $item['icon'] in the output if set
         $block_content = '';
-        foreach ($menu as $item) {
+        foreach ($menu as $slug => $item) {
+            if( ! $this->menu_visible( $slug ) ) {
+                continue;
+            }
             if (isset($item['children']) && is_array($item['children'])) {
-                $block_content .= '<!-- wp:navigation-submenu {"label":"' . esc_html($item['label']) . '","url":"' . esc_url($item['url']) . '"} -->';
+                if( is_callable($item['label']) ) {
+                    $callback = $item['label'];
+                    $label = call_user_func( $callback );
+                } else {
+                    $label = $item['label'];
+                }
+                $block_content .= '<!-- wp:navigation-submenu {"label":"' . esc_html($label) . '","url":"' . esc_url($item['url']) . '"} -->';
                 foreach ($item['children'] as $child) {
-                    $block_content .= '<!-- wp:navigation-link {"label":"' . esc_html($child['label']) . '","url":"' . esc_url($child['url']) . '"} /-->';
+                    if( is_callable($child['label']) ) {
+                        $callback = $child['label'];
+                        $label = call_user_func( $callback );
+                    } else {
+                        $label = $child['label'];
+                    }
+                    $block_content .= '<!-- wp:navigation-link {"label":"' . esc_html($label) . '","url":"' . esc_url($child['url']) . '"} /-->';
                 }
                 $block_content .= '<!-- /wp:navigation-submenu -->';
             } else {
