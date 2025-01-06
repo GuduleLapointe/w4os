@@ -100,26 +100,8 @@ class W4OS3_UserMenu {
         ] );
     }
 
-    // <li data-wp-context="{ &quot;submenuOpenedBy&quot;: { &quot;click&quot;: false, &quot;hover&quot;: false, &quot;focus&quot;: false }, &quot;type&quot;: &quot;submenu&quot; }" data-wp-interactive="core/navigation" data-wp-on--focusout="actions.handleMenuFocusout" data-wp-on--keydown="actions.handleMenuKeydown" data-wp-on-async--mouseenter="actions.openMenuOnHover" data-wp-on-async--mouseleave="actions.closeMenuOnHover" data-wp-watch="callbacks.initMenu" tabindex="-1" class=" wp-block-navigation-item has-child open-on-hover-click wp-block-navigation-submenu">
-    // <a class="wp-block-navigation-item__content current-menu-ancestor" href="http://dev.w4os.org/account/">Account</a>
-    // <button data-wp-bind--aria-expanded="state.isMenuOpen" data-wp-on-async--click="actions.toggleMenuOnClick" aria-label="Account submenu" class="wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle" aria-expanded="false">
-    // <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
-    // <path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5">
-    // </path>
-    // </svg>
-    // </button>
-    // <ul data-wp-on-async--focus="actions.openMenuOnFocus" class="wp-block-navigation__submenu-container has-text-color has-contrast-color has-background has-base-background-color wp-block-navigation-submenu">
-    // <li class=" wp-block-navigation-item current-menu-item wp-block-navigation-link">
-    // <a class="wp-block-navigation-item__content" href="http://dev.w4os.org/profile/" aria-current="page">
-    // <span class="wp-block-navigation-item__label">Profile</span>
-    // </a>
-    // </li>
-    // </ul>
-    // </li>    
-
     function render_block($attributes) {
         $menu = apply_filters('w4os_avatar_menu', array());
-        error_log( '$menu = ' . print_r($menu, true));
         // TODO: include $item['icon'] in the output if set
         $block_content = '';
         foreach ($menu as $item) {

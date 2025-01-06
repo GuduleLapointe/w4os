@@ -58,7 +58,7 @@ class W4OS3 {
 		add_action( 'init', array( $this, 'viewer_session_auth' ) );
 
 		// Allow 'w4os/avatar-menu' block within 'core/navigation'
-        add_filter( 'allowed_block_types_all', array( $this, 'w4os_allowed_navigation_blocks' ), 10, 2 );
+        // add_filter( 'allowed_block_types_all', array( $this, 'w4os_allowed_navigation_blocks' ), 10, 2 );
 	}
 
 	public static function in_world_call() {
@@ -985,22 +985,22 @@ class W4OS3 {
 		}
 	}
 
-	/**
-     * Allow 'w4os/avatar-menu' within 'core/navigation' blocks.
-     *
-     * @param array|string $allowed_blocks Array of allowed block types or '*' for all.
-     * @param array        $block The current block being processed.
-     * @return array|string Modified array of allowed block types.
-     */
-    public function w4os_allowed_navigation_blocks( $allowed_blocks, $block ) {
-        if ( isset( $block['blockName'] ) && $block['blockName'] === 'core/navigation' ) {
-            if ( is_array( $allowed_blocks ) ) {
-                // Add your custom block to the allowed blocks array
-                $allowed_blocks[] = 'w4os/avatar-menu';
-            }
-        }
-        return $allowed_blocks;
-    }
+	// /**
+    //  * Allow 'w4os/avatar-menu' within 'core/navigation' blocks.
+    //  *
+    //  * @param array|string $allowed_blocks Array of allowed block types or '*' for all.
+    //  * @param array        $block The current block being processed.
+    //  * @return array|string Modified array of allowed block types.
+    //  */
+    // public function w4os_allowed_navigation_blocks( $allowed_blocks, $block ) {
+    //     if ( isset( $block['blockName'] ) && $block['blockName'] === 'core/navigation' ) {
+    //         if ( is_array( $allowed_blocks ) ) {
+    //             // Add your custom block to the allowed blocks array
+    //             $allowed_blocks[] = 'w4os/avatar-menu';
+    //         }
+    //     }
+    //     return $allowed_blocks;
+    // }
 }
 
 $w4os3 = new W4OS3();
