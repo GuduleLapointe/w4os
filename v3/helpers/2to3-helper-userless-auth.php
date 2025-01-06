@@ -15,6 +15,7 @@ if (!defined('ABSPATH')) {
 
 class UserlessAuth {
     public static $user = null;
+    private $login_page;
 
     private $session_timeout = 1800; // 30 minutes timeout
 
@@ -25,9 +26,34 @@ class UserlessAuth {
         add_shortcode('custom_auth_form', [$this, 'login_form_shortcode']);
         add_shortcode('account_info', [$this, 'account_shortcode']);
         add_action('init', [$this, 'start_session']);
+        add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] );
+
+        // Change default logout URL for temporary users
+        add_filter( 'logout_url', [$this, 'logout_url'], 99, 2);
+        add_filter( 'wp_logout', [$this, 'wp_logout'] );
     }
 
+    /**
+     * Find login page by looking for a page with the shortcode [custom_auth_form]
+     */
+    public function get_login_page() {
+        if (!empty($this->login_page)) {
+            return $this->login_page;
+        }
+        $pages = get_pages();
+        foreach ($pages as $page) {
+            if (has_shortcode($page->post_content, 'custom_auth_form')) {
+                $this->login_page = get_permalink($page->ID);
+                return $this->login_page;
+            }
+        }
+        // Return default wordpress login page if not found
+        return wp_login_url();
+    }
+    
     public function start_session() {
+        $this->get_login_page();
+
         if (!session_id()) {
             session_start();
         }
@@ -56,6 +82,12 @@ class UserlessAuth {
                 'Welcome ' . esc_html($current_user->display_name),
             );
             $content = '<p>' . implode('</p><p>', $content) . '</p>';
+            // Add logout link as a link, not a form
+            $content .= sprintf(
+                '<a href="%s">%s</a>',
+                wp_logout_url(),
+                wp_logout_url(),
+            );
             return $content;
         // } else {
         //     return '<p>You are not logged in.</p>';
@@ -64,7 +96,7 @@ class UserlessAuth {
 
     public function login_form_shortcode() {
         // Process logout
-        if (isset($_POST['logout']) && wp_verify_nonce($_POST['_wpnonce'], 'logout_action')) {
+        if (isset($_REQUEST['logout']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'logout_action')) {
             $this->logout();
         }
 
@@ -129,8 +161,18 @@ class UserlessAuth {
     }
 
     private function logout() {
-        session_destroy();
-        wp_redirect($_SERVER['REQUEST_URI']);
+        if (self::$user->ID === -1) {
+            $this->was_userless = true;
+            session_destroy(); // Disconnect temporary user
+        }
+        wp_logout(); // Also disconnect WordPress user if any
+    }
+
+    public function wp_logout() {
+        if( $this->was_userless ) {
+            $redirect = $_REQUEST['redirect_to'] ?? $this->get_login_page();
+            wp_redirect( $redirect);
+        }
         exit;
     }
 
@@ -160,12 +202,9 @@ class UserlessAuth {
      */
     public function logout_url($logout_url, $redirect) {
         if (self::$user->ID === -1) {
-            $login_page = home_url('/account');
-            $logout_url = add_query_arg('logout', 'true', $login_page);
-            $logout_url = add_query_arg('redirect_to', urlencode($login_page), $logout_url);
+            $logout_url = add_query_arg(['logout' => 'true'], $this->get_login_page() );
             $logout_url = wp_nonce_url($logout_url, 'logout_action');
             return $logout_url;
-            // return wp_nonce_url($login_page . '?logout=true', 'logout_action');
         }
     }
 }
