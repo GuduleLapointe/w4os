@@ -894,12 +894,11 @@ class W4OS3_Avatar {
 		}
 		$slug      = get_option( 'w4os_profile_slug', 'profile' );
 		$profile_page_url  = get_home_url( null, $slug );
-		if( empty( $item && ! empty( $_GET['name'] ) ) ) {
-			$name = $_GET['name'];
+		if( empty( $item ) && ! empty( $_GET['name'] ) ) {
 			$parts = explode( '@', $name );
 			$name_parts = explode( '.', $parts[0] );
 			$firstname = $name_parts[0];
-			$lastname = $name_parts[1];
+			$lastname = $name_parts[1] ;
 			$grid = $parts[1] ?? null;
 			if( ! empty( $grid ) ) {
 				$grid_info = W4OS3::grid_info( $grid );
@@ -919,7 +918,7 @@ class W4OS3_Avatar {
 				}
 				return false;
 			}
-		} else {
+		} else if ( is_object( $item ) ) {
 			$firstname = $item->FirstName;
 			$lastname  = $item->LastName;
 		}

@@ -1019,7 +1019,7 @@ function w4os_render_asset( $image_uuid, $size = 256, $default = '', $alt = '', 
 		w4os_get_asset_url( $image_uuid ),
 		( empty( $alt ) ) ? 'OpenSimulator asset' : $alt,
 		$size,
-		$args['class'],
+		$args['class'] ?? '',
 	);
 }
 
