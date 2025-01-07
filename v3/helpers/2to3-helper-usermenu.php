@@ -274,7 +274,7 @@ class W4OS3_UserMenu {
             'which_users' => 'logged_in', // Visibility setting
             'children' => array(
                 $prefix . 'account' => array(
-                    'label' => __('Account', 'w4os'),
+                    'label' => __('Account settings', 'w4os'),
                     'url' => W4OS3::account_url(),
                     'which_users' => 'logged_in', // Visibility setting
                 ),
@@ -290,6 +290,11 @@ class W4OS3_UserMenu {
         $menu['login'] = array(
             'label' => __('Login', 'w4os'),
             'url' => wp_login_url(),
+            'which_users' => 'logged_out', // Visibility setting
+        );
+        $menu['register'] = array(
+            'label' => __('Register', 'w4os'),
+            'url' => wp_registration_url(),
             'which_users' => 'logged_out', // Visibility setting
         );
 

@@ -1039,12 +1039,11 @@ class W4OS3_Avatar {
 
 		// Redirect if external
 		if ( ! empty( $this->externalProfileURL ) ) {
-			echo "Redirectiong...";
 			wp_redirect( $this->externalProfileURL );
-			printf( 
-				__( 'External profile page, redirecting to %s', 'w4os' ),
-				'<a href="' . $this->externalProfileURL . '">' . $this->externalProfileURL . '</a>',
-			);
+			// printf( 
+			// 	__( 'External profile page, redirecting to %s', 'w4os' ),
+			// 	'<a href="' . $this->externalProfileURL . '">' . $this->externalProfileURL . '</a>',
+			// );
 			exit;
 		}
 
