@@ -16,27 +16,27 @@ Please check [OpenSimulator](https://opensimulator.org/) documentation to instal
 
 ### WordPress installation
 
-Please check [WordPress](https://wordpress.org/) documentation to install and configure WordPress.
+Please check the [WordPress documentation](https://wordpress.org/) for detailed instructions on installing and configuring WordPress.
 
-- Permalinks need to be enabled (set to any other choice than the default "Plain" setting)
-- PHP minimum version: 7.3
-- The PHP modules curl, xml, xml-rpc and imagick are needed to allow full functionalty of the plugin (and they are also recommended for WordPress anyway). Without these plugins, some important functionalties will not be available.
+- Permalinks must be enabled (choose any option other than the default "Plain" setting).
+- PHP minimum version: 7.3.
+- The PHP modules `curl`, `xml`, `xml-rpc`, and `imagick` are required for full functionality of the plugin (and are also recommended for WordPress). Without these modules, some important features will not be available.
 
-### Plugin installation and configuration
+### Plugin Installation and Configuration
 
-Note: if upgrading from a different distribution (e.a. switching from github to WordPress Plugin Directory), make sure you disabled the previous version before activating the new one.
+**Note:** If upgrading from a different distribution (e.g. switching from GitHub to the WordPress Plugin Directory), disable the previous version before activating the new one.
 
-1. Download and activate the latest stable release
-2. Visit `OpenSimulator > Settings` page in admin
-   - Enter your grid name and grid URI (like yourgrid.org:8002, without http://)
-   - Enter your robust database connection details and submit. If you get a database connection error, it might come from a case-sensitivity issue (see https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
-3. Set permalinks and profile page
-   - Visit `OpenSimulator > Settings > Permalinks`, make sure permalink structure is NOT set to "Plain", and adjust W4OS slugs to your preferences
-   - Take note of the slug chosen for profile base and create a page with the same slug
-4. Visit `OpenSimulator > Settings > Web assets server` and make sure the option is enabled. (You can disable it you have a third party web assets server up and running, and enter its full URL below)
-5. You should be able to register a new avatar from the website. You can customize your website with shortcodes or blocks, like Grid Info, Grid Status or Popular Places (see full list and descriptions in `OpenSimulator > Settings > Shortcodes`)
+1. Download and activate the latest stable release (for the latest development version, follow the instructions in DEVELOPERS.md).
+2. Visit the `OpenSimulator > Settings` page in your WordPress admin.
+   - Enter your grid name and grid URI (e.g. yourgrid.org:8002, without the "http://").
+   - Enter your robust database connection details and submit. If you encounter a database connection error, it might be due to a case-sensitivity issue (see https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674).
+3. Set permalinks and the profile page:
+   - Visit `OpenSimulator > Settings > Permalinks`, ensure the permalink structure is not set to "Plain," and adjust the W4OS slugs to your preferences.
+   - Note the slug chosen for the profile base and create a page with that slug.
+4. Visit `OpenSimulator > Settings > Web assets server` and ensure the option is enabled. (If you have a third-party web assets server running, you can disable this option and enter its full URL below.)
+5. You should now be able to register a new avatar from the website. Customize your site with shortcodes or blocks, such as Grid Info, Grid Status, or Popular Places (see the complete list and descriptions in `OpenSimulator > Settings > Shortcodes`).
 
-- *Several options of the plugin require the update of a related parameter in OpenSimulator itself, they are documented in the interface. Make sure to adjust the ini files accordingly and restart OpenSimulator for any change to take effect.**
+- *Some plugin features require updating corresponding parameters in OpenSimulator itself. These options are documented in the interface. Adjust the INI files accordingly and restart OpenSimulator for any changes to take effect.*
 
 ### Avatar models
 
