@@ -6,10 +6,8 @@ Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.7.1
 Stable tag: 2.9.4
-License: AGPLv3
-License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
-WordPress interface for OpenSimulator (w4os)
+WordPress interface for OpenSimulator (w4os).
 
 == Description ==
 
@@ -60,6 +58,47 @@ And please give us feedback for everything going well or bad.
 
 The free version from WordPress plugins directory and the [paid version](https://magiiic.com/wordpress/plugins/w4os/) are technically the same. The only difference is the way you support this plugin developement: with the free version, you join the community experience (please rate and comment), while the paid version helps us to dedicate resources to this project.
 
+== Roadmap ==
+
+See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
+
+= Medium term =
+
+* [x] Destinations guide
+* [x] Web search
+* [-] Multiple avatars for same WordPress user (v3)
+* Improve avatar profile
+  - Switch to allow web profile
+  [x]  Better basic layout
+  - Web edit profile
+* 2do HYPEvents project integration <https://2do.pm>
+* Gudz Teleport Board project integration (based on user picks)
+[-] Admin Use sim/grid configuration file to fetch settings if on the same host (v3)
+* Admin create users
+* Admin create models (from current own avatar appearance)
+
+= Long term =
+
+[x] Robust console connection (v3)
+  - Admin Start / Stop regions
+  - Admin Create region
+  - User's own regions control (create, start, stop, backup)
+* WooCommerce integration
+  - paid accounts
+  - regions orders
+  - other pay-for services
+* Deactivate (recommended) or delete (experimental) grid user when deleting wp account
+* Split code between OpenSimulator and WordPress specific codes
+
+
+== Screenshots ==
+
+1. Grid info and grid status examples
+2. Avatar registration form in WooCommerce My Account dashboard.
+3. Settings page
+4. Web assets server settings
+
+
 == Installation ==
 
 = Requirements =
@@ -78,27 +117,27 @@ Please check [OpenSimulator](https://opensimulator.org/) documentation to instal
 
 = WordPress installation =
 
-Please check [WordPress](https://wordpress.org/) documentation to install and configure WordPress.
+Please check the [WordPress documentation](https://wordpress.org/) for detailed instructions on installing and configuring WordPress.
 
-* Permalinks need to be enabled (set to any other choice than the default "Plain" setting)
-* PHP minimum version: 7.3
-* The PHP modules curl, xml, xml-rpc and imagick are needed to allow full functionalty of the plugin (and they are also recommended for WordPress anyway). Without these plugins, some important functionalties will not be available.
+* Permalinks must be enabled (choose any option other than the default "Plain" setting).
+* PHP minimum version: 7.3.
+* The PHP modules `curl`, `xml`, `xml-rpc`, and `imagick` are required for full functionality of the plugin (and are also recommended for WordPress). Without these modules, some important features will not be available.
 
-= Plugin installation and configuration =
+= Plugin Installation and Configuration =
 
-Note: if upgrading from a different distribution (e.a. switching from github to WordPress Plugin Directory), make sure you disabled the previous version before activating the new one.
+**Note:** If upgrading from a different distribution (e.g. switching from GitHub to the WordPress Plugin Directory), disable the previous version before activating the new one.
 
-1. Download and activate the latest stable release
-2. Visit `OpenSimulator > Settings` page in admin
-   - Enter your grid name and grid URI (like yourgrid.org:8002, without http://)
-   - Enter your robust database connection details and submit. If you get a database connection error, it might come from a case-sensitivity issue (see https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674)
-3. Set permalinks and profile page
-   - Visit `OpenSimulator > Settings > Permalinks`, make sure permalink structure is NOT set to "Plain", and adjust W4OS slugs to your preferences
-   - Take note of the slug chosen for profile base and create a page with the same slug
-4. Visit `OpenSimulator > Settings > Web assets server` and make sure the option is enabled. (You can disable it you have a third party web assets server up and running, and enter its full URL below)
-5. You should be able to register a new avatar from the website. You can customize your website with shortcodes or blocks, like Grid Info, Grid Status or Popular Places (see full list and descriptions in `OpenSimulator > Settings > Shortcodes`)
+1. Download and activate the latest stable release (for the latest development version, follow the instructions in DEVELOPERS.md).
+2. Visit the `OpenSimulator > Settings` page in your WordPress admin.
+   - Enter your grid name and grid URI (e.g. yourgrid.org:8002, without the "http://").
+   - Enter your robust database connection details and submit. If you encounter a database connection error, it might be due to a case-sensitivity issue (see https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674).
+3. Set permalinks and the profile page:
+   - Visit `OpenSimulator > Settings > Permalinks`, ensure the permalink structure is not set to "Plain," and adjust the W4OS slugs to your preferences.
+   - Note the slug chosen for the profile base and create a page with that slug.
+4. Visit `OpenSimulator > Settings > Web assets server` and ensure the option is enabled. (If you have a third-party web assets server running, you can disable this option and enter its full URL below.)
+5. You should now be able to register a new avatar from the website. Customize your site with shortcodes or blocks, such as Grid Info, Grid Status, or Popular Places (see the complete list and descriptions in `OpenSimulator > Settings > Shortcodes`).
 
-**Several options of the plugin require the update of a related parameter in OpenSimulator itself, they are documented in the interface. Make sure to adjust the ini files accordingly and restart OpenSimulator for any change to take effect.**
+* *Some plugin features require updating corresponding parameters in OpenSimulator itself. These options are documented in the interface. Adjust the INI files accordingly and restart OpenSimulator for any changes to take effect.*
 
 = Avatar models =
 
@@ -132,37 +171,7 @@ The models will appear in new avatar registration form, with their profile pictu
 
 See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
 
-== Roadmap ==
 
-See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) for complete status and changelog.
-
-= Medium term =
-
-* [x] Destinations guide
-* [x] Web search
-* [-] Multiple avatars for same WordPress user (v3)
-* Improve avatar profile
-  - Switch to allow web profile
-  [x]  Better basic layout
-  - Web edit profile
-* 2do HYPEvents project integration <https://2do.pm>
-* Gudz Teleport Board project integration (based on user picks)
-[-] Admin Use sim/grid configuration file to fetch settings if on the same host (v3)
-* Admin create users
-* Admin create models (from current own avatar appearance)
-
-= Long term =
-
-[x] Robust console connection (v3)
-  - Admin Start / Stop regions
-  - Admin Create region
-  - User's own regions control (create, start, stop, backup)
-* WooCommerce integration
-  - paid accounts
-  - regions orders
-  - other pay-for services
-* Deactivate (recommended) or delete (experimental) grid user when deleting wp account
-* Split code between OpenSimulator and WordPress specific codes
 
 == Frequently Asked Questions ==
 
@@ -185,11 +194,11 @@ somewhat handled for a small standalone grid, but never in hypergrid context.
 There is no process to force a foreign grid to update its cache, and probably
 never will.
 
-= Should I copy the helpers/ directory in the root of my webiste ? =
+= Shouldn't I copy the helpers/ directory in the root of my webiste ? =
 
-No, you don't need to and you shouldn't. The /helpers/ path is virtual, like
-for most pages of your website. The same way as the /about/ URL website doesn't
-match a /about/ folder your website directory. Even if there is a helpers/
+No, you don't need to and you shouldn't. The /helpers/ is virtual, it is served
+as any other page of your website. Like there the /about/ URL website doesn't
+match a /about/ folder your webste directory. Even if there is a helpers/
 directory in w4os plugin, it has the same name for convenience, but he could
 have been named anything. It's content is not accessed directly, it is used by
 the plugin to generate the answers. On the opposite, if there was an actual
@@ -211,13 +220,6 @@ Don't even finish that sentence. Versions of OpenSimulator older than 0.9
 are definitely not supported anymore. You might be lucky and it might work, 
 or not. In either case, idk&idc.
 
-
-== Screenshots ==
-
-1. Grid info and grid status examples
-2. Avatar registration form in WooCommerce My Account dashboard.
-3. Settings page
-4. Web assets server settings
 
 == Changelog ==
 
