@@ -51,5 +51,13 @@ wp-cli.local.yml
 yarn.lock
 *.zip
 setup-git.sh
-helpers/includes/config.example.php
-helpers/includes/config.wp.php
+/helpers/includes/config.example.php
+/helpers/includes/config.wp.php
+/helpers/bin/
+/helpers/tools/
+/helpers/composer.json
+/helpers/composer.lock
+/helpers/install-library.sh
+/helpers/*.example.php
+/helpers/.git*
+/helpers/.libignore
