@@ -199,7 +199,7 @@ class UserlessAuth {
      * Hide admin bar for temporary users, return unchanged value for real users.
      */
     public function show_admin_bar( $show ) {
-        if (self::$user->ID === -1) {
+        if (isset(self::$user->ID) && self::$user->ID === -1) {
             return false;
         }
         return $show;
