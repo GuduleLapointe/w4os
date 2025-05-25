@@ -32,7 +32,7 @@ function w4os_updates( $args = array() ) {
 				if ( $result != 1 ) {
 					$messages[] = $result;
 				} else {
-					$messages[] = W4OS::sprintf_safe( __( 'Update %s applied', 'band-tools' ), $u );
+					$messages[] = W4OS::sprintf_safe( __( 'Update %s applied', 'w4os' ), $u );
 				}
 				update_option( 'w4os_updated', $u );
 			} else {
@@ -44,14 +44,14 @@ function w4os_updates( $args = array() ) {
 	}
 	if ( @$success ) {
 		if ( empty( $messages ) ) {
-			$messages[] = W4OS::sprintf_safe( _n( 'Update %s applied successfully', 'Updates %s applied successfully', count( $success ), 'band-tools' ), join( ', ', $success ) );
+			$messages[] = W4OS::sprintf_safe( _n( 'Update %s applied successfully', 'Updates %s applied successfully', count( $success ), 'w4os' ), join( ', ', $success ) );
 		}
 		$class  = 'success';
 		$return = true;
 	}
 	if ( @$errors ) {
 		$messages[] = W4OS::sprintf_safe(
-			__( 'Error processing update %s', 'band-tools' ),
+			__( 'Error processing update %s', 'w4os' ),
 			$errors[0]
 		);
 		$class      = 'error';
@@ -89,7 +89,7 @@ function w4os_update_2() {
 		add_role( $role, $role_name, get_role( 'subscriber' )->capabilities );
 		w4os_admin_notice(
 			__(
-				W4OS::sprintf_safe( 'Added %s role', '<strong>' . $role_name . '</strong>' ),
+				W4OS::sprintf_safe( 'Added %s role', 'w4os' . $role_name . 'w4os' ),
 				'w4os',
 			),
 			'success',

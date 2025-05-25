@@ -71,7 +71,7 @@ class W4OS3_Service {
 		);
 
 		$settings['w4os-settings']['tabs']['connections'] = array(
-			'title'  => __( 'Connections', '≠w4os' ),
+			'title'  => __( 'Connections', 'w4os' ),
 			'fields' => array(
 				'robust'   => array(
 					'label'       => __( 'Robust', 'w4os' ),

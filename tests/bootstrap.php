@@ -7,8 +7,8 @@
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 
-# Require vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php
-require_once( dirname( dirname( __FILE__ ) ) . '/vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php' );
+// Require vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php
+require_once dirname( __DIR__ ) . '/vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php';
 
 if ( ! $_tests_dir ) {
 	$_tests_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress-tests-lib';
@@ -32,7 +32,7 @@ require_once "{$_tests_dir}/includes/functions.php";
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/w4os.php';
+	require dirname( __DIR__ ) . '/w4os.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );

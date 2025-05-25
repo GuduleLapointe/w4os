@@ -587,7 +587,7 @@ class W4OS3_Settings {
 						esc_attr( $args['id'] ),
 						$field_name,
 						checked( $creds['use_defaults'], true, false ),
-						esc_html__( 'Use defaults' ),
+						esc_html__( 'Use defaults', 'w4os' ),
 						( $readonly || $disabled ) ? 'disabled' : '',
 					);
 				}

@@ -257,7 +257,7 @@ function w4os_add_action_links( $links ) {
 
 	array_push(
 		$links,
-		"<a href='$url'>" . __( 'Settings' ) . '</a>'
+		"<a href='$url'>" . __( 'Settings', 'w4os' ) . '</a>'
 	);
 
 	return $links;

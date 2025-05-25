@@ -1,6 +1,8 @@
 #!/bin/bash
 
 export PATH=$(dirname "$0"):$PATH
+[ -d vendor/bin ] && export PATH=$PWD/vendor/bin:$PATH
+[ -d bin ] && export PATH=$PWD/bin:$PATH
 
 if [ -f .phpcfbignore ]
 then
@@ -10,6 +12,8 @@ ignore="${ignore}vendor/*,node_modules/*,lib/meta-box,lib/wp-package-updater-lib
 
 PGM=$(basename $0)
 
+echo "# Updating composer package to make sure dev tools like phpcs are present and up to date" >&2
+composer update
 echo "# checking minimum PHP required" >&2
 
 minphp=$(minphp 2>/dev/null)

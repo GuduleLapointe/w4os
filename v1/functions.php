@@ -100,7 +100,7 @@ function w4os_admin_notice( $notice, $class = 'info', $dismissible = true ) {
 			function () use ( $notice, $class, $is_dismissible ) {
 				?>
 		<div class="notice notice-<?php echo $class; ?> <?php echo $is_dismissible; ?>">
-			<p><strong><?php echo W4OS_PLUGIN_NAME; ?></strong>: <?php _e( $notice, 'band-tools' ); ?></p>
+			<p><strong><?php echo W4OS_PLUGIN_NAME; ?></strong>: <?php _e( $notice, 'w4os' ); ?></p>
 	</div>
 				<?php
 			}
@@ -760,7 +760,7 @@ function w4os_age( $time ) {
 	}
 	$age = number_format( ( current_time( 'timestamp' ) - $time ) / 24 / 3600 );
 	if ( $age == 0 ) {
-		$ageshown = __( 'Joined today' );
+		$ageshown = __( 'Joined today', 'w4os' );
 	} else {
 		$ageshown = sprintf( __( '%s days old', 'w4os' ), $age );
 	}

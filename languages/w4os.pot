@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: w4os - OpenSimulator Web Interface 2.9.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/w4os-dev\n"
-"POT-Creation-Date: 2025-05-25 15:42:44+00:00\n"
+"POT-Creation-Date: 2025-05-25 18:03:04+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -997,7 +997,7 @@ msgid "Click the \"Apply\" button"
 msgstr ""
 
 #: templates/content-configuration.php:43 templates/content-page-profile.php:31
-#: v1/profile-page.php:137 v1/profile-page.php:231 v3/2to3-avatar.php:129
+#: v1/profile-page.php:137 v1/profile-page.php:232 v3/2to3-avatar.php:129
 msgid "Log in"
 msgstr ""
 
@@ -1019,7 +1019,7 @@ msgstr ""
 msgid "My Avatar"
 msgstr ""
 
-#: templates/content-page-profile.php:59 v1/profile-page.php:244
+#: templates/content-page-profile.php:59 v1/profile-page.php:245
 msgid "%s's profile"
 msgstr ""
 
@@ -1031,11 +1031,11 @@ msgstr ""
 msgid "Feed not available on %s"
 msgstr ""
 
-#: templates/page-profile-viewer.php:28
+#: templates/page-profile-viewer.php:32
 msgid "Open profile page"
 msgstr ""
 
-#: templates/page-profile-viewer.php:35 v1/profile-page.php:247
+#: templates/page-profile-viewer.php:39 v1/profile-page.php:248
 #: v3/2to3-avatar.php:137
 msgid "Avatar not found"
 msgstr ""
@@ -1430,15 +1430,15 @@ msgstr ""
 msgid "Log in to create your avatar, view your profile or set your options."
 msgstr ""
 
-#: v1/profile-page.php:226 v3/2to3-avatar.php:124
+#: v1/profile-page.php:227 v3/2to3-avatar.php:124
 msgid "My Profile"
 msgstr ""
 
-#: v1/profile-page.php:228 v3/2to3-avatar.php:126
+#: v1/profile-page.php:229 v3/2to3-avatar.php:126
 msgid "Create My Avatar"
 msgstr ""
 
-#: v1/profile-page.php:323
+#: v1/profile-page.php:324
 msgid "Profile base"
 msgstr ""
 

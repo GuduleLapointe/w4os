@@ -4,7 +4,7 @@ Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.7.1
+Tested up to: 6.8.1
 Stable tag: 2.9.4
 
 WordPress interface for OpenSimulator (w4os).

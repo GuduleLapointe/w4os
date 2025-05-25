@@ -1,11 +1,15 @@
 {
   "name": "w4os",
-  "version": "2.9.4",
+  "version": "2.9.5-beta",
   "description": "WordPress interface for OpenSimulator (w4os)",
   "main": "webpack.config.js",
   "workspaces": [
     "src/olib-dev"
   ],
+  "scripts": {
+    "prepare": "cd src/olib-dev && npm link"
+  },
+  "workspaces-update": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/GuduleLapointe/w4os"

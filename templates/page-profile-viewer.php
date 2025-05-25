@@ -6,23 +6,27 @@ $classes = 'w4os profile-viewer profile-page page';
 if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 	if ( W4OS_ENABLE_V3 ) {
 		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
-		$avatar      = new W4OS3_Avatar( $_GET['name'] );
-		$page_title  = sprintf(
+		$avatar     = new W4OS3_Avatar( $_GET['name'] );
+		$page_title = sprintf(
 			__( '%s\'s flux', 'w4os' ),
 			$avatar->AvatarName ?? $_GET['name'],
 		);
-		if( empty( $avatar->externalProfileURL ) ) {
+		if ( empty( $avatar->externalProfileURL ) ) {
 			// $page_title = $avatar->AvatarHGName ?? $avatar->AvatarName;
 			$profile_url = false;
-			$content = '<center>' . sprintf(
+			$content     = '<center>' . sprintf(
 				__( 'Feed not available on %s', 'w4os' ),
-				$avatar->grid_info['gridname'] ?? preg_replace( '/^.*@/', '', $_GET['name'],
-			) ) . '</center>';
+				$avatar->grid_info['gridname'] ?? preg_replace(
+					'/^.*@/',
+					'',
+					$_GET['name'],
+				)
+			) . '</center>';
 		} else {
 			$profile_url = $avatar->get_profile_url();
 			$content     = $avatar->profile_page();
 		}
-		$actions[]   = empty( $profile_url ) ? '' : sprintf(
+		$actions[] = empty( $profile_url ) ? '' : sprintf(
 			'<a href="%s" class="page-title-action" target="_blank">%s</a>',
 			$profile_url,
 			__( 'Open profile page', 'w4os' )

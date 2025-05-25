@@ -93,7 +93,7 @@ function w4os_user_actions_profile_view( $actions, $user ) {
 		'
     <a class=view href="%s">%s</a>',
 		w4os_web_profile_url( $user ),
-		__( 'View profile', 'w4OS' ) . '</a>'
+		__( 'View profile', 'w4os' ) . '</a>'
 	);
 	return $actions;
 }
@@ -183,13 +183,13 @@ function w4os_users_filter_avatars( $position ) {
       %3$s
     </select>',
 		esc_attr( $position ),
-		__( 'Filter users...' ),
+		__( 'Filter users...', 'w4os' ),
 		$options_html
 	);
 
 	// output <select> and submit button
 	echo $select;
-	submit_button( __( 'Filter' ), null, $position, false );
+	submit_button( __( 'Filter', 'w4os' ), null, $position, false );
 }
 add_filter( 'pre_get_users', 'w4os_users_filter_avatars_section' );
 

@@ -134,7 +134,7 @@ function w4os_login_form( $args = array() ) {
 				wp_lostpassword_url(),
 				__( 'Email', 'w4os' ),
 				__( 'Reset Password', 'w4os' ),
-				W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_LOGIN_PAGE, __( 'Log in', 'w4Os' ) ),
+				W4OS::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_LOGIN_PAGE, __( 'Log in', 'w4os' ) ),
 			);
 			break;
 
