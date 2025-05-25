@@ -50,3 +50,4 @@ wp-cli.local.yml
 .wpignore
 yarn.lock
 *.zip
+/bin/
