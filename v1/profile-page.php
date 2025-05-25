@@ -197,6 +197,7 @@ add_action(
 		}
 		// echo "post_name " . $wp_query->queried_object->post_name;
 		if ( isset( $_REQUEST['w4os_update_avatar'] ) ) {
+			error_log('DEBUG request: ' . print_r($_REQUEST, true));
 			$user = get_user_by( 'ID', $_REQUEST['user_id'] );
 			$uuid = w4os_update_avatar(
 				$user,

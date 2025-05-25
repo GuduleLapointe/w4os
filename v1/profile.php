@@ -1289,6 +1289,7 @@ function w4os_profile_fields_save( $user_id ) {
 		'action'                   => 'update_avatar',
 		'w4os_firstname'           => esc_attr( $_POST['w4os_firstname'] ),
 		'w4os_lastname'            => esc_attr( $_POST['w4os_lastname'] ),
+		'w4os_model'			   => esc_attr( $_POST['w4os_model'] ?? null ),
 		'opensim_profileAllow_web' => ( isset( $_POST['opensim_profileAllow_web'] ) ) ? ( esc_attr( $_POST['opensim_profileAllow_web'] ) == true ) : false,
 	);
 	if ( ! empty( $_POST['w4os_password_1'] ) ) {
