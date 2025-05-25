@@ -91,7 +91,7 @@ add_action(
 			$links[] = W4OS::sprintf_safe(
 				'<a href="%1$s" alt="%2$s">%2$s</a>',
 				esc_url( wp_registration_url(), 'w4os' ),
-				esc_attr(_x( 'Register', 'Register action button', 'w4os' ) ),
+				esc_attr(_x( 'Register', 'Register to the website link', 'w4os' ) ),
 			);
 		}
 		if ( is_array( $links ) ) {

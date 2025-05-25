@@ -13,107 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#. Plugin Name of the plugin
-msgid "w4os - OpenSimulator Web Interface"
-msgstr "w4os - OpenSimulator Web Interface"
-
-#. Plugin URI of the plugin
-msgid "https://w4os.org/"
-msgstr "https://w4os.org/"
-
-#. Description of the plugin
-msgid "WordPress interface for OpenSimulator (w4os)."
-msgstr "WordPress-Schnittstelle für OpenSimulator (w4os)."
-
-#. Author of the plugin
-msgid "Speculoos World"
-msgstr "Speculoos World"
-
-#. Author URI of the plugin
-msgid "https://speculoos.world"
-msgstr "https://speculoos.world"
-
-#: admin/templates/shortcodes.php:1 includes/class-settings.php:81
-msgid "Available Shortcodes"
-msgstr "Verfügbare Shortcodes"
-
-#: admin/templates/shortcodes.php:4
-msgid "Shortcodes can be included in any page or articles."
-msgstr "Kurzcodes können in jeder Seite oder jedem Artikel eingefügt werden."
-
-#: admin/templates/shortcodes.php:5
-msgid "They are also available as configurable Gutenberg blocks and Divi modules."
-msgstr "Sie sind auch als konfigurierbare Gutenberg-Blöcke und Divi-Module verfügbar."
-
-#: admin/templates/shortcodes.php:12
-msgid "General information (grid name and login uri)"
-msgstr "Allgemeine Informationen (Gridname und Login-URI)"
-
-#: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38 admin/templates/shortcodes.php:60
-#: admin/templates/shortcodes.php:82
-msgid "Bloc title"
-msgstr "Bloc-Titel"
-
-#: admin/templates/shortcodes.php:19 admin/templates/shortcodes.php:39 admin/templates/shortcodes.php:61
-#: admin/templates/shortcodes.php:84
-msgid "Title level (h1 to h6)"
-msgstr "Titelstufe (h1 bis h6)"
-
-#: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41 admin/templates/shortcodes.php:63
-#: admin/templates/shortcodes.php:87
-msgid "Options"
-msgstr "Optionen"
-
-#: admin/templates/shortcodes.php:32
-msgid "Online users, regions, etc."
-msgstr "Online-Nutzer, Regionen, etc."
-
-#: admin/templates/shortcodes.php:52
-msgid "Avatar Profile if user is connected and has an avatar, avatar registration form otherwise"
-msgstr "Rasterprofil, wenn der Benutzer verbunden ist und einen Avatar hat, ansonsten Avatar-Registrierungsformular"
-
-#: admin/templates/shortcodes.php:53
-msgid "(formerly %s)"
-msgstr "(ehemals %s)"
-
-#: admin/templates/shortcodes.php:85
-msgid "Only show name and picture"
-msgstr "Nur Name und Bild anzeigen"
-
-#: admin/templates/shortcodes.php:75
-msgid "Most visited regions in your grid."
-msgstr "Am meisten besuchte Regionen in Ihrem Raster."
-
-#: admin/templates/shortcodes.php:83
-msgid "Show maximum n results"
-msgstr "Zeige maximal n Ergebnisse"
-
-#: admin/templates/shortcodes.php:86
-msgid "Include results from other grids"
-msgstr "Ergebnisse von anderen Grids anzeigen"
-
-#: admin/templates/shortcodes.php:87
-msgid "Include land for sale"
-msgstr "Land zum Verkauf inklusive"
-
-#: admin/templates/shortcodes.php:99
-msgid ""
-"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not "
-"be enabled."
-msgstr ""
-"Die Optionen %1$s und %2$s werden nur bereitgestellt, um zur vorherigen Verhaltensweise zurückzukehren, sollten jedoch "
-"in den meisten Fällen nicht aktiviert werden."
-
-#: admin/templates/shortcodes.php:103
-msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
-msgstr "Beliebte Orte sind im Wesentlichen für Splash-Seiten gedacht, auf denen Hypergrid-Links nicht funktionieren würden."
-
-#: admin/templates/shortcodes.php:104
-msgid "Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions."
-msgstr ""
-"Der Verkauf von Land führt in der Regel zu zusätzlichem Verkehr, was die Zuverlässigkeit des Suchmaschinen-Rankings für "
-"diese Regionen beeinträchtigen kann."
-
 #: blocks/avatar-profile.php:205 blocks/avatar-profile/avatar-profile.js:1 src/blocks/avatar-profile/editor.js:14
 #: blocks/avatar-profile/avatar-profile.js:14
 msgid "OpenSimulator Avatar Profile"
@@ -265,6 +164,108 @@ msgstr "OpenSimulator Web Suche"
 msgid "Enter the title for the Web Search module."
 msgstr "Geben Sie den Titel für das Web-Suchmodul ein."
 
+#: helpers/classes/class-form.php:124
+msgid "Reset Form"
+msgstr "Formular zurücksetzen"
+
+#: helpers/classes/class-form.php:176
+msgid "Submit"
+msgstr "Einreichen"
+
+#: helpers/classes/class-form.php:281
+msgid "Completed"
+msgstr "Abgeschlossen"
+
+#: helpers/classes/class-form.php:381
+msgid "File %s is required"
+msgstr "Die Datei %s wird benötigt"
+
+#: helpers/classes/class-form.php:389
+msgid "File %s not found"
+msgstr "Datei %s nicht gefunden"
+
+#: helpers/classes/class-form.php:401 helpers/install.php:325
+#: helpers/install.php:326
+msgid "File not found"
+msgstr "Datei nicht gefunden"
+
+#: helpers/classes/class-form.php:409
+msgid "File %s does not comply with .ini standards."
+msgstr "Die Datei %s entspricht nicht den .ini-Standards."
+
+#: helpers/classes/class-form.php:437
+msgid "File %s is not a valid .ini file"
+msgstr "Die Datei %s ist keine gültige .ini-Datei."
+
+#: helpers/classes/class-form.php:450
+msgid "Not a valid ini file"
+msgstr "Keine gültige ini-Datei"
+
+#: helpers/classes/class-form.php:472
+msgid "Not a valid Robust config file."
+msgstr "Keine gültige Robust-Konfigurationsdatei."
+
+#: helpers/classes/class-form.php:474
+msgid "%s is missing required sections: %s"
+msgstr "%s fehlen erforderliche Abschnitte: %s"
+
+#: includes/class-settings.php:77 legacy/functions.php:310
+msgid "Status"
+msgstr "Status"
+
+#: legacy/functions.php:311
+msgid "Members"
+msgstr "Mitglieder"
+
+#: legacy/functions.php:317
+msgid "Active members (30 days)"
+msgstr "Aktive Mitglieder (30 Tage)"
+
+#: legacy/functions.php:324
+msgid "Members in world"
+msgstr "Avatare im Grid Online"
+
+#: legacy/functions.php:335
+msgid "Active users (30 days)"
+msgstr "Aktive Besucher (30 Tage)"
+
+#: legacy/functions.php:341
+msgid "Total users in world"
+msgstr "Zurzeit Online gesamt"
+
+#: legacy/functions.php:349
+msgid "Regions"
+msgstr "Regionen"
+
+#: legacy/functions.php:355
+msgid "Total area"
+msgstr "Gesamtfläche"
+
+#: helpers/classes/class-grid.php:184 helpers/classes/class-grid.php:186
+#: helpers/classes/class-grid.php:202
+msgid "Grid Information"
+msgstr "Gitterinformation"
+
+#: legacy/functions.php:265
+msgid "Online"
+msgstr "Online"
+
+#: legacy/functions.php:265
+msgid "Offline"
+msgstr "Offline"
+
+#: helpers/classes/class-grid.php:242
+msgid "Database not connected."
+msgstr "Datenbank nicht verbunden."
+
+#: helpers/classes/init.php:232
+msgid "Unknown error, see log for details"
+msgstr "Unbekannter Fehler, siehe Protokoll für Details"
+
+#: includes/class-tos.php:25
+msgid "Error"
+msgstr "Fehler"
+
 #: helpers/guide.php:98 helpers/guide.php:138 includes/class-helpers-guide.php:55
 msgid "Destinations Guide"
 msgstr "Reiseführer für Ziele"
@@ -298,693 +299,715 @@ msgstr ""
 "Die Welt der Ziele, die du suchst, ist uns entwischt, von flüchtigen Gnomen fortgetragen. Rufe die Grid-Manager "
 "zusammen, lass sie sich aufmachen, um eine großartige Sammlung bemerkenswerter Orte für deine Erkundung zu kuratieren!"
 
-#: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80 legacy/admin/status-page.php:58
-msgid "Avatar Models"
-msgstr "Avatar-Modelle"
+#: helpers/install.php:31
+msgid "Helpers Installation"
+msgstr "Helfer Installation"
 
-#: includes/class-avatar-model.php:63
-msgid "Avatar Models Settings"
-msgstr "Einstellungen für Avatar-Modelle"
+#: helpers/install.php:107
+msgid "Template file not found."
+msgstr "Vorlagen-Datei nicht gefunden."
 
-#: includes/class-avatar-model.php:91
-msgid "Match"
-msgstr "Passen"
+#: helpers/install.php:120
+msgid "No configuration found."
+msgstr "Keine Konfiguration gefunden."
 
-#: includes/class-avatar-model.php:95
-msgid "First Name"
-msgstr "Vorname"
+#: helpers/install.php:195
+msgid "No config file specified, should be possible at this stage."
+msgstr "Keine Konfigurationsdatei angegeben, sollte zu diesem Zeitpunkt möglich sein."
 
-#: includes/class-avatar-model.php:96
-msgid "Any"
-msgstr "Jeder"
+#: helpers/install.php:197
+msgid "No config file specified, should not have occured."
+msgstr "Keine Konfigurationsdatei angegeben, hätte nicht auftreten sollen."
 
-#: includes/class-avatar-model.php:97
-msgid "Last Name"
-msgstr "Nachname"
+#: helpers/install.php:206
+msgid "Error writing temporary file, make sure the web server has read/write permissions to %s directory."
+msgstr ""
+"Fehler beim Schreiben der temporären Datei, stellen Sie sicher, dass der Webserver Lese-/Schreibrechte für das %s "
+"Verzeichnis hat."
 
-#: includes/class-avatar-model.php:98
-msgid "Custom list"
-msgstr "Benutzerdefinierte Liste"
+#: helpers/install.php:223
+msgid "The generated configuration file could not be found."
+msgstr "Die generierte Konfigurationsdatei konnte nicht gefunden werden."
 
-#: includes/class-avatar-model.php:103
-msgid "Name"
-msgstr "Name (Name)"
+#: helpers/install.php:266
+msgid "Constant %s is missing."
+msgstr "Konstante %s fehlt."
 
-#: includes/class-avatar-model.php:113
-msgid "Select Models"
-msgstr "Modelle auswählen"
+#: helpers/install.php:271
+msgid "%s error(s) while generating config file."
+msgstr "%s Fehler beim Erstellen der Konfigurationsdatei."
 
-#: includes/class-avatar-model.php:117
-msgid "Select one or more existing avatars"
-msgstr "Wähle einen oder mehrere vorhandene Avatare aus"
+#: helpers/install.php:276
+msgid "Some required values are missing from the configuration file."
+msgstr "Einige erforderliche Werte fehlen in der Konfigurationsdatei."
 
-#: includes/class-avatar-model.php:141
-msgid "Available Models"
-msgstr "Verfügbare Modelle"
+#: helpers/install.php:284
+msgid "Could not connect to the database."
+msgstr "Konnte keine Verbindung zur Datenbank herstellen."
 
-#: includes/class-avatar-model.php:167
+#: helpers/install.php:314
+msgid "is_robust_ini_file returned an invalid value."
+msgstr "`is_robust_ini_file` hat einen ungültigen Wert zurückgegeben."
+
+#: helpers/install.php:330
+msgid "A file must be specified"
+msgstr "Eine Datei muss angegeben werden."
+
+#: helpers/install.php:336 helpers/install.php:492
+msgid "File will be overwritten, any existing config wil be lost."
+msgstr "Die Datei wird überschrieben, alle vorhandenen Konfigurationen gehen verloren."
+
+#: helpers/install.php:350
+msgid "Robust configuration completed."
+msgstr "Robuste Konfiguration abgeschlossen."
+
+#: helpers/install.php:357 helpers/install.php:377
+msgid "Target configuration file"
+msgstr "Zielkonfigurationsdatei"
+
+#: helpers/install.php:364
+msgid "This file will be created or replaced with the settings found in the .ini file."
+msgstr "Diese Datei wird mit den Einstellungen aus der .ini-Datei erstellt oder ersetzt."
+
+#: helpers/install.php:367 helpers/install.php:383
+msgid "Robust config file path"
+msgstr "Robuste Konfigurationsdateipfad"
+
+#: helpers/install.php:372
+msgid "The full path to Robust.HG.ini (in grid mode) or Robust.ini (standalone mode) on this server."
+msgstr "Der vollständige Pfad zu Robust.HG.ini (im Grid-Modus) oder Robust.ini (im Standalone-Modus) auf diesem Server."
+
+#: helpers/install.php:389
+msgid "OpenSim config file path"
+msgstr "OpenSim Konfigurationsdateipfad"
+
+#: helpers/install.php:394
+msgid "The full path to OpenSim.ini on this server."
+msgstr "Der vollständige Pfad zu OpenSim.ini auf diesem Server."
+
+#: helpers/install.php:413
+msgid "Setup Robust"
+msgstr "Robust einrichten"
+
+#: helpers/install.php:415
 msgid ""
-"If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will "
-"determine the initial outfit of the created avatar."
+"Give the path of your Robust configuration file.\n"
+"                Robust.HG.ini for grid mode, Robust.ini for standalone mode.\n"
+"                The file will be parsed and converted to a PHP configuration file."
 msgstr ""
-"Wenn Avatar-Modelle definiert sind, werden neue Benutzer bei der Avatar-Erstellung eine Auswahlmöglichkeit haben, die "
-"das anfängliche Outfit des erstellten Avatars bestimmt."
+"Geben Sie den Pfad Ihrer Robust-Konfigurationsdatei an.\n"
+"                Robust.HG.ini für den Grid-Modus, Robust.ini für den Standalone-Modus.\n"
+"                Die Datei wird geparst und in eine PHP-Konfigurationsdatei umgewandelt."
 
-#: includes/class-avatar-model.php:168
-msgid ""
-"The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the "
-"outfit, and add a profile picture."
+#: helpers/install.php:418
+msgid "Configuration parsed and converted successfully."
+msgstr "Konfiguration erfolgreich analysiert und konvertiert."
+
+#: helpers/install.php:421
+msgid "Process form"
+msgstr "Formular verarbeiten"
+
+#: helpers/install.php:425
+msgid "Process ini file"
+msgstr "Verarbeite ini-Datei"
+
+#: helpers/install.php:427
+msgid "Robust ini parsed and converted."
+msgstr "Robust ini analysiert und konvertiert."
+
+#: helpers/install.php:430
+msgid "Generate config"
+msgstr "Konfiguration generieren"
+
+#: helpers/install.php:432
+msgid "Error generating PHP config file."
+msgstr "Fehler beim Erstellen der PHP-Konfigurationsdatei."
+
+#: helpers/install.php:433
+msgid "PHP config file generated."
+msgstr "PHP-Konfigurationsdatei generiert."
+
+#: helpers/install.php:436
+msgid "Test config"
+msgstr "Test Konfiguration"
+
+#: helpers/install.php:438
+msgid "The PHP configuration file loaded like a breeze."
+msgstr "Die PHP-Konfigurationsdatei wurde mühelos geladen."
+
+#: helpers/install.php:443
+msgid "Setup OpenSim"
+msgstr "OpenSim einrichten"
+
+#: helpers/install.php:444
+msgid "Get OpenSim.ini file and process it"
+msgstr "Holen Sie die OpenSim.ini-Datei und verarbeiten Sie sie."
+
+#: helpers/install.php:447
+msgid "Get additional files"
+msgstr "Holen Sie zusätzliche Dateien."
+
+#: helpers/install.php:448
+msgid "Get additional files, e.g. MoneyServer.ini, Gloebit.ini..."
+msgstr "Holen Sie zusätzliche Dateien, z.B. MoneyServer.ini, Gloebit.ini..."
+
+#: helpers/install.php:451
+msgid "Setup Helpers"
+msgstr "Setup-Helfer"
+
+#: helpers/install.php:452
+msgid "Additional settings specific to helpers, not in ini files, e.g. OSSEARCH_DB"
+msgstr "Zusätzliche Einstellungen spezifisch für Helfer, nicht in INI-Dateien, z.B. OSSEARCH_DB."
+
+#: helpers/install.php:455
+msgid "Validation"
+msgstr "Validierung"
+
+#: helpers/install.php:456
+msgid "Validate the configuration"
+msgstr "Konfiguration validieren"
+
+#: helpers/install.php:502
+msgid "Invalid answer from is_robust_ini_file()"
+msgstr "Ungültige Antwort von is_robust_ini_file()"
+
+#: helpers/install.php:507
+msgid "Invalid Robust config file"
+msgstr "Ungültige Robust-Konfigurationsdatei"
+
+#: helpers/install.php:560 helpers/install.php:567
+msgid "Error parsing file."
+msgstr "Fehler beim Parsen der Datei."
+
+#: helpers/install.php:580
+msgid "Installation session has been cleared. Restarting installation."
+msgstr "Installationsitzung wurde gelöscht. Installation wird neu gestartet."
+
+#: helpers/templates/templates.php:11
+msgid "OpenSimulator Helpers %s"
+msgstr "OpenSimulator-Helfer %s"
+
+#: tmp/class-avatar.php:205
+msgid "Profile"
+msgstr "Profil"
+
+#: helpers/templates/templates.php:33
+msgid "Account Settings"
+msgstr "Kontoeinstellungen"
+
+#: helpers/templates/templates.php:38 v3/helpers/2to3-helper-usermenu.php:282
+msgid "Logout"
+msgstr "Abmelden"
+
+#: lib/plugin-update-checker/Puc/v4p9/Plugin/Ui.php:54
+msgid "View details"
+msgstr "Details anzeigen"
+
+#: lib/plugin-update-checker/Puc/v4p9/Plugin/Ui.php:82
+msgid "More information about %s"
+msgstr "Weitere Informationen über %s"
+
+#: lib/plugin-update-checker/Puc/v4p9/Plugin/Ui.php:133
+msgid "Check for updates"
+msgstr "Nach Updates suchen"
+
+#: lib/plugin-update-checker/Puc/v4p9/Plugin/Ui.php:230
+msgid "Unknown update checker status \"%s\""
+msgstr "Unbekannter Update-Prüfer-Status \"%s\""
+
+#: lib/plugin-update-checker/Puc/v4p9/Vcs/PluginUpdateChecker.php:100
+msgid "There is no changelog available."
+msgstr "Es ist kein Änderungsprotokoll verfügbar."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:207
+msgid "Sorry, you are not allowed to access this page."
+msgstr "Entschuldigung, du hast keine Berechtigung, auf diese Seite zuzugreifen."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:254
+msgid "Theme License - "
+msgstr "Theme Lizenz -"
+
+#: lib/wp-package-updater/class-wp-package-updater.php:412
+msgid "Unexpected Error! The query to retrieve the license data returned a malformed response."
+msgstr "Unerwarteter Fehler! Die Abfrage zur Abrufung der Lizenzdaten hat eine fehlerhafte Antwort zurückgegeben."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:430
+msgid "The license is already in use for this domain."
+msgstr "Die Lizenz wird bereits für diese Domain verwendet."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:433
+msgid "The license has reached the maximum number of activations and cannot be activated for this domain."
+msgstr "Die Lizenz hat die maximale Anzahl von Aktivierungen erreicht und kann für diese Domain nicht aktiviert werden."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:439
+msgid "The license is already inactive for this domain."
+msgstr "Die Lizenz ist bereits für diese Domain inaktiv."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:450
+#. translators: the license expiry date
+msgid "The license expired on %s and needs to be renewed to be updated."
+msgstr "Die Lizenz ist am %s abgelaufen und muss erneuert werden, um aktualisiert zu werden."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:454
+msgid "The license expired and needs to be renewed to be updated."
+msgstr "Die Lizenz ist abgelaufen und muss erneuert werden, um aktualisiert zu werden."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:460
+msgid "The license is blocked and cannot be updated anymore. Please use another license key."
+msgstr "Die Lizenz ist blockiert und kann nicht mehr aktualisiert werden. Bitte verwenden Sie einen anderen Lizenzschlüssel."
+
+#: lib/wp-package-updater/class-wp-package-updater.php:466
+msgid "The license has not been activated and its status is stil pending. Please try again or use another license key."
 msgstr ""
-"Der Grid-Administrator muss jedes Modell von der ROBUST-Konsole aus erstellen, sich mit dem Viewer einloggen, das "
-"Outfit anpassen und ein Profilbild hinzufügen."
+"Die Lizenz wurde nicht aktiviert und ihr Status ist noch ausstehend. Bitte versuchen Sie es erneut oder verwenden Sie "
+"einen anderen Lizenzschlüssel."
 
-#: includes/class-avatar-model.php:169
-msgid "The avatars used for the models should never be real user accounts."
-msgstr "Die Avatare, die für die Modelle verwendet werden, sollten niemals echte Benutzerkonten sein."
+#: lib/wp-package-updater/class-wp-package-updater.php:472
+msgid "The provided license key is invalid. Please use another license key."
+msgstr "Der bereitgestellte Lizenzschlüssel ist ungültig. Bitte verwenden Sie einen anderen Lizenzschlüssel."
 
-#: includes/class-avatar-model.php:170
-msgid "The new avatar will wear the same outfit as the model at the time of registration."
-msgstr "Der neue Avatar wird dasselbe Outfit tragen wie das Modell zum Zeitpunkt der Registrierung."
+#: lib/wp-package-updater/class-wp-package-updater.php:475
+msgid "The provided license key does not appear to be valid. Please use another license key."
+msgstr "Der bereitgestellte Lizenzschlüssel scheint ungültig zu sein. Bitte verwende einen anderen Lizenzschlüssel."
 
-#: includes/class-avatar-model.php:171
-msgid ""
-"If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically "
-"added to the list."
+#: lib/wp-package-updater/class-wp-package-updater.php:479
+msgid "An active license is required to update the plugin. Please provide a valid license key in Plugins > Installed Plugins."
 msgstr ""
-"Wenn die Modellzuweisungsregel auf dem Namen basiert, wird jeder neu erstellte Avatar, der dieser Regel entspricht, "
-"automatisch zur Liste hinzugefügt."
+"Eine aktive Lizenz ist erforderlich, um das Plugin zu aktualisieren. Bitte gib einen gültigen Lizenzschlüssel unter "
+"Plugins > Installierte Plugins ein."
 
-#: includes/class-avatar-model.php:295
-msgid "No models found."
-msgstr "Keine Modelle gefunden."
-
-#: includes/class-avatar-model.php:309
-msgid "No models"
-msgstr "Keine Modelle"
-
-#: includes/class-avatar-model.php:346
-msgid "Your initial appearance"
-msgstr "Ihr erster Auftritt"
-
-#: includes/class-avatar-model.php:347
-msgid "You can change it as often as you want in the virtual world."
-msgstr "Sie können ihn in der virtuellen Welt so oft ändern, wie Sie wollen."
-
-#: includes/class-avatar-model.php:365
-msgid "Refreshing list..."
-msgstr "Liste wird aktualisiert..."
-
-#: includes/class-helpers-assets.php:83
-msgid "Assets Server"
-msgstr "Assets Server"
-
-#: includes/class-helpers-assets.php:84
-msgid "Web Assets Server"
-msgstr "Web Assets Server"
-
-#: includes/class-helpers-assets.php:99
-msgid "Assets Server Fields"
-msgstr "Felder des Assets-Servers"
-
-#: includes/class-helpers-assets.php:105
-msgid "Provide Web Assets Server"
-msgstr "Web Assets Server bereitstellen"
-
-#: includes/class-helpers-assets.php:108
-msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
-msgstr "Ein Web-Assets-Server wird benötigt, um In-World-Assets (aus dem Grid) auf der Website anzuzeigen (z. B. Profilbilder)."
-
-#: includes/class-helpers-assets.php:114 includes/class-helpers-assets.php:132
-msgid "Web Assets Server URL"
-msgstr "Web Assets Server URL"
-
-#: includes/class-helpers-assets.php:120
-msgid "You can set the assets slug in [permalinks settings page]"
-msgstr "Sie können den Asset-Slug in [permalinks settings] festlegen."
-
-#: includes/class-helpers-assets.php:135
-msgid ""
-"If 'Provide Web Assets Server' is disabled, it is necessary to install a third-party service and enter its URL here to "
-"ensure the proper functioning of the plugin."
+#: lib/wp-package-updater/class-wp-package-updater.php:481
+msgid "An active license is required to update the theme. Please provide a valid license key in Appearence > Theme License."
 msgstr ""
-"Wenn die Option \"Web Assets Server bereitstellen\" deaktiviert ist, ist es notwendig, einen Drittanbieterdienst zu "
-"installieren und dessen URL hier einzugeben, um die ordnungsgemäße Funktion des Plugins sicherzustellen."
+"Eine aktive Lizenz ist erforderlich, um das Theme zu aktualisieren. Bitte gib einen gültigen Lizenzschlüssel unter "
+"\"Design > Theme-Lizenz\" ein."
 
-#: includes/class-helpers-assets.php:195
-msgid "Assets base"
-msgstr "Base des Asset"
-
-#: includes/class-helpers-economy.php:51 legacy/admin/admin-init.php:411
-msgid "Economy"
-msgstr "Wirtschaft"
-
-#: includes/class-helpers-economy.php:52 includes/class-helpers-economy.php:76
-msgid "Economy Settings"
-msgstr "Wirtschaftseinstellungen"
-
-#: includes/class-helpers-economy.php:82
-msgid "Provide Economy Helper"
-msgstr "Bereitstellung von Wirtschaftshelfern"
-
-#: includes/class-helpers-economy.php:91
-msgid "Economy Helper URI"
-msgstr "Wirtschaft Basis URI"
-
-#: includes/class-helpers-economy.php:104
-msgid "The URL must be set in Robust configuration."
-msgstr "Die URL muss in der robusten Konfiguration festgelegt werden."
-
-#: includes/class-helpers-economy.php:119
-msgid "Economy Database"
-msgstr "Wirtschaftsdatenbank"
-
-#: includes/class-helpers-economy.php:138
-msgid "Set the same credentials here and in MoneyServer.ini"
-msgstr "Bitte geben Sie hier dieselben Anmeldeinformationen ein wie in der MoneyServer.ini-Datei"
-
-#: includes/class-helpers-economy.php:153
-msgid "Currency Provider"
-msgstr "Währung Anbieter"
-
-#: includes/class-helpers-economy.php:165
-msgid "Generic MoneyServer, for fake money or alternate providers."
-msgstr "Generischer MoneyServer, für Fake-Geld oder alternative Anbieter."
-
-#: includes/class-helpers-economy.php:170
-msgid "Currency Conversion Rate"
-msgstr "Währungsumrechnungskurs"
-
-#: includes/class-helpers-economy.php:173
-msgid ""
-"Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 "
-"cent per money unit)."
+#: lib/wp-package-updater/class-wp-package-updater.php:487
+msgid "An unexpected error has occured. Please try again. If the problem persists, please contact the author of the plugin."
 msgstr ""
-"Zu zahlender Betrag in US$ für 1000 in-world Geldeinheiten. Wird für Kostenschätzungen verwendet. Wenn nicht "
-"festgelegt, wird der Kurs 10/1000 (1 Cent pro Geldeinheit) sein."
+"Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut. Wenn das Problem weiterhin besteht, kontaktiere "
+"bitte den Autor des Plugins."
 
-#: includes/class-helpers-economy.php:188
-msgid "Gloebit Configuration"
-msgstr "Gloebit-Konfiguration"
-
-#: includes/class-helpers-economy.php:194
-msgid "Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator."
+#: lib/wp-package-updater/class-wp-package-updater.php:489
+msgid "An unexpected error has occured. Please try again. If the problem persists, please contact the author of the theme."
 msgstr ""
-"Der Gloebit-Modul muss vor dem Neustart der Region konfiguriert werden, da es sonst den Simulator zum Absturz bringen "
-"könnte."
+"Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut. Wenn das Problem weiterhin besteht, kontaktiere "
+"bitte den Autor des Themes."
 
-#: includes/class-helpers-economy.php:196
-msgid "For Linux, see %s to avoid certificate-related errors."
-msgstr "Für Linux, siehe %s, um Zertifikatsfehler zu vermeiden."
+#: lib/wp-package-updater/templates/license-form.php:6
+msgid "Current license key:"
+msgstr "Aktueller Lizenzschlüssel:"
 
-#: includes/class-helpers-economy.php:200
-msgid "Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator."
+#: lib/wp-package-updater/templates/license-form.php:9
+msgid "License key to change:"
+msgstr "Lizenzschlüssel ändern:"
+
+#: sources/class-avatar.php:122
+msgid "Simulator database contains more than one avatar matching %s. This should never happen and requires an immediate fix."
 msgstr ""
-"Registriere ein Konto oder verbinde dich mit %1$s und folge den Anweisungen auf %2$s, um eine App für dein "
-"Grid/Simulator einzurichten."
-
-#: includes/class-helpers-economy.php:204
-msgid "Add Gloebit configuration in OpenSim.ini."
-msgstr "Füge die Gloebit-Konfiguration in die OpenSim.ini ein."
-
-#: includes/class-helpers-economy.php:205
-msgid "Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll)."
-msgstr "Lade die neueste DLL-Datei aus dem OpenSimulator bin/-Ordner herunter (benenne sie in Gloebit.dll um)."
-
-#: includes/class-helpers-economy.php:244
-msgid "Money Script Access Key"
-msgstr "Money Script Zugangsschlüssel"
-
-#: includes/class-helpers-economy.php:254
-msgid "Choose a unique access key and set it in MoneyServer.ini"
-msgstr "Wähle einen eindeutigen Zugriffsschlüssel und setze ihn in der MoneyServer.ini"
-
-#: includes/class-helpers-economy.php:267
-msgid "Podex Options"
-msgstr "Podex-Optionen"
-
-#: includes/class-helpers-economy.php:277
-msgid "Podex Redirect Message"
-msgstr "Podex-Weiterleitungsnachricht"
-
-#: includes/class-helpers-economy.php:281
-msgid "Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange area."
-msgstr ""
-"Bitte benutzen Sie unsere Terminals in der Welt, um fortzufahren. Klicken Sie auf OK, um sich in die Region der "
-"Terminals zu teleportieren."
-
-#: includes/class-helpers-economy.php:284
-msgid "Exchange Teleport URL"
-msgstr "Austausch der Teleport-URL"
-
-#: includes/class-helpers-economy.php:315
-msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
-msgstr ""
-"Economy-Helfer sind zusätzliche Skripte, die benötigt werden, wenn Sie in Ihrem Grid Wirtschaft implementieren (mit "
-"echter oder gefälschter Währung)."
-
-#: includes/class-helpers-economy.php:316
-msgid ""
-"Helper scripts allow communication between the money server and the grid: current balance update, currency cost "
-"estimation, land and object sales, payments..."
-msgstr ""
-"Hilfsskripte ermöglichen die Kommunikation zwischen dem Geldserver und dem Grid: Aktualisierung des aktuellen "
-"Kontostands, Schätzung der Währungskosten, Verkauf von Land und Objekten, Zahlungen..."
-
-#: includes/class-helpers-economy.php:317
-msgid ""
-"This plugin only provides the web helpers required by the money server module. A third-party module must be installed "
-"and configured on the simulator, for example:"
-msgstr ""
-"Dieses Plugin stellt nur die erforderlichen Web-Helfer für das Money-Server-Modul bereit. Ein Drittanbieter-Modul muss "
-"auf dem Simulator installiert und konfiguriert werden, zum Beispiel:"
-
-#: includes/class-helpers-economy.php:327
-msgid "Ready to use binaries and example config files can be downloaded here:"
-msgstr "Fertige Binärdateien und Beispielkonfigurationsdateien können hier heruntergeladen werden:"
-
-#: includes/class-helpers-guide.php:56 includes/class-helpers-guide.php:76
-msgid "Destinations Guide Settings"
-msgstr "Einstellungen für den Reiseführer der Ziele"
-
-#: includes/class-helpers-guide.php:82
-msgid "Provide Destinations Guide Service"
-msgstr "Bereitstellung des Reiseführers für Ziele"
-
-#: includes/class-helpers-guide.php:89
-msgid "Source"
-msgstr "Quelle"
-
-#: includes/class-helpers-guide.php:100
-msgid "A text file with a formatted list of destinations."
-msgstr "Eine Textdatei mit einer formatierten Liste von Zielen."
-
-#: includes/class-helpers-guide.php:101
-msgid "The source can be an URL or the full path of a local file your web server can access."
-msgstr "Die Quelle kann eine URL oder der vollständige Pfad zu einer lokalen Datei sein, auf die Ihr Webserver zugreifen kann."
-
-#: includes/class-helpers-guide.php:102
-msgid "Destination name and teleport URL are separated by a pipe (|) character."
-msgstr "Der Zielname und die Teleport-URL werden durch das Pipe-Zeichen (|) getrennt."
-
-#: includes/class-helpers-guide.php:103
-msgid "Lines containing only text are interpreted as categories."
-msgstr "Zeilen, die nur Text enthalten, werden als Kategorien interpretiert."
-
-#: includes/class-helpers-guide.php:104
-msgid "Lines beginning with \"#\" or \"//\" are ignored."
-msgstr "Zeilen, die mit \"#\" oder \"//\" beginnen, werden ignoriert."
-
-#: includes/class-helpers-guide.php:106
-msgid "The format is identical to the format used by the in-world object %s so the same source URL can be used for both."
-msgstr ""
-"Das Format ist identisch mit dem Format, das vom In-World-Objekt %s verwendet wird, sodass dieselbe Quell-URL für beide "
-"verwendet werden kann."
-
-#: includes/class-helpers-guide.php:127
-msgid "Destinations Guide URL"
-msgstr "URL des Reiseführers für Ziele"
-
-#: includes/class-helpers-guide.php:176
-msgid "Destinations guide is a Viewer 3 feature, providing a window with places suggestions."
-msgstr "Der Destinations Guide ist eine Funktion des Viewers 3 und bietet ein Fenster mit Vorschlägen für Orte."
-
-#: includes/class-helpers-guide.php:177
-msgid ""
-"While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of "
-"must-see places, from your own grid or outside."
-msgstr ""
-"Obwohl es nicht zwingend erforderlich ist und nicht jeder Benutzer davon profitieren wird, ist es eine nützliche "
-"Möglichkeit, ihnen eine Liste der sehenswerten Orte zur Verfügung zu stellen, sowohl innerhalb als auch außerhalb Ihres "
-"Grids."
-
-#: includes/class-helpers-offline.php:46
-msgid "Offline Messages"
-msgstr "Offline-Meldungen"
-
-#: includes/class-helpers-offline.php:47 includes/class-helpers-offline.php:71
-msgid "Offline Messages Settings"
-msgstr "Einstellungen für Offline-Nachrichten"
-
-#: includes/class-helpers-offline.php:77
-msgid "Provide Offline Messages Service"
-msgstr "Offline-Helper bereitstellen"
-
-#: includes/class-helpers-offline.php:86
-msgid "Honor \"Email me IMs when I'm offline\" viewer option."
-msgstr "Ehre die Option des Viewers \"Sende mir E-Mails, wenn ich offline bin\"."
-
-#: includes/class-helpers-offline.php:87
-msgid ""
-"OpenSimulator core offline messages module delivers messages sent to an offline user when they come back online but "
-"don't handle e-mail forwarding option available in the viewer."
-msgstr ""
-"Das OpenSimulator-Kernmodul für Offline-Nachrichten stellt Nachrichten bereit, die an einen offline befindlichen "
-"Benutzer gesendet wurden, sobald dieser wieder online ist. Es unterstützt jedoch nicht die Option zur "
-"E-Mail-Weiterleitung, die im Viewer verfügbar ist."
-
-#: includes/class-helpers-offline.php:92
-msgid "Sender e-mail address"
-msgstr "E-Mail Adresse des Absenders"
-
-#: includes/class-helpers-offline.php:103
-msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
-msgstr ""
-"Eine E-Mail-Adresse ohne Antwort, die zur Weiterleitung von Nachrichten für Benutzer verwendet wird, die die Option "
-"\"E-Mail an IMs senden, wenn ich offline bin\" aktivieren."
-
-#: includes/class-helpers-offline.php:106
-msgid "Offline Messages Helper"
-msgstr "Offline-Meldungen"
-
-#: includes/class-helpers-offline.php:119
-msgid "Set the URL in Robust and OpenSimulator configurations."
-msgstr "Legen Sie die URL in Robust- und OpenSimulator-Konfigurationen fest."
-
-#: includes/class-helpers-search.php:62
-msgid "Search Engine"
-msgstr "Suchmaschine"
-
-#: includes/class-helpers-search.php:63 includes/class-helpers-search.php:81
-msgid "Search Engine Settings"
-msgstr "Suchmaschineneinstellungen"
-
-#: includes/class-helpers-search.php:88
-msgid "Provide Search"
-msgstr "In-World-Suche bereitstellen"
-
-#: includes/class-helpers-search.php:101
-msgid "OS Search Database"
-msgstr "Datenbank für OS-Suche"
-
-#: includes/class-helpers-search.php:122
-msgid "Search Engine URL"
-msgstr "Suchmaschinen-URL"
-
-#: includes/class-helpers-search.php:131
-msgid "URL of the search engine used by the viewer to provide search results (without arguments)."
-msgstr "URL der vom Viewer intern verwendeten Suchmaschine (ohne Argumente)."
-
-#: includes/class-helpers-search.php:132
-msgid "Only one can be set, other lines are alternative examples."
-msgstr "Nur eine kann festgelegt werden, die anderen Zeilen sind alternative Beispiele."
-
-#: includes/class-helpers-search.php:133
-msgid ""
-"Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements "
-"may vary for other engines."
-msgstr ""
-"Dienste, die den w4os-Engine verwenden, benötigen die Gatekeeper-URI (normalerweise die Anmelde-URI), die als "
-"gk-Argument übergeben werden muss. Die Anforderungen können je nach anderen Engines variieren."
-
-#: includes/class-helpers-search.php:146
-msgid ""
-"Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is "
-"relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or "
-"secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar "
-"names."
-msgstr ""
-"Bitte beachten Sie, dass sich die Such-URL von der Web-Such-URL unterscheidet, die derzeit nicht von W4OS behandelt "
-"wird. Die Web-Suche ist relevant, wenn Sie eine Web-Suchseite für Grid-Inhalte haben, die Ergebnisse mit In-World-URLs "
-"liefert (hop:// oder secondlife://). Sie ist optional und wird hier nur erwähnt, um die Einstellungen, die leider "
-"ähnliche Namen haben, zu verdeutlichen."
-
-#: includes/class-helpers-search.php:161
-msgid "Search Register URL"
-msgstr "Suchregister-URL"
-
-#: includes/class-helpers-search.php:169
-msgid "Data service, used to register regions, objects or land for sale."
-msgstr "Datendienst, der dazu dient, Regionen, Objekte oder Grundstücke zum Verkauf zu registrieren."
-
-#: includes/class-helpers-search.php:170
-msgid "You can register to several search engines."
-msgstr "Du kannst dich bei mehreren Suchmaschinen registrieren."
-
-#: includes/class-helpers-search.php:171
-msgid "Each line must have a unique identifier beginning with \"DATA_SRV_\""
-msgstr "Jede Zeile muss einen eindeutigen Bezeichner haben, der mit \"DATA_SRV_\" beginnt."
-
-#: includes/class-helpers-search.php:190
-msgid "Events Server URL"
-msgstr "Ereignis-Server-URL"
-
-#: includes/class-helpers-search.php:201
-msgid "HYPEvents Server URL, used to fetch upcoming events and make them available in search."
-msgstr ""
-"HYPEvents Server-URL, der verwendet wird, um bevorstehende Veranstaltungen abzurufen und sie in der Suche verfügbar zu "
-"machen."
-
-#: includes/class-helpers-search.php:202
-msgid "Leave blank to ignore events or if you have an other events implementation."
-msgstr "Lassen Sie diese Option leer, um Ereignisse zu ignorieren oder wenn Sie andere Ereignisse implementiert haben."
-
-#: includes/class-helpers-search.php:226
-msgid "Enable to use a local search engine, allowing only local results (recommended for private grids)."
-msgstr ""
-"Aktivieren Sie die Verwendung einer lokalen Suchmaschine, die nur lokale Ergebnisse zulässt (empfohlen für private "
-"Grids)."
-
-#: includes/class-helpers-search.php:227
-msgid ""
-"Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public "
-"grids."
-msgstr ""
-"Deaktivieren Sie die Verwendung einer externen Suchmaschine wie 2do Directory, um Ergebnisse sowohl von Ihrem Grid als "
-"auch von anderen öffentlichen Grids zu ermöglichen."
-
-#: includes/class-helpers-search.php:228
-msgid "Search features require the installation of OpenSimSearch Module on OpenSimulator."
-msgstr "Die Suchfunktionen erfordern die Installation des OpenSimSearch-Moduls auf OpenSimulator."
-
-#: includes/class-helpers-search.php:229
-msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
-msgstr "Fertige OpenSimSearch.Modules.dll-Binärdatei kann hier gefunden werden:"
-
-#: includes/class-helpers.php:121
-msgid "Helpers base"
-msgstr "Helfer-Basis"
-
-#: legacy/profile.php:198 legacy/profile.php:1039
-msgid "OpenSimulator"
-msgstr "OpenSimulator"
-
-#: includes/class-settings.php:85
-msgid "OpenSimulator Administration"
-msgstr "OpenSimulator-Verwaltung"
-
-#: includes/class-settings.php:77
-msgid "OpenSimulator Status"
-msgstr "OpenSimulator Status"
-
-#: includes/class-settings.php:77 legacy/functions.php:310
-msgid "Status"
-msgstr "Status"
-
-#: includes/class-settings.php:81
-msgid "Shortcodes"
-msgstr "Shortcodes"
-
-#: includes/class-settings.php:94 legacy/admin/settings.php:261
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: includes/class-settings.php:159
-msgid "ROBUST Database"
-msgstr "ROBUST-Datenbank"
-
-#: includes/class-settings.php:179
-msgid "Grid Users"
-msgstr "Benutzer des Grids"
-
-#: includes/class-settings.php:189
-msgid "Profile Page"
-msgstr "Profilseite"
-
-#: includes/class-settings.php:195
-msgid "URL"
-msgstr "URL"
-
-#: includes/class-settings.php:206
-msgid "A profile page exists with permalink set as %1$s, as defined in [permalinks settings]."
-msgstr "Die Seite %1$s muss existieren, wie in [permalinks settings] definiert."
-
-#: includes/class-settings.php:207
-msgid "A profile page must be created with permalink set as %1$s, as defined in [permalinks settings]."
-msgstr "Die Seite %1$s muss existieren, wie in [permalinks settings] definiert."
-
-#: includes/class-settings.php:215
-msgid "Public Profile Page"
-msgstr "Öffentliche Profilseite"
-
-#: includes/class-settings.php:219
-msgid "Provide avatars with a public web profile page in the following format: %1$s."
-msgstr "Stelle Avatare mit einer öffentlichen Webprofilseite im folgenden Format zur Verfügung: %1$s."
-
-#: includes/class-settings.php:227
-msgid "Login Page"
-msgstr "Anmeldeseite"
-
-#: includes/class-settings.php:230
-msgid "Use profile page as login page."
-msgstr "Profilseite als Anmeldeseite verwenden."
-
-#: includes/class-settings.php:240
-msgid "Instructions"
-msgstr "Anleitung"
-
-#: includes/class-settings.php:243
-msgid "Show configuration instructions to new users on their profile page."
-msgstr "Konfigurationsanweisungen für neue Benutzer anzeigen."
-
-#: includes/class-settings.php:251
-msgid "Replace User Names"
-msgstr "Ersetzen des Benutzernamens"
-
-#: includes/class-settings.php:254
-msgid "Show avatar name instead of user name in users list."
-msgstr "Anzeige des Avatarnamens anstelle des Benutzernamens in der Benutzerliste."
-
-#: includes/class-settings.php:260
-msgid "Exclude from stats"
-msgstr "Aus der Statistik ausschließen"
-
-#: includes/class-settings.php:263
-msgid ""
-"Accounts without email address are usually test or technical accounts created from the console. Uncheck only if you "
-"have real avatars without email address."
-msgstr ""
-"Konten ohne E-Mail-Adresse sind normalerweise Testkonten, die über die Konsole erstellt werden. Deaktivieren Sie diese "
-"Option nur, wenn Sie echte Avatare ohne E-Mail-Adresse haben."
-
-#: includes/class-settings.php:265
-msgid "Models"
-msgstr "Modelle"
-
-#: includes/class-settings.php:266
-msgid "Accounts without mail address"
-msgstr "Konten ohne Email Adresse"
-
-#: includes/class-settings.php:267
-msgid "Hypergrid visitors"
-msgstr "Hypergrid-Besucher"
-
-#: includes/class-settings.php:306 legacy/functions.php:268
-msgid "Invalid Login URI"
-msgstr "Ungültige Anmelde-URI"
-
-#: includes/class-settings.php:367
-msgid "Default"
-msgstr "Standard"
-
-#: includes/class-settings.php:390
-msgid "Hostname"
-msgstr "Hostname"
-
-#: includes/class-settings.php:397
-msgid "Port"
-msgstr "Hafen"
-
-#: includes/class-settings.php:404
-msgid "DB Name"
-msgstr "Datenbankname"
-
-#: includes/class-settings.php:411
-msgid "Username"
-msgstr "Benutzername"
+"Die Simulator-Datenbank enthält mehr als einen Avatar, der zu %s passt. Das sollte nicht passieren und erfordert eine "
+"sofortige Behebung."
+
+#: tmp/class-avatar.php:130 tmp/class-avatar.php:151 tmp/class-avatar.php:164
+msgid "Avatars"
+msgstr "Avatare"
+
+#: legacy/woocommerce.php:53 tmp/class-avatar.php:131
+msgid "Avatar"
+msgstr "Avatar"
+
+#: tmp/class-avatar.php:132
+msgid "Add New"
+msgstr "Neu hinzufügen"
+
+#: tmp/class-avatar.php:133
+msgid "Add new avatar"
+msgstr "Neuen Avatar hinzufügen"
+
+#: tmp/class-avatar.php:134
+msgid "Edit Avatar"
+msgstr "Avatar bearbeiten"
+
+#: tmp/class-avatar.php:135
+msgid "New Avatar"
+msgstr "Neuer Avatar"
+
+#: tmp/class-avatar.php:136
+msgid "View Avatar"
+msgstr "Avatar anzeigen"
+
+#: tmp/class-avatar.php:137
+msgid "View Avatars"
+msgstr "Avatare anzeigen"
+
+#: tmp/class-avatar.php:138
+msgid "Search Avatars"
+msgstr "Suche Avatare"
+
+#: tmp/class-avatar.php:139
+msgid "No avatars found"
+msgstr "Keine Avatare gefunden"
+
+#: tmp/class-avatar.php:140
+msgid "No avatars found in Trash"
+msgstr "Keine Avatare im Papierkorb gefunden"
+
+#: tmp/class-avatar.php:141
+msgid "Parent Avatar:"
+msgstr "Eltern-Avatar:"
+
+#: tmp/class-avatar.php:142
+msgid "All Avatars"
+msgstr "Alle Avatare"
+
+#: tmp/class-avatar.php:143
+msgid "Avatar Archives"
+msgstr "Avatar-Archive"
+
+#: tmp/class-avatar.php:144
+msgid "Avatar Attributes"
+msgstr "Avatar-Eigenschaften"
+
+#: tmp/class-avatar.php:145
+msgid "Insert into avatar"
+msgstr "Einfügen in Avatar"
+
+#: tmp/class-avatar.php:146
+msgid "Uploaded to this avatar"
+msgstr "Hochgeladen zu diesem Avatar"
+
+#: tmp/class-avatar.php:147
+msgid "Featured image"
+msgstr "Ausgewähltes Bild"
+
+#: tmp/class-avatar.php:148
+msgid "Set featured image"
+msgstr "Festgelegtes Beitragsbild"
+
+#: tmp/class-avatar.php:149
+msgid "Remove featured image"
+msgstr "Entferne das vorgestellte Bild"
+
+#: tmp/class-avatar.php:150
+msgid "Use as featured image"
+msgstr "Als Beitragsbild verwenden"
+
+#: tmp/class-avatar.php:152
+msgid "Filter avatars list"
+msgstr "Filtere die Liste der Avatare"
+
+#: tmp/class-avatar.php:153
+msgid "Filter by date"
+msgstr "Nach Datum filtern"
+
+#: tmp/class-avatar.php:154
+msgid "Avatars list navigation"
+msgstr "Avatare-Liste Navigation"
+
+#: tmp/class-avatar.php:155
+msgid "Avatars list"
+msgstr "Avatar-Liste"
+
+#: tmp/class-avatar.php:156
+msgid "Avatar published"
+msgstr "Avatar veröffentlicht"
+
+#: tmp/class-avatar.php:157
+msgid "Avatar published privately"
+msgstr "Avatar privat veröffentlicht"
+
+#: tmp/class-avatar.php:158
+msgid "Avatar reverted to draft"
+msgstr "Avatar zurückgesetzt auf Entwurf"
+
+#: tmp/class-avatar.php:159
+msgid "Avatar scheduled"
+msgstr "Avatar geplant"
+
+#: tmp/class-avatar.php:160
+msgid "Avatar updated"
+msgstr "Avatar aktualisiert"
+
+#: tmp/class-avatar.php:234
+msgid "WordPress User"
+msgstr "WordPress Benutzer"
+
+#: tmp/class-avatar.php:240
+msgid "Select a user"
+msgstr "Wähle einen Benutzer aus"
+
+#: tmp/class-avatar.php:248
+msgid "E-mail"
+msgstr "E-Mail"
+
+#: tmp/class-avatar.php:259
+msgid "Optional. If set, the avatar will be linked to any matching WP user account."
+msgstr "Optional. Wenn festgelegt, wird der Avatar mit einem passenden WP-Benutzerkonto verknüpft."
+
+#: tmp/class-avatar.php:266
+msgid "Create WP user"
+msgstr "Benutzer in WP erstellen"
+
+#: sources/class-avatar.php:455 sources/class-avatar.php:483
+msgid "(not implemented)"
+msgstr "(nicht implementiert)"
 
 #: includes/class-settings.php:418 tmp/class-avatar.php:277
 msgid "Password"
 msgstr "Passwort"
 
-#: includes/class-tos.php:70
-msgid "Registration"
-msgstr "Registrierung"
+#: legacy/profile.php:150 tmp/class-avatar.php:277
+msgid "Change password"
+msgstr "Passwort ändern"
 
-#: includes/class-tos.php:76
-msgid "Terms of Service page"
-msgstr "Nutzungsbedingungen"
+#: tmp/class-avatar.php:283
+msgid "Confirm password"
+msgstr "Passwort bestätigen"
 
-#: includes/class-tos.php:80
-msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
-msgstr ""
-"Wählen Sie die Seite aus, die die Nutzungsbedingungen enthält, um ein Zustimmungskästchen für die Nutzungsbedingungen "
-"auf der Benutzerregistrierungsseite hinzuzufügen."
+#: tmp/class-avatar.php:289
+msgid "Same password as WP user"
+msgstr "Gleiche Passwort wie WP-Benutzer"
 
-#: includes/class-tos.php:81
-msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
-msgstr "Lassen Sie das Feld leer, um das Kontrollkästchen zu deaktivieren oder wenn es von einem anderen Plugin verwaltet wird."
-
-#: includes/class-tos.php:82
-msgid "Note: It is crucial to have a well-crafted and legally accurate TOS page for your website."
-msgstr ""
-"Hinweis: Es ist entscheidend, eine gut ausgearbeitete und rechtlich korrekte Nutzungsbedingungen-Seite für Ihre Website "
-"zu haben."
-
-#: includes/class-tos.php:83
-msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
-msgstr ""
-"Wir empfehlen die Verwendung eines dedizierten Plugins oder die Inanspruchnahme professioneller Dienstleistungen, um "
-"Ihnen bei der Erstellung des Textes für die AGB-Seite zu helfen."
-
-#: includes/class-tos.php:88
-msgid "Select a TOS page"
-msgstr "Wählen Sie eine AGB-Seite aus"
-
-#: includes/class-tos.php:22
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "I agree to the terms on page %s."
-msgstr "Ich stimme den Bedingungen auf Seite %s zu."
-
-#: includes/class-tos.php:25
-msgid "Error"
-msgstr "Fehler"
-
-#: includes/class-tos.php:27
-#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
-msgid "You must agree to the terms on page %s."
-msgstr "Du musst den Bedingungen auf Seite %s zustimmen."
-
-#: includes/updates.php:35
-msgid "Update %s applied"
-msgstr "Aktualisierung %s angewendet"
-
-#: includes/updates.php:47
-msgid "Update %s applied successfully"
-msgid_plural "Updates %s applied successfully"
-msgstr[0] "Update %s erfolgreich durchgeführt"
-msgstr[1] "Updates %s erfolgreich angewendet"
-
-#: includes/updates.php:54
-msgid "Error processing update %s"
-msgstr "Fehler bei der Verarbeitung der Aktualisierung %s"
-
-#: includes/updates.php:61
-msgid "W4OS updated"
-msgstr "W4OS aktualisiert"
-
-#: includes/updates.php:88
-msgid "Grid user"
-msgstr "Benutzer des Grids"
-
-#: includes/updates.php:109
-msgid "Profiles service is not configured on your Robust server. It is required for full functionalities."
-msgstr "Der Profildienst ist auf Ihrem Robust-Server nicht konfiguriert. Er ist für den vollen Funktionsumfang erforderlich."
-
-#: includes/updates.php:128
-msgid "Grid and WordPress users synchronized."
-msgstr "Grid- und WordPress-Benutzer synchronisiert."
-
-#: includes/updates.php:146
-msgid "OpenSim Search tables updated."
-msgstr "OpenSim Search Tabellen aktualisiert."
-
-#: legacy/admin/admin-init.php:42
-msgid "OpenSimulator Helpers"
-msgstr "OpenSimulator-Hilfsmittel"
+#: tmp/class-avatar.php:310
+msgid "Model"
+msgstr "Modell"
 
 #: legacy/admin/admin-init.php:63 legacy/profile.php:135 tmp/class-avatar.php:318
 msgid "Avatar Name"
 msgstr "Avatar Name"
+
+#: tmp/class-avatar.php:325
+#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
+msgid "Firstname"
+msgstr "Vorname"
+
+#: tmp/class-avatar.php:325
+#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
+msgid "Lastname"
+msgstr "Nachname"
+
+#: tmp/class-avatar.php:329
+msgid "The avatar name is permanent, it can't be changed later."
+msgstr "Der Avatar-Name ist dauerhaft und kann später nicht geändert werden."
+
+#: tmp/class-avatar.php:221
+msgid "Please provide first and last name, only letters and numbers, separated by a space."
+msgstr "Bitte gib deinen Vor- und Nachnamen an, nur Buchstaben und Zahlen, getrennt durch ein Leerzeichen."
+
+#: tmp/class-avatar.php:343
+msgid "UUID"
+msgstr "UUID"
+
+#: tmp/class-avatar.php:346
+msgid "Wil be set by the server"
+msgstr "Wird vom Server festgelegt"
+
+#: sources/class-avatar.php:546
+msgid "Last seen"
+msgstr "Zuletzt gesehen"
+
+#: legacy/profile.php:386
+msgid "This user already has an avatar."
+msgstr "Dieser Benutzer hat bereits einen Avatar."
+
+#: sources/class-avatar.php:697
+msgid "This name is not available."
+msgstr "Dieser Name ist nicht verfügbar."
+
+#: sources/class-avatar.php:708
+msgid "Passwords don't match."
+msgstr "Passwörter stimmen nicht überein."
+
+#: legacy/profile.php:442
+msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
+msgstr ""
+"Dies sollte niemals passieren! Es wurde eine zufällige UUID erzeugt, die bereits existierte. Entschuldigung. Versuchen "
+"Sie es erneut."
+
+#: legacy/profile.php:468
+msgid "Error while creating user"
+msgstr "Fehler beim Anlegen eines Benutzers"
+
+#: legacy/profile.php:482
+msgid "Error while setting password"
+msgstr "Fehler beim Setzen des Passworts"
+
+#: legacy/profile.php:498
+msgid "Error while setting home region"
+msgstr "Fehler beim Einstellen der Heimatregion"
+
+#: legacy/profile.php:520
+msgid "Error while creating user inventory"
+msgstr "Fehler beim Erstellen des Benutzerinventars"
+
+#: legacy/profile.php:653
+msgid "Error while adding inventory item"
+msgstr "Fehler beim Hinzufügen von Inventargegenständen"
+
+#: legacy/profile.php:666
+msgid "Error while adding inventory outfit link"
+msgstr "Fehler beim Hinzufügen des Links für die Inventarausstattung"
+
+#: legacy/profile.php:681
+msgid "Error while adding avatar"
+msgstr "Fehler beim Hinzufügen eines Avatars"
+
+#: sources/class-avatar.php:950
+msgid "Errors occurred while creating avatar %s"
+msgstr "Fehler traten beim Erstellen des Avatars %s auf."
+
+#: sources/class-avatar.php:984
+msgid "%s contains invalid characters, replaced \"%s\" by \"%s\""
+msgstr "%s enthält ungültige Zeichen, \"%s\" wurde durch \"%s\" ersetzt."
+
+#: legacy/users.php:221
+msgid "%d reference updated"
+msgid_plural "%d references updated"
+msgstr[0] "%d Referenz aktualisiert"
+msgstr[1] "%d Referenzen aktualisiert"
+
+#: legacy/users.php:232
+msgid "%d new WordPress account created"
+msgid_plural "%d new WordPress accounts created"
+msgstr[0] "%d neues WordPress-Konto erstellt"
+msgstr[1] "%d neue WordPress-Konten erstellt"
+
+#: legacy/users.php:243
+msgid "%d broken reference removed"
+msgid_plural "%d broken references removed"
+msgstr[0] "%d fehlerhafte Referenz entfernt"
+msgstr[1] "%d fehlerhafte Referenzen entfernt"
+
+#: legacy/admin/status-page.php:84
+msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
+msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
+msgstr[0] "%d Grid-Konto hat kein verknüpftes WP-Konto. Bei der Synchronisierung wird ein neues WP-Konto erstellt."
+msgstr[1] "%d Grid-Konten haben kein verknüpftes WP-Konto. Durch die Synchronisierung werden neue WP-Konten erstellt."
+
+#: sources/class-avatar.php:1364
+msgid ""
+"%d WordPress avatar has no related account in OpenSimulator database (corrupt reference or deleted). Syncing accounts "
+"will delete it from WordPress database too."
+msgid_plural ""
+"%d WordPress avatars have no related account in OpenSimulator database corrupt reference or deleted). Syncing accounts "
+"will remove these from WordPress database too."
+msgstr[0] ""
+"%d WordPress-Avatar hat keinen zugehörigen Account in der OpenSimulator-Datenbank (beschädigter Verweis oder gelöscht). "
+"Das Synchronisieren der Konten wird es auch aus der WordPress-Datenbank löschen."
+msgstr[1] ""
+
+#: legacy/admin/status-page.php:123
+msgid "Synchronize users now"
+msgstr "Benutzer jetzt synchronisieren"
+
+#: legacy/admin/status-page.php:125
+msgid ""
+"Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it "
+"may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted "
+"directly from the grid administration console."
+msgstr ""
+"Die Synchronisierung erfolgt bei der Aktivierung des Plugins und wird danach automatisch durchgeführt. Unter bestimmten "
+"Umständen kann es jedoch notwendig sein, die Synchronisierung manuell einzuleiten, um ein sofortiges Ergebnis zu "
+"erhalten, insbesondere wenn Benutzer direkt über die Grid-Administrationskonsole hinzugefügt oder gelöscht wurden."
+
+#: sources/class-avatar.php:1428
+msgid "Model <span class=\"count\">(%s)</span>"
+msgid_plural "Models <span class=\"count\">(%s)</span>"
+msgstr[0] "Modell <span class=\"count\">(%s)</span>"
+msgstr[1] ""
+
+#: sources/class-avatar.php:1437
+msgid "Service Account <span class=\"count\">(%s)</span>"
+msgid_plural "Service Accounts <span class=\"count\">(%s)</span>"
+msgstr[0] "Service-Konto <span class=\"count\">(%s)</span>"
+msgstr[1] ""
+
+#: templates/content-configuration.php:2
+msgid "this grid"
+msgstr "dieses Grid"
+
+#: templates/content-configuration.php:20
+msgid "Viewer configuration"
+msgstr "Viewer-Konfiguration"
+
+#: templates/content-configuration.php:23
+msgid "Install the viewer and open it."
+msgstr "Installiere den Viewer und öffne ihn."
+
+#: templates/content-configuration.php:29
+msgid "You can use [any compatible viewer] to access %1$s."
+msgstr "Du kannst [jeden kompatiblen Viewer] verwenden, um auf %1$s zuzugreifen."
+
+#: templates/content-configuration.php:33
+msgid "Add %1$s to your viewer"
+msgstr "Füge %1$s zu deinem Viewer hinzu"
+
+#: templates/content-configuration.php:34
+msgid "Instructions may vary depending on the viewer"
+msgstr "Die Anweisungen können je nach Viewer variieren"
+
+#: templates/content-configuration.php:36
+msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
+msgstr "Wählen Sie \"Einstellungen\" unter dem Menü \"Viewer\" (oder geben Sie Strg-P ein)"
+
+#: templates/content-configuration.php:37
+msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
+msgstr "Wählen Sie \"OpenSim\", dann die Registerkarte \"Grid Manager\""
+
+#: templates/content-configuration.php:38
+msgid "Under \"Add new grid\", enter"
+msgstr "Geben Sie unter \"Neues Grid hinzufügen\" ein"
+
+#: templates/content-configuration.php:40
+msgid "Click the \"Apply\" button"
+msgstr "Klicken Sie auf die Schaltfläche \"Übernehmen\""
+
+#: legacy/profile-page.php:114 legacy/profile-page.php:192 templates/content-configuration.php:43
+#: templates/content-page-profile.php:26
+msgid "Log in"
+msgstr "Einloggen"
+
+#: templates/content-configuration.php:45
+msgid "Make sure %1$s is selected in the Grid menu"
+msgstr "Vergewissern Sie sich, dass %1$s im Gridmenü ausgewählt ist"
+
+#: templates/content-configuration.php:46
+msgid "Enter your avatar’s first and last name in the \"Username\" box and your password in the \"Password\" box"
+msgstr ""
+"Geben Sie den Vor- und Nachnamen Ihres Avatars in das Feld \"Benutzername\" und Ihr Passwort in das Feld \"Passwort\" "
+"ein"
+
+#: templates/content-configuration.php:47
+msgid "Click \"Log In\""
+msgstr "Klicken Sie auf \"Anmelden\"."
+
+#: templates/content-page-profile.php:15
+msgid "My Avatar"
+msgstr "Mein Avatar"
+
+#: legacy/profile-page.php:205 templates/content-page-profile.php:54
+msgid "%s's profile"
+msgstr "Profil von %s"
+
+#: templates/page-profile-viewer.php:11
+msgid "%s's flux"
+msgstr "%s's Fluss"
+
+#: templates/page-profile-viewer.php:18
+msgid "Feed not available on %s"
+msgstr "Feed nicht verfügbar auf %s"
+
+#: templates/page-profile-viewer.php:28
+msgid "Open profile page"
+msgstr "Profilseite öffnen"
+
+#: legacy/profile-page.php:208
+msgid "Avatar not found"
+msgstr "Avatar nicht gefunden"
+
+#: legacy/admin/admin-init.php:42
+msgid "OpenSimulator Helpers"
+msgstr "OpenSimulator-Hilfsmittel"
 
 #: legacy/admin/admin-init.php:69 legacy/admin/admin-init.php:75 legacy/profile.php:141 tmp/class-avatar.php:355
 msgid "Born"
@@ -1120,13 +1143,17 @@ msgstr "Registrierungseite"
 msgid "Link to the user registration."
 msgstr "Link zur Benutzerregistrierung."
 
-#: legacy/admin/admin-init.php:405
-msgid "Password revovery"
-msgstr "Passwort wiederherstellen"
+#: v1/admin/admin-init.php:412
+msgid "Password recovery"
+msgstr "Passwortwiederherstellung"
 
 #: legacy/admin/admin-init.php:406
 msgid "Link to lost password page."
 msgstr "Link zur Seite \"Passwort verloren\"."
+
+#: includes/class-helpers-economy.php:51 legacy/admin/admin-init.php:411
+msgid "Economy"
+msgstr "Wirtschaft"
 
 #: legacy/admin/admin-init.php:412
 msgid "Currencies and some other services queried by the viewer. They are not accessed directly by the user."
@@ -1178,23 +1205,9 @@ msgstr ""
 "Grid-Konten, die dem unten angegebenen Vor- oder Nachnamen entsprechen, gelten als Avatar-Modelle. Sie erscheinen auf "
 "dem Avatar-Registrierungsformular mit ihrem Profilbild in der Welt."
 
-#: legacy/admin/status-page.php:14
-msgid ""
-"%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support "
-"resources for specific instructions."
-msgstr ""
-"%s ist erforderlich, aber nicht installiert. Bitte konsultieren Sie das PHP-Handbuch oder wenden Sie sich an die "
-"Support-Ressourcen Ihres Hosting-Anbieters für spezifische Anweisungen."
-
-#: legacy/admin/status-page.php:39
-msgid "Permalinks are not enabled. Choose any permalink structure other than 'Plain' in the [permalink settings page].</a>"
-msgstr ""
-"Permalinks sind nicht aktiviert. Wählen Sie eine Permalink-Struktur außer 'Einfach' auf der "
-"[Permalink-Einstellungsseite].</a>"
-
-#: legacy/admin/status-page.php:49
-msgid "Requirements not met for w4os plugin"
-msgstr "Anforderungen nicht erfüllt für das w4os-Plugin"
+#: includes/class-settings.php:94 legacy/admin/settings.php:261
+msgid "Settings"
+msgstr "Einstellungen"
 
 #: legacy/admin/status-page.php:24
 msgid "Users"
@@ -1224,15 +1237,13 @@ msgstr "Grid-Konten"
 msgid "Linked WordPress accounts"
 msgstr "Verknüpfte WordPress-Konten"
 
+#: includes/class-avatar-model.php:62 includes/class-avatar-model.php:80 legacy/admin/status-page.php:58
+msgid "Avatar Models"
+msgstr "Avatar-Modelle"
+
 #: legacy/admin/status-page.php:67
 msgid "Other service accounts"
 msgstr "Sonstige Dienstleistungskonten"
-
-#: legacy/admin/status-page.php:84
-msgid "%d grid account has no linked WP account. Syncing will create a new WP account."
-msgid_plural "%d grid accounts have no linked WP account. Syncing will create new WP accounts."
-msgstr[0] "%d Grid-Konto hat kein verknüpftes WP-Konto. Bei der Synchronisierung wird ein neues WP-Konto erstellt."
-msgstr[1] "%d Grid-Konten haben kein verknüpftes WP-Konto. Durch die Synchronisierung werden neue WP-Konten erstellt."
 
 #: legacy/admin/status-page.php:95
 msgid ""
@@ -1266,20 +1277,6 @@ msgstr[1] ""
 msgid "Real accounts need a unique email address for W4OS to function properly."
 msgstr "Echte Konten benötigen eine eindeutige E-Mail-Adresse, damit W4OS ordnungsgemäß funktioniert."
 
-#: legacy/admin/status-page.php:123
-msgid "Synchronize users now"
-msgstr "Benutzer jetzt synchronisieren"
-
-#: legacy/admin/status-page.php:125
-msgid ""
-"Synchronization is made at plugin activation and is handled automatically afterwards, but in certain circumstances it "
-"may be necessary to initiate it manually to get an immediate result, especially if users have been added or deleted "
-"directly from the grid administration console."
-msgstr ""
-"Die Synchronisierung erfolgt bei der Aktivierung des Plugins und wird danach automatisch durchgeführt. Unter bestimmten "
-"Umständen kann es jedoch notwendig sein, die Synchronisierung manuell einzuleiten, um ein sofortiges Ergebnis zu "
-"erhalten, insbesondere wenn Benutzer direkt über die Grid-Administrationskonsole hinzugefügt oder gelöscht wurden."
-
 #: legacy/admin/status-page.php:160
 msgid "OpenSimulator pages"
 msgstr "OpenSimulator-Seiten"
@@ -1312,9 +1309,9 @@ msgstr ""
 "OpenSimulator-Seiten werden regelmäßig im Hintergrund überprüft. Synchronisieren Sie jetzt nur, wenn Sie Änderungen "
 "vorgenommen haben und einen sofortigen Status wünschen."
 
-#: legacy/admin/status-page.php:222
-msgid "Should be %s"
-msgstr "Sollte %s sein"
+#: v1/admin/status-page.php:194
+msgid "Should be %1$s, got %2$s"
+msgstr "Sollte %1$s sein, erhalten habe ich %2$s"
 
 #: legacy/admin/status-page.php:228
 msgid "This service requires a separate web application."
@@ -1340,41 +1337,9 @@ msgstr "Ein lokaler Robust-Server wurde gefunden. Bitte überprüfen Sie die Kon
 msgid "settings page"
 msgstr "Einstellungen-Seite"
 
-#: legacy/functions.php:265
-msgid "Online"
-msgstr "Online"
-
-#: legacy/functions.php:265
-msgid "Offline"
-msgstr "Offline"
-
-#: legacy/functions.php:311
-msgid "Members"
-msgstr "Mitglieder"
-
-#: legacy/functions.php:317
-msgid "Active members (30 days)"
-msgstr "Aktive Mitglieder (30 Tage)"
-
-#: legacy/functions.php:324
-msgid "Members in world"
-msgstr "Avatare im Grid Online"
-
-#: legacy/functions.php:335
-msgid "Active users (30 days)"
-msgstr "Aktive Besucher (30 Tage)"
-
-#: legacy/functions.php:341
-msgid "Total users in world"
-msgstr "Zurzeit Online gesamt"
-
-#: legacy/functions.php:349
-msgid "Regions"
-msgstr "Regionen"
-
-#: legacy/functions.php:355
-msgid "Total area"
-msgstr "Gesamtfläche"
+#: includes/class-settings.php:306 legacy/functions.php:268
+msgid "Invalid Login URI"
+msgstr "Ungültige Anmelde-URI"
 
 #: legacy/functions.php:512
 msgid "%s"
@@ -1388,13 +1353,34 @@ msgstr "Heute beigetreten"
 msgid "%s days old"
 msgstr "%s Tage alt"
 
+#: legacy/admin/status-page.php:14
+msgid ""
+"%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support "
+"resources for specific instructions."
+msgstr ""
+"%s ist erforderlich, aber nicht installiert. Bitte konsultieren Sie das PHP-Handbuch oder wenden Sie sich an die "
+"Support-Ressourcen Ihres Hosting-Anbieters für spezifische Anweisungen."
+
+#: v1/functions.php:866
+#. TRANSLATORS: %s will be replaced by permalink page link.
+msgid ""
+"Permalinks are not enabled. They are required for proper operations. Choose any permalink structure other than 'Plain' "
+"in %s.</a>"
+msgstr ""
+"Permalinks sind nicht aktiviert. Sie sind für den ordnungsgemäßen Betrieb erforderlich. Wählen Sie eine beliebige "
+"Permalink-Struktur außer 'Einfach' in %s.</a>"
+
+#: v1/functions.php:867
+msgid "Permalink settings page"
+msgstr "Permalink-Einstellungen Seite"
+
+#: legacy/admin/status-page.php:49
+msgid "Requirements not met for w4os plugin"
+msgstr "Anforderungen nicht erfüllt für das w4os-Plugin"
+
 #: legacy/profile-page.php:65
 msgid "Lost Password"
 msgstr "Verlorenes Passwort"
-
-#: legacy/profile-page.php:71
-msgid "Register"
-msgstr "Registrierung"
 
 #: legacy/profile-page.php:110
 msgid ""
@@ -1412,11 +1398,6 @@ msgstr "E-Mail"
 msgid "Reset Password"
 msgstr "Passwort zurücksetzen"
 
-#: legacy/profile-page.php:114 legacy/profile-page.php:192 templates/content-configuration.php:43
-#: templates/content-page-profile.php:26
-msgid "Log in"
-msgstr "Einloggen"
-
 #: legacy/profile-page.php:119
 msgid "Log in to create your avatar, view your profile or set your options."
 msgstr "Loggen Sie sich ein, um Ihren Avatar zu erstellen, Ihr Profil anzusehen oder Ihre Optionen einzustellen."
@@ -1428,14 +1409,6 @@ msgstr "Mein Profil"
 #: legacy/profile-page.php:189
 msgid "Create My Avatar"
 msgstr "Meinen Avatar erstellen"
-
-#: legacy/profile-page.php:205 templates/content-page-profile.php:54
-msgid "%s's profile"
-msgstr "Profil von %s"
-
-#: legacy/profile-page.php:208
-msgid "Avatar not found"
-msgstr "Avatar nicht gefunden"
 
 #: legacy/profile-page.php:280
 msgid "Profile base"
@@ -1525,25 +1498,17 @@ msgstr "Sprachen"
 msgid "Real Life"
 msgstr "Reales Leben"
 
-#: legacy/profile.php:150 tmp/class-avatar.php:277
-msgid "Change password"
-msgstr "Passwort ändern"
-
 #: legacy/profile.php:150
 msgid "Password reset link"
 msgstr "Passwort zurücksetzen Link"
 
-#: legacy/profile.php:386
-msgid "This user already has an avatar."
-msgstr "Dieser Benutzer hat bereits einen Avatar."
+#: legacy/profile.php:198 legacy/profile.php:1039
+msgid "OpenSimulator"
+msgstr "OpenSimulator"
 
-#: legacy/profile.php:402
-msgid "First name required"
-msgstr "Vorname erforderlich"
-
-#: legacy/profile.php:405
-msgid "Last name required"
-msgstr "Nachname erforderlich"
+#: v1/profile.php:447
+msgid "First and Last names are required"
+msgstr "Vor- und Nachnamen sind erforderlich"
 
 #: legacy/profile.php:409
 msgid "Password required"
@@ -1565,40 +1530,6 @@ msgstr "Namen dürfen nur alphanumerische Zeichen enthalten"
 msgid "There is already a grid user named %s"
 msgstr "Es gibt bereits einen Grid-Benutzer namens %s"
 
-#: legacy/profile.php:442
-msgid "This should never happen! Generated a random UUID that already existed. Sorry. Try again."
-msgstr ""
-"Dies sollte niemals passieren! Es wurde eine zufällige UUID erzeugt, die bereits existierte. Entschuldigung. Versuchen "
-"Sie es erneut."
-
-#: legacy/profile.php:468
-msgid "Error while creating user"
-msgstr "Fehler beim Anlegen eines Benutzers"
-
-#: legacy/profile.php:482
-msgid "Error while setting password"
-msgstr "Fehler beim Setzen des Passworts"
-
-#: legacy/profile.php:498
-msgid "Error while setting home region"
-msgstr "Fehler beim Einstellen der Heimatregion"
-
-#: legacy/profile.php:520
-msgid "Error while creating user inventory"
-msgstr "Fehler beim Erstellen des Benutzerinventars"
-
-#: legacy/profile.php:653
-msgid "Error while adding inventory item"
-msgstr "Fehler beim Hinzufügen von Inventargegenständen"
-
-#: legacy/profile.php:666
-msgid "Error while adding inventory outfit link"
-msgstr "Fehler beim Hinzufügen des Links für die Inventarausstattung"
-
-#: legacy/profile.php:681
-msgid "Error while adding avatar"
-msgstr "Fehler beim Hinzufügen eines Avatars"
-
 #: legacy/profile.php:688
 msgid "Errors occurred while creating the user"
 msgstr "Beim Anlegen des Benutzers sind Fehler aufgetreten"
@@ -1607,23 +1538,21 @@ msgstr "Beim Anlegen des Benutzers sind Fehler aufgetreten"
 msgid "Avatar %s created successfully."
 msgstr "Avatar %s erfolgreich erstellt."
 
-#: legacy/profile.php:710
-msgid "You need an avatar to explore our virtual world."
-msgstr "Sie benötigen einen Avatar, um unsere virtuelle Welt zu erkunden."
+#: v1/profile.php:756
+msgid "Security check failed"
+msgstr "Sicherheitsüberprüfung fehlgeschlagen"
 
-#: legacy/profile.php:711
-msgid "Choose a name below. This is how people will see you in-world. Once set, your avatar name cannot be changed."
-msgstr ""
-"Wählen Sie unten einen Namen. Unter diesem Namen wird man Sie in der Welt sehen. Einmal festgelegt, kann Ihr "
-"Avatar-Name nicht mehr geändert werden."
+#: v1/profile.php:788
+msgid "Choose a name below. This is how people will see you in-world."
+msgstr "Wähle einen Namen unten aus. So werden dich die Leute in der Welt sehen."
 
-#: legacy/profile.php:734
-msgid "Avatar first name"
-msgstr "Vorname des Avatars"
+#: v1/profile.php:811
+msgid "First name"
+msgstr "Vorname"
 
-#: legacy/profile.php:738
-msgid "Avatar last name"
-msgstr "Nachname des Avatars"
+#: v1/profile.php:813
+msgid "Last name"
+msgstr "Nachname"
 
 #: legacy/profile.php:743
 msgid "Confirm your password"
@@ -1633,9 +1562,17 @@ msgstr "Bestätigen Sie Ihr Passwort"
 msgid "Your in-world Avatar password is the same as your password on this website."
 msgstr "Ihr Avatar-Passwort in der Welt ist dasselbe wie Ihr Passwort auf dieser Website."
 
-#: legacy/profile.php:758
-msgid "Save"
-msgstr "Speichern"
+#: v1/profile.php:828
+msgid "Choose the first outfit for your avatar."
+msgstr "Wähle das erste Outfit für deinen Avatar aus."
+
+#: v1/profile.php:829
+msgid "You can always change your appearance in-world."
+msgstr "Du kannst dein Aussehen in der Welt jederzeit ändern."
+
+#: v1/profile.php:848
+msgid "Create Avatar"
+msgstr "Avatar erstellen"
 
 #: legacy/profile.php:804
 msgid "leave blank to leave unchanged"
@@ -1681,24 +1618,6 @@ msgstr "Fehler beim Aktualisieren von %1$s %2$s (%3$s) %4$s"
 msgid "Error while updating newly created user %1$s for %2$s %3$s (%4$s) %5$s"
 msgstr "Fehler beim Aktualisieren des neu erstellten Benutzers %1$s für %2$s %3$s (%4$s) %5$s"
 
-#: legacy/users.php:221
-msgid "%d reference updated"
-msgid_plural "%d references updated"
-msgstr[0] "%d Referenz aktualisiert"
-msgstr[1] "%d Referenzen aktualisiert"
-
-#: legacy/users.php:232
-msgid "%d new WordPress account created"
-msgid_plural "%d new WordPress accounts created"
-msgstr[0] "%d neues WordPress-Konto erstellt"
-msgstr[1] "%d neue WordPress-Konten erstellt"
-
-#: legacy/users.php:243
-msgid "%d broken reference removed"
-msgid_plural "%d broken references removed"
-msgstr[0] "%d fehlerhafte Referenz entfernt"
-msgstr[1] "%d fehlerhafte Referenzen entfernt"
-
 #: legacy/users.php:385
 msgid "%s local users updated with avatar data"
 msgstr "%s lokale Benutzer mit Avatar-Daten aktualisiert"
@@ -1735,261 +1654,1246 @@ msgstr "Grid info-Widget"
 msgid "Title:"
 msgstr "Titel:"
 
-#: legacy/woocommerce.php:53 tmp/class-avatar.php:131
-msgid "Avatar"
-msgstr "Avatar"
-
 #: legacy/woocommerce.php:99
 msgid "Your avatar:"
 msgstr "Dein Avatar:"
 
-#: templates/content-configuration.php:2
-msgid "this grid"
-msgstr "dieses Grid"
+#: admin/templates/shortcodes.php:1 includes/class-settings.php:81
+msgid "Available Shortcodes"
+msgstr "Verfügbare Shortcodes"
 
-#: templates/content-configuration.php:20
-msgid "Viewer configuration"
-msgstr "Viewer-Konfiguration"
+#: admin/templates/shortcodes.php:4
+msgid "Shortcodes can be included in any page or articles."
+msgstr "Kurzcodes können in jeder Seite oder jedem Artikel eingefügt werden."
 
-#: templates/content-configuration.php:23
-msgid "Install the viewer and open it."
-msgstr "Installiere den Viewer und öffne ihn."
+#: admin/templates/shortcodes.php:5
+msgid "They are also available as configurable Gutenberg blocks and Divi modules."
+msgstr "Sie sind auch als konfigurierbare Gutenberg-Blöcke und Divi-Module verfügbar."
 
-#: templates/content-configuration.php:29
-msgid "You can use [any compatible viewer] to access %1$s."
-msgstr "Du kannst [jeden kompatiblen Viewer] verwenden, um auf %1$s zuzugreifen."
+#: admin/templates/shortcodes.php:12
+msgid "General information (grid name and login uri)"
+msgstr "Allgemeine Informationen (Gridname und Login-URI)"
 
-#: templates/content-configuration.php:33
-msgid "Add %1$s to your viewer"
-msgstr "Füge %1$s zu deinem Viewer hinzu"
+#: admin/templates/shortcodes.php:18 admin/templates/shortcodes.php:38 admin/templates/shortcodes.php:60
+#: admin/templates/shortcodes.php:82
+msgid "Bloc title"
+msgstr "Bloc-Titel"
 
-#: templates/content-configuration.php:34
-msgid "Instructions may vary depending on the viewer"
-msgstr "Die Anweisungen können je nach Viewer variieren"
+#: admin/templates/shortcodes.php:19 admin/templates/shortcodes.php:39 admin/templates/shortcodes.php:61
+#: admin/templates/shortcodes.php:84
+msgid "Title level (h1 to h6)"
+msgstr "Titelstufe (h1 bis h6)"
 
-#: templates/content-configuration.php:36
-msgid "Select \"Preferences\" under the \"Viewer\" menu (or type Ctrl-P)"
-msgstr "Wählen Sie \"Einstellungen\" unter dem Menü \"Viewer\" (oder geben Sie Strg-P ein)"
+#: admin/templates/shortcodes.php:21 admin/templates/shortcodes.php:41 admin/templates/shortcodes.php:63
+#: admin/templates/shortcodes.php:87
+msgid "Options"
+msgstr "Optionen"
 
-#: templates/content-configuration.php:37
-msgid "Select \"OpenSim\", then \"Grid Manager\" tab"
-msgstr "Wählen Sie \"OpenSim\", dann die Registerkarte \"Grid Manager\""
+#: admin/templates/shortcodes.php:32
+msgid "Online users, regions, etc."
+msgstr "Online-Nutzer, Regionen, etc."
 
-#: templates/content-configuration.php:38
-msgid "Under \"Add new grid\", enter"
-msgstr "Geben Sie unter \"Neues Grid hinzufügen\" ein"
+#: admin/templates/shortcodes.php:52
+msgid "Avatar Profile if user is connected and has an avatar, avatar registration form otherwise"
+msgstr "Rasterprofil, wenn der Benutzer verbunden ist und einen Avatar hat, ansonsten Avatar-Registrierungsformular"
 
-#: templates/content-configuration.php:40
-msgid "Click the \"Apply\" button"
-msgstr "Klicken Sie auf die Schaltfläche \"Übernehmen\""
+#: admin/templates/shortcodes.php:53
+msgid "(formerly %s)"
+msgstr "(ehemals %s)"
 
-#: templates/content-configuration.php:45
-msgid "Make sure %1$s is selected in the Grid menu"
-msgstr "Vergewissern Sie sich, dass %1$s im Gridmenü ausgewählt ist"
+#: admin/templates/shortcodes.php:85
+msgid "Only show name and picture"
+msgstr "Nur Name und Bild anzeigen"
 
-#: templates/content-configuration.php:46
-msgid "Enter your avatar’s first and last name in the \"Username\" box and your password in the \"Password\" box"
+#: admin/templates/shortcodes.php:75
+msgid "Most visited regions in your grid."
+msgstr "Am meisten besuchte Regionen in Ihrem Raster."
+
+#: admin/templates/shortcodes.php:83
+msgid "Show maximum n results"
+msgstr "Zeige maximal n Ergebnisse"
+
+#: admin/templates/shortcodes.php:86
+msgid "Include results from other grids"
+msgstr "Ergebnisse von anderen Grids anzeigen"
+
+#: admin/templates/shortcodes.php:87
+msgid "Include land for sale"
+msgstr "Land zum Verkauf inklusive"
+
+#: admin/templates/shortcodes.php:99
+msgid ""
+"The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not "
+"be enabled."
 msgstr ""
-"Geben Sie den Vor- und Nachnamen Ihres Avatars in das Feld \"Benutzername\" und Ihr Passwort in das Feld \"Passwort\" "
-"ein"
+"Die Optionen %1$s und %2$s werden nur bereitgestellt, um zur vorherigen Verhaltensweise zurückzukehren, sollten jedoch "
+"in den meisten Fällen nicht aktiviert werden."
 
-#: templates/content-configuration.php:47
-msgid "Click \"Log In\""
-msgstr "Klicken Sie auf \"Anmelden\"."
+#: admin/templates/shortcodes.php:103
+msgid "Popular places are essentially intended for splash pages, where hypergrid links would not work."
+msgstr "Beliebte Orte sind im Wesentlichen für Splash-Seiten gedacht, auf denen Hypergrid-Links nicht funktionieren würden."
 
-#: templates/content-page-profile.php:15
-msgid "My Avatar"
-msgstr "Mein Avatar"
+#: admin/templates/shortcodes.php:104
+msgid "Land sales usually generate additional traffic, which could make the search engine ranking unreliable for these regions."
+msgstr ""
+"Der Verkauf von Land führt in der Regel zu zusätzlichem Verkehr, was die Zuverlässigkeit des Suchmaschinen-Rankings für "
+"diese Regionen beeinträchtigen kann."
 
-#: tmp/class-avatar.php:130 tmp/class-avatar.php:151 tmp/class-avatar.php:164
-msgid "Avatars"
-msgstr "Avatare"
+#: includes/class-avatar-model.php:63
+msgid "Avatar Models Settings"
+msgstr "Einstellungen für Avatar-Modelle"
 
-#: tmp/class-avatar.php:132
-msgid "Add New"
-msgstr "Neu hinzufügen"
+#: includes/class-avatar-model.php:91
+msgid "Match"
+msgstr "Passen"
 
-#: tmp/class-avatar.php:133
-msgid "Add new avatar"
-msgstr "Neuen Avatar hinzufügen"
-
-#: tmp/class-avatar.php:134
-msgid "Edit Avatar"
-msgstr "Avatar bearbeiten"
-
-#: tmp/class-avatar.php:135
-msgid "New Avatar"
-msgstr "Neuer Avatar"
-
-#: tmp/class-avatar.php:136
-msgid "View Avatar"
-msgstr "Avatar anzeigen"
-
-#: tmp/class-avatar.php:137
-msgid "View Avatars"
-msgstr "Avatare anzeigen"
-
-#: tmp/class-avatar.php:138
-msgid "Search Avatars"
-msgstr "Suche Avatare"
-
-#: tmp/class-avatar.php:139
-msgid "No avatars found"
-msgstr "Keine Avatare gefunden"
-
-#: tmp/class-avatar.php:140
-msgid "No avatars found in Trash"
-msgstr "Keine Avatare im Papierkorb gefunden"
-
-#: tmp/class-avatar.php:141
-msgid "Parent Avatar:"
-msgstr "Eltern-Avatar:"
-
-#: tmp/class-avatar.php:142
-msgid "All Avatars"
-msgstr "Alle Avatare"
-
-#: tmp/class-avatar.php:143
-msgid "Avatar Archives"
-msgstr "Avatar-Archive"
-
-#: tmp/class-avatar.php:144
-msgid "Avatar Attributes"
-msgstr "Avatar-Eigenschaften"
-
-#: tmp/class-avatar.php:145
-msgid "Insert into avatar"
-msgstr "Einfügen in Avatar"
-
-#: tmp/class-avatar.php:146
-msgid "Uploaded to this avatar"
-msgstr "Hochgeladen zu diesem Avatar"
-
-#: tmp/class-avatar.php:147
-msgid "Featured image"
-msgstr "Ausgewähltes Bild"
-
-#: tmp/class-avatar.php:148
-msgid "Set featured image"
-msgstr "Festgelegtes Beitragsbild"
-
-#: tmp/class-avatar.php:149
-msgid "Remove featured image"
-msgstr "Entferne das vorgestellte Bild"
-
-#: tmp/class-avatar.php:150
-msgid "Use as featured image"
-msgstr "Als Beitragsbild verwenden"
-
-#: tmp/class-avatar.php:152
-msgid "Filter avatars list"
-msgstr "Filtere die Liste der Avatare"
-
-#: tmp/class-avatar.php:153
-msgid "Filter by date"
-msgstr "Nach Datum filtern"
-
-#: tmp/class-avatar.php:154
-msgid "Avatars list navigation"
-msgstr "Avatare-Liste Navigation"
-
-#: tmp/class-avatar.php:155
-msgid "Avatars list"
-msgstr "Avatar-Liste"
-
-#: tmp/class-avatar.php:156
-msgid "Avatar published"
-msgstr "Avatar veröffentlicht"
-
-#: tmp/class-avatar.php:157
-msgid "Avatar published privately"
-msgstr "Avatar privat veröffentlicht"
-
-#: tmp/class-avatar.php:158
-msgid "Avatar reverted to draft"
-msgstr "Avatar zurückgesetzt auf Entwurf"
-
-#: tmp/class-avatar.php:159
-msgid "Avatar scheduled"
-msgstr "Avatar geplant"
-
-#: tmp/class-avatar.php:160
-msgid "Avatar updated"
-msgstr "Avatar aktualisiert"
-
-#: tmp/class-avatar.php:205
-msgid "Profile"
-msgstr "Profil"
-
-#: tmp/class-avatar.php:221
-msgid "Please provide first and last name, only letters and numbers, separated by a space."
-msgstr "Bitte gib deinen Vor- und Nachnamen an, nur Buchstaben und Zahlen, getrennt durch ein Leerzeichen."
-
-#: tmp/class-avatar.php:234
-msgid "WordPress User"
-msgstr "WordPress Benutzer"
-
-#: tmp/class-avatar.php:240
-msgid "Select a user"
-msgstr "Wähle einen Benutzer aus"
-
-#: tmp/class-avatar.php:248
-msgid "E-mail"
-msgstr "E-Mail"
-
-#: tmp/class-avatar.php:259
-msgid "Optional. If set, the avatar will be linked to any matching WP user account."
-msgstr "Optional. Wenn festgelegt, wird der Avatar mit einem passenden WP-Benutzerkonto verknüpft."
-
-#: tmp/class-avatar.php:266
-msgid "Create WP user"
-msgstr "Benutzer in WP erstellen"
-
-#: tmp/class-avatar.php:283
-msgid "Confirm password"
-msgstr "Passwort bestätigen"
-
-#: tmp/class-avatar.php:289
-msgid "Same password as WP user"
-msgstr "Gleiche Passwort wie WP-Benutzer"
-
-#: tmp/class-avatar.php:310
-msgid "Model"
-msgstr "Modell"
-
-#: tmp/class-avatar.php:325
-#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
-msgid "Firstname"
+#: includes/class-avatar-model.php:95
+msgid "First Name"
 msgstr "Vorname"
 
-#: tmp/class-avatar.php:325
-#. Translators: Avatar name placeholder, only latin, unaccended characters, first letter uppercase, no spaces
-msgid "Lastname"
+#: includes/class-avatar-model.php:96
+msgid "Any"
+msgstr "Jeder"
+
+#: includes/class-avatar-model.php:97
+msgid "Last Name"
 msgstr "Nachname"
 
-#: tmp/class-avatar.php:329
-msgid "The avatar name is permanent, it can't be changed later."
-msgstr "Der Avatar-Name ist dauerhaft und kann später nicht geändert werden."
+#: includes/class-avatar-model.php:98
+msgid "Custom list"
+msgstr "Benutzerdefinierte Liste"
 
-#: tmp/class-avatar.php:343
-msgid "UUID"
-msgstr "UUID"
+#: includes/class-avatar-model.php:103
+msgid "Name"
+msgstr "Name (Name)"
 
-#: tmp/class-avatar.php:346
-msgid "Wil be set by the server"
-msgstr "Wird vom Server festgelegt"
+#: includes/class-avatar-model.php:113
+msgid "Select Models"
+msgstr "Modelle auswählen"
 
-#: tmp/class-avatar.php:433
-msgid "%1$s contains invalid characters, replaced \"%2$s\" by \"%3$s\""
-msgstr "%1$s enthält ungültige Zeichen, \"%2$s\" wurde durch \"%3$s\" ersetzt."
+#: includes/class-avatar-model.php:117
+msgid "Select one or more existing avatars"
+msgstr "Wähle einen oder mehrere vorhandene Avatare aus"
 
-#: w4os.php:46
+#: includes/class-avatar-model.php:141
+msgid "Available Models"
+msgstr "Verfügbare Modelle"
+
+#: includes/class-avatar-model.php:167
 msgid ""
-"You already installed the official release of <strong>W4OS - OpenSimulator Web Interface</strong> from WordPress "
-"plugins directory. The developer version has been deactivated and should be uninstalled."
+"If avatar models are defined, new users will be presented with a choice on the avatar creation form, which will "
+"determine the initial outfit of the created avatar."
 msgstr ""
-"Sie haben bereits die offizielle Version von <strong>W4OS - OpenSimulator Web Interface</strong> aus dem WordPress "
-"Plugins Verzeichnis installiert. Die Entwicklerversion ist deaktiviert worden und sollte deinstalliert werden."
+"Wenn Avatar-Modelle definiert sind, werden neue Benutzer bei der Avatar-Erstellung eine Auswahlmöglichkeit haben, die "
+"das anfängliche Outfit des erstellten Avatars bestimmt."
+
+#: includes/class-avatar-model.php:168
+msgid ""
+"The grid administrator needs to create each model from the ROBUST console, log in with the viewer, customize the "
+"outfit, and add a profile picture."
+msgstr ""
+"Der Grid-Administrator muss jedes Modell von der ROBUST-Konsole aus erstellen, sich mit dem Viewer einloggen, das "
+"Outfit anpassen und ein Profilbild hinzufügen."
+
+#: includes/class-avatar-model.php:169
+msgid "The avatars used for the models should never be real user accounts."
+msgstr "Die Avatare, die für die Modelle verwendet werden, sollten niemals echte Benutzerkonten sein."
+
+#: includes/class-avatar-model.php:170
+msgid "The new avatar will wear the same outfit as the model at the time of registration."
+msgstr "Der neue Avatar wird dasselbe Outfit tragen wie das Modell zum Zeitpunkt der Registrierung."
+
+#: includes/class-avatar-model.php:171
+msgid ""
+"If the model assignment rule is based on the name, each newly created avatar matching that rule will be automatically "
+"added to the list."
+msgstr ""
+"Wenn die Modellzuweisungsregel auf dem Namen basiert, wird jeder neu erstellte Avatar, der dieser Regel entspricht, "
+"automatisch zur Liste hinzugefügt."
+
+#: includes/class-avatar-model.php:295
+msgid "No models found."
+msgstr "Keine Modelle gefunden."
+
+#: includes/class-avatar-model.php:309
+msgid "No models"
+msgstr "Keine Modelle"
+
+#: includes/class-avatar-model.php:365
+msgid "Refreshing list..."
+msgstr "Liste wird aktualisiert..."
+
+#: includes/class-helpers-assets.php:83
+msgid "Assets Server"
+msgstr "Assets Server"
+
+#: includes/class-helpers-assets.php:84
+msgid "Web Assets Server"
+msgstr "Web Assets Server"
+
+#: includes/class-helpers-assets.php:99
+msgid "Assets Server Fields"
+msgstr "Felder des Assets-Servers"
+
+#: includes/class-helpers-assets.php:105
+msgid "Provide Web Assets Server"
+msgstr "Web Assets Server bereitstellen"
+
+#: includes/class-helpers-assets.php:108
+msgid "A web assets server is required to display in-world assets (from the grid) on the website (e.g. profile pictures)."
+msgstr "Ein Web-Assets-Server wird benötigt, um In-World-Assets (aus dem Grid) auf der Website anzuzeigen (z. B. Profilbilder)."
+
+#: includes/class-helpers-assets.php:114 includes/class-helpers-assets.php:132
+msgid "Web Assets Server URL"
+msgstr "Web Assets Server URL"
+
+#: includes/class-helpers-assets.php:120
+msgid "You can set the assets slug in [permalinks settings page]"
+msgstr "Sie können den Asset-Slug in [permalinks settings] festlegen."
+
+#: includes/class-helpers-assets.php:135
+msgid ""
+"If 'Provide Web Assets Server' is disabled, it is necessary to install a third-party service and enter its URL here to "
+"ensure the proper functioning of the plugin."
+msgstr ""
+"Wenn die Option \"Web Assets Server bereitstellen\" deaktiviert ist, ist es notwendig, einen Drittanbieterdienst zu "
+"installieren und dessen URL hier einzugeben, um die ordnungsgemäße Funktion des Plugins sicherzustellen."
+
+#: includes/class-helpers-assets.php:195
+msgid "Assets base"
+msgstr "Base des Asset"
+
+#: includes/class-helpers-economy.php:52 includes/class-helpers-economy.php:76
+msgid "Economy Settings"
+msgstr "Wirtschaftseinstellungen"
+
+#: includes/class-helpers-economy.php:82
+msgid "Provide Economy Helper"
+msgstr "Bereitstellung von Wirtschaftshelfern"
+
+#: includes/class-helpers-economy.php:91
+msgid "Economy Helper URI"
+msgstr "Wirtschaft Basis URI"
+
+#: includes/class-helpers-economy.php:104
+msgid "The URL must be set in Robust configuration."
+msgstr "Die URL muss in der robusten Konfiguration festgelegt werden."
+
+#: includes/class-helpers-economy.php:119
+msgid "Economy Database"
+msgstr "Wirtschaftsdatenbank"
+
+#: includes/class-helpers-economy.php:153
+msgid "Currency Provider"
+msgstr "Währung Anbieter"
+
+#: includes/class-helpers-economy.php:165
+msgid "Generic MoneyServer, for fake money or alternate providers."
+msgstr "Generischer MoneyServer, für Fake-Geld oder alternative Anbieter."
+
+#: includes/class-helpers-economy.php:170
+msgid "Currency Conversion Rate"
+msgstr "Währungsumrechnungskurs"
+
+#: includes/class-helpers-economy.php:173
+msgid ""
+"Amount to pay in US$ for 1000 in-world money units. Used for cost estimation. If not set, the rate will be 10/1000 (1 "
+"cent per money unit)."
+msgstr ""
+"Zu zahlender Betrag in US$ für 1000 in-world Geldeinheiten. Wird für Kostenschätzungen verwendet. Wenn nicht "
+"festgelegt, wird der Kurs 10/1000 (1 Cent pro Geldeinheit) sein."
+
+#: includes/class-helpers-economy.php:188
+msgid "Gloebit Configuration"
+msgstr "Gloebit-Konfiguration"
+
+#: includes/class-helpers-economy.php:194
+msgid "Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator."
+msgstr ""
+"Der Gloebit-Modul muss vor dem Neustart der Region konfiguriert werden, da es sonst den Simulator zum Absturz bringen "
+"könnte."
+
+#: includes/class-helpers-economy.php:196
+msgid "For Linux, see %s to avoid certificate-related errors."
+msgstr "Für Linux, siehe %s, um Zertifikatsfehler zu vermeiden."
+
+#: includes/class-helpers-economy.php:200
+msgid "Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator."
+msgstr ""
+"Registriere ein Konto oder verbinde dich mit %1$s und folge den Anweisungen auf %2$s, um eine App für dein "
+"Grid/Simulator einzurichten."
+
+#: includes/class-helpers-economy.php:204
+msgid "Add Gloebit configuration in OpenSim.ini."
+msgstr "Füge die Gloebit-Konfiguration in die OpenSim.ini ein."
+
+#: includes/class-helpers-economy.php:244
+msgid "Money Script Access Key"
+msgstr "Money Script Zugangsschlüssel"
+
+#: includes/class-helpers-economy.php:254
+msgid "Choose a unique access key and set it in MoneyServer.ini"
+msgstr "Wähle einen eindeutigen Zugriffsschlüssel und setze ihn in der MoneyServer.ini"
+
+#: includes/class-helpers-economy.php:267
+msgid "Podex Options"
+msgstr "Podex-Optionen"
+
+#: includes/class-helpers-economy.php:277
+msgid "Podex Redirect Message"
+msgstr "Podex-Weiterleitungsnachricht"
+
+#: includes/class-helpers-economy.php:281
+msgid "Please use our terminals in-world to proceed. Click OK to teleport to Podex Exchange area."
+msgstr ""
+"Bitte benutzen Sie unsere Terminals in der Welt, um fortzufahren. Klicken Sie auf OK, um sich in die Region der "
+"Terminals zu teleportieren."
+
+#: includes/class-helpers-economy.php:284
+msgid "Exchange Teleport URL"
+msgstr "Austausch der Teleport-URL"
+
+#: includes/class-helpers-economy.php:315
+msgid "Economy helpers are additional scripts needed if you implement economy on your grid (with real or fake currency)."
+msgstr ""
+"Economy-Helfer sind zusätzliche Skripte, die benötigt werden, wenn Sie in Ihrem Grid Wirtschaft implementieren (mit "
+"echter oder gefälschter Währung)."
+
+#: includes/class-helpers-economy.php:316
+msgid ""
+"Helper scripts allow communication between the money server and the grid: current balance update, currency cost "
+"estimation, land and object sales, payments..."
+msgstr ""
+"Hilfsskripte ermöglichen die Kommunikation zwischen dem Geldserver und dem Grid: Aktualisierung des aktuellen "
+"Kontostands, Schätzung der Währungskosten, Verkauf von Land und Objekten, Zahlungen..."
+
+#: includes/class-helpers-economy.php:317
+msgid ""
+"This plugin only provides the web helpers required by the money server module. A third-party module must be installed "
+"and configured on the simulator, for example:"
+msgstr ""
+"Dieses Plugin stellt nur die erforderlichen Web-Helfer für das Money-Server-Modul bereit. Ein Drittanbieter-Modul muss "
+"auf dem Simulator installiert und konfiguriert werden, zum Beispiel:"
+
+#: includes/class-helpers-economy.php:327
+msgid "Ready to use binaries and example config files can be downloaded here:"
+msgstr "Fertige Binärdateien und Beispielkonfigurationsdateien können hier heruntergeladen werden:"
+
+#: includes/class-helpers-guide.php:56 includes/class-helpers-guide.php:76
+msgid "Destinations Guide Settings"
+msgstr "Einstellungen für den Reiseführer der Ziele"
+
+#: includes/class-helpers-guide.php:82
+msgid "Provide Destinations Guide Service"
+msgstr "Bereitstellung des Reiseführers für Ziele"
+
+#: includes/class-helpers-guide.php:89
+msgid "Source"
+msgstr "Quelle"
+
+#: includes/class-helpers-guide.php:100
+msgid "A text file with a formatted list of destinations."
+msgstr "Eine Textdatei mit einer formatierten Liste von Zielen."
+
+#: includes/class-helpers-guide.php:101
+msgid "The source can be an URL or the full path of a local file your web server can access."
+msgstr "Die Quelle kann eine URL oder der vollständige Pfad zu einer lokalen Datei sein, auf die Ihr Webserver zugreifen kann."
+
+#: includes/class-helpers-guide.php:102
+msgid "Destination name and teleport URL are separated by a pipe (|) character."
+msgstr "Der Zielname und die Teleport-URL werden durch das Pipe-Zeichen (|) getrennt."
+
+#: includes/class-helpers-guide.php:103
+msgid "Lines containing only text are interpreted as categories."
+msgstr "Zeilen, die nur Text enthalten, werden als Kategorien interpretiert."
+
+#: includes/class-helpers-guide.php:104
+msgid "Lines beginning with \"#\" or \"//\" are ignored."
+msgstr "Zeilen, die mit \"#\" oder \"//\" beginnen, werden ignoriert."
+
+#: includes/class-helpers-guide.php:106
+msgid "The format is identical to the format used by the in-world object %s so the same source URL can be used for both."
+msgstr ""
+"Das Format ist identisch mit dem Format, das vom In-World-Objekt %s verwendet wird, sodass dieselbe Quell-URL für beide "
+"verwendet werden kann."
+
+#: includes/class-helpers-guide.php:127
+msgid "Destinations Guide URL"
+msgstr "URL des Reiseführers für Ziele"
+
+#: includes/class-helpers-guide.php:176
+msgid "Destinations guide is a Viewer 3 feature, providing a window with places suggestions."
+msgstr "Der Destinations Guide ist eine Funktion des Viewers 3 und bietet ein Fenster mit Vorschlägen für Orte."
+
+#: includes/class-helpers-guide.php:177
+msgid ""
+"While it is not mandatory, and not every user will benefit from it, it is a useful way to provide them a list of "
+"must-see places, from your own grid or outside."
+msgstr ""
+"Obwohl es nicht zwingend erforderlich ist und nicht jeder Benutzer davon profitieren wird, ist es eine nützliche "
+"Möglichkeit, ihnen eine Liste der sehenswerten Orte zur Verfügung zu stellen, sowohl innerhalb als auch außerhalb Ihres "
+"Grids."
+
+#: includes/class-helpers-offline.php:46
+msgid "Offline Messages"
+msgstr "Offline-Meldungen"
+
+#: includes/class-helpers-offline.php:47 includes/class-helpers-offline.php:71
+msgid "Offline Messages Settings"
+msgstr "Einstellungen für Offline-Nachrichten"
+
+#: includes/class-helpers-offline.php:77
+msgid "Provide Offline Messages Service"
+msgstr "Offline-Helper bereitstellen"
+
+#: includes/class-helpers-offline.php:86
+msgid "Honor \"Email me IMs when I'm offline\" viewer option."
+msgstr "Ehre die Option des Viewers \"Sende mir E-Mails, wenn ich offline bin\"."
+
+#: v2/class-helpers-offline.php:91
+msgid "OpenSimulator core offline messages module doesn't handle e-mail forwarding option available in the viewer settings."
+msgstr ""
+"Das Offline-Nachrichtenmodul des OpenSimulator-Kerns unterstützt die E-Mail-Weiterleitungsoption nicht, die in den "
+"Viewer-Einstellungen verfügbar ist."
+
+#: includes/class-helpers-offline.php:92
+msgid "Sender e-mail address"
+msgstr "E-Mail Adresse des Absenders"
+
+#: includes/class-helpers-offline.php:103
+msgid "A no-reply e-mail address used to forward messages for users enabling \"Email me IMs when I'm offline\" option."
+msgstr ""
+"Eine E-Mail-Adresse ohne Antwort, die zur Weiterleitung von Nachrichten für Benutzer verwendet wird, die die Option "
+"\"E-Mail an IMs senden, wenn ich offline bin\" aktivieren."
+
+#: includes/class-helpers-offline.php:106
+msgid "Offline Messages Helper"
+msgstr "Offline-Meldungen"
+
+#: v2/class-helpers-offline.php:123
+msgid "Set the URL in OpenSimulator configurations. Go to Settings > Permalinks and"
+msgstr "Stellen Sie die URL in den OpenSimulator-Konfigurationen ein. Gehen Sie zu Einstellungen > Permalinks und"
+
+#: includes/class-helpers-search.php:62
+msgid "Search Engine"
+msgstr "Suchmaschine"
+
+#: includes/class-helpers-search.php:63 includes/class-helpers-search.php:81
+msgid "Search Engine Settings"
+msgstr "Suchmaschineneinstellungen"
+
+#: includes/class-helpers-search.php:88
+msgid "Provide Search"
+msgstr "In-World-Suche bereitstellen"
+
+#: includes/class-helpers-search.php:101
+msgid "OS Search Database"
+msgstr "Datenbank für OS-Suche"
+
+#: includes/class-helpers-search.php:122
+msgid "Search Engine URL"
+msgstr "Suchmaschinen-URL"
+
+#: includes/class-helpers-search.php:131
+msgid "URL of the search engine used by the viewer to provide search results (without arguments)."
+msgstr "URL der vom Viewer intern verwendeten Suchmaschine (ohne Argumente)."
+
+#: includes/class-helpers-search.php:132
+msgid "Only one can be set, other lines are alternative examples."
+msgstr "Nur eine kann festgelegt werden, die anderen Zeilen sind alternative Beispiele."
+
+#: includes/class-helpers-search.php:133
+msgid ""
+"Services using w4os engine need the gatekeeper URI (usually the login URI) to be passed as gk argument. Requirements "
+"may vary for other engines."
+msgstr ""
+"Dienste, die den w4os-Engine verwenden, benötigen die Gatekeeper-URI (normalerweise die Anmelde-URI), die als "
+"gk-Argument übergeben werden muss. Die Anforderungen können je nach anderen Engines variieren."
+
+#: includes/class-helpers-search.php:146
+msgid ""
+"Please note that Search URL is different from Web search URL, which is not handled by W4OS currently. Web search is "
+"relevant if you have a web search page dedicated to grid content, providing results with in-world URLs (hop:// or "
+"secondlife://). It is optional and is referenced here only to disambiguate settings which unfortunately have similar "
+"names."
+msgstr ""
+"Bitte beachten Sie, dass sich die Such-URL von der Web-Such-URL unterscheidet, die derzeit nicht von W4OS behandelt "
+"wird. Die Web-Suche ist relevant, wenn Sie eine Web-Suchseite für Grid-Inhalte haben, die Ergebnisse mit In-World-URLs "
+"liefert (hop:// oder secondlife://). Sie ist optional und wird hier nur erwähnt, um die Einstellungen, die leider "
+"ähnliche Namen haben, zu verdeutlichen."
+
+#: includes/class-helpers-search.php:161
+msgid "Search Register URL"
+msgstr "Suchregister-URL"
+
+#: includes/class-helpers-search.php:169
+msgid "Data service, used to register regions, objects or land for sale."
+msgstr "Datendienst, der dazu dient, Regionen, Objekte oder Grundstücke zum Verkauf zu registrieren."
+
+#: includes/class-helpers-search.php:170
+msgid "You can register to several search engines."
+msgstr "Du kannst dich bei mehreren Suchmaschinen registrieren."
+
+#: includes/class-helpers-search.php:171
+msgid "Each line must have a unique identifier beginning with \"DATA_SRV_\""
+msgstr "Jede Zeile muss einen eindeutigen Bezeichner haben, der mit \"DATA_SRV_\" beginnt."
+
+#: includes/class-helpers-search.php:190
+msgid "Events Server URL"
+msgstr "Ereignis-Server-URL"
+
+#: includes/class-helpers-search.php:201
+msgid "HYPEvents Server URL, used to fetch upcoming events and make them available in search."
+msgstr ""
+"HYPEvents Server-URL, der verwendet wird, um bevorstehende Veranstaltungen abzurufen und sie in der Suche verfügbar zu "
+"machen."
+
+#: includes/class-helpers-search.php:202
+msgid "Leave blank to ignore events or if you have an other events implementation."
+msgstr "Lassen Sie diese Option leer, um Ereignisse zu ignorieren oder wenn Sie andere Ereignisse implementiert haben."
+
+#: includes/class-helpers-search.php:226
+msgid "Enable to use a local search engine, allowing only local results (recommended for private grids)."
+msgstr ""
+"Aktivieren Sie die Verwendung einer lokalen Suchmaschine, die nur lokale Ergebnisse zulässt (empfohlen für private "
+"Grids)."
+
+#: includes/class-helpers-search.php:227
+msgid ""
+"Disable to use an external search engine like 2do Directory, allowing results from both your grid and other public "
+"grids."
+msgstr ""
+"Deaktivieren Sie die Verwendung einer externen Suchmaschine wie 2do Directory, um Ergebnisse sowohl von Ihrem Grid als "
+"auch von anderen öffentlichen Grids zu ermöglichen."
+
+#: includes/class-helpers-search.php:228
+msgid "Search features require the installation of OpenSimSearch Module on OpenSimulator."
+msgstr "Die Suchfunktionen erfordern die Installation des OpenSimSearch-Moduls auf OpenSimulator."
+
+#: includes/class-helpers-search.php:229
+msgid "Ready to use OpenSimSearch.Modules.dll binary can be found here:"
+msgstr "Fertige OpenSimSearch.Modules.dll-Binärdatei kann hier gefunden werden:"
+
+#: includes/class-helpers.php:121
+msgid "Helpers base"
+msgstr "Helfer-Basis"
+
+#: includes/class-settings.php:85
+msgid "OpenSimulator Administration"
+msgstr "OpenSimulator-Verwaltung"
+
+#: includes/class-settings.php:77
+msgid "OpenSimulator Status"
+msgstr "OpenSimulator Status"
+
+#: includes/class-settings.php:81
+msgid "Shortcodes"
+msgstr "Shortcodes"
+
+#: includes/class-settings.php:159
+msgid "ROBUST Database"
+msgstr "ROBUST-Datenbank"
+
+#: includes/class-settings.php:179
+msgid "Grid Users"
+msgstr "Benutzer des Grids"
+
+#: includes/class-settings.php:189
+msgid "Profile Page"
+msgstr "Profilseite"
+
+#: includes/class-settings.php:195
+msgid "URL"
+msgstr "URL"
+
+#: includes/class-settings.php:206
+msgid "A profile page exists with permalink set as %1$s, as defined in [permalinks settings]."
+msgstr "Die Seite %1$s muss existieren, wie in [permalinks settings] definiert."
+
+#: includes/class-settings.php:207
+msgid "A profile page must be created with permalink set as %1$s, as defined in [permalinks settings]."
+msgstr "Die Seite %1$s muss existieren, wie in [permalinks settings] definiert."
+
+#: includes/class-settings.php:215
+msgid "Public Profile Page"
+msgstr "Öffentliche Profilseite"
+
+#: includes/class-settings.php:219
+msgid "Provide avatars with a public web profile page in the following format: %1$s."
+msgstr "Stelle Avatare mit einer öffentlichen Webprofilseite im folgenden Format zur Verfügung: %1$s."
+
+#: includes/class-settings.php:227
+msgid "Login Page"
+msgstr "Anmeldeseite"
+
+#: includes/class-settings.php:230
+msgid "Use profile page as login page."
+msgstr "Profilseite als Anmeldeseite verwenden."
+
+#: includes/class-settings.php:240
+msgid "Instructions"
+msgstr "Anleitung"
+
+#: includes/class-settings.php:243
+msgid "Show configuration instructions to new users on their profile page."
+msgstr "Konfigurationsanweisungen für neue Benutzer anzeigen."
+
+#: includes/class-settings.php:251
+msgid "Replace User Names"
+msgstr "Ersetzen des Benutzernamens"
+
+#: includes/class-settings.php:254
+msgid "Show avatar name instead of user name in users list."
+msgstr "Anzeige des Avatarnamens anstelle des Benutzernamens in der Benutzerliste."
+
+#: includes/class-settings.php:260
+msgid "Exclude from stats"
+msgstr "Aus der Statistik ausschließen"
+
+#: v2/class-settings.php:300
+msgid ""
+"Accounts without email address are usually test or service accounts, created from the console. Uncheck only if you have "
+"real avatars without email address."
+msgstr ""
+"Konten ohne E-Mail-Adresse sind normalerweise Test- oder Servicekonten, die von der Konsole aus erstellt wurden. "
+"Deaktivieren Sie dies nur, wenn Sie echte Avatare ohne E-Mail-Adresse haben."
+
+#: includes/class-settings.php:265
+msgid "Models"
+msgstr "Modelle"
+
+#: includes/class-settings.php:266
+msgid "Accounts without mail address"
+msgstr "Konten ohne Email Adresse"
+
+#: includes/class-settings.php:267
+msgid "Hypergrid visitors"
+msgstr "Hypergrid-Besucher"
+
+#: includes/class-settings.php:367
+msgid "Default"
+msgstr "Standard"
+
+#: includes/class-settings.php:390
+msgid "Hostname"
+msgstr "Hostname"
+
+#: includes/class-settings.php:397
+msgid "Port"
+msgstr "Hafen"
+
+#: includes/class-settings.php:404
+msgid "DB Name"
+msgstr "Datenbankname"
+
+#: includes/class-settings.php:411
+msgid "Username"
+msgstr "Benutzername"
+
+#: includes/class-tos.php:76
+msgid "Terms of Service page"
+msgstr "Nutzungsbedingungen"
+
+#: includes/class-tos.php:80
+msgid "Select the page containing the terms of service to add a TOS consent checkbox on the user registration page."
+msgstr ""
+"Wählen Sie die Seite aus, die die Nutzungsbedingungen enthält, um ein Zustimmungskästchen für die Nutzungsbedingungen "
+"auf der Benutzerregistrierungsseite hinzuzufügen."
+
+#: includes/class-tos.php:81
+msgid "Leave blank to disable the checkbox or if it is handled by another plugin."
+msgstr "Lassen Sie das Feld leer, um das Kontrollkästchen zu deaktivieren oder wenn es von einem anderen Plugin verwaltet wird."
+
+#: includes/class-tos.php:83
+msgid "We recommend using a dedicated plugin or seeking professional services to help you write the text of the TOS page."
+msgstr ""
+"Wir empfehlen die Verwendung eines dedizierten Plugins oder die Inanspruchnahme professioneller Dienstleistungen, um "
+"Ihnen bei der Erstellung des Textes für die AGB-Seite zu helfen."
+
+#: includes/class-tos.php:88
+msgid "Select a TOS page"
+msgstr "Wählen Sie eine AGB-Seite aus"
+
+#: includes/class-tos.php:70
+msgid "Registration"
+msgstr "Registrierung"
+
+#: includes/class-tos.php:82
+msgid "Note: It is crucial to have a well-crafted and legally accurate TOS page for your website."
+msgstr ""
+"Hinweis: Es ist entscheidend, eine gut ausgearbeitete und rechtlich korrekte Nutzungsbedingungen-Seite für Ihre Website "
+"zu haben."
+
+#: includes/class-tos.php:22
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "I agree to the terms on page %s."
+msgstr "Ich stimme den Bedingungen auf Seite %s zu."
+
+#: includes/class-tos.php:27
+#. translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended)
+msgid "You must agree to the terms on page %s."
+msgstr "Du musst den Bedingungen auf Seite %s zustimmen."
+
+#: includes/updates.php:35
+msgid "Update %s applied"
+msgstr "Aktualisierung %s angewendet"
+
+#: includes/updates.php:47
+msgid "Update %s applied successfully"
+msgid_plural "Updates %s applied successfully"
+msgstr[0] "Update %s erfolgreich durchgeführt"
+msgstr[1] "Updates %s erfolgreich angewendet"
+
+#: includes/updates.php:54
+msgid "Error processing update %s"
+msgstr "Fehler bei der Verarbeitung der Aktualisierung %s"
+
+#: includes/updates.php:61
+msgid "W4OS updated"
+msgstr "W4OS aktualisiert"
+
+#: includes/updates.php:88
+msgid "Grid user"
+msgstr "Benutzer des Grids"
+
+#: includes/updates.php:109
+msgid "Profiles service is not configured on your Robust server. It is required for full functionalities."
+msgstr "Der Profildienst ist auf Ihrem Robust-Server nicht konfiguriert. Er ist für den vollen Funktionsumfang erforderlich."
+
+#: includes/updates.php:128
+msgid "Grid and WordPress users synchronized."
+msgstr "Grid- und WordPress-Benutzer synchronisiert."
+
+#: includes/updates.php:146
+msgid "OpenSim Search tables updated."
+msgstr "OpenSim Search Tabellen aktualisiert."
+
+#: v3/2to3-avatar.php:356 v3/2to3-region.php:146
+msgid "List"
+msgstr "Liste"
+
+#: v3/2to3-avatar.php:363
+msgid "Create WP accounts"
+msgstr "Erstelle WP-Konten"
+
+#: v3/2to3-avatar.php:365
+msgid "Create website accounts for avatars."
+msgstr "Erstelle Website-Konten für Avatare."
+
+#: v3/2to3-avatar.php:366
+msgid ""
+"This will create a WordPress account for avatars that do not have one. The password will synced between site and "
+"OpenSimulator."
+msgstr ""
+"Dies wird ein WordPress-Konto für Avatare erstellen, die keins haben. Das Passwort wird zwischen der Website und "
+"OpenSimulator synchronisiert."
+
+#: v3/2to3-avatar.php:370
+msgid "Allow multiple avatars"
+msgstr "Erlaube mehrere Avatare"
+
+#: v3/2to3-avatar.php:372
+msgid "Allow more than one avatar for a single email address."
+msgstr "Erlaube mehr als einen Avatar für eine einzige E-Mail-Adresse."
+
+#: v3/2to3-avatar.php:373
+msgid "This will allow users to have more than one avatar on the site."
+msgstr "Dies wird es Benutzern ermöglichen, mehr als einen Avatar auf der Seite zu haben."
+
+#: v3/2to3-avatar.php:374
+msgid "Disabling the option can only be enforced for avatars created through the website."
+msgstr "Die Deaktivierung der Option kann nur für Avatare durchgesetzt werden, die über die Website erstellt wurden."
+
+#: v3/2to3-avatar.php:378
+msgid "Override author"
+msgstr "Autor überschreiben"
+
+#: v3/2to3-avatar.php:380
+msgid "Override author with avatar when relevant."
+msgstr "Autor mit Avatar überschreiben, wenn relevant."
+
+#: v3/2to3-avatar.php:381
+msgid "This will allow, for example, to define avatars as authors of messages."
+msgstr "Das wird es beispielsweise ermöglichen, Avatare als Autoren von Nachrichten zu definieren."
+
+#: v3/2to3-avatar.php:385
+msgid "Hide profile title"
+msgstr "Profil-Titel ausblenden"
+
+#: v3/2to3-avatar.php:387
+msgid "Hide profile page title."
+msgstr "Titel der Profilseite ausblenden."
+
+#: v3/2to3-avatar.php:388
+msgid "The title is already displayed in the profile page content."
+msgstr "Der Titel wird bereits im Profilseiteninhalt angezeigt."
+
+#: v3/2to3-avatar.php:396
+msgid "Pages"
+msgstr "Seiten"
+
+#: v3/2to3-avatar.php:405
+msgid "Select the page to be used as profile page."
+msgstr "Wähle die Seite aus, die als Profilseite verwendet werden soll."
+
+#: v3/2to3-avatar.php:414 v3/2to3-avatar.php:427
+msgid "Custom URL"
+msgstr "Benutzerdefinierte URL"
+
+#: v3/2to3-avatar.php:415 v3/2to3-avatar.php:428
+msgid "Use profile page"
+msgstr "Profilseite verwenden"
+
+#: v3/2to3-avatar.php:416 v3/2to3-avatar.php:429
+msgid "Use WordPress default"
+msgstr "Verwenden Sie das Standard-WordPress-Design."
+
+#: v3/2to3-avatar.php:418
+msgid "Select the page to be used as registration page."
+msgstr "Wähle die Seite aus, die als Registrierungsseite verwendet werden soll."
+
+#: v3/2to3-avatar.php:423
+msgid "Password Recovery"
+msgstr "Passwort-Wiederherstellung"
+
+#: v3/2to3-avatar.php:431
+msgid "Select the page to be used as password reset page."
+msgstr "Wählen Sie die Seite aus, die als Passwort-Zurücksetzungsseite verwendet werden soll."
+
+#: v3/2to3-avatar.php:480
+msgid "Type"
+msgstr "Typisieren"
+
+#: v3/2to3-avatar.php:488
+msgid "Active"
+msgstr "Aktiv"
+
+#: v3/2to3-avatar.php:514
+msgid "Created"
+msgstr "Erstellt"
+
+#: v3/2to3-avatar.php:567
+msgid "Invalid Avatar Object"
+msgstr "Ungültiges Avatar-Objekt"
+
+#: v3/2to3-avatar.php:577
+msgid "Unknown Avatar"
+msgstr "Unbekannter Avatar"
+
+#: v3/2to3-avatar.php:615 v3/2to3-avatar.php:868
+msgid "View profile page"
+msgstr "Profilseite anzeigen"
+
+#: v3/2to3-avatar.php:646
+msgid "God"
+msgstr "Gott"
+
+#: v3/2to3-avatar.php:648
+msgid "Liaison"
+msgstr "Verbindung"
+
+#: v3/2to3-avatar.php:650
+msgid "Customer Service"
+msgstr "Kundenservice"
+
+#: v3/2to3-avatar.php:652
+msgid "God-like"
+msgstr "Gottgleich"
+
+#: v3/2to3-avatar.php:663
+msgid "Default Model"
+msgstr "Standardmodell"
+
+#: v3/2to3-avatar.php:665
+msgid "Service Account"
+msgstr "Dienstkonto"
+
+#: v3/2to3-avatar.php:667
+msgid "User Avatar"
+msgstr "Benutzer Avatar"
+
+#: v3/2to3-avatar.php:669
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: v3/2to3-avatar.php:709 v3/2to3-region.php:680
+msgid "Gateway not set"
+msgstr "Gateway nicht festgelegt"
+
+#: v3/2to3-avatar.php:1083
+msgid "Partner: %s"
+msgstr "Partner: %s"
+
+#: v3/2to3-avatar.php:1084
+msgid "Skills: %s"
+msgstr "Fähigkeiten: %s"
+
+#: v3/2to3-avatar.php:1085
+msgid "Wants to: %s"
+msgstr "Möchte: %s"
+
+#: v3/2to3-avatar.php:1086
+msgid "Languages: %s"
+msgstr "Sprachen: %s"
+
+#: v3/2to3-avatar.php:1099 v3/class-flux.php:214 v3/class-flux.php:215
+#: v3/class-flux.php:573
+msgid "Flux"
+msgstr "Fluss"
+
+#: v3/2to3-init.php:373 v3/2to3-settings.php:50
+msgid "Beta Features"
+msgstr "Beta-Funktionen"
+
+#: v3/2to3-init.php:379
+msgid "Enable v3 Beta Features"
+msgstr "Aktiviere v3 Beta-Funktionen"
+
+#: v3/2to3-init.php:382
+msgid "Warning: this could break your website and/or your OpenSimulator services."
+msgstr "Achtung: Dies könnte Ihre Website und/oder Ihre OpenSimulator-Dienste beeinträchtigen."
+
+#: v3/2to3-init.php:536
+msgid "%s at %s"
+msgstr "%s um %s"
+
+#: v3/2to3-init.php:952
+msgid "Open page"
+msgstr "Seite öffnen"
+
+#: v3/2to3-region.php:116
+msgid "Default Region"
+msgstr "Standardregion"
+
+#: v3/2to3-region.php:117
+msgid "Default HG Region"
+msgstr "Standard HG-Region"
+
+#: v3/2to3-region.php:118
+msgid "Fallback Region"
+msgstr "Fallback-Region"
+
+#: v3/2to3-region.php:119
+msgid "Authenticate"
+msgstr "Authentifizieren"
+
+#: v3/2to3-region.php:120
+msgid "Hyperlink"
+msgstr "Hyperlink"
+
+#: v3/2to3-region.php:121
+msgid "Locked Out"
+msgstr "Ausgesperrt"
+
+#: v3/2to3-region.php:122
+msgid "No Direct Login"
+msgstr "Kein direkter Login"
+
+#: v3/2to3-region.php:123
+msgid "No Move"
+msgstr "Keine Bewegung"
+
+#: v3/2to3-region.php:124
+msgid "Persistent"
+msgstr "Beharrlich"
+
+#: v3/2to3-region.php:125
+msgid "Reservation"
+msgstr "Reservierung"
+
+#: v3/2to3-region.php:154
+msgid "Make Coffee"
+msgstr "Kaffee kochen"
+
+#: v3/2to3-region.php:156
+msgid "Make coffee after boot"
+msgstr "Kaffee kochen nach dem Start"
+
+#: v3/2to3-region.php:185 v3/templates/admin-region-edit.php:4
+msgid "Region: %s"
+msgstr "Region: %s"
+
+#: v3/2to3-region.php:202
+msgid "Edit (improved)"
+msgstr "Bearbeitet (verbessert)"
+
+#: v3/2to3-region.php:203 v3/templates/admin-region-edit.php:90
+msgid "Parcels"
+msgstr "Parzellen"
+
+#: v3/2to3-region.php:209
+msgid "Simulator Credentials"
+msgstr "Simulator-Anmeldeinformationen"
+
+#: v3/2to3-region.php:217 v3/templates/admin-region-edit.php:35
+msgid "last seen"
+msgstr "Zuletzt gesehen"
+
+#: v3/2to3-region.php:222 v3/2to3-region.php:323 v3/2to3-region.php:324
+msgid "Simulator"
+msgstr "Simulator"
+
+#: v3/2to3-region.php:228 v3/2to3-region.php:311 v3/2to3-region.php:312
+#: v3/templates/admin-region-edit.php:37
+msgid "Owner"
+msgstr "Besitzer"
+
+#: v3/2to3-region.php:234 v3/2to3-region.php:501
+#: v3/templates/admin-region-edit.php:38
+msgid "Teleport"
+msgstr "Teleportation"
+
+#: v3/2to3-region.php:240 v3/templates/admin-region-edit.php:39
+msgid "Map"
+msgstr "Karte"
+
+#: v3/2to3-region.php:245 v3/templates/admin-region-edit.php:42
+msgid "%s region map"
+msgstr "%s Regionen Karte"
+
+#: v3/2to3-region.php:300
+msgid "Region Name"
+msgstr "Region Name"
+
+#: v3/2to3-region.php:319
+msgid "Region URI"
+msgstr "Region URI"
+
+#: v3/2to3-region.php:330
+msgid "Control"
+msgstr "Steuerung"
+
+#: v3/2to3-region.php:336
+msgid "Presence"
+msgstr "Anwesenheit"
+
+#: v3/2to3-region.php:342
+msgid "Internal Port"
+msgstr "Interner Port"
+
+#: v3/2to3-region.php:346 v3/templates/admin-region-edit.php:46
+msgid "Size"
+msgstr "Größe"
+
+#: v3/2to3-region.php:361
+msgid "Last Activity"
+msgstr "Letzte Aktivität"
+
+#: v3/2to3-region.php:498 v3/2to3-settings.php:276
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: v3/2to3-service.php:74
+msgid "Connections"
+msgstr "Verbindungen"
+
+#: v3/2to3-service.php:77
+msgid "Robust"
+msgstr "Robust"
+
+#: v3/2to3-service.php:80
+msgid "Main ROBUST credentials set in %1$s, %2$s and %3$s."
+msgstr "Haupt-ROBUST-Anmeldeinformationen festgelegt in %1$s, %2$s und %3$s."
+
+#: v3/2to3-service.php:93
+msgid "Assets Service"
+msgstr "Assets Service"
+
+#: v3/2to3-service.php:96 v3/2to3-service.php:110
+msgid "Leave checked unless different credentials are set in %s."
+msgstr "Lassen Sie angekreuzt, es sei denn, es sind andere Anmeldedaten in %s festgelegt."
+
+#: v3/2to3-service.php:107
+msgid "User Profiles Service"
+msgstr "Benutzerprofile-Dienst"
+
+#: v3/2to3-settings.php:54
+msgid "Enable HTML debug"
+msgstr "Aktiviere HTML-Debugging"
+
+#: v3/2to3-settings.php:56
+msgid "Warning: this might expose critical debug information on the front end."
+msgstr "Achtung: Dies könnte kritische Debug-Informationen auf der Vorderseite offenlegen."
+
+#: v3/2to3-settings.php:353
+msgid "Could not connect to %s"
+msgstr "Konnte keine Verbindung zu %s herstellen"
+
+#: v3/2to3-settings.php:368
+msgid "Unknown DB connection error"
+msgstr "Unbekannter DB-Verbindungsfehler"
+
+#: v3/2to3-settings.php:420
+msgid "This page is not available. You probably did nothing wrong, the developer did."
+msgstr "Diese Seite ist nicht verfügbar. Du hast wahrscheinlich nichts falsch gemacht, der Entwickler schon."
+
+#: v3/2to3-settings.php:427
+msgid "No settings registered for %s."
+msgstr "Keine Einstellungen für %s registriert."
+
+#: v3/2to3-settings.php:455
+msgid "Template page missing."
+msgstr "Vorlage Seite fehlt."
+
+#: v3/2to3-settings.php:590
+msgid "Use defaults"
+msgstr "Standardwerte verwenden"
+
+#: v3/2to3-settings.php:605
+msgid "Service URI"
+msgstr "Dienst-URI"
+
+#: v3/2to3-settings.php:626
+msgid "Console"
+msgstr "Konsole"
+
+#: v3/2to3-settings.php:633 v3/2to3-settings.php:663
+msgid "User"
+msgstr "Benutzer"
+
+#: v3/2to3-settings.php:655
+msgid "Database"
+msgstr "Datenbank"
+
+#: v3/2to3-settings.php:661
+msgid "Database name"
+msgstr "Datenbankname"
+
+#: v3/2to3-settings.php:758
+msgid "Select a page"
+msgstr "Wähle eine Seite"
+
+#: v3/2to3-settings.php:780
+msgid "Or enter a custom URL..."
+msgstr "Oder geben Sie eine benutzerdefinierte URL ein..."
+
+#: v3/class-flux.php:71 v3/class-flux.php:82
+msgid "Flux Posts"
+msgstr "Flux-Beiträge"
+
+#: v3/class-flux.php:72
+msgid "Flux Post"
+msgstr "Flux-Beitrag"
+
+#: v3/class-flux.php:74
+msgid "Add New Flux Post"
+msgstr "Neuen Flux-Beitrag hinzufügen"
+
+#: v3/class-flux.php:75
+msgid "Edit Flux Post"
+msgstr "Flux-Beitrag bearbeiten"
+
+#: v3/class-flux.php:76
+msgid "New Flux Post"
+msgstr "Neuer Flux-Beitrag"
+
+#: v3/class-flux.php:77
+msgid "View Flux Post"
+msgstr "Beitrag anzeigen Flux"
+
+#: v3/class-flux.php:78
+msgid "Search Flux Posts"
+msgstr "Suche nach Flux-Beiträgen"
+
+#: v3/class-flux.php:79
+msgid "No Flux Posts found"
+msgstr "Keine Flux-Beiträge gefunden"
+
+#: v3/class-flux.php:80
+msgid "No Flux Posts found in Trash"
+msgstr "Keine Flux-Beiträge im Papierkorb gefunden"
+
+#: v3/class-flux.php:81
+msgid "Parent Flux Post:"
+msgstr "Elternteil Flux Beitrag:"
+
+#: v3/class-flux.php:114 v3/class-flux.php:479
+msgid "Author"
+msgstr "Autor"
+
+#: v3/class-flux.php:255
+msgid "Your message..."
+msgstr "Deine Nachricht..."
+
+#: v3/class-flux.php:259
+msgid "Spreading your wisdom to the world..."
+msgstr "Verbreite deine Weisheit in die Welt..."
+
+#: v3/class-flux.php:388
+msgid "Loading more posts..."
+msgstr "Lade mehr Beiträge..."
+
+#: v3/helpers/2to3-helper-list.php:319
+msgid "Select bulk action"
+msgstr "Wählen Sie die Massenaktion aus"
+
+#: v3/helpers/2to3-helper-list.php:321
+msgid "Bulk Actions"
+msgstr "Massenaktionen"
+
+#: v3/helpers/2to3-helper-list.php:322
+msgid "Message"
+msgstr "Nachricht"
+
+#: v3/helpers/2to3-helper-list.php:323
+msgid "Start"
+msgstr "Start"
+
+#: v3/helpers/2to3-helper-list.php:324
+msgid "Restart"
+msgstr "Neustart"
+
+#: v3/helpers/2to3-helper-list.php:325
+msgid "Stop"
+msgstr "Stop"
+
+#: v3/helpers/2to3-helper-list.php:326
+msgid "Disable"
+msgstr "Deaktivieren"
+
+#: v3/helpers/2to3-helper-list.php:329
+msgid "Apply"
+msgstr "Anwenden"
+
+#: v3/helpers/2to3-helper-list.php:404
+msgid "All"
+msgstr "Alle"
+
+#: v3/helpers/2to3-helper-list.php:512
+msgid "Reset Filters"
+msgstr "Filter zurücksetzen"
+
+#: v3/helpers/2to3-helper-models.php:203
+msgid "Models Preview"
+msgstr "Modelle Vorschau"
+
+#: v3/helpers/2to3-helper-usermenu.php:74
+msgid "Avatar Menu"
+msgstr "Avatar-Menü"
+
+#: v3/helpers/2to3-helper-usermenu.php:277
+msgid "Account settings"
+msgstr "Kontoeinstellungen"
+
+#: v3/helpers/2to3-helper-usermenu.php:291
+msgid "Login"
+msgstr "Anmelden"
+
+#: legacy/profile-page.php:71
+msgid "Register"
+msgstr "Registrierung"
+
+#: v3/templates/admin-settings-page.php:9
+msgid "Invalid callback function %s."
+msgstr "Ungültige Rückruffunktion %s."
+
+#: v3/templates/admin-settings-page.php:27
+msgid "Required parameters missing for this page."
+msgstr "Erforderliche Parameter fehlen für diese Seite."
+
+#: v3/templates/admin-settings-page.php:61
+msgid "No content template available for this page."
+msgstr "Keine Inhaltsvorlage für diese Seite verfügbar."
 
 #: w4os.php:58
 msgid "Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled."
@@ -1997,9 +2901,52 @@ msgstr ""
 "Eine andere Version von <strong>W4OS - OpenSimulator Web Interface</strong> ist installiert und aktiv. Duplikat "
 "deaktiviert."
 
-#: blocks/avatar-profile/avatar-profile.js:1 blocks/grid-info/grid-info.js:1 blocks/grid-status/grid-status.js:1
-#: blocks/popular-places/popular-places.js:1 src/blocks/avatar-profile/editor.js:64 src/blocks/grid-info/editor.js:54
-#: src/blocks/grid-status/editor.js:54 src/blocks/popular-places/editor.js:63 blocks/avatar-profile/avatar-profile.js:64
-#: blocks/grid-info/grid-info.js:54 blocks/grid-status/grid-status.js:54 blocks/popular-places/popular-places.js:63
-msgid "Block Settings"
-msgstr "Blockeinstellungen"
+#. Plugin Name of the plugin
+msgid "w4os - OpenSimulator Web Interface"
+msgstr "w4os - OpenSimulator Web Interface"
+
+#. Plugin URI of the plugin
+msgid "https://w4os.org/"
+msgstr "https://w4os.org/"
+
+#. Description of the plugin
+msgid "WordPress interface for OpenSimulator (w4os)."
+msgstr "WordPress-Schnittstelle für OpenSimulator (w4os)."
+
+#. Author of the plugin
+msgid "Speculoos World"
+msgstr "Speculoos World"
+
+#. Author URI of the plugin
+msgid "https://speculoos.world"
+msgstr "https://speculoos.world"
+
+#: lib/plugin-update-checker/Puc/v4p9/Plugin/Ui.php:220
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr "Das %s Plugin ist auf dem neuesten Stand."
+
+#: lib/plugin-update-checker/Puc/v4p9/Plugin/Ui.php:222
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr "Eine neue Version des %s Plugins ist verfügbar."
+
+#: lib/plugin-update-checker/Puc/v4p9/Plugin/Ui.php:224
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr "Konnte nicht feststellen, ob Updates für %s verfügbar sind."
+
+#: sources/class-avatar.php:1422
+msgctxt "avatar"
+msgid "Model"
+msgstr "Modell"
+
+#: sources/class-avatar.php:1431
+msgctxt "avatar"
+msgid "Service Account"
+msgstr "Dienstkonto"
+
+#: v1/profile-page.php:94
+msgctxt "Register to the website link"
+msgid "Register"
+msgstr "Registrieren"
