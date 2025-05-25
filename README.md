@@ -1,9 +1,8 @@
-# w4os - OpenSimulator Web Interface
+# w4os - OpenSimulator Web Interface (dev)
 
 ![Stable 2.9.4](https://badgen.net/badge/Stable/2.9.4/00aa00)
 ![WordPress 5.3.0 - 6.8.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.8.1/3858e9)
-![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
-![License AGPLv3](https://badgen.net/badge/License/AGPLv3/552b55)
+![Requires PHP 7.3](https://badgen.net/badge/PHP/5.7/7884bf)
 
 WordPress interface for OpenSimulator (w4os).
 
@@ -88,6 +87,15 @@ See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) fo
 - Deactivate (recommended) or delete (experimental) grid user when deleting wp account
 - Split code between OpenSimulator and WordPress specific codes
 
+
+## Screenshots
+
+1. Grid info and grid status examples
+2. Avatar registration form in WooCommerce My Account dashboard.
+3. Settings page
+4. Web assets server settings
+
+
 ## Frequently Asked Questions
 
 ### Do I need to run the website on the same server?
@@ -109,11 +117,11 @@ somewhat handled for a small standalone grid, but never in hypergrid context.
 There is no process to force a foreign grid to update its cache, and probably
 never will.
 
-### Should I copy the helpers/ directory in the root of my webiste ?
+### Shouldn't I copy the helpers/ directory in the root of my webiste ?
 
-No, you don't need to and you shouldn't. The /helpers/ path is virtual, like
-for most pages of your website. The same way as the /about/ URL website doesn't
-match a /about/ folder your website directory. Even if there is a helpers/
+No, you don't need to and you shouldn't. The /helpers/ is virtual, it is served
+as any other page of your website. Like there the /about/ URL website doesn't
+match a /about/ folder your webste directory. Even if there is a helpers/
 directory in w4os plugin, it has the same name for convenience, but he could
 have been named anything. It's content is not accessed directly, it is used by
 the plugin to generate the answers. On the opposite, if there was an actual
@@ -135,11 +143,4 @@ Don't even finish that sentence. Versions of OpenSimulator older than 0.9
 are definitely not supported anymore. You might be lucky and it might work,
 or not. In either case, idk&idc.
 
-
-## Screenshots
-
-1. Grid info and grid status examples
-2. Avatar registration form in WooCommerce My Account dashboard.
-3. Settings page
-4. Web assets server settings
 

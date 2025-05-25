@@ -24,7 +24,7 @@ Please check the [WordPress documentation](https://wordpress.org/) for detailed 
 
 ### Plugin Installation and Configuration
 
-**Note:** If upgrading from a different distribution (e.g. switching from GitHub to the WordPress Plugin Directory), disable the previous version before activating the new one.
+- *Note:** If upgrading from a different distribution (e.g. switching from GitHub to the WordPress Plugin Directory), disable the previous version before activating the new one.
 
 1. Download and activate the latest stable release (for the latest development version, follow the instructions in DEVELOPERS.md).
 2. Visit the `OpenSimulator > Settings` page in your WordPress admin.
@@ -69,4 +69,6 @@ The models will appear in new avatar registration form, with their profile pictu
 ### Troubleshooting
 
 See [TROUBLESHOOTING.md](https://gudulelapointe.github.io/w4os/TROUBLESHOOTING.html) for more information.
+
+
 

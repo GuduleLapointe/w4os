@@ -1,5 +1,23 @@
 ## Changelog
 
+### Unreleased (2.9.5-beta)
+- fix default model not applied on avatar creation
+- fix some grid uri not properly sanitized
+- new textgen helper script (create dynamic texture from url)
+- update DEVELOPERS.md (add instructions to properly setup submodules)
+
+v3 beta features
+*  new avatar menu block
+*  added registration page in user menu
+*  added logout_url() and redirect for temporary users
+*  userless authentification (proof of concept, to prepare opensim auth without wp account)
+*  flux display foreign web profile if enabled on remote grid
+*  grid_info() method also get foreign grid info
+*  hide admin bar for temporary users
+*  avatar menu available in classic menu
+*  usermenu fix regressions introduced with classic menus
+*  fix  logout url broken for standard users
+
 ### 2.9.4
 - fix avatar mini profile block crashing
 - fix all menu titles replaced in some themes on profile page

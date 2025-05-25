@@ -51,3 +51,15 @@ wp-cli.local.yml export-ignore
 .wpignore export-ignore
 yarn.lock export-ignore
 *.zip export-ignore
+setup-git.sh export-ignore
+/helpers/includes/config.example.php export-ignore
+/helpers/includes/config.wp.php export-ignore
+/helpers/bin/ export-ignore
+/helpers/tools/ export-ignore
+/helpers/composer.json export-ignore
+/helpers/composer.lock export-ignore
+/helpers/install-library.sh export-ignore
+/helpers/*.example.php export-ignore
+/helpers/.git* export-ignore
+/helpers/.libignore export-ignore
+/helpers/tests/ export-ignore
