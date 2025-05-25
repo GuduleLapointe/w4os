@@ -1264,7 +1264,7 @@ msgstr ""
 
 #: legacy/admin/status-page.php:49
 msgid "Requirements not met for w4os plugin"
-msgstr ""
+msgstr "Nid cyflawnwyd y gofynion ar gyfer ategyn w4os."
 
 #: legacy/admin/status-page.php:24
 msgid "Users"
