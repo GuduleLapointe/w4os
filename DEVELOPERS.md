@@ -5,6 +5,8 @@ To ensure that all submodules are included (especially the helpers submodule), m
 ```bash
 cd wp-content/plugins/
 git clone --recurse-submodules https://github.com/GuduleLapointe/w4os.git
+cd w4os
+./setup-git.sh
 wp plugin activate w4os
 ```
 
@@ -13,6 +15,7 @@ If you've already cloned the repository without submodules, you can initialize a
 ```bash
 cd wp-content/plugins/w4os
 git submodule update --init --recursive
+./setup-git.sh
 ```
 
 Then follow instructions from step 2 in INSTALLATION.md

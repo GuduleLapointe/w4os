@@ -50,4 +50,15 @@ wp-cli.local.yml
 .wpignore
 yarn.lock
 *.zip
-/bin/
+setup-git.sh
+/helpers/includes/config.example.php
+/helpers/includes/config.wp.php
+/helpers/bin/
+/helpers/tools/
+/helpers/composer.json
+/helpers/composer.lock
+/helpers/install-library.sh
+/helpers/*.example.php
+/helpers/.git*
+/helpers/.libignore
+/helpers/tests/
