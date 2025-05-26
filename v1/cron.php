@@ -34,7 +34,6 @@ function w4os_search_parser_exec( $args = array() ) {
 	$result = file_get_contents( $parser );
 	if ( ! empty( get_option( 'w4os_hypevents_url' ) ) ) {
 		$eventsparser = preg_replace( ':^//:', '/', dirname( $search ) . '/eventsparser.php' );
-		error_log( "w4os_search_parser_cron: $eventsparser" );
 		$result       = file_get_contents( $eventsparser );
 	}
 	// require(dirname(__DIR__) . '/helpers/parser.php');
