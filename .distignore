@@ -62,3 +62,4 @@ setup-git.sh
 /helpers/.git*
 /helpers/.libignore
 /helpers/tests/
+/helpers/install.php
