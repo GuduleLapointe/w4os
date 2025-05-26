@@ -13,11 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository code
+      # Step 1: Checkout the repository code with submodules
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Fetches the Git history
+          submodules: true  # Clone submodules as well
 
       # Step 2: Set up environment variables
       - name: Set up environment variables
