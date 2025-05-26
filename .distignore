@@ -62,5 +62,3 @@ setup-git.sh
 /helpers/.git*
 /helpers/.libignore
 /helpers/tests/
-# Make sure these helper files are included
-!/helpers/wp-load.php

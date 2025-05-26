@@ -313,7 +313,8 @@ class W4OS3 {
 		require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
 		require_once W4OS_INCLUDES_DIR . 'class-db.php';
 		require_once W4OS_INCLUDES_DIR . '2to3-service.php';
-
+		
+		// require_once W4OS_INCLUDES_DIR . 'helpers/helpers-redirect.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-userless-auth.php';
