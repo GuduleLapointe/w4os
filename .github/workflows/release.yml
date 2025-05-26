@@ -48,7 +48,13 @@ jobs:
           echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
           echo "$TAG_MESSAGE" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-      # Step 4: Generate the ZIP archive
+      # Step 4: Run setup script to create necessary files
+      - name: Run setup script
+        run: |
+          chmod +x setup-git.sh
+          ./setup-git.sh
+
+      # Step 5: Generate the ZIP archive  
       - name: Generate Release ZIP
         run: |
           PLUGIN_NAME="${PLUGIN_NAME}"
@@ -83,7 +89,7 @@ jobs:
             exit 1
           fi
 
-      # Step 5: Create the GitHub Release
+      # Step 6: Create the GitHub Release
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -96,7 +102,7 @@ jobs:
           draft: false
           prerelease: ${{ contains(env.RELEASE_VERSION, '-beta') }}
 
-      # Step 6: Attach the ZIP archive to the release
+      # Step 7: Attach the ZIP archive to the release
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:

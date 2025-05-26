@@ -22,16 +22,23 @@ then
     && echo "helpers/includes/config.php is up to date." \
     && exit 0
 
-    echo
-    read -p "These changes will be applied to helpers/includes/config.php. Do you want to overwrite it? [y/N] " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
+    # If running in CI environment (GitHub Actions), skip the prompt
+    if [ -n "$GITHUB_ACTIONS" ]; then
         cp -f helpers/includes/config.wp.php helpers/includes/config.php \
-        && echo "The file helpers/includes/config.php has been updated." \
+        && echo "The file helpers/includes/config.php has been updated in CI." \
         || echo "The file helpers/includes/config.php could not be updated."
     else
-        echo "The file helpers/includes/config.php has not been updated."
+        echo
+        read -p "These changes will be applied to helpers/includes/config.php. Do you want to overwrite it? [y/N] " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            cp -f helpers/includes/config.wp.php helpers/includes/config.php \
+            && echo "The file helpers/includes/config.php has been updated." \
+            || echo "The file helpers/includes/config.php could not be updated."
+        else
+            echo "The file helpers/includes/config.php has not been updated."
+        fi
     fi
 else 
     cp -f helpers/includes/config.wp.php helpers/includes/config.php \
