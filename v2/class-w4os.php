@@ -5,6 +5,9 @@
  * @package    GuduleLapointe/w4os
  * @link       https://github.com/magicoli/w4os
  * @since      2.5.1
+ * 
+ * MIGRATED TO: wordpress/includes/class-w4os.php
+ * This class has been moved to the new architecture.
  */
 
-// Merged in wordpress/includes/class-w4os.php W4OS class
+// W4OS class migrated to wordpress/includes/class-w4os.php

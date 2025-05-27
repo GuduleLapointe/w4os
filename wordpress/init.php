@@ -196,7 +196,7 @@ if (file_exists(__DIR__ . '/includes/class-w4os.php')) {
 // Legacy v1 init (contains core WordPress integration)
 require_once W4OS_PLUGIN_DIR . 'v1/init.php';
 
-// v2 loader (contains additional features)
+// v2 loader (contains additional features) - re-enabled after removing class conflict
 require_once W4OS_PLUGIN_DIR . 'v2/loader.php';
 
 // Load admin functionality
