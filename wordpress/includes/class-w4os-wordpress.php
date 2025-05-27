@@ -1,6 +1,6 @@
 <?php
 /**
- * W4OS WordPress Integration Class
+ * W4OS Main WordPress Integration Class
  * 
  * WordPress-specific W4OS functionality that bridges OpenSimulator engine
  * with WordPress features like options, hooks, enqueue scripts, etc.
@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class W4OS_WordPress
+class W4OS
 {
     private static $instance = null;
     private static $opensim_engine = null;
