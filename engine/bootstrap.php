@@ -1,36 +1,37 @@
 <?php
 /**
- * W4OS Engine Bootstrap
+ * OpenSimulator Engine Bootstrap
  * 
- * Core engine initialization without WordPress dependencies.
- * This file sets up the engine that can be used by both WordPress and helpers.
+ * Core OpenSimulator communication engine without framework dependencies.
+ * This file sets up the engine that can be used by WordPress, API, or standalone.
  */
 
 // Prevent direct access
-if (!defined('ABSPATH') && !defined('W4OS_ENGINE')) {
+if (!defined('ABSPATH') && !defined('OPENSIM_ENGINE')) {
     exit;
 }
 
 // Define engine constants
-if (!defined('W4OS_ENGINE_PATH')) {
-    define('W4OS_ENGINE_PATH', __DIR__);
+if (!defined('OPENSIM_ENGINE_PATH')) {
+    define('OPENSIM_ENGINE_PATH', __DIR__);
 }
 
-if (!defined('W4OS_ENGINE_VERSION')) {
-    define('W4OS_ENGINE_VERSION', '3.0.0');
+if (!defined('OPENSIM_ENGINE_VERSION')) {
+    define('OPENSIM_ENGINE_VERSION', '1.0.0');
 }
 
 // Engine autoloader
 spl_autoload_register(function ($class) {
-    if (strpos($class, 'W4OS_Engine_') === 0) {
-        $file = W4OS_ENGINE_PATH . '/includes/' . strtolower(str_replace('_', '-', str_replace('W4OS_Engine_', '', $class))) . '.php';
+    if (strpos($class, 'OpenSim_') === 0) {
+        $file = OPENSIM_ENGINE_PATH . '/includes/class-' . strtolower(str_replace('_', '-', str_replace('OpenSim_', '', $class))) . '.php';
         if (file_exists($file)) {
             require $file;
         }
     }
 });
 
-// Load core engine classes
+// Load core OpenSimulator class
+require_once OPENSIM_ENGINE_PATH . '/includes/class-opensim.php';
 require_once __DIR__ . '/includes/class-database.php';
 require_once __DIR__ . '/includes/class-avatar.php';
 require_once __DIR__ . '/includes/class-search.php';
