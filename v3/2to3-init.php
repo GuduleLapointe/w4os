@@ -40,7 +40,7 @@ class W4OS3 {
 	public function init() {
 		// Transitional. Add settings fields to the legacy settings page.
 		add_action( 'rwmb_meta_boxes', array( $this, 'register_legacy_settings_fields' ), 20 );
-		define( 'W4OS_ENABLE_V3', get_option( 'w4os-enable-v3-beta', false ) );
+		if(!defined('W4OS_ENABLE_V3')) define( 'W4OS_ENABLE_V3', get_option( 'w4os-enable-v3-beta', false ) );
 		if ( ! W4OS_ENABLE_V3 ) {
 			return;
 		}
@@ -285,8 +285,8 @@ class W4OS3 {
 	}
 
 	public static function constants() {
-		define( 'W4OS_PLUGIN_DIR', plugin_dir_path( __DIR__ ) );
-		define( 'W4OS_PLUGIN_DIR_URL', plugin_dir_url( __DIR__ ) );
+		if(!defined('W4OS_PLUGIN_DIR')) define( 'W4OS_PLUGIN_DIR', plugin_dir_path( __DIR__ ) );
+		if(!defined('W4OS_PLUGIN_DIR_URL')) define( 'W4OS_PLUGIN_DIR_URL', plugin_dir_url( __DIR__ ) );
 		define( 'W4OS_PLUGIN', basename( W4OS_PLUGIN_DIR ) . '/w4os.php' );
 		define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
 		define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );

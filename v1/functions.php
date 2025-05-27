@@ -497,7 +497,7 @@ function w4os_get_url_status( $url, $output = null, $force = false ) {
 		$status_code       = ( $force ) ? false : get_transient( $url_transient_key );
 		if ( ! $status_code ) {
 			$headers     = @get_headers( $url, true );
-			$status_code = preg_replace( '/.* ([0-9]+) .*/', '$1', $headers['0'] );
+			$status_code = preg_replace( '/.* ([0-9]+) .*/', '$1', $headers['0'] ?? false);
 			if ( ! $status_code ) {
 				$status_code = 0;
 			}

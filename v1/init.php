@@ -29,7 +29,6 @@ if ( ! defined( 'W4OS_SLUG' ) ) {
 if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 }
-
 $plugin_data = get_file_data(
 	WP_PLUGIN_DIR . '/' . W4OS_PLUGIN,
 	array(

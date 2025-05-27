@@ -54,24 +54,14 @@ if ( defined( 'W4OS_SLUG' ) ) {
 
 	// No conflict, initialize the plugin.
 
-	if ( file_exists( plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php' ) ) {
-		// Load v3 transitional files.
-		require_once plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php';
-	} else {
-		define( 'W4OS_ENABLE_V3', false );
-	}
+	// Modern plugin structure - enable all features
+	define( 'W4OS_ENABLE_V3', true );
 
-	// Legacy v1 and v2 inits. Both should be removed when v3 transition is complete.
-	require_once plugin_dir_path( __FILE__ ) . 'v1/init.php';
-	require_once plugin_dir_path( __FILE__ ) . 'v2/loader.php';
+	// Load modern organized structure
+	require_once plugin_dir_path( __FILE__ ) . 'wordpress/init.php';
 
-	// Plugin updater. Should definitively be moved to init class.
+	// Plugin updater
 	if ( file_exists( plugin_dir_path( __FILE__ ) . 'lib/package-updater.php' ) ) {
 		include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
-	}
-
-	// Legacy admin init.
-	if ( is_admin() ) {
-		require_once plugin_dir_path( __FILE__ ) . 'v1/admin/admin-init.php';
 	}
 }
