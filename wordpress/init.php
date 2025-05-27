@@ -33,9 +33,9 @@ require_once W4OS_PLUGIN_DIR . 'compatibility.php';
 
 // Load v3 transitional files FIRST (contains W4OS3 class and latest features)
 // Temporarily disabled to use bridge implementation during migration
-// if (file_exists(W4OS_PLUGIN_DIR . 'v3/2to3-init.php')) {
-//     require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
-// }
+if (file_exists(W4OS_PLUGIN_DIR . 'v3/2to3-init.php')) {
+    require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
+}
 
 // Ensure W4OS3 class is available (critical for credential handling)
     // During migration, skip loading incomplete v3 class files
@@ -196,7 +196,7 @@ if (file_exists(__DIR__ . '/includes/class-w4os.php')) {
 // Legacy v1 init (contains core WordPress integration)
 require_once W4OS_PLUGIN_DIR . 'v1/init.php';
 
-// v2 loader (contains additional features) - re-enabled after removing class conflict
+// v2 loader (contains additional features)
 require_once W4OS_PLUGIN_DIR . 'v2/loader.php';
 
 // Load admin functionality

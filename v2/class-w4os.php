@@ -10,4 +10,4 @@
  * This class has been moved to the new architecture.
  */
 
-// W4OS class migrated to wordpress/includes/class-w4os.php
+// Code removed from this file has been migrated to the new class structure.
