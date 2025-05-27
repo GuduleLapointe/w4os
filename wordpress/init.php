@@ -32,29 +32,31 @@ require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
 require_once W4OS_PLUGIN_DIR . 'compatibility.php';
 
 // Load v3 transitional files FIRST (contains W4OS3 class and latest features)
-if (file_exists(W4OS_PLUGIN_DIR . 'v3/2to3-init.php')) {
-    require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
-}
+// Temporarily disabled to use bridge implementation during migration
+// if (file_exists(W4OS_PLUGIN_DIR . 'v3/2to3-init.php')) {
+//     require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
+// }
 
 // Ensure W4OS3 class is available (critical for credential handling)
 if (!class_exists('W4OS3')) {
-    // Try to load W4OS3 class from various possible locations
-    $possible_locations = [
-        W4OS_PLUGIN_DIR . 'v3/includes/class-w4os3.php',
-        W4OS_PLUGIN_DIR . 'v3/class-w4os3.php',
-        W4OS_PLUGIN_DIR . 'v2/includes/class-w4os3.php',
-        W4OS_PLUGIN_DIR . 'includes/class-w4os3.php',
-        W4OS_PLUGIN_DIR . 'class-w4os3.php'
-    ];
+    // During migration, skip loading incomplete v3 class files
+    // Try to load W4OS3 class from various possible locations - temporarily disabled during clean migration
+    // $possible_locations = [
+    //     W4OS_PLUGIN_DIR . 'v3/includes/class-w4os3.php',
+    //     W4OS_PLUGIN_DIR . 'v3/class-w4os3.php',
+    //     W4OS_PLUGIN_DIR . 'v2/includes/class-w4os3.php',
+    //     W4OS_PLUGIN_DIR . 'includes/class-w4os3.php',
+    //     W4OS_PLUGIN_DIR . 'class-w4os3.php'
+    // ];
+    // 
+    // foreach ($possible_locations as $file) {
+    //     if (file_exists($file)) {
+    //         require_once $file;
+    //         break;
+    //     }
+    // }
     
-    foreach ($possible_locations as $file) {
-        if (file_exists($file)) {
-            require_once $file;
-            break;
-        }
-    }
-    
-    // If still not found, create a bridge to OpenSimulator engine
+    // Use bridge implementation to OpenSimulator engine
     if (!class_exists('W4OS3')) {
         class W4OS3 {
             public static $robust_db;
@@ -109,10 +111,24 @@ if (!class_exists('W4OS3')) {
                 return null;
             }
             
+            public static function grid_info($gateway_uri = null, $force = false) {
+                if (class_exists('OpenSim')) {
+                    if (!$gateway_uri) {
+                        $gateway_uri = get_option('w4os_login_uri', 'localhost:8002');
+                    }
+                    return OpenSim::grid_info($gateway_uri, $force);
+                }
+                // Fallback implementation
+                if (!$gateway_uri) {
+                    $gateway_uri = get_option('w4os_login_uri', 'localhost:8002');
+                }
+                return ['gridname' => 'Unknown Grid', 'gridnick' => 'unknown'];
+            }
+            
             // WordPress-specific methods for compatibility
             public static function enqueue_script($handle, $src, $deps = [], $ver = false, $in_footer = false) {
-                if (class_exists('W4OS_WordPress')) {
-                    return W4OS_WordPress::enqueue_script($handle, $src, $deps, $ver, $in_footer);
+                if (class_exists('W4OS')) {
+                    return W4OS::enqueue_script($handle, $src, $deps, $ver, $in_footer);
                 }
                 if (function_exists('wp_enqueue_script')) {
                     $handle = preg_match('/^w4os-/', $handle) ? $handle : 'w4os-' . $handle;
@@ -121,8 +137,8 @@ if (!class_exists('W4OS3')) {
             }
             
             public static function enqueue_style($handle, $src, $deps = [], $ver = false, $media = 'all') {
-                if (class_exists('W4OS_WordPress')) {
-                    return W4OS_WordPress::enqueue_style($handle, $src, $deps, $ver, $media);
+                if (class_exists('W4OS')) {
+                    return W4OS::enqueue_style($handle, $src, $deps, $ver, $media);
                 }
                 if (function_exists('wp_enqueue_style')) {
                     $handle = preg_match('/^w4os-/', $handle) ? $handle : 'w4os-' . $handle;
@@ -131,12 +147,39 @@ if (!class_exists('W4OS3')) {
             }
             
             public static function account_url() {
-                if (class_exists('W4OS_WordPress')) {
-                    return W4OS_WordPress::account_url();
+                if (class_exists('W4OS')) {
+                    return W4OS::account_url();
                 }
                 $account_slug = get_option('w4os_account_url', 'account');
                 $page = get_page_by_path($account_slug);
                 return ($page) ? get_permalink($page->ID) : get_edit_user_link();
+            }
+            
+            // Additional methods that might be needed by v1 functions
+            public static function empty($var) {
+                if (!$var) return true;
+                if (empty($var)) return true;
+                $null_keys = ['00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-000000000001'];
+                if (in_array($var, $null_keys)) return true;
+                return false;
+            }
+            
+            public static function date($timestamp = null, $format = null, $timezone = null) {
+                $args = func_get_args();
+                if (empty($args)) {
+                    $timestamp = time();
+                    $format = get_option('date_format');
+                } elseif (is_numeric($args[0])) {
+                    $timestamp = $args[0];
+                    $format = $args[1] ?? get_option('date_format');
+                } else {
+                    $format = $args[0] ?? get_option('date_format');
+                    $timestamp = $args[1] ?? time();
+                }
+                $timezone = $args[2] ?? null;
+                if (empty($timestamp)) return;
+                if (empty($format)) $format = get_option('date_format');
+                return wp_date($format, $timestamp, $timezone);
             }
         }
     }
