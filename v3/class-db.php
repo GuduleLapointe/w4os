@@ -15,7 +15,7 @@ if ( W4OS_ENABLE_V3 ) {
 				// If a single string is passed, assume it's service URI.
 				$url_parts   = parse_url( $args[0] );
 				$serviceURI  = $url_parts['host'] . ( empty( $url_parts['port'] ) ? '' : ':' . $url_parts['port'] );
-				$credentials = W4OS3::get_credentials( $serviceURI );
+				$credentials = W4OS2to3::get_credentials( $serviceURI );
 
 				$db_enabled = $credentials['db']['enabled'] ?? false;
 				if ( ! $db_enabled ) {

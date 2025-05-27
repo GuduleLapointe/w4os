@@ -196,7 +196,7 @@ class W4OS3_Region {
 					'host' => $parts['host'] ?? '',
 					'port' => $parts['port'] ?? '',
 				),
-				W4OS3::get_credentials( $this->item->serverURI ),
+				W4OS2to3::get_credentials( $this->item->serverURI ),
 			);
 			$settings['w4os-regions']['tabs']['edit'] = array(
 				'title'           => __( 'Edit (improved)', 'w4os' ),
@@ -738,7 +738,7 @@ class W4OS3_Region {
 		}
 		$icons = array();
 
-		$credentials = W4OS3::get_credentials( $server_uri );
+		$credentials = W4OS2to3::get_credentials( $server_uri );
 		// error_log( 'Server credentials ' . print_r( $credentials, true ) );
 		// if ( $credentials['rest']['enabled'] ?? false ) {
 		// $icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';

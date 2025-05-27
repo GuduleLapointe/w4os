@@ -35,7 +35,7 @@ class W4OS3_Service {
 		if ( is_array( $args ) && count( $args ) == 1 ) {
 			// Single argument is the service URI
 			$this->serviceURI  = $args[0];
-			$this->credentials = W4OS3::get_credentials( $this->serviceURI );
+			$this->credentials = W4OS2to3::get_credentials( $this->serviceURI );
 			$this->init_console();
 			$this->init_db();
 		}
@@ -87,7 +87,7 @@ class W4OS3_Service {
 						'port' => $default_port,
 						'db'   => $default_db_creds,
 					),
-					'value'       => W4OS3::get_credentials( $login_uri ),
+					'value'       => W4OS2to3::get_credentials( $login_uri ),
 				),
 				'assets'   => array(
 					'label'       => __( 'Assets Service', 'w4os' ),
@@ -101,7 +101,7 @@ class W4OS3_Service {
 						'port' => $default_port,
 						'db'   => array_merge( $default_db_creds, array( 'name' => 'assets' ) ),
 					),
-					'readonly'    => W4OS3::$console_enabled,
+					'readonly'    => W4OS2to3::$console_enabled,
 				),
 				'profiles' => array(
 					'label'       => __( 'User Profiles Service', 'w4os' ),
@@ -115,7 +115,7 @@ class W4OS3_Service {
 						'port' => '8002',
 						'db'   => array_merge( $default_db_creds, array( 'name' => 'profiles' ) ),
 					),
-					'readonly'    => W4OS3::$console_enabled,
+					'readonly'    => W4OS2to3::$console_enabled,
 				),
 			),
 		);

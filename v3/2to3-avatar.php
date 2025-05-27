@@ -416,7 +416,7 @@ class W4OS3_Avatar {
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as registration page.', 'w4os' ),
-					'readonly'    => W4OS3::$console_enabled,
+					'readonly'    => W4OS2to3::$console_enabled,
 					// 'default' => w4os::get_option( 'registration-page' ),
 				),
 				'password'     => array(
@@ -429,7 +429,7 @@ class W4OS3_Avatar {
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as password reset page.', 'w4os' ),
-					'readonly'    => W4OS3::$console_enabled,
+					'readonly'    => W4OS2to3::$console_enabled,
 					// 'default' => w4os::get_option( 'password-page' ),
 				),
 			),
