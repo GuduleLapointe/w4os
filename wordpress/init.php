@@ -185,6 +185,17 @@ if (!class_exists('W4OS3')) {
     }
 }
 
+// Load WordPress-specific classes and functions (new organized structure)
+if (file_exists(__DIR__ . '/includes/class-w4os-wordpress.php')) {
+    require_once __DIR__ . '/includes/class-w4os-wordpress.php';
+    require_once __DIR__ . '/includes/class-w4os3-model.php';
+    require_once __DIR__ . '/includes/admin-functions.php';
+    require_once __DIR__ . '/includes/public-functions.php';
+    
+    // Initialize WordPress integration
+    W4OS::getInstance();
+}
+
 // Load all current WordPress functionality in correct order
 // Legacy v1 init (contains core WordPress integration)
 require_once W4OS_PLUGIN_DIR . 'v1/init.php';
@@ -195,14 +206,4 @@ require_once W4OS_PLUGIN_DIR . 'v2/loader.php';
 // Load admin functionality
 if (is_admin()) {
     require_once W4OS_PLUGIN_DIR . 'v1/admin/admin-init.php';
-}
-
-// Load WordPress-specific classes and functions (new organized structure)
-if (file_exists(__DIR__ . '/includes/class-w4os-wordpress.php')) {
-    require_once __DIR__ . '/includes/class-w4os-wordpress.php';
-    require_once __DIR__ . '/includes/admin-functions.php';
-    require_once __DIR__ . '/includes/public-functions.php';
-    
-    // Initialize WordPress integration
-    W4OS::getInstance();
 }

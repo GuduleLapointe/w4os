@@ -1,18 +1,16 @@
 <?php
 /**
- * Avatar Model Class
- *
- * Helper class including the functions related the Avatar Models.
+ * W4OS3 Model Class
  * 
- * MIGRATED TO: wordpress/includes/class-w4os3-model.php
- * This file is disabled during clean architecture migration.
+ * Moved from v3/helpers/2to3-helper-models.php
+ * Avatar Model Class - Helper class including functions related to Avatar Models.
  */
 
-/*
-class W4OS3_Model {
-    // ... class contents moved to wordpress/includes/class-w4os3-model.php
+if (!defined('ABSPATH')) {
+    exit;
 }
-*/
+
+class W4OS3_Model {
 
 	public function init() {
 		add_filter( 'w4os_settings_tabs', array( $this, 'register_tabs' ) );
@@ -21,9 +19,6 @@ class W4OS3_Model {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_models_ajax_update_script' ) );
 
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
-
-		// add_filter( 'parent_file', [ __CLASS__, 'set_active_menu' ] );
-		// add_filter( 'submenu_file', [ __CLASS__, 'set_active_submenu' ] );
 
 		// Update the action name to match the AJAX request
 		add_action( 'wp_ajax_ajax_update_models_preview_content', array( $this, 'ajax_update_models_preview_content' ) );
@@ -57,14 +52,13 @@ class W4OS3_Model {
 				'w4osSettings',
 				array(
 					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
-					'nonce'          => wp_create_nonce( 'ajax_update_models_preview_content_nonce' ), // Nonce for security
+					'nonce'          => wp_create_nonce( 'ajax_update_models_preview_content_nonce' ),
 					'loadingMessage' => __( 'Refreshing list...', 'w4os' ),
 					'updateAction'   => 'ajax_update_models_preview_content',
 				)
 			);
 
 			W4OS3_Settings::enqueue_select2();
-
 		}
 	}
 
@@ -93,14 +87,10 @@ class W4OS3_Model {
 		}
 	}
 
-
 	function register_tabs( $tabs ) {
-
 		$tabs['w4os-avatars']['models'] = array(
 			'title' => __( 'Avatar Models', 'w4os' ),
-			// 'url'   => admin_url('admin.php?page=w4os-models')
 		);
-
 		return $tabs;
 	}
 
@@ -112,11 +102,8 @@ class W4OS3_Model {
 			return;
 		}
 
-		$option_name  = 'w4os-avatars'; // Hard-coded here is fine to make sure it matches intended submenu slug
+		$option_name  = 'w4os-avatars';
 		$option_group = $option_name . '_group';
-
-		// Register the main option with a sanitize callback
-		// register_setting( $option_group, $option_name, [ __CLASS__, 'sanitize_options' ] );
 
 		// Get the current tab
 		$tab     = isset( $_GET['tab'] ) ? $_GET['tab'] : 'settings';
@@ -126,9 +113,9 @@ class W4OS3_Model {
 		if ( $tab == 'models' ) {
 			add_settings_section(
 				$section,
-				null, // No title for the section
-				null, // [ __CLASS__, 'section_callback' ],
-				$option_name // Use dynamic option name
+				null,
+				null,
+				$option_name
 			);
 
 			$fields = array(
@@ -158,24 +145,14 @@ class W4OS3_Model {
 					'name'        => __( 'Select Models', 'w4os' ),
 					'id'          => 'uuids',
 					'type'        => 'select2',
-					// 'type'        => 'autocomplete',
 					'placeholder' => __( 'Select one or more existing avatars', 'w4os' ),
 					'multiple'    => true,
-					// 'clone' => true,
 					'options'     => W4OS3_Avatar::get_avatars(),
 					'visible'     => array(
 						'when'     => array( array( 'match', '=', 'uuid' ) ),
 						'relation' => 'or',
 					),
 				),
-				// array(
-				// 'id'             => 'w4os-models-preview-container',
-				// 'name'           => __( 'Models Preview', 'w4os' ),
-				// 'settings_pages' => array( 'w4os-models' ),
-				// 'class'          => 'w4os-settings no-hints',
-				// 'type'           => 'custom_html',
-				// 'value'          => '<div class="available-models-container">' . self::models_preview() . '</div>',
-				// ),
 			);
 
 			foreach ( $fields as $field ) {
@@ -185,7 +162,6 @@ class W4OS3_Model {
 					array(
 						'option_name' => $option_name,
 						'tab'         => $tab,
-					// 'label_for'   => $field_id,
 					)
 				);
 				$field['option_name'] = $option_name;
@@ -193,7 +169,7 @@ class W4OS3_Model {
 					$field_id,
 					$field['name'] ?? '',
 					'W4OS3_Settings::render_settings_field',
-					$option_name, // Use dynamic option name as menu slug
+					$option_name,
 					$section,
 					$field,
 				);
@@ -261,34 +237,6 @@ class W4OS3_Model {
 
 		return $output;
 	}
-
-
-	// public static function set_active_menu( $parent_file ) {
-	// global $pagenow;
-
-	// if ( $pagenow === 'admin.php' ) {
-	// $current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
-	// if ( $current_page === 'w4os-models' ) {
-	// $parent_file = 'w4os-avatars'; // Set to main plugin menu slug
-	// }
-	// }
-
-	// return $parent_file;
-	// }
-
-	// public static function set_active_submenu( $submenu_file ) {
-	// global $pagenow, $typenow;
-
-	// if ( $pagenow === 'admin.php' ) {
-	// $current_page = isset( $_GET['page'] ) ? $_GET['page'] : '';
-	// if ( $current_page === 'w4os-models' ) {
-	// $submenu_file = 'w4os-avatars'; // Set to submenu slug
-	// }
-	// }
-
-	// return $submenu_file;
-	// }
-
 
 	static function is_model( $atts ) {
 		if ( empty( $atts ) ) {
@@ -401,34 +349,5 @@ class W4OS3_Model {
 		$models = $w4osdb->get_results( $sql, $format );
 
 		return $models;
-	}
-
-	public static function render_settings_field( $args ) {
-		// ...existing code...
-
-		switch ( $args['type'] ) {
-			// ...existing cases...
-
-			case 'select2':
-			case 'select_advanced':
-				$multiple_attr = $args['multiple'] ? 'multiple' : '';
-				$select_class  = 'select2-field';
-				$placeholder   = isset( $args['placeholder'] ) ? esc_attr( $args['placeholder'] ) : '';
-				$input_field   = sprintf(
-					'<select id="%1$s" name="%2$s" class="%3$s" data-placeholder="%4$s" %5$s>
-						<option value="">%4$s</option>',
-					esc_attr( $args['id'] ),
-					esc_attr( $field_name ),
-					esc_attr( $select_class ),
-					$placeholder,
-					$multiple_attr
-				);
-				// ...existing code...
-				break;
-
-			// ...existing cases...
-		}
-
-		// ...existing code...
 	}
 }
