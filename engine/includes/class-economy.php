@@ -5,7 +5,7 @@
  * Core economy functionality including currency, transactions, etc.
  */
 
-class W4OS_Engine_Economy
+class OpenSim_Economy
 {
     private static $instance = null;
     

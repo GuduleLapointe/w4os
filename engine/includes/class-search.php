@@ -5,7 +5,7 @@
  * Core search functionality for avatars, regions, events, etc.
  */
 
-class W4OS_Engine_Search
+class OpenSim_Search
 {
     private static $instance = null;
     

@@ -85,7 +85,7 @@ class W4OS2to3 {
 			} else {
 				$parts      = explode( '?', $_GET['session_id'] );
 				$session_id = $parts[0];
-				if ( ! self::is_uuid( $session_id, false ) ) {
+				if ( ! OpenSim::is_uuid( $session_id, false ) ) {
 					$session = false;
 				} else {
 					$sql    = sprintf(
@@ -586,50 +586,6 @@ class W4OS2to3 {
 		);
 	}
 
-	public static function is_true( $value ) {
-		if ( is_bool( $value ) ) {
-			return $value;
-		}
-		$value = strtolower( $value );
-		return $value === 'true' || $value === 'yes' || $value === true || $value === 1 || $value === '1';
-	}
-
-	/**
-	 * Complete standard empty() function with NULL key.
-	 */
-	public static function empty( $var ) {
-		if ( ! $var ) {
-			return true;
-		}
-		if ( empty( $var ) ) {
-			return true;
-		}
-		$null_keys = array(
-			'00000000-0000-0000-0000-000000000000',
-			'00000000-0000-0000-0000-000000000001',
-			// W4OS_NULL_KEY, // Not yet defined when this function is called early.
-		);
-		if ( in_array( $var, $null_keys ) ) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Check if a string is a valid UUID.
-	 */
-	public static function is_uuid( $uuid, $accept_null = true ) {
-		if ( ! is_string( $uuid ) ) {
-			return false;
-		}
-		if ( ! preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid ) ) {
-			return false;
-		}
-		if ( ! $accept_null && self::empty( $uuid ) ) {
-			return false;
-		}
-		return true;
-	}
 
 	public static function connectionstring_to_array( $connectionstring ) {
 		$parts = explode( ';', $connectionstring );
@@ -640,6 +596,10 @@ class W4OS2to3 {
 		}
 		return $creds;
 	}
+
+	// is_true moved in engine/class-opensim.php
+	// is_empty moved in engine/class-opensim.php
+	// is_uuid moved in engine/class-opensim.php
 
 	public static function update_credentials( $serverURI, $credentials ) {
 
@@ -917,10 +877,10 @@ class W4OS2to3 {
 	}
 
 	public static function img( $img_uuid, $atts = array() ) {
-		if ( self::empty( $img_uuid ) ) {
+		if ( OpenSim::empty( $img_uuid ) ) {
 			return;
 		}
-		if ( ! self::is_uuid( $img_uuid ) ) {
+		if ( ! OpenSim::is_uuid( $img_uuid ) ) {
 			return;
 		}
 		$asset_url = w4os_get_asset_url( $img_uuid );

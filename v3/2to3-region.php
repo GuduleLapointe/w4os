@@ -82,7 +82,7 @@ class W4OS3_Region {
 	public function __construct( $args = null ) {
 		// error_log( __METHOD__ );
 
-		if ( ! W4OS3::empty( $args ) ) {
+		if ( ! OpenSim::empty( $args ) ) {
 			$this->fetch_region_data( $args );
 		} elseif ( isset( $_GET['region'] ) ) {
 			$this->fetch_region_data( $_GET['region'] );
@@ -178,7 +178,7 @@ class W4OS3_Region {
 				'region' => null,
 			)
 		);
-		if ( $get['page'] === 'w4os-regions' && $get['action'] === 'edit' && ! W4OS3::empty( $get['region'] ) ) {
+		if ( $get['page'] === 'w4os-regions' && $get['action'] === 'edit' && ! OpenSim::empty( $get['region'] ) ) {
 			$_GET['tab']  = 'edit';
 			$region_title = sprintf(
 				'<h1 class="wp-heading-inline">%s</h1>',
@@ -239,7 +239,7 @@ class W4OS3_Region {
 						'id'    => 'map',
 						'label' => __( 'Map', 'w4os' ),
 						'type'  => 'custom_html',
-						'value' => ( ! W4OS3::empty( $this->item->regionMapTexture ) ) ? sprintf(
+						'value' => ( ! OpenSim::empty( $this->item->regionMapTexture ) ) ? sprintf(
 							'<img src="%1$s" class="asset asset-%3$d region-map" alt="%2$s" loading="lazy" width="%3$d" height="%4$d">',
 							w4os_get_asset_url( $this->item->regionMapTexture ),
 							sprintf( __( '%s region map', 'w4os' ), esc_attr( $this->item->regionName ) ),
@@ -401,7 +401,7 @@ class W4OS3_Region {
 	 * @return void
 	 */
 	public function fetch_region_data( $args ) {
-		if ( W4OS3::empty( $args ) ) {
+		if ( OpenSim::empty( $args ) ) {
 			return;
 		}
 
@@ -919,7 +919,7 @@ class W4OS_Parcel {
 	 */
 	public function display() {
 		// Display the parcel data
-		$image   = ( ! W4OS3::empty( $this->image ) ) ? sprintf( '<img src="%s" alt="%s">', w4os_get_asset_url( $this->image ), $this->name ) : '';
+		$image   = ( ! OpenSim::empty( $this->image ) ) ? sprintf( '<img src="%s" alt="%s">', w4os_get_asset_url( $this->image ), $this->name ) : '';
 		$output  = '<div class="parcel">';
 		$output .= $image;
 		$output .= '<h3>' . $this->name . '</h3>';

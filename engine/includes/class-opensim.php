@@ -221,4 +221,35 @@ class OpenSim
         
         return $creds;
     }
+
+	public static function is_true( $value ) {
+		if ( is_bool( $value ) ) {
+			return $value;
+		}
+		$value = strtolower( $value );
+		return $value === 'true' || $value === 'yes' || $value === true || $value === 1 || $value === '1';
+	}
+
+	/**
+	 * Complete standard empty() function with NULL key.
+	 */
+	public static function empty( $var ) {
+		if ( ! $var ) {
+			return true;
+		}
+		if ( empty( $var ) ) {
+			return true;
+		}
+		$null_keys = array(
+			'00000000-0000-0000-0000-000000000000',
+			'00000000-0000-0000-0000-000000000001',
+			// W4OS_NULL_KEY, // Not yet defined when this function is called early.
+		);
+		if ( in_array( $var, $null_keys ) ) {
+			return true;
+		}
+		return false;
+	}
+
+
 }

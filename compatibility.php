@@ -12,24 +12,24 @@ if (!defined('ABSPATH')) {
 }
 
 // Create compatibility aliases for moved classes
-if (!class_exists('W4OS_Engine_Database')) {
-    class_alias('W4OS_Engine_Database', 'W4OS_Database');
+if (!class_exists('OpenSim_Database')) {
+    class_alias('OpenSim_Database', 'W4OS_Database');
 }
 
-if (!class_exists('W4OS_Engine_Avatar')) {
-    class_alias('W4OS_Engine_Avatar', 'W4OS_Avatar');
+if (!class_exists('OpenSim_Avatar')) {
+    class_alias('OpenSim_Avatar', 'W4OS_Avatar');
 }
 
-if (!class_exists('W4OS_Engine_Search')) {
-    class_alias('W4OS_Engine_Search', 'W4OS_Search');
+if (!class_exists('OpenSim_Search')) {
+    class_alias('OpenSim_Search', 'W4OS_Search');
 }
 
-if (!class_exists('W4OS_Engine_Economy')) {
-    class_alias('W4OS_Engine_Economy', 'W4OS_Economy');
+if (!class_exists('OpenSim_Economy')) {
+    class_alias('OpenSim_Economy', 'W4OS_Economy');
 }
 
-if (!class_exists('W4OS_Engine_Grid')) {
-    class_alias('W4OS_Engine_Grid', 'W4OS_Grid');
+if (!class_exists('OpenSim_Grid')) {
+    class_alias('OpenSim_Grid', 'W4OS_Grid');
 }
 
 // Maintain function compatibility

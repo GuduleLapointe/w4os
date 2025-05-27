@@ -36,7 +36,7 @@ if ( is_object( $region ) ) {
 			. $region->format_flags( $check_flags ),
 			__( 'Owner', 'w4os' )    => $region->owner_name( $region->item ),
 			__( 'Teleport', 'w4os' ) => $region->get_tp_link(),
-			__( 'Map', 'w4os' )      => ( ! W4OS3::empty( $map_uuid ) ) ? sprintf(
+			__( 'Map', 'w4os' )      => ( ! OpenSim::empty( $map_uuid ) ) ? sprintf(
 				'<img src="%1$s" class="asset asset-%3$d region-map" alt="%2$s" loading="lazy" width="%3$d" height="%4$d">',
 				w4os_get_asset_url( $map_uuid ),
 				sprintf( __( '%s region map', 'w4os' ), esc_attr( $title ) ),

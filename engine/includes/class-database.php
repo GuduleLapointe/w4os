@@ -6,7 +6,7 @@
  * This will contain all the database connection and query logic.
  */
 
-class W4OS_Engine_Database
+class OpenSim_Database
 {
     private static $instance = null;
     private $connection = null;

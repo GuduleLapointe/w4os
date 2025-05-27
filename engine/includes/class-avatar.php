@@ -5,7 +5,7 @@
  * Core avatar functionality including profile management, search, etc.
  */
 
-class W4OS_Engine_Avatar
+class OpenSim_Avatar
 {
     private static $instance = null;
     

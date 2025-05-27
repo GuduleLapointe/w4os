@@ -5,7 +5,7 @@
  * Core grid functionality including region management, grid services, etc.
  */
 
-class W4OS_Engine_Grid
+class OpenSim_Grid
 {
     private static $instance = null;
     
