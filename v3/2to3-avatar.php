@@ -89,7 +89,7 @@ class W4OS3_Avatar {
 	public function setup_profile() {
 		global $wp_query;
 
-		$pagename = W4OS::get_localized_post_slug();
+		$pagename = W4OS3::get_localized_post_slug();
 
 		if( $pagename === self::$slug ) {
 			$this->is_profile_page = true;

@@ -56,7 +56,7 @@ if ( ! preg_match( "/<table class='avatar-profile-table'>|\[et_pb_w4os_avatar_pr
 			$avatar_name   = esc_attr( get_the_author_meta( 'w4os_firstname', $avatar->ID ) . ' ' . get_the_author_meta( 'w4os_lastname', $avatar->ID ) );
 			$page_content .= $avatar_profile;
 			$page_title    = $avatar_name;
-			$head_title    = W4OS::sprintf_safe( __( "%s's profile", 'w4os' ), $avatar_name );
+			$head_title    = W4OS3::sprintf_safe( __( "%s's profile", 'w4os' ), $avatar_name );
 		}
 	}
 

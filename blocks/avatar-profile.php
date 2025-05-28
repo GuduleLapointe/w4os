@@ -105,7 +105,7 @@ function w4os_avatar_profile_block_render( $attributes, $void, $block = true ) {
 
 	$class = preg_replace( ':/:', '-', $block->name );
 
-	return W4OS::sprintf_safe(
+	return W4OS3::sprintf_safe(
 		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
 		$content
@@ -273,7 +273,7 @@ function et_builder_module_w4os_avatar_profile_init() {
 
 				$output = w4os_avatar_profile_html( $atts );
 
-				return W4OS::sprintf_safe(
+				return W4OS3::sprintf_safe(
 					'<div class="et_pb_module et_pb_w4os_avatar_profile w4os-avatar-profile">%s</div>',
 					$output
 				);

@@ -349,7 +349,7 @@ class W4OS3_Flux {
 		$content    = '';
 
 		$content      .= $this->new_flux_form();
-		$in_world_call = W4OS3::in_world_call();
+		$in_world_call = W4OS2to3::in_world_call();
 
 		$content .= '<div id="flux-posts-container">';
 		foreach ( $flux_posts as $flux_post ) {
@@ -451,7 +451,7 @@ class W4OS3_Flux {
 		ob_start();
 		foreach ( $flux_posts as $flux_post ) {
 			// ...existing display code...
-			if ( W4OS3::in_world_call() ) {
+			if ( W4OS2to3::in_world_call() ) {
 				$message = preg_replace( '/<a (.*?)>/', '<a $1 target="_blank">', $flux_post->post_content );
 			} else {
 				$message = $flux_post->post_content;

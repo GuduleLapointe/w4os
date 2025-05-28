@@ -14,7 +14,7 @@ class W4OS_Tos extends W4OS_Loader {
 	// public $tos_page_url;
 
 	public function __construct() {
-		$this->tos_page_id = W4OS::get_option( 'w4os_tos_page_id' );
+		$this->tos_page_id = W4OS3::get_option( 'w4os_tos_page_id' );
 	}
 
 	public function url() {
@@ -103,7 +103,7 @@ class W4OS_Tos extends W4OS_Loader {
 	}
 
 	function set_strings() {
-		$tos_page_id         = W4OS::get_localized_post_id( $this->tos_page_id, false );
+		$tos_page_id         = W4OS3::get_localized_post_id( $this->tos_page_id, false );
 		$this->tos_link      = '<a href="' . get_permalink( $tos_page_id ) . '">' . get_the_title( $tos_page_id ) . '</a>';
 		$this->tos_agreement = sprintf(
 			/* translators: %s: title and link to a page created by the user (gender- and number-neutral phrasing recommended) */

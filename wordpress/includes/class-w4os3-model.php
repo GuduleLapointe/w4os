@@ -219,7 +219,7 @@ class W4OS3_Model {
 
 		$imgid = ( w4os_empty( $model->profileImage ) ) ? $placeholder : $model->profileImage;
 		if ( $imgid ) {
-			$output = W4OS::sprintf_safe(
+			$output = W4OS3::sprintf_safe(
 				'<figure>
 				<img class="model-picture" alt="%2$s" src="%3$s">
 				<figcaption>%1$s</figcaption>
@@ -229,7 +229,7 @@ class W4OS3_Model {
 				w4os_get_asset_url( $imgid ),
 			);
 		} elseif ( ! empty( $display_name ) ) {
-			$output = W4OS::sprintf_safe(
+			$output = W4OS3::sprintf_safe(
 				'<span class="model-name">%s</span>',
 				$display_name,
 			);

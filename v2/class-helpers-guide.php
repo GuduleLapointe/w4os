@@ -196,8 +196,8 @@ class W4OS_Guide extends W4OS_Loader {
 
 	// Check conditions and enable rewrite rule
 	function set_rewrite_rules() {
-		$provide = W4OS::get_option( 'w4os-guide:provide' );
-		$url     = W4OS::get_option( 'w4os-guide:url' );
+		$provide = W4OS3::get_option( 'w4os-guide:provide' );
+		$url     = W4OS3::get_option( 'w4os-guide:url' );
 
 		if ( $provide && ! empty( $url ) ) {
 			// Remove the host part of the URL to create the permalink_slug
@@ -217,7 +217,7 @@ class W4OS_Guide extends W4OS_Loader {
 		if ( array_key_exists( 'guide_source', $wp->query_vars ) ) {
 			require_once W4OS_DIR . '/helpers/guide.php';
 
-			$source  = W4OS::get_option( 'w4os-guide:source' );
+			$source  = W4OS3::get_option( 'w4os-guide:source' );
 			$guide   = new OpenSim_Guide( $source );
 			$content = $guide->output_page();
 

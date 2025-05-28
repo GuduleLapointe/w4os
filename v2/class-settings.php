@@ -234,7 +234,7 @@ class W4OS_Settings extends W4OS_Loader {
 								'type'       => 'custom_html',
 								'callback'   => 'W4OS_Profile::url',
 								'class'      => get_page_by_path( W4OS_Profile::slug() ) ? '' : 'field-error',
-								'desc'       => W4OS::sprintf_safe(
+								'desc'       => W4OS3::sprintf_safe(
 									preg_replace(
 										'/\[(.*)\]/',
 										'<a href="' . get_admin_url( '', 'options-permalink.php' ) . '">$1</a>',
@@ -252,7 +252,7 @@ class W4OS_Settings extends W4OS_Loader {
 								'name'       => __( 'Public Profile Page', 'w4os' ),
 								'id'         => 'provide',
 								'type'       => W4OS_ENABLE_V3 ? 'hidden' : 'switch',
-								'desc'       => W4OS::sprintf_safe(
+								'desc'       => W4OS3::sprintf_safe(
 									__( 'Provide avatars with a public web profile page in the following format: %1$s.', 'w4os' ),
 									'<code>' . W4OS_Profile::url( 'John', 'Smith' ) . '</code>',
 								),

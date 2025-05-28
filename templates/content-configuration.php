@@ -8,7 +8,7 @@ $viewers     = array(
 );
 $viewerslist = '<ul>';
 foreach ( $viewers as $key => $value ) {
-	$viewerslist .= W4OS::sprintf_safe( '<li><a href="%1$s" target=_blank>%2$s</a></li>', $value, $key );
+	$viewerslist .= W4OS3::sprintf_safe( '<li><a href="%1$s" target=_blank>%2$s</a></li>', $value, $key );
 }
 $viewerslist      .= '</ul>';
 $compatibleviewers = 'http://opensimulator.org/wiki/Compatible_Viewers';
@@ -25,12 +25,12 @@ $page_content .= '
     ' . preg_replace(
 		'/\[(.*)\]/',
 		'<a href="' . $compatibleviewers . '" target=_blank>$1</a>',
-		W4OS::sprintf_safe(
+		W4OS3::sprintf_safe(
 			__( 'You can use [any compatible viewer] to access %1$s.', 'w4os' ),
 			$gridname,
 		),
 	) . $viewerslist . '
-  </li><li>' . W4OS::sprintf_safe( __( 'Add %1$s to your viewer', 'w4os' ), $gridname, ) . '
+  </li><li>' . W4OS3::sprintf_safe( __( 'Add %1$s to your viewer', 'w4os' ), $gridname, ) . '
     <p class=description>' . __( 'Instructions may vary depending on the viewer', 'w4os' ) . '</p>
     <ul>
       <li>' . __( 'Select "Preferences" under the "Viewer" menu (or type Ctrl-P)', 'w4os' ) . '</li>
@@ -42,7 +42,7 @@ $page_content .= '
   </li>
   <li>' . __( 'Log in', 'w4os' ) . '
     <ul>
-      <li>' . W4OS::sprintf_safe( __( 'Make sure %1$s is selected in the Grid menu', 'w4os' ), $gridname ) . '</li>
+      <li>' . W4OS3::sprintf_safe( __( 'Make sure %1$s is selected in the Grid menu', 'w4os' ), $gridname ) . '</li>
       <li>' . __( 'Enter your avatar’s first and last name in the "Username" box and your password in the "Password" box', 'w4os' ) . '</li>
       <li>' . __( 'Click "Log In"', 'w4os' ) . '</li>
     </ul>

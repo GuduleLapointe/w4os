@@ -126,7 +126,7 @@ class W4OS_Search extends W4OS_Loader {
 					'std'         => get_option( 'w4os_search_url', $this->default_search_url ),
 					'class'       => 'copyable',
 					'save_field'  => false,
-					'desc'        => W4OS::sprintf_safe(
+					'desc'        => W4OS3::sprintf_safe(
 						'<ul classs="description"><li>%s</li><li>%s</li><li>%s</li></ul>',
 						__( 'URL of the search engine used by the viewer to provide search results (without arguments).', 'w4os' ),
 						__( 'Only one can be set, other lines are alternative examples.', 'w4os' ),

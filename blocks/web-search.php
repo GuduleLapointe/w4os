@@ -91,7 +91,7 @@ function w4os_web_search_block_render( $attributes, $void, $block = true ) {
 
 	$class = preg_replace( ':/:', '-', $block->name );
 
-	return W4OS::sprintf_safe(
+	return W4OS3::sprintf_safe(
 		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
 		$content
@@ -226,7 +226,7 @@ function w4os_web_search_html( $atts = array(), $args = array() ) {
 					break;
 				}
 
-				$image = W4OS::sprintf_safe(
+				$image = W4OS3::sprintf_safe(
 					'<img class="place-image" src="%1$s" alt="%2$s">',
 					w4os_get_asset_url( $place['imageUUID'] ),
 					$place['name'],
@@ -234,7 +234,7 @@ function w4os_web_search_html( $atts = array(), $args = array() ) {
 
 				$tplink = opensim_format_tp( $place['gatekeeperURL'] . '/' . $place['regionname'] . '/' . $place['landingpoint'], TPLINK_HG );
 
-				$content .= W4OS::sprintf_safe(
+				$content .= W4OS3::sprintf_safe(
 					'<div class="place"><a href="%1$s"><div class=place-name>%2$s</div>%3$s</a></div>',
 					$tplink,
 					$place['name'],
@@ -353,7 +353,7 @@ function et_builder_module_w4os_web_search_init() {
 
 				$output = w4os_web_search_html( $atts );
 
-				return W4OS::sprintf_safe(
+				return W4OS3::sprintf_safe(
 					'<div class="et_pb_module et_pb_w4os_web_search w4os-web-search">%s</div>',
 					$output
 				);

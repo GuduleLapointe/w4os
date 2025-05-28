@@ -38,7 +38,7 @@ function w4os_template_redirect() {
 // $pagename = $wp_query->query['pagename'] ?? '';
 //
 // $template_slug  = str_replace( '.php', '', basename( $template ) );
-// $localized_post_id = W4OS::get_localized_post_id();
+// $localized_post_id = W4OS3::get_localized_post_id();
 // if ( $template_slug == 'template-canvas' && isset($wp_query->query['pagename']) && $wp_query->query['pagename'] == 'profile' ) {
 // error_log( 'template-canvas profile' );
 // if ( empty( $localized_post_id ) ) {
@@ -80,7 +80,7 @@ function w4os_the_content( $content ) {
 	}
 	global $wp_query;
 	global $template;
-	$localized_post_id = W4OS::get_localized_post_id();
+	$localized_post_id = W4OS3::get_localized_post_id();
 	$original          = get_post( $localized_post_id );
 	if ( ! $original ) {
 		return $content;
@@ -125,13 +125,13 @@ function w4os_the_content( $content ) {
 // if(w4os_get_option('layout_page_title:official_website')) {
 // $url = rwmb_meta( 'official_website', array(), $post_ID );
 // if($url) {
-// $links[] = W4OS::sprintf_safe("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Website', 'w4os'));
+// $links[] = W4OS3::sprintf_safe("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Website', 'w4os'));
 // }
 // }
 // if(w4os_get_option('layout_page_title:official_store')) {
 // $url = rwmb_meta( 'official_store', array(), $post_ID );
 // if($url) {
-// $links[] = W4OS::sprintf_safe("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Store', 'w4os'));
+// $links[] = W4OS3::sprintf_safe("<li class=link><a href='%s'>%s</a></li>", $url, __('Official Store', 'w4os'));
 // }
 // }
 // if(!empty($links)) $title_after .= "<ul class=links>" . join(' ', $links) . "</ul>";
@@ -143,7 +143,7 @@ function w4os_the_content( $content ) {
 // if($band_ID = rwmb_meta( 'band', array(), $post_ID )) {
 // $band = get_post($band_ID);
 // echo "<pre>"; print_r($band); die;
-// $title_after .= W4OS::sprintf_safe(__('by <a href="%s">%s</a>', 'w4os'), get_permalink($band), $band->post_title);
+// $title_after .= W4OS3::sprintf_safe(__('by <a href="%s">%s</a>', 'w4os'), get_permalink($band), $band->post_title);
 // }
 // }
 //

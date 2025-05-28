@@ -195,17 +195,17 @@ class W4OS_Economy extends W4OS_Loader {
 						'</li><li>',
 						array(
 							'<strong>' . __( 'Gloebit module needs to be configured before restarting the region, otherwise it could crash the simulator.', 'w4os' ) . '</strong>',
-							'<strong>' . W4OS::sprintf_safe(
+							'<strong>' . W4OS3::sprintf_safe(
 								__( 'For Linux, see %s to avoid certificate-related errors.', 'w4os' ),
 								'<a href=https://github.com/magicoli/opensim-helpers/blob/master/README-Gloebit.md target=_blank>README-Gloebit.md</a>',
 							) . '</strong>',
-							W4OS::sprintf_safe(
+							W4OS3::sprintf_safe(
 								__( 'Register an account or connect on %1$s and Follow instructions on %2$s to setup an app for your grid/simulator.', 'w4os' ),
 								'<a href=https://www.gloebit.com/ target=_blank>gloebit.com</a>',
 								'<a href=http://dev.gloebit.com/opensim/configuration-instructions/ target=_blank>dev.gloebit.com</a>',
 							),
 							__( 'Add Gloebit configuration in OpenSim.ini.', 'w4os' ),
-							W4OS::sprintf_safe(
+							W4OS3::sprintf_safe(
 								'Download the latest dll in your OpenSimulator bin/ folder (rename it Gloebit.dll), from %1$s or %2$s',
 								'<a href="https://github.com/GuduleLapointe/opensim-debian" target="_blank">github.com/GuduleLapointe/opensim-debian</a>',
 								'<a href="http://dev.gloebit.com/opensim/downloads/" target="_blank">dev.gloebit.com</a>',
@@ -229,7 +229,7 @@ class W4OS_Economy extends W4OS_Loader {
 									'GLBSecret'      => '(your Gloebit app secret)',
 									'GLBOwnerName'   => 'Banker Name',
 									'GLBOwnerEmail'  => 'banker@example.org',
-									'GLBSpecificConnectionString' => W4OS::sprintf_safe(
+									'GLBSpecificConnectionString' => W4OS3::sprintf_safe(
 										'"Data Source=%1$s;Database=%2$s;User ID=%3$s;Password=%4$s;Old Guids=true;',
 										( $use_default_db ? get_option( 'w4os_db_host' ) : get_option( 'w4os_economy_db_host' ) ),
 										( $use_default_db ? get_option( 'w4os_db_database' ) : get_option( 'w4os_economy_db_database' ) ),

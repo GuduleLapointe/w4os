@@ -42,7 +42,7 @@ if ( defined( 'W4OS_SLUG' ) ) {
 	add_action(
 		'admin_notices',
 		function () {
-			echo W4OS::sprintf_safe(
+			echo W4OS3::sprintf_safe(
 				"<div class='notice notice-error'><p><strong>W4OS:</strong> %s (%s).</p></div>",
 				__( 'Another version of <strong>W4OS - OpenSimulator Web Interface</strong> is installed and active. Duplicate disabled.', 'w4os' ),
 				basename( __DIR__ ) . '/' . basename( __FILE__ ),

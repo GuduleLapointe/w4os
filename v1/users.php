@@ -182,9 +182,9 @@ function w4os_sync_users() {
 				// wrong reference, but an avatar exists for this WP user, replace reference
 				$result = w4os_profile_sync( $account['user_id'], $account['PrincipalID'] );
 				if ( w4os_profile_sync( $account['user_id'], $account['PrincipalID'] ) ) {
-					$users_updated[] = W4OS::sprintf_safe( '<a href=%s>%s %s</a>', get_edit_user_link( $newid ), $account['FirstName'], $account['LastName'] );
+					$users_updated[] = W4OS3::sprintf_safe( '<a href=%s>%s %s</a>', get_edit_user_link( $newid ), $account['FirstName'], $account['LastName'] );
 				} else {
-					$errors[] = '<p class=error>' . W4OS::sprintf_safe( __( 'Error while updating %1$s %2$s (%3$s) %4$s', 'w4os' ), $account['FirstName'], $account['LastName'], $account['email'], $result ) . '</p>';
+					$errors[] = '<p class=error>' . W4OS3::sprintf_safe( __( 'Error while updating %1$s %2$s (%3$s) %4$s', 'w4os' ), $account['FirstName'], $account['LastName'], $account['email'], $result ) . '</p>';
 				}
 			} else {
 				// No user with this email, create one
@@ -202,14 +202,14 @@ function w4os_sync_users() {
 				if ( is_wp_error( $newid ) ) {
 					$errors[] = $newid->get_error_message();
 				} elseif ( w4os_profile_sync( $newid, $account['PrincipalID'] ) ) {
-					$users_created[] = W4OS::sprintf_safe( '<a href=%s>%s %s</a>', get_edit_user_link( $newid ), $account['FirstName'], $account['LastName'] );
+					$users_created[] = W4OS3::sprintf_safe( '<a href=%s>%s %s</a>', get_edit_user_link( $newid ), $account['FirstName'], $account['LastName'] );
 				} else {
-					$errors[] = '<p class=error>' . W4OS::sprintf_safe( __( 'Error while updating newly created user %1$s for %2$s %3$s (%4$s) %5$s', 'w4os' ), $newid, $account['FirstName'], $account['LastName'], $account['email'], $result ) . '</p>';
+					$errors[] = '<p class=error>' . W4OS3::sprintf_safe( __( 'Error while updating newly created user %1$s for %2$s %3$s (%4$s) %5$s', 'w4os' ), $newid, $account['FirstName'], $account['LastName'], $account['email'], $result ) . '</p>';
 				}
 			}
 		} elseif ( isset( $account['w4os_uuid'] ) & ! w4os_empty( $account['w4os_uuid'] ) ) {
 			w4os_profile_dereference( $account['user_id'] );
-			$users_dereferenced[] = W4OS::sprintf_safe( '<a href=%s>%s</a>', get_edit_user_link( $account['user_id'] ), $account['user_id'] );
+			$users_dereferenced[] = W4OS3::sprintf_safe( '<a href=%s>%s</a>', get_edit_user_link( $account['user_id'] ), $account['user_id'] );
 			// } else {
 			// // No linked account, but none referenced so we should not interfer
 			// w4os_profile_dereference($account['user_id']);
@@ -218,7 +218,7 @@ function w4os_sync_users() {
 	}
 
 	if ( ! empty( $users_updated ) ) {
-		$messages[] = W4OS::sprintf_safe(
+		$messages[] = W4OS3::sprintf_safe(
 			_n(
 				'%d reference updated',
 				'%d references updated',
@@ -229,7 +229,7 @@ function w4os_sync_users() {
 		) . ': ' . join( ', ', $users_updated );
 	}
 	if ( ! empty( $users_created ) ) {
-		$messages[] = '<p>' . W4OS::sprintf_safe(
+		$messages[] = '<p>' . W4OS3::sprintf_safe(
 			_n(
 				'%d new WordPress account created',
 				'%d new WordPress accounts created',
@@ -240,7 +240,7 @@ function w4os_sync_users() {
 		) . ': ' . join( ', ', $users_created );
 	}
 	if ( ! empty( $users_dereferenced ) ) {
-		$messages[] = W4OS::sprintf_safe(
+		$messages[] = W4OS3::sprintf_safe(
 			_n(
 				'%d broken reference removed',
 				'%d broken references removed',
@@ -383,7 +383,7 @@ function w4os_profile_sync_all() {
 		$uuid                           = w4os_profile_sync( $user );
 		$updated[ $UserAccount->Email ] = $user->ID . ' ' . $uuid;
 	}
-	w4os_admin_notice( W4OS::sprintf_safe( __( '%s local users updated with avatar data', 'w4os' ), count( $updated ) ), 'success' );
+	w4os_admin_notice( W4OS3::sprintf_safe( __( '%s local users updated with avatar data', 'w4os' ), count( $updated ) ), 'success' );
 	return;
 }
 
