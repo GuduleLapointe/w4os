@@ -30,7 +30,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	public static $profile_page_url;
 	public $profile_url;
 	private $is_profile_page = false;
-	private $wp_db; // WordPress database connection
+	protected $db; // WordPress database connection
 
 	public function __construct() {
 		// Initialize WordPress-specific properties
@@ -38,7 +38,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		self::$profile_page_url = get_home_url(null, self::$slug);
 
 		// Initialize WordPress database connection for this class
-		$this->wp_db = new OSPDO( W4OS_DB_ROBUST );
+		$this->db = new OSPDO( W4OS_DB_ROBUST );
 
 		// Call parent constructor for core avatar functionality
 		$args = func_get_args();
@@ -53,7 +53,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	 * Uses OSPDO and WordPress functions like esc_attr(), get_option(), etc.
 	 */
 	private function initialize_avatar_wp( $args ) {
-		if ( ! $this->wp_db ) {
+		if ( ! $this->db ) {
 			return false;
 		}
 		if( empty( $args ) ) {
@@ -85,8 +85,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 
 		if( $uuid !== false ) {
 			$query .= " WHERE PrincipalID = %s";
-			$sql = $this->wp_db->prepare( $query, array( $uuid ) );
-			$avatar_row = $this->wp_db->get_row( $sql );
+			$sql = $this->db->prepare( $query, array( $uuid ) );
+			$avatar_row = $this->db->get_row( $sql );
 		} else if ( is_string( $args ) ) {
 			$parts = explode( '@', $args );
 			$grid = $parts[1] ?? null;
@@ -109,8 +109,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 				return;
 			} else {
 				$query .= " WHERE FirstName = %s AND LastName = %s";
-				$sql = $this->wp_db->prepare( $query, array ( $firstname, $lastname ) );
-				$avatar_row = $this->wp_db->get_row( $sql );
+				$sql = $this->db->prepare( $query, array ( $firstname, $lastname ) );
+				$avatar_row = $this->db->get_row( $sql );
 			}
 		} else {
 			return false;
