@@ -63,7 +63,10 @@ class W4OS3_Region extends OpenSim_Region {
 	private $parcels;
 
 	public function __construct( $args = null ) {
-		// Initialize database connection if not provided
+		// Initialize database connection if not already available
+		if (!W4OS3::$robust_db) {
+			W4OS3::$robust_db = new OSPDO( W4OS_DB_ROBUST );
+		}
 		$database_connection = W4OS3::$robust_db;
 		
 		// Call parent constructor
@@ -82,7 +85,7 @@ class W4OS3_Region extends OpenSim_Region {
 				$this->server            = new W4OS3_Service( $this->item->serverURI );
 				$this->console_connected = $this->server->console_connected();
 				$this->db           = $this->server->db ?? false;
-				$this->db_connected = $this->db->ready ?? false;
+				$this->db_connected = $this->db->connected ?? false;
 			}
 		}
 	}
@@ -380,8 +383,17 @@ class W4OS3_Region extends OpenSim_Region {
 			$this->item = $args;
 		} elseif ( is_string( $args ) && W4OS3::is_uuid( $args ) ) {
 			$this->uuid = $args;
-			$query      = $this->main_query . ' WHERE uuid = %s';
-			$this->item = W4OS3::$robust_db->get_row( W4OS3::$robust_db->prepare( $query, $this->uuid ) );
+			
+			// Use the database connection from parent class
+			if ( !$this->db ) {
+				error_log(__METHOD__ . ' [ERROR] No database connection available');
+				return;
+			}
+			
+			$query      = $this->main_query . ' WHERE uuid = ?';
+			$stmt = $this->db->prepare( $query );
+			$stmt->execute( array( $this->uuid ) );
+			$this->item = $stmt->fetch(PDO::FETCH_OBJ);
 		} else {
 			return;
 		}
@@ -508,12 +520,11 @@ class W4OS3_Region extends OpenSim_Region {
 		// $result = $sim->console( 'land show' );
 		// error_log( 'result: ' . print_r( $result, true ) );
 
-		if ( $this->db && $this->db->ready ) {
-			$query   = $this->db->prepare(
-				'SELECT * FROM land WHERE RegionUUID = %s',
-				$this->uuid,
-			);
-			$results = $this->db->get_results( $query );
+		if ( $this->db && $this->db->connected ) {
+			$query   = 'SELECT * FROM land WHERE RegionUUID = ?';
+			$stmt = $this->db->prepare( $query );
+			$stmt->execute( array( $this->uuid ) );
+			$results = $stmt->fetchAll( PDO::FETCH_OBJ );
 			if ( ! $results ) {
 				return false;
 			}
@@ -686,19 +697,19 @@ class W4OS3_Region extends OpenSim_Region {
 		$icons = array();
 
 		$credentials = W4OS2to3::get_credentials( $server_uri );
-		// error_log( 'Server credentials ' . print_r( $credentials, true ) );
-		// if ( $credentials['rest']['enabled'] ?? false ) {
-		// $icons['rest'] = '<span class="dashicons dashicons-rest-api"></span>';
-		// }
 		if ( $credentials['console']['enabled'] ?? false ) {
-			$disabled = $region->console_connected ? '' : 'disabled';
-			// $icons['console'] = '<span class="dashicons dashicons-desktop"></span>';
-			// $icons['console'] = '<span class="dashicons dashicons-analytics"></span>';
-			$icons['console'] = '<span class="dashicons dashicons-embed-generic ' . $disabled . '"></span>';
+			if ( $region->console_connected ) {
+				$icons['console'] = '<span class="dashicons dashicons-embed-generic" style="color: #00a32a;"></span>';
+			} else {
+				$icons['console'] = '<span class="dashicons dashicons-embed-generic disabled"></span>';
+			}
 		}
 		if ( $credentials['db']['enabled'] ?? false ) {
-			$disabled    = $region->db_connected ? '' : 'disabled';
-			$icons['db'] = '<span class="dashicons dashicons-database ' . $disabled . '"></span>';
+			if ( $region->db_connected ) {
+				$icons['db'] = '<span class="dashicons dashicons-database" style="color: #00a32a;"></span>';
+			} else {
+				$icons['db'] = '<span class="dashicons dashicons-database disabled"></span>';
+			}
 		}
 
 		return implode( ' ', $icons );
