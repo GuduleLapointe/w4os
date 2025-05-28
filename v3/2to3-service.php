@@ -140,7 +140,7 @@ class W4OS3_Service {
 			return false;
 		}
 
-		$this->db = new W4OS_WPDB( $this->serviceURI );
+		$this->db = new OSPDO( $this->serviceURI );
 		if ( is_wp_error( $this->db ) ) {
 			error_log( 'simdb error ' . $this->db->get_error_message() );
 			$this->db = false;

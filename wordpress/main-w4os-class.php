@@ -27,9 +27,6 @@ if(!defined('W4OS_ENABLE_V3')) {
 
 // Load engine first
 require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
-
-// Load v3 transitional files FIRST (contains latest features not yet migrated here)
-require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
     
 // Use bridge implementation to OpenSimulator engine
 class W4OS3 {
@@ -343,10 +340,8 @@ class W4OS3 {
 }
 
 // Load WordPress-specific classes (consolidating into W4OS3)
-// Only load the model class now that methods are consolidated into W4OS3
-if (file_exists(__DIR__ . '/includes/class-w4os3-model.php')) {
-    require_once __DIR__ . '/includes/class-w4os3-model.php';
-}
+require_once __DIR__ . '/includes/class-w4os3-model.php';
+require_once __DIR__ . '/includes/class-w4os-avatar.php';
 
 // Load WordPress Avatar class
 if (file_exists(__DIR__ . '/includes/class-w4os-avatar.php')) {
@@ -359,6 +354,8 @@ require_once W4OS_PLUGIN_DIR . 'v1/init.php';
 
 // v2 loader (contains additional features)
 require_once W4OS_PLUGIN_DIR . 'v2/loader.php';
+require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
+
 
 // Load admin functionality
 if (is_admin()) {

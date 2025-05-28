@@ -237,7 +237,7 @@ class W4OS3_Flux {
 		if ( $avatar && $avatar->Email == wp_get_current_user()->user_email ) {
 			$thatsme = true;
 		} else if ( $avatar ) {
-			$session_avatar = W4OS3::session_avatar();
+			$session_avatar = W4OS2to3::session_avatar ();
 			$thatsme        = $session_avatar ? ( $session_avatar->UUID == $avatar->UUID ) : false;
 		}
 		if ( ! $thatsme ) {

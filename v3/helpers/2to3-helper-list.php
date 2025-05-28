@@ -31,7 +31,7 @@ add_action(
 
 			/** Class constructor */
 			public function __construct( $db, $table, $args ) {
-				$args                   = WP_parse_args(
+				$args                   = wp_parse_args(
 					$args,
 					array(
 						'singular'      => 'Item',
@@ -100,7 +100,7 @@ add_action(
 
 			/** Define the columns */
 			public function get_columns() {
-				$columns = WP_parse_args(
+				$columns = wp_parse_args(
 					$this->columns,
 					array(
 						'cb' => '<input type="checkbox" />',
@@ -246,7 +246,14 @@ add_action(
 					// $query .= " ORDER BY `{$this->id_field}` ASC";
 				}
 
-				$results = $this->db->get_results( $query );
+				if($this->db) {
+					$results = $this->db->get_results( $query );
+				} else {
+					error_log(__FUNCTION__ . ':' . __LINE__ . ' [ERROR] Database not connected.');
+					$results = [];
+					// Handle error if database connection fails
+				}
+				
 
 				// Apply PHP-based filters if any
 				if ( ! empty( $this->php_filters ) ) {
@@ -374,7 +381,13 @@ add_action(
 			function get_views() {
 				// Get unfiltered items to build views action links
 				$unfiltered_query = $this->query;
-				$items            = $this->db->get_results( $unfiltered_query );
+				if($this->db) {
+					$items            = $this->db->get_results( $unfiltered_query );
+				} else {
+					error_log(__FUNCTION__ . ':' . __LINE__ . ' [ERROR] Database not connected.');
+					$items = [];
+					// Handle error if database connection fails
+				}
 
 				if ( empty( $items ) ) {
 					return;

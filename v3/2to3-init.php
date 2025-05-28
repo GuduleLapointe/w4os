@@ -285,11 +285,11 @@ class W4OS2to3 {
 
 	public static function constants() {
 		define( 'W4OS_PLUGIN_DIR_URL', plugin_dir_url( __DIR__ ) );
-		define( 'W4OS_PLUGIN', basename( W4OS_PLUGIN_DIR ) . '/w4os.php' );
+		// define( 'W4OS_PLUGIN', basename( W4OS_PLUGIN_DIR ) . '/w4os.php' );
 		define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
 		define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
 		define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
-		define( 'W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000' );
+		// define( 'W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000' );
 
 		define(
 			'W4OS_DB_ROBUST',
@@ -318,19 +318,13 @@ class W4OS2to3 {
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-usermenu.php';
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 
-		// Load v3 features if enabled
-		if ( W4OS_ENABLE_V3 ) {
-			// Include v3 feature files
-			require_once W4OS_INCLUDES_DIR . '2to3-avatar.php';
-			require_once W4OS_INCLUDES_DIR . 'class-flux.php';
-			// require_once W4OS_INCLUDES_DIR . '2to3-region.php';
-		}
+		require_once W4OS_INCLUDES_DIR . 'class-flux.php';
 
 		// Once all files are loaded, we start the classes.
 		$Settings = new W4OS3_Settings();
 		$Settings->init();
 
-		self::$robust_db  = new W4OS_WPDB( W4OS_DB_ROBUST );
+		self::$robust_db  = new OSPDO( W4OS_DB_ROBUST );
 		self::$assets_db  = self::$robust_db;
 		self::$profile_db = self::$robust_db;
 

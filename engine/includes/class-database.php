@@ -10,6 +10,74 @@ class OSPDO extends PDO {
     public $connected = false;
     
     public function __construct($dsn, $username = null, $password = null, $driver_options = null) {
+        // First handle the different attributes formatting
+		if ( WP_DEBUG && WP_DEBUG_DISPLAY ) {
+			$this->show_errors();
+		}
+
+		$args = func_get_args();
+		if ( count( $args ) == 1 && is_string( $args[0] ) ) {
+			// If a single string is passed, assume it's service URI.
+			$url_parts   = parse_url( $args[0] );
+			$serviceURI  = $url_parts['host'] . ( empty( $url_parts['port'] ) ? '' : ':' . $url_parts['port'] );
+			$credentials = W4OS2to3::get_credentials( $serviceURI );
+
+			$db_enabled = $credentials['db']['enabled'] ?? false;
+			if ( ! $db_enabled ) {
+				return false;
+			}
+
+			$username    = $credentials['db']['user'];
+			$password = $credentials['db']['pass'];
+			$dbname     = $credentials['db']['name'];
+			$dbhost     = $credentials['db']['host'] . ( empty( $credentials['db']['port'] ) ? '' : ':' . $credentials['db']['port'] );
+		} elseif ( is_array( $args[0] ) ) {
+			// If args are passed as an array, extract them.
+			$credentials = OpenSim::parse_args(
+				$args[0],
+				array(
+					'user'     => null,
+					'pass'     => null,
+					'database' => null,
+					'host'     => null,
+					'port'     => null,
+				)
+			);
+			$username     = $credentials['user'];
+			$password  = $credentials['pass'];
+			$dbname      = $credentials['database'];
+			$dbhost      = $credentials['host'] . ( empty( $credentials['port'] ) ? '' : ':' . $credentials['port'] );
+		}
+
+		// Use the `mysqli` extension if it exists unless `WP_USE_EXT_MYSQL` is defined as true.
+		if ( function_exists( 'mysqli_connect' ) ) {
+			$this->use_mysqli = true;
+
+			// Set mysqli connection timeout to 5 seconds
+			ini_set( 'mysqli.connect_timeout', 1 );
+
+			if ( defined( 'WP_USE_EXT_MYSQL' ) ) {
+				$this->use_mysqli = ! WP_USE_EXT_MYSQL;
+			}
+		}
+
+		// Actual db_connect() attempt can take forever is remote connection is not allowed.
+		// So, we should first make a quick test to verify the remote port is accessible
+		// before attempting to connect to the database.
+
+		$url_parts = parse_url( $dbhost );
+		$test_host = $url_parts['host'];
+		$test_port = $url_parts['port'] ?? 3306;
+		$socket    = @fsockopen( $test_host, $test_port, $errno, $errstr, 1 );
+		if ( ! $socket ) {
+			$error = "Failed to connect to the database server: $errstr";
+			error_log( $error );
+			// If the port is not accessible, we should not attempt to connect to the database.
+			return new WP_Error( 'db_connect_error', $error );
+		}
+
+        $dsn = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
+
         try {
             @parent::__construct($dsn, $username, $password, $driver_options);
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -56,7 +124,7 @@ class OSPDO extends PDO {
     }
 
     /**
-     * Prepare query and return single value
+     * Get single value using PDO standard
      */
     public function get_var($query, $params = array()) {
         $statement = $this->prepareAndExecute($query, $params);
@@ -69,12 +137,12 @@ class OSPDO extends PDO {
     }
 
     /**
-     * WordPress wpdb compatibility method - get single row
+     * Get single row using PDO standard
      */
-    public function get_row($query, $params = array(), $output = OBJECT) {
+    public function get_row($query, $params = array(), $output = PDO::FETCH_OBJ) {
         $statement = $this->prepareAndExecute($query, $params);
         if ($statement) {
-            $result = ($output === ARRAY_A) ? $statement->fetch(PDO::FETCH_ASSOC) : $statement->fetch(PDO::FETCH_OBJ);
+            $result = $statement->fetch($output);
             $statement->closeCursor();
             return $result;
         }
@@ -82,32 +150,16 @@ class OSPDO extends PDO {
     }
 
     /**
-     * WordPress wpdb compatibility method - get multiple rows
+     * Get multiple rows using PDO standard
      */
-    public function get_results($query, $params = array(), $output = OBJECT) {
+    public function get_results($query, $params = array(), $output = PDO::FETCH_OBJ) {
         $statement = $this->prepareAndExecute($query, $params);
         if ($statement) {
-            $results = ($output === ARRAY_A) ? $statement->fetchAll(PDO::FETCH_ASSOC) : $statement->fetchAll(PDO::FETCH_OBJ);
+            $results = $statement->fetchAll($output);
             $statement->closeCursor();
             return $results;
         }
         return array();
-    }
-
-    /**
-     * WordPress wpdb compatibility method - prepare query with placeholders
-     */
-    public function prepare($query, ...$args) {
-        if (empty($args)) {
-            return parent::prepare($query);
-        }
-        
-        // Simple WordPress-style placeholder replacement
-        $query = str_replace('%s', '?', $query);
-        $query = str_replace('%d', '?', $query);
-        $query = str_replace('%f', '?', $query);
-        
-        return parent::prepare($query);
     }
 
     /**

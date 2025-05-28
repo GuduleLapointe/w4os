@@ -547,7 +547,7 @@ class W4OS3_Settings {
 				// Grouped fields for database credentials
 				$login_uri    = get_option( 'w4os_login_uri', home_url() );
 				$default_host = parse_url( $login_uri, PHP_URL_HOST ) ?? 'yourgrid.org';
-				$creds        = WP_parse_args(
+				$creds        = wp_parse_args(
 					$value,
 					array(
 						'type'         => ( $args['id'] == 'robust' ) ? 'robust' : null,
