@@ -40,19 +40,19 @@ class W4OS3 {
     public static $assets_db;
     public static $profile_db;
     
-    // Bridge to OpenSimulator engine methods
-    public static function sanitize_uri($uri) {
-        if (class_exists('OpenSim')) {
-            return OpenSim::sanitize_uri($uri);
-        }
-        // Fallback implementation
-        if (empty($uri)) return null;
-        $uri = (preg_match('/^https?:\/\//', $uri)) ? $uri : 'http://' . $uri;
-        $parts = parse_url($uri);
-        if (!$parts) return null;
-        $parts = array_merge(['scheme' => 'http', 'port' => 8002], $parts);
-        return $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
-    }
+    // Moved in engine OpenSim class
+    // public static function sanitize_uri($uri) {
+    //     if (class_exists('OpenSim')) {
+    //         return OpenSim::sanitize_uri($uri);
+    //     }
+    //     // Fallback implementation
+    //     if (empty($uri)) return null;
+    //     $uri = (preg_match('/^https?:\/\//', $uri)) ? $uri : 'http://' . $uri;
+    //     $parts = parse_url($uri);
+    //     if (!$parts) return null;
+    //     $parts = array_merge(['scheme' => 'http', 'port' => 8002], $parts);
+    //     return $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
+    // }
     
     public static function encrypt($data, $key = null) {
         if (class_exists('OpenSim') && $key) {

@@ -627,7 +627,7 @@ add_action( 'w4os_get_urls_statuses', 'w4os_get_urls_statuses' );
 
 function w4os_sanitize_login_uri( $login_uri ) {
 	if ( W4OS_ENABLE_V3 ) {
-		return W4OS3::sanitize_uri( $login_uri );
+		return OpenSim::sanitize_uri( $login_uri );
 	}
 
 	if ( empty( $login_uri ) ) {

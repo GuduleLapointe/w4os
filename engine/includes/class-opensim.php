@@ -13,6 +13,7 @@ if (!defined('OPENSIM_ENGINE_PATH')) {
 class OpenSim
 {
     private static $instance = null;
+	private static $key;
     
     public static function getInstance()
     {
@@ -26,12 +27,16 @@ class OpenSim
      * Encrypt data with key
      * Pure PHP encryption without WordPress dependencies
      */
-    public static function encrypt($data, $key)
+    public static function encrypt($data, $key = null)
     {
         if (!extension_loaded('openssl') || !function_exists('openssl_encrypt')) {
             return $data; // Return unencrypted if OpenSSL not available
         }
         
+        if(empty($key)) {
+            return $data; // Return unencrypted if no key provided
+        }
+
         if (!is_string($data)) {
             $data = json_encode($data);
         }
@@ -50,7 +55,9 @@ class OpenSim
         if (!extension_loaded('openssl') || !function_exists('openssl_decrypt')) {
             return $data; // Return raw data if OpenSSL not available
         }
-        
+        if( empty($key)) {
+            return $data; // Return raw data if no key provided
+        }
         if (!is_string($data)) {
             return $data;
         }
@@ -92,7 +99,36 @@ class OpenSim
         
         return $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
     }
-    
+
+    static function sanitize_login_uri( $login_uri ) {
+		if ( empty( $login_uri ) ) {
+			return;
+		}
+	
+		$login_uri = ( preg_match( '/^https?:\/\//', $login_uri ) ) ? $login_uri : 'http://' . $login_uri;
+	
+		$parts = wp_parse_args(
+			wp_parse_url( $login_uri ),
+			array(
+				'scheme' => 'http',
+				'port'   => preg_match('/osgrid\.org/', $login_uri) ? 80 : 8002,
+			),
+		);
+	
+		$login_uri = $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
+	
+		return $login_uri;
+	}
+
+
+    public static function sanitize_uri_plus( $url ) {
+        $url = trim( $url );
+        $url = str_replace( ' ', '+', $url );
+        $url = filter_var( $url, FILTER_SANITIZE_URL );
+        return $url;
+    }
+
+
     /**
      * Check if string is valid UUID
      */

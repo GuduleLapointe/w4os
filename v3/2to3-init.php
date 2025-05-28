@@ -501,25 +501,6 @@ class W4OS2to3 {
 		return wp_date( $format, $timestamp, $timezone );
 	}
 
-	static function sanitize_uri( $login_uri ) {
-		if ( empty( $login_uri ) ) {
-			return;
-		}
-	
-		$login_uri = ( preg_match( '/^https?:\/\//', $login_uri ) ) ? $login_uri : 'http://' . $login_uri;
-	
-		$parts = wp_parse_args(
-			wp_parse_url( $login_uri ),
-			array(
-				'scheme' => 'http',
-				'port'   => preg_match('/osgrid\.org/', $login_uri) ? 80 : 8002,
-			),
-		);
-	
-		$login_uri = $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
-	
-		return $login_uri;
-	}
 
 	static function format_date( $timestamp, $format = 'MEDIUM', $timetype_str = 'NONE' ) {
 		switch( $format ) {
@@ -656,7 +637,7 @@ class W4OS2to3 {
 		}
 
 		if ( is_string( $instance ) ) {
-			$instance = self::sanitize_uri( $instance );
+			$instance = OpenSim::sanitize_login_uri( $instance );
 			$parts              = parse_url( $instance );
 			$serverURI          = $parts['host'] . ':' . $parts['port'];
 			$cred_options       = get_option( 'w4os-credentials' ); // Shoud somewhere else, but it's where it's currently.
@@ -716,41 +697,14 @@ class W4OS2to3 {
 	 * Encrypt data with self::$key, in such a way that it can be decrypted later with the same key
 	 */
 	public static function encrypt( $data ) {
-		if ( ! extension_loaded( 'openssl' ) || ! function_exists( 'openssl_encrypt' ) ) {
-			// Return data unencrypted or handle error
-			return $data;
-		}
-		$key = self::$key;
-		if ( ! is_string( $data ) ) {
-			$data = json_encode( $data );
-		}
-		$iv        = openssl_random_pseudo_bytes( 16 );
-		$encrypted = openssl_encrypt( $data, 'aes-256-cbc', $key, 0, $iv );
-		return base64_encode( $encrypted . '::' . $iv );
+		return OpenSim::encrypt( $data, self::$key );
 	}
 
 	/**
 	 * Decrypt data with self::$key, encrypted with self::encrypt
 	 */
 	public static function decrypt( $data ) {
-		if ( ! extension_loaded( 'openssl' ) || ! function_exists( 'openssl_decrypt' ) ) {
-			// Return raw data if OpenSSL is not available
-			return $data;
-		}
-		if ( ! is_string( $data ) ) {
-			return $data;
-		}
-		if ( ! preg_match( '/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $data ) ) {
-			return $data;
-		}
-		$key                       = self::$key;
-		list($encrypted_data, $iv) = explode( '::', base64_decode( $data ), 2 );
-		$data                      = openssl_decrypt( $encrypted_data, 'aes-256-cbc', $key, 0, $iv );
-		$decode                    = json_decode( $data, true );
-		if ( json_last_error() === JSON_ERROR_NONE ) {
-			return $decode;
-		}
-		return $data;
+		return OpenSim::decrypt( $data, self::$key );
 	}
 
 	public static function grid_info( $gateway_uri = null, $force = false ) {
