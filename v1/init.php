@@ -62,7 +62,7 @@ if ( ! defined( 'W4OS_TXDOM' ) ) {
 // if ( ! defined( 'W4OS_DATA_SLUG' ) ) define('W4OS_DATA_SLUG', sanitize_title(W4OS_PLUGIN_NAME) );
 // if ( ! defined( 'W4OS_STORE_LINK' ) ) define('W4OS_STORE_LINK', "<a href=" . W4OS_PLUGIN_URI . " target=_blank>" . W4OS_AUTHOR_NAME . "</a>");
 // /* translators: %s is replaced by the name of the plugin, untranslated */
-// if ( ! defined( 'W4OS_REGISTER_TEXT' ) ) define('W4OS_REGISTER_TEXT', W4OS3::sprintf_safe(__('Get a license key on %s website', W4OS_TXDOM), W4OS_STORE_LINK) );
+// if ( ! defined( 'W4OS_REGISTER_TEXT' ) ) define('W4OS_REGISTER_TEXT', sprintf_safe(__('Get a license key on %s website', W4OS_TXDOM), W4OS_STORE_LINK) );
 
 define( 'W4OS_LOGIN_PAGE', get_home_url( null, get_option( 'w4os_profile_slug' ) ) );
 

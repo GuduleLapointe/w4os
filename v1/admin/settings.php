@@ -151,7 +151,7 @@ function w4os_settings_field( $args, $user = false ) {
 		case 'url':
 			if ( $args['readonly'] ) {
 				if ( ! empty( $value ) ) {
-					echo W4OS3::sprintf_safe( '<a href="%1$s">%1$s</a>', esc_html( $value ) );
+					echo sprintf_safe( '<a href="%1$s">%1$s</a>', esc_html( $value ) );
 				}
 				break;
 			}
@@ -232,7 +232,7 @@ function w4os_settings_field( $args, $user = false ) {
 }
 
 function w4os_settings_callback_gridinfo() {
-	echo W4OS3::sprintf_safe(
+	echo sprintf_safe(
 		'<p>%1$s %2$s</p>',
 		__( 'Values must match Robust.HG.ini (or Robust.HG.ini) config file.', 'w4os' ),
 		__( 'Robust server must be running. Values entered here will be checked against your Robust server and updated if needed.', 'w4os' ),

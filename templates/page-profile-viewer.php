@@ -5,7 +5,7 @@ $classes = 'w4os profile-viewer profile-page page';
 
 if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
 	if ( W4OS_ENABLE_V3 ) {
-		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
+		W4OS3::enqueue_style( 'w4os-profile', 'wordpress/css/profile.css' );
 		$avatar     = new W4OS3_Avatar( $_GET['name'] );
 		$page_title = sprintf(
 			__( '%s\'s flux', 'w4os' ),

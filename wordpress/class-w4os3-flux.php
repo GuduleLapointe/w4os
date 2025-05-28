@@ -260,7 +260,7 @@ class W4OS3_Flux extends OpenSim_Flux {
 		);
 
 		// Enqueue flux.js to load in the footer
-		W4OS3::enqueue_script( 'v3-flux', 'v3/js/flux.js', array(), false, true );
+		W4OS3::enqueue_script( 'v3-flux', 'wordpress/js/flux.js', array(), false, true );
 
 		$content .= '</form>';
 		return $content;
@@ -400,7 +400,7 @@ class W4OS3_Flux extends OpenSim_Flux {
 		if ( is_page() ) { // Adjust the condition as needed
 			// wp_enqueue_script(
 			// 'infinite-scroll',
-			// plugins_url( 'v3/js/flux.js', __FILE__ ),
+			// plugins_url( 'wordpress/js/flux.js', __FILE__ ),
 			// array( 'jquery' ),
 			// '1.0',
 			// true
@@ -547,8 +547,8 @@ class W4OS3_Flux extends OpenSim_Flux {
 				return $content;
 			}
 
-			W4OS3::enqueue_style( 'flux-posts-style', 'v3/css/flux-posts.css' );
-			W4OS3::enqueue_style( 'flux-posts-style', 'v3/css/profile.css' );
+			W4OS3::enqueue_style( 'flux-posts-style', 'wordpress/css/flux-posts.css' );
+			W4OS3::enqueue_style( 'flux-posts-style', 'wordpress/css/profile.css' );
 
 			$post_date   = get_the_date( '', $post_id ) . ' ' . get_the_time( '', $post_id );
 			$timestamp = get_the_time( 'U', $post_id );

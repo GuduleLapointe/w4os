@@ -196,12 +196,12 @@ class W4OS_Avatar extends WP_User {
 			In-world profiles are always public, so are web profiles */
 			// if($avatar_row->profileAllowPublish != 1) {
 			// if($avatar_row->Email == $current_user_email) {
-			// $content.= W4OS3::sprintf_safe(
+			// $content.= sprintf_safe(
 			// '<p class=notice>%s</p>',
 			// __('This is a preview, your profile is actually private.', 'w4os'),
 			// );
 			// } else {
-			// $content.= W4OS3::sprintf_safe(
+			// $content.= sprintf_safe(
 			// '<p class=notice>%s</p>',
 			// __('This profile is private but you are admin, so you can look. Be fair.', 'w4os'),
 			// );
@@ -463,11 +463,11 @@ function w4os_create_avatar( $user, $params ) {
 	// if ( ! w4os_is_strong ($password)) return false; // We now only rely on WP password requirements
 
 	if ( in_array( strtolower( $firstname ), array_map( 'strtolower', W4OS_DEFAULT_RESTRICTED_NAMES ) ) ) {
-		w4os_user_notice( W4OS3::sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$firstname" ), 'error' );
+		w4os_user_notice( sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$firstname" ), 'error' );
 		return false;
 	}
 	if ( in_array( strtolower( $lastname ), array_map( 'strtolower', W4OS_DEFAULT_RESTRICTED_NAMES ) ) ) {
-		w4os_user_notice( W4OS3::sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$lastname" ), 'error' );
+		w4os_user_notice( sprintf_safe( __( 'The name %s is not allowed', 'w4os' ), "$lastname" ), 'error' );
 		return false;
 	}
 	if ( ! preg_match( '/^[a-zA-Z0-9]*$/', $firstname . $lastname ) ) {
@@ -477,7 +477,7 @@ function w4os_create_avatar( $user, $params ) {
 	// Check if there is already an avatar with this name
 	$check_uuid = $w4osdb->get_var( "SELECT PrincipalID FROM UserAccounts WHERE FirstName = '$firstname' AND LastName = '$lastname'" );
 	if ( $check_uuid ) {
-		w4os_user_notice( W4OS3::sprintf_safe( __( 'There is already a grid user named %s', 'w4os' ), "$firstname $lastname" ), 'fail' );
+		w4os_user_notice( sprintf_safe( __( 'There is already a grid user named %s', 'w4os' ), "$firstname $lastname" ), 'fail' );
 		return false;
 	}
 	$newavatar_uuid = w4os_gen_uuid();
@@ -732,7 +732,7 @@ function w4os_create_avatar( $user, $params ) {
 		return false;
 	}
 
-	w4os_user_notice( W4OS3::sprintf_safe( __( 'Avatar %s created successfully.', 'w4os' ), "$firstname $lastname" ), 'success' );
+	w4os_user_notice( sprintf_safe( __( 'Avatar %s created successfully.', 'w4os' ), "$firstname $lastname" ), 'success' );
 
 	$check_uuid = w4os_profile_sync( $user ); // refresh opensim data for this user
 	return $newavatar_uuid;
@@ -766,7 +766,7 @@ function w4os_avatar_creation_form( $user ) {
 	global $w4osdb;
 
 	wp_enqueue_style( 'w4os-wp-forms', site_url( '/wp-admin/css/forms.min.css' ) );
-	wp_enqueue_style( 'w4os-forms', plugin_dir_url( __DIR__ ) . 'v3/css/forms.css', array(), time() );
+	wp_enqueue_style( 'w4os-forms', plugin_dir_url( __DIR__ ) . 'wordpress/css/forms.css', array(), time() );
 
 	if ( isset( $_REQUEST['w4os_firstname'] ) && isset( $_REQUEST['w4os_lastname'] ) ) {
 		$firstname = sanitize_text_field( $_REQUEST['w4os_firstname'] );
@@ -881,7 +881,7 @@ function w4os_profile_display( $user, $args = array() ) {
 
 	if ( isset( $user->ID ) && $user->ID == 0 ) {
 		$wp_login_url = wp_login_url();
-		// $content =  "<p class='avatar not-connected'>" . W4OS3::sprintf_safe(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
+		// $content =  "<p class='avatar not-connected'>" . sprintf_safe(__("%sLog in%s to choose an avatar.", 'w4os'), "<a href='$wp_login_url$wp_login_url'>", "</a>") ."</p>";
 		$content = '<div class=w4os-login>' . wp_login_form( array( 'echo' => false ) ) . '</div>';
 		return $content;
 	}
@@ -929,7 +929,7 @@ function w4os_profile_display( $user, $args = array() ) {
 		} else {
 			$content .= $avatar->profile_page();
 		}
-		// $content.= W4OS3::sprintf_safe(
+		// $content.= sprintf_safe(
 		// '<div class=profile><div class=profile-pic>%1$s</div><div class=profile-details>%2$s</div></div>',
 		// $avatar->profile_picture(),
 		// $avatar->AvatarName,
@@ -937,7 +937,7 @@ function w4os_profile_display( $user, $args = array() ) {
 		// return $content;
 	} elseif ( ! empty( $args['mini'] ) ) {
 			// Display simple link when 'mini' argument is set
-			$content .= W4OS3::sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __( 'Create an avatar', 'w4os' ) );
+			$content .= sprintf_safe( '<a href="%1$s">%2$s</a>', W4OS_PROFILE_URL, __( 'Create an avatar', 'w4os' ) );
 	} else {
 		// Display responsive form and hidden dialog
 		$content .= '<div id="profilewrapper">';
@@ -1014,7 +1014,7 @@ function w4os_render_asset( $image_uuid, $size = 256, $default = '', $alt = '', 
 	if ( w4os_empty( $image_uuid ) ) {
 		return;
 	}
-	return W4OS3::sprintf_safe(
+	return sprintf_safe(
 		'<img src="%1$s" class="asset asset-%3$d %4$s" alt="%2$s" loading="lazy" width="%3$d" height="%3$d">',
 		w4os_get_asset_url( $image_uuid ),
 		( empty( $alt ) ) ? 'OpenSimulator asset' : $alt,
@@ -1039,7 +1039,7 @@ function w4os_get_avatar( $user_id, $size = 96, $default = '', $alt = '', $args 
 		$alt = 'avatar profile picture';
 	}
 	return w4os_render_asset( $image_uuid, $size, $default, $alt, $args );
-	return W4OS3::sprintf_safe(
+	return sprintf_safe(
 		'<img src="%1$s" class="avatar avatar-%3$d photo" alt="%2$s" loading="lazy" width="%3$d" height="%3$d">',
 		w4os_get_asset_url( $image_uuid ),
 		'avatar profile picture',
@@ -1087,7 +1087,7 @@ function w4os_gridprofile_block_render( $args = array(), $dumb = '', $block_obje
 	$args['before_title'] = '<h4>';
 	$args['after_title']  = '</h4>';
 	$args['title']        = __( 'Avatar Profile', 'w4os' );
-	return W4OS3::sprintf_safe(
+	return sprintf_safe(
 		'<div>%s</div>',
 		w4os_gridprofile_html( null, $args )
 	);
@@ -1109,7 +1109,7 @@ function w4os_grid_profile_url( $user_or_id ) {
 		return;
 	}
 
-	$link = W4OS3::sprintf_safe( '/app/agent/%s/about', $user->UUID );
+	$link = sprintf_safe( '/app/agent/%s/about', $user->UUID );
 	if ( W4OS_ENABLE_V3 && W4OS2to3::in_world_call() ) {
 		// SLURL not supported from within profile tab, not sure it is in embedded web browser either
 		return false;
@@ -1249,7 +1249,7 @@ function w4os_user_profile_fields( $user ) {
 					// 'value' => (get_the_author_meta( 'opensim_profileAllow_web', $user->ID ) === true),
 					// 'default' => true,
 					// 'description' => __('Make avatar profile public (available in search and on the website).', 'w4os')
-					// . (($has_avatar) ? W4OS3::sprintf_safe('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_web_profile_url($user) ) : ''),
+					// . (($has_avatar) ? sprintf_safe('<p class="description"><a href="%1$s">%1$s</a></p>', w4os_web_profile_url($user) ) : ''),
 					// )
 					),
 				),

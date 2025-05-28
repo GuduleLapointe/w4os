@@ -53,7 +53,7 @@ class W4OS_I18n extends W4OS_Loader {
 		if ( is_textdomain_loaded( W4OS_TXDOM ) ) {
 			unload_textdomain( W4OS_TXDOM );
 		}
-		$mofile = W4OS3::sprintf_safe( '%s-%s.mo', W4OS_TXDOM, $locale );
+		$mofile = sprintf_safe( '%s-%s.mo', W4OS_TXDOM, $locale );
 
 		$domain_path = path_join( WP_PLUGIN_DIR, W4OS_SLUG . '/languages' );
 		$loaded      = load_textdomain( W4OS_TXDOM, path_join( $domain_path, $mofile ) );

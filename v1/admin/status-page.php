@@ -72,7 +72,7 @@ $count = w4os_count_users();
 						<td>
 						<?php
 						if ( $count['grid_only'] > 0 ) {
-							echo '<p>' . W4OS3::sprintf_safe(
+							echo '<p>' . sprintf_safe(
 								_n(
 									'%d grid account has no linked WP account. Syncing will create a new WP account.',
 									'%d grid accounts have no linked WP account. Syncing will create new WP accounts.',
@@ -83,7 +83,7 @@ $count = w4os_count_users();
 							) . '</p>';
 						}
 						if ( $count['wp_only'] > 0 ) {
-							echo '<p>' . W4OS3::sprintf_safe(
+							echo '<p>' . sprintf_safe(
 								_n(
 									'%d WordPress account is linked to an unexisting avatar (wrong UUID). Syncing accounts will keep this WP account but remove the broken reference.',
 									'%d WordPress accounts are linked to unexisting avatars (wrong UUID). Syncing accounts will keep these WP accounts but remove the broken reference.',
@@ -94,7 +94,7 @@ $count = w4os_count_users();
 							) . '</p>';
 						}
 						if ( $count['tech'] > 0 ) {
-							echo '<p>' . W4OS3::sprintf_safe(
+							echo '<p>' . sprintf_safe(
 								_n(
 									'%d grid account (other than models) has no email address, which is fine as long as it is used only for maintenance or service tasks.',
 									'%d grid accounts (other than models) have no email address, which is fine as long as they are used only for maintenance or service tasks.',
@@ -139,7 +139,7 @@ $count = w4os_count_users();
 		$grid_running = w4os_grid_running();
 		if ( ! w4os_grid_running() ) {
 			$other_attributes['disabled'] = true;
-			echo '<p class="notice warning">' . W4OS3::sprintf_safe(
+			echo '<p class="notice warning">' . sprintf_safe(
 				__( 'Grid not running, start Robust server or %1$scheck OpenSimulator settings%2$s.', 'w4os' ),
 				'<a href="' . get_admin_url( '', 'admin.php?page=w4os_settings' ) . '">',
 				'</a>',
@@ -151,7 +151,7 @@ $count = w4os_count_users();
 		echo '<tr>';
 		echo '<td>' . w4os_status_icon( $grid_running ) . '</td>';
 		echo '<td>';
-		echo W4OS3::sprintf_safe(
+		echo sprintf_safe(
 			'<a class=button href="%s">%s</a>',
 			admin_url(
 				'admin.php?' . wp_nonce_url(
@@ -168,7 +168,7 @@ $count = w4os_count_users();
 		);
 		echo '</td>';
 		echo '<td>';
-		echo '<p class=description>' . W4OS3::sprintf_safe( __( 'Last checked %s ago.', 'w4os' ), human_time_diff( get_transient( 'w4os_get_url_status_checked' ) ) ) . '</p>';
+		echo '<p class=description>' . sprintf_safe( __( 'Last checked %s ago.', 'w4os' ), human_time_diff( get_transient( 'w4os_get_url_status_checked' ) ) ) . '</p>';
 		echo '<p class=description>' . __( 'OpenSimulator pages are checked regularly in the background. Synchronize now only if you made changes and want an immediate status.', 'w4os' ) . '<p>';
 		echo '</td></tr>';
 
@@ -176,10 +176,10 @@ $count = w4os_count_users();
 			foreach ( $required as $key => $data ) {
 				$url = ( ! empty( $grid_info[ $key ] ) ) ? $grid_info[ $key ] : '';
 				// if (empty($grid_info[$key]) ) $url = "''";
-				// else $url = W4OS3::sprintf_safe('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
+				// else $url = sprintf_safe('<a href="%1$s" target=_blank>%1$s</a>', $grid_info[$key]);
 				$success     = w4os_get_url_status( $url, 'boolean' );
 				$status_icon = w4os_get_url_status( $url, 'icon' );
-				echo W4OS3::sprintf_safe(
+				echo sprintf_safe(
 					'<tr>
 				<td>%2$s</td>
 				<td><h3>%1$s</h3>%3$s%4$s%5$s%7$s</td>
@@ -188,19 +188,19 @@ $count = w4os_count_users();
 				',
 					$data['name'],
 					$status_icon,
-					( ! empty( $url ) ) ? W4OS3::sprintf_safe( '<p class=url><a href="%1$s">%1$s</a></p>', $url ) : '',
+					( ! empty( $url ) ) ? sprintf_safe( '<p class=url><a href="%1$s">%1$s</a></p>', $url ) : '',
 					( ! empty( $data['description'] ) ) ? '<p class=description>' . $data['description'] . '</p>' : '',
 					( ! empty( $data['recommended'] ) && $url != $data['recommended'] ) ? '<p class=warning><span class="w4os-status dashicons dashicons-warning"></span> '
-					. W4OS3::sprintf_safe( __( 'Should be %1$s, got %2$s', 'w4os' ), $data['recommended'], $url ) . '</p>' : '',
+					. sprintf_safe( __( 'Should be %1$s, got %2$s', 'w4os' ), $data['recommended'], $url ) . '</p>' : '',
 					( ! empty( $data['os_config'] ) )
-					? W4OS3::sprintf_safe( w4os_format_ini( $data['os_config'] ), ( ! empty( $data['recommended'] ) ) ? $data['recommended'] : $url )
+					? sprintf_safe( w4os_format_ini( $data['os_config'] ), ( ! empty( $data['recommended'] ) ) ? $data['recommended'] : $url )
 					: '',
 					( $success == false && ( ! empty( $data['third_party_url'] ) )
 					? '<p class=third_party>'
 					. __( 'This service requires a separate web application.', 'w4os' )
 					. (
 						empty( $data['third_party_url'] ) ? null :
-						' ' . W4OS3::sprintf_safe(
+						' ' . sprintf_safe(
 							__( 'Try %s', 'w4os' ),
 							preg_replace( '/%url%/', $data['third_party_url'], '<a href="%url%" target=_blank>%url%</a>' ),
 						)
@@ -208,7 +208,7 @@ $count = w4os_count_users();
 					. '</p>'
 					: ( ( $success == false && empty( $data['settings_page_url'] ) && ! empty( $url ) )
 					? '<a class=button href="' . admin_url(
-						W4OS3::sprintf_safe(
+						sprintf_safe(
 							'admin.php?%s',
 							wp_nonce_url(
 								http_build_query(
@@ -229,7 +229,7 @@ $count = w4os_count_users();
 							)
 						)
 					) . '">'
-						. W4OS3::sprintf_safe(
+						. sprintf_safe(
 							__( 'Create %s page', 'w4os' ),
 							$data['name'],
 						) . '</a>'

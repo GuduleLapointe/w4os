@@ -46,7 +46,7 @@ class W4OS3_Model {
 	function enqueue_models_ajax_update_script( $hook ) {
 		// Enqueue the script only on the specific settings page
 		if ( $hook === 'opensimulator_page_w4os-avatars' ) {
-			wp_enqueue_script( 'w4os-ajax-update-available-models', W4OS_PLUGIN_DIR_URL . 'v3/helpers/js/ajax-update-available-models.js', array( 'jquery' ), '1.0.1', true );
+			wp_enqueue_script( 'w4os-ajax-update-available-models', W4OS_PLUGIN_DIR_URL . 'wordpress/includes/js/ajax-update-available-models.js', array( 'jquery' ), '1.0.1', true );
 			wp_localize_script(
 				'w4os-ajax-update-available-models',
 				'w4osSettings',
@@ -219,7 +219,7 @@ class W4OS3_Model {
 
 		$imgid = ( w4os_empty( $model->profileImage ) ) ? $placeholder : $model->profileImage;
 		if ( $imgid ) {
-			$output = W4OS3::sprintf_safe(
+			$output = sprintf_safe(
 				'<figure>
 				<img class="model-picture" alt="%2$s" src="%3$s">
 				<figcaption>%1$s</figcaption>
@@ -229,7 +229,7 @@ class W4OS3_Model {
 				w4os_get_asset_url( $imgid ),
 			);
 		} elseif ( ! empty( $display_name ) ) {
-			$output = W4OS3::sprintf_safe(
+			$output = sprintf_safe(
 				'<span class="model-name">%s</span>',
 				$display_name,
 			);

@@ -111,7 +111,7 @@ class W4OS3_UserMenu {
     
     public function add_meta_boxes_callback() {
         $menu = apply_filters('w4os_avatar_menu', array());
-        W4OS3::enqueue_script( 'usermenu-classic-menu', 'v3/helpers/js/usermenu-classic-menu.js' );
+        W4OS3::enqueue_script( 'usermenu-classic-menu', 'wordpress/includes/js/usermenu-classic-menu.js' );
         $this->menu = $menu;
         $i = -1;
         ?>

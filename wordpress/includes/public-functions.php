@@ -157,28 +157,6 @@ function w4os_get_user_notices( $echo = false ) {
 	}
 }
 
-function w4os_fast_xml( $url ) {
-	if ( class_exists( 'W4OS3' ) ) {
-		return W4OS3::fast_xml( $url );
-	}
-
-	// Exit silently if required php modules are missing
-	if ( ! function_exists( 'curl_init' ) ) {
-		return null;
-	}
-	if ( ! function_exists( 'simplexml_load_string' ) ) {
-		return null;
-	}
-
-	$ch = curl_init();
-	curl_setopt( $ch, CURLOPT_URL, $url );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-	$html = curl_exec( $ch );
-	curl_close( $ch );
-	$xml = simplexml_load_string( $html );
-	return $xml;
-}
-
 function w4os_get_grid_info( $rechecknow = false ) {
 	if ( class_exists( 'W4OS3' ) ) {
 		return W4OS3::grid_info( $rechecknow );
@@ -206,7 +184,7 @@ function w4os_update_grid_info( $rechecknow = false ) {
 	$check_login_uri = ( get_option( 'w4os_login_uri' ) ) ? 'http://' . get_option( 'w4os_login_uri' ) : $local_uri;
 	$check_login_uri = preg_replace( '+http://http+', 'http', $check_login_uri );
 	// $xml = simplexml_load_file($check_login_uri . '/get_grid_info');
-	$xml = w4os_fast_xml( $check_login_uri . '/get_grid_info' );
+	$xml = OpenSim::fast_xml( $check_login_uri . '/get_grid_info' );
 
 	if ( ! $xml ) {
 		return false;

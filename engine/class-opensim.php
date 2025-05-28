@@ -10,13 +10,11 @@ if (!defined('OPENSIM_ENGINE_PATH')) {
     exit;
 }
 
-class OpenSim
-{
+class OpenSim {
     private static $instance = null;
 	private static $key;
     
-    public static function getInstance()
-    {
+    public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
         }
@@ -27,8 +25,7 @@ class OpenSim
      * Encrypt data with key
      * Pure PHP encryption without WordPress dependencies
      */
-    public static function encrypt($data, $key = null)
-    {
+    public static function encrypt($data, $key = null) {
         if (!extension_loaded('openssl') || !function_exists('openssl_encrypt')) {
             return $data; // Return unencrypted if OpenSSL not available
         }
@@ -50,8 +47,7 @@ class OpenSim
      * Decrypt data with key
      * Pure PHP decryption without WordPress dependencies
      */
-    public static function decrypt($data, $key)
-    {
+    public static function decrypt($data, $key) {
         if (!extension_loaded('openssl') || !function_exists('openssl_decrypt')) {
             return $data; // Return raw data if OpenSSL not available
         }
@@ -79,8 +75,7 @@ class OpenSim
     /**
      * Sanitize URI - framework agnostic
      */
-    public static function sanitize_uri($login_uri)
-    {
+    public static function sanitize_uri($login_uri) {
         if (empty($login_uri)) {
             return null;
         }
@@ -145,8 +140,7 @@ class OpenSim
     /**
      * Check if string is valid UUID
      */
-    public static function is_uuid($uuid, $accept_null = true)
-    {
+    public static function is_uuid($uuid, $accept_null = true) {
         if (!is_string($uuid)) {
             return false;
         }
@@ -165,8 +159,7 @@ class OpenSim
     /**
      * Check if UUID is null key
      */
-    public static function is_null_key($uuid)
-    {
+    public static function is_null_key($uuid) {
         $null_keys = [
             '00000000-0000-0000-0000-000000000000',
             '00000000-0000-0000-0000-000000000001',
@@ -178,8 +171,7 @@ class OpenSim
      * Get grid info from gateway URI
      * Framework-agnostic grid information retrieval
      */
-    public static function grid_info($gateway_uri, $force = false)
-    {
+    public static function grid_info($gateway_uri, $force = false) {
         // Simple caching without framework dependencies
         static $cache = [];
         $cache_key = md5($gateway_uri);
@@ -189,7 +181,7 @@ class OpenSim
         }
         
         $check_login_uri = 'http://' . preg_replace('+.*://+', '', $gateway_uri);
-        $xml = self::fast_xml($check_login_uri . '/get_grid_info');
+        $xml = OpenSim::fast_xml($check_login_uri . '/get_grid_info');
         
         if (!$xml) {
             return false;
@@ -204,9 +196,11 @@ class OpenSim
     /**
      * Fast XML retrieval - framework agnostic
      */
-    public static function fast_xml($url)
-    {
+    public static function fast_xml($url) {
         if (!function_exists('curl_init') || !function_exists('simplexml_load_string')) {
+            return null;
+        }
+        if ( ! function_exists( 'simplexml_load_string' ) ) {
             return null;
         }
         
@@ -232,8 +226,7 @@ class OpenSim
      * Validate database credentials
      * Framework-agnostic database validation
      */
-    public static function validate_db_credentials($db_creds)
-    {
+    public static function validate_db_credentials($db_creds) {
         if (empty($db_creds['host']) || empty($db_creds['user']) || 
             empty($db_creds['pass']) || empty($db_creds['name'])) {
             return false;
@@ -256,8 +249,7 @@ class OpenSim
      * Parse connection string to array
      * Framework-agnostic connection string parser
      */
-    public static function connectionstring_to_array($connectionstring)
-    {
+    public static function connectionstring_to_array($connectionstring) {
         $parts = explode(';', $connectionstring);
         $creds = [];
         

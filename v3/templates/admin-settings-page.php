@@ -33,7 +33,7 @@ if ( ! isset( $menu_slug ) ) {
 $option_name  = $option_name ?? $menu_slug;
 $option_group = $option_group ?? $menu_slug . '_group';
 
-W4OS3::enqueue_style( 'w4os-admin-settings', 'v3/css/admin-settings.css' );
+W4OS3::enqueue_style( 'w4os-admin-settings', 'wordpress/css/admin-settings.css' );
 ?>
 <div class="wrap w4os">
 	<header>

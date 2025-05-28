@@ -90,7 +90,7 @@ function w4os_grid_info_block_render( $attributes, $void, $block = true ) {
 
 	$class = preg_replace( ':/:', '-', $block->name );
 
-	return W4OS3::sprintf_safe(
+	return sprintf_safe(
 		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
 		$content
@@ -143,23 +143,26 @@ function w4os_grid_info( $atts = array() ) {
 	$req['sim_name']       = '';
 	$request               = xmlrpc_encode_request( 'dir_popular_query', $req );
 
-	$post_data = array( 'xml' => $request );
-	$context   = stream_context_create(
-		array(
-			'http' => array(
-				'method'  => 'POST',
-				'header'  => 'Content-Type: text/xml' . "\r\n",
-				'content' => $request,
-			),
-		)
-	);
-	$response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );
+	// TODO: double check request parameters, dir_popular_query might not be the proper one for this request.
+	return get_xml_response_data( $searchURL, $request );
 
-	if ( is_array( $response ) & ! xmlrpc_is_fault( $response ) & ! empty( $response ) && isset( $response['data'] ) ) {
-		return $response['data'];
-	} else {
-		return array();
-	}
+	// $post_data = array( 'xml' => $request );
+	// $context   = stream_context_create(
+	// 	array(
+	// 		'http' => array(
+	// 			'method'  => 'POST',
+	// 			'header'  => 'Content-Type: text/xml' . "\r\n",
+	// 			'content' => $request,
+	// 		),
+	// 	)
+	// );
+	// $response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );
+
+	// if ( is_array( $response ) & ! xmlrpc_is_fault( $response ) & ! empty( $response ) && isset( $response['data'] ) ) {
+	// 	return $response['data'];
+	// } else {
+	// 	return array();
+	// }
 }
 
 
@@ -258,7 +261,7 @@ function et_builder_module_w4os_grid_info_init() {
 
 				$output = w4os_grid_info_html( $atts );
 
-				return W4OS3::sprintf_safe(
+				return sprintf_safe(
 					'<div class="et_pb_module et_pb_w4os_grid_info w4os-grid-info">%s</div>',
 					$output
 				);

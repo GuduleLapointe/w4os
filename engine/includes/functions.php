@@ -350,16 +350,29 @@ function opensim_user_alert( $agentID, $message, $secureID = null ) {
 function oxXmlRequest( $gatekeeper, $method, $request ) {
 	$xml_request = xmlrpc_encode_request( $method, array( $request ) );
 
-	$context = stream_context_create(
-		array(
-			'http' => array(
-				'method'  => 'POST',
-				'header'  => 'Content-Type: text/xml' . "\r\n",
-				'timeout' => 3, // most of the time below 1 sec, but leave some time for slow ones
-				'content' => $xml_request,
-			),
-		)
+	// Check if self-signed certificates should be accepted
+	$beta_options = W4OS3::get_option('beta', array());
+	$enable_self_signed = $beta_options['enable_self_signed'] ?? false;
+
+	$options = array(
+		'http' => array(
+			'method'  => 'POST',
+			'header'  => 'Content-Type: text/xml' . "\r\n",
+			'timeout' => 3, // most of the time below 1 sec, but leave some time for slow ones
+			'content' => $xml_request,
+		),
 	);
+
+	// Add SSL context options if self-signed certificates should be accepted
+	if ($enable_self_signed) {
+		$options['ssl'] = array(
+			'verify_peer'      => false,
+			'verify_peer_name' => false,
+			'allow_self_signed' => true,
+		);
+	}
+
+	$context = stream_context_create($options);
 
 	$response = @file_get_contents( $gatekeeper, false, $context );
 	if ( $response === false ) {
@@ -375,6 +388,41 @@ function oxXmlRequest( $gatekeeper, $method, $request ) {
 	}
 
 	return false;
+}
+
+function get_xml_response_data( $requestURL, $request ) {
+	if(empty($request)) {
+		return array();
+	}
+
+	// Check if self-signed certificates should be accepted
+	$beta_options = W4OS3::get_option('beta', array());
+	$enable_self_signed = $beta_options['enable_self_signed'] ?? false;
+
+	$options = array(
+		'http' => array(
+			'method'  => 'POST',
+			'header'  => 'Content-Type: text/xml' . "\r\n",
+			'content' => $request,
+		),
+	);
+
+	// Add SSL context options if self-signed certificates should be accepted
+	if ($enable_self_signed) {
+		$options['ssl'] = array(
+			'verify_peer'      => false,
+			'verify_peer_name' => false,
+			'allow_self_signed' => true,
+		);
+	}
+
+	$context = stream_context_create($options);
+	$response  = xmlrpc_decode( file_get_contents( $requestURL, false, $context ) );
+	if ( is_array( $response ) && ! xmlrpc_is_fault( $response ) && ! empty( $response ) && isset( $response['data'] ) ) {
+		return $response['data'];
+	} else {
+		return array();
+	}
 }
 
 function osXmlResponse( $success = true, $errorMessage = false, $data = false ) {
@@ -571,6 +619,26 @@ if( ! defined( 'TPLINK_LOCAL') ) {
 define( 'HELPERS_LOCALE_DIR', dirname( __DIR__ ) . '/languages' );
 
 /**
+ * Safe sprintf function to avoid fatal errors
+ * Returns unchanged format string if error occurs
+ * 
+ * @param string $format
+ * @param mixed ...$args
+ * @return string
+ */
+function sprintf_safe($format, ...$args) {
+	try {
+		$result = sprintf($format, ...$args);
+		restore_error_handler();
+		return $result;
+	} catch (Throwable $e) {
+		error_log("Error sprintf_safe( $format, " . join(', ', $args) . '): ' . $e->getMessage());
+		restore_error_handler();
+		return $format;
+	}
+}
+
+/**
  * OpenSim source to help further attempts to allow Hypergrid search results.
  * Infouuid is a fake parcelid resolving to region handle and (region-level?)
  * pos which might (or not) give enough information to allow hg results.
@@ -600,3 +668,4 @@ define( 'HELPERS_LOCALE_DIR', dirname( __DIR__ ) . '/languages' );
 // (byte)y, (byte)(y >> 8), 0, 0 };
 // return new UUID(bytes, 0);
 // }
+

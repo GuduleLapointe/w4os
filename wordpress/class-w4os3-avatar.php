@@ -840,7 +840,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	}
 
 	public function profile_link( $include_picture = false ) {
-		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
+		W4OS3::enqueue_style( 'w4os-profile', 'wordpress/css/profile.css' );
 
 		$profile_url = $this->get_profile_url();
 		$avatarName  = $this->AvatarName;
@@ -918,7 +918,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	}
 
 	public function profile_preview( $item = null ) {
-		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
+		W4OS3::enqueue_style( 'w4os-profile', 'wordpress/css/profile.css' );
 
 		$profile_url = $this->profile_url( $item );
 		$avatarName  = $item->avatarName;
@@ -1045,8 +1045,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 			// $this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
 		}
 
-		W4OS3::enqueue_style( 'w4os-profile', 'v3/css/profile.css' );
-		W4OS3::enqueue_script( 'w4os-profile', 'v3/js/profile.js' );
+		W4OS3::enqueue_style( 'w4os-profile', 'wordpress/css/profile.css' );
+		W4OS3::enqueue_script( 'w4os-profile', 'wordpress/js/profile.js' );
 
 		$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
 

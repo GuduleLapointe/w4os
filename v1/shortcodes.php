@@ -82,7 +82,7 @@ add_action( 'init', 'w4os_shortcodes_init' );
 function w4os_newusers_html( $atts = array(), $args = array() ) {
 	if ( ! W4OS_DB_CONNECTED ) {
 		if ( $args['args']['error-messages'] ) {
-			echo W4OS3::sprintf_safe(
+			echo sprintf_safe(
 				__( 'Configure W4OS database on %s.', 'w4os' ),
 				w4os_settings_link(),
 			);
@@ -109,7 +109,7 @@ function w4os_newusers_html( $atts = array(), $args = array() ) {
 		$uuid = get_the_author_meta( 'w4os_uuid', $user->ID );
 		if ( $uuid ) {
 
-			$recentusers .= W4OS3::sprintf_safe(
+			$recentusers .= sprintf_safe(
 				'<li>
 			<span class="profile-pic"><a href="%1$s">%2$s</a></span>
 			<span class=info>
@@ -142,7 +142,7 @@ function w4os_newusers_html( $atts = array(), $args = array() ) {
 // function w4os_grid_status_html( $atts = array(), $args = array() ) {
 // if ( ! W4OS_DB_CONNECTED ) {
 // if ( $args['args']['error-messages'] ) {
-// echo W4OS3::sprintf_safe(
+// echo sprintf_safe(
 // __( 'Configure W4OS database on %s.', 'w4os' ),
 // w4os_settings_link(),
 // ),

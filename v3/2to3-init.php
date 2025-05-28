@@ -310,10 +310,6 @@ class W4OS2to3 {
 		// First we include all the files
 		require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
 
-		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
-		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
-		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-userless-auth.php';
-		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-usermenu.php';
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 
 		// require_once W4OS_INCLUDES_DIR . 'class-flux.php';
@@ -589,7 +585,7 @@ class W4OS2to3 {
 			}
 		}
 
-		$credentials['db']['enabled'] = self::validate_db_credentials( $credentials['db'] );
+		$credentials['db']['enabled'] = OpenSim::validate_db_credentials( $credentials['db'] );
 
 		error_log( __FUNCTION__ . ' ' . $serverURI . ' ' . print_r( $credentials, true ) );
 
@@ -699,7 +695,7 @@ class W4OS2to3 {
 		// $check_login_uri = preg_replace( '+http://http+', 'http', $check_login_uri );
 		$check_login_uri = 'http://' . preg_replace( '+.*://+', '', $gateway_uri );
 
-		$xml = self::fast_xml( $check_login_uri . '/get_grid_info' );
+		$xml = OpenSim::fast_xml( $check_login_uri . '/get_grid_info' );
 
 		if ( ! $xml ) {
 			return false;
@@ -735,29 +731,6 @@ class W4OS2to3 {
 		set_transient( $transient_key, $grid_info, 60 * 60 * 24 );
 
 		return $grid_info;
-	}
-
-	/**
-	 * Fast XML function.
-	 *
-	 * Not sure what makes it fast, but it's used in several places.
-	 */
-	public static function fast_xml( $url ) {
-		// Exit silently if required php modules are missing
-		if ( ! function_exists( 'curl_init' ) ) {
-			return null;
-		}
-		if ( ! function_exists( 'simplexml_load_string' ) ) {
-			return null;
-		}
-
-		$ch = curl_init();
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-		$html = curl_exec( $ch );
-		curl_close( $ch );
-		$xml = simplexml_load_string( $html );
-		return $xml;
 	}
 
 	/**

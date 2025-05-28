@@ -92,7 +92,7 @@ function custom_account_dashboard_content() {
 		return;
 	}
 
-	$page_content = W4OS3::sprintf_safe(
+	$page_content = sprintf_safe(
 		'%3$s <span class=profile><span class=profile-pic>%1$s</span><span class=profile-details>%2$s</span></span>',
 		$avatar->profile_picture(),
 		$avatar->AvatarName,

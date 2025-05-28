@@ -99,7 +99,7 @@ add_action(
 			}
 
 			/** Define the columns */
-			public function get_columns() {
+			public function get_cols() {
 				$columns = wp_parse_args(
 					$this->columns,
 					array(
@@ -155,7 +155,7 @@ add_action(
 
 			/** Prepare the items for the table */
 			public function prepare_items() {
-				$columns  = $this->get_columns();
+				$columns  = $this->get_cols();
 				$hidden   = array();
 				$sortable = $this->get_sortable_columns();
 				$primary  = $this->primary ?? null;
@@ -528,7 +528,7 @@ add_action(
 
 						echo '</div>';
 
-						W4OS3::enqueue_script( 'w4os-filter-actions', 'v3/helpers/js/admin-list-filter-actions.js' );
+						W4OS3::enqueue_script( 'w4os-filter-actions', 'wordpress/includes/js/admin-list-filter-actions.js' );
 					}
 				}
 			}
@@ -556,7 +556,7 @@ add_action(
 					}
 				} else {
 					// Get unique values directly from the database for this column
-					$results = $this->db->get_column( "SELECT DISTINCT `$key` FROM ({$query}) AS subquery" );
+					$results = $this->db->get_col( "SELECT DISTINCT `$key` FROM ({$query}) AS subquery" );
 
 					foreach ( $results as $value ) {
 						if ( $value !== '' && ! in_array( $value, $values, true ) ) {

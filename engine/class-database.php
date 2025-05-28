@@ -71,12 +71,8 @@ class OSPDO extends PDO {
 		$test_port = $url_parts['port'] ?? 3306;
 		$socket    = @fsockopen( $test_host, $test_port, $errno, $errstr, 1 );
 		if ( ! $socket ) {
-			$error = "Failed to connect to the database server: $errstr";
-			error_log( $error );
-			// If the port is not accessible, we should not attempt to connect to the database.
-			throw new Exception( 'db_connect_error ' . $error );
+			throw new Exception( "Failed to connect to the database server: $errstr" );
 		}
-        
         
         $dsn = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
 
@@ -141,11 +137,8 @@ class OSPDO extends PDO {
     /**
      * Get single column as array using PDO standard
      */
-    public function get_column($query, $params = array(), $column_offset = 0) {
-        // Bypass if get_col() exists, not validated yet, keep for further testing
-        // if ( method_exists( $this, 'get_col' ) ) {
-        //     return $this->get_col( $query, $params, $column_offset );
-        // }
+    public function get_col($query, $params = array(), $column_offset = 0) {
+        // TODO: if parent get_col() exists return its output and ignore this method
 
         $statement = $this->prepareAndExecute($query, $params);
         if ($statement) {

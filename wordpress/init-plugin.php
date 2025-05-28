@@ -51,8 +51,8 @@ class W4OS3 {
         $Instances->init();
         $AvatarClass = new W4OS3_Avatar();
         $AvatarClass->init();
-        // $ModelClass = new W4OS3_Model();
-        // $ModelClass->init();
+        $ModelClass = new W4OS3_Model();
+        $ModelClass->init();
         $FluxClass = new W4OS3_Flux();
         $FluxClass->init();
         $RegionClass = new W4OS3_Region();
@@ -149,13 +149,6 @@ class W4OS3 {
         // Fallback implementation
         if (!is_string($uuid)) return false;
         return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid);
-    }
-    
-    public static function fast_xml($url) {
-        if (class_exists('OpenSim')) {
-            return OpenSim::fast_xml($url);
-        }
-        return null;
     }
     
     public static function grid_info($gateway_uri = null, $force = false) {
@@ -401,23 +394,15 @@ class W4OS3 {
         $post_name = isset($original->post_name) ? $original->post_name : null;
         return $post_name;
     }
-    
-    public static function sprintf_safe($format, ...$args) {
-        try {
-            $result = sprintf($format, ...$args);
-            restore_error_handler();
-            return $result;
-        } catch (Throwable $e) {
-            error_log("Error W4OS3::sprintf_safe( $format, " . join(', ', $args) . '): ' . $e->getMessage());
-            restore_error_handler();
-            return $format;
-        }
-    }
 }
 
 // Load WordPress-specific functions and utilities
 require_once __DIR__ . '/includes/public-functions.php';
 require_once __DIR__ . '/includes/admin-functions.php';
+require_once __DIR__ . '/includes/class-list-table.php';
+require_once __DIR__ . '/includes/class-userless-auth.php';
+require_once __DIR__ . '/includes/class-user-menu.php';
+
 require_once __DIR__ . '/class-w4os3-service.php';
 
 // Load WordPress-specific classes (consolidating into W4OS3)

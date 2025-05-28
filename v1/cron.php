@@ -31,12 +31,30 @@ add_action( 'w4os_search_parser_cron', 'w4os_search_parser_exec', 10, 0 );
 function w4os_search_parser_exec( $args = array() ) {
 	$search = get_option( 'w4os_search_url' );
 	$parser = preg_replace( ':^//:', '/', dirname( $search ) . '/parser.php' );
-	$result = file_get_contents( $parser );
+
+	$beta_options = W4OS3::get_option('beta', array());
+	$enable_self_signed = $beta_options['enable_self_signed'] ?? false;
+
+	// Create context for file_get_contents if self-signed certificates should be accepted
+	$context = null;
+	if ($enable_self_signed) {
+		$context = stream_context_create(array(
+			'ssl' => array(
+				'verify_peer'      => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true,
+			),
+			'http' => array(
+				'timeout' => 30,
+			),
+		));
+	}
+
+	$result = file_get_contents( $parser, false, $context );
 	if ( ! empty( get_option( 'w4os_hypevents_url' ) ) ) {
 		$eventsparser = preg_replace( ':^//:', '/', dirname( $search ) . '/eventsparser.php' );
-		$result       = file_get_contents( $eventsparser );
+		$result       = file_get_contents( $eventsparser, false, $context );
 	}
-	// require(dirname(__DIR__) . '/helpers/parser.php');
 }
 
 // register_activation_hook( WP_PLUGIN_DIR . "/" . W4OS_PLUGIN, 'w4os_activate' );

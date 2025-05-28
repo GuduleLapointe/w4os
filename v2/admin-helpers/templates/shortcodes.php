@@ -50,7 +50,7 @@
 	<tr><th>
 		<code>[avatar-profile]</code>
 		<p><?php _e( 'Avatar Profile if user is connected and has an avatar, avatar registration form otherwise', 'w4os' ); ?>
-		<?php echo W4OS3::sprintf_safe( __( '(formerly %s)', 'w4os' ), '<code>[gridprofile]</code>' ); ?>
+		<?php echo sprintf_safe( __( '(formerly %s)', 'w4os' ), '<code>[gridprofile]</code>' ); ?>
 		</p>
 	</th><td>
 		<?php echo do_shortcode( '[avatar-profile]' ); ?>
@@ -95,7 +95,7 @@
 		$options .= '<ul class="description"><li>' . join(
 			'</li><li>',
 			array(
-				W4OS3::sprintf_safe(
+				sprintf_safe(
 					__( 'The options %1$s and %2$s are only provided to allow reverting to previous behaviour but in most cases they should not be enabled.', 'w4os' ),
 					'<code>include-hypergrid</code>',
 					'<code>include-landsales</code>',

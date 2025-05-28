@@ -104,7 +104,9 @@ class OpenSim_Rest {
 		$startSessionResponse = curl_exec( $this->ch );
 		// Check for errors
 		if ( ! $startSessionResponse ) {
-			return new Error( trim( 'Unable to start session ' . curl_error( $this->ch ) ) . ' in ' . __FILE__ . ' on line ' . __LINE__ );
+			// return new Error( trim( 'Unable to start session ' . curl_error( $this->ch ) ) . ' in ' . __FILE__ . ' on line ' . __LINE__ );
+			// Probably an offline simulator, no need to log an error here.
+			return false;
 		}
 
 		// Parse the session ID from the start session response

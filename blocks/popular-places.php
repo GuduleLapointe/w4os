@@ -91,7 +91,7 @@ function w4os_popular_places_block_render( $attributes, $void, $block = true ) {
 
 	$class = preg_replace( ':/:', '-', $block->name );
 
-	return W4OS3::sprintf_safe(
+	return sprintf_safe(
 		'<div class="w4os-block wp-block wp-block-spacing %s">%s</div>',
 		$class,
 		$content
@@ -149,22 +149,29 @@ function w4os_popular_places( $atts = array() ) {
 
 	$request = xmlrpc_encode_request( 'dir_popular_query', $req );
 
-	$post_data = array( 'xml' => $request );
-	$context   = stream_context_create(
-		array(
-			'http' => array(
-				'method'  => 'POST',
-				'header'  => 'Content-Type: text/xml' . "\r\n",
-				'content' => $request,
-			),
-		)
-	);
-	$response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );
-	if ( is_array( $response ) && ! xmlrpc_is_fault( $response ) && ! empty( $response ) && isset( $response['data'] ) ) {
-		return $response['data'];
-	} else {
-		return array();
-	}
+	return get_xml_response_data( $searchURL, $request );
+
+	// $post_data = array( 'xml' => $request );
+	
+	// $context   = stream_context_create(
+	// 	array(
+	// 		'http' => array(
+	// 			'method'  => 'POST',
+	// 			'header'  => 'Content-Type: text/xml' . "\r\n",
+	// 			'content' => $request,
+	// 		),
+	// 	)
+	// );
+	
+	// $beta_options = W4OS3::get_option('beta');
+	// $enable_self_signed = $beta_options['enable_self_signed'] ?? false;
+
+	// $response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );
+	// if ( is_array( $response ) && ! xmlrpc_is_fault( $response ) && ! empty( $response ) && isset( $response['data'] ) ) {
+	// 	return $response['data'];
+	// } else {
+	// 	return array();
+	// }
 }
 
 function w4os_popular_places_html( $atts = array(), $args = array() ) {
@@ -205,7 +212,7 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 			break;
 		}
 
-		$image = W4OS3::sprintf_safe(
+		$image = sprintf_safe(
 			'<img class="place-image" src="%1$s" alt="%2$s">',
 			w4os_get_asset_url( $place['imageUUID'] ),
 			$place['name'],
@@ -213,7 +220,7 @@ function w4os_popular_places_html( $atts = array(), $args = array() ) {
 
 		$tplink = opensim_format_tp( $place['gatekeeperURL'] . '/' . $place['regionname'] . '/' . $place['landingpoint'], TPLINK_HG );
 
-		$content .= W4OS3::sprintf_safe(
+		$content .= sprintf_safe(
 			'<div class="place"><a href="%1$s"><div class=place-name>%2$s</div>%3$s</a></div>',
 			$tplink,
 			$place['name'],
@@ -329,7 +336,7 @@ function et_builder_module_w4os_popular_places_init() {
 
 				$output = w4os_popular_places_html( $atts );
 
-				return W4OS3::sprintf_safe(
+				return sprintf_safe(
 					'<div class="et_pb_module et_pb_w4os_popular_places w4os-popular-places">%s</div>',
 					$output
 				);

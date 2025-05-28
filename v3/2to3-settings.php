@@ -263,7 +263,7 @@ class W4OS3_Settings {
 		wp_enqueue_style( 'select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', array(), '4.0.13' );
 		wp_enqueue_script( 'select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array( 'jquery' ), '4.0.13', true );
 
-		W4OS3::enqueue_script( 'v3-admin-settings', 'v3/js/admin-settings.js' );
+		W4OS3::enqueue_script( 'v3-admin-settings', 'wordpress/js/admin-settings.js' );
 	}
 
 	public static function get_tabs_html( $menu_slug = null, $default = 'default' ) {
