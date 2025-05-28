@@ -28,9 +28,6 @@ if(!defined('W4OS_ENABLE_V3')) {
 // Load engine first
 require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
 
-// Load backward compatibility layer
-require_once W4OS_PLUGIN_DIR . 'compatibility.php';
-
 // Load v3 transitional files FIRST (contains latest features not yet migrated here)
 require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
     

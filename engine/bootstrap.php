@@ -32,8 +32,8 @@ spl_autoload_register(function ($class) {
 
 // Load core OpenSimulator class
 require_once OPENSIM_ENGINE_PATH . '/includes/class-opensim.php';
-require_once __DIR__ . '/includes/class-database.php';
-require_once __DIR__ . '/includes/class-avatar.php';
-require_once __DIR__ . '/includes/class-search.php';
-require_once __DIR__ . '/includes/class-economy.php';
-require_once __DIR__ . '/includes/class-grid.php';
+require_once OPENSIM_ENGINE_PATH . '/includes/class-database.php';
+require_once OPENSIM_ENGINE_PATH . '/includes/class-avatar.php';
+require_once OPENSIM_ENGINE_PATH . '/includes/class-search.php';
+require_once OPENSIM_ENGINE_PATH . '/includes/class-economy.php';
+require_once OPENSIM_ENGINE_PATH . '/includes/class-grid.php';
