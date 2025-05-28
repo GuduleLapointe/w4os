@@ -556,7 +556,8 @@ add_action(
 					}
 				} else {
 					// Get unique values directly from the database for this column
-					$results = $this->db->get_col( "SELECT DISTINCT `$key` FROM ({$query}) AS subquery" );
+					$results = $this->db->get_column( "SELECT DISTINCT `$key` FROM ({$query}) AS subquery" );
+
 					foreach ( $results as $value ) {
 						if ( $value !== '' && ! in_array( $value, $values, true ) ) {
 							$values[] = $value;

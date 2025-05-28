@@ -34,6 +34,7 @@ spl_autoload_register(function ($class) {
 require_once OPENSIM_ENGINE_PATH . '/class-opensim.php';
 require_once OPENSIM_ENGINE_PATH . '/class-database.php';
 require_once OPENSIM_ENGINE_PATH . '/class-avatar.php';
+require_once OPENSIM_ENGINE_PATH . '/class-region.php';
 require_once OPENSIM_ENGINE_PATH . '/class-search.php';
 require_once OPENSIM_ENGINE_PATH . '/class-economy.php';
 require_once OPENSIM_ENGINE_PATH . '/class-grid.php';

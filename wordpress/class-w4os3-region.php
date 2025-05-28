@@ -50,7 +50,7 @@
 // parcelMapTexture varchar(36) YES     NULL
 
 
-class W4OS3_Region {
+class W4OS3_Region extends OpenSim_Region {
 	private $uuid;
 	private $item;
 	private $data;
@@ -267,25 +267,15 @@ class W4OS3_Region {
 	 * Display the list of Regions from the custom database.
 	 */
 	public function display_regions_list() {
-		// if ( ! class_exists( 'WP_List_Table' ) ) {
-		// require_once ABSPATH . 'wp-admin/v2/class-wp-list-table.php';
-		// }
-
-		if ( isset( $_GET['action'] ) && $_GET['action'] === 'edit' && ! empty( $_GET['region'] ) ) {
-			$region = new W4OS3_Region( $_GET['region'] );
-
-			$template = W4OS_INCLUDES_DIR . 'templates/admin-region-edit.php';
-			if ( file_exists( $template ) ) {
-				require_once $template;
-			} else {
-				error_log( __FUNCTION__ . ' template missing ' . $template );
-			}
-
-			return;
-			// $region = new W4OS3_Region( $_GET['region'] );
-			// $region->edit_region();
+		// Ensure we have a database connection
+		if ( ! W4OS3::$robust_db ) {
+			W4OS3::$robust_db = new OSPDO( W4OS_DB_ROBUST );
 		}
-		// Instantiate and display the list table
+		
+		if ( ! W4OS3::$robust_db->connected ) {
+			echo '<div class="notice notice-error"><p>' . __( 'Database connection failed. Please check your settings.', 'w4os' ) . '</p></div>';
+			return;
+		}
 
 		$regionsTable = new W4OS_List_Table(
 			W4OS3::$robust_db,

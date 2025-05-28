@@ -42,6 +42,21 @@ class W4OS3 {
         
         // Initialize WordPress-specific functionality
         self::init_wordpress_features();
+
+        $UserlessAuth = new UserlessAuth();
+        $UserlessAuth->init();
+        $UserMenu = new W4OS3_UserMenu();
+        $UserMenu->init();
+        $Instances = new W4OS3_Service();
+        $Instances->init();
+        $AvatarClass = new W4OS3_Avatar();
+        $AvatarClass->init();
+        // $ModelClass = new W4OS3_Model();
+        // $ModelClass->init();
+        $FluxClass = new W4OS3_Flux();
+        $FluxClass->init();
+        $RegionClass = new W4OS3_Region();
+        $RegionClass->init();
     }
 
     /**
@@ -407,10 +422,11 @@ require_once __DIR__ . '/includes/admin-functions.php';
 // Load WordPress-specific classes (consolidating into W4OS3)
 require_once __DIR__ . '/class-w4os3-model.php';
 require_once __DIR__ . '/class-w4os3-avatar.php';
+require_once __DIR__ . '/class-w4os3-region.php';
 
-// Load WordPress Avatar class
-if (file_exists(__DIR__ . '/class-w4os3-avatar.php')) {
-    require_once __DIR__ . '/class-w4os3-avatar.php';
+// Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.
+if ( w4os_is_front_end() ) {
+	require_once dirname( __DIR__ ) . '/templates/templates.php';
 }
 
 // Load all current WordPress functionality in correct order

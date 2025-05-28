@@ -327,23 +327,6 @@ class W4OS2to3 {
 		self::$robust_db  = new OSPDO( W4OS_DB_ROBUST );
 		self::$assets_db  = self::$robust_db;
 		self::$profile_db = self::$robust_db;
-
-		if ( W4OS_ENABLE_V3 ) {
-			$UserlessAuth = new UserlessAuth();
-			$UserlessAuth->init();
-			$UserMenu = new W4OS3_UserMenu();
-			$UserMenu->init();
-			$Instances = new W4OS3_Service();
-			$Instances->init();
-			$AvatarClass = new W4OS3_Avatar();
-			$AvatarClass->init();
-			// $ModelClass = new W4OS3_Model();
-			// $ModelClass->init();
-			$FluxClass = new W4OS3_Flux();
-			$FluxClass->init();
-			// $RegionClass = new W4OS3_Region();
-			// $RegionClass->init();
-		}
 	}
 
 	public static function account_url() {

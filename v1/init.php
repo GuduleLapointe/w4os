@@ -79,12 +79,6 @@ if ( get_option( 'w4os_profile_page' ) == 'provide' ) {
 }
 define( 'W4OS_GRID_INFO', w4os_get_grid_info() );
 
-
-// Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.
-if ( w4os_is_front_end() ) {
-	require_once dirname( __DIR__ ) . '/templates/templates.php';
-}
-
 require_once __DIR__ . '/w4osdb.php';
 require_once __DIR__ . '/shortcodes.php';
 // require_once __DIR__ . '/widgets.php';

@@ -137,6 +137,27 @@ class OSPDO extends PDO {
     }
 
     /**
+     * Get single column as array using PDO standard
+     */
+    public function get_column($query, $params = array(), $column_offset = 0) {
+        // Bypass if get_col() exists, not validated yet, keep for further testing
+        // if ( method_exists( $this, 'get_col' ) ) {
+        //     return $this->get_col( $query, $params, $column_offset );
+        // }
+
+        $statement = $this->prepareAndExecute($query, $params);
+        if ($statement) {
+            $results = array();
+            while ($row = $statement->fetchColumn($column_offset)) {
+                $results[] = $row;
+            }
+            $statement->closeCursor();
+            return $results;
+        }
+        return array();
+    }
+
+    /**
      * Get single row using PDO standard
      */
     public function get_row($query, $params = array(), $output = PDO::FETCH_OBJ) {
