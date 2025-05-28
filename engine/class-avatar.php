@@ -9,6 +9,11 @@ class OpenSim_Avatar {
     public $UUID;
     public $FirstName;
     public $LastName;
+    public $Email;
+    public $AvatarName;
+    public $AvatarHGName;
+    public $AvatarSlug;
+    public $ProfilePictureUUID;
 
     protected $db;
     protected $data;    
