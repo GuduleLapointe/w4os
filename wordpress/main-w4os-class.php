@@ -31,29 +31,8 @@ require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
 // Load backward compatibility layer
 require_once W4OS_PLUGIN_DIR . 'compatibility.php';
 
-// Load v3 transitional files FIRST (contains W4OS3 class and latest features)
-// Temporarily disabled to use bridge implementation during migration
-if (file_exists(W4OS_PLUGIN_DIR . 'v3/2to3-init.php')) {
-    require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
-}
-
-// Ensure W4OS3 class is available (critical for credential handling)
-    // During migration, skip loading incomplete v3 class files
-    // Try to load W4OS3 class from various possible locations - temporarily disabled during clean migration
-    // $possible_locations = [
-    //     W4OS_PLUGIN_DIR . 'v3/includes/class-w4os3.php',
-    //     W4OS_PLUGIN_DIR . 'v3/class-w4os3.php',
-    //     W4OS_PLUGIN_DIR . 'v2/includes/class-w4os3.php',
-    //     W4OS_PLUGIN_DIR . 'includes/class-w4os3.php',
-    //     W4OS_PLUGIN_DIR . 'class-w4os3.php'
-    // ];
-    // 
-    // foreach ($possible_locations as $file) {
-    //     if (file_exists($file)) {
-    //         require_once $file;
-    //         break;
-    //     }
-    // }
+// Load v3 transitional files FIRST (contains latest features not yet migrated here)
+require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
     
 // Use bridge implementation to OpenSimulator engine
 class W4OS3 {

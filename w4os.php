@@ -58,7 +58,7 @@ if ( defined( 'W4OS_SLUG' ) ) {
 	define( 'W4OS_ENABLE_V3', true );
 
 	// Load modern organized structure
-	require_once plugin_dir_path( __FILE__ ) . 'wordpress/init.php';
+	require_once plugin_dir_path( __FILE__ ) . 'wordpress/main-w4os-class.php';
 
 	// Plugin updater
 	if ( file_exists( plugin_dir_path( __FILE__ ) . 'lib/package-updater.php' ) ) {
