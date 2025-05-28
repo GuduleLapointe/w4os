@@ -20,9 +20,10 @@ class OpenSim_Avatar {
     ) AS subquery";
 
     public function __construct() {
-        // Initialize the custom database connection with credentials
-        if (class_exists('W4OS_WPDB')) {
-            $this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
+        // Initialize database connection using OSPDO (framework-agnostic)
+        if (class_exists('OSPDO') && defined('OPENSIM_DB_HOST')) {
+            $dsn = 'mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME;
+            $this->db = new OSPDO($dsn, OPENSIM_DB_USER, OPENSIM_DB_PASS);
         }
 
         $args = func_get_args();
@@ -44,10 +45,10 @@ class OpenSim_Avatar {
 
         $query = self::$base_query;
         
-        if( W4OS3::is_uuid($args ) ) {
+        if( $this->is_uuid($args ) ) {
             $uuid = $args;
         } else if ( is_array( $args ) ) {
-            $uuid = ( W4OS3::is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
+            $uuid = ( $this->is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
         } else if( is_object( $args )) {
             $user = $args;
             $avatars = self::get_avatars_by_email( $user->user_email );
@@ -61,10 +62,10 @@ class OpenSim_Avatar {
         }
 
         if( $uuid !== false ) {
-            // $uuid = $args;
-            $query .= " WHERE PrincipalID = %s";
-            $sql = $this->db->prepare( $query, array( $uuid ) );
-            $avatar_row = $this->db->get_row( $sql );
+            $query .= " WHERE PrincipalID = ?";
+            $stmt = $this->db->prepare( $query );
+            $stmt->execute( array( $uuid ) );
+            $avatar_row = $stmt->fetch();
         } else if ( is_string( $args ) ) {
             $parts = explode( '@', $args );
             $grid = $parts[1] ?? null;
@@ -76,45 +77,45 @@ class OpenSim_Avatar {
             $firstname = $parts[0];
             $lastname = $parts[1];
             if( isset( $grid ) ) {
-                $grid_info = W4OS3::grid_info( $grid );
-                // $avatar_row = new stdClass();
-                $this->UUID = W4OS_NULL_KEY;
+                // External grid avatar - set basic properties
+                $this->UUID = '00000000-0000-0000-0000-000000000000'; // W4OS_NULL_KEY equivalent
                 $this->FirstName = $firstname;
                 $this->LastName = $lastname;
                 $this->AvatarName = trim( "$this->FirstName $this->LastName" );
                 $this->AvatarHGName = "$firstname.$lastname@$grid";
-                $this->externalProfileURL = self::get_profile_url();
-                $this->grid_info = $grid_info;
+                // Note: grid_info lookup would need to be handled by calling code
                 return;
             } else {
-                $query .= " WHERE FirstName = %s AND LastName = %s";
-                $sql = $this->db->prepare( $query, array ( $firstname, $lastname ) );
-                $avatar_row = $this->db->get_row( $sql );
+                $query .= " WHERE FirstName = ? AND LastName = ?";
+                $stmt = $this->db->prepare( $query );
+                $stmt->execute( array( $firstname, $lastname ) );
+                $avatar_row = $stmt->fetch();
             }
         } else {
             return false;
         }
 
         if ( $avatar_row ) {
-            $this->UUID = $avatar_row->PrincipalID;
-            $this->FirstName = $avatar_row->FirstName;
-            $this->LastName  = $avatar_row->LastName;
+            $this->UUID = $avatar_row['PrincipalID'];
+            $this->FirstName = $avatar_row['FirstName'];
+            $this->LastName  = $avatar_row['LastName'];
             $this->AvatarName = trim( "$this->FirstName $this->LastName" );
-            $this->Created = $avatar_row->Created;
+            $this->Created = $avatar_row['Created'];
+            $this->AvatarSlug = strtolower( "$this->FirstName.$this->LastName" );
+            
+            // Set grid-specific properties (would need grid info from calling code)
+            $this->AvatarHGName = $this->AvatarSlug . '@' . (defined('OPENSIM_GRID_NAME') ? OPENSIM_GRID_NAME : 'localhost');
+            
+            $this->ProfilePictureUUID = $avatar_row['ProfilePictureUUID'] ?? '00000000-0000-0000-0000-000000000000';
+            $this->profileLanguages   = $avatar_row['profileLanguages'] ?? '';
+            $this->profileAboutText   = $avatar_row['profileAboutText'] ?? '';
+            $this->profileImage       = $avatar_row['profileImage'] ?? '';
+            $this->profileFirstImage  = $avatar_row['profileFirstImage'] ?? '';
+            $this->profileFirstText   = $avatar_row['profileFirstText'] ?? '';
+            $this->profilePartner     = $avatar_row['profilePartner'] ?? '';
+            $this->Email              = $avatar_row['Email'] ?? '';
 
-            // $this->Created = esc_attr(get_the_author_meta( 'w4os_created', $id ));
-            $this->AvatarSlug         = strtolower( "$this->FirstName.$this->LastName" );
-            $this->AvatarHGName       = $this->AvatarSlug . '@' . esc_attr( get_option( 'w4os_login_uri' ) );
-            $this->ProfilePictureUUID = $avatar_row->ProfilePictureUUID ?? W4OS_NULL_KEY;
-            $this->profileLanguages   = $avatar_row->profileLanguages;
-            $this->profileAboutText   = $avatar_row->profileAboutText;
-            $this->profileImage	   	  = $avatar_row->profileImage;
-            $this->profileFirstImage  = $avatar_row->profileFirstImage;
-            $this->profileFirstText   = $avatar_row->profileFirstText;
-            $this->profilePartner     = $avatar_row->profilePartner;
-            $this->Email			  = $avatar_row->Email;
-
-            $this->data      = $avatar_row; // Dev only, shoudn't be use once the class is fully implemented
+            $this->data = (object) $avatar_row; // Convert array to object for compatibility
         }
     }
 
@@ -142,41 +143,44 @@ class OpenSim_Avatar {
         return $this->Email ?? '';
     }
 
+    /**
+     * Check if a string is a valid UUID
+     */
+    protected function is_uuid($string) {
+        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $string);
+    }
+
     public static function get_name( $item ) {
         if ( is_object( $item ) ) {
-            $uuid = $item->PrincipalID;
             if ( isset( $item->avatarName ) ) {
-                return trim( $avatarName = $item->avatarName );
+                return trim( $item->avatarName );
             } elseif ( isset( $item->FirstName ) && isset( $item->LastName ) ) {
                 return trim( $item->FirstName . ' ' . $item->LastName );
             }
-            return __( 'Invalid Avatar Object', 'w4os' );
-        } elseif ( opensim_isuuid( $item ) ) {
-            $uuid = $item;
-            global $w4osdb;
-            $query  = "SELECT CONCAT(FirstName, ' ', LastName) AS Name FROM UserAccounts WHERE PrincipalID = %s";
-            $result = $w4osdb->get_var( $w4osdb->prepare( $query, $uuid ) );
-            if ( $result && ! is_wp_error( $result ) ) {
-                return esc_html( $result );
-            }
+            return _('Invalid Avatar Object');
+        } elseif ( self::is_uuid_static( $item ) ) {
+            // For framework-agnostic operation, we'd need a database connection here
+            // This would need to be refactored to accept a database connection
+            return _('Unknown Avatar');
         }
-        return __( 'Unknown Avatar', 'w4os' );
+        return _('Unknown Avatar');
     }
 
-    static function get_user_avatar( $user_id = null ) {
-        if ( empty( $user_id ) ) {
-            $user = wp_get_current_user();
-        } else {
-            $user = get_user_by( 'ID', $user_id );
-        }
+    /**
+     * Static UUID validation method
+     */
+    protected static function is_uuid_static($string) {
+        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $string);
+    }
 
-        $avatars = self::get_avatars( array( 'Email' => $user->user_email ) );
+    static function get_user_avatar( $user_email ) {
+        // Framework-agnostic version - requires email instead of WordPress user object
+        $avatars = self::get_avatars( array( 'Email' => $user_email ) );
         if ( empty( $avatars ) ) {
             return false;
         }
-        $key    = key( $avatars );
+        $key = key( $avatars );
         $avatar = new static( $key );
-
         return $avatar;
     }
 
@@ -187,39 +191,17 @@ class OpenSim_Avatar {
         return self::get_avatars( array( 'Email' => $email ) );
     }
 
-    static function get_avatars( $args = array(), $format = OBJECT ) {
-        global $w4osdb;
-        if ( empty( $w4osdb ) ) {
-            return false;
-        }
-
-        if( ! isset ( $args['active'] ) ) {
-            $args['active'] = true;
-        }
-
-        foreach( $args as $arg => $value ) {
-            switch( $arg ) {
-                case 'Email':
-                    $conditions[] = $w4osdb->prepare( 'Email = %s', $value );
-                    break;
-                case 'active':
-                    $conditions[] = 'active = ' . ( $value ? 'true' : 'false' );
-                    break;
-            }
-        }
-
+    static function get_avatars( $args = array() ) {
+        // Framework-agnostic version - needs database connection
+        // For now, return empty array - this should be implemented with proper OSPDO connection
         $avatars = array();
-        $sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts';
-        if( ! empty( $conditions )) {
-            $sql .= ' WHERE ' . implode( ' AND ', $conditions );
-        }
-
-        $result = $w4osdb->get_results( $sql, $format );
-        if ( is_array( $result ) ) {
-            foreach ( $result as $avatar ) {
-                $avatars[ $avatar->PrincipalID ] = trim( "$avatar->FirstName $avatar->LastName" );
-            }
-        }
+        
+        // TODO: Implement with OSPDO when database connection is available statically
+        // This would need either:
+        // 1. A static database connection property
+        // 2. Or pass database connection as parameter
+        // 3. Or use dependency injection
+        
         return $avatars;
     }
 
@@ -230,13 +212,14 @@ class OpenSim_Avatar {
             $level = intval( $item->UserLevel );
         }
         if ( $level >= 200 ) {
-            return __( 'God', 'w4os' );
+            return _('God');
         } elseif ( $level >= 150 ) {
-            return __( 'Liaison', 'w4os' );
+            return _('Liaison');
         } elseif ( $level >= 100 ) {
-            return __( 'Customer Service', 'w4os' );
+            return _('Customer Service');
         } elseif ( $level >= 1 ) {
-            return __( 'God-like', 'w4os' );
+            return _('God-like');
         }
+        return '';
     }
 }

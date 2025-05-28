@@ -30,18 +30,111 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	public static $profile_page_url;
 	public $profile_url;
 	private $is_profile_page = false;
+	private $wp_db; // WordPress database connection
 
 	public function __construct() {
 		// Initialize WordPress-specific properties
 		self::$slug = get_option('w4os_profile_slug', 'profile');
 		self::$profile_page_url = get_home_url(null, self::$slug);
 
+		// Initialize WordPress database connection for this class
+		$this->wp_db = new W4OS_WPDB( W4OS_DB_ROBUST );
+
 		// Call parent constructor for core avatar functionality
 		$args = func_get_args();
 		if (!empty($args[0])) {
-			parent::__construct($args[0]);
+			// Override parent initialization with WordPress-specific version
+			$this->initialize_avatar_wp($args[0]);
+		}
+	}
+
+	/**
+	 * WordPress-specific avatar initialization
+	 * Uses W4OS_WPDB and WordPress functions like esc_attr(), get_option(), etc.
+	 */
+	private function initialize_avatar_wp( $args ) {
+		if ( ! $this->wp_db ) {
+			return false;
+		}
+		if( empty( $args ) ) {
+			return false;
+		}
+
+		$query = "SELECT * FROM (
+			SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
+			FROM UserAccounts 
+			LEFT JOIN userprofile ON PrincipalID = userUUID 
+			LEFT JOIN GridUser ON PrincipalID = UserID
+		) AS subquery";
+		
+		if( W4OS3::is_uuid($args ) ) {
+			$uuid = $args;
+		} else if ( is_array( $args ) ) {
+			$uuid = ( W4OS3::is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
+		} else if( is_object( $args )) {
+			$user = $args;
+			$avatars = self::get_avatars_by_email( $user->user_email );
+			if( count( $avatars ) > 0 ) {
+				$uuid = key( $avatars );
+			} else {
+				$uuid = false;
+			}
 		} else {
-			parent::__construct();
+			$uuid = false;
+		}
+
+		if( $uuid !== false ) {
+			$query .= " WHERE PrincipalID = %s";
+			$sql = $this->wp_db->prepare( $query, array( $uuid ) );
+			$avatar_row = $this->wp_db->get_row( $sql );
+		} else if ( is_string( $args ) ) {
+			$parts = explode( '@', $args );
+			$grid = $parts[1] ?? null;
+			$name = preg_replace('/\s+/', '.', $parts[0]);
+			$parts = explode('.', $name);
+			if ( count($parts) < 2 ) {
+				return false;
+			}
+			$firstname = $parts[0];
+			$lastname = $parts[1];
+			if( isset( $grid ) ) {
+				$grid_info = W4OS3::grid_info( $grid );
+				$this->UUID = W4OS_NULL_KEY;
+				$this->FirstName = $firstname;
+				$this->LastName = $lastname;
+				$this->AvatarName = trim( "$this->FirstName $this->LastName" );
+				$this->AvatarHGName = "$firstname.$lastname@$grid";
+				$this->externalProfileURL = self::get_profile_url();
+				$this->grid_info = $grid_info;
+				return;
+			} else {
+				$query .= " WHERE FirstName = %s AND LastName = %s";
+				$sql = $this->wp_db->prepare( $query, array ( $firstname, $lastname ) );
+				$avatar_row = $this->wp_db->get_row( $sql );
+			}
+		} else {
+			return false;
+		}
+
+		if ( $avatar_row ) {
+			$this->UUID = $avatar_row->PrincipalID;
+			$this->FirstName = $avatar_row->FirstName;
+			$this->LastName  = $avatar_row->LastName;
+			$this->AvatarName = trim( "$this->FirstName $this->LastName" );
+			$this->Created = $avatar_row->Created;
+
+			$this->AvatarSlug         = strtolower( "$this->FirstName.$this->LastName" );
+			$this->AvatarHGName       = $this->AvatarSlug . '@' . esc_attr( get_option( 'w4os_login_uri' ) );
+			$this->ProfilePictureUUID = $avatar_row->ProfilePictureUUID ?? W4OS_NULL_KEY;
+			$this->profileLanguages   = $avatar_row->profileLanguages;
+			$this->profileAboutText   = $avatar_row->profileAboutText;
+			$this->profileImage	   	  = $avatar_row->profileImage;
+			$this->profileFirstImage  = $avatar_row->profileFirstImage;
+			$this->profileFirstText   = $avatar_row->profileFirstText;
+			$this->profilePartner     = $avatar_row->profilePartner;
+			$this->Email			  = $avatar_row->Email;
+
+			$this->data      = $avatar_row;
 		}
 	}
 
