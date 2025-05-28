@@ -31,7 +31,7 @@ add_action(
 
 			/** Class constructor */
 			public function __construct( $db, $table, $args ) {
-				$args                   = WP_parse_args(
+				$args                   = wp_parse_args(
 					$args,
 					array(
 						'singular'      => 'Item',
@@ -100,7 +100,7 @@ add_action(
 
 			/** Define the columns */
 			public function get_columns() {
-				$columns = WP_parse_args(
+				$columns = wp_parse_args(
 					$this->columns,
 					array(
 						'cb' => '<input type="checkbox" />',

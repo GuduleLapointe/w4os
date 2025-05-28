@@ -8,8 +8,6 @@
 
 class OSPDO extends PDO {
     public $connected = false;
-    private $last_prepared_query;
-    private $last_prepared_args;
     
     public function __construct($dsn, $username = null, $password = null, $driver_options = null) {
         // First handle the different attributes formatting
@@ -35,7 +33,7 @@ class OSPDO extends PDO {
 			$dbhost     = $credentials['db']['host'] . ( empty( $credentials['db']['port'] ) ? '' : ':' . $credentials['db']['port'] );
 		} elseif ( is_array( $args[0] ) ) {
 			// If args are passed as an array, extract them.
-			$credentials = WP_parse_args(
+			$credentials = OpenSim::parse_args(
 				$args[0],
 				array(
 					'user'     => null,
@@ -102,12 +100,7 @@ class OSPDO extends PDO {
         $trace = debug_backtrace()[0];
         $trace = $trace['file'] . ':' . $trace['line'];
 
-        // If this is a prepared query from our prepare() method, use stored args
-        if (isset($this->last_prepared_query) && $query === $this->last_prepared_query && isset($this->last_prepared_args)) {
-            $params = $this->last_prepared_args;
-        }
-        
-        $statement = parent::prepare($query, $options);
+        $statement = $this->prepare($query, $options);
         $result = $statement->execute($params);
 
         if ($result) {
@@ -131,7 +124,7 @@ class OSPDO extends PDO {
     }
 
     /**
-     * Prepare query and return single value
+     * Get single value using PDO standard
      */
     public function get_var($query, $params = array()) {
         $statement = $this->prepareAndExecute($query, $params);
@@ -144,12 +137,12 @@ class OSPDO extends PDO {
     }
 
     /**
-     * WordPress wpdb compatibility method - get single row
+     * Get single row using PDO standard
      */
-    public function get_row($query, $params = array(), $output = OBJECT) {
+    public function get_row($query, $params = array(), $output = PDO::FETCH_OBJ) {
         $statement = $this->prepareAndExecute($query, $params);
         if ($statement) {
-            $result = ($output === ARRAY_A) ? $statement->fetch(PDO::FETCH_ASSOC) : $statement->fetch(PDO::FETCH_OBJ);
+            $result = $statement->fetch($output);
             $statement->closeCursor();
             return $result;
         }
@@ -157,41 +150,16 @@ class OSPDO extends PDO {
     }
 
     /**
-     * WordPress wpdb compatibility method - get multiple rows
+     * Get multiple rows using PDO standard
      */
-    public function get_results($query, $params = array(), $output = OBJECT) {
+    public function get_results($query, $params = array(), $output = PDO::FETCH_OBJ) {
         $statement = $this->prepareAndExecute($query, $params);
         if ($statement) {
-            $results = ($output === ARRAY_A) ? $statement->fetchAll(PDO::FETCH_ASSOC) : $statement->fetchAll(PDO::FETCH_OBJ);
+            $results = $statement->fetchAll($output);
             $statement->closeCursor();
             return $results;
         }
         return array();
-    }
-
-    /**
-     * WordPress wpdb compatibility method - prepare query with placeholders
-     */
-    public function prepare($query, ...$args) {
-        if (empty($args)) {
-            return $query;
-        }
-        
-        // Flatten args if passed as array
-        if (count($args) == 1 && is_array($args[0])) {
-            $args = $args[0];
-        }
-        
-        // Simple WordPress-style placeholder replacement
-        $query = str_replace('%s', '?', $query);
-        $query = str_replace('%d', '?', $query);
-        $query = str_replace('%f', '?', $query);
-        
-        // Store the prepared query and args for later execution
-        $this->last_prepared_query = $query;
-        $this->last_prepared_args = array_values($args);
-        
-        return $query;
     }
 
     /**

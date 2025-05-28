@@ -107,7 +107,7 @@ class OpenSim
 	
 		$login_uri = ( preg_match( '/^https?:\/\//', $login_uri ) ) ? $login_uri : 'http://' . $login_uri;
 	
-		$parts = wp_parse_args(
+		$parts = OpenSim::parse_args(
 			wp_parse_url( $login_uri ),
 			array(
 				'scheme' => 'http',
@@ -120,6 +120,19 @@ class OpenSim
 		return $login_uri;
 	}
 
+    public static function parse_args( $args, $defaults ) {
+        if( empty( $defaults ) ) {
+            $defaults = array();
+        }
+        if( is_object( $args ) ) {
+            $args = get_object_vars( $args );
+        } elseif( is_array( $args ) ) {
+            $args = $args;
+        } else {
+            parse_str( $args, $args );
+        }
+        return array_merge( $defaults, $args );
+    }
 
     public static function sanitize_uri_plus( $url ) {
         $url = trim( $url );

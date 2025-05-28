@@ -30,27 +30,25 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	public static $profile_page_url;
 	public $profile_url;
 	private $is_profile_page = false;
-	protected $db; // WordPress database connection
 
 	public function __construct() {
 		// Initialize WordPress-specific properties
 		self::$slug = get_option('w4os_profile_slug', 'profile');
 		self::$profile_page_url = get_home_url(null, self::$slug);
 
-		// Initialize WordPress database connection for this class
-		$this->db = new OSPDO( W4OS_DB_ROBUST );
-
 		// Call parent constructor for core avatar functionality
 		$args = func_get_args();
 		if (!empty($args[0])) {
-			// Override parent initialization with WordPress-specific version
+			// Call parent initialization but with WordPress-specific wrapper
 			$this->initialize_avatar_wp($args[0]);
+		} else {
+			parent::__construct();
 		}
 	}
 
 	/**
 	 * WordPress-specific avatar initialization
-	 * Uses OSPDO and WordPress functions like esc_attr(), get_option(), etc.
+	 * Uses OSPDO with PDO standards and WordPress functions like esc_attr(), get_option(), etc.
 	 */
 	private function initialize_avatar_wp( $args ) {
 		if ( ! $this->db ) {
@@ -84,9 +82,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		}
 
 		if( $uuid !== false ) {
-			$query .= " WHERE PrincipalID = %s";
-			$sql = $this->db->prepare( $query, array( $uuid ) );
-			$avatar_row = $this->db->get_row( $sql );
+			$query .= " WHERE PrincipalID = ?";
+			$avatar_row = $this->db->get_row( $query, array( $uuid ) );
 		} else if ( is_string( $args ) ) {
 			$parts = explode( '@', $args );
 			$grid = $parts[1] ?? null;
@@ -108,9 +105,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 				$this->grid_info = $grid_info;
 				return;
 			} else {
-				$query .= " WHERE FirstName = %s AND LastName = %s";
-				$sql = $this->db->prepare( $query, array ( $firstname, $lastname ) );
-				$avatar_row = $this->db->get_row( $sql );
+				$query .= " WHERE FirstName = ? AND LastName = ?";
+				$avatar_row = $this->db->get_row( $query, array( $firstname, $lastname ) );
 			}
 		} else {
 			return false;
