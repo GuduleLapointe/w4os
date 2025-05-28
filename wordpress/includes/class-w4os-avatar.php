@@ -25,32 +25,23 @@
 
 
 class W4OS3_Avatar extends OpenSim_Avatar {
-	private $db;
+	// WordPress-specific properties
 	public static $slug;
 	public static $profile_page_url;
-	public $UUID;
-	public $FirstName;
-	public $LastName;
 	public $profile_url;
-	private $data;
 	private $is_profile_page = false;
-	
-	private static $base_query = "SELECT * FROM (
-		SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
-		FROM UserAccounts 
-		LEFT JOIN userprofile ON PrincipalID = userUUID 
-		LEFT JOIN GridUser ON PrincipalID = UserID
-	) AS subquery";
 
 	public function __construct() {
-		// Initialize the custom database connection with credentials
-		$this->db = new W4OS_WPDB( W4OS_DB_ROBUST );
-		self::$slug     = get_option( 'w4os_profile_slug', 'profile' );
-		self::$profile_page_url = get_home_url( null, self::$slug );
+		// Initialize WordPress-specific properties
+		self::$slug = get_option('w4os_profile_slug', 'profile');
+		self::$profile_page_url = get_home_url(null, self::$slug);
 
+		// Call parent constructor for core avatar functionality
 		$args = func_get_args();
-		if ( ! empty( $args[0] ) ) {
-			$this->initialize_avatar( $args[0] );
+		if (!empty($args[0])) {
+			parent::__construct($args[0]);
+		} else {
+			parent::__construct();
 		}
 	}
 
@@ -556,26 +547,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		return W4OS3_Settings::sanitize_options( $input, 'w4os-avatars' );
 	}
 
-	public static function get_name( $item ) {
-		if ( is_object( $item ) ) {
-			$uuid = $item->PrincipalID;
-			if ( isset( $item->avatarName ) ) {
-				return trim( $avatarName = $item->avatarName );
-			} elseif ( isset( $item->FirstName ) && isset( $item->LastName ) ) {
-				return trim( $item->FirstName . ' ' . $item->LastName );
-			}
-			return __( 'Invalid Avatar Object', 'w4os' );
-		} elseif ( opensim_isuuid( $item ) ) {
-			$uuid = $item;
-			global $w4osdb;
-			$query  = "SELECT CONCAT(FirstName, ' ', LastName) AS Name FROM UserAccounts WHERE PrincipalID = %s";
-			$result = $w4osdb->get_var( $w4osdb->prepare( $query, $uuid ) );
-			if ( $result && ! is_wp_error( $result ) ) {
-				return esc_html( $result );
-			}
-		}
-		return __( 'Unknown Avatar', 'w4os' );
-	}
+	// REMOVED: Moved to parent OpenSim_Avatar class:
+	// - get_name(), get_user_avatar(), get_avatars_by_email(), get_avatars(), user_level()
 
 	public function avatar_type( $item = null ) {
 		if ( empty( $item ) ) {
@@ -600,7 +573,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$PrincipalID = $item->PrincipalID;
 
 		$type = $this->avatar_type( $item );
-		$name = $this->get_name( $item );
+		$name = parent::get_name( $item );
 		if ( $type === 'user' ) {
 			$actions = array(
 				// 'edit' => sprintf(
@@ -617,10 +590,10 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 				),
 			);
 		} else {
-			return $this->get_name( $item );
+			return parent::get_name( $item );
 		}
 		$special_accounts = array();
-		$user_level       = self::user_level( $item );
+		$user_level       = parent::user_level( $item );
 		if ( ! empty( $user_level ) ) {
 			$special_accounts[] = $user_level;
 		}
@@ -628,29 +601,12 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$output       = sprintf(
 			'<strong><a href="#" data-modal-target="modal-%1$s">%2$s</a> %3$s</strong>',
 			$PrincipalID,
-			$this->get_name( $item ),
+			parent::get_name( $item ),
 			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts )
 		);
 		$output      .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
 		$output      .= W4OS2to3::modal( $PrincipalID, $this->profile_url( $item ), $profile_preview );
 		return $output;
-	}
-
-	public static function user_level( $item ) {
-		if ( is_numeric( $item ) ) {
-			$level = intval( $item );
-		} else {
-			$level = intval( $item->UserLevel );
-		}
-		if ( $level >= 200 ) {
-			return __( 'God', 'w4os' );
-		} elseif ( $level >= 150 ) {
-			return __( 'Liaison', 'w4os' );
-		} elseif ( $level >= 100 ) {
-			return __( 'Customer Service', 'w4os' );
-		} elseif ( $level >= 1 ) {
-			return __( 'God-like', 'w4os' );
-		}
 	}
 
 	/**
@@ -745,65 +701,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		return esc_html( $server_uri );
 	}
 
-	static function get_user_avatar( $user_id = null ) {
-		if ( empty( $user_id ) ) {
-			$user = wp_get_current_user();
-		} else {
-			$user = get_user_by( 'ID', $user_id );
-		}
-
-		$avatars = self::get_avatars( array( 'Email' => $user->user_email ) );
-		if ( empty( $avatars ) ) {
-			return false;
-		}
-		$key    = key( $avatars );
-		$avatar = new W4OS3_Avatar( $key );
-
-		return $avatar;
-	}
-
-	static function get_avatars_by_email( $email ) {
-		if ( empty( $email ) ) {
-			return array();
-		}
-		return self::get_avatars( array( 'Email' => $email ) );
-	}
-
-	static function get_avatars( $args = array(), $format = OBJECT ) {
-		global $w4osdb;
-		if ( empty( $w4osdb ) ) {
-			return false;
-		}
-
-		if( ! isset ( $args['active'] ) ) {
-			$args['active'] = true;
-		}
-
-		foreach( $args as $arg => $value ) {
-			switch( $arg ) {
-				case 'Email':
-					$conditions[] = $w4osdb->prepare( 'Email = %s', $value );
-					break;
-				case 'active':
-					$conditions[] = 'active = ' . ( $value ? 'true' : 'false' );
-					break;
-			}
-		}
-
-		$avatars = array();
-		$sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts';
-		if( ! empty( $conditions )) {
-			$sql .= ' WHERE ' . implode( ' AND ', $conditions );
-		}
-
-		$result = $w4osdb->get_results( $sql, $format );
-		if ( is_array( $result ) ) {
-			foreach ( $result as $avatar ) {
-				$avatars[ $avatar->PrincipalID ] = trim( "$avatar->FirstName $avatar->LastName" );
-			}
-		}
-		return $avatars;
-	}
+	// REMOVED: Moved to parent OpenSim_Avatar class:
+	// - get_user_avatar(), get_avatars_by_email(), get_avatars()
 
 	public function get_profile_url() {
 		return self::profile_url( $this->data );
