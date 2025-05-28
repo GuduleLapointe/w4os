@@ -348,6 +348,11 @@ if (file_exists(__DIR__ . '/includes/class-w4os3-model.php')) {
     require_once __DIR__ . '/includes/class-w4os3-model.php';
 }
 
+// Load WordPress Avatar class
+if (file_exists(__DIR__ . '/includes/class-w4os-avatar.php')) {
+    require_once __DIR__ . '/includes/class-w4os-avatar.php';
+}
+
 // Load all current WordPress functionality in correct order
 // Legacy v1 init (contains core WordPress integration)
 require_once W4OS_PLUGIN_DIR . 'v1/init.php';

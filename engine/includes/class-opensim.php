@@ -287,5 +287,28 @@ class OpenSim
 		return false;
 	}
 
-
+    /**
+     * Convert bitmask to readable array
+     */
+    public static function demask($mask, $options, $additionalvalue = null) {
+        $result = array();
+        
+        if (!is_numeric($mask)) {
+            return $result;
+        }
+        
+        $mask = intval($mask);
+        
+        for ($i = 0; $i < count($options); $i++) {
+            if ($mask & (1 << $i)) {
+                $result[] = $options[$i];
+            }
+        }
+        
+        if (!empty($additionalvalue)) {
+            $result[] = $additionalvalue;
+        }
+        
+        return $result;
+    }
 }
