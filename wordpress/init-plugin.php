@@ -406,6 +406,7 @@ require_once __DIR__ . '/includes/class-user-menu.php';
 require_once __DIR__ . '/class-w4os3-service.php';
 
 // Load WordPress-specific classes (consolidating into W4OS3)
+require_once __DIR__ . '/class-w4os3-settings.php';
 require_once __DIR__ . '/class-w4os3-model.php';
 require_once __DIR__ . '/class-w4os3-avatar.php';
 require_once __DIR__ . '/class-w4os3-flux.php';

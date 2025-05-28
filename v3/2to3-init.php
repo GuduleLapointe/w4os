@@ -287,7 +287,7 @@ class W4OS2to3 {
 		define( 'W4OS_PLUGIN_DIR_URL', plugin_dir_url( __DIR__ ) );
 		// define( 'W4OS_PLUGIN', basename( W4OS_PLUGIN_DIR ) . '/w4os.php' );
 		define( 'W4OS_INCLUDES_DIR', plugin_dir_path( __FILE__ ) );
-		define( 'W4OS_TEMPLATES_DIR', W4OS_INCLUDES_DIR . 'templates/' );
+		define( 'W4OS_TEMPLATES_DIR', W4OS_PLUGIN_DIR . 'wordpress/templates/' );
 		define( 'W4OS_PATTERN_NAME', '[A-Za-z][A-Za-z0-9]* [A-Za-z][A-Za-z0-9]*' ); // Moved to v3 init class
 		// define( 'W4OS_NULL_KEY', '00000000-0000-0000-0000-000000000000' );
 
@@ -308,7 +308,6 @@ class W4OS2to3 {
 		// Transition classes will be loaded here.
 
 		// First we include all the files
-		require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
 
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 

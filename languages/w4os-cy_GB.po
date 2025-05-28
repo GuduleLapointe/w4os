@@ -2969,15 +2969,15 @@ msgstr "Mewngofnodi"
 msgid "Register"
 msgstr "Cofrestrwch"
 
-#: v3/templates/admin-settings-page.php:9
+#: wordpress/templates/admin-settings-page.php:9
 msgid "Invalid callback function %s."
 msgstr "Functsiwn alweddol annilys %s."
 
-#: v3/templates/admin-settings-page.php:27
+#: wordpress/templates/admin-settings-page.php:27
 msgid "Required parameters missing for this page."
 msgstr "Angen paramedrau angenrheidiol ar gyfer y dudalen hon."
 
-#: v3/templates/admin-settings-page.php:61
+#: wordpress/templates/admin-settings-page.php:61
 msgid "No content template available for this page."
 msgstr "Dim ond dim templed cynnwys ar gael ar gyfer y dudalen hon."
 

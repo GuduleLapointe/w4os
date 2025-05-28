@@ -2870,15 +2870,15 @@ msgstr "Entrar"
 msgid "Register"
 msgstr "Registrar"
 
-#: v3/templates/admin-settings-page.php:9
+#: wordpress/templates/admin-settings-page.php:9
 msgid "Invalid callback function %s."
 msgstr "Função de retorno inválida %s."
 
-#: v3/templates/admin-settings-page.php:27
+#: wordpress/templates/admin-settings-page.php:27
 msgid "Required parameters missing for this page."
 msgstr "Parâmetros obrigatórios em falta para esta página."
 
-#: v3/templates/admin-settings-page.php:61
+#: wordpress/templates/admin-settings-page.php:61
 msgid "No content template available for this page."
 msgstr "Nenhum modelo de conteúdo disponível para esta página."
 
