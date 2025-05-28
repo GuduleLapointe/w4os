@@ -24,7 +24,7 @@
 // active   int(11)         No  1
 
 
-class W4OS3_Avatar {
+class W4OS3_Avatar extends OpenSim_Avatar {
 	private $db;
 	public static $slug;
 	public static $profile_page_url;
