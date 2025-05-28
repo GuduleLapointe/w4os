@@ -507,6 +507,10 @@ class W4OS3 {
 
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 
+        if ( function_exists( 'xmlrpc_encode_request' ) ) {
+            require_once __DIR__ . '/includes/load-helpers.php';
+        }
+
 		// require_once W4OS_INCLUDES_DIR . 'class-flux.php';
 
 		// Once all files are loaded, we start the classes.

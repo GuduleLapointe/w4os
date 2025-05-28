@@ -88,9 +88,7 @@ if ( w4os_check_db_tables( 'userprofile' ) ) {
 	require_once __DIR__ . '/profile.php';
 }
 require_once __DIR__ . '/cron.php';
-if ( function_exists( 'xmlrpc_encode_request' ) ) {
-	require_once dirname( __DIR__ ) . '/helpers/wp-load.php';
-}
+
 require_once dirname( __DIR__ ) . '/blocks/blocks.php';
 
 if ( W4OS_DB_CONNECTED ) {
