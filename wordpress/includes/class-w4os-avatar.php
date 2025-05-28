@@ -38,7 +38,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		self::$profile_page_url = get_home_url(null, self::$slug);
 
 		// Initialize WordPress database connection for this class
-		$this->wp_db = new W4OS_WPDB( W4OS_DB_ROBUST );
+		$this->wp_db = new OSPDO( W4OS_DB_ROBUST );
 
 		// Call parent constructor for core avatar functionality
 		$args = func_get_args();
@@ -50,7 +50,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 
 	/**
 	 * WordPress-specific avatar initialization
-	 * Uses W4OS_WPDB and WordPress functions like esc_attr(), get_option(), etc.
+	 * Uses OSPDO and WordPress functions like esc_attr(), get_option(), etc.
 	 */
 	private function initialize_avatar_wp( $args ) {
 		if ( ! $this->wp_db ) {

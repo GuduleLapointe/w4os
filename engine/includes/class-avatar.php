@@ -25,6 +25,12 @@ class OpenSim_Avatar {
             $dsn = 'mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME;
             $this->db = new OSPDO($dsn, OPENSIM_DB_USER, OPENSIM_DB_PASS);
         }
+        if($this->db) {
+            error_log('OpenSim_Avatar: DB connected');
+        } else {
+            // Handle error if database connection fails
+            error_log('OpenSim_Avatar: Database connection failed.');
+        }
 
         $args = func_get_args();
         if ( ! empty( $args[0] ) ) {
