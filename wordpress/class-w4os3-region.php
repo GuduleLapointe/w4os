@@ -262,6 +262,7 @@ class W4OS3_Region extends OpenSim_Region {
 		
 		if ( ! W4OS3::$robust_db->connected ) {
 			echo '<div class="notice notice-error"><p>' . __( 'Database connection failed. Please check your settings.', 'w4os' ) . '</p></div>';
+            error_log(__METHOD__ . '[ERROR] Database connection failed in ' . __FILE__ . ' on line ' . __LINE__);
 			return;
 		}
 

@@ -317,7 +317,7 @@ class W4OS2to3 {
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-usermenu.php';
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 
-		require_once W4OS_INCLUDES_DIR . 'class-flux.php';
+		// require_once W4OS_INCLUDES_DIR . 'class-flux.php';
 
 		// Once all files are loaded, we start the classes.
 		$Settings = new W4OS3_Settings();

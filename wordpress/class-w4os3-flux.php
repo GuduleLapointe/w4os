@@ -16,7 +16,7 @@
  * @since 3.0
  */
 
-class W4OS3_Flux {
+class W4OS3_Flux extends OpenSim_Flux {
 
 	/**
 	 * Constructor

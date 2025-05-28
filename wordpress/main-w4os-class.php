@@ -422,6 +422,7 @@ require_once __DIR__ . '/includes/admin-functions.php';
 // Load WordPress-specific classes (consolidating into W4OS3)
 require_once __DIR__ . '/class-w4os3-model.php';
 require_once __DIR__ . '/class-w4os3-avatar.php';
+require_once __DIR__ . '/class-w4os3-flux.php';
 require_once __DIR__ . '/class-w4os3-region.php';
 
 // Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.

@@ -29,7 +29,7 @@ class OpenSim_Avatar {
             error_log('OpenSim_Avatar: DB connected');
         } else {
             // Handle error if database connection fails
-            error_log('OpenSim_Avatar: Database connection failed.');
+            error_log(__METHOD__ . '[ERROR] Database connection failed in ' . __FILE__ . ' on line ' . __LINE__);
         }
 
         $args = func_get_args();
