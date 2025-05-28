@@ -32,7 +32,9 @@ spl_autoload_register(function ($class) {
 
 // Load core OpenSimulator classes
 require_once OPENSIM_ENGINE_PATH . '/class-opensim.php';
+require_once OPENSIM_ENGINE_PATH . '/class-service.php';
 require_once OPENSIM_ENGINE_PATH . '/class-database.php';
+
 require_once OPENSIM_ENGINE_PATH . '/class-avatar.php';
 require_once OPENSIM_ENGINE_PATH . '/class-region.php';
 require_once OPENSIM_ENGINE_PATH . '/class-search.php';

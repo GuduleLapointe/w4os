@@ -415,10 +415,11 @@ class W4OS3 {
     }
 }
 
-// Load functions and utilities
+// Load WordPress-specific functions and utilities
 require_once __DIR__ . '/includes/public-functions.php';
 require_once __DIR__ . '/includes/admin-functions.php';
-require_once __DIR__ . '/includes/w4os3-services.php';
+require_once __DIR__ . '/class-w4os3-service.php';
+
 // Load WordPress-specific classes (consolidating into W4OS3)
 require_once __DIR__ . '/class-w4os3-model.php';
 require_once __DIR__ . '/class-w4os3-avatar.php';
