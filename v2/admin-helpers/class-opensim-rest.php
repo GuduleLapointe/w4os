@@ -104,7 +104,7 @@ class OpenSim_Rest {
 		$startSessionResponse = curl_exec( $this->ch );
 		// Check for errors
 		if ( ! $startSessionResponse ) {
-			return new Error( trim( 'Unable to start session ' . curl_error( $this->ch ) ) );
+			return new Error( trim( 'Unable to start session ' . curl_error( $this->ch ) ) . ' in ' . __FILE__ . ' on line ' . __LINE__ );
 		}
 
 		// Parse the session ID from the start session response
@@ -114,7 +114,7 @@ class OpenSim_Rest {
 		}
 
 		if ( empty( $this->sessionID ) ) {
-			return new Error( trim( 'Unable to get a session ID ' . curl_error( $this->ch ) ) );
+			return new Error( trim( 'Unable to get a session ID ' . curl_error( $this->ch ) ) . ' in ' . __FILE__ . ' on line ' . __LINE__ );
 		}
 
 		return $this->sessionID;

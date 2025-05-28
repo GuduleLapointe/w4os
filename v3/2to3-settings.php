@@ -47,13 +47,18 @@ class W4OS3_Settings {
 
 	public function register_w4os_settings_beta( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-settings']['tabs']['beta'] = array(
-			'title'    => __( 'Beta Features', 'w4os' ),
+			'title'    => __( 'Developer', 'w4os' ),
 			'priority' => 9,
 			'fields'   => array(
 				'debug_html' => array(
 					'label'       => __( 'Enable HTML debug', 'w4os' ),
 					'type'        => 'switch',
 					'description' => __( 'Warning: this might expose critical debug information on the front end.', 'w4os' ),
+				),
+				'enable_self_signed' => array(
+					'label'       => __( 'Enable self-signed certificates', 'w4os' ),
+					'type'        => 'switch',
+					'description' => __( 'Warning: enable only in development environments. This will allow connections to OpenSimulator grids with self-signed certificates.', 'w4os' ),
 				),
 			),
 		);

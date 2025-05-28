@@ -309,7 +309,6 @@ class W4OS2to3 {
 
 		// First we include all the files
 		require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
-		require_once W4OS_INCLUDES_DIR . '2to3-service.php';
 
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-list.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';

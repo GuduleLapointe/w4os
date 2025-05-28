@@ -21,15 +21,20 @@ class OpenSim_Avatar {
 
     public function __construct() {
         // Initialize database connection using OSPDO (framework-agnostic)
-        if (class_exists('OSPDO') && defined('OPENSIM_DB_HOST')) {
-            $dsn = 'mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME;
-            $this->db = new OSPDO($dsn, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+        if(!class_exists('OSPDO')) {
+            error_log(__METHOD__ . ' [ERROR] OSPDO class not found in ' . __FILE__ . ' on line ' . __LINE__);
+            return;
+        } else if (!defined('OPENSIM_DB_HOST') || !defined('OPENSIM_DB_NAME') || !defined('OPENSIM_DB_USER') || !defined('OPENSIM_DB_PASS')) {
+            error_log(__METHOD__ . ' [ERROR] OpenSim database constants not defined in ' . __FILE__ . ' on line ' . __LINE__);
+            return;
         }
-        if($this->db) {
-            error_log('OpenSim_Avatar: DB connected');
-        } else {
+
+        $dsn = 'mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME;
+        $this->db = new OSPDO($dsn, OPENSIM_DB_USER, OPENSIM_DB_PASS);
+
+        if(! $this->db) {
             // Handle error if database connection fails
-            error_log(__METHOD__ . '[ERROR] Database connection failed in ' . __FILE__ . ' on line ' . __LINE__);
+            error_log(__METHOD__ . ' [ERROR] Database connection failed in ' . __FILE__ . ' on line ' . __LINE__);
         }
 
         $args = func_get_args();

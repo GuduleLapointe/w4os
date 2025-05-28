@@ -418,7 +418,7 @@ class W4OS3 {
 // Load functions and utilities
 require_once __DIR__ . '/includes/public-functions.php';
 require_once __DIR__ . '/includes/admin-functions.php';
-
+require_once __DIR__ . '/includes/w4os3-services.php';
 // Load WordPress-specific classes (consolidating into W4OS3)
 require_once __DIR__ . '/class-w4os3-model.php';
 require_once __DIR__ . '/class-w4os3-avatar.php';
@@ -442,6 +442,21 @@ require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
 // Load admin functionality
 if (is_admin()) {
     require_once W4OS_PLUGIN_DIR . 'v1/admin/admin-init.php';
+}
+
+// Temporary workaround, load legacy helpers configuration.
+// This should be replaced with a proper configuration management system in the future.
+try {
+    require_once dirname(__DIR__) . '/helpers/includes/config.php';
+} catch (Exception $e) {
+    error_log("[ERROR] Failed to load OpenSimulator helpers configuration: " . $e->getMessage());
+    // // If config fails, fallback to default values
+    // define('OPENSIM_HELPERS_CONFIG', [
+    //     'api_url' => 'https://api.opensimulator.org',
+    //     'default_region' => 'default',
+    //     'default_avatar' => 'avatar',
+    //     'default_search_radius' => 1000,
+    // ]);
 }
 
 W4OS3::init();

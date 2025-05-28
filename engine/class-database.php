@@ -47,35 +47,37 @@ class OSPDO extends PDO {
 			$password  = $credentials['pass'];
 			$dbname      = $credentials['database'];
 			$dbhost      = $credentials['host'] . ( empty( $credentials['port'] ) ? '' : ':' . $credentials['port'] );
-		}
-
-		// Use the `mysqli` extension if it exists unless `WP_USE_EXT_MYSQL` is defined as true.
-		if ( function_exists( 'mysqli_connect' ) ) {
-			$this->use_mysqli = true;
-
-			// Set mysqli connection timeout to 5 seconds
-			ini_set( 'mysqli.connect_timeout', 1 );
-
-			if ( defined( 'WP_USE_EXT_MYSQL' ) ) {
-				$this->use_mysqli = ! WP_USE_EXT_MYSQL;
-			}
-		}
+		} else {
+            // split $dsn string formatted as 'mysql:host=$dbhost;dbname=$dbname' into $dbhost and $dbname
+            $dsn_parts = explode(';', $dsn);
+            $dbhost = str_replace('mysql:host=', '', $dsn_parts[0]);
+            $dbname = str_replace('dbname=', '', $dsn_parts[1] ?? '');
+            $username = $username ?? null;
+            $password = $password ?? null;
+            $credentials = array(
+                'user' => $username,
+                'pass' => $password,
+                'database' => $dbname,
+                'host' => $dbhost,
+            );
+        }
 
 		// Actual db_connect() attempt can take forever is remote connection is not allowed.
 		// So, we should first make a quick test to verify the remote port is accessible
 		// before attempting to connect to the database.
 
 		$url_parts = parse_url( $dbhost );
-		$test_host = $url_parts['host'];
+		$test_host = $url_parts['host'] ?? $url_parts['path'] ?? 'localhost';
 		$test_port = $url_parts['port'] ?? 3306;
 		$socket    = @fsockopen( $test_host, $test_port, $errno, $errstr, 1 );
 		if ( ! $socket ) {
 			$error = "Failed to connect to the database server: $errstr";
 			error_log( $error );
 			// If the port is not accessible, we should not attempt to connect to the database.
-			return new WP_Error( 'db_connect_error', $error );
+			throw new Exception( 'db_connect_error ' . $error );
 		}
-
+        
+        
         $dsn = 'mysql:host=' . $dbhost . ';dbname=' . $dbname;
 
         try {
