@@ -26,9 +26,6 @@ if ( ! defined( 'W4OS_SLUG' ) ) {
 	define( 'W4OS_SLUG', basename( W4OS_DIR ) );
 }
 
-if ( ! defined( 'W4OS_PLUGIN' ) ) {
-	define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
-}
 $plugin_data = get_file_data(
 	WP_PLUGIN_DIR . '/' . W4OS_PLUGIN,
 	array(
@@ -70,7 +67,7 @@ if ( ! defined( 'W4OS_TXDOM' ) ) {
 define( 'W4OS_LOGIN_PAGE', get_home_url( null, get_option( 'w4os_profile_slug' ) ) );
 
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
-require_once __DIR__ . '/functions.php';
+// functions loaded in wordpress/includes/public-functions.php
 
 define( 'W4OS_GRID_LOGIN_URI', w4os_grid_login_uri() );
 if ( empty( get_option( 'w4os_assets_slug' ) ) ) {
@@ -82,34 +79,6 @@ if ( get_option( 'w4os_profile_page' ) == 'provide' ) {
 }
 define( 'W4OS_GRID_INFO', w4os_get_grid_info() );
 
-function w4os_is_front_end() {
-	// Exclude admin and feeds
-	if ( is_admin() || is_feed() ) {
-		return false;
-	}
-	// Exclude cron
-	if ( defined( 'DOING_CRON' ) ) {
-		return false;
-	}
-	// Exclude ajax, autosave, script debug, wp debug, etc.
-	if ( defined( 'DOING_AJAX' ) || defined( 'DOING_AUTOSAVE' ) ) {
-		return false;
-	}
-	if ( defined( 'WP_IMPORTING' ) || defined( 'WP_INSTALLING' ) || defined( 'WP_REPAIRING' )
-	|| defined( 'WP_SETUP_CONFIG' ) || defined( 'WP_UNINSTALL_PLUGIN' ) || defined( 'WP_INSTALL_PLUGIN' )
-	|| defined( 'WP_LOAD_IMPORTERS' ) || defined( 'WP_INSTALLING_NETWORK' )
-	|| defined( 'WP_INSTALLING_UPDATER' ) || defined( 'WP_INSTALLING_UPDATES' ) || defined( 'WP_INSTALLING_AUTO_UPDATER' ) || defined( 'WP_INSTALLING_AUTO_UPDATE' )
-	|| defined( 'WP_INSTALLING_AUTO_UPDATES' ) || defined( 'WP_INSTALLING_AUTO_UPDATE_CORE' ) ) {
-		return false;
-	}
-
-	if ( preg_match( '/\.js?/', $_SERVER['REQUEST_URI'] ) ) {
-		return false;
-	}
-
-	// Include front-end
-	return true;
-}
 
 // Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.
 if ( w4os_is_front_end() ) {
@@ -139,14 +108,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	require_once __DIR__ . '/woocommerce.php';
 }
 
-add_filter( 'script_loader_tag', 'w4os_add_crossorigin', 10, 2 );
-function w4os_add_crossorigin( $tag, $handle ) {
-	if ( 'w4os-fa' === $handle ) {
-		return str_replace( '>', ' crossorigin="anonymous" >', $tag );
-	}
-	return $tag;
-}
-
 w4os_check_requirements();
 
 /**
@@ -160,19 +121,3 @@ if ( get_option( 'w4os_flush_rewrite_rules' ) || get_option( 'w4os_rewrite_versi
 }
 
 
-add_filter( 'body_class', 'w4os_css_classes_body' );
-function w4os_css_classes_body( $classes ) {
-	if ( ! is_array( W4OS_GRID_INFO ) ) {
-		return $classes;
-	}
-
-	$post = get_post();
-	if ( ! $post ) {
-		return array();
-	}
-	$helper = array_search( $post->guid, W4OS_GRID_INFO );
-	if ( ! empty( $helper ) ) {
-		$classes[] = 'w4os-' . $helper;
-	}
-	return $classes;
-}

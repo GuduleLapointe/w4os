@@ -19,6 +19,7 @@ define('W4OS_VERSION', '2.9.5-beta-9');
 define('W4OS_PLUGIN_DIR', plugin_dir_path(__DIR__));
 define('W4OS_PLUGIN_URL', plugin_dir_url(__DIR__));
 define('W4OS_SLUG', basename( W4OS_PLUGIN_DIR ) );
+define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 
 // Enable all features (remove beta toggles)
 if(!defined('W4OS_ENABLE_V3')) {
@@ -34,6 +35,66 @@ class W4OS3 {
     public static $assets_db;
     public static $profile_db;
     
+    static function init() {
+        // Register WordPress hooks and filters
+        self::register_filters();
+        self::register_actions();
+        
+        // Initialize WordPress-specific functionality
+        self::init_wordpress_features();
+    }
+
+    /**
+     * Register WordPress filters
+     */
+    private static function register_filters() {
+        add_filter( 'script_loader_tag', __CLASS__ . '::w4os_add_crossorigin', 10, 2 );
+        add_filter( 'body_class', __CLASS__ . '::w4os_css_classes_body' );
+        
+        // Add more filters here as they're moved from v1/v2/v3
+        // add_filter( 'example_filter', __CLASS__ . '::example_method' );
+    }
+
+    /**
+     * Register WordPress actions
+     */
+    private static function register_actions() {
+        // Add actions here as they're moved from v1/v2/v3
+        // add_action( 'init', __CLASS__ . '::example_action' );
+        // add_action( 'wp_enqueue_scripts', __CLASS__ . '::enqueue_assets' );
+    }
+
+    /**
+     * Initialize WordPress-specific features
+     */
+    private static function init_wordpress_features() {
+        // Initialize any WordPress-specific functionality
+        // that doesn't fit into standard hooks/filters
+    }
+
+    static function w4os_css_classes_body( $classes ) {
+        if ( ! is_array( W4OS_GRID_INFO ) ) {
+            return $classes;
+        }
+
+        $post = get_post();
+        if ( ! $post ) {
+            return array();
+        }
+        $helper = array_search( $post->guid, W4OS_GRID_INFO );
+        if ( ! empty( $helper ) ) {
+            $classes[] = 'w4os-' . $helper;
+        }
+        return $classes;
+    }
+
+    static function w4os_add_crossorigin( $tag, $handle ) {
+        if ( 'w4os-fa' === $handle ) {
+            return str_replace( '>', ' crossorigin="anonymous" >', $tag );
+        }
+        return $tag;
+    }
+
     // Moved in engine OpenSim class
     // public static function sanitize_uri($uri) {
     //     if (class_exists('OpenSim')) {
@@ -339,13 +400,17 @@ class W4OS3 {
     }
 }
 
+// Load functions and utilities
+require_once __DIR__ . '/includes/public-functions.php';
+require_once __DIR__ . '/includes/admin-functions.php';
+
 // Load WordPress-specific classes (consolidating into W4OS3)
-require_once __DIR__ . '/includes/class-w4os3-model.php';
-require_once __DIR__ . '/includes/class-w4os-avatar.php';
+require_once __DIR__ . '/class-w4os3-model.php';
+require_once __DIR__ . '/class-w4os3-avatar.php';
 
 // Load WordPress Avatar class
-if (file_exists(__DIR__ . '/includes/class-w4os-avatar.php')) {
-    require_once __DIR__ . '/includes/class-w4os-avatar.php';
+if (file_exists(__DIR__ . '/class-w4os3-avatar.php')) {
+    require_once __DIR__ . '/class-w4os3-avatar.php';
 }
 
 // Load all current WordPress functionality in correct order
@@ -361,3 +426,5 @@ require_once W4OS_PLUGIN_DIR . 'v3/2to3-init.php';
 if (is_admin()) {
     require_once W4OS_PLUGIN_DIR . 'v1/admin/admin-init.php';
 }
+
+W4OS3::init();

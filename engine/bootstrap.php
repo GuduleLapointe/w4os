@@ -23,17 +23,17 @@ if (!defined('OPENSIM_ENGINE_VERSION')) {
 // Engine autoloader
 spl_autoload_register(function ($class) {
     if (strpos($class, 'OpenSim_') === 0) {
-        $file = OPENSIM_ENGINE_PATH . '/includes/class-' . strtolower(str_replace('_', '-', str_replace('OpenSim_', '', $class))) . '.php';
+        $file = OPENSIM_ENGINE_PATH . '/class-' . strtolower(str_replace('_', '-', str_replace('OpenSim_', '', $class))) . '.php';
         if (file_exists($file)) {
             require $file;
         }
     }
 });
 
-// Load core OpenSimulator class
-require_once OPENSIM_ENGINE_PATH . '/includes/class-opensim.php';
-require_once OPENSIM_ENGINE_PATH . '/includes/class-database.php';
-require_once OPENSIM_ENGINE_PATH . '/includes/class-avatar.php';
-require_once OPENSIM_ENGINE_PATH . '/includes/class-search.php';
-require_once OPENSIM_ENGINE_PATH . '/includes/class-economy.php';
-require_once OPENSIM_ENGINE_PATH . '/includes/class-grid.php';
+// Load core OpenSimulator classes
+require_once OPENSIM_ENGINE_PATH . '/class-opensim.php';
+require_once OPENSIM_ENGINE_PATH . '/class-database.php';
+require_once OPENSIM_ENGINE_PATH . '/class-avatar.php';
+require_once OPENSIM_ENGINE_PATH . '/class-search.php';
+require_once OPENSIM_ENGINE_PATH . '/class-economy.php';
+require_once OPENSIM_ENGINE_PATH . '/class-grid.php';
