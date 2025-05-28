@@ -8,6 +8,8 @@
 
 class OSPDO extends PDO {
     public $connected = false;
+    private $last_prepared_query;
+    private $last_prepared_args;
     
     public function __construct($dsn, $username = null, $password = null, $driver_options = null) {
         // First handle the different attributes formatting
@@ -100,7 +102,12 @@ class OSPDO extends PDO {
         $trace = debug_backtrace()[0];
         $trace = $trace['file'] . ':' . $trace['line'];
 
-        $statement = $this->prepare($query, $options);
+        // If this is a prepared query from our prepare() method, use stored args
+        if (isset($this->last_prepared_query) && $query === $this->last_prepared_query && isset($this->last_prepared_args)) {
+            $params = $this->last_prepared_args;
+        }
+        
+        $statement = parent::prepare($query, $options);
         $result = $statement->execute($params);
 
         if ($result) {
@@ -167,7 +174,12 @@ class OSPDO extends PDO {
      */
     public function prepare($query, ...$args) {
         if (empty($args)) {
-            return parent::prepare($query);
+            return $query;
+        }
+        
+        // Flatten args if passed as array
+        if (count($args) == 1 && is_array($args[0])) {
+            $args = $args[0];
         }
         
         // Simple WordPress-style placeholder replacement
@@ -175,7 +187,11 @@ class OSPDO extends PDO {
         $query = str_replace('%d', '?', $query);
         $query = str_replace('%f', '?', $query);
         
-        return parent::prepare($query);
+        // Store the prepared query and args for later execution
+        $this->last_prepared_query = $query;
+        $this->last_prepared_args = array_values($args);
+        
+        return $query;
     }
 
     /**

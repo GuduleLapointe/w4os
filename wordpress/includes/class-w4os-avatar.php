@@ -526,39 +526,36 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	 * Display the list of Avatars from the custom database.
 	 */
 	public function display_avatars_list() {
-		// if ( ! class_exists( 'WP_List_Table' ) ) {
-		// require_once ABSPATH . 'wp-admin/v2/class-wp-list-table.php';
-		// }
-
-		// Instantiate and display the list table
+		// Use OSPDO connection for list table
+		$db_connection = new OSPDO( W4OS_DB_ROBUST );
 
 		$avatarsTable = new W4OS_List_Table(
-			$this->db,
+			$db_connection,
 			'avatars',
 			array(
 				'singular'      => 'Avatar',
 				'plural'        => 'Avatars',
 				'ajax'          => false,
 				'table'         => 'UserAccounts',
-				'query'         => self::$base_query,
+				'query'         => "SELECT * FROM (
+					SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
+					FROM UserAccounts 
+					LEFT JOIN userprofile ON PrincipalID = userUUID 
+					LEFT JOIN GridUser ON PrincipalID = UserID
+				) AS subquery",
 				'admin_columns' => array(
 					'avatarName'  => array(
 						'title'           => __( 'Avatar Name', 'w4os' ),
-						'sortable'        => true, // optional, defaults to false
-						// 'sort_column' => 'avatarName', // optional, defaults to column key, use 'callback' to use render_callback value
-						'order'           => 'ASC', // optional, defaults to 'ASC'
-						'searchable'      => true, // optional, defaults to false
-						// 'search_column' => 'avatarName', // optional, defaults to column key, use 'callback' to use render_callback value
-						// 'filterable' => false, // deprecated, use 'views' instead
-						'render_callback' => array( $this, 'format_name' ), // optional, defaults to 'column_' . $key
-						'size'            => null, // optional, defaults to null (auto)
+						'sortable'        => true,
+						'order'           => 'ASC',
+						'searchable'      => true,
+						'render_callback' => array( $this, 'format_name' ),
+						'size'            => null,
 					),
 					'Email'       => array(
 						'title'      => __( 'Email', 'w4os' ),
-						// 'type' => 'email',
 						'sortable'   => true,
 						'searchable' => true,
-						// 'size' => '20%',
 					),
 					'avatar_type' => array(
 						'title'           => __( 'Type', 'w4os' ),
@@ -584,7 +581,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 						'sortable'        => true,
 						'sort_column'     => 'callback',
 						'size'            => '8%',
-						'views'           => 'callback', // Add subsubsub links based on the rendered value
+						'views'           => 'callback',
 					),
 					'last_seen'   => array(
 						'title'           => __( 'Last Seen', 'w4os' ),
@@ -612,7 +609,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		<div class="wrap w4os-list w4os-list-avatars">
 			<form method="post">
 				<?php
-					$avatarsTable->search_box( 'Search Avatars', 's' ); // Add search box
+					$avatarsTable->search_box( 'Search Avatars', 's' );
 					$avatarsTable->display();
 				?>
 			</form>

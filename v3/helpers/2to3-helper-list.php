@@ -96,7 +96,6 @@ add_action(
 
 				// Use the passed DB connection
 				$this->db = $db;
-				error_log( __METHOD__ . ':' . __LINE__ . ' [DEBUG] Db ' . print_r($db, true) . ' connected to ' . $this->table );
 			}
 
 			/** Define the columns */
@@ -250,7 +249,7 @@ add_action(
 				if($this->db) {
 					$results = $this->db->get_results( $query );
 				} else {
-					error_log(__FUNCTION__ . ':' . __LINE__ . ' [DEBUG] Database not connected.');
+					error_log(__FUNCTION__ . ':' . __LINE__ . ' [ERROR] Database not connected.');
 					$results = [];
 					// Handle error if database connection fails
 				}
@@ -385,7 +384,7 @@ add_action(
 				if($this->db) {
 					$items            = $this->db->get_results( $unfiltered_query );
 				} else {
-					error_log(__FUNCTION__ . ':' . __LINE__ . ' [DEBUG] Database not connected.');
+					error_log(__FUNCTION__ . ':' . __LINE__ . ' [ERROR] Database not connected.');
 					$items = [];
 					// Handle error if database connection fails
 				}
