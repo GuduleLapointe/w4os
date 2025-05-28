@@ -496,7 +496,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as registration page.', 'w4os' ),
-					'readonly'    => W4OS2to3::$console_enabled,
+					'readonly'    => W4OS3::$console_enabled,
 					// 'default' => w4os::get_option( 'registration-page' ),
 				),
 				'password'     => array(
@@ -509,7 +509,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 						'use-default' => ' ' . __( 'Use WordPress default', 'w4os' ),
 					),
 					'placeholder' => __( 'Select the page to be used as password reset page.', 'w4os' ),
-					'readonly'    => W4OS2to3::$console_enabled,
+					'readonly'    => W4OS3::$console_enabled,
 					// 'default' => w4os::get_option( 'password-page' ),
 				),
 			),
@@ -691,7 +691,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 			( empty( $special_accounts ) ) ? '' : ' – ' . implode( ', ', $special_accounts )
 		);
 		$output      .= empty( $actions ) ? '' : '<div class="row-actions">' . implode( ' | ', $actions ) . '</div>';
-		$output      .= W4OS2to3::modal( $PrincipalID, $this->profile_url( $item ), $profile_preview );
+		$output      .= W4OS3::modal( $PrincipalID, $this->profile_url( $item ), $profile_preview );
 		return $output;
 	}
 
@@ -846,7 +846,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$avatarName  = $this->AvatarName;
 		$profileImage = $this->profileImage;
 		// $img          = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
-		$img = ( $include_picture ) ? W4OS2to3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) ) : '';
+		$img = ( $include_picture ) ? W4OS3::img( $profileImage, array( 'alt' => $avatarName, 'class' => 'profile' ) ) : '';
 		return sprintf(
 			'<a href="%s" title="%s">%s%s</a>',
 			$profile_url,
@@ -858,7 +858,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 
 	public function profile_picture( $echo = false ) {
 		$avatarName = $this->AvatarName ?? '';
-		$html       = OpenSim::empty( $this->profileImage ) ? '' : W4OS2to3::img(
+		$html       = OpenSim::empty( $this->profileImage ) ? '' : W4OS3::img(
 			$this->profileImage,
 			array(
 				'alt'   => $avatarName,
@@ -929,7 +929,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$profileImage = $item->profileImage;
 		$img          = ( empty( $profileImage ) ) ? '' : '<img src="' . $profileImage . '" alt="' . $avatarName . '">';
 		if ( ! empty( $item->profileFirstImage . $item->profileFirstText ) ) {
-			$profileFirstImage = W4OS2to3::img( $item->profileFirstImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
+			$profileFirstImage = W4OS3::img( $item->profileFirstImage, array( 'alt' => $avatarName, 'class' => 'profile' ) );
 			$reallife          = sprintf(
 				'<div class="firstlife" style="clear:both !important;">%s %s</div>',
 				$profileFirstImage,
@@ -951,7 +951,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$data = array_filter( $data );
 
 		$output[] = '<h2>' . $avatarName . '</h2>';
-		$output[] = W4OS2to3::img(
+		$output[] = W4OS3::img(
 			$profileImage,
 			array(
 				'alt'   => $avatarName,
@@ -1051,8 +1051,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$flux = ( isset( $this->profileFlux ) ) ? $this->profileFlux : new W4OS3_Flux( $this->UUID );
 
 		if ( empty( $_GET['name'] ) ) {
-			$this->profileImageHtml = W4OS2to3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
-			$this->profileFirstImageHtml = W4OS2to3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
+			$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
+			$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
 	
 			if ( ! w4os_empty( $this->profilePartner ) ) {
 				$partner = new W4OS3_Avatar( $this->profilePartner );

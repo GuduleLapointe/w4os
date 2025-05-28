@@ -1110,7 +1110,7 @@ function w4os_grid_profile_url( $user_or_id ) {
 	}
 
 	$link = sprintf_safe( '/app/agent/%s/about', $user->UUID );
-	if ( W4OS_ENABLE_V3 && W4OS2to3::in_world_call() ) {
+	if ( W4OS_ENABLE_V3 && W4OS3::in_world_call() ) {
 		// SLURL not supported from within profile tab, not sure it is in embedded web browser either
 		return false;
 		// $link = 'secondlife://' . $link;

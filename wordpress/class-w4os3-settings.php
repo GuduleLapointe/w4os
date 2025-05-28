@@ -644,7 +644,7 @@ class W4OS3_Settings {
 					);
 				}
 
-				$dbreadonly = ( W4OS2to3::$console_enabled || ( isset( $creds['console']['enabled'] ) && $creds['console']['enabled'] ) ) ? 'readonly' : '';
+				$dbreadonly = ( W4OS3::$console_enabled || ( isset( $creds['console']['enabled'] ) && $creds['console']['enabled'] ) ) ? 'readonly' : '';
 
 				$input_field .= sprintf(
 					'<div class="w4os-credentials  credentials-db">

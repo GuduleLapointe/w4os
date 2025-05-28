@@ -187,7 +187,7 @@ class W4OS3_Region extends OpenSim_Region {
 					'host' => $parts['host'] ?? '',
 					'port' => $parts['port'] ?? '',
 				),
-				W4OS2to3::get_credentials( $this->item->serverURI ),
+				W4OS3::get_credentials( $this->item->serverURI ),
 			);
 			$settings['w4os-regions']['tabs']['edit'] = array(
 				'title'           => __( 'Edit (improved)', 'w4os' ),
@@ -696,7 +696,7 @@ class W4OS3_Region extends OpenSim_Region {
 		}
 		$icons = array();
 
-		$credentials = W4OS2to3::get_credentials( $server_uri );
+		$credentials = W4OS3::get_credentials( $server_uri );
 		if ( $credentials['console']['enabled'] ?? false ) {
 			if ( $region->console_connected ) {
 				$icons['console'] = '<span class="dashicons dashicons-embed-generic" style="color: #00a32a;"></span>';
