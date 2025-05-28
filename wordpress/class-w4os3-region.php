@@ -51,9 +51,6 @@
 
 
 class W4OS3_Region extends OpenSim_Region {
-	private $uuid;
-	private $item;
-	private $data;
 	private $main_query = "SELECT * FROM (
 		SELECT regions.*,
 		CONCAT(UserAccounts.FirstName, ' ', UserAccounts.LastName) AS owner_name,
@@ -63,36 +60,27 @@ class W4OS3_Region extends OpenSim_Region {
 		LEFT JOIN UserAccounts ON regions.owner_uuid = UserAccounts.PrincipalID
 	) AS subquery";
 
-	private $name;
-	private $owner_name;
-	private $owner_uuid;
-	private $serverURI;
-	private $server;
-	private $sizeX;
-	private $sizeY;
-	private $flags;
-	private $last_seen;
-	private $presence;
 	private $parcels;
 
-	private $console_connected = false;
-	private $db_connected      = false;
-	private $db                = false;
-
 	public function __construct( $args = null ) {
-		// error_log( __METHOD__ );
+		// Initialize database connection if not provided
+		$database_connection = W4OS3::$robust_db;
+		
+		// Call parent constructor
+		parent::__construct($args, $database_connection);
 
+		// Handle WordPress-specific initialization
 		if ( ! OpenSim::empty( $args ) ) {
 			$this->fetch_region_data( $args );
 		} elseif ( isset( $_GET['region'] ) ) {
 			$this->fetch_region_data( $_GET['region'] );
 		}
 
+		// Initialize WordPress-specific server connection
 		if ( ! empty( $this->item->serverURI ) ) {
 			if ( empty( $this->server ) && $this->server !== false ) {
 				$this->server            = new W4OS3_Service( $this->item->serverURI );
 				$this->console_connected = $this->server->console_connected();
-				// $this->db_connected = $this->server->db_connected();
 				$this->db           = $this->server->db ?? false;
 				$this->db_connected = $this->db->ready ?? false;
 			}
@@ -227,7 +215,7 @@ class W4OS3_Region extends OpenSim_Region {
 						'id'    => 'owner',
 						'label' => __( 'Owner', 'w4os' ),
 						'type'  => 'custom_html',
-						'value' => $this->owner_name( $this->item ),
+						'value' => $this->get_owner_name(),
 					),
 					'teleport'        => array(
 						'id'    => 'teleport',
@@ -374,18 +362,9 @@ class W4OS3_Region extends OpenSim_Region {
 		<?php
 	}
 
-	public function owner_name( $item ) {
-		$uuid = $item->owner_uuid;
-		if ( ! W4OS3::$robust_db ) {
-			return "not found ($uuid)";
-		}
-		$query  = "SELECT CONCAT(FirstName, ' ', LastName) AS Name FROM UserAccounts WHERE PrincipalID = %s";
-		$result = W4OS3::$robust_db->get_var( W4OS3::$robust_db->prepare( $query, $uuid ) );
-		return esc_html( $result );
-	}
-
 	/**
 	 * Fetch the Region data from the custom database.
+	 * Override parent method to use WordPress database connection
 	 *
 	 * @param mixed $args The UUID of the Region or the Region data.
 	 * @return void
@@ -405,26 +384,22 @@ class W4OS3_Region extends OpenSim_Region {
 		} else {
 			return;
 		}
-	}
-
-	/**
-	 * Get region name
-	 */
-	public function get_name() {
-		if ( empty( $this->item ) ) {
-			return;
+		
+		// Call parent method to populate properties
+		if ($this->item) {
+			$this->populate_properties();
 		}
-		return $this->item->regionName;
 	}
 
 	/**
-	 * Get region teleport uri
+	 * Get region teleport uri - WordPress wrapper for parent method
 	 */
 	public function get_tp_uri( $string = null ) {
 		if ( empty( $this->item ) ) {
 			return;
 		}
-		return $this->region_tp_uri( $this->item );
+		$gateway = get_option( 'w4os_login_uri' );
+		return parent::get_tp_uri( $gateway );
 	}
 
 	/**
@@ -435,13 +410,14 @@ class W4OS3_Region extends OpenSim_Region {
 		return empty( $url ) ? null : w4os_hop( $url, $string );
 	}
 
+	/**
+	 * Format flags using WordPress translations
+	 */
 	public static function format_flags( $bitwise = null ) {
-		$matches = self::match_flags( $bitwise );
+		$matches = self::match_flags( $bitwise, W4OS_REGION_FLAGS );
 		if ( empty( $matches ) ) {
 			return;
 		}
-
-		// asort( $matches );
 
 		$output_html = '<ul class="region-flags">';
 		foreach ( $matches as $flag ) {
@@ -452,16 +428,19 @@ class W4OS3_Region extends OpenSim_Region {
 		return $output_html;
 	}
 
-	public static function match_flags( $bitwise ) {
-		$matches = array();
-		foreach ( W4OS_REGION_FLAGS as $flag => $label ) {
-			if ( $bitwise & $flag ) {
-				$matches[ $flag ] = $label;
-			}
+	/**
+	 * WordPress-specific flag matching using translated labels
+	 */
+	public static function match_flags( $bitwise, $flag_definitions = null ) {
+		if ( $flag_definitions === null ) {
+			$flag_definitions = W4OS_REGION_FLAGS;
 		}
-		return $matches;
+		return parent::match_flags( $bitwise, $flag_definitions );
 	}
 
+	/**
+	 * Get flags for this region using WordPress translations
+	 */
 	public function flags( $bitwise = null ) {
 		if ( $bitwise === null ) {
 			$bitwise = $this->item->flags;
@@ -634,12 +613,8 @@ class W4OS3_Region extends OpenSim_Region {
 	 * Format the Region size.
 	 */
 	public function format_region_size( $item ) {
-		if ( empty( $item->size ) ) {
-			return null;
-		}
-
-		$size = $item->sizeX . '×' . $item->sizeY;
-		return $size;
+		$region = new W4OS3_Region( $item );
+		return $region->get_size_formatted();
 	}
 
 	/**
@@ -688,31 +663,12 @@ class W4OS3_Region extends OpenSim_Region {
 	}
 
 	/**
-	 * Format the server URI column in a lighter way.
+	 * Format the server URI column using parent class method.
 	 */
 	public function format_server_uri( $item, $use_dns = true ) {
-		$server_uri = $item->serverURI;
-		if ( empty( $server_uri ) ) {
-			return;
-		}
-
-		$parts    = parse_url( $server_uri );
-		$hostname = $parts['host'];
-
-		// use DNS if use_dns is true and hostname is an IP4 or IP6 address
-		if ( $use_dns && filter_var( $hostname, FILTER_VALIDATE_IP ) ) {
-			$hostname = gethostbyaddr( $parts['host'] );
-			$hostname = empty( $hostname ) ? $parts['host'] : $hostname;
-			// count dots and fallback to $parts['host'] if no dots or more than 5
-			$dot_count = substr_count( $hostname, '.' );
-			if ( $dot_count === 0 || $dot_count > 4 ) {
-				$hostname = $parts['host'];
-			}
-		}
-
-		$server_uri = $hostname . ':' . $parts['port'];
-
-		return esc_html( $server_uri );
+		$region = new W4OS3_Region( $item );
+		$formatted = $region->get_server_uri_formatted( $use_dns );
+		return esc_html( $formatted );
 	}
 
 	public function format_server_control( $item ) {
