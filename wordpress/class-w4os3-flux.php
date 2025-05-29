@@ -135,7 +135,8 @@ class W4OS3_Flux extends OpenSim_Flux {
 		$args          = array_filter( $args );
 
 		$avatars = W4OS3_Avatar::get_avatars( array( 'Email' => $user_email ) );
-
+		error_log( __FUNCTION__ . ' [DEBUG] avatars: ' . print_r( $avatars, true ) );
+		
 		// Allow admin to select any avatar
 		if ( current_user_can( 'manage_options' ) ) {
 			$avatars = array_merge(

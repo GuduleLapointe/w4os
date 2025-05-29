@@ -508,6 +508,7 @@ class W4OS3 {
 		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
 
         if ( function_exists( 'xmlrpc_encode_request' ) ) {
+            // global $SearchDB, $AssetsDB, $ProfileDB, $OpenSimDB;
             require_once __DIR__ . '/includes/load-helpers.php';
         }
 

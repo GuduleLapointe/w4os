@@ -15,6 +15,8 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;
 }
 
+global $SearchDB, $AssetsDB, $ProfileDB, $OpenSimDB;
+
 $helpers_dir = W4OS_PLUGIN_DIR . 'helpers/';
 
 $url = parse_url( getenv( 'REQUEST_URI' ), PHP_URL_PATH );
