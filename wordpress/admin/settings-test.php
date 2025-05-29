@@ -61,6 +61,9 @@ class W4OS_Settings_Test_Page {
             case 'fix_arrays':
                 $this->fix_array_values();
                 break;
+            case 'migrate_wordpress_options':
+                $this->migrate_wordpress_options();
+                break;
         }
     }
     
@@ -246,6 +249,42 @@ class W4OS_Settings_Test_Page {
         }
     }
     
+    private function migrate_wordpress_options() {
+        try {
+            $result = Engine_Settings::migrate_wordpress_options();
+            
+            if (!empty($result['migrated']) || !empty($result['skipped'])) {
+                $message = 'WordPress options migration completed!';
+                if (!empty($result['migrated'])) {
+                    $message .= ' Migrated: ' . count($result['migrated']) . ' options.';
+                }
+                if (!empty($result['skipped'])) {
+                    $message .= ' Skipped: ' . count($result['skipped']) . ' options.';
+                }
+                if (!empty($result['errors'])) {
+                    $message .= ' Errors: ' . count($result['errors']) . ' options.';
+                }
+                add_settings_error('w4os_settings_test', 'migrate_wp_result', $message, 'updated');
+                
+                // Show details
+                if (!empty($result['migrated'])) {
+                    $details = 'Migrated options: ' . implode(', ', array_slice($result['migrated'], 0, 10));
+                    if (count($result['migrated']) > 10) {
+                        $details .= ' and ' . (count($result['migrated']) - 10) . ' more...';
+                    }
+                    add_settings_error('w4os_settings_test', 'migrate_wp_details', $details, 'notice-info');
+                }
+            } else {
+                $message = 'No WordPress options found to migrate. Make sure you have w4os_* options in your database.';
+                add_settings_error('w4os_settings_test', 'migrate_wp_result', $message, 'notice-warning');
+            }
+            
+        } catch (Exception $e) {
+            $message = 'Exception during WordPress options migration: ' . $e->getMessage();
+            add_settings_error('w4os_settings_test', 'migrate_wp_result', $message, 'error');
+        }
+    }
+    
     public function admin_page() {
         ?>
         <div class="wrap">
@@ -265,7 +304,102 @@ class W4OS_Settings_Test_Page {
             
             <div class="w4os-settings-layout">
                 <div class="w4os-main-content">
-            
+
+            <!-- Clear Settings -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Clear All Settings</h2>
+                    <div class="inside">
+                        <p><strong>Warning:</strong> This will clear ALL engine settings, not just test data.</p>
+                        <p>
+                            <input type="hidden" name="action" value="clear_settings" />
+                            <input type="submit" class="button button-secondary" value="Clear All Settings" 
+                                   onclick="return confirm('Are you sure you want to clear ALL settings? This cannot be undone.')" />
+                        </p>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Migrate PHP Constants -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Test PHP Constants Migration</h2>
+                    <div class="inside">
+                        <p>Migrate existing PHP constants to INI format:</p>
+                        <?php 
+                        $current_constants = Engine_Settings::get_current_constants();
+                        if (!empty($current_constants)) {
+                            echo '<p>Found ' . count($current_constants) . ' constants to migrate:</p>';
+                            echo '<div style="background: #f0f0f0; padding: 10px; max-height: 200px; overflow-y: auto; margin: 10px 0;">';
+                            foreach ($current_constants as $name => $value) {
+                                echo '<strong>' . esc_html($name) . '</strong> = ';
+                                if (is_array($value)) {
+                                    echo '<em>Array (' . count($value) . ' items)</em>';
+                                } elseif (is_bool($value)) {
+                                    echo $value ? 'true' : 'false';
+                                } elseif (is_string($value) && strlen($value) > 50) {
+                                    echo esc_html(substr($value, 0, 47)) . '...';
+                                } else {
+                                    echo esc_html($value);
+                                }
+                                echo '<br>';
+                            }
+                            echo '</div>';
+                        } else {
+                            echo '<p><em>No OpenSim/helpers constants found in current environment.</em></p>';
+                            echo '<p><small>Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_</small></p>';
+                        }
+                        ?>
+                        <p>
+                            <input type="hidden" name="action" value="migrate_constants" />
+                            <input type="submit" class="button" value="Migrate PHP Constants" 
+                                   <?php echo !empty($current_constants) ? '' : 'disabled'; ?> />
+                        </p>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Migrate WordPress Options -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Migrate WordPress Options</h2>
+                    <div class="inside">
+                        <p>Migrate WordPress options (w4os_* settings) to Engine Settings format.</p>
+                        <p><strong>Available WordPress Options (<?php echo count(Engine_Settings::get_available_wordpress_options()); ?> found):</strong></p>
+                        <?php
+                        $available_options = Engine_Settings::get_available_wordpress_options();
+                        if (!empty($available_options)) {
+                            echo "<div style='max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;'>";
+                            echo "<ul style='margin: 0;'>";
+                            foreach ($available_options as $option => $value) {
+                                $display_value = $value;
+                                if (is_array($value)) {
+                                    $display_value = 'Array (' . count($value) . ' items)';
+                                } elseif (is_bool($value)) {
+                                    $display_value = $value ? 'true' : 'false';
+                                } elseif (strlen($value) > 80) {
+                                    $display_value = substr($value, 0, 77) . '...';
+                                }
+                                echo "<li><code>" . esc_html($option) . "</code> = <strong>" . esc_html($display_value) . "</strong></li>";
+                            }
+                            echo "</ul>";
+                            echo "</div>";
+                        } else {
+                            echo "<p><em>No w4os_* WordPress options found in database.</em></p>";
+                        }
+                        ?>
+                        <p>
+                        <input type="hidden" name="action" value="migrate_wordpress_options">
+                        <input type="submit" value="Migrate WordPress Options" class="button" 
+                               <?php echo empty($available_options) ? 'disabled' : ''; ?>>
+                        </p>
+                    </div>
+                </div>
+            </form>
+
             <!-- Test Form -->
             <form method="post">
                 <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
@@ -315,23 +449,7 @@ class W4OS_Settings_Test_Page {
                     </div>
                 </div>
             </form>
-            
-            <!-- Test Section Save -->
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Test Section Save</h2>
-                    <div class="inside">
-                        <p>This will save a test section with various data types (string, number, boolean, timestamp).</p>
-                        <p>
-                            <input type="hidden" name="action" value="save_settings" />
-                            <input type="hidden" name="test_section" value="1" />
-                            <input type="submit" class="button" value="Save Test Section" />
-                        </p>
-                    </div>
-                </div>
-            </form>
-            
+
             <!-- Import OpenSim Config -->
             <form method="post">
                 <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
@@ -376,47 +494,36 @@ class W4OS_Settings_Test_Page {
                     </div>
                 </div>
             </form>
-            
-            <!-- Migrate PHP Constants -->
+
+            <!-- Test Section Save -->
             <form method="post">
                 <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
                 <div class="card">
-                    <h2>Test PHP Constants Migration</h2>
+                    <h2>Test Section Save</h2>
                     <div class="inside">
-                        <p>Migrate existing PHP constants to INI format:</p>
-                        <?php 
-                        $current_constants = Engine_Settings::get_current_constants();
-                        if (!empty($current_constants)) {
-                            echo '<p>Found ' . count($current_constants) . ' constants to migrate:</p>';
-                            echo '<div style="background: #f0f0f0; padding: 10px; max-height: 200px; overflow-y: auto; margin: 10px 0;">';
-                            foreach ($current_constants as $name => $value) {
-                                echo '<strong>' . esc_html($name) . '</strong> = ';
-                                if (is_array($value)) {
-                                    echo '<em>Array (' . count($value) . ' items)</em>';
-                                } elseif (is_bool($value)) {
-                                    echo $value ? 'true' : 'false';
-                                } elseif (is_string($value) && strlen($value) > 50) {
-                                    echo esc_html(substr($value, 0, 47)) . '...';
-                                } else {
-                                    echo esc_html($value);
-                                }
-                                echo '<br>';
-                            }
-                            echo '</div>';
-                        } else {
-                            echo '<p><em>No OpenSim/helpers constants found in current environment.</em></p>';
-                            echo '<p><small>Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_</small></p>';
-                        }
-                        ?>
+                        <p>This will save a test section with various data types (string, number, boolean, timestamp).</p>
                         <p>
-                            <input type="hidden" name="action" value="migrate_constants" />
-                            <input type="submit" class="button" value="Migrate PHP Constants" 
-                                   <?php echo !empty($current_constants) ? '' : 'disabled'; ?> />
+                            <input type="hidden" name="action" value="save_settings" />
+                            <input type="hidden" name="test_section" value="1" />
+                            <input type="submit" class="button" value="Save Test Section" />
                         </p>
                     </div>
                 </div>
             </form>
-            
+
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Migrate PHP Constants to INI</h2>
+                    <div class="inside">
+                        <p>This will migrate existing PHP constants to the INI format.</p>
+                        <p><small>Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_</small></p>
+                        <p>
+                            <input type="hidden" name="action" value="migrate_constants" />
+                            <input type="submit" class="button" value="Migrate PHP Constants" />
+                        </p>
+                    </div>
+                </div>            
             <!-- Fix Array Values -->
             <form method="post">
                 <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
@@ -456,21 +563,6 @@ class W4OS_Settings_Test_Page {
             
             </div> <!-- End layout wrapper -->
             
-            <!-- Clear Settings -->
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Clear All Settings</h2>
-                    <div class="inside">
-                        <p><strong>Warning:</strong> This will clear ALL engine settings, not just test data.</p>
-                        <p>
-                            <input type="hidden" name="action" value="clear_settings" />
-                            <input type="submit" class="button button-secondary" value="Clear All Settings" 
-                                   onclick="return confirm('Are you sure you want to clear ALL settings? This cannot be undone.')" />
-                        </p>
-                    </div>
-                </div>
-            </form>
 <!-- File System Info -->
                 <div class="card">
                     <h2>File System Information</h2>

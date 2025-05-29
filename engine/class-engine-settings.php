@@ -300,7 +300,28 @@ class Engine_Settings {
         $ini = "; Engine Settings Configuration\n";
         $ini .= "; Generated on " . date('Y-m-d H:i:s') . "\n\n";
         
-        foreach ($array as $section => $settings) {
+        // Clean up redundant individual credentials before saving
+        $cleaned_array = self::cleanup_redundant_credentials($array);
+        
+        // Define section order - W4OS and Helpers first
+        $priority_sections = array('W4OS', 'Helpers');
+        $ordered_sections = array();
+        
+        // Add priority sections first
+        foreach ($priority_sections as $section) {
+            if (isset($cleaned_array[$section])) {
+                $ordered_sections[$section] = $cleaned_array[$section];
+            }
+        }
+        
+        // Add remaining sections
+        foreach ($cleaned_array as $section => $settings) {
+            if (!in_array($section, $priority_sections)) {
+                $ordered_sections[$section] = $settings;
+            }
+        }
+        
+        foreach ($ordered_sections as $section => $settings) {
             if (!is_array($settings)) {
                 // Handle non-sectioned settings
                 $ini .= "$section = " . self::format_ini_value($settings) . "\n";
@@ -309,23 +330,7 @@ class Engine_Settings {
             
             $ini .= "[$section]\n";
             foreach ($settings as $key => $value) {
-                // Special handling for DatabaseService credentials arrays
-                if ($section === 'DatabaseService' && $key === 'credentials' && is_array($value)) {
-                    // Skip credentials array - the ConnectionString should be preserved separately
-                    continue;
-                } elseif ($section === 'DatabaseService' && $key === 'ConnectionString') {
-                    // Preserve connection string format but ensure proper quoting
-                    $ini .= "$key = " . self::format_ini_value($value) . "\n";
-                } elseif (is_array($value) && isset($value['saveformat']) && $value['saveformat'] === 'connection_string') {
-                    // Convert credentials array back to connection string format
-                    if (class_exists('Helpers')) {
-                        $connection_string = Helpers::array_to_connectionstring($value);
-                        $ini .= "ConnectionString = $connection_string\n";
-                    }
-                } else {
-                    // Handle regular key-value pairs
-                    $ini .= "$key = " . self::format_ini_value($value) . "\n";
-                }
+                $ini .= "$key = " . self::format_ini_value($value) . "\n";
             }
             $ini .= "\n";
         }
@@ -386,12 +391,13 @@ class Engine_Settings {
             }
         }
         
-        // Debug logging for ConnectionString values
-        if (strpos($value, 'Data Source=') === 0) {
-            error_log("Engine_Settings DEBUG format_ini_value ConnectionString: " . var_export($value, true) . " -> semicolon check: " . (strpos($value, ';') !== false ? 'YES' : 'NO'));
+        // Special handling for connection strings - they contain semicolons but should use single quotes only
+        if (strpos($value, 'Data Source=') === 0 || strpos($value, 'Server=') === 0) {
+            // Connection string - use single quotes to avoid triple quote issue
+            return '"' . str_replace('"', '""', $value) . '"';
         }
         
-        // Quote strings that contain special characters (including semicolons for connection strings)
+        // Quote strings that contain special characters (including semicolons)
         if (is_string($value) && (
             strpos($value, ' ') !== false ||
             strpos($value, '"') !== false ||
@@ -399,14 +405,81 @@ class Engine_Settings {
             strpos($value, ';') !== false ||
             strpos($value, '#') !== false
         )) {
-            $quoted = '"' . str_replace('"', '""', $value) . '"';
-            if (strpos($value, 'Data Source=') === 0) {
-                error_log("Engine_Settings DEBUG format_ini_value ConnectionString QUOTED: " . var_export($quoted, true));
-            }
-            return $quoted;
+            return '"' . str_replace('"', '""', $value) . '"';
         }
         
         return (string) $value;
+    }
+    
+    /**
+     * Clean up redundant individual database credentials when ConnectionString exists
+     * 
+     * @param array $array Settings array
+     * @return array Cleaned array
+     */
+    private static function cleanup_redundant_credentials($array) {
+        $cleaned = $array;
+        
+        // Services that might have both individual credentials and ConnectionString
+        $services_with_connections = array(
+            'DatabaseService',
+            'CurrencyService', 
+            'SearchService',
+            'OfflineMessageService'
+        );
+        
+        foreach ($services_with_connections as $service) {
+            if (isset($cleaned[$service]) && is_array($cleaned[$service])) {
+                // If ConnectionString exists, remove individual credentials
+                if (!empty($cleaned[$service]['ConnectionString'])) {
+                    $credentials_to_remove = array('host', 'database', 'user', 'password', 'port');
+                    
+                    foreach ($credentials_to_remove as $cred_key) {
+                        if (isset($cleaned[$service][$cred_key])) {
+                            unset($cleaned[$service][$cred_key]);
+                        }
+                    }
+                    
+                    // Also remove any 'credentials' array that might have been added
+                    if (isset($cleaned[$service]['credentials'])) {
+                        unset($cleaned[$service]['credentials']);
+                    }
+                }
+            }
+        }
+        
+        return $cleaned;
+    }
+    
+    /**
+     * Force cleanup of redundant credentials - can be called after migration
+     */
+    public static function cleanup_redundant_database_credentials() {
+        self::load();
+        
+        // If all databases use the same credentials, we can clean up redundancy
+        $main_db = self::get_section('DatabaseService');
+        $search_db = self::get_section('SearchService');
+        $currency_db = self::get_section('CurrencyService');
+        $offline_db = self::get_section('OfflineMessageService');
+        
+        // Check if search DB connection is identical to main DB
+        if (isset($search_db['ConnectionString']) && isset($main_db['ConnectionString'])) {
+            if ($search_db['ConnectionString'] === $main_db['ConnectionString']) {
+                self::delete('SearchService.ConnectionString');
+            }
+        }
+        
+        // Check if offline message DB connection is identical to main DB
+        if (isset($offline_db['ConnectionString']) && isset($main_db['ConnectionString'])) {
+            if ($offline_db['ConnectionString'] === $main_db['ConnectionString']) {
+                self::delete('OfflineMessageService.ConnectionString');
+            }
+        }
+        
+        // Keep currency DB separate as it often uses a different database
+        
+        return self::save();
     }
     
     /**
@@ -699,7 +772,7 @@ class Engine_Settings {
             
             // === OPENSIM_DB dual-purpose handling ===
             'OPENSIM_DB' => array(
-                'helpers.HelperSettings.SearchOnly' => 'opensim_db_to_search_only',
+                'helpers.Helpers.SearchOnly' => 'opensim_db_to_search_only',
                 'robust.DatabaseService.ConnectionString' => 'opensim_db_array_to_connection_string'
             ),
             // Note: Individual OPENSIM_DB_* constants are NOT mapped to avoid storing redundant data
@@ -707,32 +780,32 @@ class Engine_Settings {
             // === Currency database - if different ===
             'CURRENCY_DB_HOST' => array(
                 'robust.CurrencyService.ConnectionString' => 'build_from_parts',
-                'helpers.HelperSettings.CurrencyDbHost' => 'value'
+                'helpers.Helpers.CurrencyDbHost' => 'value'
             ),
-            'CURRENCY_DB_PORT' => 'helpers.HelperSettings.CurrencyDbPort', 
-            'CURRENCY_DB_NAME' => 'helpers.HelperSettings.CurrencyDbName',
-            'CURRENCY_DB_USER' => 'helpers.HelperSettings.CurrencyDbUser',
-            'CURRENCY_DB_PASS' => 'helpers.HelperSettings.CurrencyDbPass',
+            'CURRENCY_DB_PORT' => 'helpers.Helpers.CurrencyDbPort', 
+            'CURRENCY_DB_NAME' => 'helpers.Helpers.CurrencyDbName',
+            'CURRENCY_DB_USER' => 'helpers.Helpers.CurrencyDbUser',
+            'CURRENCY_DB_PASS' => 'helpers.Helpers.CurrencyDbPass',
             
             // === Search database - if different ===
             'SEARCH_DB_HOST' => array(
                 'robust.SearchService.ConnectionString' => 'build_from_parts',
-                'helpers.HelperSettings.SearchDbHost' => 'value'
+                'helpers.Helpers.SearchDbHost' => 'value'
             ),
-            'SEARCH_DB_PORT' => 'helpers.HelperSettings.SearchDbPort',
-            'SEARCH_DB_NAME' => 'helpers.HelperSettings.SearchDbName',
-            'SEARCH_DB_USER' => 'helpers.HelperSettings.SearchDbUser',
-            'SEARCH_DB_PASS' => 'helpers.HelperSettings.SearchDbPass',
+            'SEARCH_DB_PORT' => 'helpers.Helpers.SearchDbPort',
+            'SEARCH_DB_NAME' => 'helpers.Helpers.SearchDbName',
+            'SEARCH_DB_USER' => 'helpers.Helpers.SearchDbUser',
+            'SEARCH_DB_PASS' => 'helpers.Helpers.SearchDbPass',
             
             // === Offline messages database - if different ===
             'OFFLINE_DB_HOST' => array(
                 'robust.OfflineMessageService.ConnectionString' => 'build_from_parts',
-                'helpers.HelperSettings.OfflineDbHost' => 'value'
+                'helpers.Helpers.OfflineDbHost' => 'value'
             ),
-            'OFFLINE_DB_PORT' => 'helpers.HelperSettings.OfflineDbPort',
-            'OFFLINE_DB_NAME' => 'helpers.HelperSettings.OfflineDbName',
-            'OFFLINE_DB_USER' => 'helpers.HelperSettings.OfflineDbUser',
-            'OFFLINE_DB_PASS' => 'helpers.HelperSettings.OfflineDbPass',
+            'OFFLINE_DB_PORT' => 'helpers.Helpers.OfflineDbPort',
+            'OFFLINE_DB_NAME' => 'helpers.Helpers.OfflineDbName',
+            'OFFLINE_DB_USER' => 'helpers.Helpers.OfflineDbUser',
+            'OFFLINE_DB_PASS' => 'helpers.Helpers.OfflineDbPass',
             
             // === Economy/Currency provider settings ===
             'CURRENCY_PROVIDER' => array(
@@ -746,104 +819,104 @@ class Engine_Settings {
             'CURRENCY_USE_MONEYSERVER' => 'robust.MoneyServer.Enabled',
             'GLOEBIT_SANDBOX' => 'robust.Gloebit.GLBEnvironment:sandbox_to_env',
             
-            // === All remaining constants from example.constants (mapped to HelperSettings with PascalCase) ===
-            'CURRENCY_MONEY_TBL' => 'helpers.HelperSettings.CurrencyMoneyTable',
-            'CURRENCY_TRANSACTION_TBL' => 'helpers.HelperSettings.CurrencyTransactionTable',
-            'CURRENCY_HELPER_PATH' => 'helpers.HelperSettings.CurrencyHelperPath',
-            'OFFLINE_MESSAGE_TBL' => 'helpers.HelperSettings.OfflineMessageTable',
-            'SEARCH_TABLE_EVENTS' => 'helpers.HelperSettings.SearchTableEvents',
-            'SEARCH_REGION_TABLE' => 'helpers.HelperSettings.SearchRegionTable',
-            'MUTE_LIST_TBL' => 'helpers.HelperSettings.MuteListTable',
-            'HYPEVENTS_URL' => 'helpers.HelperSettings.HypeventsUrl',
-            'OSHELPERS_DIR' => 'helpers.HelperSettings.OshelpersDir',
-            'OPENSIM_MAIL_SENDER' => 'helpers.HelperSettings.OpensimMailSender',
-            'OPENSIM_USE_UTC_TIME' => 'helpers.HelperSettings.OpensimUseUtcTime',
-            'EVENTS_NULL_KEY' => 'helpers.HelperSettings.EventsNullKey',
-            'PODEX_ERROR_MESSAGE' => 'helpers.HelperSettings.PodexErrorMessage',
-            'PODEX_REDIRECT_URL' => 'helpers.HelperSettings.PodexRedirectUrl',
-            'GLOEBIT_CONVERSION_THRESHOLD' => 'helpers.HelperSettings.GloebitConversionThreshold',
-            'GLOEBIT_CONVERSION_TABLE' => 'helpers.HelperSettings.GloebitConversionTable',
-            'OSHELPERS' => 'helpers.HelperSettings.Oshelpers',
+            // === All remaining constants from example.constants (mapped to Helpers with PascalCase) ===
+            'CURRENCY_MONEY_TBL' => 'helpers.Helpers.CurrencyMoneyTable',
+            'CURRENCY_TRANSACTION_TBL' => 'helpers.Helpers.CurrencyTransactionTable',
+            'CURRENCY_HELPER_PATH' => 'helpers.Helpers.CurrencyHelperPath',
+            'OFFLINE_MESSAGE_TBL' => 'helpers.Helpers.OfflineMessageTable',
+            'SEARCH_TABLE_EVENTS' => 'helpers.Helpers.SearchTableEvents',
+            'SEARCH_REGION_TABLE' => 'helpers.Helpers.SearchRegionTable',
+            'MUTE_LIST_TBL' => 'helpers.Helpers.MuteListTable',
+            'HYPEVENTS_URL' => 'helpers.Helpers.HypeventsUrl',
+            'OSHELPERS_DIR' => 'helpers.Helpers.OshelpersDir',
+            'OPENSIM_MAIL_SENDER' => 'helpers.Helpers.OpensimMailSender',
+            'OPENSIM_USE_UTC_TIME' => 'helpers.Helpers.OpensimUseUtcTime',
+            'EVENTS_NULL_KEY' => 'helpers.Helpers.EventsNullKey',
+            'PODEX_ERROR_MESSAGE' => 'helpers.Helpers.PodexErrorMessage',
+            'PODEX_REDIRECT_URL' => 'helpers.Helpers.PodexRedirectUrl',
+            'GLOEBIT_CONVERSION_THRESHOLD' => 'helpers.Helpers.GloebitConversionThreshold',
+            'GLOEBIT_CONVERSION_TABLE' => 'helpers.Helpers.GloebitConversionTable',
+            'OSHELPERS' => 'helpers.Helpers.Oshelpers',
             
             // === Additional constants from example.constants that need to be handled (PascalCase) ===
-            'CURRENCY_ADMIN_AVATAR' => 'helpers.HelperSettings.CurrencyAdminAvatar',
-            'CURRENCY_BANK_AVATAR' => 'helpers.HelperSettings.CurrencyBankAvatar',
-            'CURRENCY_CONVERT_THRESHOLD' => 'helpers.HelperSettings.CurrencyConvertThreshold',
-            'CURRENCY_CONVERT_AFTER' => 'helpers.HelperSettings.CurrencyConvertAfter',
-            'CURRENCY_BANKER_AVATAR' => 'helpers.HelperSettings.CurrencyBankerAvatar',
-            'CURRENCY_CONVERTER_NAME' => 'helpers.HelperSettings.CurrencyConverterName',
-            'CURRENCY_CONVERSION_RATE' => 'helpers.HelperSettings.CurrencyConversionRate',
-            'CURRENCY_DIVISIBILITY' => 'helpers.HelperSettings.CurrencyDivisibility',
-            'CURRENCY_DENOM' => 'helpers.HelperSettings.CurrencyDenom',
-            'CURRENCY_ECONOMY_URL' => 'helpers.HelperSettings.CurrencyEconomyUrl',
-            'CURRENCY_ENABLE_GROUPS' => 'helpers.HelperSettings.CurrencyEnableGroups',
-            'CURRENCY_ENABLE_SIMULATOR_IP_CHECK' => 'helpers.HelperSettings.CurrencyEnableSimulatorIpCheck',
-            'CURRENCY_MAX_GROUP_CHARGE' => 'helpers.HelperSettings.CurrencyMaxGroupCharge',
-            'CURRENCY_GROUP_CREATE_FEE' => 'helpers.HelperSettings.CurrencyGroupCreateFee',
-            'CURRENCY_GROUP_JOIN_FEE' => 'helpers.HelperSettings.CurrencyGroupJoinFee',
-            'CURRENCY_ENABLE_LAND_SALES' => 'helpers.HelperSettings.CurrencyEnableLandSales',
-            'CURRENCY_LAND_FEE' => 'helpers.HelperSettings.CurrencyLandFee',
-            'CURRENCY_SELL_ENABLED' => 'helpers.HelperSettings.CurrencySellEnabled',
-            'CURRENCY_TELEPORT_MIN_PRICE' => 'helpers.HelperSettings.CurrencyTeleportMinPrice',
-            'CURRENCY_UPLOAD_CHARGE' => 'helpers.HelperSettings.CurrencyUploadCharge',
-            'DTL_PAYMENT_MODULE' => 'helpers.HelperSettings.DtlPaymentModule',
-            'DTL_PAYMENT_HANDLER' => 'helpers.HelperSettings.DtlPaymentHandler',
-            'ENABLE_SEARCH' => 'helpers.HelperSettings.EnableSearch',
-            'EVENT_CATEGORIES' => 'helpers.HelperSettings.EventCategories',
-            'EVENT_CATEGORY_DISCUSSIONS' => 'helpers.HelperSettings.EventCategoryDiscussions',
-            'EVENT_CATEGORY_SPORTS' => 'helpers.HelperSettings.EventCategorySports',
-            'EVENT_CATEGORY_LIVE_MUSIC' => 'helpers.HelperSettings.EventCategoryLiveMusic',
-            'EVENT_CATEGORY_COMMERCIAL' => 'helpers.HelperSettings.EventCategoryCommercial',
-            'EVENT_CATEGORY_NIGHTLIFE' => 'helpers.HelperSettings.EventCategoryNightlife',
-            'EVENT_CATEGORY_GAMES' => 'helpers.HelperSettings.EventCategoryGames',
-            'EVENT_CATEGORY_PAGEANTS' => 'helpers.HelperSettings.EventCategoryPageants',
-            'EVENT_CATEGORY_EDUCATION' => 'helpers.HelperSettings.EventCategoryEducation',
-            'EVENT_CATEGORY_ARTS' => 'helpers.HelperSettings.EventCategoryArts',
-            'EVENT_CATEGORY_CHARITY' => 'helpers.HelperSettings.EventCategoryCharity',
-            'EVENT_CATEGORY_MISCELLANEOUS' => 'helpers.HelperSettings.EventCategoryMiscellaneous',
-            'FORMAT_SEARCH_TIME' => 'helpers.HelperSettings.FormatSearchTime',
-            'GLOEBIT_CONVERSION_MODULE' => 'helpers.HelperSettings.GloebitConversionModule',
-            'GLOEBIT_ENABLE_LANDTOOL' => 'helpers.HelperSettings.GloebitEnableLandtool',
-            'GLOEBIT_ERROR_MESSAGE' => 'helpers.HelperSettings.GloebitErrorMessage',
-            'GLOEBIT_GENERIC_MESSAGE' => 'helpers.HelperSettings.GloebitGenericMessage',
-            'GLOEBIT_GRID_SHORT_NAME' => 'helpers.HelperSettings.GloebitGridShortName',
-            'GLOEBIT_LANDTOOL_ACCESS_TOKEN' => 'helpers.HelperSettings.GloebitLandtoolAccessToken',
-            'GLOEBIT_LANDTOOL_ADMIN_TOKEN' => 'helpers.HelperSettings.GloebitLandtoolAdminToken',
-            'GLOEBIT_MESSAGE_NOTIFICATION' => 'helpers.HelperSettings.GloebitMessageNotification',
-            'GLOEBIT_OAUTH_TOKEN' => 'helpers.HelperSettings.GloebitOauthToken',
-            'GLOEBIT_OWNER_NAME' => 'helpers.HelperSettings.GloebitOwnerName',
-            'GLOEBIT_OWNER_EMAIL' => 'helpers.HelperSettings.GloebitOwnerEmail',
-            'GLOEBIT_WELCOME_MESSAGE' => 'helpers.HelperSettings.GloebitWelcomeMessage',
-            'GROUPS_DB' => 'helpers.HelperSettings.GroupsDb',
-            'GROUPS_DB_HOST' => 'helpers.HelperSettings.GroupsDbHost',
-            'GROUPS_DB_NAME' => 'helpers.HelperSettings.GroupsDbName',
-            'GROUPS_DB_PASS' => 'helpers.HelperSettings.GroupsDbPass',
-            'GROUPS_DB_PORT' => 'helpers.HelperSettings.GroupsDbPort',
-            'GROUPS_DB_USER' => 'helpers.HelperSettings.GroupsDbUser',
-            'MUTE_LIST_DB' => 'helpers.HelperSettings.MuteListDb',
-            'MUTE_LIST_DB_HOST' => 'helpers.HelperSettings.MuteListDbHost',
-            'MUTE_LIST_DB_NAME' => 'helpers.HelperSettings.MuteListDbName',
-            'MUTE_LIST_DB_PASS' => 'helpers.HelperSettings.MuteListDbPass',
-            'MUTE_LIST_DB_PORT' => 'helpers.HelperSettings.MuteListDbPort',
-            'MUTE_LIST_DB_USER' => 'helpers.HelperSettings.MuteListDbUser',
-            'MUTE_DB_HOST' => 'helpers.HelperSettings.MuteDbHost',
-            'MUTE_DB_NAME' => 'helpers.HelperSettings.MuteDbName', 
-            'MUTE_DB_PASS' => 'helpers.HelperSettings.MuteDbPass',
-            'MUTE_DB_USER' => 'helpers.HelperSettings.MuteDbUser',
-            'PROFILE_ENABLE_CLASSIFIEDS' => 'helpers.HelperSettings.ProfileEnableClassifieds',
-            'PROFILE_ENABLE_PICKS' => 'helpers.HelperSettings.ProfileEnablePicks',
-            'PROFILE_ENABLE_PARTNER' => 'helpers.HelperSettings.ProfileEnablePartner',
-            'ROBUST_SERVICE' => 'helpers.HelperSettings.RobustService',
-            'ROBUST_SERVICE_HOST' => 'helpers.HelperSettings.RobustServiceHost',
-            'ROBUST_SERVICE_PORT' => 'helpers.HelperSettings.RobustServicePort',
-            'SEARCH_ENABLE_CLASSIFIEDS' => 'helpers.HelperSettings.SearchEnableClassifieds',
-            'SEARCH_ENABLE_EVENTS' => 'helpers.HelperSettings.SearchEnableEvents',
-            'SEARCH_ENABLE_LAND' => 'helpers.HelperSettings.SearchEnableLand',
-            'SEARCH_ENABLE_PLACES' => 'helpers.HelperSettings.SearchEnablePlaces',
-            'SEARCH_ENABLE_PEOPLE' => 'helpers.HelperSettings.SearchEnablePeople',
-            'SEARCH_ENABLE_GROUPS' => 'helpers.HelperSettings.SearchEnableGroups',
-            'XMLRPC_ADMIN' => 'helpers.HelperSettings.XmlrpcAdmin',
-            'XMLRPC_ADMIN_PASSWORD' => 'helpers.HelperSettings.XmlrpcAdminPassword',
+            'CURRENCY_ADMIN_AVATAR' => 'helpers.Helpers.CurrencyAdminAvatar',
+            'CURRENCY_BANK_AVATAR' => 'helpers.Helpers.CurrencyBankAvatar',
+            'CURRENCY_CONVERT_THRESHOLD' => 'helpers.Helpers.CurrencyConvertThreshold',
+            'CURRENCY_CONVERT_AFTER' => 'helpers.Helpers.CurrencyConvertAfter',
+            'CURRENCY_BANKER_AVATAR' => 'helpers.Helpers.CurrencyBankerAvatar',
+            'CURRENCY_CONVERTER_NAME' => 'helpers.Helpers.CurrencyConverterName',
+            'CURRENCY_CONVERSION_RATE' => 'helpers.Helpers.CurrencyConversionRate',
+            'CURRENCY_DIVISIBILITY' => 'helpers.Helpers.CurrencyDivisibility',
+            'CURRENCY_DENOM' => 'helpers.Helpers.CurrencyDenom',
+            'CURRENCY_ECONOMY_URL' => 'helpers.Helpers.CurrencyEconomyUrl',
+            'CURRENCY_ENABLE_GROUPS' => 'helpers.Helpers.CurrencyEnableGroups',
+            'CURRENCY_ENABLE_SIMULATOR_IP_CHECK' => 'helpers.Helpers.CurrencyEnableSimulatorIpCheck',
+            'CURRENCY_MAX_GROUP_CHARGE' => 'helpers.Helpers.CurrencyMaxGroupCharge',
+            'CURRENCY_GROUP_CREATE_FEE' => 'helpers.Helpers.CurrencyGroupCreateFee',
+            'CURRENCY_GROUP_JOIN_FEE' => 'helpers.Helpers.CurrencyGroupJoinFee',
+            'CURRENCY_ENABLE_LAND_SALES' => 'helpers.Helpers.CurrencyEnableLandSales',
+            'CURRENCY_LAND_FEE' => 'helpers.Helpers.CurrencyLandFee',
+            'CURRENCY_SELL_ENABLED' => 'helpers.Helpers.CurrencySellEnabled',
+            'CURRENCY_TELEPORT_MIN_PRICE' => 'helpers.Helpers.CurrencyTeleportMinPrice',
+            'CURRENCY_UPLOAD_CHARGE' => 'helpers.Helpers.CurrencyUploadCharge',
+            'DTL_PAYMENT_MODULE' => 'helpers.Helpers.DtlPaymentModule',
+            'DTL_PAYMENT_HANDLER' => 'helpers.Helpers.DtlPaymentHandler',
+            'ENABLE_SEARCH' => 'helpers.Helpers.EnableSearch',
+            'EVENT_CATEGORIES' => 'helpers.Helpers.EventCategories',
+            'EVENT_CATEGORY_DISCUSSIONS' => 'helpers.Helpers.EventCategoryDiscussions',
+            'EVENT_CATEGORY_SPORTS' => 'helpers.Helpers.EventCategorySports',
+            'EVENT_CATEGORY_LIVE_MUSIC' => 'helpers.Helpers.EventCategoryLiveMusic',
+            'EVENT_CATEGORY_COMMERCIAL' => 'helpers.Helpers.EventCategoryCommercial',
+            'EVENT_CATEGORY_NIGHTLIFE' => 'helpers.Helpers.EventCategoryNightlife',
+            'EVENT_CATEGORY_GAMES' => 'helpers.Helpers.EventCategoryGames',
+            'EVENT_CATEGORY_PAGEANTS' => 'helpers.Helpers.EventCategoryPageants',
+            'EVENT_CATEGORY_EDUCATION' => 'helpers.Helpers.EventCategoryEducation',
+            'EVENT_CATEGORY_ARTS' => 'helpers.Helpers.EventCategoryArts',
+            'EVENT_CATEGORY_CHARITY' => 'helpers.Helpers.EventCategoryCharity',
+            'EVENT_CATEGORY_MISCELLANEOUS' => 'helpers.Helpers.EventCategoryMiscellaneous',
+            'FORMAT_SEARCH_TIME' => 'helpers.Helpers.FormatSearchTime',
+            'GLOEBIT_CONVERSION_MODULE' => 'helpers.Helpers.GloebitConversionModule',
+            'GLOEBIT_ENABLE_LANDTOOL' => 'helpers.Helpers.GloebitEnableLandtool',
+            'GLOEBIT_ERROR_MESSAGE' => 'helpers.Helpers.GloebitErrorMessage',
+            'GLOEBIT_GENERIC_MESSAGE' => 'helpers.Helpers.GloebitGenericMessage',
+            'GLOEBIT_GRID_SHORT_NAME' => 'helpers.Helpers.GloebitGridShortName',
+            'GLOEBIT_LANDTOOL_ACCESS_TOKEN' => 'helpers.Helpers.GloebitLandtoolAccessToken',
+            'GLOEBIT_LANDTOOL_ADMIN_TOKEN' => 'helpers.Helpers.GloebitLandtoolAdminToken',
+            'GLOEBIT_MESSAGE_NOTIFICATION' => 'helpers.Helpers.GloebitMessageNotification',
+            'GLOEBIT_OAUTH_TOKEN' => 'helpers.Helpers.GloebitOauthToken',
+            'GLOEBIT_OWNER_NAME' => 'helpers.Helpers.GloebitOwnerName',
+            'GLOEBIT_OWNER_EMAIL' => 'helpers.Helpers.GloebitOwnerEmail',
+            'GLOEBIT_WELCOME_MESSAGE' => 'helpers.Helpers.GloebitWelcomeMessage',
+            'GROUPS_DB' => 'helpers.Helpers.GroupsDb',
+            'GROUPS_DB_HOST' => 'helpers.Helpers.GroupsDbHost',
+            'GROUPS_DB_NAME' => 'helpers.Helpers.GroupsDbName',
+            'GROUPS_DB_PASS' => 'helpers.Helpers.GroupsDbPass',
+            'GROUPS_DB_PORT' => 'helpers.Helpers.GroupsDbPort',
+            'GROUPS_DB_USER' => 'helpers.Helpers.GroupsDbUser',
+            'MUTE_LIST_DB' => 'helpers.Helpers.MuteListDb',
+            'MUTE_LIST_DB_HOST' => 'helpers.Helpers.MuteListDbHost',
+            'MUTE_LIST_DB_NAME' => 'helpers.Helpers.MuteListDbName',
+            'MUTE_LIST_DB_PASS' => 'helpers.Helpers.MuteListDbPass',
+            'MUTE_LIST_DB_PORT' => 'helpers.Helpers.MuteListDbPort',
+            'MUTE_LIST_DB_USER' => 'helpers.Helpers.MuteListDbUser',
+            'MUTE_DB_HOST' => 'helpers.Helpers.MuteDbHost',
+            'MUTE_DB_NAME' => 'helpers.Helpers.MuteDbName', 
+            'MUTE_DB_PASS' => 'helpers.Helpers.MuteDbPass',
+            'MUTE_DB_USER' => 'helpers.Helpers.MuteDbUser',
+            'PROFILE_ENABLE_CLASSIFIEDS' => 'helpers.Helpers.ProfileEnableClassifieds',
+            'PROFILE_ENABLE_PICKS' => 'helpers.Helpers.ProfileEnablePicks',
+            'PROFILE_ENABLE_PARTNER' => 'helpers.Helpers.ProfileEnablePartner',
+            'ROBUST_SERVICE' => 'helpers.Helpers.RobustService',
+            'ROBUST_SERVICE_HOST' => 'helpers.Helpers.RobustServiceHost',
+            'ROBUST_SERVICE_PORT' => 'helpers.Helpers.RobustServicePort',
+            'SEARCH_ENABLE_CLASSIFIEDS' => 'helpers.Helpers.SearchEnableClassifieds',
+            'SEARCH_ENABLE_EVENTS' => 'helpers.Helpers.SearchEnableEvents',
+            'SEARCH_ENABLE_LAND' => 'helpers.Helpers.SearchEnableLand',
+            'SEARCH_ENABLE_PLACES' => 'helpers.Helpers.SearchEnablePlaces',
+            'SEARCH_ENABLE_PEOPLE' => 'helpers.Helpers.SearchEnablePeople',
+            'SEARCH_ENABLE_GROUPS' => 'helpers.Helpers.SearchEnableGroups',
+            'XMLRPC_ADMIN' => 'helpers.Helpers.XmlrpcAdmin',
+            'XMLRPC_ADMIN_PASSWORD' => 'helpers.Helpers.XmlrpcAdminPassword',
         );
         
         // Process all expected constants, even if not defined
@@ -853,7 +926,7 @@ class Engine_Settings {
         // Process constants that exist (not just expected ones)
         foreach ($constants as $constant_name => $value) {
             if (!isset($mapping[$constant_name])) {
-                // Check if it should be mapped to HelperSettings with PascalCase
+                // Check if it should be mapped to Helpers with PascalCase
                 $opensim_prefixes = array('OPENSIM_', 'ROBUST_', 'CURRENCY_', 'SEARCH_', 'OFFLINE_', 'GLOEBIT_', 'PODEX_', 'HYPEVENTS_', 'EVENTS_', 'DTL_', 'ENABLE_', 'EVENT_', 'FORMAT_', 'GROUPS_', 'MUTE_', 'PROFILE_', 'XMLRPC_');
                 $mapped = false;
                 foreach ($opensim_prefixes as $prefix) {
@@ -866,7 +939,7 @@ class Engine_Settings {
                         
                         // Convert unmapped constants to PascalCase for better readability
                         $pascal_key = self::constant_to_pascal_case($constant_name);
-                        $ini_config['HelperSettings'][$pascal_key] = $value;
+                        $ini_config['Helpers'][$pascal_key] = $value;
                         $mapped = true;
                         break;
                     }
@@ -927,9 +1000,9 @@ class Engine_Settings {
         $transformed_value = self::transform_value($value, $transform, $modifier, $all_constants, $constant_name);
         
         // Debug logging
-        if ($constant_name === 'OPENSIM_DB' || $constant_name === 'ROBUST_CONSOLE' || $constant_name === 'ROBUST_DB') {
-            error_log("Engine_Settings DEBUG: $constant_name -> $destination ($transform:$modifier) = " . var_export($transformed_value, true));
-        }
+        // if ($constant_name === 'OPENSIM_DB' || $constant_name === 'ROBUST_CONSOLE' || $constant_name === 'ROBUST_DB') {
+        //     error_log("Engine_Settings DEBUG: $constant_name -> $destination ($transform:$modifier) = " . var_export($transformed_value, true));
+        // }
         
         // Handle database connection strings specially
         if ($key === 'ConnectionString') {
@@ -940,7 +1013,7 @@ class Engine_Settings {
                     $ini_config[$section] = array();
                 }
                 // Debug logging for ConnectionString formatting
-                error_log("Engine_Settings DEBUG ConnectionString: $constant_name -> $section.$key = " . var_export($transformed_value, true));
+                // error_log("Engine_Settings DEBUG ConnectionString: $constant_name -> $section.$key = " . var_export($transformed_value, true));
                 $ini_config[$section][$key] = $transformed_value;
             }
             return;
@@ -1179,11 +1252,11 @@ class Engine_Settings {
      * Remove redundant individual DB credentials when ConnectionStrings exist
      */
     private static function cleanup_redundant_db_credentials() {
-        if (!isset(self::$settings['HelperSettings'])) {
+        if (!isset(self::$settings['Helpers'])) {
             return;
         }
         
-        $helper_settings = &self::$settings['HelperSettings'];
+        $helper_settings = &self::$settings['Helpers'];
         
         // Check each service that might have ConnectionString
         $services = array(
@@ -1209,7 +1282,7 @@ class Engine_Settings {
                     foreach ($credentials_to_remove as $cred_key) {
                         if (isset($helper_settings[$cred_key])) {
                             unset($helper_settings[$cred_key]);
-                            error_log("Engine_Settings: Removed redundant credential $cred_key (ConnectionString exists for $service)");
+                            // error_log("Engine_Settings: Removed redundant credential $cred_key (ConnectionString exists for $service)");
                         }
                     }
                 }
@@ -1333,5 +1406,40 @@ class Engine_Settings {
         }
         
         return $constants;
+    }
+    
+    /**
+     * Migrate constants to Engine Settings
+     * This handles the transition from PHP constants to INI-based configuration
+     */
+    public static function migrate_constants() {
+        if (!class_exists('W4OS_Constants_Migrator')) {
+            require_once W4OS_PLUGIN_DIR . 'engine/migrate-constants.php';
+        }
+        
+        return W4OS_Constants_Migrator::migrate_constants();
+    }
+    
+    /**
+     * Migrate WordPress options to Engine Settings
+     * This handles the transition from WordPress options to INI-based configuration
+     */
+    public static function migrate_wordpress_options($options = null) {
+        if (!class_exists('W4OS_Options_Migrator')) {
+            require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
+        }
+        
+        return W4OS_Options_Migrator::migrate_wordpress_options($options);
+    }
+    
+    /**
+     * Get available WordPress options for migration
+     */
+    public static function get_available_wordpress_options() {
+        if (!class_exists('W4OS_Options_Migrator')) {
+            require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
+        }
+        
+        return W4OS_Options_Migrator::get_available_options();
     }
 }

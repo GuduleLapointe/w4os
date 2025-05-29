@@ -536,7 +536,7 @@ class W4OS3 {
 				array(
 					'name'       => __( 'Enable v3 Beta Features', 'w4os' ),
 					'id'         => 'w4os-enable-v3-beta',
-					'type'       => 'switch',
+					'type'       => 'hidden',
 					'desc'       => __( 'Warning: this could break your website and/or your OpenSimulator services.', 'w4os' ),
 					'std'        => get_option( 'w4os-enable-v3-beta', false ),
 					'style'      => 'rounded',
