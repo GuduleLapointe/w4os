@@ -14,6 +14,8 @@ class OpenSim_Avatar {
     public $AvatarHGName;
     public $AvatarSlug;
     public $ProfilePictureUUID;
+    protected static $slug;
+    protected static $profile_page_url;
 
     protected $db;
     protected $data;    
@@ -25,27 +27,15 @@ class OpenSim_Avatar {
     ) AS subquery";
 
     public function __construct() {
-        // Initialize database connection using OSPDO (framework-agnostic)
-        if(!class_exists('OSPDO')) {
-            error_log(__METHOD__ . ' [ERROR] OSPDO class not found in ' . __FILE__ . ' on line ' . __LINE__);
-            return;
-        } else if (!defined('OPENSIM_DB_HOST') || !defined('OPENSIM_DB_NAME') || !defined('OPENSIM_DB_USER') || !defined('OPENSIM_DB_PASS')) {
-            error_log(__METHOD__ . ' [ERROR] OpenSim database constants not defined in ' . __FILE__ . ' on line ' . __LINE__);
-            return;
-        }
+        // Initialize the custom database connection with credentials
+		$this->db = new OSPDO( W4OS_DB_ROBUST );
+		self::$slug     = get_option( 'w4os_profile_slug', 'profile' );
+		self::$profile_page_url = get_home_url( null, self::$slug );
 
-        $dsn = 'mysql:host=' . OPENSIM_DB_HOST . ';dbname=' . OPENSIM_DB_NAME;
-        $this->db = new OSPDO($dsn, OPENSIM_DB_USER, OPENSIM_DB_PASS);
-
-        if(! $this->db) {
-            // Handle error if database connection fails
-            error_log(__METHOD__ . ' [ERROR] Database connection failed in ' . __FILE__ . ' on line ' . __LINE__);
-        }
-
-        $args = func_get_args();
-        if ( ! empty( $args[0] ) ) {
-            $this->initialize_avatar( $args[0] );
-        }
+		$args = func_get_args();
+		if ( ! empty( $args[0] ) ) {
+			$this->initialize_avatar( $args[0] );
+		}
     }
 
     /**

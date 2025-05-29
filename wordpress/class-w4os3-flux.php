@@ -204,7 +204,7 @@ class W4OS3_Flux extends OpenSim_Flux {
 		$content     = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( $profile_url ),
-			esc_html( $avatar_name )
+			esc_html( $avatar_name ),
 		);
 		return $content;
 	}
