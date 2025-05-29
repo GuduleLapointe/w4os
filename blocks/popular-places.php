@@ -163,7 +163,7 @@ function w4os_popular_places( $atts = array() ) {
 	// 	)
 	// );
 	
-	// $beta_options = W4OS3::get_option('beta');
+	// $beta_options = w4os_get_option('beta');
 	// $enable_self_signed = $beta_options['enable_self_signed'] ?? false;
 
 	// $response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );

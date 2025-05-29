@@ -354,7 +354,7 @@ function oxXmlRequest( $gatekeeper, $method, $request ) {
 	$xml_request = xmlrpc_encode_request( $method, array( $request ) );
 
 	// Check if self-signed certificates should be accepted
-	$beta_options = W4OS3::get_option('beta', array());
+	$beta_options = w4os_get_option('beta', array());
 	$enable_self_signed = $beta_options['enable_self_signed'] ?? false;
 
 	$options = array(
@@ -399,7 +399,7 @@ function get_xml_response_data( $requestURL, $request ) {
 	}
 
 	// Check if self-signed certificates should be accepted
-	$beta_options = W4OS3::get_option('beta', array());
+	$beta_options = w4os_get_option('beta', array());
 	$enable_self_signed = $beta_options['enable_self_signed'] ?? false;
 
 	$options = array(

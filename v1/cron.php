@@ -32,7 +32,7 @@ function w4os_search_parser_exec( $args = array() ) {
 	$search = get_option( 'w4os_search_url' );
 	$parser = preg_replace( ':^//:', '/', dirname( $search ) . '/parser.php' );
 
-	$beta_options = W4OS3::get_option('beta', array());
+	$beta_options = w4os_get_option('beta', array());
 	$enable_self_signed = $beta_options['enable_self_signed'] ?? false;
 
 	// Create context for file_get_contents if self-signed certificates should be accepted

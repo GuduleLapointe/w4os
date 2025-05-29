@@ -410,7 +410,7 @@ class W4OS3 {
 		if ( is_array( $instance ) ) {
 			$console_prefs = $instance;
 		} else {
-			$connections   = self::get_option( 'w4os-settings:connections', array() );
+			$connections   = w4os_get_option( 'w4os-settings:connections', array() );
 			$console_prefs = $connections[ $instance ]['console'] ?? false;
 		}
 
@@ -546,52 +546,6 @@ class W4OS3 {
 		);
 
 		return $meta_boxes;
-	}
-
-	static function get_option( $option, $default = false ) {
-		if ( is_array( $option ) && isset( $option[1] ) ) {
-			$option_group = $option[0];
-			$option       = $option[1];
-		} else {
-			$option_group = 'w4os-settings';
-		}
-
-		if ( preg_match( '/:/', $option ) ) {
-			$option_group = strstr( $option, ':', true );
-			$option       = trim( strstr( $option, ':' ), ':' );
-		}
-
-		$options = get_option( $option_group );
-		if ( $options && isset( $options[ $option ] ) ) {
-			return $options[ $option ];
-		}
-
-		// Fallback to v2 settings untill v3 settings are all implemented.
-		if ( $option_group == 'w4os-settings' ) {
-			$options = get_option( 'w4os_settings' );
-			if ( $options && isset( $options[ $option ] ) ) {
-				return $options[ $option ];
-			}
-		}
-
-		return $default;
-	}
-
-	static function update_option( $option, $value, $autoload = null ) {
-		if ( is_array( $option ) && isset( $option[1] ) ) {
-			$option_group = $option[0];
-			$option       = $option[1];
-		} elseif ( preg_match( '/:/', $option ) ) {
-			$option_group = strstr( $option, ':', true );
-			$option       = trim( strstr( $option, ':' ), ':' );
-		} else {
-			$option_group = null;
-		}
-		$options            = get_option( $option_group );
-		$options[ $option ] = $value;
-		$result             = update_option( $option_group, $options, $autoload );
-
-		return $result;
 	}
 
 	/**

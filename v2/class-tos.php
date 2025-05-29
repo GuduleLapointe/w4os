@@ -14,7 +14,7 @@ class W4OS_Tos extends W4OS_Loader {
 	// public $tos_page_url;
 
 	public function __construct() {
-		$this->tos_page_id = W4OS3::get_option( 'w4os_tos_page_id' );
+		$this->tos_page_id = w4os_get_option( 'w4os_tos_page_id' );
 	}
 
 	public function url() {

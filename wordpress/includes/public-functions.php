@@ -681,37 +681,84 @@ function w4os_option_exists( $option_name ) {
 	return false;
 }
 
+// function w4os_get_option( $option, $default = false ) {
+// 	$settings_page = null;
+// 	$result        = $default;
+// 	if ( preg_match( '/:/', $option ) ) {
+// 		$settings_page = strstr( $option, ':', true );
+// 		$option        = trim( strstr( $option, ':' ), ':' );
+// 	} else {
+// 		$settings_page = 'w4os';
+// 	}
+
+// 	$settings = get_option( $settings_page );
+// 	if ( $settings && isset( $settings[ $option ] ) ) {
+// 		$result = $settings[ $option ];
+// 	} else {
+// 		$result = get_option( $option, $default );
+// 	}
+
+// 	return $result;
+// }
+
 function w4os_get_option( $option, $default = false ) {
-	$settings_page = null;
-	$result        = $default;
+	if ( is_array( $option ) && isset( $option[1] ) ) {
+		$option_group = $option[0];
+		$option       = $option[1];
+	} else {
+		$option_group = 'w4os-settings';
+	}
+
 	if ( preg_match( '/:/', $option ) ) {
-		$settings_page = strstr( $option, ':', true );
-		$option        = trim( strstr( $option, ':' ), ':' );
-	} else {
-		$settings_page = 'w4os';
+		$option_group = strstr( $option, ':', true );
+		$option       = trim( strstr( $option, ':' ), ':' );
 	}
 
-	$settings = get_option( $settings_page );
-	if ( $settings && isset( $settings[ $option ] ) ) {
-		$result = $settings[ $option ];
-	} else {
-		$result = get_option( $option, $default );
+	$options = get_option( $option_group );
+	if ( $options && isset( $options[ $option ] ) ) {
+		return $options[ $option ];
 	}
 
-	return $result;
+	// Fallback to v2 settings untill v3 settings are all implemented.
+	if ( $option_group == 'w4os-settings' ) {
+		$options = get_option( 'w4os_settings' );
+		if ( $options && isset( $options[ $option ] ) ) {
+			return $options[ $option ];
+		}
+	}
+
+	return $default;
 }
 
+
+// function w4os_update_option( $option, $value, $autoload = null ) {
+// 	$settings_page = null;
+// 	if ( preg_match( '/:/', $option ) ) {
+// 		$settings_page       = strstr( $option, ':', true );
+// 		$option              = trim( strstr( $option, ':' ), ':' );
+// 		$settings            = get_option( $settings_page );
+// 		$settings[ $option ] = $value;
+// 		$result              = update_option( $settings_page, $settings, $autoload );
+// 	} else {
+// 		$result = update_option( $option, $value, $autoload );
+// 	}
+// 	return $result;
+// }
+
 function w4os_update_option( $option, $value, $autoload = null ) {
-	$settings_page = null;
-	if ( preg_match( '/:/', $option ) ) {
-		$settings_page       = strstr( $option, ':', true );
-		$option              = trim( strstr( $option, ':' ), ':' );
-		$settings            = get_option( $settings_page );
-		$settings[ $option ] = $value;
-		$result              = update_option( $settings_page, $settings, $autoload );
+	if ( is_array( $option ) && isset( $option[1] ) ) {
+		$option_group = $option[0];
+		$option       = $option[1];
+	} elseif ( preg_match( '/:/', $option ) ) {
+		$option_group = strstr( $option, ':', true );
+		$option       = trim( strstr( $option, ':' ), ':' );
 	} else {
-		$result = update_option( $option, $value, $autoload );
+		$option_group = null;
 	}
+	$options            = get_option( $option_group );
+	$options[ $option ] = $value;
+	$result             = update_option( $option_group, $options, $autoload );
+
 	return $result;
 }
 

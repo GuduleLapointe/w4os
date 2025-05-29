@@ -126,12 +126,12 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$this->head_title = $page_title . ' – ' . get_bloginfo( 'name' );
 	}
 
-	static function get_option( $option, $default = false ) {
+	static function avatar_get_option( $option, $default = false ) {
 		// if( ! preg_match( '/:/', $option )) {
 		// 	$option = 'w4os-avatars:' . $option;
 		// }
 		
-		$settings = W4OS3::get_option( 'w4os-avatars:settings', array() );
+		$settings = w4os_get_option( 'w4os-avatars:settings', array() );
 		if ( isset( $settings[$option] ) ) {
 			$value = $settings[$option];
 		} else {
@@ -152,7 +152,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		}
 
 		if ( $this->is_profile_page && in_the_loop() && is_main_query() ) {
-			if ( self::get_option( 'hide_profile_title', true ) ) {
+			if ( self::avatar_get_option( 'hide_profile_title', true ) ) {
 				return null;
 			}
 			if ( $this->page_title ) {
@@ -387,7 +387,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 					'label'       => __( 'Profile Page', 'w4os' ),
 					'type'        => 'page_select2',
 					'placeholder' => __( 'Select the page to be used as profile page.', 'w4os' ),
-					// 'default' => w4os::get_option( 'profile-page' ),
+					// 'default' => w4os::avatar_get_option( 'profile-page' ),
 				),
 				'registration' => array(
 					'label'       => __( 'Registration', 'w4os' ),
@@ -401,7 +401,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 					),
 					'placeholder' => __( 'Select the page to be used as registration page.', 'w4os' ),
 					'readonly'    => W4OS3::$console_enabled,
-					// 'default' => w4os::get_option( 'registration-page' ),
+					// 'default' => w4os::avatar_get_option( 'registration-page' ),
 				),
 				'password'     => array(
 					'label'       => __( 'Password Recovery', 'w4os' ),
@@ -414,7 +414,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 					),
 					'placeholder' => __( 'Select the page to be used as password reset page.', 'w4os' ),
 					'readonly'    => W4OS3::$console_enabled,
-					// 'default' => w4os::get_option( 'password-page' ),
+					// 'default' => w4os::avatar_get_option( 'password-page' ),
 				),
 			),
 		);
