@@ -30,13 +30,40 @@ spl_autoload_register(function ($class) {
     }
 });
 
-// Load core OpenSimulator classes
+// Load core Engine classes
+require_once OPENSIM_ENGINE_PATH . '/class-engine-exceptions.php';
+require_once OPENSIM_ENGINE_PATH . '/class-engine-settings.php';
+
+// Load OpenSimulator classes
 require_once OPENSIM_ENGINE_PATH . '/class-opensim.php';
 require_once OPENSIM_ENGINE_PATH . '/class-service.php';
 require_once OPENSIM_ENGINE_PATH . '/class-database.php';
+
+// Temporary fix: Load helper classes for OpenSim compatibility
+// TODO: if they are needed by engine, they should be moved to the engine directory
+$helpers_path = dirname(OPENSIM_ENGINE_PATH) . '/helpers';
+if (file_exists($helpers_path . '/classes/class-ini.php')) {
+    require_once $helpers_path . '/classes/class-ini.php';
+}
+if (file_exists($helpers_path . '/classes/class-error.php')) {
+    require_once $helpers_path . '/classes/class-error.php';
+}
 
 require_once OPENSIM_ENGINE_PATH . '/class-avatar.php';
 require_once OPENSIM_ENGINE_PATH . '/class-region.php';
 require_once OPENSIM_ENGINE_PATH . '/class-search.php';
 require_once OPENSIM_ENGINE_PATH . '/class-economy.php';
 require_once OPENSIM_ENGINE_PATH . '/class-grid.php';
+
+// Initialize settings system
+Engine_Settings::init();
+
+// Engine initialization complete
+if (!defined('OPENSIM_ENGINE_LOADED')) {
+    define('OPENSIM_ENGINE_LOADED', true);
+}
+
+// Optional: Test the settings system if in debug mode
+if (defined('OPENSIM_ENGINE_DEBUG') && OPENSIM_ENGINE_DEBUG) {
+    error_log('OpenSim Engine: Settings system initialized at ' . Engine_Settings::get_file_path());
+}

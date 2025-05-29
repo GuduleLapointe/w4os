@@ -938,6 +938,8 @@ require_once W4OS_PLUGIN_DIR . 'v2/loader.php';
 // Load admin functionality
 if (is_admin()) {
     require_once W4OS_PLUGIN_DIR . 'v1/admin/admin-init.php';
+    // Load admin test pages (temporary)
+    require_once W4OS_PLUGIN_DIR . 'wordpress/admin/settings-test.php';
 }
 
 // Temporary workaround, load legacy helpers configuration.
