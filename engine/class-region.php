@@ -58,7 +58,7 @@ class OpenSim_Region {
         if (is_object($args)) {
             $this->uuid = $args->uuid;
             $this->item = $args;
-        } elseif (is_string($args) && $this->is_uuid($args)) {
+        } elseif (is_string($args) && is_uuid($args)) {
             $this->uuid = $args;
             if ($this->db) {
                 $query = $this->get_main_query() . ' WHERE uuid = ?';
@@ -98,13 +98,6 @@ class OpenSim_Region {
         $this->flags = $this->item->flags ?? 0;
         $this->last_seen = $this->item->last_seen ?? 0;
         $this->presence = $this->item->presence ?? 0;
-    }
-
-    /**
-     * Check if string is a valid UUID
-     */
-    protected function is_uuid($string) {
-        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $string);
     }
 
     /**

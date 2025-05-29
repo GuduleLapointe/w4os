@@ -194,10 +194,10 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 
 		$query = self::$base_query;
 		
-		if( W4OS3::is_uuid($args ) ) {
+		if( is_uuid($args ) ) {
 			$uuid = $args;
 		} else if ( is_array( $args ) ) {
-			$uuid = ( W4OS3::is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
+			$uuid = ( is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
 		} else if( is_object( $args )) {
 			$user = $args;
 			$avatars = W4OS3_Avatar::get_avatars_by_email( $user->user_email );

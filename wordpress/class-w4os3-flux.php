@@ -29,7 +29,7 @@ class W4OS3_Flux extends OpenSim_Flux {
 			return;
 		}
 
-		if ( W4OS3::is_uuid( $args[0], false ) ) {
+		if ( is_uuid( $args[0], false ) ) {
 			$this->avatar_uuid = $args[0];
 			$this->avatar      = new W4OS3_Avatar( $this->avatar_uuid );
 			$this->thumb       = $this->avatar->get_thumb();

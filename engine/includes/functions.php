@@ -21,7 +21,10 @@
  * @param  boolean $strict               apply strict UUID v4 implentation (default false)
  * @return boolean
  */
-function opensim_isuuid( $uuid, $nullok = false, $strict = false ) {
+function is_uuid( $uuid, $nullok = false, $strict = false ) {
+	if(! is_string( $uuid ) ) {
+		return false;
+	}
 	if ( $uuid == null ) {
 		return $nullok;
 	}
@@ -270,7 +273,7 @@ function opensim_get_region( $region_uri, $var = null ) {
 	$link_region = opensim_link_region( $region );
 
 	$uuid = @$link_region['uuid'];
-	if ( ! opensim_isuuid( $uuid ) ) {
+	if ( ! is_uuid( $uuid ) ) {
 		// error_log( "opensim_get_region $region_uri invalid uuid $uuid" );
 		return array();
 	}

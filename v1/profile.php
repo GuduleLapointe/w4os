@@ -24,7 +24,7 @@ class W4OS_Avatar extends WP_User {
 		}
 
 		if ( W4OS_ENABLE_V3 ) {
-			if ( W4OS3::is_uuid( $id ) ) {
+			if ( is_uuid( $id ) ) {
 				$uuid = $id;
 				$id   = null;
 			}

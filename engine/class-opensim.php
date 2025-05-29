@@ -135,26 +135,6 @@ class OpenSim {
         $url = filter_var( $url, FILTER_SANITIZE_URL );
         return $url;
     }
-
-
-    /**
-     * Check if string is valid UUID
-     */
-    public static function is_uuid($uuid, $accept_null = true) {
-        if (!is_string($uuid)) {
-            return false;
-        }
-        
-        if (!preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid)) {
-            return false;
-        }
-        
-        if (!$accept_null && self::is_null_key($uuid)) {
-            return false;
-        }
-        
-        return true;
-    }
     
     /**
      * Check if UUID is null key

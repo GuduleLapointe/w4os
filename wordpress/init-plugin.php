@@ -133,15 +133,6 @@ class W4OS3 {
         }
         return $tag;
     }
-
-    public static function is_uuid($uuid, $accept_null = true) {
-        if (class_exists('OpenSim')) {
-            return OpenSim::is_uuid($uuid, $accept_null);
-        }
-        // Fallback implementation
-        if (!is_string($uuid)) return false;
-        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $uuid);
-    }
     
     // Additional methods that might be needed by v1 functions
     public static function empty($var) {
@@ -281,7 +272,7 @@ class W4OS3 {
 			} else {
 				$parts      = explode( '?', $_GET['session_id'] );
 				$session_id = $parts[0];
-				if ( ! OpenSim::is_uuid( $session_id, false ) ) {
+				if ( ! is_uuid( $session_id, false ) ) {
 					$session = false;
 				} else {
 					$sql    = sprintf(
@@ -942,7 +933,7 @@ class W4OS3 {
 		if ( OpenSim::empty( $img_uuid ) ) {
 			return;
 		}
-		if ( ! OpenSim::is_uuid( $img_uuid ) ) {
+		if ( ! is_uuid( $img_uuid ) ) {
 			return;
 		}
 		$asset_url = w4os_get_asset_url( $img_uuid );

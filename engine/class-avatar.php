@@ -51,10 +51,10 @@ class OpenSim_Avatar {
 
         $query = self::$base_query;
         
-        if( $this->is_uuid($args ) ) {
+        if( is_uuid($args ) ) {
             $uuid = $args;
         } else if ( is_array( $args ) ) {
-            $uuid = ( $this->is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
+            $uuid = ( is_uuid( $args['uuid'] ) ? $args['uuid'] : false );
         } else if( is_object( $args )) {
             $user = $args;
             $avatars = self::get_avatars_by_email( $user->user_email );
@@ -149,34 +149,29 @@ class OpenSim_Avatar {
         return $this->Email ?? '';
     }
 
-    /**
-     * Check if a string is a valid UUID
-     */
-    protected function is_uuid($string) {
-        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $string);
-    }
-
     public static function get_name( $item ) {
         if ( is_object( $item ) ) {
+            $uuid = $item->PrincipalID;
             if ( isset( $item->avatarName ) ) {
-                return trim( $item->avatarName );
+                return trim( $avatarName = $item->avatarName );
             } elseif ( isset( $item->FirstName ) && isset( $item->LastName ) ) {
                 return trim( $item->FirstName . ' ' . $item->LastName );
             }
-            return _('Invalid Avatar Object');
-        } elseif ( self::is_uuid_static( $item ) ) {
-            // For framework-agnostic operation, we'd need a database connection here
-            // This would need to be refactored to accept a database connection
-            return _('Unknown Avatar');
-        }
-        return _('Unknown Avatar');
-    }
+            return __( 'Invalid Avatar Object', 'w4os' );
+        } elseif ( is_uuid( $item ) ) {
+            return _('get_name missing DB implementation');
+            
+            // TODO: adapt for OSPDO database connection
 
-    /**
-     * Static UUID validation method
-     */
-    protected static function is_uuid_static($string) {
-        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $string);
+            // $uuid = $item;
+            // global $w4osdb;
+            // $query  = "SELECT CONCAT(FirstName, ' ', LastName) AS Name FROM UserAccounts WHERE PrincipalID = %s";
+            // $result = $w4osdb->get_var( $w4osdb->prepare( $query, $uuid ) );
+            // if ( $result && ! is_wp_error( $result ) ) {
+            //     return esc_html( $result );
+            // }
+        }
+        return _( 'Unknown Avatar' );
     }
 
     static function get_user_avatar( $user_email ) {

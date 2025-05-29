@@ -381,7 +381,7 @@ class W4OS3_Region extends OpenSim_Region {
 		if ( is_object( $args ) ) {
 			$this->uuid = $args->uuid;
 			$this->item = $args;
-		} elseif ( is_string( $args ) && W4OS3::is_uuid( $args ) ) {
+		} elseif ( is_uuid( $args ) ) {
 			$this->uuid = $args;
 			
 			// Use the database connection from parent class
