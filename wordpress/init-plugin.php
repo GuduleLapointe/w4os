@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('W4OS_VERSION', '2.9.5-beta-9');
+define('W4OS_VERSION', '3.0.0-dev');
 define('W4OS_PLUGIN_DIR', plugin_dir_path(__DIR__));
 define('W4OS_PLUGIN_URL', plugin_dir_url(__DIR__));
 define('W4OS_SLUG', basename( W4OS_PLUGIN_DIR ) );

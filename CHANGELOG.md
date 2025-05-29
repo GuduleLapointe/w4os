@@ -1,6 +1,6 @@
 ## Changelog
 
-### Unreleased (2.9.5-beta-9)
+### Unreleased (3.0.0-dev)
 - fix default model not applied on avatar creation
 - fix some grid uri not properly sanitized
 - new textgen helper script (create dynamic texture from url)
