@@ -55,6 +55,12 @@ class W4OS_Settings_Test_Page {
             case 'import_ini_file':
                 $this->import_ini_file();
                 break;
+            case 'migrate_constants':
+                $this->migrate_from_constants();
+                break;
+            case 'fix_arrays':
+                $this->fix_array_values();
+                break;
         }
     }
     
@@ -194,6 +200,52 @@ class W4OS_Settings_Test_Page {
         }
     }
     
+    private function migrate_from_constants() {
+        // Get current PHP constants for migration
+        $constants = Engine_Settings::get_current_constants();
+        
+        if (empty($constants)) {
+            $message = 'No OpenSim/helpers constants found to migrate. Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_';
+            add_settings_error('w4os_settings_test', 'migrate_result', $message, 'notice-warning');
+            return;
+        }
+        
+        try {
+            $success = Engine_Settings::migrate_from_constants($constants);
+            
+            if ($success) {
+                $constant_count = count($constants);
+                $message = "Successfully migrated {$constant_count} PHP constants to INI format. Constants found: " . implode(', ', array_keys($constants));
+                add_settings_error('w4os_settings_test', 'migrate_result', $message, 'updated');
+            } else {
+                $message = 'Failed to migrate PHP constants to INI format. Check error logs for details.';
+                add_settings_error('w4os_settings_test', 'migrate_result', $message, 'error');
+            }
+            
+        } catch (Exception $e) {
+            $message = 'Exception during constants migration: ' . $e->getMessage();
+            add_settings_error('w4os_settings_test', 'migrate_result', $message, 'error');
+        }
+    }
+    
+    private function fix_array_values() {
+        try {
+            $success = Engine_Settings::fix_array_values();
+            
+            if ($success) {
+                $message = 'Successfully fixed array values that were saved as "Array" strings';
+                add_settings_error('w4os_settings_test', 'fix_result', $message, 'updated');
+            } else {
+                $message = 'No array values needed fixing, or operation failed';
+                add_settings_error('w4os_settings_test', 'fix_result', $message, 'notice-info');
+            }
+            
+        } catch (Exception $e) {
+            $message = 'Exception during array fix: ' . $e->getMessage();
+            add_settings_error('w4os_settings_test', 'fix_result', $message, 'error');
+        }
+    }
+    
     public function admin_page() {
         ?>
         <div class="wrap">
@@ -325,11 +377,67 @@ class W4OS_Settings_Test_Page {
                 </div>
             </form>
             
+            <!-- Migrate PHP Constants -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Test PHP Constants Migration</h2>
+                    <div class="inside">
+                        <p>Migrate existing PHP constants to INI format:</p>
+                        <?php 
+                        $current_constants = Engine_Settings::get_current_constants();
+                        if (!empty($current_constants)) {
+                            echo '<p>Found ' . count($current_constants) . ' constants to migrate:</p>';
+                            echo '<div style="background: #f0f0f0; padding: 10px; max-height: 200px; overflow-y: auto; margin: 10px 0;">';
+                            foreach ($current_constants as $name => $value) {
+                                echo '<strong>' . esc_html($name) . '</strong> = ';
+                                if (is_array($value)) {
+                                    echo '<em>Array (' . count($value) . ' items)</em>';
+                                } elseif (is_bool($value)) {
+                                    echo $value ? 'true' : 'false';
+                                } elseif (is_string($value) && strlen($value) > 50) {
+                                    echo esc_html(substr($value, 0, 47)) . '...';
+                                } else {
+                                    echo esc_html($value);
+                                }
+                                echo '<br>';
+                            }
+                            echo '</div>';
+                        } else {
+                            echo '<p><em>No OpenSim/helpers constants found in current environment.</em></p>';
+                            echo '<p><small>Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_</small></p>';
+                        }
+                        ?>
+                        <p>
+                            <input type="hidden" name="action" value="migrate_constants" />
+                            <input type="submit" class="button" value="Migrate PHP Constants" 
+                                   <?php echo !empty($current_constants) ? '' : 'disabled'; ?> />
+                        </p>
+                    </div>
+                </div>
+            </form>
+            
+            <!-- Fix Array Values -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Fix Array Values</h2>
+                    <div class="inside">
+                        <p>Fix any array values that were incorrectly saved as "Array" strings:</p>
+                        <p><small>This will fix GLOEBIT_CONVERSION_TABLE and other arrays that show as "Array" instead of proper JSON.</small></p>
+                        <p>
+                            <input type="hidden" name="action" value="fix_arrays" />
+                            <input type="submit" class="button" value="Fix Array Values" />
+                        </p>
+                    </div>
+                </div>
+            </form>
+            
             </div> <!-- End main content -->
             
             <div class="w4os-sidebar">
                 <!-- Current Settings Display -->
-                <div class="card">
+                <div class="card current-settings">
                     <h2>Current Settings</h2>
                     <div class="inside">
                         <?php
@@ -337,14 +445,33 @@ class W4OS_Settings_Test_Page {
                         if (empty($all_settings)) {
                             echo '<p><em>No settings found. The configuration file will be created when you save settings.</em></p>';
                         } else {
-                            echo '<pre style="background: #f0f0f0; padding: 10px; overflow: auto; max-height: 400px;">';
+                            echo '<pre style="background: #f0f0f0; padding: 10px; overflow-x: auto;">';
                             echo esc_html(print_r($all_settings, true));
                             echo '</pre>';
                         }
                         ?>
                     </div>
                 </div>
-                <!-- File System Info -->
+            </div> <!-- End sidebar -->
+            
+            </div> <!-- End layout wrapper -->
+            
+            <!-- Clear Settings -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Clear All Settings</h2>
+                    <div class="inside">
+                        <p><strong>Warning:</strong> This will clear ALL engine settings, not just test data.</p>
+                        <p>
+                            <input type="hidden" name="action" value="clear_settings" />
+                            <input type="submit" class="button button-secondary" value="Clear All Settings" 
+                                   onclick="return confirm('Are you sure you want to clear ALL settings? This cannot be undone.')" />
+                        </p>
+                    </div>
+                </div>
+            </form>
+<!-- File System Info -->
                 <div class="card">
                     <h2>File System Information</h2>
                     <!-- <div class="inside"> -->
@@ -408,26 +535,7 @@ class W4OS_Settings_Test_Page {
                         </table>
                     <!-- </div> -->
                 </div>
-            </div> <!-- End sidebar -->
-            
-            </div> <!-- End layout wrapper -->
-            
-            <!-- Clear Settings -->
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Clear All Settings</h2>
-                    <div class="inside">
-                        <p><strong>Warning:</strong> This will clear ALL engine settings, not just test data.</p>
-                        <p>
-                            <input type="hidden" name="action" value="clear_settings" />
-                            <input type="submit" class="button button-secondary" value="Clear All Settings" 
-                                   onclick="return confirm('Are you sure you want to clear ALL settings? This cannot be undone.')" />
-                        </p>
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
         
         <style>
         .text-success { color: #46b450; font-weight: bold; }
@@ -473,7 +581,7 @@ class W4OS_Settings_Test_Page {
             min-width: 0;
         }
         
-        .w4os-sidebar .card {
+        .w4os-sidebar .current-settings {
             position: sticky;
             top: 32px; /* Account for WP admin bar */
         }
