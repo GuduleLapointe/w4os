@@ -4,40 +4,32 @@ add_filter( 'show_admin_bar', '__return_false' );
 $classes = 'w4os profile-viewer profile-page page';
 
 if ( isset( $_GET['name'] ) && ! empty( $_GET['name'] ) ) {
-	if ( W4OS_ENABLE_V3 ) {
-		W4OS3::enqueue_style( 'w4os-profile', 'wordpress/css/profile.css' );
-		$avatar     = new W4OS3_Avatar( $_GET['name'] );
-		$page_title = sprintf(
-			__( '%s\'s flux', 'w4os' ),
-			$avatar->AvatarName ?? $_GET['name'],
-		);
-		if ( empty( $avatar->externalProfileURL ) ) {
-			// $page_title = $avatar->AvatarHGName ?? $avatar->AvatarName;
-			$profile_url = false;
-			$content     = '<center>' . sprintf(
-				__( 'Feed not available on %s', 'w4os' ),
-				$avatar->grid_info['gridname'] ?? preg_replace(
-					'/^.*@/',
-					'',
-					$_GET['name'],
-				)
-			) . '</center>';
-		} else {
-			$profile_url = $avatar->get_profile_url();
-			$content     = $avatar->profile_page();
-		}
-		$actions[] = empty( $profile_url ) ? '' : sprintf(
-			'<a href="%s" class="page-title-action" target="_blank">%s</a>',
-			$profile_url,
-			__( 'Open profile page', 'w4os' )
-		);
+	W4OS3::enqueue_style( 'w4os-profile', 'wordpress/css/profile.css' );
+	$avatar     = new W4OS3_Avatar( $_GET['name'] );
+	$page_title = sprintf(
+		__( '%s\'s flux', 'w4os' ),
+		$avatar->AvatarName ?? $_GET['name'],
+	);
+	if ( empty( $avatar->externalProfileURL ) ) {
+		// $page_title = $avatar->AvatarHGName ?? $avatar->AvatarName;
+		$profile_url = false;
+		$content     = '<center>' . sprintf(
+			__( 'Feed not available on %s', 'w4os' ),
+			$avatar->grid_info['gridname'] ?? preg_replace(
+				'/^.*@/',
+				'',
+				$_GET['name'],
+			)
+		) . '</center>';
 	} else {
-		$user    = w4os_get_user_by_avatar_name( $_GET['name'] );
-		$content = w4os_profile_display( $user->ID );
-
-		$avatar     = new W4OS_Avatar( $user->ID );
-		$page_title = ( empty( $avatar->AvatarName ) ) ? __( 'Avatar not found', 'w4os' ) : $avatar->AvatarName;
+		$profile_url = $avatar->get_profile_url();
+		$content     = $avatar->profile_page();
 	}
+	$actions[] = empty( $profile_url ) ? '' : sprintf(
+		'<a href="%s" class="page-title-action" target="_blank">%s</a>',
+		$profile_url,
+		__( 'Open profile page', 'w4os' )
+	);
 }
 
 ?><!doctype html>

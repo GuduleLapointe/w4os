@@ -124,10 +124,6 @@ class W4OS3_Settings {
 	}
 
 	public function register_settings() {
-		if ( ! W4OS_ENABLE_V3 ) {
-			return;
-		}
-
 		// All settings pages must be registered to be allowed by options.php
 		$settings = self::get_settings();
 		foreach ( $settings as $menu_slug => $setting ) {

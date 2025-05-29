@@ -21,11 +21,6 @@ define('W4OS_PLUGIN_URL', plugin_dir_url(__DIR__));
 define('W4OS_SLUG', basename( W4OS_PLUGIN_DIR ) );
 define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 
-// Enable all features (remove beta toggles)
-if(!defined('W4OS_ENABLE_V3')) {
-    define('W4OS_ENABLE_V3', true);
-}
-
 // Load engine first
 require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
     

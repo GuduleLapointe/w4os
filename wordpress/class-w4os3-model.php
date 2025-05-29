@@ -98,10 +98,6 @@ class W4OS3_Model {
 	 * Register settings using the Settings API, templates and the method W4OS3_Settings::render_settings_section().
 	 */
 	public static function register_settings() {
-		if ( ! W4OS_ENABLE_V3 ) {
-			return;
-		}
-
 		$option_name  = 'w4os-avatars';
 		$option_group = $option_name . '_group';
 

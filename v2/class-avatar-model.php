@@ -20,11 +20,7 @@ class W4OS_Model extends W4OS_Loader {
 	public $models;
 
 	public function __construct() {
-		if ( W4OS_ENABLE_V3 ) {
-			$this->models = W4OS3_Model::get_models();
-		} else {
-			$this->models = $this->get_models();
-		}
+		$this->models = W4OS3_Model::get_models();
 	}
 
 	public function init() {
@@ -33,10 +29,6 @@ class W4OS_Model extends W4OS_Loader {
 			array(
 				'hook'     => 'admin_menu',
 				'callback' => 'register_settings_sidebar',
-			),
-			array(
-				'hook'     => 'admin_enqueue_scripts',
-				'callback' => 'enqueue_custom_settings_script',
 			),
 			array(
 				'hook'     => 'wp_ajax_update_models_preview_content',
@@ -55,10 +47,8 @@ class W4OS_Model extends W4OS_Loader {
 			),
 		);
 
-		if ( W4OS_ENABLE_V3 ) {
-			add_filter( 'parent_file', array( __CLASS__, 'set_active_menu' ) );
-			add_filter( 'submenu_file', array( __CLASS__, 'set_active_submenu' ) );
-		}
+		add_filter( 'parent_file', array( __CLASS__, 'set_active_menu' ) );
+		add_filter( 'submenu_file', array( __CLASS__, 'set_active_submenu' ) );
 	}
 
 	public static function set_active_menu( $parent_file ) {
@@ -92,7 +82,7 @@ class W4OS_Model extends W4OS_Loader {
 	}
 
 	function register_settings_pages( $settings_pages ) {
-		$parent           = W4OS_ENABLE_V3 ? 'w4os-avatars' : 'w4os';
+		$parent           = 'w4os-avatars';
 		$settings_pages[] = array(
 			'menu_title' => __( 'Avatar Models', 'w4os' ),
 			'page_title' => __( 'Avatar Models Settings', 'w4os' ),
@@ -209,148 +199,19 @@ class W4OS_Model extends W4OS_Loader {
 	}
 
 	static function get_avatars( $args = array(), $format = OBJECT ) {
-		if ( W4OS_ENABLE_V3 ) {
-			return W4OS3_Avatar::get_avatars( array(), $format );
-		}
-
-		global $w4osdb;
-		if ( empty( $w4osdb ) ) {
-			return false;
-		}
-
-		$avatars = array();
-
-		$sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE active = true';
-		$result = $w4osdb->get_results( $sql, $format );
-		if ( is_array( $result ) ) {
-			foreach ( $result as $avatar ) {
-				$avatars[ $avatar->PrincipalID ] = trim( "$avatar->FirstName $avatar->LastName" );
-			}
-		}
-		return $avatars;
+		return W4OS3_Avatar::get_avatars( array(), $format );
 	}
 
 	static function get_models( $atts = array(), $format = OBJECT ) {
-		if ( W4OS_ENABLE_V3 ) {
-			return W4OS3_Model::get_models( $atts, $format );
-		}
-
-		global $w4osdb;
-		if ( empty( $w4osdb ) ) {
-			return false;
-		}
-
-		$models = array();
-
-		if ( ! empty( $atts['match'] ) ) {
-			$match = $atts['match'];
-			$name  = $atts['name'];
-			$uuids = $atts['uuids'];
-		} elseif (
-				isset( $_REQUEST['page'] )
-				&& $_REQUEST['page'] == 'w4os-models'
-				&& isset( $_POST['match'] )
-				&& isset( $_POST['name'] )
-				&& isset( $_POST['uuids'] )
-			) {
-
-				$match = esc_attr( $_POST['match'] );
-				$name  = esc_attr( $_POST['name'] );
-				$uuids = array_map( 'esc_attr', $_POST['uuids'] );
-		} else {
-			$match = w4os_get_option( 'w4os-models:match', 'any' );
-			$name  = w4os_get_option( 'w4os-models:name', false );
-			$uuids = w4os_get_option( 'w4os-models:uuids', array() );
-		}
-
-		switch ( $match ) {
-			case 'uuid':
-				if ( ! empty( $uuids ) ) {
-					$conditions = "PrincipalID IN ('" . implode( "','", $uuids ) . "')";
-				} else {
-					$conditions = 'FALSE';
-				}
-				break;
-
-			case 'first':
-				$conditions = "FirstName = '%1\$s'";
-				break;
-
-			case 'last':
-				$conditions = "LastName = '%1\$s'";
-				break;
-
-			default:
-				$conditions = "( FirstName = '%1\$s' OR LastName = '%1\$s' )";
-		}
-		$sql    = $w4osdb->prepare(
-			"SELECT PrincipalID, FirstName, LastName, profileImage, profileAboutText FROM
-			UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID WHERE active =
-			true AND {$conditions} ORDER BY FirstName, LastName",
-			$name,
-		);
-		$models = $w4osdb->get_results( $sql, $format );
-
-		return $models;
+		return W4OS3_Model::get_models( $atts, $format );
 	}
 
 	public function model_thumb( $model, $placeholder = W4OS_NOTFOUND_IMG ) {
-		if ( W4OS_ENABLE_V3 ) {
-			return W4OS3_Model::model_thumb( $model, $placeholder );
-		}
-
-		$output = '';
-
-		$name         = $model->FirstName . ' ' . $model->LastName;
-		$display_name = $name;
-		$filter_name  = w4os_get_option( 'w4os-models:name', false );
-		if ( ! empty( $filter_name ) ) {
-			$display_name = preg_replace( '/ *' . $filter_name . ' */', '', $display_name );
-		}
-		$display_name = preg_replace( '/(.*) *Ruth2 *(.*)/', '\1 \2 <span class="r2">Ruth 2.0</span>', $display_name );
-		$display_name = preg_replace( '/(.*) *Roth2 *(.*)/', '\1 \2 <span class="r2">Roth 2.0</span>', $display_name );
-		$alt_name     = wp_strip_all_tags( $display_name );
-
-		$imgid = ( w4os_empty( $model->profileImage ) ) ? $placeholder : $model->profileImage;
-		if ( $imgid ) {
-			$output = sprintf_safe(
-				'<figure>
-				<img class="model-picture" alt="%2$s" src="%3$s">
-				<figcaption>%1$s</figcaption>
-				</figure>',
-				$display_name,
-				$alt_name,
-				w4os_get_asset_url( $imgid ),
-			);
-		} elseif ( ! empty( $display_name ) ) {
-			$output = sprintf_safe(
-				'<span class="model-name">%s</span>',
-				$display_name,
-			);
-		}
-
-		return $output;
+		return W4OS3_Model::model_thumb( $model, $placeholder );
 	}
 
 	public function models_preview( $atts = array() ) {
-		if ( W4OS_ENABLE_V3 ) {
-			return W4OS3_Model::models_preview( $atts );
-		}
-
-		$content = '';
-
-		$models = $this->get_models( $atts );
-
-		if ( empty( $models ) ) {
-			$content = '<divclass="models-list">' . __( 'No models found.', 'w4os' ) . '</div>';
-		} else {
-			foreach ( $models as $model ) {
-				$content .= '<li class=model>' . $this->model_thumb( $model ) . '</li>';
-			}
-			$content = '<ul class="models-list">' . $content . '</ul>';
-		}
-
-		return $content;
+		return W4OS3_Model::models_preview( $atts );
 	}
 
 	function select_model_field() {
@@ -398,52 +259,9 @@ class W4OS_Model extends W4OS_Loader {
 		return $content;
 	}
 
-	function enqueue_custom_settings_script( $hook ) {
-		if ( W4OS_ENABLE_V3 ) {
-			return;
-		}
-		// Enqueue the script only on the specific settings page
-		if ( $hook === 'opensimulator_page_w4os-models' ) {
-			wp_enqueue_script( 'w4os-settings-models', plugin_dir_url( __DIR__ ) . 'v2/admin/settings-models.js', array( 'jquery' ), '1.0', true );
-			wp_localize_script(
-				'w4os-settings-models',
-				'w4osSettings',
-				array(
-					'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
-					'nonce'          => wp_create_nonce( 'update_models_preview_content_nonce' ), // Nonce for security
-					'loadingMessage' => __( 'Refreshing list...', 'w4os' ),
-					'updateAction'   => 'update_models_preview_content',
-				)
-			);
-		}
-	}
-
 	// AJAX handler to update the available models content
 	public function update_models_preview_content() {
-		if ( W4OS_ENABLE_V3 ) {
-			return;
-		}
-		// Verify the AJAX request
-		check_ajax_referer( 'update_models_preview_content_nonce', 'nonce' );
-
-		// Check if the action parameter is set to 'update_models_preview_content'
-		if ( isset( $_POST['action'] ) && $_POST['action'] === 'update_models_preview_content' ) {
-			// Sanitize the input values
-			$atts = array(
-				'match' => isset( $_POST['preview_match'] ) ? esc_attr( $_POST['preview_match'] ) : null,
-				'name'  => isset( $_POST['preview_name'] ) ? esc_attr( $_POST['preview_name'] ) : null,
-				'uuids' => isset( $_POST['preview_uuids'] ) ? array_map( 'esc_attr', $_POST['preview_uuids'] ) : null,
-			);
-
-			// Generate the updated available models content
-			$output = $this->models_preview( $atts );
-
-			// Send the updated content as the AJAX response
-			wp_send_json( $output );
-		} else {
-			// Invalid action parameter
-			wp_send_json_error( 'Invalid action' );
-		}
+		return;
 	}
 }
 

@@ -12,11 +12,7 @@ if ( ! preg_match( "/<table class='avatar-profile-table'>|\[et_pb_w4os_avatar_pr
 		if ( is_user_logged_in() ) {
 			// User logged in, get profile if exists, avatar form otherwise
 			$user = wp_get_current_user();
-			if ( W4OS_ENABLE_V3 ) {
-				$avatar = new W4OS3_Avatar( $user );
-			} else {
-				$avatar = new W4OS_Avatar( $user );
-			}
+			$avatar = new W4OS3_Avatar( $user );
 			$page_title     = __( 'My Avatar', 'w4os' );
 			$avatar_profile = $avatar->profile_page();
 			if ( empty( $avatar_profile ) ) {

@@ -23,38 +23,36 @@ class W4OS_Avatar extends WP_User {
 			return;
 		}
 
-		if ( W4OS_ENABLE_V3 ) {
-			if ( is_uuid( $id ) ) {
-				$uuid = $id;
-				$id   = null;
-			}
-			$args   = array_filter(
-				array(
-					'id'      => $id,
-					'uuid'    => $uuid ?? null,
-					'name'    => $name,
-					'site_id' => $site_id,
-				)
-			);
-			$avatar = new W4OS3_Avatar( $args );
+		if ( is_uuid( $id ) ) {
+			$uuid = $id;
+			$id   = null;
+		}
+		$args   = array_filter(
+			array(
+				'id'      => $id,
+				'uuid'    => $uuid ?? null,
+				'name'    => $name,
+				'site_id' => $site_id,
+			)
+		);
+		$avatar = new W4OS3_Avatar( $args );
 
-			if ( $avatar->UUID ) {
-				$user = get_user_by( 'email', $avatar->Email );
-				$id   = $user->ID;
+		if ( $avatar->UUID ) {
+			$user = get_user_by( 'email', $avatar->Email );
+			$id   = $user->ID;
 
-				$this->ID                 = $user->ID;
-				$this->data               = $avatar->get_data();
-				$this->UUID               = $avatar->UUID;
-				$this->FirstName          = $avatar->FirstName;
-				$this->LastName           = $avatar->LastName;
-				$this->AvatarName         = $avatar->AvatarName;
-				$this->AvatarSlug         = $avatar->AvatarSlug;
-				$this->AvatarHGName       = $avatar->AvatarHGName;
-				$this->ProfilePictureUUID = $avatar->ProfilePictureUUID;
-				return;
-			} else {
-				return false;
-			}
+			$this->ID                 = $user->ID;
+			$this->data               = $avatar->get_data();
+			$this->UUID               = $avatar->UUID;
+			$this->FirstName          = $avatar->FirstName;
+			$this->LastName           = $avatar->LastName;
+			$this->AvatarName         = $avatar->AvatarName;
+			$this->AvatarSlug         = $avatar->AvatarSlug;
+			$this->AvatarHGName       = $avatar->AvatarHGName;
+			$this->ProfilePictureUUID = $avatar->ProfilePictureUUID;
+			return;
+		} else {
+			return false;
 		}
 
 		if ( ! empty( $id ) && ! is_numeric( $id ) ) {
@@ -113,115 +111,8 @@ class W4OS_Avatar extends WP_User {
 			$this->UUID = esc_attr( get_the_author_meta( 'w4os_uuid', $this->ID ) );
 		}
 
-		if ( W4OS_ENABLE_V3 ) {
-			$v3avatar = new W4OS3_Avatar( $this->UUID );
-			return $v3avatar->profile_page( $echo, $args );
-		}
-
-		global $wpdb, $w4osdb;
-
-		$content            = '';
-		$can_list_users     = ( current_user_can( 'list_users' ) ) ? 'true' : 'false';
-		$current_user_email = wp_get_current_user()->user_email;
-
-		$avatar_query = "SELECT *
-		FROM UserAccounts LEFT JOIN userprofile ON PrincipalID = userUUID
-		WHERE active = 1 AND Email != ''
-		AND PrincipalID = '$this->UUID';";
-		/*
-		In-world profiles are always public, so are web profiles */
-		// AND ( profileAllowPublish = 1 OR $can_list_users OR Email = '$current_user_email')
-
-		$avatar_row = $w4osdb->get_row( $avatar_query );
-
-		if ( is_object( $avatar_row ) ) {
-			$keys = array(
-				'FirstName'        => null,
-				'LastName'         => null,
-				'profileImage'     => null,
-				'profileAboutText' => null,
-			);
-			// $keys = array_combine($keys, $keys);
-			// $avatar_array=(array)$avatar_row;
-			$avatar_row->profileImageHtml      = ( ! w4os_empty( $avatar_row->profileImage ) ) ? '<div class=profileImage><img src=' . w4os_get_asset_url( $avatar_row->profileImage ) . '></div>' : null;
-			$avatar_row->profileFirstImageHtml = ( ! w4os_empty( $avatar_row->profileFirstImage ) ) ? '<div class="profileImage profileFirstImage"><img src=' . w4os_get_asset_url( $avatar_row->profileFirstImage ) . '></div>' : null;
-
-			$wants  = array(
-				__( 'Build', 'w4os' ),
-				__( 'Explore', 'w4os' ),
-				__( 'Meet', 'w4os' ),
-				__( 'Group', 'w4os' ),
-				__( 'Buy', 'w4os' ),
-				__( 'Sell', 'w4os' ),
-				__( 'Be Hired', 'w4os' ),
-				__( 'Hire', 'w4os' ),
-			);
-			$skills = array(
-				__( 'Textures', 'w4os' ),
-				__( 'Architecture', 'w4os' ),
-				__( 'Event Planning', 'w4os' ),
-				__( 'Modeling', 'w4os' ),
-				__( 'Scripting', 'w4os' ),
-				__( 'Custom Characters', 'w4os' ),
-			);
-
-			if ( ! w4os_empty( $avatar_row->profilePartner ) ) {
-				$partner = $w4osdb->get_row( "SELECT FirstName, LastName FROM UserAccounts WHERE PrincipalID = '$avatar_row->profilePartner';" );
-			}
-
-			$this->AvatarName = trim( $avatar_row->FirstName . ' ' . $avatar_row->LastName );
-
-			$profileAboutText = ( isset( $avatar_row->profileAboutText ) ) ? wpautop( $avatar_row->profileAboutText ) : null;
-			$profile          = array_filter(
-				array(
-					__( 'Avatar Name', 'w4os' ) => w4os_hop( w4os_grid_profile_url( $this ), $this->AvatarName ),
-					// __('Profile URI', 'w4os') => w4os_hop(w4os_grid_profile_url($this), $this->AvatarName),
-					// __('HG Name', 'w4os') => $avatar_row->HGName, // To implement
-					// __('Avatar Display Name', 'w4os') => $avatar_row->DisplayName, // To implement
-					__( 'About', 'w4os' )       => $avatar_row->profileImageHtml . $profileAboutText,
-					// __('Profile picture', 'w4os') => $avatar_row->profileImageHtml,
-					__( 'Born', 'w4os' )        => w4os_age( $avatar_row->Created ),
-					__( 'Partner', 'w4os' )     => ( empty( $partner ) ) ? null : trim( $partner->FirstName . ' ' . $partner->LastName ),
-					__( 'Wants to', 'w4os' )    => join( ', ', w4os_demask( $avatar_row->profileWantToMask, $wants, $avatar_row->profileWantToText ) ),
-					__( 'Skills', 'w4os' )      => join( ', ', w4os_demask( $avatar_row->profileSkillsMask, $skills, $avatar_row->profileSkillsText ) ),
-					__( 'Languages', 'w4os' )   => $avatar_row->profileLanguages,
-					__( 'Real Life', 'w4os' )   => trim( $avatar_row->profileFirstImageHtml . ' ' . wpautop( $avatar_row->profileFirstText ) ),
-				)
-			);
-			if ( wp_get_current_user()->ID == $this->ID ) {
-					$profile[ __( 'Change password', 'w4os' ) ] = '<a href="' . wp_lostpassword_url() . '">' . __( 'Password reset link', 'w4os' ) . '</a>';
-			}
-
-			/*
-			In-world profiles are always public, so are web profiles */
-			// if($avatar_row->profileAllowPublish != 1) {
-			// if($avatar_row->Email == $current_user_email) {
-			// $content.= sprintf_safe(
-			// '<p class=notice>%s</p>',
-			// __('This is a preview, your profile is actually private.', 'w4os'),
-			// );
-			// } else {
-			// $content.= sprintf_safe(
-			// '<p class=notice>%s</p>',
-			// __('This profile is private but you are admin, so you can look. Be fair.', 'w4os'),
-			// );
-			// }
-			// }
-
-			// $content .= w4os_array2table((array)$avatar_row);
-			$content .= w4os_array2table( $profile, 'avatar-profile-table' );
-
-			if ( W4OS_ENABLE_V3 ) {
-				// $content .= $avatar->profile_page( false, $args );
-			}
-		} else {
-			return false;
-		}
-		if ( $echo ) {
-			echo $content;
-		} else {
-			return $content;
-		}
+		$v3avatar = new W4OS3_Avatar( $this->UUID );
+		return $v3avatar->profile_page( $echo, $args );
 	}
 }
 
@@ -895,28 +786,20 @@ function w4os_profile_display( $user, $args = array() ) {
 	);
 	extract( $args );
 
-	if ( W4OS_ENABLE_V3 ) {
-		if ( is_string( $user ) && ! is_numeric( $user ) ) {
-			// Probably an avatar name
-			$name   = $user;
-			$avatar = new W4OS3_Avatar( $name );
-			if ( ! $avatar->UUID ) {
-				return false;
-			}
-		} elseif ( $user->ID ) {
-			$avatar = W4OS3_Avatar::get_user_avatar( $user->ID );
-			if ( empty( $avatar ) ) {
-				return false;
-			}
-		} else {
+	if ( is_string( $user ) && ! is_numeric( $user ) ) {
+		// Probably an avatar name
+		$name   = $user;
+		$avatar = new W4OS3_Avatar( $name );
+		if ( ! $avatar->UUID ) {
 			return false;
 		}
-	} elseif ( is_string( $user ) ) {
-		$avatar = new W4OS_Avatar( null, $user );
 	} elseif ( $user->ID ) {
-		$avatar = new W4OS_Avatar( $user->ID );
+		$avatar = W4OS3_Avatar::get_user_avatar( $user->ID );
+		if ( empty( $avatar ) ) {
+			return false;
+		}
 	} else {
-		$avatar = new W4OS_Avatar( $user );
+		return false;
 	}
 
 	$content = '';
@@ -1110,7 +993,7 @@ function w4os_grid_profile_url( $user_or_id ) {
 	}
 
 	$link = sprintf_safe( '/app/agent/%s/about', $user->UUID );
-	if ( W4OS_ENABLE_V3 && W4OS3::in_world_call() ) {
+	if ( W4OS3::in_world_call() ) {
 		// SLURL not supported from within profile tab, not sure it is in embedded web browser either
 		return false;
 		// $link = 'secondlife://' . $link;

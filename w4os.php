@@ -51,11 +51,7 @@ if ( defined( 'W4OS_SLUG' ) ) {
 	);
 	deactivate_plugins( basename( __DIR__ ) . '/' . basename( __FILE__ ) );
 } else {
-
 	// No conflict, initialize the plugin.
-
-	// Modern plugin structure - enable all features
-	define( 'W4OS_ENABLE_V3', true );
 
 	// Load modern organized structure
 	require_once plugin_dir_path( __FILE__ ) . 'wordpress/init-plugin.php';

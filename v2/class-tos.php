@@ -22,9 +22,7 @@ class W4OS_Tos extends W4OS_Loader {
 	}
 
 	public function init() {
-		if ( W4OS_ENABLE_V3 ) {
-			add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ) );
-		}
+		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ) );
 		add_filter( 'rwmb_meta_boxes', array( $this, 'register_settings_fields' ) );
 
 		if ( $this->tos_page_id ) {
@@ -67,9 +65,6 @@ class W4OS_Tos extends W4OS_Loader {
 
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
-
-		// if( W4OS_ENABLE_V3 )
-		// return $meta_boxes;
 
 		$meta_boxes[] = array(
 			'title'          => __( 'Registration', 'w4os' ),

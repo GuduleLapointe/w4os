@@ -121,18 +121,9 @@ function w4os_register_user_columns_views( $value, $column_name, $user_id ) {
 add_action( 'manage_users_custom_column', 'w4os_register_user_columns_views', 10, 3 );
 
 function w4os_date( $format, $timestamp = null, $timezone = null ) {
-	if ( W4OS_ENABLE_V3 ) {
-		return W4OS3::date( $timestamp, $format, $timezone );
-	}
-
-	if ( empty( $timestamp ) ) {
-		return;
-	}
-	if ( empty( $format ) ) {
-		$format = get_option( 'date_format' );
-	}
-	return wp_date( $format, $timestamp, $timezone );
+	return W4OS3::date( $timestamp, $format, $timezone );
 }
+
 /**
  * Make avatar name column sortable
  */

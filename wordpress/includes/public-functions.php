@@ -547,27 +547,7 @@ add_action( 'init', 'register_w4os_get_urls_statuses_async_cron' );
 add_action( 'w4os_get_urls_statuses', 'w4os_get_urls_statuses' );
 
 function w4os_sanitize_login_uri( $login_uri ) {
-	if ( W4OS_ENABLE_V3 ) {
-		return OpenSim::sanitize_uri( $login_uri );
-	}
-
-	if ( empty( $login_uri ) ) {
-		return;
-	}
-
-	$login_uri = ( preg_match( '/^https?:\/\//', $login_uri ) ) ? $login_uri : 'http://' . $login_uri;
-
-	$parts = wp_parse_args(
-		wp_parse_url( $login_uri ),
-		array(
-			'scheme' => 'http',
-			'port'   => preg_match('/osgrid\.org/', $login_uri) ? 80 : 8002,
-		),
-	);
-
-	$login_uri = $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
-
-	return $login_uri;
+	return OpenSim::sanitize_uri( $login_uri );
 }
 
 function w4os_grid_login_uri() {
