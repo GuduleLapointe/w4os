@@ -897,20 +897,6 @@ class W4OS3 {
 		}
 	}
 
-	public static function validate_db_credentials( $db_creds ) {
-		if ( empty( $db_creds['host'] ) || empty( $db_creds['user'] ) || empty( $db_creds['pass'] ) || empty( $db_creds['name'] ) ) {
-			error_log( __FUNCTION__ . ' missing arguments ' . print_r( $db_creds, true ) );
-			return null;
-		}
-		@$db_conn = new mysqli( $db_creds['host'], $db_creds['user'], $db_creds['pass'], $db_creds['name'], $db_creds['port'] );
-		if ( $db_conn && ! $db_conn->connect_error ) {
-			$db_conn->close();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public static function modal( $id, $url = null, $content = null ) {
 		$footer_buttons = array(
 			( empty( $url ) ) ? '' : sprintf(

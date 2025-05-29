@@ -362,22 +362,9 @@ class W4OS3_Settings {
 		}
 
 		// Check database credentials
-		// TODO: replace with W4OS3::validate_db_credentials
-		if ( ! empty( $creds['db']['host'] ) && ! empty( $creds['db']['user'] ) && ! empty( $creds['db']['pass'] && ! empty( $creds['db']['name'] ) ) ) {
-			@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
-			if ( $db_conn && ! $db_conn->connect_error ) {
-				$creds['db']['status'] = true;
-				$db_conn->close();
-			} else {
-				$creds['db']['status'] = false;
-				$creds['db']['error']  = $db_conn->connect_error ?? __( 'Unknown DB connection error', 'w4os' );
-			}
-		} else {
-			$creds['db']['status'] = null;
-		}
+		$creds['db']['status'] = OpenSim::validate_db_credentials( $creds['db'] );
 
 		// Check console credentials
-		// TODO: replace with W4OS3::validate_console_credentials
 		if ( empty( $creds['console']['port'] ) || empty( $creds['console']['host'] ) || empty( $creds['console']['user'] ) || empty( $creds['console']['pass'] ) ) {
 			$creds['console']['status'] = null;
 		} else {

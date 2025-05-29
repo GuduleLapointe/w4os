@@ -207,19 +207,41 @@ class OpenSim_Avatar {
         return self::get_avatars( array( 'Email' => $email ) );
     }
 
-    static function get_avatars( $args = array() ) {
-        // Framework-agnostic version - needs database connection
-        // For now, return empty array - this should be implemented with proper OSPDO connection
-        $avatars = array();
-        
-        // TODO: Implement with OSPDO when database connection is available statically
-        // This would need either:
-        // 1. A static database connection property
-        // 2. Or pass database connection as parameter
-        // 3. Or use dependency injection
-        
-        return $avatars;
-    }
+	static function get_avatars( $args = array(), $format = OBJECT ) {
+		global $w4osdb;
+		if ( empty( $w4osdb ) ) {
+			return false;
+		}
+
+		if( ! isset ( $args['active'] ) ) {
+			$args['active'] = true;
+		}
+
+		foreach( $args as $arg => $value ) {
+			switch( $arg ) {
+				case 'Email':
+					$conditions[] = $w4osdb->prepare( 'Email = %s', $value );
+					break;
+				case 'active':
+					$conditions[] = 'active = ' . ( $value ? 'true' : 'false' );
+					break;
+			}
+		}
+
+		$avatars = array();
+		$sql    = 'SELECT PrincipalID, FirstName, LastName FROM UserAccounts';
+		if( ! empty( $conditions )) {
+			$sql .= ' WHERE ' . implode( ' AND ', $conditions );
+		}
+
+		$result = $w4osdb->get_results( $sql, $format );
+		if ( is_array( $result ) ) {
+			foreach ( $result as $avatar ) {
+				$avatars[ $avatar->PrincipalID ] = trim( "$avatar->FirstName $avatar->LastName" );
+			}
+		}
+		return $avatars;
+	}
 
     public static function user_level( $item ) {
         if ( is_numeric( $item ) ) {
