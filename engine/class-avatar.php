@@ -174,16 +174,22 @@ class OpenSim_Avatar {
         return _( 'Unknown Avatar' );
     }
 
-    static function get_user_avatar( $user_email ) {
-        // Framework-agnostic version - requires email instead of WordPress user object
-        $avatars = self::get_avatars( array( 'Email' => $user_email ) );
-        if ( empty( $avatars ) ) {
-            return false;
-        }
-        $key = key( $avatars );
-        $avatar = new static( $key );
-        return $avatar;
-    }
+	static function get_user_avatar( $user_id = null ) {
+		if ( empty( $user_id ) ) {
+			$user = wp_get_current_user();
+		} else {
+			$user = get_user_by( 'ID', $user_id );
+		}
+
+		$avatars = self::get_avatars( array( 'Email' => $user->user_email ) );
+		if ( empty( $avatars ) ) {
+			return false;
+		}
+		$key    = key( $avatars );
+		$avatar = new W4OS3_Avatar( $key );
+
+		return $avatar;
+	}
 
     static function get_avatars_by_email( $email ) {
         if ( empty( $email ) ) {

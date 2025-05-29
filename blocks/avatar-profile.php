@@ -130,54 +130,56 @@ function w4os_avatar_profile_shortcode( $atts = array(), $content = null ) {
 	return "<div class='w4os-shortcode w4os-avatar-profile'>$result</div>";
 }
 
-function w4os_avatar_profile( $atts = array() ) {
-	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
-		return array();
-	}
-	$searchURL = get_option( 'w4os_search_url' );
-	if ( empty( $searchURL ) ) {
-		return array();
-	}
+// Deprecated?
+// function w4os_avatar_profile( $atts = array() ) {
+// 	error_log( __FUNCTION__ . ' called [DEBUG]' );
+// 	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
+// 		return array();
+// 	}
+// 	$searchURL = get_option( 'w4os_search_url' );
+// 	if ( empty( $searchURL ) ) {
+// 		return array();
+// 	}
 
-	$req['query_start'] = 0;
-	$req['text']        = '';
-	$req['flags']       = pow( 2, 12 );  // has_picture
+// 	$req['query_start'] = 0;
+// 	$req['text']        = '';
+// 	$req['flags']       = pow( 2, 12 );  // has_picture
 
-	if ( isset( $atts['rating'] ) ) {
-		if ( $atts['rating'] == 'pg' ) {
-			$req['flags'] += pow( 2, 24 ); // PG Only
-		} elseif ( $atts['rating'] != 'adult' ) {
-			$req['flags'] += pow( 2, 24 ) + pow( 2, 25 );
-		}
-		// 24 PG; 25 Mature; 26 Adult; default PG & Mature
-	}
+// 	if ( isset( $atts['rating'] ) ) {
+// 		if ( $atts['rating'] == 'pg' ) {
+// 			$req['flags'] += pow( 2, 24 ); // PG Only
+// 		} elseif ( $atts['rating'] != 'adult' ) {
+// 			$req['flags'] += pow( 2, 24 ) + pow( 2, 25 );
+// 		}
+// 		// 24 PG; 25 Mature; 26 Adult; default PG & Mature
+// 	}
 
-	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
-	$req['sim_name']       = '';
+// 	$req['gatekeeper_url'] = W4OS_GRID_LOGIN_URI;
+// 	$req['sim_name']       = '';
 
-	// TODO: check the actual request parameters, dir_popular_query must not be the one for avatar profile.
-	$request               = xmlrpc_encode_request( 'dir_popular_query', $req );
+// 	// TODO: check the actual request parameters, dir_popular_query must not be the one for avatar profile.
+// 	$request               = xmlrpc_encode_request( 'dir_popular_query', $req );
 
-	return get_xml_response_data( $searchURL, $request );
+// 	return get_xml_response_data( $searchURL, $request );
 
-	// $post_data = array( 'xml' => $request );
-	// $context   = stream_context_create(
-	// 	array(
-	// 		'http' => array(
-	// 			'method'  => 'POST',
-	// 			'header'  => 'Content-Type: text/xml' . "\r\n",
-	// 			'content' => $request,
-	// 		),
-	// 	)
-	// );
-	// $response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );
+// 	// $post_data = array( 'xml' => $request );
+// 	// $context   = stream_context_create(
+// 	// 	array(
+// 	// 		'http' => array(
+// 	// 			'method'  => 'POST',
+// 	// 			'header'  => 'Content-Type: text/xml' . "\r\n",
+// 	// 			'content' => $request,
+// 	// 		),
+// 	// 	)
+// 	// );
+// 	// $response  = xmlrpc_decode( file_get_contents( $searchURL, false, $context ) );
 
-	// if ( is_array( $response ) & ! xmlrpc_is_fault( $response ) & ! empty( $response ) && isset( $response['data'] ) ) {
-	// 	return $response['data'];
-	// } else {
-	// 	return array();
-	// }
-}
+// 	// if ( is_array( $response ) & ! xmlrpc_is_fault( $response ) & ! empty( $response ) && isset( $response['data'] ) ) {
+// 	// 	return $response['data'];
+// 	// } else {
+// 	// 	return array();
+// 	// }
+// }
 
 function w4os_avatar_profile_html( $atts = array(), $args = array() ) {
 	if ( ! function_exists( 'w4os_profile_display' ) ) {
