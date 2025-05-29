@@ -213,7 +213,7 @@ class W4OS3_Flux extends OpenSim_Flux {
 		add_submenu_page(
 			'w4os',
 			__( 'Flux', 'w4os' ),
-			'(dev) ' . __( 'Flux', 'w4os' ),
+			W4OS_NEW_ICON . ' ' . __( 'Flux', 'w4os' ),
 			'manage_options',
 			'edit.php?post_type=flux_post',
 			null,

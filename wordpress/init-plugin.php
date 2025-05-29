@@ -21,6 +21,9 @@ define('W4OS_PLUGIN_URL', plugin_dir_url(__DIR__));
 define('W4OS_SLUG', basename( W4OS_PLUGIN_DIR ) );
 define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 
+// Icon to highlight new features in admin menus
+define( 'W4OS_NEW_ICON', '<span class="dashicons dashicons-smiley" style="color:#00a32a;"></span>' ); // Blue megaphone
+
 // Load engine first
 require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
     

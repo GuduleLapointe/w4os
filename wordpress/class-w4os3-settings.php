@@ -31,8 +31,8 @@ class W4OS3_Settings {
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-settings'] = array(
 			'parent_slug'       => 'w4os',
-			'page_title'        => __( 'Settings', 'w4os' ) . ' (dev)',
-			'menu_title'        => '(dev) ' . __( 'Settings', 'w4os' ),
+			'page_title'        => __( 'Settings', 'w4os' ),
+			'menu_title'        => W4OS_NEW_ICON . ' ' . __( 'Settings', 'w4os' ),
 			'capability'        => 'manage_options',
 			'menu_slug'         => 'w4os-settings',
 			'sanitize_callback' => array( $this, 'sanitize_options' ),

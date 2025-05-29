@@ -31,6 +31,9 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	public $profile_url;
 	private $is_profile_page = false;
 
+	// Icon to mark new features
+	private static $new_icon = '<span class="dashicons dashicons-star-filled" style="color: #f39c12; font-size: 1.2em;"></span>';
+
 	// construct is handled by parent class OpenSim_Avatar
 	// public function __construct() {
 	// }
@@ -325,8 +328,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	public function register_w4os_settings( $settings, $args = array(), $atts = array() ) {
 		$settings['w4os-avatars'] = array(
 			'parent_slug'       => 'w4os',
-			'page_title'        => __( 'Avatars', 'w4os' ) . ' (dev)',
-			'menu_title'        => '(dev) ' . __( 'Avatars', 'w4os' ),
+			'page_title'        => __( 'Avatars', 'w4os' ),
+			'menu_title'        => W4OS_NEW_ICON . ' ' . __( 'Avatars', 'w4os' ),
 			// 'capability'  => 'manage_options',
 			'menu_slug'         => 'w4os-avatars',
 			// 'callback'    => array( $this, 'render_settings_page' ),
