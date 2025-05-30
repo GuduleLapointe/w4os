@@ -625,16 +625,15 @@ class W4OS3 {
 		);
 	}
 
-
-	public static function connectionstring_to_array( $connectionstring ) {
-		$parts = explode( ';', $connectionstring );
-		$creds = array();
-		foreach ( $parts as $part ) {
-			$pair              = explode( '=', $part );
-			$creds[ $pair[0] ] = $pair[1] ?? '';
-		}
-		return $creds;
-	}
+	// public static function connectionstring_to_array( $connectionstring ) {
+	// 	$parts = explode( ';', $connectionstring );
+	// 	$creds = array();
+	// 	foreach ( $parts as $part ) {
+	// 		$pair              = explode( '=', $part );
+	// 		$creds[ $pair[0] ] = $pair[1] ?? '';
+	// 	}
+	// 	return $creds;
+	// }
 
 	public static function update_credentials( $serverURI, $credentials ) {
 
@@ -651,7 +650,7 @@ class W4OS3 {
 				$result = explode( ' : ', $result );
 				$result = array_pop( $result );
 				// $result = preg_replace( '/.*Data Source=', 'host=', $result );
-				$data = self::connectionstring_to_array( $result );
+				$data = OSPDO::connectionstring_to_array( $result );
 				$db   = array_filter(
 					array(
 						'host' => $data['Data Source'],
@@ -703,16 +702,17 @@ class W4OS3 {
 		$credentials = wp_parse_args(
 			$server_credentials,
 			array(
-				'host'        => null,
-				'port'        => null,
-				'use_default' => false,
-				'console'     => array(
+				'host'        => null, // the hostname of the service of these credentials
+				'port'        => null, // the port of the service of these credentials
+				'use_default' => false, // if true, use default credentials, same as if no credentials were set
+				'console'     => array( // ignore for db
 					'host' => null,
 					'port' => null,
 					'user' => null,
 					'pass' => null,
 				),
 				'db'          => array(
+					'type' => null, // default to mysql
 					'host' => null,
 					'port' => null,
 					'name' => null,
@@ -730,6 +730,21 @@ class W4OS3 {
 		return $credentials;
 	}
 
+	public static function get_db_credentials( $instance = 'robust' ) {
+		$credentials = self::get_credentials( $instance );
+		if ( empty(array_filter($credentials['db'] ?? [] )) ) {
+			return false;
+		}
+		if ( ! is_array( $credentials['db'] ) ) {
+			// If credentials are not an array, return false.
+			return false;
+		}
+		// if ( empty( $credentials['db']['host'] ) || empty( $credentials['db']['port'] ) || empty( $credentials['db']['name'] ) || empty( $credentials['db']['user'] ) || empty( $credentials['db']['pass'] ) ) {
+		// 	return false;
+		// }
+		return $credentials['db'];
+	}
+
 	/**
 	 * Calculate a unique site key. Uuse to encrypt and decrypt sensitive data like connection credentials.
 	 *
@@ -737,6 +752,8 @@ class W4OS3 {
 	 * - not stored in the database, generated on the fly.
 	 * - depends on W4OS_LOGIN_URI and an additional secret key specific to the plugin.
 	 *
+     * TODO: make independant from current config, as it could change any time
+     * 
 	 * @return string The site key
 	 */
 	private static function set_key() {
@@ -747,12 +764,54 @@ class W4OS3 {
 		self::$key = $key;
 	}
 
-	/**
-	 * Decrypt data with self::$key, encrypted with self::encrypt
-	 */
-	public static function decrypt( $data ) {
-		return OpenSim::decrypt( $data, self::$key );
-	}
+    /**
+     * Encrypt data with key
+     * Pure PHP encryption without WordPress dependencies
+     * 
+     * TODO: make independant from WordPress
+     */
+    public static function encrypt( $data ) {
+            if ( ! extension_loaded( 'openssl' ) || ! function_exists( 'openssl_encrypt' ) ) {
+                    // Return data unencrypted or handle error
+                    return $data;
+            }
+            $key = self::$key;
+            if ( ! is_string( $data ) ) {
+                    $data = json_encode( $data );
+            }
+            $iv        = openssl_random_pseudo_bytes( 16 );
+            $encrypted = openssl_encrypt( $data, 'aes-256-cbc', $key, 0, $iv );
+            return base64_encode( $encrypted . '::' . $iv );
+    }
+
+    /**
+     * Decrypt data with key
+     * Pure PHP decryption without WordPress dependencies
+     */
+    public static function decrypt( $data ) {
+            if ( ! extension_loaded( 'openssl' ) || ! function_exists( 'openssl_decrypt' ) ) {
+                    // Return raw data if OpenSSL is not available
+                    return $data;
+            }
+            if ( ! is_string( $data ) ) {
+                    return $data;
+            }
+            if ( ! preg_match( '/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $data ) ) {
+                    return $data;
+            }
+            $key                       = self::$key;
+            list($encrypted_data, $iv) = explode( '::', base64_decode( $data ), 2 );
+            $data                      = openssl_decrypt( $encrypted_data, 'aes-256-cbc', $key, 0, $iv );
+            $decode                    = json_decode( $data, true );
+            if ( json_last_error() === JSON_ERROR_NONE ) {
+                    return $decode;
+            } else {
+                // return json error message instead of data
+                $error_message = json_last_error_msg();
+                error_log( "OpenSim: JSON decode error: $error_message" );
+            }
+            // return $data;
+    }
 
 	public static function grid_info( $gateway_uri = null, $force = false ) {
 		$local_uri       = 'http://localhost:8002';
@@ -940,6 +999,13 @@ if (is_admin()) {
     require_once W4OS_PLUGIN_DIR . 'v1/admin/admin-init.php';
     // Load admin test pages (temporary)
     require_once W4OS_PLUGIN_DIR . 'wordpress/admin/settings-test.php';
+
+	require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
+
+	// Include validation page
+	require_once W4OS_PLUGIN_DIR . '/wordpress/admin/settings-validation.php';
+	// Include validation helpers
+	require_once W4OS_PLUGIN_DIR . '/wordpress/includes/validation-helpers.php';
 }
 
 // Temporary workaround, load legacy helpers configuration.

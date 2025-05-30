@@ -321,6 +321,45 @@ class W4OS_Settings_Test_Page {
                 </div>
             </form>
 
+            <!-- Migrate WordPress Options -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Migrate WordPress Options</h2>
+                    <div class="inside">
+                        <p>Migrate WordPress options (w4os_* settings) to Engine Settings format.</p>
+                        <p><strong>Available WordPress Options (<?php echo count(Engine_Settings::get_available_wordpress_options()); ?> found):</strong></p>
+                        <?php
+                        $available_options = Engine_Settings::get_available_wordpress_options();
+                        if (!empty($available_options)) {
+                            echo "<div style='max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;'>";
+                            echo "<ul style='margin: 0;'>";
+                            foreach ($available_options as $option => $value) {
+                                $display_value = $value;
+                                if (is_array($value)) {
+                                    $display_value = 'Array (' . count($value) . ' items)';
+                                } elseif (is_bool($value)) {
+                                    $display_value = $value ? 'true' : 'false';
+                                } elseif (strlen($value) > 80) {
+                                    $display_value = substr($value, 0, 77) . '...';
+                                }
+                                echo "<li><code>" . esc_html($option) . "</code> = <strong>" . esc_html($display_value) . "</strong></li>";
+                            }
+                            echo "</ul>";
+                            echo "</div>";
+                        } else {
+                            echo "<p><em>No w4os_* WordPress options found in database.</em></p>";
+                        }
+                        ?>
+                        <p>
+                        <input type="hidden" name="action" value="migrate_wordpress_options">
+                        <input type="submit" value="Migrate WordPress Options" class="button" 
+                               <?php echo empty($available_options) ? 'disabled' : ''; ?>>
+                        </p>
+                    </div>
+                </div>
+            </form>
+
             <!-- Migrate PHP Constants -->
             <form method="post">
                 <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
@@ -356,45 +395,6 @@ class W4OS_Settings_Test_Page {
                             <input type="hidden" name="action" value="migrate_constants" />
                             <input type="submit" class="button" value="Migrate PHP Constants" 
                                    <?php echo !empty($current_constants) ? '' : 'disabled'; ?> />
-                        </p>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Migrate WordPress Options -->
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Migrate WordPress Options</h2>
-                    <div class="inside">
-                        <p>Migrate WordPress options (w4os_* settings) to Engine Settings format.</p>
-                        <p><strong>Available WordPress Options (<?php echo count(Engine_Settings::get_available_wordpress_options()); ?> found):</strong></p>
-                        <?php
-                        $available_options = Engine_Settings::get_available_wordpress_options();
-                        if (!empty($available_options)) {
-                            echo "<div style='max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;'>";
-                            echo "<ul style='margin: 0;'>";
-                            foreach ($available_options as $option => $value) {
-                                $display_value = $value;
-                                if (is_array($value)) {
-                                    $display_value = 'Array (' . count($value) . ' items)';
-                                } elseif (is_bool($value)) {
-                                    $display_value = $value ? 'true' : 'false';
-                                } elseif (strlen($value) > 80) {
-                                    $display_value = substr($value, 0, 77) . '...';
-                                }
-                                echo "<li><code>" . esc_html($option) . "</code> = <strong>" . esc_html($display_value) . "</strong></li>";
-                            }
-                            echo "</ul>";
-                            echo "</div>";
-                        } else {
-                            echo "<p><em>No w4os_* WordPress options found in database.</em></p>";
-                        }
-                        ?>
-                        <p>
-                        <input type="hidden" name="action" value="migrate_wordpress_options">
-                        <input type="submit" value="Migrate WordPress Options" class="button" 
-                               <?php echo empty($available_options) ? 'disabled' : ''; ?>>
                         </p>
                     </div>
                 </div>

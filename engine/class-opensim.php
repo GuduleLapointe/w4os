@@ -20,58 +20,7 @@ class OpenSim {
         }
         return self::$instance;
     }
-    
-    /**
-     * Encrypt data with key
-     * Pure PHP encryption without WordPress dependencies
-     */
-    public static function encrypt($data, $key = null) {
-        if (!extension_loaded('openssl') || !function_exists('openssl_encrypt')) {
-            return $data; // Return unencrypted if OpenSSL not available
-        }
-        
-        if(empty($key)) {
-            return $data; // Return unencrypted if no key provided
-        }
 
-        if (!is_string($data)) {
-            $data = json_encode($data);
-        }
-        
-        $iv = openssl_random_pseudo_bytes(16);
-        $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
-        return base64_encode($encrypted . '::' . $iv);
-    }
-    
-    /**
-     * Decrypt data with key
-     * Pure PHP decryption without WordPress dependencies
-     */
-    public static function decrypt($data, $key) {
-        if (!extension_loaded('openssl') || !function_exists('openssl_decrypt')) {
-            return $data; // Return raw data if OpenSSL not available
-        }
-        if( empty($key)) {
-            return $data; // Return raw data if no key provided
-        }
-        if (!is_string($data)) {
-            return $data;
-        }
-        
-        if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $data)) {
-            return $data;
-        }
-        
-        list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
-        $decrypted = openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
-        
-        $decode = json_decode($decrypted, true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            return $decode;
-        }
-        return $decrypted;
-    }
-    
     /**
      * Sanitize URI - framework agnostic
      */
@@ -225,23 +174,24 @@ class OpenSim {
         return false;
     }
     
-    /**
-     * Parse connection string to array
-     * Framework-agnostic connection string parser
-     */
-    public static function connectionstring_to_array($connectionstring) {
-        $parts = explode(';', $connectionstring);
-        $creds = [];
+    // Use version in OpenSim_Database class instead
+    // /**
+    //  * Parse connection string to array
+    //  * Framework-agnostic connection string parser
+    //  */
+    // public static function connectionstring_to_array($connectionstring) {
+    //     $parts = explode(';', $connectionstring);
+    //     $creds = [];
         
-        foreach ($parts as $part) {
-            $pair = explode('=', $part, 2);
-            if (count($pair) === 2) {
-                $creds[trim($pair[0])] = trim($pair[1]);
-            }
-        }
+    //     foreach ($parts as $part) {
+    //         $pair = explode('=', $part, 2);
+    //         if (count($pair) === 2) {
+    //             $creds[trim($pair[0])] = trim($pair[1]);
+    //         }
+    //     }
         
-        return $creds;
-    }
+    //     return $creds;
+    // }
 
 	public static function is_true( $value ) {
 		if ( is_bool( $value ) ) {

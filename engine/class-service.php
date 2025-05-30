@@ -201,19 +201,4 @@ class OpenSim_Service {
     public function get_service_uri() {
         return $this->serviceURI;
     }
-
-    /**
-     * Get credentials (without sensitive data)
-     */
-    public function get_credentials_info() {
-        $safe_creds = $this->credentials;
-        // Remove sensitive information
-        if (isset($safe_creds['db']['pass'])) {
-            $safe_creds['db']['pass'] = '***';
-        }
-        if (isset($safe_creds['console']['pass'])) {
-            $safe_creds['console']['pass'] = '***';
-        }
-        return $safe_creds;
-    }
 }

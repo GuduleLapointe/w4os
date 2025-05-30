@@ -209,4 +209,104 @@ class OSPDO extends PDO {
         }
         return true;
     }
+
+    /**
+     * Convert .NET connection string to array format
+     * 
+     * @param string $connectionstring .NET connection string
+     * @return array Array with keys: saveformat, type, host, port, name, user, pass
+     */
+	public static function connectionstring_to_array( $connectionstring, $provider = 'mysql' ) {
+		$parts = explode( ';', $connectionstring );
+		$creds = array();
+		foreach ( $parts as $part ) {
+			if (empty(trim($part))) continue; // Skip empty parts
+			$pair              = explode( '=', $part, 2 ); // Limit to 2 parts in case value contains =
+			if (count($pair) === 2) {
+				$creds[ trim($pair[0]) ] = trim($pair[1]);
+			}
+		}
+        if( preg_match( '/:[0-9]+$/', $creds['Data Source'] ?? '' ) ) {
+            $host = explode( ':', $creds['Data Source'] );
+            $creds['Data Source'] = $host[0];
+            $creds['Port'] = empty( $host[1] ) || $host[1] == 3306 ? null : $host[1];
+        }
+        switch ( $provider ) {
+            // TODO: test pgsql before enabling
+
+            // case 'OpenSim.Data.PGSQL.dll':
+            // case 'pgsql':
+            // case 'postgres':
+            // case 'postgresql':
+            // case 'posql':
+            //     $type = 'pgsql';
+            //     // PostgreSQL specific handling if needed
+            //     break;
+
+            case 'OpenSim.Data.MySQL.dll':
+            case 'mysql':
+            default:
+                $type = 'mysql';
+        }
+
+        $result = array(
+            'type' => $type,
+            'host' => $creds['Data Source'] ?? '',
+            'port' => $creds['Port'] ?? null,
+            'name' => $creds['Database'] ?? '',
+            'user' => $creds['User ID'] ?? '',
+            'pass' => $creds['Password'] ?? '',
+            'saveformat' => 'connection_string',
+            'ConnectionString' => $connectionstring, // Preserve original for reference
+        );
+		return $result;
+	}
+
+	/**
+	 * Convert database credentials array back to .NET connection string format
+	 * 
+	 * @param array $creds Database credentials array
+	 * @return string Connection string in .NET format
+	 */
+	public static function array_to_connectionstring( $creds ) {
+		if ( empty($creds) || !is_array($creds) ) {
+			return '';
+		}
+
+		// If we have the original string and nothing critical changed, use it
+		if ( !empty($creds['original_string']) && 
+			 !empty($creds['saveformat']) && 
+			 $creds['saveformat'] === 'connection_string' ) {
+			return $creds['original_string'];
+		}
+
+		$parts = array();
+		
+		// Build Data Source (host:port or just host)
+		if ( !empty($creds['host']) ) {
+			$data_source = $creds['host'];
+			if ( !empty($creds['port']) && $creds['port'] != 3306 ) {
+				$data_source .= ':' . $creds['port'];
+			}
+			$parts[] = 'Data Source=' . $data_source;
+		}
+		
+		if ( !empty($creds['name']) ) {
+			$parts[] = 'Database=' . $creds['name'];
+		}
+		
+		if ( !empty($creds['user']) ) {
+			$parts[] = 'User ID=' . $creds['user'];
+		}
+		
+		if ( !empty($creds['pass']) ) {
+            // TODO: escape password if needed
+			$parts[] = 'Password=' . $creds['pass'];
+		}
+		
+		// Add common OpenSim-specific options
+		$parts[] = 'Old Guids=true';
+		
+		return implode(';', $parts) . ';';
+	}
 }

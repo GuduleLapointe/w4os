@@ -33,6 +33,21 @@ class Engine_Settings {
     private static $config_dir = null;
     
     /**
+     * @var string Path to the credentials file
+     */
+    private static $credentials_file = null;
+    
+    /**
+     * @var array Cached credentials data
+     */
+    private static $credentials = array();
+    
+    /**
+     * @var bool Whether credentials have been loaded
+     */
+    private static $credentials_loaded = false;
+    
+    /**
      * Initialize settings with file path
      */
     public static function init($settings_file = null) {
@@ -43,6 +58,7 @@ class Engine_Settings {
         }
         
         self::$settings_file = $settings_file;
+        self::$credentials_file = self::$config_dir . '/credentials.json';
         self::ensure_config_directory();
         self::load();
     }
@@ -104,6 +120,220 @@ class Engine_Settings {
         }
         
         self::$loaded = true;
+    }
+    
+    /**
+     * Load credentials from separate JSON credentials file
+     */
+    private static function load_credentials() {
+        if (self::$credentials_loaded) {
+            return;
+        }
+        
+        if (!file_exists(self::$credentials_file)) {
+            self::$credentials = array();
+            self::$credentials_loaded = true;
+            return;
+        }
+        
+        $json_content = file_get_contents(self::$credentials_file);
+        if ($json_content === false) {
+            error_log("Engine_Settings: Failed to read credentials file: " . self::$credentials_file);
+            self::$credentials = array();
+        } else {
+            $parsed = json_decode($json_content, true);
+            if ($parsed === null) {
+                error_log("Engine_Settings: Failed to parse JSON credentials file: " . self::$credentials_file);
+                self::$credentials = array();
+            } else {
+                self::$credentials = $parsed;
+            }
+        }
+        
+        self::$credentials_loaded = true;
+    }
+    
+    /**
+     * Save credentials to separate JSON file
+     */
+    private static function save_credentials() {
+        if (empty(self::$credentials_file)) {
+            return false;
+        }
+        
+        // Ensure config directory exists and is secured
+        self::ensure_config_directory();
+        
+        $json_content = json_encode(self::$credentials, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        
+        $result = file_put_contents(self::$credentials_file, $json_content, LOCK_EX);
+        if ($result === false) {
+            error_log("Engine_Settings: Failed to write credentials file: " . self::$credentials_file);
+            return false;
+        }
+        
+        // Set very restrictive permissions on the credentials file
+        chmod(self::$credentials_file, 0600);
+        
+        return true;
+    }
+    
+    /**
+     * Set a credential value (stored in separate JSON file)
+     * 
+     * @param string $key Credential key (URL or host:port format)
+     * @param mixed $value Credential value (encrypted)
+     * @return bool Success
+     */
+    public static function set_credential($key, $value) {
+        self::load_credentials();
+        self::$credentials[$key] = $value;
+        return self::save_credentials();
+    }
+    
+    /**
+     * Get a credential value (from separate JSON file)
+     * 
+     * @param string $key Credential key (URL or host:port format)
+     * @param mixed $default Default value if credential doesn't exist
+     * @return mixed Credential value
+     */
+    public static function get_credential($key, $default = null) {
+        self::load_credentials();
+        return isset(self::$credentials[$key]) ? self::$credentials[$key] : $default;
+    }
+    
+    /**
+     * Get credentials for a specific service using URI-based lookup
+     * 
+     * @param string $service_key The service key (e.g., "DatabaseService.ConnectionString")
+     * @return array|null Decrypted credentials array or null if not found
+     */
+    public static function get_service_credentials($service_key) {
+        // Get the main grid URI from settings to use as credential key
+        $login_uri = self::get('GridInfoService.login');
+        if (!$login_uri) {
+            error_log("Engine_Settings: No GridInfoService.login found for credential lookup");
+            return null;
+        }
+        
+        // Extract host:port from login URI
+        $parsed = parse_url($login_uri);
+        if (!$parsed || !isset($parsed['host'])) {
+            error_log("Engine_Settings: Invalid login URI format: " . $login_uri);
+            return null;
+        }
+        
+        $credential_key = $parsed['host'];
+        if (isset($parsed['port'])) {
+            $credential_key .= ':' . $parsed['port'];
+        }
+        
+        // Load credentials from JSON file
+        self::load_credentials();
+        
+        // Look for encrypted credentials for this service URI
+        if (!isset(self::$credentials[$credential_key])) {
+            return null;
+        }
+        
+        $encrypted_data = self::$credentials[$credential_key];
+        
+        // Decrypt the credentials using W4OS3 decrypt method
+        if (class_exists('W4OS3') && method_exists('W4OS3', 'decrypt')) {
+            $decrypted_json = W4OS3::decrypt($encrypted_data);
+            if ($decrypted_json) {
+                $credentials = json_decode($decrypted_json, true);
+                return $credentials;
+            }
+        }
+        
+        error_log("Engine_Settings: Failed to decrypt credentials for " . $credential_key);
+        return null;
+    }
+    
+    /**
+     * Set credentials for a specific service using URI-based storage
+     * 
+     * @param string $service_key The service key (e.g., "DatabaseService.ConnectionString")
+     * @param array $credentials_array The credentials to encrypt and store
+     * @return bool Success
+     */
+    public static function set_service_credentials($service_key, $credentials_array) {
+        // Get the main grid URI from settings to use as credential key
+        $login_uri = self::get('GridInfoService.login');
+        if (!$login_uri) {
+            error_log("Engine_Settings: No GridInfoService.login found for credential storage");
+            return false;
+        }
+        
+        // Extract host:port from login URI
+        $parsed = parse_url($login_uri);
+        if (!$parsed || !isset($parsed['host'])) {
+            error_log("Engine_Settings: Invalid login URI format: " . $login_uri);
+            return false;
+        }
+        
+        $credential_key = $parsed['host'];
+        if (isset($parsed['port'])) {
+            $credential_key .= ':' . $parsed['port'];
+        }
+        
+        // Encrypt the credentials using W4OS3 encrypt method
+        if (class_exists('W4OS3') && method_exists('W4OS3', 'encrypt')) {
+            $credentials_json = json_encode($credentials_array, JSON_UNESCAPED_SLASHES);
+            $encrypted_data = W4OS3::encrypt($credentials_json);
+            
+            if ($encrypted_data) {
+                self::load_credentials();
+                self::$credentials[$credential_key] = $encrypted_data;
+                return self::save_credentials();
+            }
+        }
+        
+        error_log("Engine_Settings: Failed to encrypt credentials for " . $credential_key);
+        return false;
+    }
+    
+    /**
+     * Get connection string with credentials resolved from encrypted storage
+     * 
+     * @param string $service_key The service key (e.g., "DatabaseService.ConnectionString")
+     * @return string|null Connection string with credentials or null if not available
+     */
+    public static function get_connection_string_with_credentials($service_key) {
+        // First try to get the connection string from settings
+        $connection_string = self::get($service_key);
+        
+        if ($connection_string) {
+            // Parse the connection string to see if it has credentials
+            if (class_exists('OSPDO')) {
+                $parsed = OSPDO::connectionstring_to_array($connection_string);
+                
+                // If it has credentials, return as-is
+                if (!empty($parsed['user']) && !empty($parsed['pass'])) {
+                    return $connection_string;
+                }
+                
+                // If no credentials, try to get them from encrypted storage
+                $credentials = self::get_service_credentials($service_key);
+                if ($credentials) {
+                    // Merge credentials into connection string
+                    $merged = array_merge($parsed, $credentials);
+                    return OSPDO::array_to_connectionstring($merged);
+                }
+            }
+            
+            return $connection_string;
+        }
+        
+        // No connection string in settings, try to build from encrypted credentials
+        $credentials = self::get_service_credentials($service_key);
+        if ($credentials && class_exists('OSPDO')) {
+            return OSPDO::array_to_connectionstring($credentials);
+        }
+        
+        return null;
     }
     
     /**
@@ -303,8 +533,14 @@ class Engine_Settings {
         // Clean up redundant individual credentials before saving
         $cleaned_array = self::cleanup_redundant_credentials($array);
         
-        // Define section order - W4OS and Helpers first
+        // Remove credential-related sections - they're stored separately in JSON
+        unset($cleaned_array['Credentials']);
+        unset($cleaned_array['LegacyCredentials']);
+        unset($cleaned_array['Services']); // Remove Services section that might contain credentials
+        
+        // Define section order - W4OS and Helpers first, then standard OpenSim sections
         $priority_sections = array('W4OS', 'Helpers');
+        $opensim_sections = array('Const', 'GridInfoService', 'DatabaseService', 'SearchService', 'CurrencyService', 'OfflineMessageService', 'MoneyServer', 'Economy', 'Gloebit');
         $ordered_sections = array();
         
         // Add priority sections first
@@ -314,9 +550,16 @@ class Engine_Settings {
             }
         }
         
-        // Add remaining sections
+        // Add standard OpenSim sections  
+        foreach ($opensim_sections as $section) {
+            if (isset($cleaned_array[$section])) {
+                $ordered_sections[$section] = $cleaned_array[$section];
+            }
+        }
+        
+        // Add any remaining sections (but not credentials)
         foreach ($cleaned_array as $section => $settings) {
-            if (!in_array($section, $priority_sections)) {
+            if (!in_array($section, array_merge($priority_sections, $opensim_sections))) {
                 $ordered_sections[$section] = $settings;
             }
         }
@@ -339,76 +582,33 @@ class Engine_Settings {
     }
     
     /**
-     * Format a value for .ini file
-     * 
-     * @param mixed $value Value to format
-     * @return string Formatted value
+     * Format a value for INI file storage
      */
     private static function format_ini_value($value) {
         if (is_bool($value)) {
             return $value ? 'true' : 'false';
         }
         
-        if (is_numeric($value)) {
-            return (string) $value;
+        if (is_null($value)) {
+            return '';
         }
         
-        // Handle arrays - use more readable formats
-        if (is_array($value)) {
-            // For simple arrays with numeric keys, use comma-separated format
-            if (array_keys($value) === range(0, count($value) - 1)) {
-                // Simple indexed array
-                $items = array_map(function($item) {
-                    return is_string($item) ? $item : json_encode($item);
-                }, $value);
-                return implode(',', $items);
-            } else {
-                // Associative array - use JSON but without excessive quoting
-                $json = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                // Don't quote JSON if it doesn't contain problematic characters for INI
-                if (strpos($json, ';') === false && strpos($json, '#') === false) {
-                    return $json;
-                } else {
-                    return '"' . str_replace('"', '""', $json) . '"';
-                }
+        if(is_array($value)) {
+            if(empty($value)) {
+                return; // If array is empty, return nothing
             }
+            // Convert arrays to JSON for INI storage
+            return json_encode($value, JSON_UNESCAPED_SLASHES);
+        }
+        $str = (string)$value;
+        
+        // Quote strings that contain any special characters, spaces, or non-alphanumeric chars
+        // Also quote if it looks like a URL, path, or contains operators
+        if (!preg_match('/^[a-zA-Z0-9_-]+$/', $str) || empty($str)) {
+            return '"' . str_replace('"', '""', $str) . '"';
         }
         
-        if (empty($value)) {
-            return '""';
-        }
-        
-        // Check if the string is already JSON (from our transformation)
-        if (is_string($value) && (
-            (substr($value, 0, 1) === '{' && substr($value, -1) === '}') ||
-            (substr($value, 0, 1) === '[' && substr($value, -1) === ']')
-        )) {
-            // Already JSON-encoded, avoid double quoting if safe
-            if (strpos($value, ';') === false && strpos($value, '#') === false) {
-                return $value;
-            } else {
-                return '"' . str_replace('"', '""', $value) . '"';
-            }
-        }
-        
-        // Special handling for connection strings - they contain semicolons but should use single quotes only
-        if (strpos($value, 'Data Source=') === 0 || strpos($value, 'Server=') === 0) {
-            // Connection string - use single quotes to avoid triple quote issue
-            return '"' . str_replace('"', '""', $value) . '"';
-        }
-        
-        // Quote strings that contain special characters (including semicolons)
-        if (is_string($value) && (
-            strpos($value, ' ') !== false ||
-            strpos($value, '"') !== false ||
-            strpos($value, "'") !== false ||
-            strpos($value, ';') !== false ||
-            strpos($value, '#') !== false
-        )) {
-            return '"' . str_replace('"', '""', $value) . '"';
-        }
-        
-        return (string) $value;
+        return $str;
     }
     
     /**
@@ -507,7 +707,7 @@ class Engine_Settings {
             
             // Also add parsed credentials for programmatic access
             if (class_exists('Helpers') && !empty($opensim_config['DatabaseService']['ConnectionString'])) {
-                $db_creds = Helpers::connectionstring_to_array($opensim_config['DatabaseService']['ConnectionString']);
+                $db_creds = OSPDO::connectionstring_to_array($opensim_config['DatabaseService']['ConnectionString']);
                 $engine_config['DatabaseService']['credentials'] = $db_creds;
             }
             
@@ -575,7 +775,7 @@ class Engine_Settings {
             return self::import_from_opensim($opensim_config);
             
         } catch (Exception $e) {
-            error_log("Engine_Settings: Failed to parse INI file: " . $ini_file_path . " - " . $e->getMessage());
+            error_log("Engine_Settings: Failed to parse INI file: " . $ini_file_path + " - " . $e->getMessage());
             return false;
         }
     }
@@ -1144,7 +1344,7 @@ class Engine_Settings {
                 return "[MISSING_CONSTANT:$constant_name]";
                 
             case 'to_pascal_case':
-                // Convert CONSTANT_NAME to PascalCase
+                // Convert CONSTANT_NAME format to PascalCase
                 return self::constant_to_pascal_case($constant_name);
                 
             case 'opensim_db_to_search_only':
@@ -1361,7 +1561,7 @@ class Engine_Settings {
         // Generate connection string
         if (class_exists('Helpers')) {
             $db_creds['saveformat'] = 'connection_string';
-            return Helpers::array_to_connectionstring($db_creds);
+            return OSPDO::array_to_connectionstring($db_creds);
         }
         
         return null;
@@ -1425,9 +1625,9 @@ class Engine_Settings {
      * This handles the transition from WordPress options to INI-based configuration
      */
     public static function migrate_wordpress_options($options = null) {
-        if (!class_exists('W4OS_Options_Migrator')) {
-            require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
-        }
+        // if (!class_exists('W4OS_Options_Migrator')) {
+        //     require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
+        // }
         
         return W4OS_Options_Migrator::migrate_wordpress_options($options);
     }
@@ -1436,10 +1636,63 @@ class Engine_Settings {
      * Get available WordPress options for migration
      */
     public static function get_available_wordpress_options() {
-        if (!class_exists('W4OS_Options_Migrator')) {
-            require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
-        }
+        // if (!class_exists('W4OS_Options_Migrator')) {
+        //     require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
+        // }
         
         return W4OS_Options_Migrator::get_available_options();
+    }
+
+    /**
+     * Migrate credentials from WordPress options to JSON format
+     * This handles the transition from WordPress w4os-credentials to credentials.json
+     * 
+     * @param array $wp_credentials Array from w4os-credentials WordPress option
+     * @return bool Success
+     */
+    public static function migrate_wordpress_credentials($wp_credentials) {
+        if (!is_array($wp_credentials) || empty($wp_credentials)) {
+            return true; // Nothing to migrate
+        }
+        
+        self::load_credentials();
+        $migrated_count = 0;
+        
+        foreach ($wp_credentials as $service_uri => $encrypted_value) {
+            if (!empty($encrypted_value)) {
+                // Extract host:port from service URI for the credential key
+                $parsed = parse_url($service_uri);
+                if ($parsed && isset($parsed['host'])) {
+                    $credential_key = $parsed['host'];
+                    if (isset($parsed['port'])) {
+                        $credential_key .= ':' . $parsed['port'];
+                    }
+                    
+                    // Store the encrypted value directly (it's already encrypted by W4OS3)
+                    self::$credentials[$credential_key] = $encrypted_value;
+                    $migrated_count++;
+                }
+            }
+        }
+        
+        if ($migrated_count > 0) {
+            $success = self::save_credentials();
+            if ($success) {
+                error_log("Engine_Settings: Migrated {$migrated_count} credentials to JSON format");
+            }
+            return $success;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Get all credentials (for migration purposes)
+     * 
+     * @return array All stored credentials
+     */
+    public static function get_all_credentials() {
+        self::load_credentials();
+        return self::$credentials;
     }
 }

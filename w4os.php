@@ -56,7 +56,7 @@ if ( defined( 'W4OS_SLUG' ) ) {
 	// Load modern organized structure
 	require_once plugin_dir_path( __FILE__ ) . 'wordpress/init-plugin.php';
 
-	// Plugin updater
+	// Plugin updater. Should definitively be moved to init class.
 	if ( file_exists( plugin_dir_path( __FILE__ ) . 'lib/package-updater.php' ) ) {
 		include_once plugin_dir_path( __FILE__ ) . 'lib/package-updater.php';
 	}
