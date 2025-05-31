@@ -23,7 +23,7 @@ class W4OS_Options_Migrator {
      * 4. W4OS3::get_credentials() for database/console credentials
      */
     private static $ini_mapping = [
-        'w4os.ini' => [
+        'w4os' => [
             'W4OS' => [
                 'ModelFirstName' => ['w4os_model_firstname'],
                 'ModelLastName' => ['w4os_model_lastname'],
@@ -54,7 +54,7 @@ class W4OS_Options_Migrator {
                 'ProfilePageCustom' => ['w4os_profile_page_custom'],
             ],
         ],
-        'helpers.ini' => [
+        'helpers' => [
             'Helpers' => [
                 'OpensimMailSender' => ['w4os_offline_sender'],
                 'HypeventsUrl' => ['w4os_hypevents_url'],
@@ -67,7 +67,7 @@ class W4OS_Options_Migrator {
             ],
         ],
 
-        'robust.ini' => [
+        'robust' => [
             'LoginService' => [
                 'SearchURL' => ['w4os_grid_info.search'], // Web Search URL
                 // 'Currency' => 'G$', // To be implemented
@@ -87,7 +87,7 @@ class W4OS_Options_Migrator {
             ],
         ],
 
-        'opensim.ini' => [
+        'opensim' => [
             'Search' => [
                 // 'Module' => 'OpenSimSearch', // Fixed value if search URL is not empty, for user info only
                 'SearchURL' => ['w4os_search_url'], // In-world Search URL
@@ -110,18 +110,18 @@ class W4OS_Options_Migrator {
 
             'Gloebit' => [
                 'Enabled' => ['w4os_currency_provider', 'transform' => 'is_gloebit_enabled'],
-                'GLBSpecificStorageProvider' => ['transform' => 'get_storage_module_economy'],
+                // 'GLBSpecificStorageProvider' => ['transform' => 'get_storage_module_economy'], // To be implemented
                 'GLBSpecificConnectionString' => ['transform' => 'get_db_credentials_economy'],
             ],
 
             'Messaging' => [
-                'OfflineMessageModule' => 'OfflineMessageModule', // if w4os_provide_offline_messages is true
+                // 'OfflineMessageModule' => 'OfflineMessageModule', // if w4os_provide_offline_messages is true
                 'Enabled' => ['w4os_provide_offline_messages', 'transform' => 'boolean_to_string'],
                 'OfflineMessageURL' => ['w4os_offline_helper_uri'],
             ],
         ],
 
-        'moneyserver.ini' => [
+        'moneyserver' => [
             'MoneyServer' => [
                 // - not used with Gloebit
                 // - default if w4os_provide_economy_helpers is true and w4os_currency_provider is empty)
@@ -310,7 +310,7 @@ class W4OS_Options_Migrator {
         // must be decrypted with W4OS3::decrypt()
         if (!empty($all_options['w4os-credentials'][$type] ?? null)) {
             // Unlikely to happen, key is usually the instance, not the service type
-            return W4OS3::decrypt($all_options≠['w4os-credentials'][$type]);
+            return W4OS3::decrypt($all_options['w4os-credentials'][$type]);
         }
 
         // Find the uri for the service type, then look into w4os-credentials
@@ -330,7 +330,6 @@ class W4OS_Options_Migrator {
             return 'No URI found for ' . $type;
         }
 
-        error_log('looking ' . $type . ' by serviceURI ' . $serviceURI );
         // $credentials = W4OS3::get_credentials( $serviceURI );
         $db_credentials = W4OS3::get_db_credentials( $serviceURI );
         if(!empty($db_credentials)) {
@@ -425,6 +424,7 @@ class W4OS_Options_Migrator {
         
         // Process each INI file and its sections
         foreach (self::$ini_mapping as $ini_file => $file_sections) {
+            $instance = basename($ini_file, '.ini');
             foreach ($file_sections as $section => $section_mapping) {
                 foreach ($section_mapping as $ini_key => $option_config) {
                     try {
@@ -437,13 +437,13 @@ class W4OS_Options_Migrator {
                                 $value = self::transform_value($value, $option_config['transform'], $all_wp_options);
                             }
                             
-                            // Save to Engine Settings using Section.Key format
-                            if (Engine_Settings::set("$section.$ini_key", $value)) {
+                            // Set value in Engine Settings using Instance.Section.Key format, do not save yet.
+                            if (Engine_Settings::set("$instance.$section.$ini_key", $value, false)) {
                                 $display_value = is_string($value) ? $value : json_encode($value);
                                 $display_value = is_string($display_value) && strlen($display_value) > 50 ? substr($display_value, 0, 47) . '...' : $display_value;
                                 $results['migrated'][] = "$section.$ini_key = $display_value (in $ini_file)";
                             } else {
-                                $results['errors'][] = "Failed to save $section.$ini_key";
+                                $results['errors'][] = "Failed to set $section.$ini_key";
                             }
                         } else {
                             $results['skipped'][] = "$section.$ini_key (no value found)";
@@ -454,8 +454,18 @@ class W4OS_Options_Migrator {
                     }
                 }
             }
+            // Let engine save ini file
+            if(empty($results['errors'])) {
+                if (!Engine_Settings::save($ini_file)) {
+                    $results['errors'][] = "Failed to save INI file: $ini_file";
+                }
+            } else {
+                // If there were errors, do not try to save the ini file
+                error_log("Skipping save for $ini_file due to errors: " . implode(', ', $results['errors']));
+            }
         }
         
+
         // Handle special array options (like beta settings)
         self::migrate_array_options($results, $all_wp_options);
         

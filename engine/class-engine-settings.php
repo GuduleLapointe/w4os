@@ -20,7 +20,7 @@ class Engine_Settings {
     /**
      * @var string Path to the settings file
      */
-    private static $settings_file = null;
+    private static $custom_settings = null;
     
     /**
      * @var bool Whether settings have been loaded
@@ -48,17 +48,16 @@ class Engine_Settings {
     private static $credentials_loaded = false;
     
     /**
-     * Initialize settings with file path
+     * Initialize settings.
+     * 
+     * Read all ini files in config directory, and store their values in a nested array.
+     * 
+     * @return void
      */
-    public static function init($settings_file = null) {
-        if (empty($settings_file)) {
-            // Default to engine/config/engine.ini 
-            self::$config_dir = OPENSIM_ENGINE_PATH . '/config';
-            $settings_file = self::$config_dir . '/engine.ini';
-        }
-        
-        self::$settings_file = $settings_file;
+    public static function init() {
+        self::$config_dir = OPENSIM_ENGINE_PATH . '/config';
         self::$credentials_file = self::$config_dir . '/credentials.json';
+
         self::ensure_config_directory();
         self::load();
     }
@@ -68,7 +67,7 @@ class Engine_Settings {
      */
     private static function ensure_config_directory() {
         if (!self::$config_dir) {
-            self::$config_dir = dirname(self::$settings_file);
+            self::$config_dir = dirname($ini_file);
         }
         
         // Create directory if it doesn't exist with restrictive permissions
@@ -104,21 +103,28 @@ class Engine_Settings {
             return;
         }
         
-        // Don't create default settings - let it be empty until first save
-        if (!file_exists(self::$settings_file)) {
-            self::$settings = array();
+        // Find all files in config directory
+        $ini_files = glob(self::$config_dir . '/*.ini');
+        if (empty($ini_files)) {
             self::$loaded = true;
             return;
         }
-        
-        $parsed = parse_ini_file(self::$settings_file, true);
-        if ($parsed === false) {
-            error_log("Engine_Settings: Failed to parse settings file: " . self::$settings_file);
-            self::$settings = array();
-        } else {
-            self::$settings = $parsed;
+
+        foreach( $ini_files as $ini_file ) {
+            $parsed = parse_ini_file($ini_file, true);
+            $file_key = basename($ini_file, '.ini');
+            if (isset(self::$settings[$file_key])) {
+                // Ignore, we already processed it for some reason
+            } else {
+                if ($parsed === false) {
+                    error_log("Engine_Settings: Failed to parse settings file: " . $ini_file);
+                    self::$settings = array();
+                } else {
+                    self::$settings[$file_key] = $parsed;
+                }
+            }
         }
-        
+
         self::$loaded = true;
     }
     
@@ -367,25 +373,32 @@ class Engine_Settings {
      * @param mixed $value Setting value
      * @return bool Success
      */
-    public static function set($key, $value) {
+    public static function set($key, $value, $save = true) {
         self::load();
-        
-        // Handle section.key format
-        if (strpos($key, '.') !== false) {
-            list($section, $setting_key) = explode('.', $key, 2);
-            if (!isset(self::$settings[$section])) {
-                self::$settings[$section] = array();
-            }
-            self::$settings[$section][$setting_key] = $value;
-        } else {
-            // Handle flat key (default section)
-            if (!isset(self::$settings['default'])) {
-                self::$settings['default'] = array();
-            }
-            self::$settings['default'][$key] = $value;
+
+        $default_instance = 'engine'; // Should happen, but just in case
+        $default_section = 'Default'; // Should happen be used, but just in case
+
+        $key_parts = explode('.', $key);
+        // Insert $default_section in top of parts if count < 2
+        if (count($key_parts) < 2) {
+            array_unshift($key_parts, $default_section);
         }
+        // Insert $default_instance in top of parts if count < 3
+        if (count($key_parts) < 3) {
+            array_unshift($key_parts, $default_instance);
+        }
+        $instance = $key_parts[0];
+        $section = $key_parts[1];
+        $setting_key = implode('.', array_slice($key_parts, 2));
+
+        self::$settings[$instance][$section][$setting_key] = $value;
         
-        return self::save();
+        if($save) {
+            return self::save();
+        }
+
+        return true;
     }
     
     /**
@@ -498,26 +511,35 @@ class Engine_Settings {
      * 
      * @return bool Success
      */
-    private static function save() {
-        if (empty(self::$settings_file)) {
-            return false;
-        }
-        
+     static function save( $instance = null ) {
         // Ensure config directory exists and is secured
         self::ensure_config_directory();
-        
-        $ini_content = self::array_to_ini(self::$settings);
-        
-        $result = file_put_contents(self::$settings_file, $ini_content, LOCK_EX);
-        if ($result === false) {
-            error_log("Engine_Settings: Failed to write settings file: " . self::$settings_file);
-            return false;
+
+        if( empty( $instance ) ) {
+            $instances = array_keys( self::$settings );
+        } else {
+            $instances = array( $instance );
         }
-        
-        // Set restrictive permissions on the config file
-        chmod(self::$settings_file, 0600);
-        
-        return true;
+
+        $errors = false;
+        foreach ( $instances as $instance ) {
+            $instance = basename($instance, '.ini'); // Sanitize section name
+            $ini_file = self::$config_dir . "/$instance.ini";
+            $instance_array = self::$settings[$instance] ?? null;
+
+            $instance_ini = self::array_to_ini($instance_array);
+            
+            $result = file_put_contents($ini_file, $instance_ini, LOCK_EX);
+            if ($result === false) {
+                error_log("Engine_Settings: Failed to write settings file: " . $ini_file);
+                $errors = true;
+            } 
+            
+            // Set restrictive permissions on the config file
+            chmod($ini_file, 0600);
+        }
+
+        return ! $errors;
     }
     
     /**
@@ -526,45 +548,41 @@ class Engine_Settings {
      * @param array $array Settings array
      * @return string INI formatted string
      */
-    private static function array_to_ini($array) {
+    private static function array_to_ini( $array ) {
         $ini = "; Engine Settings Configuration\n";
         $ini .= "; Generated on " . date('Y-m-d H:i:s') . "\n\n";
         
         // Clean up redundant individual credentials before saving
         $cleaned_array = self::cleanup_redundant_credentials($array);
         
-        // Remove credential-related sections - they're stored separately in JSON
-        unset($cleaned_array['Credentials']);
-        unset($cleaned_array['LegacyCredentials']);
-        unset($cleaned_array['Services']); // Remove Services section that might contain credentials
+        // // Add priority sections first
+        // foreach ($priority_sections as $section) {
+        //     if (isset($cleaned_array[$section])) {
+        //         $ordered_sections[$section] = $cleaned_array[$section];
+        //     }
+        // }
         
-        // Define section order - W4OS and Helpers first, then standard OpenSim sections
-        $priority_sections = array('W4OS', 'Helpers');
-        $opensim_sections = array('Const', 'GridInfoService', 'DatabaseService', 'SearchService', 'CurrencyService', 'OfflineMessageService', 'MoneyServer', 'Economy', 'Gloebit');
-        $ordered_sections = array();
-        
-        // Add priority sections first
-        foreach ($priority_sections as $section) {
-            if (isset($cleaned_array[$section])) {
-                $ordered_sections[$section] = $cleaned_array[$section];
-            }
-        }
-        
-        // Add standard OpenSim sections  
-        foreach ($opensim_sections as $section) {
-            if (isset($cleaned_array[$section])) {
-                $ordered_sections[$section] = $cleaned_array[$section];
-            }
-        }
+        // // Add standard OpenSim sections  
+        // foreach ($opensim_sections as $section) {
+        //     if (isset($cleaned_array[$section])) {
+        //         $ordered_sections[$section] = $cleaned_array[$section];
+        //     }
+        // }
         
         // Add any remaining sections (but not credentials)
-        foreach ($cleaned_array as $section => $settings) {
-            if (!in_array($section, array_merge($priority_sections, $opensim_sections))) {
-                $ordered_sections[$section] = $settings;
-            }
-        }
+        // if(is_array($cleaned_array)) {
+        //     foreach ($cleaned_array as $section => $settings) {
+        //         if (!in_array($section, array_merge($priority_sections, $opensim_sections))) {
+        //             $ordered_sections[$section] = $settings;
+        //         }
+        //     }
+        // }
         
-        foreach ($ordered_sections as $section => $settings) {
+        if(! is_array($cleaned_array) ) {
+            // If array is empty, return nothing
+            return '';
+        }
+        foreach ($cleaned_array as $section => $settings) {
             if (!is_array($settings)) {
                 // Handle non-sectioned settings
                 $ini .= "$section = " . self::format_ini_value($settings) . "\n";
@@ -806,7 +824,8 @@ class Engine_Settings {
      * @return string Settings file path
      */
     public static function get_file_path() {
-        return self::$settings_file;
+        return self::$config_dir . '/engine.ini';
+        // return $ini_file;
     }
     
     /**
@@ -1199,10 +1218,6 @@ class Engine_Settings {
         // Apply transformation
         $transformed_value = self::transform_value($value, $transform, $modifier, $all_constants, $constant_name);
         
-        // Debug logging
-        // if ($constant_name === 'OPENSIM_DB' || $constant_name === 'ROBUST_CONSOLE' || $constant_name === 'ROBUST_DB') {
-        //     error_log("Engine_Settings DEBUG: $constant_name -> $destination ($transform:$modifier) = " . var_export($transformed_value, true));
-        // }
         
         // Handle database connection strings specially
         if ($key === 'ConnectionString') {
@@ -1212,8 +1227,6 @@ class Engine_Settings {
                 if (!isset($ini_config[$section])) {
                     $ini_config[$section] = array();
                 }
-                // Debug logging for ConnectionString formatting
-                // error_log("Engine_Settings DEBUG ConnectionString: $constant_name -> $section.$key = " . var_export($transformed_value, true));
                 $ini_config[$section][$key] = $transformed_value;
             }
             return;
