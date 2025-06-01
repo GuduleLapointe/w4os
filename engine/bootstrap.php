@@ -65,5 +65,5 @@ if (!defined('OPENSIM_ENGINE_LOADED')) {
 
 // Optional: Test the settings system if in debug mode
 if (defined('OPENSIM_ENGINE_DEBUG') && OPENSIM_ENGINE_DEBUG) {
-    error_log('OpenSim Engine: Settings system initialized at ' . Engine_Settings::get_file_path());
+    error_log('OpenSim Engine: Settings system initialized at ' . Engine_Settings::get_config_dir());
 }

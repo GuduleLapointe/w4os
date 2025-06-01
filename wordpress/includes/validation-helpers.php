@@ -96,16 +96,16 @@ function w4os_get_option_with_validation($wp_option, $default = null, $ini_key =
  * @return array Array of validation results
  */
 function w4os_test_all_mapped_settings() {
-    if (!class_exists('W4OS_Options_Migrator')) {
-        return ['error' => 'W4OS_Options_Migrator class not available'];
+    if (!class_exists('W4OS_Migration_2to3')) {
+        return ['error' => 'W4OS_Migration_2to3 class not available'];
     }
     
     $results = [];
-    $mapped_keys = W4OS_Options_Migrator::get_mapped_ini_keys();
-    $wp_options = W4OS_Options_Migrator::get_available_options();
+    $mapped_keys = W4OS_Migration_2to3::get_mapped_ini_keys();
+    $wp_options = W4OS_Migration_2to3::get_available_options();
     
     foreach ($mapped_keys as $ini_key) {
-        $mapping = W4OS_Options_Migrator::get_mapping_for_key($ini_key);
+        $mapping = W4OS_Migration_2to3::get_mapping_for_key($ini_key);
         if (!$mapping) continue;
         
         // Find the primary WordPress option for this INI key
@@ -123,50 +123,18 @@ function w4os_test_all_mapped_settings() {
 }
 
 /**
- * Parse connection string into comparable array format
- */
-function parse_connection_string($connection_string) {
-    // Use OSPDO method if available for consistency
-    if (class_exists('OSPDO')) {
-        return OSPDO::connectionstring_to_array($connection_string);
-    }
-    
-    // Fallback manual parsing
-    if (empty($connection_string)) {
-        return [];
-    }
-    
-    $parts = explode(';', trim($connection_string, '; '));
-    $parsed = [];
-    
-    foreach ($parts as $part) {
-        $part = trim($part);
-        if (empty($part)) continue;
-        
-        if (strpos($part, '=') !== false) {
-            list($key, $value) = explode('=', $part, 2);
-            $parsed[trim($key)] = trim($value);
-        }
-    }
-    
-    // Sort by key for consistent comparison
-    ksort($parsed);
-    return $parsed;
-}
-
-/**
  * Build connection string from database info array/string
  */
 function build_connection_string_from_info($db_info) {
     if (is_string($db_info)) {
         // Already a connection string, parse and return parsed format
-        return parse_connection_string($db_info);
+        return OSPDO::connectionstring_to_array($db_info);
     }
     
     if (is_array($db_info) && class_exists('OSPDO')) {
         // Use OSPDO to build connection string then parse back to array for comparison
         $connection_string = OSPDO::array_to_connectionstring($db_info);
-        return parse_connection_string($connection_string);
+        return OSPDO::connectionstring_to_array($connection_string);
     }
     
     if (is_array($db_info)) {
@@ -220,7 +188,7 @@ function compare_values_enhanced($old_value, $new_value, $key = '') {
     // Special handling for connection strings
     if (stripos($key, 'connectionstring') !== false || stripos($key, 'db') !== false) {
         $old_parsed = build_connection_string_from_info($old_value);
-        $new_parsed = parse_connection_string($new_value);
+        $new_parsed = OSPDO::connectionstring_to_array($new_value);
         
         return ($old_parsed === $new_parsed) ? 'match' : 'differ';
     }

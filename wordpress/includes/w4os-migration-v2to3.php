@@ -11,8 +11,7 @@ if (!defined('ABSPATH') && !defined('OPENSIM_ENGINE')) {
     exit;
 }
 
-class W4OS_Options_Migrator {
-    
+class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
     /**
      * Complete mapping of INI sections to WordPress options with precedence rules
      * 
@@ -22,7 +21,7 @@ class W4OS_Options_Migrator {
      * 3. avatar_get_option() calls (translates to w4os-avatars.settings.*)
      * 4. W4OS3::get_credentials() for database/console credentials
      */
-    private static $ini_mapping = [
+    private static $wp_options_mapping = [
         'w4os' => [
             'W4OS' => [
                 'ModelFirstName' => ['w4os_model_firstname'],
@@ -260,69 +259,57 @@ class W4OS_Options_Migrator {
         // New v3 beta option arrays
         'w4os_beta'
     ];
-    
-    /**
-     * Transform a value according to the specified transformation
-     */
-    private static function transform_value($value, $transform, $all_options) {
-        switch ($transform) {
-            case 'boolean_to_string':
-                return $value ? 'true' : 'false';
-                
-            case 'currency_provider_to_module':
-                switch (strtolower($value)) {
-                    case 'gloebit': return 'Gloebit';
-                    case 'podex': return 'Podex'; 
-                    case 'moneyserver':
-                    case 'dtlnslmoneyserver':
-                    default: return 'MoneyServer';
-                }
 
-            case 'is_gloebit_enabled':
-                return (strtolower($value) === 'gloebit') ? 'true' : 'false';
-                
+    /**
+     * Transform a value according to the specified transformation.
+     * This method handles specific wp plugin transformations
+     */
+    // protected static function transform_value($value, $transform, $all_values = array()) {
+    protected static function transform_value($value, $transform, $all_values = array(), $constant_config = null) {
+        $value = parent::transform_value($value, $transform, $all_values);
+        switch ($transform) {
             case 'get_db_credentials_robust':
-                return self::get_db_credentials('robust', $all_options);
+                return self::get_db_credentials('robust', $all_values);
                 
             case 'get_db_credentials_economy':
             case 'get_db_credentials_currency':
             case 'get_db_credentials_gloebit':
-                return self::get_db_credentials('economy', $all_options);
+                return self::get_db_credentials('economy', $all_values);
                 
             default:
                 return $value;
         }
     }
-    
+
     /**
      * Build connection parameters from WordPress options
      * 
      * @param string $type Type of database connection ('robust' or 'currency') 
-     * @param array $all_options All available WordPress options
+     * @param array $all_values All available WordPress options
      * @return array|null Connection credentials as an array or null if not found
      */
-    private static function get_db_credentials($type, $all_options) {
-        if(!is_array($all_options) || empty($all_options)) {
+    private static function get_db_credentials($type, $all_values) {
+        if(!is_array($all_values) || empty($all_values)) {
             return null; // No options available
         }
 
         // First look into w4os-credentials for any existing credentials,
         // must be decrypted with W4OS3::decrypt()
-        if (!empty($all_options['w4os-credentials'][$type] ?? null)) {
+        if (!empty($all_values['w4os-credentials'][$type] ?? null)) {
             // Unlikely to happen, key is usually the instance, not the service type
-            return W4OS3::decrypt($all_options['w4os-credentials'][$type]);
+            return W4OS3::decrypt($all_values['w4os-credentials'][$type]);
         }
 
         // Find the uri for the service type, then look into w4os-credentials
         $serviceURI = null;
         switch($type) {
             case 'robust':
-                $serviceURI = $all_options['w4os_login_uri'] ?? null;
+                $serviceURI = $all_values['w4os_login_uri'] ?? null;
                 break;
             case 'currency':
             case 'economy':
             case 'gloebit':
-                $serviceURI = $all_options['w4os_economy_helper_uri'] ?? null;
+                $serviceURI = $all_values['w4os_economy_helper_uri'] ?? null;
                 break;
         }
         if(empty($serviceURI)) {
@@ -338,20 +325,20 @@ class W4OS_Options_Migrator {
         }
 
         // Fallback to direct wp optionn storage
-        $db_credentials = self::get_database_connection_info($all_options, $type);
+        $db_credentials = self::get_database_connection_info($all_values, $type);
         if(!empty($db_credentials['host']) && !empty($db_credentials['name'])) {
             // If we have at least host and database, return them
             return $db_credentials;
         }
         // // Look for credentials in w4os-credentials using the uri as key
-        // if (!empty($all_options['w4os-credentials'][$uri] ?? null)) {
+        // if (!empty($all_values['w4os-credentials'][$uri] ?? null)) {
         //     // Decrypt the credentials
-        //     return W4OS3::decrypt($all_options['w4os-credentials'][$uri]);
+        //     return W4OS3::decrypt($all_values['w4os-credentials'][$uri]);
         // }
         
         return $type . ' credentials ' . $serviceURI . ' not found in w4os-credentials';
         // Get database connection details based on type if nothing else found
-        // $db_info = self::get_database_connection_info($all_options, $type);
+        // $db_info = self::get_database_connection_info($all_values, $type);
         // return implode(';', $db_info);
 
         // // Determine which database credentials to use
@@ -363,11 +350,11 @@ class W4OS_Options_Migrator {
         // }
         
         // // Get database connection details from WordPress options
-        // $host = $all_options["w4os_{$prefix}db_host"] ?? $all_options['w4os_db_host'] ?? '';
-        // $database = $all_options["w4os_{$prefix}db_database"] ?? $all_options['w4os_db_database'] ?? '';
-        // $user = $all_options["w4os_{$prefix}db_user"] ?? $all_options['w4os_db_user'] ?? '';
-        // $pass = $all_options["w4os_{$prefix}db_pass"] ?? $all_options['w4os_db_pass'] ?? '';
-        // $port = $all_options["w4os_{$prefix}db_port"] ?? $all_options['w4os_db_port'] ?? 3306;
+        // $host = $all_values["w4os_{$prefix}db_host"] ?? $all_values['w4os_db_host'] ?? '';
+        // $database = $all_values["w4os_{$prefix}db_database"] ?? $all_values['w4os_db_database'] ?? '';
+        // $user = $all_values["w4os_{$prefix}db_user"] ?? $all_values['w4os_db_user'] ?? '';
+        // $pass = $all_values["w4os_{$prefix}db_pass"] ?? $all_values['w4os_db_pass'] ?? '';
+        // $port = $all_values["w4os_{$prefix}db_port"] ?? $all_values['w4os_db_port'] ?? 3306;
         
         // // Only build connection string if we have minimum required info
         // if (empty($host) || empty($database)) {
@@ -388,20 +375,20 @@ class W4OS_Options_Migrator {
     
     /**
      */
-    private static function get_database_connection_info($all_options, $prefix = '') {
+    private static function get_database_connection_info($all_values, $prefix = '') {
         $db_prefix = $prefix ? $prefix . '_' : '';
         
-        $type = $all_options["w4os_{$db_prefix}db_type"] ?? 'mysql';
-        $db_name = $all_options["w4os_{$db_prefix}db_name"] ?? '';
+        $type = $all_values["w4os_{$db_prefix}db_type"] ?? 'mysql';
+        $db_name = $all_values["w4os_{$db_prefix}db_name"] ?? '';
         error_log("looking for {$type} database w4os_{$db_prefix}db_host");
         $creds = [
             'type' => $type,
-            'host' => $all_options["w4os_{$db_prefix}db_host"] ?? null,
-            'name' => $all_options["w4os_{$db_prefix}db_name"] ?? $all_options["w4os_{$db_prefix}db_database"] ?? '',
-            'user' => $all_options["w4os_{$db_prefix}db_user"] ?? null,
-            'pass' => $all_options["w4os_{$db_prefix}db_pass"] ?? null,
-            'port' => $all_options["w4os_{$db_prefix}db_port"] ?? ($type === 'mysql' ? 3306 : ($type === 'pgsql' ? 5432 : null)),
-            'enabled' => $all_options["w4os_{$db_prefix}db_enabled"] ?? true,
+            'host' => $all_values["w4os_{$db_prefix}db_host"] ?? null,
+            'name' => $all_values["w4os_{$db_prefix}db_name"] ?? $all_values["w4os_{$db_prefix}db_database"] ?? '',
+            'user' => $all_values["w4os_{$db_prefix}db_user"] ?? null,
+            'pass' => $all_values["w4os_{$db_prefix}db_pass"] ?? null,
+            'port' => $all_values["w4os_{$db_prefix}db_port"] ?? ($type === 'mysql' ? 3306 : ($type === 'pgsql' ? 5432 : null)),
+            'enabled' => $all_values["w4os_{$db_prefix}db_enabled"] ?? true,
         ];
         return $creds;
     }
@@ -423,7 +410,7 @@ class W4OS_Options_Migrator {
         $all_wp_options = self::get_all_w4os_options();
         
         // Process each INI file and its sections
-        foreach (self::$ini_mapping as $ini_file => $file_sections) {
+        foreach (self::$wp_options_mapping as $ini_file => $file_sections) {
             $instance = basename($ini_file, '.ini');
             foreach ($file_sections as $section => $section_mapping) {
                 foreach ($section_mapping as $ini_key => $option_config) {
@@ -473,9 +460,9 @@ class W4OS_Options_Migrator {
         self::migrate_credentials($results, $all_wp_options);
         
         // Clean up any redundant database credentials
-        if (class_exists('Engine_Settings')) {
-            Engine_Settings::cleanup_redundant_database_credentials();
-        }
+        // if (class_exists('Engine_Settings')) {
+        //     Engine_Settings::cleanup_redundant_database_credentials();
+        // }
         
         return $results;
     }
@@ -670,12 +657,31 @@ class W4OS_Options_Migrator {
     
     /**
      * Get available WordPress options for migration
-     * This method is called by Engine_Settings::get_available_wordpress_options()
+     * This method is called by W4OS_Migration_2to3::get_available_options()
      * 
      * @return array Array of available WordPress options with their current values
      */
     public static function get_available_options() {
+        // This is the way to go. We do not need specific options here.
         return self::get_all_w4os_options();
+
+        // This was an old, overcomplicated way to get a worst result.
+        // global $wpdb;
+        
+        // $options = [];
+        
+        // // Get all w4os options from wp_options table
+        // $wp_options = $wpdb->get_results(
+        //     "SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE 'w4os%'",
+        //     OBJECT
+        // );
+        
+        // foreach ($wp_options as $option) {
+        //     $value = maybe_unserialize($option->option_value);
+        //     $options[$option->option_name] = $value;
+        // }
+        
+        // return $options;
     }
     
     /**
@@ -686,7 +692,7 @@ class W4OS_Options_Migrator {
     public static function get_mapped_ini_keys() {
         $mapped_keys = [];
         
-        foreach (self::$ini_mapping as $ini_file => $file_sections) {
+        foreach (self::$wp_options_mapping as $ini_file => $file_sections) {
             foreach ($file_sections as $section => $section_mapping) {
                 foreach ($section_mapping as $ini_key => $option_config) {
                     $mapped_keys[] = "$section.$ini_key";
@@ -711,7 +717,7 @@ class W4OS_Options_Migrator {
         list($section, $key) = explode('.', $ini_key, 2);
         
         // Search through all ini files to find the section
-        foreach (self::$ini_mapping as $ini_file => $file_sections) {
+        foreach (self::$wp_options_mapping as $ini_file => $file_sections) {
             if (isset($file_sections[$section][$key])) {
                 return $file_sections[$section][$key];
             }

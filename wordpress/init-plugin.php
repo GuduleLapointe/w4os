@@ -14,6 +14,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Capture baseline constants before any plugin code loads
+// This allows filtering out pre-existing constants in migration tools
+$GLOBALS['migration_preprocess_constants'] = get_defined_constants(true);
+
 // Define plugin constants
 define('W4OS_VERSION', '3.0.0-dev');
 define('W4OS_PLUGIN_DIR', plugin_dir_path(__DIR__));
@@ -653,16 +657,22 @@ class W4OS3 {
 				$data = OSPDO::connectionstring_to_array( $result );
 				$db   = array_filter(
 					array(
+						'type' => null, // default to mysql
 						'host' => $data['Data Source'],
 						'port' => $data['Port'] ?? 3306,
 						'name' => $data['Database'],
 						'user' => $data['User ID'],
 						'pass' => $data['Password'],
+						'enabled' => false, // is set after validation
+						// 'use_default' => false, // optional
+						// 'enabled' => true, // Added dynamically after connection validation
 					)
 				);
-				if ( $db['host'] == 'localhost' && $credentials['host'] != $_SERVER['SERVER_ADDR'] ) {
-					$db['host'] = $credentials['host'];
-				}
+				// Do not replace localhost with the server address, localhost might be
+				// the only allowed address for the database connection.
+				// if ( $db['host'] == 'localhost' && $credentials['host'] != $_SERVER['SERVER_ADDR'] ) {
+				// 	$db['host'] = $credentials['host'];
+				// }
 				$credentials['db'] = $db;
 			}
 		}
@@ -713,11 +723,13 @@ class W4OS3 {
 				),
 				'db'          => array(
 					'type' => null, // default to mysql
-					'host' => null,
-					'port' => null,
-					'name' => null,
-					'user' => null,
-					'pass' => null,
+					'host' => null, // db host, might be different from the server host, e.g. localhost
+					'port' => null, // db port, always different from the server port, e.g. 3306
+					'name' => null, // db name, e.g. opensim
+					'user' => null, // db user
+					'pass' => null, // db password
+					// 'use_default' => false, // optional (use parent use_default value)
+					// 'enabled' => true, // Added dynamically after connection validation
 				),
 			)
 		);
@@ -758,8 +770,15 @@ class W4OS3 {
 	 */
 	private static function set_key() {
 		$login_uri = get_option( 'w4os_login_uri', home_url() );
-		$grid_info = self::grid_info();
-		$combine   = array( $login_uri, $grid_info['gridnick'], $grid_info['platform'] );
+		$grid_info = json_decode( get_option( 'w4os_grid_info' ), true );
+
+		if( is_array( $grid_info ) ) {
+			$combine   = array( $login_uri, $grid_info['gridnick'], $grid_info['platform'] );
+		} else {
+			$combine = [$login_uri];
+			error_log( 'OpenSim: Failed to get grid info: ' . print_r( $grid_info, true ) . 'using only login URI for key generation. ' . print_r( $combine, true ) );
+		}
+
 		$key       = md5( sanitize_title( implode( ' ', $combine ) ) );
 		self::$key = $key;
 	}
@@ -1000,11 +1019,12 @@ if (is_admin()) {
     // Load admin test pages (temporary)
     require_once W4OS_PLUGIN_DIR . 'wordpress/admin/settings-test.php';
 
-	require_once W4OS_PLUGIN_DIR . 'wordpress/includes/migration-v2to3.php';
-
-	// Include validation page
+	// Migration v2 to 3
+	require_once W4OS_PLUGIN_DIR . 'helpers/includes/helpers-migration-v2to3.php';
+	require_once W4OS_PLUGIN_DIR . 'wordpress/includes/w4os-migration-v2to3.php';
+	// Include Debug validation page
 	require_once W4OS_PLUGIN_DIR . '/wordpress/admin/settings-validation.php';
-	// Include validation helpers
+	// Include Debug validation helpers
 	require_once W4OS_PLUGIN_DIR . '/wordpress/includes/validation-helpers.php';
 }
 

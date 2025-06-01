@@ -2,7 +2,7 @@
 /**
  * Engine Settings Test Page
  * 
- * Temporary admin page to test the Engine_Settings functionality
+ * Temporary test page to test the Engine_Settings functionality
  */
 
 // Prevent direct access
@@ -55,14 +55,14 @@ class W4OS_Settings_Test_Page {
             case 'import_ini_file':
                 $this->import_ini_file();
                 break;
-            case 'migrate_constants':
-                $this->migrate_from_constants();
-                break;
-            case 'fix_arrays':
-                $this->fix_array_values();
-                break;
             case 'migrate_wordpress_options':
                 $this->migrate_wordpress_options();
+                break;
+            case 'test_constants_migration':
+                $this->test_constants_migration();
+                break;
+            case 'perform_constants_migration':
+                $this->perform_constants_migration();
                 break;
         }
     }
@@ -203,55 +203,9 @@ class W4OS_Settings_Test_Page {
         }
     }
     
-    private function migrate_from_constants() {
-        // Get current PHP constants for migration
-        $constants = Engine_Settings::get_current_constants();
-        
-        if (empty($constants)) {
-            $message = 'No OpenSim/helpers constants found to migrate. Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_';
-            add_settings_error('w4os_settings_test', 'migrate_result', $message, 'notice-warning');
-            return;
-        }
-        
-        try {
-            $success = Engine_Settings::migrate_from_constants($constants);
-            
-            if ($success) {
-                $constant_count = count($constants);
-                $message = "Successfully migrated {$constant_count} PHP constants to INI format. Constants found: " . implode(', ', array_keys($constants));
-                add_settings_error('w4os_settings_test', 'migrate_result', $message, 'updated');
-            } else {
-                $message = 'Failed to migrate PHP constants to INI format. Check error logs for details.';
-                add_settings_error('w4os_settings_test', 'migrate_result', $message, 'error');
-            }
-            
-        } catch (Exception $e) {
-            $message = 'Exception during constants migration: ' . $e->getMessage();
-            add_settings_error('w4os_settings_test', 'migrate_result', $message, 'error');
-        }
-    }
-    
-    private function fix_array_values() {
-        try {
-            $success = Engine_Settings::fix_array_values();
-            
-            if ($success) {
-                $message = 'Successfully fixed array values that were saved as "Array" strings';
-                add_settings_error('w4os_settings_test', 'fix_result', $message, 'updated');
-            } else {
-                $message = 'No array values needed fixing, or operation failed';
-                add_settings_error('w4os_settings_test', 'fix_result', $message, 'notice-info');
-            }
-            
-        } catch (Exception $e) {
-            $message = 'Exception during array fix: ' . $e->getMessage();
-            add_settings_error('w4os_settings_test', 'fix_result', $message, 'error');
-        }
-    }
-    
     private function migrate_wordpress_options() {
         try {
-            $result = Engine_Settings::migrate_wordpress_options();
+            $result = W4OS_Migration_2to3::migrate_wordpress_options();
             
             if (!empty($result['migrated']) || !empty($result['skipped'])) {
                 $message = 'WordPress options migration completed!';
@@ -284,7 +238,281 @@ class W4OS_Settings_Test_Page {
             add_settings_error('w4os_settings_test', 'migrate_wp_result', $message, 'error');
         }
     }
+
+    /**
+     * Test constants migration (debug only - shows what would be migrated)
+     */
+    private function test_constants_migration() {
+        if (!class_exists('Helpers_Migration_2to3')) {
+            require_once OPENSIM_ENGINE_PATH . '/helpers/includes/helpers-migration-v2to3.php';
+        }
+        
+        // Get constants that were added after plugin loading started (no filtering)
+        $internal_constants = $this->get_internal_constants();
+        
+        // Get the mapping to see which constants would be processed
+        $mapping = $this->get_constants_mapping_for_debug();
+        $mapped_constants = $this->extract_all_constant_names_from_mapping($mapping);
+        
+        echo '<div class="notice notice-info"><p>Found ' . count($internal_constants) . ' new constants. ' . count($mapped_constants) . ' are in the migration mapping.</p></div>';
+        
+        // Group constants by status
+        $will_migrate = array();
+        $not_in_mapping = array();
+        
+        foreach ($internal_constants as $name => $value) {
+            if (in_array($name, $mapped_constants)) {
+                $will_migrate[$name] = $value;
+            } else {
+                $not_in_mapping[$name] = $value;
+            }
+        }
+        
+        // Show constants that will be migrated
+        echo '<h3 style="color: green;">✓ Constants that WILL be migrated (' . count($will_migrate) . ')</h3>';
+        if (!empty($will_migrate)) {
+            echo '<div class="table-container" style="background: #f0f8f0; border-left: 4px solid #28a745; padding: 10px; margin: 10px 0;">';
+            echo '<table class="widefat striped">';
+            echo '<thead><tr><th>Constant Name</th><th>Current Value</th><th>Type</th></tr></thead><tbody>';
+            foreach ($will_migrate as $name => $value) {
+                $display_value = $this->format_value_for_display($value);
+                $type = gettype($value);
+                echo "<tr><td><strong>{$name}</strong></td><td>{$display_value}</td><td>{$type}</td></tr>";
+            }
+            echo '</tbody></table></div>';
+        }
+        
+        // Show constants that won't be migrated
+        echo '<h3 style="color: #888;">⚪ Constants NOT in migration mapping (' . count($not_in_mapping) . ')</h3>';
+
+        echo '<p>Make sure to check if any of the constants below are important for your application and should be added to the mapping.
+        In theory, most of them would be system or framework constants and can be safely ignored.</p>';
+        echo '<div style="background: #f8f8f8; border-left: 4px solid #888; padding: 10px; margin: 10px 0;">';
+        
+        if (!empty($not_in_mapping)) {
+            // Apply filtering to remove unwanted constants from the display
+            $filtered_constants = $this->filter_unprocessed_constants($not_in_mapping);
+            
+            echo '<p><strong>User/Project constants (' . count($filtered_constants) . '):</strong></p>';
+            if (!empty($filtered_constants)) {
+                echo '<div class="table-container">';
+                echo '<table class="widefat striped">';
+                echo '<thead><tr><th>Constant Name</th><th>Current Value</th><th>Type</th></tr></thead><tbody>';
+                
+                foreach ($filtered_constants as $name => $value) {
+                    $display_value = $this->format_value_for_display($value);
+                    $type = gettype($value);
+                    echo "<tr><td>{$name}</td><td>{$display_value}</td><td>{$type}</td></tr>";
+                }
+                echo '</tbody></table>';
+                echo '</div>'; // Close table container
+            } else {
+                echo '<p><em>All user constants are already in the migration mapping or filtered out!</em></p>';
+            }
+            
+            // Show filtered constants count
+            $filtered_count = count($not_in_mapping) - count($filtered_constants);
+            if ($filtered_count > 0) {
+                echo '<p><small>(' . $filtered_count . ' constants filtered out: W4OS_* constants, duplicates, or individual DB credentials)</small></p>';
+            }
+        } else {
+            echo '<p><em>All new constants are in the migration mapping! It\'s a little bit worrying, there must be at least a few system or framework constants here.</em></p>';
+        }
+        
+        echo '</div>';
+    }
+
+    /**
+     * Actually perform constants migration
+     */
+    private function perform_constants_migration() {
+        try {
+            $result = Helpers_Migration_2to3::migrate_constants();
+            
+            if (!empty($result['migrated']) || !empty($result['skipped'])) {
+                $message = 'Constants migration completed!';
+                if (!empty($result['migrated'])) {
+                    $message .= ' Migrated: ' . count($result['migrated']) . ' constants.';
+                }
+                if (!empty($result['skipped'])) {
+                    $message .= ' Skipped: ' . count($result['skipped']) . ' constants.';
+                }
+                if (!empty($result['errors'])) {
+                    $message .= ' Errors: ' . count($result['errors']) . ' constants.';
+                }
+                add_settings_error('w4os_settings_test', 'migrate_result', $message, 'updated');
+                
+                // Show details
+                if (!empty($result['migrated'])) {
+                    $details = 'Migrated: ' . implode(', ', array_slice($result['migrated'], 0, 10));
+                    if (count($result['migrated']) > 10) {
+                        $details .= ' and ' . (count($result['migrated']) - 10) . ' more...';
+                    }
+                    add_settings_error('w4os_settings_test', 'migrate_details', $details, 'notice-info');
+                }
+                
+                // Show any errors
+                if (!empty($result['errors'])) {
+                    foreach ($result['errors'] as $error) {
+                        add_settings_error('w4os_settings_test', 'migrate_error', 'Error: ' . $error, 'error');
+                    }
+                }
+            } else {
+                $message = 'No constants found to migrate or migration failed.';
+                add_settings_error('w4os_settings_test', 'migrate_result', $message, 'notice-warning');
+            }
+            
+        } catch (Exception $e) {
+            $message = 'Exception during constants migration: ' . $e->getMessage();
+            add_settings_error('w4os_settings_test', 'migrate_result', $message, 'error');
+        }
+    }
+
+    /**
+     * Get constants mapping for debug purposes
+     */
+    private function get_constants_mapping_for_debug() {
+        // Access the mapping from Helpers_Migration_2to3
+        $reflection = new ReflectionClass('Helpers_Migration_2to3');
+        $property = $reflection->getProperty('constants_mapping');
+        $property->setAccessible(true);
+        return $property->getValue();
+    }
     
+    /**
+     * Extract all constant names referenced in the mapping
+     */
+    private function extract_all_constant_names_from_mapping($mapping) {
+        $constant_names = array();
+        
+        foreach ($mapping as $ini_file => $file_sections) {
+            foreach ($file_sections as $section => $section_mapping) {
+                foreach ($section_mapping as $ini_key => $constant_config) {
+                    if (is_string($constant_config)) {
+                        $constant_names[] = $constant_config;
+                    } elseif (is_array($constant_config)) {
+                        foreach ($constant_config as $key => $constant_name) {
+                            if ($key !== 'transform' && is_string($constant_name)) {
+                                $constant_names[] = $constant_name;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return array_unique($constant_names);
+    }
+
+    /**
+     * Format value for display in debug table
+     */
+    private function format_value_for_display($value) {
+        if (is_null($value)) {
+            return '<em style="color: #999;">null</em>';
+        } elseif (is_bool($value)) {
+            return $value ? '<span style="color: green;">true</span>' : '<span style="color: red;">false</span>';
+        } elseif (is_array($value)) {
+            $json = json_encode($value, JSON_UNESCAPED_SLASHES);
+            if (strlen($json) > 100) {
+                return '<span style="color: #0073aa;" title="' . htmlspecialchars($json) . '">[Array with ' . count($value) . ' items]</span>';
+            }
+            return '<span style="color: #0073aa;">' . htmlspecialchars($json) . '</span>';
+        } elseif (is_string($value)) {
+            if (strlen($value) > 80) {
+                return '<span title="' . htmlspecialchars($value) . '">' . htmlspecialchars(substr($value, 0, 77)) . '...</span>';
+            }
+            return htmlspecialchars($value);
+        } else {
+            return htmlspecialchars((string)$value);
+        }
+    }
+
+    /**
+     * Get constants that were added after plugin loading started
+     * Returns the raw list of new constants (no filtering applied)
+     */
+    private function get_internal_constants() {
+        // Get baseline constants captured when plugin started loading
+        $baseline_constants = isset($GLOBALS['migration_preprocess_constants']) 
+            ? $GLOBALS['migration_preprocess_constants'] 
+            : array();
+        
+        // Get current constants (all user constants)
+        $current_constants = get_defined_constants(true);
+        $current_user_constants = isset($current_constants['user']) ? $current_constants['user'] : array();
+        
+        if (empty($baseline_constants)) {
+            error_log('W4OS: No baseline constants found in $GLOBALS');
+            return $current_user_constants; // Return all user constants if no baseline
+        }
+        
+        // Flatten baseline constants into a simple array
+        $baseline_flat = array();
+        foreach ($baseline_constants as $category => $category_constants) {
+            $baseline_flat = array_merge($baseline_flat, $category_constants);
+        }
+        
+        // Use array_diff to get only constants that weren't in the baseline
+        $new_constants = array_diff_key($current_user_constants, $baseline_flat);
+        
+        return $new_constants;
+    }
+    
+    /**
+     * Filter out constants we don't want to show in unprocessed list
+     */
+    private function filter_unprocessed_constants($constants) {
+        $filtered = array();
+        $processed_constants = $this->get_processed_constants();
+        
+        foreach ($constants as $name => $value) {
+            // Skip W4OS_* constants (handled by WordPress migration)
+            if (strpos($name, 'W4OS_') === 0) {
+                continue;
+            }
+            
+            // Skip individual DB credentials if the main DB constant is processed
+            if ($this->is_individual_db_credential($name, $processed_constants)) {
+                continue;
+            }
+            
+            // Skip if already in processed list
+            if (in_array($name, $processed_constants)) {
+                continue;
+            }
+            
+            $filtered[$name] = $value;
+        }
+        
+        return $filtered;
+    }
+    
+    /**
+     * Check if a constant is an individual DB credential that should be ignored
+     */
+    private function is_individual_db_credential($name, $processed_constants) {
+        $db_suffixes = ['_DB_HOST', '_DB_NAME', '_DB_USER', '_DB_PASS', '_DB_PORT'];
+        
+        foreach ($db_suffixes as $suffix) {
+            if (strpos($name, $suffix) !== false) {
+                $base_name = str_replace($suffix, '_DB', $name);
+                if (in_array($base_name, $processed_constants)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Get list of constants that are processed by migration mapping
+     */
+    private function get_processed_constants() {
+        $mapping = $this->get_constants_mapping_for_debug();
+        return $this->extract_all_constant_names_from_mapping($mapping);
+    }
     public function admin_page() {
         ?>
         <div class="wrap">
@@ -294,7 +522,7 @@ class W4OS_Settings_Test_Page {
             
             <div class="notice notice-info">
                 <p><strong>This is a temporary test page for the Engine Settings system.</strong></p>
-                <p>Settings file location: <code><?php echo esc_html(Engine_Settings::get_file_path()); ?></code></p>
+                <p>Settings file location: <code><?php echo esc_html(Engine_Settings::get_config_dir()); ?></code></p>
                 <p>Configuration status: 
                     <span class="<?php echo Engine_Settings::is_configured() ? 'text-success' : 'text-warning'; ?>">
                         <?php echo Engine_Settings::is_configured() ? 'Configured' : 'Not configured'; ?>
@@ -321,6 +549,29 @@ class W4OS_Settings_Test_Page {
                 </div>
             </form>
 
+            <!-- Test PHP Constants Migration -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Test PHP Constants Migration</h2>
+                    <div class="inside">
+                        <p>Debug view showing all available constants and which ones will be migrated:</p>
+                        <?php $this->test_constants_migration(); ?>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd;">
+                            <p>
+                                <input type="hidden" name="action" value="test_constants_migration" />
+                                <input type="submit" class="button" value="Refresh Constants Debug" />
+                            </p>
+                            <p>
+                                <input type="hidden" name="action" value="perform_constants_migration" />
+                                <input type="submit" class="button-primary" value="Perform Constants Migration" 
+                                       onclick="return confirm('Are you sure you want to migrate constants? This will create/update INI files.')" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
             <!-- Migrate WordPress Options -->
             <form method="post">
                 <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
@@ -328,9 +579,9 @@ class W4OS_Settings_Test_Page {
                     <h2>Migrate WordPress Options</h2>
                     <div class="inside">
                         <p>Migrate WordPress options (w4os_* settings) to Engine Settings format.</p>
-                        <p><strong>Available WordPress Options (<?php echo count(Engine_Settings::get_available_wordpress_options()); ?> found):</strong></p>
+                        <p><strong>Available WordPress Options (<?php echo count(W4OS_Migration_2to3::get_available_options()); ?> found):</strong></p>
                         <?php
-                        $available_options = Engine_Settings::get_available_wordpress_options();
+                        $available_options = W4OS_Migration_2to3::get_available_options();
                         if (!empty($available_options)) {
                             echo "<div style='max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;'>";
                             echo "<ul style='margin: 0;'>";
@@ -355,46 +606,6 @@ class W4OS_Settings_Test_Page {
                         <input type="hidden" name="action" value="migrate_wordpress_options">
                         <input type="submit" value="Migrate WordPress Options" class="button" 
                                <?php echo empty($available_options) ? 'disabled' : ''; ?>>
-                        </p>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Migrate PHP Constants -->
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Test PHP Constants Migration</h2>
-                    <div class="inside">
-                        <p>Migrate existing PHP constants to INI format:</p>
-                        <?php 
-                        $current_constants = Engine_Settings::get_current_constants();
-                        if (!empty($current_constants)) {
-                            echo '<p>Found ' . count($current_constants) . ' constants to migrate:</p>';
-                            echo '<div style="background: #f0f0f0; padding: 10px; max-height: 200px; overflow-y: auto; margin: 10px 0;">';
-                            foreach ($current_constants as $name => $value) {
-                                echo '<strong>' . esc_html($name) . '</strong> = ';
-                                if (is_array($value)) {
-                                    echo '<em>Array (' . count($value) . ' items)</em>';
-                                } elseif (is_bool($value)) {
-                                    echo $value ? 'true' : 'false';
-                                } elseif (is_string($value) && strlen($value) > 50) {
-                                    echo esc_html(substr($value, 0, 47)) . '...';
-                                } else {
-                                    echo esc_html($value);
-                                }
-                                echo '<br>';
-                            }
-                            echo '</div>';
-                        } else {
-                            echo '<p><em>No OpenSim/helpers constants found in current environment.</em></p>';
-                            echo '<p><small>Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_</small></p>';
-                        }
-                        ?>
-                        <p>
-                            <input type="hidden" name="action" value="migrate_constants" />
-                            <input type="submit" class="button" value="Migrate PHP Constants" 
-                                   <?php echo !empty($current_constants) ? '' : 'disabled'; ?> />
                         </p>
                     </div>
                 </div>
@@ -509,36 +720,7 @@ class W4OS_Settings_Test_Page {
                         </p>
                     </div>
                 </div>
-            </form>
-
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Migrate PHP Constants to INI</h2>
-                    <div class="inside">
-                        <p>This will migrate existing PHP constants to the INI format.</p>
-                        <p><small>Constants should start with: OPENSIM_, ROBUST_, CURRENCY_, SEARCH_, OFFLINE_, GLOEBIT_, PODEX_, HYPEVENTS_, EVENTS_</small></p>
-                        <p>
-                            <input type="hidden" name="action" value="migrate_constants" />
-                            <input type="submit" class="button" value="Migrate PHP Constants" />
-                        </p>
-                    </div>
-                </div>            
-            <!-- Fix Array Values -->
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Fix Array Values</h2>
-                    <div class="inside">
-                        <p>Fix any array values that were incorrectly saved as "Array" strings:</p>
-                        <p><small>This will fix GLOEBIT_CONVERSION_TABLE and other arrays that show as "Array" instead of proper JSON.</small></p>
-                        <p>
-                            <input type="hidden" name="action" value="fix_arrays" />
-                            <input type="submit" class="button" value="Fix Array Values" />
-                        </p>
-                    </div>
-                </div>
-            </form>
+            </form>            
             
             </div> <!-- End main content -->
             
@@ -575,8 +757,8 @@ class W4OS_Settings_Test_Page {
                             </tr>
                             <tr>
                                 <th>Settings File</th>
-                                <td><code><?php echo esc_html(Engine_Settings::get_file_path()); ?></code></td>
-                                <td><?php echo file_exists(Engine_Settings::get_file_path()) ? '✅ Exists' : '❌ Not created yet'; ?></td>
+                                <td><code><?php echo esc_html(Engine_Settings::get_config_dir()); ?></code></td>
+                                <td><?php echo file_exists(Engine_Settings::get_config_dir()) ? '✅ Exists' : '❌ Not created yet'; ?></td>
                             </tr>
                             <tr>
                                 <th>.htaccess Protection</th>
@@ -638,11 +820,28 @@ class W4OS_Settings_Test_Page {
         
         /* Override WordPress admin width constraints */
         .wrap {
-            max-width: none !important;
+            max-width: 100% !important;
         }
-        
+        .table-container {
+            display: inline-block;
+            overflow-y: auto;
+            max-width: 100%;
+            max-height: 40em;
+            padding: 0 0 10px !important;
+        }
+        .table-container:hover {
+            max-width: none;
+        }
+        .table-container th {
+            position: sticky;
+            top: 0;
+            background: #f1f1f1;
+        } 
+        table,
         .form-table {
-            max-width: none !important;
+            /* max-width: 100% !important; */
+            /* max-height: 40em;
+            overflow-y: auto; */
         }
         
         .form-table th,
@@ -652,7 +851,7 @@ class W4OS_Settings_Test_Page {
         
         .regular-text {
             width: 100% !important;
-            max-width: none !important;
+            max-width: 100% !important;
         }
         
         /* Two-column layout */

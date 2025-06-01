@@ -642,6 +642,29 @@ function sprintf_safe($format, ...$args) {
 }
 
 /**
+ * Convert a string to PascalCase.
+ * Preserves PascalCase-like words (e.g. "OpenSim", "OSHelper") as they are.
+ * 
+ * @param string $string
+ * @return string
+ */
+function pascal_case($string) {
+	// Convert to PascalCase
+	$string = preg_replace('/[^a-zA-Z0-9]+/', ' ', $string); // Replace non-alphanumeric characters with space
+	$string = trim(preg_replace('/\s+/', ' ', $string)); // Remove extra spaces
+	$words = explode(' ', $string);
+	$pascal_words = array();
+	foreach ($words as $$key => $word) {
+		if(preg_match('/^[A-Z].*[a-z]/', $word)) {
+			continue;
+		}
+		$words[$key] = ucfirst(strtolower($word));
+	}
+	$string = implode('', $pascal_words);
+	return $string;
+}
+
+/**
  * OpenSim source to help further attempts to allow Hypergrid search results.
  * Infouuid is a fake parcelid resolving to region handle and (region-level?)
  * pos which might (or not) give enough information to allow hg results.

@@ -19,11 +19,21 @@ global $SearchDB, $AssetsDB, $ProfileDB, $OpenSimDB;
 
 $helpers_dir = W4OS_PLUGIN_DIR . 'helpers/';
 
-$url = parse_url( getenv( 'REQUEST_URI' ), PHP_URL_PATH );
-$economy = parse_url( W4OS_GRID_INFO['economy'] )['path'];
+$grid_info = json_decode(get_option( 'w4os_grid_info' ), true);
 
-if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( W4OS_GRID_INFO['economy'] ) ) {
-	$economy = parse_url( W4OS_GRID_INFO['economy'] )['path'];
+if(empty($grid_info) ) {
+	error_log( '[ERROR] Grid info not set or empty in ' . __FILE__ . ':' . __LINE__ );
+	return;
+}
+if(! is_array( $grid_info ) ) {
+	error_log( '[ERROR] Grid info is not an array in ' . __FILE__ . ':' . __LINE__ );
+	return;
+}
+
+$url = parse_url( getenv( 'REQUEST_URI' ), PHP_URL_PATH );
+
+if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( $grid_info['economy'] ) ) {
+	$economy = parse_url( $grid_info['economy'] )['path'] ?? 'helpers';
 	if ( preg_match( ":^$economy(currency.php|landtool.php):", $url ) ) {
 		// $helper = preg_replace( ":^$economy:", '', $url );
 		require $helpers_dir . basename($url);
@@ -35,8 +45,8 @@ if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( W4OS_GRID_I
 	}
 }
 
-if ( get_option( 'w4os_provide_offline_messages' ) == true & ! empty( W4OS_GRID_INFO['OfflineMessageURL'] ) ) {
-	$message = parse_url( W4OS_GRID_INFO['OfflineMessageURL'] )['path'];
+if ( get_option( 'w4os_provide_offline_messages' ) == true & ! empty( $grid_info['OfflineMessageURL'] ) ) {
+	$message = parse_url( $grid_info['OfflineMessageURL'] )['path'];
 	if ( preg_match( ":^$message/(SaveMessage|RetrieveMessages|offlineim)/:", "$url/" ) ) {
 		require $helpers_dir . 'offline.php';
 	} elseif ( $message == $url ) {
@@ -71,6 +81,7 @@ if ( get_option( 'w4os_provide_search' ) == true ) {
 		$register = parse_url( get_option( 'w4os_search_register' ) )['path'];
 		if ( preg_match( ":^$register:", "$url/" ) ) {
 			require $helpers_dir . 'register.php';
+			die();
 		}
 	}
 }

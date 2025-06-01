@@ -30,13 +30,13 @@ class W4OS_Settings_Validation_Page {
     public function admin_page() {
         // Run migration if requested
         if (isset($_POST['run_migration']) && check_admin_referer('w4os_validation', 'w4os_validation_nonce')) {
-            $migration_results = W4OS_Options_Migrator::migrate_wordpress_options();
+            $migration_results = W4OS_Migration_2to3::migrate_wordpress_options();
             echo '<div class="notice notice-success"><p>Migration completed. See results below.</p></div>';
         }
         
         // Get all available WordPress options
-        $wp_options = W4OS_Options_Migrator::get_available_options();
-        $mapped_keys = W4OS_Options_Migrator::get_mapped_ini_keys();
+        $wp_options = W4OS_Migration_2to3::get_available_options();
+        $mapped_keys = W4OS_Migration_2to3::get_mapped_ini_keys();
         
         ?>
         <div class="wrap">
@@ -121,7 +121,7 @@ class W4OS_Settings_Validation_Page {
         echo '<tbody>';
         
         foreach ($mapped_keys as $ini_key) {
-            $mapping = W4OS_Options_Migrator::get_mapping_for_key($ini_key);
+            $mapping = W4OS_Migration_2to3::get_mapping_for_key($ini_key);
             if (!$mapping) continue;
             
             // Get old value using precedence
@@ -250,7 +250,7 @@ class W4OS_Settings_Validation_Page {
         // Special handling for connection strings - decrypt and parse both values
         if (is_string($new_value) && strpos($new_value, 'Data Source=') !== false) {
             // New value is a connection string, parse it to array
-            $new_parsed = $this->parse_connection_string_to_array($new_value);
+            $new_parsed = OSPDO::connectionstring_to_array_to_array($new_value);
             
             // Old value might be encrypted credentials, try to decrypt and compare
             if (is_string($old_value) && class_exists('W4OS3')) {
@@ -361,28 +361,6 @@ class W4OS_Settings_Validation_Page {
         }
         
         return $normalized;
-    }
-    
-    private function parse_connection_string_to_array($connection_string) {
-        if (class_exists('OSPDO') && method_exists('OSPDO', 'connectionstring_to_array')) {
-            return OSPDO::connectionstring_to_array($connection_string);
-        }
-        
-        // Fallback manual parsing
-        $parts = explode(';', trim($connection_string, '; '));
-        $parsed = [];
-        
-        foreach ($parts as $part) {
-            $part = trim($part);
-            if (empty($part)) continue;
-            
-            if (strpos($part, '=') !== false) {
-                list($key, $value) = explode('=', $part, 2);
-                $parsed[trim($key)] = trim($value);
-            }
-        }
-        
-        return $parsed;
     }
     
     private function format_value_display($value) {
