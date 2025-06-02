@@ -11,6 +11,8 @@ if (!defined('ABSPATH') && !defined('OPENSIM_ENGINE')) {
     exit;
 }
 
+require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
+
 class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
     /**
      * Complete mapping of INI sections to WordPress options with precedence rules
@@ -23,46 +25,63 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
      */
     private static $wp_options_mapping = [
         'w4os' => [
-            'W4OS' => [
-                'ModelFirstName' => ['w4os_model_firstname'],
-                'ModelLastName' => ['w4os_model_lastname'],
+            // Parameters not handled by OpenSim, only useful in WordPress
+            'Users' => [
+                'LoginPage' => ['w4os_login_page'],
+                'ReplaceUserName' => ['w4os_userlist_replace_name', 'transform' => 'boolean_to_string'],
+            ],
+            'Profile' => [
                 'ProfileSlug' => ['w4os_profile_slug'],
                 'ProfilePage' => ['w4os_profile_page'],
-                'AssetsSlug' => ['w4os_assets_slug'],
-                'LoginPage' => ['w4os_login_page'],
-                'ShowConfigurationInstructions' => ['w4os_configuration_instructions', 'transform' => 'boolean_to_string'],
-                'PodexRedirectUrl' => ['w4os_podex_redirect_url'],
-                'EnableRegistration' => ['w4os_enable_registration', 'transform' => 'boolean_to_string'],
-                'ExcludeModels' => ['w4os_exclude_models', 'transform' => 'boolean_to_string'],
-                'ExcludeNomail' => ['w4os_exclude_nomail', 'transform' => 'boolean_to_string'],
-                'ExcludeTests' => ['w4os_exclude_tests', 'transform' => 'boolean_to_string'],
-                'UserlistReplaceName' => ['w4os_userlist_replace_name', 'transform' => 'boolean_to_string'],
-                'ProvideAssetServer' => ['w4os_provide_asset_server', 'transform' => 'boolean_to_string'],
-                'RewriteRules' => ['w4os_rewrite_rules', 'transform' => 'boolean_to_string'],
-                'RewriteVersion' => ['w4os_rewrite_version'],
-                'LegacyImported' => ['w4os_legacy_imported', 'transform' => 'boolean_to_string'],
-                'LegacyNoticeDismissed' => ['w4os_legacy_notice_dismissed', 'transform' => 'boolean_to_string'],
-                'TosPageId' => ['w4os_tos_page_id'],
-                'EconomySlug' => ['w4os_economy_slug'],
-                'HelpersSlug' => ['w4os_helpers_slug'],
-                'ProvideGuide' => ['w4os-guide.provide', 'transform' => 'boolean_to_string'],
-                'ProvideSearch' => ['w4os_provide_search', 'transform' => 'boolean_to_string'],
-                'GuideSource' => ['w4os-guide.source'],
-                'GuideUrl' => ['w4os-guide.url'],
                 'ProfileEditPage' => ['w4os_profile_edit_page'],
                 'ProfilePageCustom' => ['w4os_profile_page_custom'],
             ],
-        ],
-        'helpers' => [
+            'Registration' => [
+                'EnableRegistration' => ['w4os_enable_registration', 'transform' => 'boolean_to_string'],
+                'ShowConfigurationInstructions' => ['w4os_configuration_instructions', 'transform' => 'boolean_to_string'],
+                'TosPageId' => ['w4os_tos_page_id'],
+            ],
             'Helpers' => [
-                'OpensimMailSender' => ['w4os_offline_sender'],
+            ],
+        ],
+        'engine' => [
+            // Parameters not handled by OpenSim, usable regardless of framework
+            'Helpers' => [
+                'HelpersSlug' => ['w4os_helpers_slug'],
+            ],
+            'Avatars' => [
+                'ExcludeModels' => ['w4os_exclude_models', 'transform' => 'boolean_to_string'],
+                'ExcludeNomail' => ['w4os_exclude_nomail', 'transform' => 'boolean_to_string'],
+            ],
+            'Models' => [ 
+                'ModelFirstName' => ['w4os_model_firstname'], // Deprecated, use to set MatchPattern if w4os-avatars.models.name not set and match set to First
+                'ModelLastName' => ['w4os_model_lastname'], // Deprecated, use to set MatchPattern if w4os-avatars.models.name not set and match set to Last
+                'Match' => ['w4os-avatars.models.match'],
+                'MatchPattern' => ['w4os-avatars.models.name'],
+                'List' => ['w4os-avatars.models.uuids'],
+            ],
+            'Search' => [
+                'ProvideSearch' => ['w4os_provide_search', 'transform' => 'boolean_to_string'],
                 'HypeventsUrl' => ['w4os_hypevents_url'],
-                'OfflineHelperUri' => ['w4os_offline_helper_uri'],
-                'EconomyHelperUri' => ['w4os_economy_helper_uri'],
-                'SearchRegisterUri' => ['w4os_search_register'],
+            ],
+            'Assets' => [
+                'ProvideAssetServer' => ['w4os_provide_asset_server', 'transform' => 'boolean_to_string'],
+                'AssetsSlug' => ['w4os_assets_slug'],
+                'AssetServerUri' => ['w4os_asset_server_uri'],
                 'InternalAssetServerUri' => ['w4os_internal_asset_server_uri'],
                 'ExternalAssetServerUri' => ['w4os_external_asset_server_uri'],
-                'AssetServerUri' => ['w4os_asset_server_uri'],
+            ],
+            'DestinationGuide' => [
+                'ProvideGuide' => ['w4os-guide.provide', 'transform' => 'boolean_to_string'],
+                'GuideUrl' => ['w4os-guide.url'],
+                'GuideSource' => ['w4os-guide.source'],
+            ],
+            'Economy' => [
+                'EconomySlug' => ['w4os_economy_slug'],
+                'PodexRedirectUrl' => ['w4os_podex_redirect_url'],
+            ],
+            'OfflineMessages' => [
+                'SenderEmail' => ['w4os_offline_sender'],
             ],
         ],
 
@@ -212,7 +231,7 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
         'w4os_exclude_hypergrid',
         'w4os_exclude_models',
         'w4os_exclude_nomail',
-        'w4os_exclude_tests',
+        // 'w4os_exclude_tests',
         'w4os_external_asset_server_uri',
         'w4os_flush_rewrite_rules',
         'w4os_grid_info',
@@ -227,9 +246,9 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
         'w4os-offline',
         'w4os_provide',
         'w4os_provide_asset_server',
-        'w4os-region',
-        'w4os-regions',
-        'w4os-region-settings',
+        // 'w4os-region',
+        // 'w4os-regions',
+        // 'w4os-region-settings',
         'w4os_rewrite_rules',
         'w4os_rewrite_version',
         'w4os-search',

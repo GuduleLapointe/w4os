@@ -30,7 +30,7 @@ define( 'W4OS_NEW_ICON', '<span class="dashicons dashicons-smiley" style="color:
 
 // Load engine first
 require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
-    
+
 // Use bridge implementation to OpenSimulator engine
 class W4OS3 {
     public static $robust_db;
@@ -1020,7 +1020,7 @@ if (is_admin()) {
     require_once W4OS_PLUGIN_DIR . 'wordpress/admin/settings-test.php';
 
 	// Migration v2 to 3
-	require_once W4OS_PLUGIN_DIR . 'helpers/includes/helpers-migration-v2to3.php';
+	// require_once W4OS_PLUGIN_DIR . 'helpers/includes/helpers-migration-v2to3.php';
 	require_once W4OS_PLUGIN_DIR . 'wordpress/includes/w4os-migration-v2to3.php';
 	// Include Debug validation page
 	require_once W4OS_PLUGIN_DIR . '/wordpress/admin/settings-validation.php';
@@ -1030,10 +1030,10 @@ if (is_admin()) {
 
 // Temporary workaround, load legacy helpers configuration.
 // This should be replaced with a proper configuration management system in the future.
-try {
-    require_once dirname(__DIR__) . '/helpers/includes/config.php';
-} catch (Exception $e) {
-    error_log("[ERROR] Failed to load legacy helpers configuration: " . $e->getMessage());
-}
+// try {
+//     require_once dirname(__DIR__) . '/helpers/includes/config.php';
+// } catch (Exception $e) {
+//     error_log("[ERROR] Failed to load legacy helpers configuration: " . $e->getMessage());
+// }
 
 W4OS3::init();

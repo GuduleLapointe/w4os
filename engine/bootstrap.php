@@ -33,6 +33,7 @@ spl_autoload_register(function ($class) {
 require_once OPENSIM_ENGINE_PATH . '/includes/functions.php';
 
 // Load core Engine classes
+require_once OPENSIM_ENGINE_PATH . '/class-ini.php';
 require_once OPENSIM_ENGINE_PATH . '/class-engine-exceptions.php';
 require_once OPENSIM_ENGINE_PATH . '/class-engine-settings.php';
 
@@ -44,9 +45,6 @@ require_once OPENSIM_ENGINE_PATH . '/class-database.php';
 // Temporary fix: Load helper classes for OpenSim compatibility
 // TODO: if they are needed by engine, they should be moved to the engine directory
 $helpers_path = dirname(OPENSIM_ENGINE_PATH) . '/helpers';
-if (file_exists($helpers_path . '/classes/class-ini.php')) {
-    require_once $helpers_path . '/classes/class-ini.php';
-}
 if (file_exists($helpers_path . '/classes/class-error.php')) {
     require_once $helpers_path . '/classes/class-error.php';
 }

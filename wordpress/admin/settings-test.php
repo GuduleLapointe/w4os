@@ -168,39 +168,58 @@ class W4OS_Settings_Test_Page {
         }
         
         try {
-            $success = Engine_Settings::import_from_ini_file($ini_file_path);
-            
-            if ($success) {
-                // Check if the imported settings contain missing constant markers
-                $all_settings = Engine_Settings::all();
-                $missing_constants = array();
-                
-                array_walk_recursive($all_settings, function($value, $key) use (&$missing_constants) {
-                    if (is_string($value) && preg_match_all('/\[MISSING_CONSTANT:([^]]+)\]/', $value, $matches)) {
-                        foreach ($matches[1] as $constant) {
-                            $missing_constants[] = $constant;
-                        }
-                    }
-                });
-                
-                if (!empty($missing_constants)) {
-                    $missing_list = array_unique($missing_constants);
-                    $message = 'INI file imported with warnings. Missing constants: ' . implode(', ', $missing_list) . 
-                               '. Check settings for [MISSING_CONSTANT:...] markers.';
-                    add_settings_error('w4os_settings_test', 'import_result', $message, 'notice-warning');
-                } else {
-                    $message = 'OpenSim INI file imported successfully from: ' . basename($ini_file_path);
-                    add_settings_error('w4os_settings_test', 'import_result', $message, 'updated');
-                }
+            // Create an instance of OpenSim_Ini with the file path
+            $ini = new OpenSim_Ini($ini_file_path);
+            if($ini) {
+                $ini_config = $ini->get_config();
             } else {
-                $message = 'Failed to import OpenSim INI file. Check error logs for details.';
-                add_settings_error('w4os_settings_test', 'import_result', $message, 'error');
+                throw new Exception('Failed to load INI file');
             }
-            
+            if( ! $ini_config ?? false) {
+                throw new Exception('Failed to parse INI file');    
+            }
         } catch (Exception $e) {
-            $message = 'Exception during INI import: ' . $e->getMessage();
+            $message = 'Error parsing INI file: ' . $e->getMessage();
             add_settings_error('w4os_settings_test', 'import_result', $message, 'error');
+            return;
         }
+        
+        error_log(__METHOD__ . '() [DEBUG] Parsed INI file: ' . print_r($ini_config ?? [ 'empty' ], true));
+
+        // try {
+        //     $success = Engine_Settings::import_from_ini_file($ini_file_path);
+            
+        //     if ($success) {
+        //         // Check if the imported settings contain missing constant markers
+        //         $all_settings = Engine_Settings::all();
+        //         $missing_constants = array();
+                
+        //         array_walk_recursive($all_settings, function($value, $key) use (&$missing_constants) {
+        //             if (is_string($value) && preg_match_all('/\[MISSING_CONSTANT:([^]]+)\]/', $value, $matches)) {
+        //                 foreach ($matches[1] as $constant) {
+        //                     $missing_constants[] = $constant;
+        //                 }
+        //             }
+        //         });
+                
+        //         if (!empty($missing_constants)) {
+        //             $missing_list = array_unique($missing_constants);
+        //             $message = 'INI file imported with warnings. Missing constants: ' . implode(', ', $missing_list) . 
+        //                        '. Check settings for [MISSING_CONSTANT:...] markers.';
+        //             add_settings_error('w4os_settings_test', 'import_result', $message, 'notice-warning');
+        //         } else {
+        //             $message = 'OpenSim INI file imported successfully from: ' . basename($ini_file_path);
+        //             add_settings_error('w4os_settings_test', 'import_result', $message, 'updated');
+        //         }
+        //     } else {
+        //         $message = 'Failed to import OpenSim INI file. Check error logs for details.';
+        //         add_settings_error('w4os_settings_test', 'import_result', $message, 'error');
+        //     }
+            
+        // } catch (Exception $e) {
+        //     $message = 'Exception during INI import: ' . $e->getMessage();
+        //     add_settings_error('w4os_settings_test', 'import_result', $message, 'error');
+        // }
     }
     
     private function migrate_wordpress_options() {
@@ -392,8 +411,23 @@ class W4OS_Settings_Test_Page {
                         $constant_names[] = $constant_config;
                     } elseif (is_array($constant_config)) {
                         foreach ($constant_config as $key => $constant_name) {
+                            // Skip 'transform' key and only add string values
                             if ($key !== 'transform' && is_string($constant_name)) {
                                 $constant_names[] = $constant_name;
+                            }
+                        }
+                        
+                        // For db_credentials transforms, also add individual constants
+                        if (isset($constant_config['transform']) && $constant_config['transform'] === 'db_credentials') {
+                            foreach ($constant_config as $key => $base_constant) {
+                                if ($key !== 'transform' && is_string($base_constant)) {
+                                    // Add individual DB credential constants
+                                    $constant_names[] = $base_constant . '_HOST';
+                                    $constant_names[] = $base_constant . '_NAME';
+                                    $constant_names[] = $base_constant . '_USER';
+                                    $constant_names[] = $base_constant . '_PASS';
+                                    $constant_names[] = $base_constant . '_PORT';
+                                }
                             }
                         }
                     }
@@ -549,6 +583,34 @@ class W4OS_Settings_Test_Page {
                 </div>
             </form>
 
+            <!-- Import Real INI File -->
+            <form method="post">
+                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
+                <div class="card">
+                    <h2>Test Real INI File Import</h2>
+                    <div class="inside">
+                        <p>Import from <code>tmp/example.source.ini</code> file:</p>
+                        <p>File status: 
+                            <?php 
+                            $ini_file_path = W4OS_PLUGIN_DIR . 'tmp/example.source.ini';
+                            if (file_exists($ini_file_path)) {
+                                echo '<span style="color: green;">✅ File exists</span>';
+                                echo '<br><small>File size: ' . filesize($ini_file_path) . ' bytes</small>';
+                                echo '<br><small>Last modified: ' . date('Y-m-d H:i:s', filemtime($ini_file_path)) . '</small>';
+                            } else {
+                                echo '<span style="color: red;">❌ File not found at: ' . esc_html($ini_file_path) . '</span>';
+                            }
+                            ?>
+                        </p>
+                        <p>
+                            <input type="hidden" name="action" value="import_ini_file" />
+                            <input type="submit" class="button" value="Import Real INI File" 
+                                   <?php echo file_exists($ini_file_path) ? '' : 'disabled'; ?> />
+                        </p>
+                    </div>
+                </div>
+            </form>
+
             <!-- Test PHP Constants Migration -->
             <form method="post">
                 <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
@@ -673,34 +735,6 @@ class W4OS_Settings_Test_Page {
                             <input type="hidden" name="action" value="import_config_array" />
                             <input type="submit" class="button" value="Import Sample Config Array" />
                             <small> - Tests importing from a PHP array (simulated config)</small>
-                        </p>
-                    </div>
-                </div>
-            </form>
-            
-            <!-- Import Real INI File -->
-            <form method="post">
-                <?php wp_nonce_field('w4os_settings_test', 'w4os_settings_test_nonce'); ?>
-                <div class="card">
-                    <h2>Test Real INI File Import</h2>
-                    <div class="inside">
-                        <p>Import from <code>tmp/example.source.ini</code> file:</p>
-                        <p>File status: 
-                            <?php 
-                            $ini_file_path = W4OS_PLUGIN_DIR . 'tmp/example.source.ini';
-                            if (file_exists($ini_file_path)) {
-                                echo '<span style="color: green;">✅ File exists</span>';
-                                echo '<br><small>File size: ' . filesize($ini_file_path) . ' bytes</small>';
-                                echo '<br><small>Last modified: ' . date('Y-m-d H:i:s', filemtime($ini_file_path)) . '</small>';
-                            } else {
-                                echo '<span style="color: red;">❌ File not found at: ' . esc_html($ini_file_path) . '</span>';
-                            }
-                            ?>
-                        </p>
-                        <p>
-                            <input type="hidden" name="action" value="import_ini_file" />
-                            <input type="submit" class="button" value="Import Real INI File" 
-                                   <?php echo file_exists($ini_file_path) ? '' : 'disabled'; ?> />
                         </p>
                     </div>
                 </div>

@@ -15,6 +15,8 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;
 }
 
+require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
+
 global $SearchDB, $AssetsDB, $ProfileDB, $OpenSimDB;
 
 $helpers_dir = W4OS_PLUGIN_DIR . 'helpers/';

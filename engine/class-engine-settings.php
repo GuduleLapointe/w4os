@@ -47,6 +47,8 @@ class Engine_Settings {
      */
     private static $credentials_loaded = false;
     
+    private static $fields_config = array();
+
     /**
      * Initialize settings.
      * 
@@ -59,6 +61,7 @@ class Engine_Settings {
         self::$credentials_file = self::$config_dir . '/credentials.json';
 
         self::ensure_config_directory();
+        self::setup_fields_config();
         self::load();
     }
     
@@ -647,4 +650,538 @@ class Engine_Settings {
         self::load_credentials();
         return self::$credentials;
     }
+
+    /**
+     * Setup fields configuration for settings forms.
+     * 
+     * This must contain field definitions for at least all options
+     * currently defined in helpers/includes/helpers-migration-v2to3.php
+     * and wordpress/includes/w4os-migration-v2to3.php.
+     * 
+     * @return void
+     */
+    private static function setup_fields_config() {
+        self::$fields_config = array(
+            'w4os' => array(
+                'General' => array(
+                ),
+                'Users' => array(
+                    // Feature related to WP Users
+                    'LoginPage' => array(
+                        'type' => 'select',
+                        'label' => _('Login Page'),
+                        'options' => 'get_wp_pages',
+                        'description' => _('Overrides WP login page.'),
+                    ),
+                    'ReplaceUserName' => array(
+                        'type' => 'checkbox',
+                        'label' => _('Replace User Name'),
+                        'description' => _('If enabled, replaces the user name with the OpenSim avatar name.'),
+                        'default' => true,
+                    ),
+                ),
+                'Profiles' => array(
+                    'ProfileSlug' => array(
+                        'type' => 'text',
+                        'label' => _('Profile Slug'),
+                        'description' => _('The slug used for user profiles in the OpenSim instance.'),
+                    ),
+                    'ProfilePage' => array(
+                        'type' => 'select',
+                        'label' => _('Profile Page'),
+                        'options' => 'get_wp_pages',
+                        'description' => _('The WP page used to display profile.'),
+                    ),
+                ),
+            ),
+            'engine' => array(
+                'General' => array(
+                    'GridLogoURL' => array(
+                        'type' => 'url',
+                        'label' => _('Grid Logo URL'),
+                        'description' => _('URL to the grid logo image.'),
+                    ),
+                    'OSHelpersDir' => array(
+                        'type' => 'path',
+                        'label' => _('OS Helpers Directory'),
+                        'description' => _('Path to the OS helpers directory.'),
+                    ),
+                ),
+                'Avatars' => array(
+                    'ExcludeModels' => array(
+                        'type' => 'checkbox',
+                        'label' => _('Exclude Models'),
+                        'description' => _('Excludes default models from the avatar list and statitics.'),
+                        'default' => true,
+                    ),
+                    'ExcludeNoMail' => array(
+                        'type' => 'checkbox',
+                        'label' => _('Exclude No Mail'),
+                        'description' => _('Consider avatars without email as technical accounts, exclude from the avatar list and statistics.'),
+                        'default' => true,
+                    ),
+                ),
+                'Models' => array(
+                    'Match' => array(
+                        'type' => 'select',
+                        'label' => _('Match rule'),
+                        'options' => array(
+                            'first' => _('First Name'),
+                            'any' => _('Any'),
+                            'last' => _('Last Name'),
+                            'uuid' => _('Custom List'),
+                        ),
+                        'description' => _('The rule used to match avatars to default models, first name, last name, first or last name, or a list of existing avatars.'),
+                        'default' => 'any',
+                    ),
+                    'MatchPattern' => array(
+                        'type' => 'text',
+                        'label' => _('Match Pattern'),
+                        'description' => _('The pattern used to match avatars to default models.'),
+                        'default' => 'Default',
+                    ),
+                    'List' => array(
+                        'type' => 'select2',
+                        'multiple' => true,
+                        'label' => _('Default Models List'),
+                        'description' => _('List of default avatar models to use when match is set to Custom List.'),
+                        'options' => 'get_avatars',
+                    ),
+                ),
+                'Search' => array(
+                    'SearchDB' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('Search Database'),
+                        'description' => _('Database connection string for the search service.'),
+                    ),
+                    'SearchEventsTable' => array(
+                        'type' => 'text',
+                        'label' => _('Search Events Table'),
+                        'description' => _('Name of the table for search events.'),
+                    ),
+                    'SearchRegionTable' => array(
+                        'type' => 'text',
+                        'label' => _('Search Region Table'),
+                        'description' => _('Name of the table for search regions.'),
+                    ),
+                    'HypeventsUrl' => array(
+                        'type' => 'url',
+                        'label' => _('Hypevents URL'),
+                        'description' => _('URL for Hypevents integration.'),
+                    ),
+                ),
+                'OfflineMessages' => array(
+                    'OfflineDB' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('Offline Database'),
+                        'description' => _('Database connection string for the offline message service.'),
+                    ),
+                    'OfflineMessageTable' => array(
+                        'type' => 'text',
+                        'label' => _('Offline Message Table'),
+                        'description' => _('Name of the table for offline messages.'),
+                    ),
+                    'MuteDB' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('Mute Database'),
+                        'description' => _('Database connection string for the mute service.'),
+                    ),
+                    'MuteListTable' => array(
+                        'type' => 'text',
+                        'label' => _('Mute List Table'),
+                        'description' => _('Name of the table for the mute list.'),
+                    ),
+                     'OfflineHelperUri' => array(
+                        'type' => 'url',
+                        'label' => _('Offline Messages Helper URI'),
+                        'description' => _('URI for the offline helper service.'),
+                    ),
+                    'SenderEmail' => array(
+                        'type' => 'email',
+                        'label' => _('Sender A'),
+                        'description' => _('Email address used for sending OpenSim mails.'),
+                    ),
+                ),
+                'Economy' => array(
+                    'CurrencyMoneyTable' => array(
+                        'type' => 'text',
+                        'label' => _('Currency Money Table'),
+                        'description' => _('Name of the table for currency money transactions.'),
+                    ),
+                    'CurrencyTransactionTable' => array(
+                        'type' => 'text',
+                        'label' => _('Currency Transaction Table'),
+                        'description' => _('Name of the table for currency transactions.'),
+                    ),
+                    'CurrencyRate' => array(
+                        'type' => 'float',
+                        'label' => _('Currency Rate'),
+                        'description' => _('Exchange rate for the currency.'),
+                    ),
+                    'GloebitConversionThreshold' => array(
+                        'type' => 'float',
+                        'label' => _('Gloebit Conversion Threshold'),
+                        'description' => _('Threshold for Gloebit conversion.'),
+                    ),
+                    'GloebitConversionTable' => array(
+                        'type' => 'text',
+                        'label' => _('Gloebit Conversion Table'),
+                        'description' => _('Name of the table for Gloebit conversions.'),
+                    ),
+                    'PodexErrorMessage' => array(
+                        'type' => 'text',
+                        'label' => _('Podex Error Message'),
+                        'description' => _('Error message to display for Podex errors.'),
+                    ),
+                    'PodexRedirectUrl' => array(
+                        'type' => 'url',
+                        'label' => _('Podex Redirect URL'),
+                        'description' => _('URL to redirect users after Podex transactions.'),
+                    ),
+                ),
+            ),
+            'robust' => array(
+                'Const' => array(
+                    'BaseHostname' => array(
+                        'type' => 'hostname',
+                        'label' => _('Base Hostname'),
+                        'description' => _('Base hostname for the OpenSim instance.'),
+                    ),
+                    'BaseURL' => array(
+                        'type' => 'url',
+                        'label' => _('Base URL'),
+                        'description' => _('Base URL for the OpenSim instance.'),
+                    ),
+                    'PublicPort' => array(
+                        'type' => 'integer',
+                        'default' => 8002,
+                        'label' => _('Public Port'),
+                        'description' => _('Public port for the OpenSim instance.'),
+                    ),
+                    'PrivatePort' => array(
+                        'type' => 'integer',
+                        'default' => 8003,
+                        'label' => _('Private Port'),
+                        'description' => _('Private port for the OpenSim instance.'),
+                    ),
+                ),
+                'DatabaseService' => array(
+                    'StorageProvider' => array(
+                        'type' => 'select',
+                        'label' => _('Storage Provider'),
+                        'options' => array(
+                            'OpenSim.Data.MySQL.dll' => _('MySQL'),
+                            'OpenSim.Data.PGSQL.dll' => _('PostgreSQL'),
+                        ),
+                        'default' => 'OpenSim.Data.MySQL.dll',
+                        'description' => _('Storage provider for the OpenSim database.'),
+                    ),
+                    'ConnectionString' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('Database Connection String'),
+                        'description' => _('Database connection string for the OpenSim database.'),
+                    ),
+                ),
+                'LoginService' => array(
+                    'SearchURL' => array(
+                        'type' => 'url',
+                        'label' => _('Search URL'),
+                        'description' => _('URL for the in-world search service.'),
+                    ),
+                    'Currency' => array(
+                        'type' => 'text',
+                        'label' => _('Currency Name'),
+                        'description' => _('Name of the currency used in the grid.'),
+                    ),
+                    'DestinationGuide' => array(
+                        'type' => 'url',
+                        'label' => _('Destination Guide URL'),
+                        'description' => _('URL for the destination guide service.'),
+                    ),
+                    'DSTZone' => array(
+                        'type' => 'text',
+                        'label' => _('DST Zone'),
+                        'description' => _('Time zone for Daylight Saving Time rules. Set to "none" if OPENSIM_USE_UTC_TIME is false.'),
+                    ),
+                ),
+                'GridInfoService' => array(
+                    'register' => array(
+                        'type' => 'url',
+                        'label' => _('Registration URL'),
+                        'description' => _('URL for the grid registration service.'),
+                    ),
+                    'password' => array(
+                        'type' => 'url',
+                        'label' => _('Password Recovery URL'),
+                        'description' => _('URL for the password recovery service.'),
+                    ),
+                    'gridname' => array(
+                        'type' => 'text',
+                        'label' => _('Grid Name'),
+                        'description' => _('Name of the OpenSim grid.'),
+                    ),
+                    'gridnick' => array(
+                        'type' => 'text',
+                        'label' => _('Grid Nickname'),
+                        'description' => _('Nickname for the OpenSim grid.'),
+                        'callback' => 'sanitize_slug',
+                    ),
+                    'login' => array(
+                        'type' => 'url',
+                        'label' => _('Login URI'),
+                        'description' => _('URI for the OpenSim login service.'),
+                    ),
+                    'economy' => array(
+                        'type' => 'url',
+                        'label' => _('Economy Helper URL'),
+                        'description' => _('URL for the economy service.'),
+                    ),
+                    'search' => array(
+                        'type' => 'url',
+                        'label' => _('Web Search URL'),
+                        'description' => _('URL for the web search service.'),
+                    ),
+                    'OfflineMessageURL' => array(
+                        'type' => 'url',
+                        'label' => _('Offline Message URL'),
+                        'description' => _('URI for the offline message service.'),
+                    ),
+                ),
+                'Network' => array(
+                    'ConsoleUser' => array(
+                        'type' => 'text',
+                        'label' => _('Console User'),
+                        'description' => _('Username for the OpenSim console.'),
+                    ),
+                    'ConsolePass' => array(
+                        'type' => 'password',
+                        'label' => _('Console Password'),
+                        'description' => _('Password for the OpenSim console user.'),
+                    ),
+                    'ConsolePort' => array(
+                        'type' => 'integer',
+                        'default' => 8004,
+                        'label' => _('Console Port'),
+                        'description' => _('Port for the OpenSim console service.'),
+                    ),
+                ),
+                'AssetService' => array(
+                    'ConnectionString' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('Asset Database Connection String'),
+                        'description' => _('Database connection string for the OpenSim asset service.'),
+                    ),
+                ),
+                'UserProfilesService' => array(
+                    'ConnectionString' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('User Profiles Database Connection String'),
+                        'description' => _('Database connection string for the OpenSim user profiles service.'),
+                    ),
+                ),
+            ),
+            'opensim' => array(
+                'DatabaseService' => array(
+                    'StorageProvider' => array(
+                        'type' => 'select',
+                        'label' => _('Storage Provider'),
+                        'options' => array(
+                            'OpenSim.Data.MySQL.dll' => _('MySQL'),
+                            'OpenSim.Data.PGSQL.dll' => _('PostgreSQL'),
+                        ),
+                        'default' => 'OpenSim.Data.MySQL.dll',
+                        'description' => _('Storage provider for the OpenSim main database.'),
+                    ),
+                    'ConnectionString' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('OpenSim Database Connection String'),
+                        'description' => _('Database connection string for the OpenSim main database.'),
+                    ),
+                ),
+                'Search' => array(
+                    'Module' => array(
+                        'type' => 'text',
+                        'label' => _('Search Module'),
+                        'default' => 'OpenSimSearch',
+                        'description' => _('Module used for the in-world search service.'),
+                    ),
+                    'SearchURL' => array(
+                        'type' => 'url',
+                        'label' => _('In-world Search URL'),
+                        'description' => _('URL for the in-world search service.'),
+                    ),
+                ),
+                'DataSnapshot' => array(
+                    'gridname' => array(
+                        'type' => 'text',
+                        'label' => _('Grid Name'),
+                        'default' => 'robust.GridInfoService.gridname',
+                        'description' => _('Name of the OpenSim grid for data snapshots.'),
+                    ),
+                    'registrars' => array(
+                        'type' => 'url',
+                        'multiple' => true,
+                        'label' => _('Data Registrars'),
+                        'description' => _('Register URLs for search engines.'),
+                        'default' => array(
+                            'DATA_SRV_Self' => '{BaseURL}/helpers/register.php', // Will be honored if ProvideSearch is true
+                            'DATA_SRV_2do' => 'http://2do.directory/helpers/register.php',
+                        ),
+                    ),
+                ),
+                'Economy' => array(
+                    'economymodule' => array(
+                        'type' => 'text',
+                        'label' => _('Economy Module'),
+                        'description' => _('Module used for the economy service.'),
+                    ),
+                    'economy' => array(
+                        'type' => 'url',
+                        'label' => _('Economy URL'),
+                        'description' => _('URL for the economy service.'),
+                    ),
+                    'SellEnabled' => array(
+                        'type' => 'checkbox',
+                        'label' => _('Enable Selling'),
+                        'description' => _('Whether selling is enabled in the economy service.'),
+                        'default' => true,
+                    ),
+                    'PriceUpload' => array(
+                        'type' => 'integer', // We might need to enable float for some unknown yet currency providers, but let's use integer for now
+                        'label' => _('Price Upload'),
+                        'default' => 0,
+                        'description' => _('Price for uploading items in the economy service.'),
+                    ),
+                    'PriceGroupCreate' => array(
+                        'type' => 'integer', // We might need to enable float for some unknown yet currency providers, but let's use integer for now
+                        'label' => _('Price Group Create'),
+                        'default' => 0,
+                        'description' => _('Price for creating groups in the economy service.'),
+                    ),
+                ),
+                'Gloebit' => array(
+                    'Enabled' => array(
+                        'type' => 'checkbox',
+                        'label' => _('Enable Gloebit'),
+                        'description' => _('Whether Gloebit is enabled as the currency provider.'),
+                        'default' => false,
+                    ),
+                    'GLBSpecificStorageProvider' => array(
+                        'type' => 'select',
+                        'label' => _('Gloebit Storage Provider'),
+                        'options' => array(
+                            'OpenSim.Data.MySQL.dll' => _('MySQL'),
+                            'OpenSim.Data.PGSQL.dll' => _('PostgreSQL'),
+                        ),
+                        'default' => 'OpenSim.Data.MySQL.dll',
+                        'description' => _('Storage provider for Gloebit transactions.'),
+                    ),
+                    'GLBSpecificConnectionString' => array(
+                        'type' => 'db_credentials',
+                        'label' => _('Gloebit Database Connection String'),
+                        'description' => _('Database connection string for Gloebit transactions.'),
+                    ),
+                    'GLBOwnerEmail' => array(
+                        'type' => 'email',
+                        'label' => _('Gloebit Owner Email'),
+                        'default' => '{helpers.SenderEmail}',
+                        'description' => _('Email address of the Gloebit owner.'),
+                    ),
+                ),
+                'Messaging' => array(
+                    'Enabled' => array(
+                        'type' => 'checkbox',
+                        'label' => _('Enable Offline Messages'),
+                        'description' => _('Whether offline messages are enabled.'),
+                        'default' => true,
+                    ),
+                    'OfflineMessageModule' => array(
+                        'type' => 'select',
+                        'label' => _('Offline Message Module'),
+                        'options' => array(
+                            'OfflineMessageModule' => _('Offline Message Module'),
+                            'Offline Message Module V2' => _('Offline Message Module V2'),
+                        ),
+                        'default' => 'OfflineMessageModule',
+                        'description' => _('Module used for handling offline messages.'),
+                        'condition' => array(
+                            'field' => 'Messaging.Enabled',
+                            'value' => true,
+                        ),
+                    ),
+                    'OfflineMessageURL' => array(
+                        'type' => 'url',
+                        'label' => _('Offline Message URL'),
+                        'description' => _('URI for the offline message service.'),
+                        'condition' => array(
+                            'field' => 'Messaging.Enabled',
+                            'value' => true,
+                        ),
+                    ),
+                ),
+            ),
+            'moneyserver' => array(
+                'MySql' => array(
+                    'hostname' => array(
+                        'type' => 'hostname',
+                        'label' => _('MySQL server Hostname'),
+                        'description' => _('Hostname for the MySQL database used by the Money Server.'),
+                    ),
+                    'port' => array(
+                        'type' => 'integer',
+                        'default' => 3306,
+                        'label' => _('MySQL Port'),
+                        'description' => _('Port for the MySQL database used by the Money Server.'),
+                    ),
+                    'database' => array(
+                        'type' => 'text',
+                        'label' => _('Database name'),
+                        'description' => _('Name of the MySQL database used by the Money Server.'),
+                    ),
+                    'username' => array(
+                        'type' => 'text',
+                        'label' => _('MySQL Username'),
+                        'description' => _('Username for the MySQL database used by the Money Server.'),
+                    ),
+                    'password' => array(
+                        'type' => 'password',
+                        'label' => _('MySQL Password'),
+                        'description' => _('Password for the MySQL database used by the Money Server.'),
+                    ),
+                ),
+                'MoneyServer' => array(
+                    'Enabled' => array(
+                        'type' => 'checkbox',
+                        'label' => _('Enable Money Server'),
+                        'description' => _('Whether the Money Server is enabled.'),
+                        'default' => true,
+                    ),
+                    'BankerAvatar' => array(
+                        'type' => 'uuid',
+                        'label' => _('Banker Avatar'),
+                        'description' => _('UUID of the banker for the Money Server.'),
+                    ),
+                    // Found both MoneyScriptAccessKey in some snippets, I think the good  one is MoneyScriptAccessKey
+                    // 'ScriptKey' => array(
+                    'MoneyScriptAccessKey' => array(
+                        'type' => 'text',
+                        'label' => _('Script Key'),
+                        'description' => _('Key used for scripts to access the Money Server.'),
+                    ),
+                    // 'Rate' => array(
+                    //     'type' => 'float',
+                    //     'label' => _('Currency Rate'),
+                    //     'default' => 4.0, // 4/1000 is the most common rate
+                    //     'description' => _('Exchange rate for the currency used by the Money Server.'),
+                    // ),
+                    // 'RatePer' => array(
+                    //     'type' => 'integer',
+                    //     'label' => _('Rate Per'),
+                    //     'default' => 'USD',
+                    //     'description' => _('Currency unit for the exchange rate (e.g., USD, EUR).'),
+                    // ),
+                ),
+            ),
+        );
+    }        
 }
