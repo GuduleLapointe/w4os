@@ -111,17 +111,17 @@ class Engine_Settings {
         }
 
         foreach( $ini_files as $ini_file ) {
-            $parsed = parse_ini_file($ini_file, true);
             $file_key = basename($ini_file, '.ini');
             if (isset(self::$settings[$file_key])) {
                 // Ignore, we already processed it for some reason
+                continue;
+            }
+            $parsed = parse_ini_file_decode($ini_file, true);
+            if ($parsed === false) {
+                error_log("Engine_Settings: Failed to parse settings file: " . $ini_file);
+                self::$settings = array();
             } else {
-                if ($parsed === false) {
-                    error_log("Engine_Settings: Failed to parse settings file: " . $ini_file);
-                    self::$settings = array();
-                } else {
-                    self::$settings[$file_key] = $parsed;
-                }
+                self::$settings[$file_key] = $parsed;
             }
         }
 

@@ -30,6 +30,8 @@ spl_autoload_register(function ($class) {
     }
 });
 
+require_once OPENSIM_ENGINE_PATH . '/includes/functions.php';
+
 // Load core Engine classes
 require_once OPENSIM_ENGINE_PATH . '/class-engine-exceptions.php';
 require_once OPENSIM_ENGINE_PATH . '/class-engine-settings.php';

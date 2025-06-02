@@ -152,7 +152,7 @@ class W4OS_Settings_Test_Page {
     
     private function import_ini_file() {
         // Path to the example .ini file
-        $ini_file_path = W4OS_PLUGIN_DIR . 'tmp/example.engine.ini';
+        $ini_file_path = W4OS_PLUGIN_DIR . 'tmp/example.source.ini';
         
         if (!file_exists($ini_file_path)) {
             $message = 'Example INI file not found at: ' . $ini_file_path;
@@ -684,10 +684,10 @@ class W4OS_Settings_Test_Page {
                 <div class="card">
                     <h2>Test Real INI File Import</h2>
                     <div class="inside">
-                        <p>Import from <code>tmp/example.engine.ini</code> file:</p>
+                        <p>Import from <code>tmp/example.source.ini</code> file:</p>
                         <p>File status: 
                             <?php 
-                            $ini_file_path = W4OS_PLUGIN_DIR . 'tmp/example.engine.ini';
+                            $ini_file_path = W4OS_PLUGIN_DIR . 'tmp/example.source.ini';
                             if (file_exists($ini_file_path)) {
                                 echo '<span style="color: green;">✅ File exists</span>';
                                 echo '<br><small>File size: ' . filesize($ini_file_path) . ' bytes</small>';
