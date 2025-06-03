@@ -203,13 +203,83 @@ class Engine_Settings {
     /**
      * Get a credential value (from separate JSON file)
      * 
-     * @param string $key Credential key (URL or host:port format)
+     * @param string $key Credential key (service or host:port format)
      * @param mixed $default Default value if credential doesn't exist
      * @return mixed Credential value
      */
-    public static function get_credential($key, $default = null) {
+    public static function get_credentials($key, $default = null) {
         self::load_credentials();
-        return isset(self::$credentials[$key]) ? self::$credentials[$key] : $default;
+        if (isset(self::$credentials[$key])) {
+            return self::$credentials[$key];
+        }
+
+        switch($key) {
+            case 'robust':
+            case 'robust.DatabaseService.ConnectionString':
+                $service_url = self::get('robust.GridInfoService.login');
+                // Default to empty string if not set
+                break;
+            // case 'opensim':
+            // case 'opensim.DatabaseService.ConnectionString':
+            //     // Default to empty string if not set
+            //     return '';
+            default:
+                // Return default value for any other key
+                return $default;
+        }
+
+        if(!empty($service_url) && isset(self::$credentials[$service_url])) {
+            return self::$credentials[$service_url];
+        }
+
+        return $default;
+    }
+
+    /**
+     * Get DB credentials for a specific service
+     */
+    public static function get_db_credentials($key, $default = array()) {
+        if(!is_array($default)) {
+            $default = [$default];
+        }
+        $credentials = self::get_credentials($key, $default);
+        if(!is_array($credentials)) {
+            error_log("Engine_Settings: get_db_credentials expected an array, got: " . print_r($credentials, true) . ' in ' . __FILE__ . ':' . __LINE__);
+            return $default;
+        }
+        $credentials = array_filter(self::get_credentials($key, $default));
+        if (empty($credentials)) {
+            return $default;
+        }
+        if(! empty(array_filter($credentials['db'] ?? array()))) {
+            return $credentials['db'];
+        }
+        return $credentials;      
+    }
+
+    /**
+     * Get Console credentials for a specific service
+     */
+    public static function get_console_credentials($key, $default = array()) {
+        if(!is_array($default)) {
+            $default = [$default];
+        }
+        $credentials = self::get_credentials($key, $default);
+        if(!is_array($credentials)) {
+            return $default;
+        }
+        $credentials = array_filter($credentials);
+        if (empty($credentials)) {
+            return $default;
+        }
+        if(! empty(array_filter($credentials['console'] ?? array()))) {
+            $console = $credentials['console'];
+        }
+        if(isset($console['user'] ) && isset($console['pass']) && isset($console['port'])) {
+            // If host and port are set, return them as console credentials
+            return $console;
+        }
+        return false;
     }
     
     /**
@@ -355,17 +425,32 @@ class Engine_Settings {
     public static function get($key, $default = null) {
         self::load();
         
-        // Handle section.key format
-        if (strpos($key, '.') !== false) {
-            list($section, $setting_key) = explode('.', $key, 2);
-            return isset(self::$settings[$section][$setting_key]) 
-                ? self::$settings[$section][$setting_key] 
-                : $default;
+        $default_instance = 'engine'; // Should happen, but just in case
+        $default_section = 'Default'; // Should happen be used, but just in case
+
+        if(is_array($key)) {
+            // Should never happen, debug, backtrace and die.
+            throw new Error("Engine_Settings: Invalid key type, expected string, got array.");
+            die('I though I\'d already be dead by now.');
+            // error_log("Engine_Settings: Invalid key type, expected string, got array. Key: " . print_r($key, true));
+            // error_log("Engine_Settings: Backtrace: " . print_r(debug_backtrace(), true));
         }
-        
-        // Handle flat key (default section)
-        return isset(self::$settings['default'][$key]) 
-            ? self::$settings['default'][$key] 
+
+        $key_parts = explode('.', $key);
+        // Insert $default_section in top of parts if count < 2
+        if (count($key_parts) < 2) {
+            array_unshift($key_parts, $default_section);
+        }
+        // Insert $default_instance in top of parts if count < 3
+        if (count($key_parts) < 3) {
+            array_unshift($key_parts, $default_instance);
+        }
+        $instance = $key_parts[0];
+        $section = $key_parts[1];
+        $setting_key = implode('.', array_slice($key_parts, 2));
+
+        return isset(self::$settings[$instance][$section][$setting_key]) 
+            ? self::$settings[$instance][$section][$setting_key] 
             : $default;
     }
     

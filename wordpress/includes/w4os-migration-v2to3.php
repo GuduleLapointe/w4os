@@ -650,7 +650,7 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
                         }
                         
                         // Store the encrypted value directly (it's already encrypted by W4OS3)
-                        $existing_credentials[$credential_key] = $encrypted_value;
+                        $existing_credentials[$credential_key] = W4OS3::decrypt($encrypted_value);
                         $migrated_count++;
                     }
                 }

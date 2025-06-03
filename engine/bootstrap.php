@@ -36,6 +36,7 @@ require_once OPENSIM_ENGINE_PATH . '/includes/functions.php';
 require_once OPENSIM_ENGINE_PATH . '/class-ini.php';
 require_once OPENSIM_ENGINE_PATH . '/class-engine-exceptions.php';
 require_once OPENSIM_ENGINE_PATH . '/class-engine-settings.php';
+require_once OPENSIM_ENGINE_PATH . '/class-installation-wizard.php';
 
 // Load OpenSimulator classes
 require_once OPENSIM_ENGINE_PATH . '/class-opensim.php';

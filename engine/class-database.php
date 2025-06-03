@@ -217,6 +217,10 @@ class OSPDO extends PDO {
      * @return array Array with keys: saveformat, type, host, port, name, user, pass
      */
 	public static function connectionstring_to_array( $connectionstring, $provider = 'mysql' ) {
+        if(is_array($connectionstring)) {
+            // If already an array, just return it
+            return $connectionstring;
+        }
 		$parts = explode( ';', $connectionstring );
 		$creds = array();
 		foreach ( $parts as $part ) {

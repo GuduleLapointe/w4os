@@ -1001,6 +1001,7 @@ require_once __DIR__ . '/class-w4os3-model.php';
 require_once __DIR__ . '/class-w4os3-avatar.php';
 require_once __DIR__ . '/class-w4os3-flux.php';
 require_once __DIR__ . '/class-w4os3-region.php';
+require_once __DIR__ . '/class-w4os3-installation-wizard.php';
 
 // Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.
 if ( w4os_is_front_end() ) {

@@ -40,7 +40,42 @@ function is_uuid( $uuid, $nullok = false, $strict = false ) {
 }
 
 /**
- * Sanitize a destination URI or URL
+ * Sanitize a URL, removing spaces and invalid characters.
+ * For any king of URL. For OpenSim teleport links, use opensim_sanitize_uri() instead.
+ *
+ * @param  string $url  The URL to sanitize.
+ * @return string       The sanitized URL.
+ */
+if(! function_exists( 'sanitize_url' ) ) {
+	// If sanitize_url is not defined, define it
+	// This is to avoid conflicts with WordPress or other frameworks that may have their own sanitize_url function
+	function sanitize_url( $url ) {
+		$url = trim( $url );
+		$url = str_replace( ' ', '+', $url );
+		$url = filter_var( $url, FILTER_SANITIZE_URL );
+		return $url;
+	}
+}
+	
+function sanitize_id( $string ) {
+	if( empty( $string ) ) {
+		return false;
+	}
+	
+	$id = $string;
+	try {
+		$id = @transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $id );
+	} catch ( Error $e ) {
+		error_log( 'Warning (php-intl missing) ' . $e->getMessage() );
+		$id = $string;
+	}
+	$id = preg_replace('/[-_\s]+/', '-', $id );
+		
+	return $id;
+}
+
+/**
+ * Sanitize a destination URI or URL, specifically for OpenSim teleport links.
  *
  * @param  string  $url                             url or uri (secondlife:// url, hop:// url, region name...)
  * @param  string  $gatekeeperURL           default login uri to add to urls sithout host:port

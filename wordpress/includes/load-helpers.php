@@ -15,6 +15,32 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;
 }
 
+// Add Apache rewrite rules for helpers directory
+add_action('init', function() {
+	$plugin_dir = basename(W4OS_PLUGIN_DIR);
+	
+	$helpers_slug = w4os_get_option('w4os_helpers_slug', 'helpers');
+	// Add external rewrite rules that will be written to .htaccess
+	// This bypasses WordPress entirely for helpers/ URLs
+	add_rewrite_rule(
+		"^$helpers_slug/(.*)$",
+		'wp-content/plugins/' . $plugin_dir . '/helpers/$1',
+		'top'
+	);
+});
+
+// Add filter to modify .htaccess content directly
+add_filter('mod_rewrite_rules', function($rules) {
+	$plugin_dir = basename(W4OS_PLUGIN_DIR);
+	$helpers_slug = w4os_get_option('w4os_helpers_slug', 'helpers');
+	
+	// Add rule before WordPress rules to bypass WordPress entirely
+	$helpers_rule = "# W4OS Helpers bypass\n";
+	$helpers_rule .= "RewriteRule ^$helpers_slug/(.*)$ wp-content/plugins/" . $plugin_dir . "/helpers/$1 [L]\n\n";
+	
+	return $helpers_rule . $rules;
+});
+
 require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
 
 global $SearchDB, $AssetsDB, $ProfileDB, $OpenSimDB;
@@ -33,6 +59,12 @@ if(! is_array( $grid_info ) ) {
 }
 
 $url = parse_url( getenv( 'REQUEST_URI' ), PHP_URL_PATH );
+
+// Handle Setup Wizard
+if ( preg_match( ":^/helpers/install-wizard\.php:", $url ) ) {
+	require $helpers_dir . 'install-wizard.php';
+	die();
+}
 
 if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( $grid_info['economy'] ) ) {
 	$economy = parse_url( $grid_info['economy'] )['path'] ?? 'helpers';
