@@ -1,6 +1,27 @@
 # Code Reorganization Migration Plan
 
-This document tracks the migration of code from v1/v2/v3 folders to the new engine/wordpress/helpers structure.
+## Background & Context
+
+This migration addresses fundamental architectural limitations that have accumulated over 10 years of development. The w4os project originated as a merge of multiple independent OpenSimulator-related projects, each with their own structure and standards. While initially designed to maintain backwards compatibility and allow cross-updates with original projects, the reality is that these original projects have rarely been updated, and cross-pollination of improvements has not occurred.
+
+The immediate catalyst for this restructuring was a user registration issue: OpenSimulator allows multiple avatars to share the same email address, but WordPress does not allow multiple users with the same email. The old architecture tightly coupled WordPress users with avatars, making this a complex problem to solve. However, addressing this revealed deeper structural issues that needed comprehensive resolution.
+
+**Key challenges with the current codebase:**
+- 10+ years of backwards compatibility layers creating technical debt
+- Mixed architectural patterns from merged projects
+- Tight coupling between WordPress users and OpenSim avatars
+- Scattered configuration across multiple systems (PHP constants, WordPress options, INI files)
+- Difficult maintenance and feature development due to structural complexity
+
+**V3 represents a breaking change** that will:
+- ✅ Decouple avatar management from WordPress user accounts
+- ✅ Establish a clean, modern architecture for future development
+- ✅ Provide unified configuration management through Engine Settings
+- ✅ Enable easier creation of additional modules and features
+- ✅ Significantly improve both user and administrator experience
+- ✅ Allow the project to evolve sustainably for the next decade
+
+This document tracks the migration of code from the legacy v1/v2/v3 folder structure to the new engine/wordpress/helpers architecture.
 
 ## Current Structure (to be migrated from):
 - v1/ - Legacy WordPress integration
