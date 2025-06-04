@@ -64,12 +64,21 @@ function sanitize_id( $string ) {
 	
 	$id = $string;
 	try {
-		$id = @transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $id );
+		// Transliterate to Latin, remove diacritics, lowercase, but keep dashes and underscores
+		$id = @transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; Lower();", $id );
 	} catch ( Error $e ) {
 		error_log( 'Warning (php-intl missing) ' . $e->getMessage() );
-		$id = $string;
+		$id = strtolower( $id );
 	}
-	$id = preg_replace('/[-_\s]+/', '-', $id );
+	// Remove all punctuation except dashes and underscores
+	$id = preg_replace('/[^\p{L}\p{N}_\-\s]/u', '', $id);
+	// Replace multiple separators with a single one
+	$sep="[-_\s]";
+	$id = preg_replace("/$sep* $sep*/", '_', $id );
+	$id = preg_replace("/$sep*_$sep*/", '_', $id );
+	$id = preg_replace("/$sep*-$sep*/", '-', $id );
+	// Remove leading/trailing dashes
+	$id = trim($id, '-');
 		
 	return $id;
 }
