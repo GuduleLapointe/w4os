@@ -56,7 +56,18 @@ if(! function_exists( 'sanitize_url' ) ) {
 		return $url;
 	}
 }
-	
+
+/**
+ * Does nothing, just returns the string unchanged. Meant to replace dozens of 
+ * unnecessary calls to htmlspecialchars() in the code.
+ */
+function do_not_sanitize($string, $foo='', $bar='', $john='', $doe='' ) {
+	return $string;
+}
+
+/**
+ * Sanitize a string to be used as an ID or slug, like for html container id, css class, etc.
+ */
 function sanitize_id( $string ) {
 	if( empty( $string ) ) {
 		return false;

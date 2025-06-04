@@ -35,7 +35,9 @@
 class OpenSim_Field {
     private $field_id;
     private $field_config;
-    
+    private $has_error = false;
+    private $error_message = '';
+
     public function __construct($field_id, $field_config = array()) {
         if(empty($field_id)) {
             throw new InvalidArgumentException('Field ID cannot be empty');
@@ -63,6 +65,14 @@ class OpenSim_Field {
             $field_config
         );
     }
+
+    /**
+     * Set field error for validation display
+     */
+    public function set_error($error_message) {
+        $this->has_error = true;
+        $this->error_message = $error_message;
+    }
     
     /**
      * Render field based on type
@@ -84,7 +94,7 @@ class OpenSim_Field {
                 return $this->render_console_credentials();
             case 'db_credentials':
                 return $this->render_db_credentials();
-            case 'ini_files':
+            case 'file-ini':
                 return $this->render_ini_files();
             default:
                 return $this->render_standard();
@@ -95,6 +105,10 @@ class OpenSim_Field {
      * Check if field should be shown based on conditions
      */
     private function should_show_field() {
+        if (isset($this->field_config['enable']) && $this->field_config['enable'] === false) {
+            return false;
+        }
+
         if (empty($this->field_config['condition'])) {
             return true;
         }
@@ -131,13 +145,19 @@ class OpenSim_Field {
         
         $html = '<div class="form-group mb-3">';
         if ($label) {
-            $html .= '<label class="form-label" for="' . $this->field_id . '">' . htmlspecialchars($label) . $required_mark . '</label>';
+            $html .= '<label class="form-label" for="' . $this->field_id . '">' . do_not_sanitize($label) . $required_mark . '</label>';
         }
         
-        $html .= '<input type="' . $type . '" class="form-control" id="' . $this->field_id . '" name="' . $this->field_id . '" ';
-        $html .= 'value="' . htmlspecialchars($value) . '" ';
+        // Add Bootstrap classes based on field state
+        $input_classes = ['form-control'];
+        if ($this->has_error) {
+            $input_classes[] = 'is-invalid';
+        }
+        
+        $html .= '<input type="' . $type . '" class="' . implode(' ', $input_classes) . '" id="' . $this->field_id . '" name="' . $this->field_id . '" ';
+        $html .= 'value="' . do_not_sanitize($value) . '" ';
         if ($placeholder) {
-            $html .= 'placeholder="' . htmlspecialchars($placeholder) . '" ';
+            $html .= 'placeholder="' . do_not_sanitize($placeholder) . '" ';
         }
         if ($required) {
             $html .= 'required ';
@@ -165,13 +185,16 @@ class OpenSim_Field {
         $required_mark = $required ? '<span class="text-danger">*</span>' : '';
         $html = '<div class="config-choice mb-4">';
         if ($label) {
-            $html .= '<h5 class="mb-3">' . htmlspecialchars($label) . $required_mark . '</h5>';
+            $html .= '<h5 class="mb-3">' . do_not_sanitize($label) . $required_mark . '</h5>';
         }
         
         // Hidden input to store the selected value
-        $html .= '<input type="hidden" name="' . $this->field_id . '" id="' . $this->field_id . '" value="' . htmlspecialchars($value) . '"' . ($required ? ' required' : '') . '>';
+        $html .= '<input type="hidden" name="' . $this->field_id . '" id="' . $this->field_id . '" value="' . do_not_sanitize($value) . '"' . ($required ? ' required' : '') . '>';
         
         foreach ($options as $option_value => $option_config) {
+            if(isset($option_config['enable']) && $option_config['enable'] === false) {
+                continue; // Skip disabled options
+            }
             // Handle both string and array option configs
             if (is_array($option_config)) {
                 $option_label = $option_config['label'] ?? $option_value;
@@ -198,7 +221,7 @@ class OpenSim_Field {
             $html .= '<div class="d-flex align-items-center justify-content-between">';
             $html .= '<div class="d-flex align-items-center">';
             $html .= self::render_icon($icon);
-            $html .= '<span class="fw-semibold">' . htmlspecialchars($option_label) . '</span>';
+            $html .= '<span class="fw-semibold">' . do_not_sanitize($option_label) . '</span>';
             $html .= '</div>';
             $html .= '</div>';
             
@@ -239,7 +262,6 @@ class OpenSim_Field {
             $icon = '<i class="' . sanitize_id($icon) . '"></i>'; 
         }
         $icon_html = ' <span class="method-icon fs-4 p-1"> ' . $icon . '</span> ';
-        error_log('render_icon: ' . $icon_html);
         return $icon_html;
     }
         
@@ -256,7 +278,7 @@ class OpenSim_Field {
         
         $html = '<div class="connection-methods mb-4">';
         if ($label) {
-            $html .= '<h5 class="mb-3">' . htmlspecialchars($label) . $required_mark . '</h5>';
+            $html .= '<h5 class="mb-3">' . do_not_sanitize($label) . $required_mark . '</h5>';
         }
         
         foreach ($options as $option_value => $option_config) {
@@ -284,14 +306,14 @@ class OpenSim_Field {
             $html .= '<div class="' . $header_classes . '" onclick="selectMethod(\'' . $option_value . '\')" style="cursor: pointer;">';
             $html .= '<div class="d-flex align-items-center">';
             $html .= '<input type="radio" name="' . $this->field_id . '" value="' . $option_value . '" ' . $checked . ($required ? ' required' : '') . ' class="me-3">';
-            $html .= '<span class="method-title fw-semibold">' . htmlspecialchars($option_label) . '</span>';
+            $html .= '<span class="method-title fw-semibold">' . do_not_sanitize($option_label) . '</span>';
             $html .= '</div>';
             $html .= self::render_icon($option_icon ?? '');
             $html .= '</div>';
             
             $html .= '<div class="' . $body_classes . '" id="' . $option_value . '-body">';
             if ($option_description) {
-                $html .= '<p class="text-muted mb-3">' . htmlspecialchars($option_description) . '</p>';
+                $html .= '<p class="text-muted mb-3">' . do_not_sanitize($option_description) . '</p>';
             }
             
             // Render option fields
@@ -320,7 +342,7 @@ class OpenSim_Field {
         $description = $this->field_config['description'] ?? '';
         
         $html = '<div class="credentials-section">';
-        $html .= '<h6>' . htmlspecialchars($label) . '</h6>';
+        $html .= '<h6>' . do_not_sanitize($label) . '</h6>';
         
         if ($description) {
             $html .= '<p class="text-muted small">' . $description . '</p>';
@@ -361,7 +383,7 @@ class OpenSim_Field {
         $is_main_db = strpos($this->field_id, 'robust.DatabaseService') !== false;
         
         $html = '<div class="credentials-section">';
-        $html .= '<h6>' . htmlspecialchars($label) . '</h6>';
+        $html .= '<h6>' . do_not_sanitize($label) . '</h6>';
         
         if ($description) {
             $html .= '<p class="text-muted small">' . $description . '</p>';
@@ -422,29 +444,37 @@ class OpenSim_Field {
      * Render .ini files upload fields
      */
     private function render_ini_files() {
+        $field_id = $this->field_id;
         $label = $this->field_config['label'] ?? _('.ini files');
         $description = $this->field_config['description'] ?? '';
+        $required = $this->field_config['required'] ?? false ? 'required' : '';
         
         $html = '<div class="ini-files-section">';
-        $html .= '<h6>' . htmlspecialchars($label) . '</h6>';
+        $html .= '<h6>' . do_not_sanitize($label) . '</h6>';
         
         if ($description) {
             $html .= '<p class="text-muted small">' . $description . '</p>';
         }
         
         // Only Robust.HG.ini for grid configuration, OpenSim.ini comes later for regions
-        $html .= '<div class="row">';
-        $html .= '<div class="col-md-6">';
-        $html .= $this->render_inline_field('robust_ini_path', _('File path on server'), 'text', '', false);
-        $html .= '</div>';
-        $html .= '<div class="col-md-6">';
-        $html .= $this->render_inline_field('robust_ini_upload', _('Upload file'), 'file', '', false, false, '.ini');
-        $html .= '</div>';
-        $html .= '</div>';
-        
-        $html .= '<div class="form-text">';
-        $html .= _('Provide either a file path on the server or upload a file from your computer.');
-        $html .= '</div>';
+        $html .= sprintf(
+            '<fieldset class="input-group">
+                <label class="input-group-text" for="%1$s[path]">%2$s</label>
+                <input type="text" class="form-control" id="%1$s[path]" name="%1$s[path]" value="%3$s" placeholder="%4$s" %5$s oninput="toggleMutualExclusive(this)" onchange="toggleMutualExclusive(this)">
+                <label class="input-group-text bg-transparent border-0" for="%1$s[upload]">%6$s</label>
+                <input type="file" class="form-control" id="%1$s[upload]" name="%1$s[upload]" accept=".ini" %7$s onchange="toggleMutualExclusive(this)">
+                <button type="button" class="btn btn-outline-secondary" onclick="clearInputField(\'%1$s[upload]\')">
+                    <i class="bi bi-x"></i>
+                </button>
+            </fieldset>',
+            $field_id,
+            _('On server'),
+            $this->get_field_value()['path'] ?? '',
+            _('e.g. /opt/opensim/bin/Robust.HG.ini'),
+            $required,
+            _('Or upload'),
+            $required
+        );
         
         $html .= '</div>';
         
@@ -457,13 +487,13 @@ class OpenSim_Field {
     private function render_inline_field($name, $label, $type, $value = '', $required = false, $readonly = false, $accept = '') {
         $required_attr = $required ? 'required' : '';
         $readonly_attr = $readonly ? 'readonly' : '';
-        $accept_attr = $accept ? 'accept="' . htmlspecialchars($accept) . '"' : '';
+        $accept_attr = $accept ? 'accept="' . do_not_sanitize($accept) . '"' : '';
         $required_mark = $required ? '<span class="text-danger">*</span>' : '';
         
         $html = '<div class="form-group mb-2">';
-        $html .= '<label class="form-label" for="' . $name . '">' . htmlspecialchars($label) . $required_mark . '</label>';
+        $html .= '<label class="form-label" for="' . $name . '">' . do_not_sanitize($label) . $required_mark . '</label>';
         $html .= '<input type="' . $type . '" class="form-control" id="' . $name . '" name="' . $name . '" ';
-        $html .= 'value="' . htmlspecialchars($value) . '" ' . $required_attr . ' ' . $readonly_attr . ' ' . $accept_attr . '>';
+        $html .= 'value="' . do_not_sanitize($value) . '" ' . $required_attr . ' ' . $readonly_attr . ' ' . $accept_attr . '>';
         $html .= '</div>';
         
         return $html;

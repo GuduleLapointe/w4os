@@ -23,10 +23,23 @@ class Installation_Wizard {
      * Get wizard content for rendering
      */
     public function get_content() {
+        // Handle reset request
+        if (isset($_POST['reset_wizard'])) {
+            $this->reset();
+            // Redirect to avoid resubmission
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+            exit;
+        }
+        
+        // Process form if submitted
+        if (!empty($_POST['form_id'])) {
+            $result = $this->form->process();
+            // Form processing handles step advancement internally
+        }
+        
         // Enqueue required assets
-        Helpers::enqueue_style('helpers-wizard', 'css/wizard.css');
-        Helpers::enqueue_script('helpers-wizard', 'js/wizard.js');
-        Helpers::enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js');
+        Helpers::enqueue_style('helpers-form', 'css/form.css');
+        Helpers::enqueue_script('helpers-form', 'js/form.js');
         
         return $this->form->render_form();
     }
@@ -43,8 +56,8 @@ class Installation_Wizard {
         $asset_db = Engine_Settings::get_db_credentials('asset');
         $profiles_db = Engine_Settings::get_db_credentials('profiles');
         
-        $legacy_detected = false;
-        $config_detected = !empty($grid_name) || !empty($login_uri);
+        $default_config_method = 'ini_import'; // Default to ini import if no config detected
+        $config_detected = (!empty($grid_name) || !empty($login_uri)) ? 'current_config' : null;
         if(!$config_detected) {
             // TODO: Check for legacy configuration:
             // If some mandatory constants are defined, try to import constants
@@ -52,6 +65,7 @@ class Installation_Wizard {
             // $legacy_detected = !empty($grid_name) || !empty($login_uri);
             // $grid_name = Engine_Settings::get('robust.GridInfoService.gridname');
             // $login_uri = Engine_Settings::get('robust.GridInfoService.login');
+            // $config_detected = (!empty($grid_name) || !empty($login_uri)) ? 'import_legacy' : null;
         }
         // Build detected label for current_config option
         $grid_label = ($config_detected || $legacy_detected) ? "{$grid_name} {$login_uri}" : '';
@@ -71,59 +85,63 @@ class Installation_Wizard {
             'multistep' => true,
             'callback' => array($this, 'process_form'),
             'steps' => array(
-                'welcome' => array(
-                    'title' => _('Base Configuration'),
+                'initial_config' => array(
+                    'title' => _('Initial Configuration'),
                     'description' => join('<br>', array(
                         _('Which base do you want to use for your OpenSimulator installation?'),
                         _('You can adjust these settings in the next steps.'),
                     ) ),
+                    'callback' => 'process_initial_config',
                     'fields' => array(
                         'config_method' => array(
                             'type' => 'select-nested',
-                            'description' => 'DEBUG: if there is a description here, it must appear between the label and the options.',
+                            'default' => $config_detected ?? 'ini_import',
+                            'required' => true,
                             'options' => array(
                                 'current_config' => array(
-                                    'label' => sprintf(_('Use current configuration (%s)'), $grid_label),
-                                    'description' => _('The configuration is already done, you can use the wizard to review and adjust settings.'),
+                                    'label' => sprintf(_('Use current app configuration: %s %s'), "<em>$grid_name</em>", "<code>$login_uri</code>"),
+                                    'description' => _('The app is configured, you can use the wizard to review and adjust settings.'),
                                     'icon' => 'bi-sliders',
                                     'fields' => array(),
-                                    'enable' => $config_detected,
-                                    
+                                    'enable' => ( $config_detected === 'current_config' ),
                                 ),
                                 'import_legacy' => array(
-                                    'label' => sprintf(_('Import legacy configuration (%s)'), $grid_label),
+                                    'label' => sprintf(_('Import legacy app configuration (%s at %s)'), $grid_name, $login_uri),
                                     'description' => _('A legacy configuration has been found, use this option to migrate the settings.'),
                                     'icon' => 'bi-sliders',
                                     'fields' => array(),
-                                    'enable' => $legacy_detected,
+                                    'enable' => ( $config_detected === 'import_legacy' ),
                                 ),
                                 'ini_import' => array(
-                                    'label' => _('Import Robust(.HG).ini file'),
-                                    'description' => _('If your grid is already up and running, but the console is not enabled, the easiest way is to import settings from OpenSim .ini files.'),
+                                    'label' => _('Use current grid configuration (import Robust .ini file)'),
+                                    'description' => _('The most efficient way to configure the app is to enable the console (in the next steps), but if you don\'t have it enabled, you can import your existing Robust(.HG).ini file.'),
                                     'icon' => 'bi-file-earmark-text',
+                                    'enable' => empty($config_detected),
                                     'fields' => array(
-                                        'ini_files' => array(
-                                            'type' => 'ini_files',
-                                            'label' => _('Robust(.HG).ini file'),
-                                            'description' => join('<br>', array(
+                                        'robust_ini' => array(
+                                            'type' => 'file-ini',
+                                            // 'label' => _('Robust(.HG).ini file'),
+                                            'required' => true,
+                                            'description' => '<ul><li>' . join('</li><li>', array(
                                                 sprintf(
-                                                    _('%s for Hypergrid-enabled grids, %s for standalone grids'),
+                                                    _('%s for public grids, Hypergrid-enabled'),
                                                     '<code>Robust.HG.ini</code>',
-                                                    '<code>Robust.ini</code>'
                                                 ),
-                                            ) ),
+                                                sprintf(
+                                                    _('%s for private grids, without Hypergrid support'),
+                                                    '<code>Robust.ini</code>',
+                                                ),
+                                            ) ) . '</li></ul>',
                                         )
                                     )
                                 ),
                                 'start_fresh' => array(
                                     'label' => _('New configuration'),
-                                    'description' => _('For a new installations. You can download the OpenSim .ini files at the end of the process.'),
+                                    'description' => _('For a fresh new installation. The app generate OpenSim necessary .ini files at the end of the process.'),
                                     'icon' => 'bi-stars',
                                     'fields' => array()
                                 )
                             ),
-                            'default' => $config_detected ? 'current_config' : 'start_fresh',
-                            'required' => true
                         ),
                     ),
                 ),
@@ -272,7 +290,7 @@ class Installation_Wizard {
         
         // Filter out current_config option if no config is detected
         if (!$config_detected) {
-            unset($form_config['steps']['welcome']['fields']['config_method']['options']['current_config']);
+            unset($form_config['steps']['initial_config']['fields']['config_method']['options']['current_config']);
         }
 
         $this->form = new OpenSim_Form($form_config);
@@ -286,6 +304,73 @@ class Installation_Wizard {
             session_start();
         }
         $this->wizard_data = $_SESSION[$this->session_key] ?? array();
+    }
+
+    /**
+     * Validate initial configuration step
+     */
+    public function process_initial_config($submitted_data) {
+        $errors = array();
+        $field_errors = array();
+        
+        // Temporary fix for $submitted_data passed by the caller being empty
+        // $submitted_data = empty($submitted_data) ? $_POST : $submitted_data;
+        // error_log('[CHECKPOINT] step_data: ' . print_r($submitted_data, true) . ' POST ' . print_r($_POST, true) );
+
+        if (empty($submitted_data)) {
+            error_log(__METHOD__ . ' [ERROR] No data received in ' . __FILE__ . ':' . __LINE__);
+            $errors[] = _('System error: no data received');
+        } else if(empty($submitted_data['step_slug']) || $submitted_data['step_slug'] !== 'initial_config') {
+            error_log(__METHOD__ . ' [ERROR] Invalid step slug: ' . ($submitted_data['step_slug'] ?? 'empty') . ' in ' . __FILE__ . ':' . __LINE__);
+            $errors[] = _('System error: invalid step slug');
+        } else {
+            $config_method = $submitted_data['config_method'] ?? false;
+
+            // The required fields and other common requirements sshould have been validated by the form class
+            // so we don't check again here, we process and check the result.
+            switch($config_method) {
+                // The config validation is very minimal, as each step will have its own validation
+                case 'current_config':
+                    // TODO: minimal config validation and load as work config
+                    // (no import needed, it's the live configuration)
+                    $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
+                    break;
+                case 'import_legacy':
+                    // TODO: run contants import, minimal config validation and load as work config
+                    $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
+                    break;
+                case 'ini_import':
+                    error_log(__METHOD__ . ' [DEBUG] ' . $config_method . ' - submitted_data: ' . print_r($submitted_data, true));
+                    if(empty($submitted_data['robust_ini_path']) && empty($submitted_data['robust_ini_upload'])) {
+                        $errors[] = _('Please fill the Robust(.HG).ini file path or upload a file');
+                        $field_errors['robust_ini_path'] = _('Please provide at least one .ini file path');
+                    } else {
+                        // TODO: load ini file, check it's thhe right kine of config (presence of certain sections
+                        // depending on the config type, check provided by another method), load as work config
+                        $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
+                    }
+                    break;
+                case 'start_fresh':
+                    // TODO: make sure to unload any work config so next page doesn't contain random/unrelated alues
+                    $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
+                    break;
+                default:
+                    $errors[] = _('Invalid configuration method');
+            }   
+        }
+        
+        if (!empty($errors)) {
+            return array(
+                'success' => false, 
+                'errors' => $errors,
+                'field_errors' => $field_errors
+            );
+        }
+        
+        // Save step data to wizard data
+        $this->wizard_data['initial_config'] = $submitted_data;
+        $this->save_session_data();
+        // return array('success' => true);
     }
     
     /**

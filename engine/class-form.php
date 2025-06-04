@@ -20,7 +20,6 @@
  *          'callback' => callback to call to process form
  * )
  * - render_form()     return the form html code
- * - get_values()   return an array of field_id => value pairs
  * - get_fields()   return the array of defined fields 
  * - process()      process the form callback
  * 
@@ -34,10 +33,12 @@ class OpenSim_Form {
     private $fields = array();
     private $callback;
     private static $forms = array();
-    private $errors;
+    private $errors = array();
+    private $field_errors = array();
     private $html;
     private $completed;
     private $multistep;
+    private $current_step_slug;
     public $tasks;
 
     public function __construct($args = array(), $step = 0) {
@@ -61,10 +62,15 @@ class OpenSim_Form {
         $this->steps = $args['steps'] ?? false;
         $this->callback = $args['callback'];
         $this->add_fields($args['fields']);
+        $this->current_step = $step;
 
         $this->completed = $_SESSION[$this->form_id]['completed'] ?? $this->completed;
         self::$forms[$this->form_id] = $this;
-        // $this->refresh_steps();
+        
+        // Process step validation if this is a multistep form and form was submitted
+        if ($this->multistep) {
+            $this->process_step();
+        }
     }
 
     /**
@@ -98,7 +104,6 @@ class OpenSim_Form {
             return;
         }
         $this->fields = OpenSim::parse_args( $fields, $this->fields );
-        $this->get_next_step();
     }
 
     public function task_error( $field_id, $message, $type = 'warning' ) {
@@ -115,10 +120,10 @@ class OpenSim_Form {
         
         if( $this->multistep ) {
             $this->refresh_steps();
-            $current_step = $this->get_current_step();
+            $current_step = $this->get_current_step_config();
             if( empty( $current_step ) ) {
                 error_log( __METHOD__ . ' no current step found' );
-                return 'No step to render';
+                return '(debug) No step to render';
             }
             
             $fields = $current_step['fields'] ?? array();
@@ -146,10 +151,21 @@ class OpenSim_Form {
         
         // Add step title and description
         if( !empty( $step_title ) ) {
-            $html .= '<h2>' . htmlspecialchars( $step_title ) . '</h2>';
+            $html .= '<h2>' . do_not_sanitize( $step_title ) . '</h2>';
         }
         if( !empty( $step_description ) ) {
-            $html .= '<p class="lead">' . htmlspecialchars( $step_description ) . '</p>';
+            $html .= '<p class="lead">' . do_not_sanitize( $step_description ) . '</p>';
+        }
+        
+        // Display general errors
+        if (!empty($this->errors)) {
+            $html .= '<div class="alert alert-danger" role="alert">';
+            $html .= '<ul class="mb-0">';
+            foreach ($this->errors as $error) {
+                $html .= '<li>' . do_not_sanitize($error) . '</li>';
+            }
+            $html .= '</ul>';
+            $html .= '</div>';
         }
         
         // Start form
@@ -163,29 +179,46 @@ class OpenSim_Form {
         foreach ( $fields as $field_id => $field_config ) {
             $html .= $this->render_field( $field_id, $field_config );
         }
-
-        // Add form buttons
-        $reset_button = ( empty($_SESSION[$form_id])) ? '' : sprintf(
-            '<button type="submit" name="reset" formnovalidate class="btn btn-secondary mx-2">%s</button>',
-            _( 'Reset' )
-        );
         
-        $submit_button = sprintf(
+        $current_step_slug = $this->get_current_step_slug();
+        $current_step_number = $this->get_current_step_number();
+        $step_keys = array_keys($this->steps);
+
+        $buttons = array();
+
+        if( $current_step_number >0 ) {
+            // Previous button (not on first step)
+            $buttons['previous'] = ($this->multistep && $current_step_number > 0) ? sprintf(
+                '<button type="button" class="ms-auto btn btn-outline-secondary" onclick="previousStep()">
+                    <i class="bi bi-arrow-left"></i> 
+                    %s
+                </button>',
+                _('Previous')
+            ) : '';
+        }
+
+        $buttons['reset'] = sprintf(
+            '<button type="button" class="ms-auto btn btn-outline-danger" onclick="resetWizard()">%s</button>',
+            _('Reset')
+        );
+        $buttons['submit'] = sprintf(
             '<button type="submit" class="btn btn-primary">%s</button>',
             $this->multistep ? _('Next') : _('Submit')
         );
 
-        $buttons = sprintf(
+        // Add form buttons
+        $html .= '<div class="mt-4">';
+        // Reset button
+        $html .= sprintf(
             '<input type="hidden" name="form_id" value="%s">'
-            . '<input type="hidden" name="step_key" value="%s">'
-            . '<div class="form-actions mt-4 text-end">%s%s</div>',
+            . '<input type="hidden" name="step_slug" value="%s">'
+            . '<div class="d-flex gap-3 mt-4">%s</div>',
             $this->form_id,
-            $this->next_step_key ?? '',
-            $reset_button,
-            $submit_button
+            $current_step_slug,
+            join(' ', $buttons),
         );
-        
-        $html .= $buttons;
+
+        $html .= '</div>';
         $html .= '</form>';
 
         $this->html = $html;
@@ -201,17 +234,35 @@ class OpenSim_Form {
             return '';
         }
         
+        // Check if field has errors
+        $has_error = isset($this->field_errors[$field_id]);
+        $field_error = $has_error ? $this->field_errors[$field_id] : '';
+        
         // Use OpenSim_Field class for all field rendering
         $field = new OpenSim_Field($field_id, $field_config);
+        
+        // Pass error information to field
+        if ($has_error) {
+            $field->set_error($field_error);
+        }
         
         // Wrap field with Bootstrap classes and data attributes
         $wrapper_classes = ['mb-3'];
         if (!empty($field_config['condition'])) {
             $wrapper_classes[] = 'conditional-field';
         }
+        if ($has_error) {
+            $wrapper_classes[] = 'has-validation';
+        }
         
-        $html = '<div class="' . implode(' ', $wrapper_classes) . '" data-field="' . htmlspecialchars($field_id) . '">';
+        $html = '<div class="' . implode(' ', $wrapper_classes) . '" data-field="' . do_not_sanitize($field_id) . '">';
         $html .= $field->render();
+        
+        // Add field-specific error message
+        if ($has_error && $field_error) {
+            $html .= '<div class="invalid-feedback d-block">' . do_not_sanitize($field_error) . '</div>';
+        }
+        
         $html .= '</div>';
         
         return $html;
@@ -258,24 +309,178 @@ class OpenSim_Form {
     }
     
     /**
-     * Get current step for multistep forms
+     * Get the step slug that should be displayed
      */
-    private function get_current_step() {
+    private function get_current_step_slug() {
         if (!$this->multistep || empty($this->steps)) {
             return null;
         }
         
-        $step_key = $this->get_next_step();
-        return $this->steps[$step_key] ?? null;
+        $current_step_slug = $_SESSION[$this->form_id]['current_step'] ?? null;
+        if (empty($current_step_slug)) {
+            $step_keys = array_keys($this->steps);
+            $current_step_slug = $step_keys[0];
+            $_SESSION[$this->form_id]['current_step'] = $current_step_slug;
+        }
+        
+        return $current_step_slug;
+    }
+
+    /**
+     * Get the current step index
+     */
+    private function get_current_step_number() {
+        $current_step_slug = $this->get_current_step_slug();
+        if (empty($current_step_slug)) {
+            return 0;
+        }
+        
+        $step_keys = array_keys($this->steps);
+        $current_index = array_search($current_step_slug, $step_keys);
+        
+        if ($current_index === false) {
+            error_log(__METHOD__ . ' Current step slug not found in steps: ' . $current_step_slug);
+            return 0;
+        }
+        
+        return $current_index;
+    }
+
+    /**
+     * Get current step config for multistep forms
+     * Returns the step that should be displayed/processed RIGHT NOW
+     * 
+     * @return array|null Returns the current step configuration or null if not a multistep form
+     */
+    private function get_current_step_config() {
+        if (!$this->multistep || empty($this->steps)) {
+            return null;
+        }
+        
+        // The current step is always what's in session (or first step if nothing)
+        $current_step_slug = $this->get_current_step_slug();
+        if (empty($current_step_slug)) {
+            // get_current_step_slug returns first step by default, so 
+            // if it's empty, we have a problem, Huston
+            return false;
+        }
+
+        $step_config = $this->steps[$current_step_slug] ?? false;
+        if (!$step_config) {
+            error_log(__METHOD__ . ' No step configuration found for slug: ' . $current_step_slug);
+        }        
+        return $step_config;
+    }
+
+    /**
+     * Process step validation and advance if successful
+     */
+    private function process_step() {
+        if (empty($_POST['form_id']) || $_POST['form_id'] !== $this->form_id) {
+            return;
+        }
+        
+        // Get the step that was just submitted
+        $submitted_step_key = $_POST['step_slug'] ?? null;
+        if (empty($submitted_step_key)) {
+            error_log(__METHOD__ . ' [ERROR] No step_slug in POST data');
+            return;
+        }
+        
+        $submitted_step = $this->steps[$submitted_step_key] ?? null;
+        if (!$submitted_step) {
+            error_log(__METHOD__ . ' No step configuration found for key: ' . $submitted_step_key);
+            return;
+        }
+        
+        error_log(__METHOD__ . ' Processing submitted step: ' . $submitted_step_key);
+        
+        // Get step callback if defined
+        $callback = $submitted_step['callback'] ?? null;
+        if (!$callback) {
+            error_log(__METHOD__ . ' No callback defined for step ' . $submitted_step_key . ', advancing automatically');
+            // No validation needed, just save form data and advance
+            $this->save_step_data($submitted_step_key);
+            $this->advance_step();
+            return;
+        }
+        
+        error_log(__METHOD__ . ' Executing callback: ' . $callback);
+        
+        // Execute step validation callback with submitted values
+        $submitted_values = $_POST;
+        
+        if (is_callable($callback)) {
+            $result = call_user_func($callback, $submitted_values);
+        } elseif (is_array($this->callback) && method_exists($this->callback[0], $callback)) {
+            $result = call_user_func(array($this->callback[0], $callback), $submitted_values);
+        } else {
+            error_log(__METHOD__ . ' callback not found: ' . $callback);
+            return;
+        }
+
+        // Handle validation result
+        if (is_array($result) && isset($result['success'])) {
+            if ($result['success']) {
+                // Validation passed, advance to next step
+                error_log(__METHOD__ . ' Validation passed, advancing to next step');
+                $this->save_step_data($submitted_step_key);
+                $this->advance_step();
+            } else {
+                // Validation failed, set errors and stay on current step
+                if (isset($result['errors'])) {
+                    $this->errors = $result['errors'];
+                }
+                if (isset($result['field_errors'])) {
+                    $this->field_errors = $result['field_errors'];
+                }
+                // Current step remains unchanged - user stays on the step that failed validation
+            }
+        }
+    }
+    
+    /**
+     * Save current step data to session
+     */
+    private function save_step_data($step_slug) {
+        $step_data = $_POST;
+        
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        $_SESSION[$this->form_id]['steps'][$step_slug] = $step_data;
+    }
+    
+    /**
+     * Advance to next step
+     */
+    private function advance_step() {
+        $step_keys = array_keys($this->steps);
+        $current_step_slug = $_SESSION[$this->form_id]['current_step'] ?? $step_keys[0];
+        $current_index = array_search($current_step_slug, $step_keys);
+        
+        if ($current_index !== false && $current_index < count($step_keys) - 1) {
+            $next_step_key = $step_keys[$current_index + 1];
+            $_SESSION[$this->form_id]['current_step'] = $next_step_key;
+            error_log(__METHOD__ . ' [DEBUG] Advanced from ' . $current_step_slug . ' to ' . $next_step_key);
+        } else {
+            error_log(__METHOD__ . ' [DEBUG] Already at last step or step not found');
+        }
     }
 
     public function process() {
         if( empty( $_POST )) {
-            // Only init values if form is not submitted
-            return $this->get_values();
+            // Fail if no POST data
+            error_log(__METHOD__ . ' called without POST data');
+            return false;
         }
+        $values = $_POST;
+
+        // TODO: validate form_id, make basic sanitization
+
         if (is_callable($this->callback)) {
-            return call_user_func($this->callback, $this->get_values());
+            return call_user_func($this->callback, $values);
         } else {
             if (is_array($this->callback)) {
                 $callback_name = get_class($this->callback[0]) . '::' . $this->callback[1];
@@ -287,31 +492,7 @@ class OpenSim_Form {
         }
     }
 
-    /**
-     * Get values from fields definition and post.
-     * 
-     * TODO: make sure values are not replaced with post values before this step,
-     * although it doesn't hurt with the current usage, it might be useful to
-     * compare old and new value in the process() method called later.
-     */
-    public function get_values() {
-        $form_id = $this->form_id;
-        $values = array();
-        if( $this->multistep ) {
-            $fields = $this->get_step_fields() ?? array();
-            if( ! is_array( $fields )) {
-                error_log( __METHOD__ . ' wrong field format ' );
-                return false;
-            }
-        } else {
-            $fields = $this->fields;
-        }
-        // error_log( 'Fields: ' . print_r( $fields, true ) );
-        foreach( $fields as $key => $field ) {
-            $values[$key] = $_POST[$key] ?? $_SESSION[$form_id][$key] ?? $field['value'] ?? null;
-        }
-        return $values;
-    }
+
 
     private function get_step_fields() {
         if( ! isset( $this->next_step_key ) || ! isset( $this->fields[$this->next_step_key] ) ) {
@@ -341,34 +522,18 @@ class OpenSim_Form {
             return false;
         }
         
-        // Get current step from POST or session
-        $current_step_key = $_POST['step_key'] ?? $_SESSION[$this->form_id]['current_step'] ?? null;
-        
-        // If no current step, start with first step
-        if (empty($current_step_key)) {
-            $step_keys = array_keys($this->steps);
-            $this->next_step_key = $step_keys[0];
-            return $this->next_step_key;
+        // Get current step from session (this is the step to display)
+        $current_step_slug = $this->get_current_step_slug();
+        if(!is_numeric($current_step_slug)) {
+            // Probably redundant with empty($this->steps)
+            return false;
         }
-        
-        // If form was submitted, move to next step
-        if (!empty($_POST['form_id']) && $_POST['form_id'] === $this->form_id) {
-            $step_keys = array_keys($this->steps);
-            $current_index = array_search($current_step_key, $step_keys);
-            
-            if ($current_index !== false && $current_index < count($step_keys) - 1) {
-                $this->next_step_key = $step_keys[$current_index + 1];
-            } else {
-                // Last step or step not found
-                $this->next_step_key = $current_step_key;
-            }
-        } else {
-            // Not submitted, return current step
-            $this->next_step_key = $current_step_key;
-        }
-        
-        return $this->next_step_key;
+
+        // TODO: get next step slug based on current step
+        error_log(__METHOD__ . ' used but not implemented yet');
+        return false;
     }
+
     /**
      * Use the value of $this->complete as last completed step, get the next step and 
      * build a navigation html.
@@ -379,16 +544,8 @@ class OpenSim_Form {
         }
 
         $steps = $this->steps;
-        if( ! empty($_POST['form_id']) ) {
-            $form_id = $_POST['form_id'];
-            $form = self::$forms[$form_id];
-            if( $form ) {
-                $form->process();
-            } else {
-                error_log( __METHOD__ . ' Form ' . $form_id . ' is not registered' );
-                return false;
-            }
-        }
+
+        // TODO: make sure current step is validated before doing that
         $next_step_key = $this->get_next_step();
 
         // Set progression table
@@ -414,34 +571,47 @@ class OpenSim_Form {
         }
 
         $steps = $this->steps;
-        $current_step_key = $this->get_next_step();
+        $current_step_slug = $this->get_current_step_slug();
         $step_keys = array_keys($steps);
-        $current_index = array_search($current_step_key, $step_keys);
+        $current_index = array_search($current_step_slug, $step_keys);
         
-        $html = '<div class="multistep-progress mb-4">';
-        $html .= '<div class="step-indicators">';
+        $html = '<div class="multistep-progress mt-4">';
+        $html .= '<div class="step-indicators d-flex align-items-stretch justify-content-between">';
+
+        error_log(__METHOD__ . ' step slug ' . $current_step_slug . ' at index ' . $current_index . ' step keys: ' . print_r($step_keys, true));
         
-        foreach( $step_keys as $index => $step_key ) {
+        foreach( $step_keys as $index => $step_slug ) {
             $step_number = $index + 1;
-            $step_title = $steps[$step_key]['title'] ?? ucfirst($step_key);
+            $step_title = $steps[$step_slug]['title'] ?? ucfirst($step_slug);
             
             $status_class = '';
             if ($index < $current_index) {
                 $status_class = 'completed';
+                $number_class = 'bg-success text-white';
             } elseif ($index === $current_index) {
                 $status_class = 'active';
+                $number_class = 'bg-primary text-white';
             } else {
                 $status_class = 'pending';
+                $number_class = 'bg-secondary text-white';
             }
-            
-            $html .= '<div class="step-indicator ' . $status_class . '">';
-            $html .= '<div class="step-number">' . $step_number . '</div>';
-            $html .= '<div class="step-title">' . htmlspecialchars($step_title) . '</div>';
-            $html .= '</div>';
+
+            $html .= sprintf(
+                '<div class="step-indicator %s" data-step="%s">
+                <div class="step-number %s">%d</div>
+                <div class="step-title">%s</div>
+                </div>
+                ',
+                $status_class,
+                $step_slug,
+                $number_class,
+                $step_number,
+                $step_title,
+            );
             
             // Add connector line (except for last step)
             if ($index < count($step_keys) - 1) {
-                $html .= '<div class="step-connector"></div>';
+                $html .= '<div class="step-connector pt-1"><hr></div>';
             }
         }
         
@@ -511,7 +681,7 @@ class OpenSim_Form {
 
         if( ! empty( $valid )) {
             $message = sprintf( _('File %s is not a valid .ini file'), $file_path );
-            error_log( $message . ', found invalid lines: ' . print_r( $valid, true ) );
+            // error_log( $message . ', found invalid lines: ' . print_r( $valid, true ) );
             $this->task_error( $field_id, $message, 'danger' );
             return false;
         }
