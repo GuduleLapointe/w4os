@@ -1,5 +1,4 @@
 <?php namespace OpenSimulator\Helpers;
-
 /*
  * wp-load.php
  *
@@ -12,7 +11,7 @@
  */
 
 if ( ! defined( 'W4OS_PLUGIN' ) ) {
-	die;
+	die();
 }
 
 // Add Apache rewrite rules for helpers directory
@@ -72,7 +71,7 @@ if ( get_option( 'w4os_provide_economy_helpers' ) == true & ! empty( $grid_info[
 		// $helper = preg_replace( ":^$economy:", '', $url );
 		require $helpers_dir . basename($url);
 		die();
-	} elseif ( $url == $economy ) {
+	} elseif ( $url !== '/' && $url == $economy ) {
 		// Probably the url check, just accept it
 		// TODO: redirect to support page if set
 		die();
