@@ -16,6 +16,11 @@ class Engine_Settings {
      * @var array Cached settings data
      */
     private static $settings = array();
+
+    /**
+     * @var string Settings version
+     */
+    private static $version = '3.0';
     
     /**
      * @var string Path to the settings file
@@ -290,7 +295,7 @@ class Engine_Settings {
      */
     public static function get_service_credentials($service_key) {
         // Get the main grid URI from settings to use as credential key
-        $login_uri = self::get('GridInfoService.login');
+        $login_uri = self::get('robust.GridInfoService.login');
         if (!$login_uri) {
             error_log("Engine_Settings: No GridInfoService.login found for credential lookup");
             return null;
@@ -340,7 +345,7 @@ class Engine_Settings {
      */
     public static function set_service_credentials($service_key, $credentials_array) {
         // Get the main grid URI from settings to use as credential key
-        $login_uri = self::get('GridInfoService.login');
+        $login_uri = self::get('robust.GridInfoService.login');
         if (!$login_uri) {
             error_log("Engine_Settings: No GridInfoService.login found for credential storage");
             return false;
@@ -594,7 +599,7 @@ class Engine_Settings {
      * 
      * @return bool Whether basic configuration exists
      */
-    public static function is_configured() {
+    public static function configured() {
         self::load();
         
         // Check for essential configuration indicators
@@ -781,6 +786,13 @@ class Engine_Settings {
             ),
             'engine' => array(
                 'General' => array(
+                    'settings_version' => array(
+                        'type' => 'text',
+                        'label' => _('Settings Version'),
+                        'description' => _('The version of the settings format.'),
+                        'value' => self::$version,
+                        'readonly' => true,
+                    ),
                     'GridLogoURL' => array(
                         'type' => 'url',
                         'label' => _('Grid Logo URL'),

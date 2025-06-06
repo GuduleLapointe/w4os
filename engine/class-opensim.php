@@ -84,7 +84,7 @@ class OpenSim {
         $url = filter_var( $url, FILTER_SANITIZE_URL );
         return $url;
     }
-    
+
     /**
      * Check if UUID is null key
      */
@@ -122,6 +122,14 @@ class OpenSim {
         return $grid_info;
     }
     
+    public static function grid_name() {
+        return Engine_Settings::get('robust.GridInfoService.gridname', false);
+    }
+
+    public static function login_uri() {
+        return Engine_Settings::get('robust.GridInfoService.login', false);
+    }
+
     /**
      * Fast XML retrieval - framework agnostic
      */

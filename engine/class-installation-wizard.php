@@ -48,27 +48,17 @@ class Installation_Wizard {
      * Setup form with proper field configuration
      */
     private function setup_form() {
+        $configured = Engine_Settings::configured();
+        $grid_name = OpenSim::grid_name();
+        $login_uri = OpenSim::login_uri();
+
         // Get existing configuration for defaults
-        $grid_name = Engine_Settings::get('robust.GridInfoService.gridname');
-        $login_uri = Engine_Settings::get('robust.GridInfoService.login');
+        // $grid_name = Engine_Settings::get('robust.GridInfoService.gridname');
+        // $login_uri = Engine_Settings::get('robust.GridInfoService.login');
         $robust_db = Engine_Settings::get_db_credentials('robust');
         $robust_console = Engine_Settings::get_console_credentials('robust');
-        $asset_db = Engine_Settings::get_db_credentials('asset');
-        $profiles_db = Engine_Settings::get_db_credentials('profiles');
-        
-        $default_config_method = 'ini_import'; // Default to ini import if no config detected
-        $config_detected = (!empty($grid_name) || !empty($login_uri)) ? 'current_config' : null;
-        if(!$config_detected) {
-            // TODO: Check for legacy configuration:
-            // If some mandatory constants are defined, try to import constants
-            // then check again grid_name and login_uri
-            // $legacy_detected = !empty($grid_name) || !empty($login_uri);
-            // $grid_name = Engine_Settings::get('robust.GridInfoService.gridname');
-            // $login_uri = Engine_Settings::get('robust.GridInfoService.login');
-            // $config_detected = (!empty($grid_name) || !empty($login_uri)) ? 'import_legacy' : null;
-        }
-        // Build detected label for current_config option
-        $grid_label = ($config_detected || $legacy_detected) ? "{$grid_name} {$login_uri}" : '';
+        // $asset_db = Engine_Settings::get_db_credentials('asset');
+        // $profiles_db = Engine_Settings::get_db_credentials('profiles');
 
         // Set default console host from login URI if available
         if ($login_uri && empty($robust_console['host'])) {
@@ -95,28 +85,23 @@ class Installation_Wizard {
                     'fields' => array(
                         'config_method' => array(
                             'type' => 'select-nested',
-                            'default' => $config_detected ?? 'ini_import',
+                            'default' => $configured ? 'current_config' : 'ini_import',
                             'required' => true,
                             'options' => array(
                                 'current_config' => array(
+                                    // Engine_Settings class should take cares of loading legacy constants if 
+                                    // not yet converted to v3 settings, it makes no difference for the wizard                                     
                                     'label' => sprintf(_('Use current app configuration: %s %s'), "<em>$grid_name</em>", "<code>$login_uri</code>"),
                                     'description' => _('The app is configured, you can use the wizard to review and adjust settings.'),
                                     'icon' => 'bi-sliders',
                                     'fields' => array(),
-                                    'enable' => ( $config_detected === 'current_config' ),
-                                ),
-                                'import_legacy' => array(
-                                    'label' => sprintf(_('Import legacy app configuration (%s at %s)'), $grid_name, $login_uri),
-                                    'description' => _('A legacy configuration has been found, use this option to migrate the settings.'),
-                                    'icon' => 'bi-sliders',
-                                    'fields' => array(),
-                                    'enable' => ( $config_detected === 'import_legacy' ),
+                                    'enable' => Engine_Settings::configured(),
                                 ),
                                 'ini_import' => array(
                                     'label' => _('Use current grid configuration (import Robust .ini file)'),
                                     'description' => _('The most efficient way to configure the app is to enable the console (in the next steps), but if you don\'t have it enabled, you can import your existing Robust(.HG).ini file.'),
                                     'icon' => 'bi-file-earmark-text',
-                                    'enable' => empty($config_detected),
+                                    'enable' => empty($configured),
                                     'fields' => array(
                                         'robust_ini' => array(
                                             'type' => 'file-ini',
@@ -289,7 +274,7 @@ class Installation_Wizard {
         );
         
         // Filter out current_config option if no config is detected
-        if (!$config_detected) {
+        if (!$configured) {
             unset($form_config['steps']['initial_config']['fields']['config_method']['options']['current_config']);
         }
 
