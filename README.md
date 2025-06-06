@@ -2,7 +2,7 @@
 
 ![Stable 2.9.4](https://badgen.net/badge/Stable/2.9.4/00aa00)
 ![WordPress 5.3.0 - 6.8.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.8.1/3858e9)
-![Requires PHP 7.3](https://badgen.net/badge/PHP/5.7/7884bf)
+![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
 
 WordPress interface for OpenSimulator (w4os).
 
@@ -13,10 +13,6 @@ Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/).
 Full installation instructions: (https://gudulelapointe.github.io/w4os/INSTALLATION.html)
 
 See Features and Roadmap sections for current and upcoming functionalties.
-
-- 2.x will only get maintenance and bug fix updates.
-- New features will be added in upcoming 3.x release, available on github in branch 3.x
-- See MIGRATION-PLAN.md for more details
 
 ### Features
 
@@ -49,7 +45,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 Some v3 features are already available, but still in testing. So they are not included
 in the WordPress directory release. To try the new features, you must:
 - Download the latest release from https://github.com/GuduleLapointe/w4os/releases
-- Check "Enable v3 Beta Features" in Admin > OpenSimulator > Settings
+- Check "Enable v3 Betat Features" in Admin > OpenSimulator > Settings
 - A couple of new menus will appear, including Settings, Avatars and Flux
 
 Be careful, do not enable beta in a production environment.

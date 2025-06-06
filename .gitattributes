@@ -63,3 +63,4 @@ setup-git.sh export-ignore
 /helpers/.git* export-ignore
 /helpers/.libignore export-ignore
 /helpers/tests/ export-ignore
+/helpers/install.php export-ignore
