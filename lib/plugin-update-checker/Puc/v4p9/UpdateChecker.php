@@ -623,7 +623,7 @@ if ( ! class_exists( 'Puc_v4p9_UpdateChecker', false ) ) :
 			} else {
 				do_action( 'puc_api_error', $status, $result, $url, $this->slug );
 				$this->triggerError(
-					W4OS::sprintf_safe( 'The URL %s does not point to a valid metadata file. ', $url )
+					printf( 'The URL %s does not point to a valid metadata file. ', $url )
 					. $status->get_error_message(),
 					E_USER_WARNING
 				);
