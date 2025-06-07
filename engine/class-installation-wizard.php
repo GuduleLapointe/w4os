@@ -87,6 +87,7 @@ class Installation_Wizard {
                             'type' => 'select-nested',
                             'default' => $configured ? 'current_config' : 'ini_import',
                             'required' => true,
+                            'mutual-exclusive' => true,
                             'options' => array(
                                 'current_config' => array(
                                     // Engine_Settings class should take cares of loading legacy constants if 
@@ -326,7 +327,7 @@ class Installation_Wizard {
                     break;
                 case 'ini_import':
                     error_log(__METHOD__ . ' [DEBUG] ' . $config_method . ' - submitted_data: ' . print_r($submitted_data, true));
-                    if(empty($submitted_data['robust_ini_path']) && empty($submitted_data['robust_ini_upload'])) {
+                    if(empty($submitted_data['robust_ini']['path']) && empty($submitted_data['robust_ini']['upload'])) {
                         $errors[] = _('Please fill the Robust(.HG).ini file path or upload a file');
                         $field_errors['robust_ini_path'] = _('Please provide at least one .ini file path');
                     } else {

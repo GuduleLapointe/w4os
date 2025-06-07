@@ -458,11 +458,11 @@ class OpenSim_Field {
         
         // Only Robust.HG.ini for grid configuration, OpenSim.ini comes later for regions
         $html .= sprintf(
-            '<fieldset class="input-group">
+            '<fieldset class="input-group mutual-exclusive">
                 <label class="input-group-text" for="%1$s[path]">%2$s</label>
-                <input type="text" class="form-control" id="%1$s[path]" name="%1$s[path]" value="%3$s" placeholder="%4$s" %5$s oninput="toggleMutualExclusive(this)" onchange="toggleMutualExclusive(this)">
-                <label class="input-group-text bg-transparent border-0" for="%1$s[upload]">%6$s</label>
-                <input type="file" class="form-control" id="%1$s[upload]" name="%1$s[upload]" accept=".ini" %7$s onchange="toggleMutualExclusive(this)">
+                <input type="text" class="form-control" id="%1$s[path]" name="%1$s[path]" value="%3$s" placeholder="%4$s" %5$s onload="%6$s" oninput="%6$s" onchange="%6$s">
+                <label class="input-group-text bg-transparent border-0" for="%1$s[upload]">%7$s</label>
+                <input type="file" class="form-control" id="%1$s[upload]" name="%1$s[upload]" accept=".ini" %7$s onchange="%6$s">
                 <button type="button" class="btn btn-outline-secondary" onclick="clearInputField(\'%1$s[upload]\')">
                     <i class="bi bi-x"></i>
                 </button>
@@ -472,8 +472,8 @@ class OpenSim_Field {
             $this->get_field_value()['path'] ?? '',
             _('e.g. /opt/opensim/bin/Robust.HG.ini'),
             $required,
+            'toggleMutualExclusive(this)',
             _('Or upload'),
-            $required
         );
         
         $html .= '</div>';
