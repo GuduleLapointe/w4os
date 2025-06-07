@@ -399,7 +399,7 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
         
         $type = $all_values["w4os_{$db_prefix}db_type"] ?? 'mysql';
         $db_name = $all_values["w4os_{$db_prefix}db_name"] ?? '';
-        error_log("looking for {$type} database w4os_{$db_prefix}db_host");
+
         $creds = [
             'type' => $type,
             'host' => $all_values["w4os_{$db_prefix}db_host"] ?? null,
@@ -418,7 +418,7 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
      * @param array $options Optional array of options to migrate. If empty, gets all mapped options.
      * @return array Migration results
      */
-    public static function migrate_wordpress_options($options = null) {
+    public static function migrate_wordpress_options($save = true) {
         $results = [
             'migrated' => [],
             'skipped' => [],
@@ -427,7 +427,7 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
         
         // Get all WordPress options that start with 'w4os'
         $all_wp_options = self::get_all_w4os_options();
-        
+        $return_values = [];
         // Process each INI file and its sections
         foreach (self::$wp_options_mapping as $ini_file => $file_sections) {
             $instance = basename($ini_file, '.ini');
@@ -445,6 +445,7 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
                             
                             // Set value in Engine Settings using Instance.Section.Key format, do not save yet.
                             if (Engine_Settings::set("$instance.$section.$ini_key", $value, false)) {
+                                $return_values[$instance][$section][$ini_key] = $value;
                                 $display_value = is_string($value) ? $value : json_encode($value);
                                 $display_value = is_string($display_value) && strlen($display_value) > 50 ? substr($display_value, 0, 47) . '...' : $display_value;
                                 $results['migrated'][] = "$section.$ini_key = $display_value (in $ini_file)";
@@ -462,11 +463,13 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
             }
             // Let engine save ini file
             if(empty($results['errors'])) {
-                if (!Engine_Settings::save($ini_file)) {
-                    $results['errors'][] = "Failed to save INI file: $ini_file";
+                if($save) {
+                    if (!Engine_Settings::save($ini_file)) {
+                        $results['errors'][] = "Failed to save INI file: $ini_file";
+                    }
                 }
-            } else {
                 // If there were errors, do not try to save the ini file
+            } else {
                 error_log("Skipping save for $ini_file due to errors: " . implode(', ', $results['errors']));
             }
         }
@@ -478,6 +481,9 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
         // Handle credentials separately
         self::migrate_credentials($results, $all_wp_options);
         
+        if(!$save) {
+            $results['values'] = $return_values; // Return
+        }
         // Clean up any redundant database credentials
         // if (class_exists('Engine_Settings')) {
         //     Engine_Settings::cleanup_redundant_database_credentials();

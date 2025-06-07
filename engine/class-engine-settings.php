@@ -56,6 +56,11 @@ class Engine_Settings {
     private static $fields_config = array();
 
     /**
+     * @var array Imported options to use instead of regular settings
+     */
+    private static $imported_options = null;
+
+    /**
      * Initialize settings.
      * 
      * Read all ini files in config directory, and store their values in a nested array.
@@ -112,6 +117,12 @@ class Engine_Settings {
             return;
         }
         
+        if (self::using_imported_options()) {
+            self::$settings = self::$imported_options;
+            self::$loaded = true;
+            return;
+        }
+
         // Find all files in config directory
         $ini_files = glob(self::$config_dir . '/*.ini');
         if (empty($ini_files)) {
@@ -1282,4 +1293,19 @@ class Engine_Settings {
             ),
         );
     }        
+
+    /**
+     * Set imported options to use instead of regular settings
+     */
+    public static function set_imported_options($options) {
+        self::$imported_options = $options;
+        self::$loaded = false; // Force reload to use imported options
+    }
+    
+    /**
+     * Check if using imported options
+     */
+    public static function using_imported_options() {
+        return self::$imported_options !== null;
+    }
 }

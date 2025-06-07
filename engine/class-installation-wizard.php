@@ -10,13 +10,49 @@ class Installation_Wizard {
     private $session_key = 'opensim_install_wizard';
     private $form;
     private $wizard_data = array();
-    
+    private $return_url = null;
+
     /**
      * Initialize wizard
      */
     public function __construct() {
         $this->load_session_data();
         $this->setup_form();
+    }
+    
+    /**
+     * Set return URL for after wizard completion
+     */
+    public function set_return_url($url) {
+        $this->return_url = $url;
+        $_SESSION[$this->form_id]['return_url'] = $url;
+    }
+    
+    /**
+     * Get return URL
+     */
+    public function get_return_url() {
+        return $this->return_url ?? $_SESSION[$this->form_id]['return_url'] ?? null;
+    }
+
+    /**
+     * Get reset/cancel button text and URL
+     */
+    public function get_reset_button_config() {
+        $return_url = $this->get_return_url();
+        if ($return_url) {
+            return array(
+                'text' => 'Cancel',
+                'url' => $return_url,
+                'action' => 'cancel'
+            );
+        } else {
+            return array(
+                'text' => 'Reset',
+                'url' => '#',
+                'action' => 'reset'
+            );
+        }
     }
     
     /**
@@ -384,5 +420,26 @@ class Installation_Wizard {
     public function reset() {
         unset($_SESSION[$this->session_key]);
         $this->wizard_data = array();
+    }
+
+    /**
+     * Handle wizard completion
+     */
+    private function handle_completion() {
+        // ...existing completion logic...
+        
+        // Clean up wizard session data
+        unset($_SESSION[$this->form_id]);
+        unset($_SESSION['wizard_data']);
+        
+        $return_url = $this->get_return_url();
+        if ($return_url) {
+            // Redirect back to WordPress admin
+            header('Location: ' . $return_url . '&wizard_completed=1');
+            exit;
+        } else {
+            // Show completion page
+            // ...existing completion display...
+        }
     }
 }
