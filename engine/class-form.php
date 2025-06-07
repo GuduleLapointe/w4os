@@ -63,7 +63,6 @@ class OpenSim_Form {
         $this->callback = $args['callback'];
         $this->add_fields($args['fields']);
         $this->current_step = $step;
-        error_log('[DEBUG] args ' . print_r($args, true));
 
         $this->completed = $_SESSION[$this->form_id]['completed'] ?? $this->completed;
         self::$forms[$this->form_id] = $this;
@@ -188,9 +187,6 @@ class OpenSim_Form {
         // Get return URL if available (for back link)
         $return_url = $_SESSION[$this->form_id]['return_url'] ?? null;
         $return_pagename = $_SESSION[$this->form_id]['return_pagename'] ?? null;
-        error_log(
-            '[DEBUG] return page name ' . $return_pagename 
-            . ' session form ' . print_r($_SESSION[$this->form_id], true));
         $has_external_data = isset($_SESSION['wizard_data']);
 
         $buttons = array();
@@ -209,7 +205,7 @@ class OpenSim_Form {
         // Back link in the middle
         if ($return_url) {
             $buttons['backlink'] = sprintf(
-                '<div class="btn border-none bg-none mx-auto">
+                '<div class="btn border-none bg-none">
                     <a href="%s" class="text-decoration-none fw-medium">← %s</a>
                 </div>',
                 escape_url($return_url),
@@ -222,7 +218,7 @@ class OpenSim_Form {
         }
 
         $buttons['reset'] = sprintf(
-            '<button type="button" class=" btn btn-outline-danger" onclick="resetWizard()">%s</button>',
+            '<button type="button" class="ms-auto btn btn-outline-danger" onclick="resetWizard()">%s</button>',
             _('Reset')
         );
         $buttons['submit'] = sprintf(

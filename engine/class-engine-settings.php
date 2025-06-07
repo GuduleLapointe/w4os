@@ -116,13 +116,11 @@ class Engine_Settings {
         if (self::$loaded) {
             return;
         }
-        error_log(__METHOD__ . ' [DEBUG] loading');
 
         // If imported options are available, use them instead of loading from file
         if (self::$imported_options !== null) {
             self::$settings = self::$imported_options;
             self::$loaded = true;
-            error_log('[DEBUG] Engine_Settings using imported options: ' . count(self::$settings) . ' settings loaded');
             return;
         }
         

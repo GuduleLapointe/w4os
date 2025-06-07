@@ -105,7 +105,6 @@ class Installation_Wizard {
         $grid_name = OpenSim::grid_name();
         $login_uri = OpenSim::login_uri();
         $configured = Engine_Settings::configured() || ! empty($login_uri);
-        error_log("[DEBUG] grid $grid_name $login_uri");
 
         // Get existing configuration for defaults
         // $grid_name = Engine_Settings::get('robust.GridInfoService.gridname');
@@ -397,9 +396,8 @@ class Installation_Wizard {
             switch($config_method) {
                 // The config validation is very minimal, as each step will have its own validation
                 case 'current_config':
-                    // TODO: minimal config validation and load as work config
-                    // (no import needed, it's the live configuration)
-                    $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
+                    // Theorically, if we reach this point, minimal validation has been done, we can proceed.
+                    error_log(__METHOD__ . ' [DEBUG] ' . $config_method . ' proceed to step 2');
                     break;
                 case 'import_legacy':
                     // TODO: run contants import, minimal config validation and load as work config
@@ -413,12 +411,12 @@ class Installation_Wizard {
                     } else {
                         // TODO: load ini file, check it's thhe right kine of config (presence of certain sections
                         // depending on the config type, check provided by another method), load as work config
-                        $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
+                        $errors[] = '[DEBUG] config_method ' . $config_method . ' validation not implemented yet';
                     }
                     break;
                 case 'start_fresh':
                     // TODO: make sure to unload any work config so next page doesn't contain random/unrelated alues
-                    $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
+                    $errors[] = '[DEBUG] config_method ' . $config_method . ' validation not implemented yet';
                     break;
                 default:
                     $errors[] = _('Invalid configuration method');
