@@ -40,6 +40,8 @@ class OpenSim_Form {
     private $multistep;
     private $current_step_slug;
     public $tasks;
+    private $return_url;
+
 
     public function __construct($args = array(), $step = 0) {
         if( is_string( $args )) {
@@ -63,6 +65,8 @@ class OpenSim_Form {
         $this->callback = $args['callback'];
         $this->add_fields($args['fields']);
         $this->current_step = $step;
+        $this->return_url = $args['return_url'] ?? null;
+        $this->return_pagename = $args['return_pagename'] ?? null;
 
         $this->completed = $_SESSION[$this->form_id]['completed'] ?? $this->completed;
         self::$forms[$this->form_id] = $this;
@@ -185,8 +189,8 @@ class OpenSim_Form {
         $step_keys = array_keys($this->steps);
         
         // Get return URL if available (for back link)
-        $return_url = $_SESSION[$this->form_id]['return_url'] ?? null;
-        $return_pagename = $_SESSION[$this->form_id]['return_pagename'] ?? null;
+        $return_url = $this->return_url; //$_SESSION[$this->form_id]['return_url'] ?? null;
+        $return_pagename = $this->return_pagename; // $_SESSION[$this->form_id]['return_pagename'] ?? null;
         $has_external_data = isset($_SESSION['wizard_data']);
 
         $buttons = array();

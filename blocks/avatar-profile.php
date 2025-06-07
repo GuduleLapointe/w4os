@@ -132,7 +132,6 @@ function w4os_avatar_profile_shortcode( $atts = array(), $content = null ) {
 
 // Deprecated?
 // function w4os_avatar_profile( $atts = array() ) {
-// 	error_log( __FUNCTION__ . ' called [DEBUG]' );
 // 	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
 // 		return array();
 // 	}
