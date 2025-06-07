@@ -558,8 +558,8 @@ class W4OS_Settings_Test_Page {
                 <p><strong>This is a temporary test page for the Engine Settings system.</strong></p>
                 <p>Settings file location: <code><?php echo esc_html(Engine_Settings::get_config_dir()); ?></code></p>
                 <p>Configuration status: 
-                    <span class="<?php echo Engine_Settings::is_configured() ? 'text-success' : 'text-warning'; ?>">
-                        <?php echo Engine_Settings::is_configured() ? 'Configured' : 'Not configured'; ?>
+                    <span class="<?php echo Engine_Settings::configured() ? 'text-success' : 'text-warning'; ?>">
+                        <?php echo Engine_Settings::configured() ? 'Configured' : 'Not configured'; ?>
                     </span>
                 </p>
             </div>

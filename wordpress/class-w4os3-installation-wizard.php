@@ -23,7 +23,7 @@ class W4OS3_Installation_Wizard {
      */
     public function add_admin_menu() {
         // Only show if not configured or if explicitly requested
-        if (!Engine_Settings::is_configured() || isset($_GET['force_wizard'])) {
+        if (!Engine_Settings::configured() || isset($_GET['force_wizard'])) {
             add_submenu_page(
                 'w4os',
                 'Installation Wizard',

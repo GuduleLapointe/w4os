@@ -57,8 +57,8 @@ class Installation_Wizard {
         // $login_uri = Engine_Settings::get('robust.GridInfoService.login');
         $robust_db = Engine_Settings::get_db_credentials('robust');
         $robust_console = Engine_Settings::get_console_credentials('robust');
-        // $asset_db = Engine_Settings::get_db_credentials('asset');
-        // $profiles_db = Engine_Settings::get_db_credentials('profiles');
+        $asset_db = Engine_Settings::get_db_credentials('asset');
+        $profiles_db = Engine_Settings::get_db_credentials('profiles');
 
         // Set default console host from login URI if available
         if ($login_uri && empty($robust_console['host'])) {
