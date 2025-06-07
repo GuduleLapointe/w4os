@@ -43,7 +43,7 @@ class W4OS3_Installation_Wizard {
             // Add the installation wizard page to the admin menu
             add_submenu_page(
                 'w4os',
-                'Installation Wizard',
+                'W4OS Installation Wizard',
                 'Installation Wizard',
                 'manage_options',
                 'w4os_installation_wizard',
@@ -135,7 +135,7 @@ class W4OS3_Installation_Wizard {
                 ),
                 'data' => $data,
                 'return_url' => admin_url('admin.php?page=w4os_installation_wizard'),
-                'return_page_title' => get_admin_page_title(),
+                'return_pagename' => get_admin_page_title(),
                 'timestamp' => time()
             );
             

@@ -183,8 +183,6 @@ class W4OS_Settings_Test_Page {
             add_settings_error('w4os_settings_test', 'import_result', $message, 'error');
             return;
         }
-        
-        error_log(__METHOD__ . '() [DEBUG] Parsed INI file: ' . print_r($ini_config ?? [ 'empty' ], true));
 
         // try {
         //     $success = Engine_Settings::import_from_ini_file($ini_file_path);

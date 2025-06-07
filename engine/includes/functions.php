@@ -58,6 +58,16 @@ if(! function_exists( 'sanitize_url' ) ) {
 }
 
 /**
+ * Escape URL for safe output in HTML
+ * 
+ * @param string $url URL to escape
+ * @return string Escaped URL
+ */
+function escape_url($url) {
+    return htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+}
+
+/**
  * Does nothing, just returns the string unchanged. Meant to replace dozens of 
  * unnecessary calls to htmlspecialchars() in the code.
  */
@@ -593,7 +603,7 @@ if ( ! function_exists( 'osdebug' ) ) {
 		if ( ! is_string( $message ) ) {
 			$message = print_r( $message, true );
 		}
-		error_log( 'osdebug ' . $message );
+		error_log( '[DEBUG] ' . $message );
 		echo $message . "\n";
 	}
 }

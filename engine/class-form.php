@@ -63,6 +63,7 @@ class OpenSim_Form {
         $this->callback = $args['callback'];
         $this->add_fields($args['fields']);
         $this->current_step = $step;
+        error_log('[DEBUG] args ' . print_r($args, true));
 
         $this->completed = $_SESSION[$this->form_id]['completed'] ?? $this->completed;
         self::$forms[$this->form_id] = $this;
@@ -183,13 +184,21 @@ class OpenSim_Form {
         $current_step_slug = $this->get_current_step_slug();
         $current_step_number = $this->get_current_step_number();
         $step_keys = array_keys($this->steps);
+        
+        // Get return URL if available (for back link)
+        $return_url = $_SESSION[$this->form_id]['return_url'] ?? null;
+        $return_pagename = $_SESSION[$this->form_id]['return_pagename'] ?? null;
+        error_log(
+            '[DEBUG] return page name ' . $return_pagename 
+            . ' session form ' . print_r($_SESSION[$this->form_id], true));
+        $has_external_data = isset($_SESSION['wizard_data']);
 
         $buttons = array();
 
         if( $current_step_number >0 ) {
             // Previous button (not on first step)
             $buttons['previous'] = ($this->multistep && $current_step_number > 0) ? sprintf(
-                '<button type="button" class="ms-auto btn btn-outline-secondary" onclick="previousStep()">
+                '<button type="button" class="me-auto btn btn-outline-secondary" onclick="previousStep()">
                     <i class="bi bi-arrow-left"></i> 
                     %s
                 </button>',
@@ -197,8 +206,23 @@ class OpenSim_Form {
             ) : '';
         }
 
+        // Back link in the middle
+        if ($return_url) {
+            $buttons['backlink'] = sprintf(
+                '<div class="btn border-none bg-none mx-auto">
+                    <a href="%s" class="text-decoration-none fw-medium">← %s</a>
+                </div>',
+                escape_url($return_url),
+                sprintf(
+                    _('Back to %s'), 
+                    // Translators: in the phrase 'Back to (page name)'
+                    $return_pagename ?? _('calling page'),
+                ),
+            );
+        }
+
         $buttons['reset'] = sprintf(
-            '<button type="button" class="ms-auto btn btn-outline-danger" onclick="resetWizard()">%s</button>',
+            '<button type="button" class=" btn btn-outline-danger" onclick="resetWizard()">%s</button>',
             _('Reset')
         );
         $buttons['submit'] = sprintf(
@@ -208,7 +232,6 @@ class OpenSim_Form {
 
         // Add form buttons
         $html .= '<div class="mt-4">';
-        // Reset button
         $html .= sprintf(
             '<input type="hidden" name="form_id" value="%s">'
             . '<input type="hidden" name="step_slug" value="%s">'
@@ -217,6 +240,17 @@ class OpenSim_Form {
             $current_step_slug,
             join(' ', $buttons),
         );
+
+        // Add JavaScript function to clean wizard session
+        $html .= '<script>
+        function cleanWizardSession() {
+            fetch("' . $_SERVER['REQUEST_URI'] . '", {
+                method: "POST",
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: "action=clean_wizard_session"
+            });
+        }
+        </script>';
 
         $html .= '</div>';
         $html .= '</form>';
@@ -339,7 +373,7 @@ class OpenSim_Form {
         $current_index = array_search($current_step_slug, $step_keys);
         
         if ($current_index === false) {
-            error_log(__METHOD__ . ' Current step slug not found in steps: ' . $current_step_slug);
+            error_log(__METHOD__ . ' [ERROR] Current step slug not found in steps: ' . $current_step_slug);
             return 0;
         }
         
@@ -578,8 +612,6 @@ class OpenSim_Form {
         $html = '<div class="multistep-progress mt-4">';
         $html .= '<div class="step-indicators d-flex align-items-stretch justify-content-between">';
 
-        error_log(__METHOD__ . ' step slug ' . $current_step_slug . ' at index ' . $current_index . ' step keys: ' . print_r($step_keys, true));
-        
         foreach( $step_keys as $index => $step_slug ) {
             $step_number = $index + 1;
             $step_title = $steps[$step_slug]['title'] ?? ucfirst($step_slug);

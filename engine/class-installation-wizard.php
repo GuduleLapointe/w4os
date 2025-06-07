@@ -25,14 +25,31 @@ class Installation_Wizard {
      */
     public function set_return_url($url) {
         $this->return_url = $url;
-        $_SESSION[$this->form_id]['return_url'] = $url;
+        $_SESSION[$this->session_key]['return_url'] = $url;
+        
+        // Also set it in the form session for the form to use
+        if ($this->form) {
+            $_SESSION[$this->form->get_form_id()]['return_url'] = $url;
+        }
+    }
+    
+    /**
+     * Set return page name for display in back link
+     */
+    public function set_return_pagename($pagename) {
+        $_SESSION[$this->session_key]['return_pagename'] = $pagename;
+        
+        // Also set it in the form session for the form to use
+        if ($this->form) {
+            $_SESSION[$this->form->get_form_id()]['return_pagename'] = $pagename;
+        }
     }
     
     /**
      * Get return URL
      */
     public function get_return_url() {
-        return $this->return_url ?? $_SESSION[$this->form_id]['return_url'] ?? null;
+        return $this->return_url ?? $_SESSION[$this->session_key]['return_url'] ?? null;
     }
 
     /**
@@ -84,9 +101,11 @@ class Installation_Wizard {
      * Setup form with proper field configuration
      */
     private function setup_form() {
-        $configured = Engine_Settings::configured();
+        // error_log('[DEBUG] Session ' . print_r($_SESSION, true));
         $grid_name = OpenSim::grid_name();
         $login_uri = OpenSim::login_uri();
+        $configured = Engine_Settings::configured() || ! empty($login_uri);
+        error_log("[DEBUG] grid $grid_name $login_uri");
 
         // Get existing configuration for defaults
         // $grid_name = Engine_Settings::get('robust.GridInfoService.gridname');
@@ -319,13 +338,38 @@ class Installation_Wizard {
     }
     
     /**
-     * Load session data
+     * Get configuration method for setup form
+     */
+    private function get_config_method() {
+        // If imported options are available, use import/migration mode
+        if (Engine_Settings::using_imported_options()) {
+            return 'import_legacy';
+        }
+        
+        // Otherwise check if system is already configured
+        if (Engine_Settings::configured()) {
+            return 'update_existing';
+        }
+        
+        return 'new_installation';
+    }
+
+    /**
+     * Load session data and extract wizard_data if available
      */
     private function load_session_data() {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
+        // If wizard_data exists, extract return URL and page name
+        if (isset($_SESSION['wizard_data'])) {
+            $wizard_data = $_SESSION['wizard_data'];
+            
+            if (isset($wizard_data['return_url'])) {
+                $this->set_return_url($wizard_data['return_url']);
+            }
+            
+            if (isset($wizard_data['return_pagename'])) {
+                $this->set_return_pagename($wizard_data['return_pagename']);
+            }
         }
-        $this->wizard_data = $_SESSION[$this->session_key] ?? array();
     }
 
     /**

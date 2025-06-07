@@ -110,19 +110,23 @@ class Engine_Settings {
     }
     
     /**
-     * Load settings from .ini file
+     * Load settings from configuration file or use imported options
      */
     private static function load() {
         if (self::$loaded) {
             return;
         }
-        
-        if (self::using_imported_options()) {
+        error_log(__METHOD__ . ' [DEBUG] loading');
+
+        // If imported options are available, use them instead of loading from file
+        if (self::$imported_options !== null) {
             self::$settings = self::$imported_options;
             self::$loaded = true;
+            error_log('[DEBUG] Engine_Settings using imported options: ' . count(self::$settings) . ' settings loaded');
             return;
         }
-
+        
+        // Otherwise load from configuration file as usual
         // Find all files in config directory
         $ini_files = glob(self::$config_dir . '/*.ini');
         if (empty($ini_files)) {
