@@ -130,6 +130,291 @@ class Installation_Wizard {
                             ),
                         ),
                     ),
+                    'fields_tests' => array(
+                        'title' => _('Field type tests'),
+                        'description' => _('Various field types, for testing purposes only, this form has no effect.'),
+                        'fields' => array(
+                            // 'dummy_group' => array(
+                            //     'label' => _('Field group'),
+                            //     'description' => _('Saved as an array of child fields.'),
+                            //     // 'type' => 'field-group',
+                            //     'fields' => array(
+                            //         'foo' => array(
+                            //             'label' => _('Foo'),
+                            //             'required' => true,
+                            //         ),
+                            //         'bar' => array(
+                            //             'label' => _('Bar'),
+                            //         ),
+                            //         'child3' => array(
+                            //             'label' => _('Child 3'),
+                            //             'default' => 'John Doe',
+                            //         ),
+                            //     )
+                            // ),
+                            'dummy_switch' => array(
+                                'type' => 'switch',
+                                'label' => _('Switch field'),
+                                'default' => true,
+                                // 'columns' => 2,
+                            ),
+                            'advanced_phone' => array(
+                                'label' => _('Advanced phone'),
+                                'multiple' => true,
+                                'fields' => array(
+                                    'phone_type' => array(
+                                        'label' => _('Type'),
+                                        'type' => 'select',
+                                        'placeholder' => _('Select phone type'),
+                                        'columns' => 4, // 1 to 12, number of columns to use
+                                        'options' => array(
+                                            'mobile' => _('Mobile'),
+                                            'landline' => _('Landline'),
+                                            'office' => _('Office'),
+                                        )
+                                    ),
+                                    'phone_number' => array(
+                                        'type' => 'tel',
+                                        'label' => _('Number'),
+                                        'columns' => 8, // 1 to 12, number of columns to use
+                                    ),
+                                ),
+                            ),
+                            'dummy_text' => array(
+                                'label' => _('Dummy text field'),
+                                'type' => 'string',
+                                'description' => _('For testing purposes only, this field has no effect.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_textarea' => array(
+                                'label' => _('Dummy text area'),
+                                'type' => 'textarea',
+                                'description' => _('Test area field'),
+                                'multiple' => true,
+                            ),
+                            'dummy_email' => array(
+                                'label' => _('Dummy email field'),
+                                'type' => 'email',
+                                'description' => _('HTML5 email input.'),
+                                'readonly' => true,
+                                'multiple' => true,
+                            ),
+                            'dummy_url' => array(
+                                'label' => _('Dummy URL field'),
+                                'type' => 'url',
+                                'description' => _('HTML5 URL input.'),
+                                'disabled' => true,
+                            ),
+                            'dummy_tel' => array(
+                                'label' => _('Dummy telephone field'),
+                                'type' => 'tel',
+                                'description' => _('HTML5 telephone input.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_password' => array(
+                                'label' => _('Dummy password field'),
+                                'type' => 'password',
+                                'description' => _('HTML5 password input.'),
+                            ),
+                            'dummy_date' => array(
+                                'label' => _('Dummy date field'),
+                                'type' => 'date',
+                                'description' => _('HTML5 date input.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_time' => array(
+                                'label' => _('Dummy time field'),
+                                'type' => 'time',
+                                'description' => _('HTML5 time input.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_datetime' => array(
+                                'label' => _('Dummy datetime-local field'),
+                                'type' => 'datetime-local',
+                                'description' => _('HTML5 datetime-local input.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_month' => array(
+                                'label' => _('Dummy month field'),
+                                'type' => 'month',
+                                'description' => _('HTML5 month input.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_week' => array(
+                                'label' => _('Dummy week field'),
+                                'type' => 'week',
+                                'description' => _('HTML5 week input.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_color' => array(
+                                'label' => _('Dummy color field'),
+                                'type' => 'color',
+                                'description' => _('HTML5 color input.'),
+                            ),
+                            'dummy_color_multiple' => array(
+                                'label' => _('Dummy multiple color field'),
+                                'type' => 'color',
+                                'description' => _('HTML5 color input.'),
+                                'multiple' => true,
+                            ),
+                            'dummy_file' => array(
+                                'label' => _('Dummy file field'),
+                                'type' => 'file',
+                                'description' => _('HTML5 file input.'),
+                                'preview' => true, // Show thumbnails when fields are added
+                            ),
+                            'dummy_multiple_files' => array(
+                                'label' => _('Dummy file field'),
+                                'type' => 'file',
+                                'multiple' => true,
+                                'description' => _('HTML5 multiple files input.'),
+                                'preview' => true, // Show thumbnails when fields are added, last thumb is an add button, files can be cleared individually
+                            ),
+                            'dummy_int' => array(
+                                'label' => _('Dummy integer field'),
+                                'type' => 'number',
+                                'options' => array(
+                                    'steps' => 1,
+                                    'min' => 8000,
+                                    'max' => 8999,
+                                ),
+                                'multiple' => true,
+                                'description' => _('For testing purposes only, this field has no effect.'),
+                                'icon' => '🚫',
+                            ),
+                            'dummy_float' => array(
+                                'label' => _('Dummy float number field'),
+                                'type' => 'number',
+                                'options' => array(
+                                    'min' => 0.5,
+                                    'max' => 5.00,
+                                ),
+                                'description' => _('For testing purposes only, this field has no effect.'),
+                                'multiple' => true,
+                                'icon' => '🚫',
+                            ),
+                            'dummy_checkbox' => array(
+                                'type' => 'checkbox',
+                                'label' => _('Dummy checkbox'),
+                                'description' => _('For testing purposes only, this field has no effect.'),
+                                'options' => array(
+                                    'one' => _('One'),
+                                    'two' => _('Two'),
+                                    'three' => _('Three'),
+                                ),
+                            ),
+                            'dummy_radio' => array(
+                                'type' => 'radio',
+                                'label' => _('Dummy radio'),
+                                'description' => _('For testing purposes only, this field has no effect.'),
+                                'options' => array(
+                                    'one' => _('One'),
+                                    'two' => _('Two'),
+                                    'three' => _('Three'),
+                                ),
+                            ),
+                            'dummy_select' => array(
+                                'type' => 'select',
+                                'label' => _('Dummy select'),   
+                                'description' => _('For testing purposes only, this field has no effect.'),
+                                'placeholder' => _('Select the dummiest option'),
+                                'options' => array(
+                                    'one' => _('One'),
+                                    'two' => _('Two'),
+                                    'three' => _('Three'),
+                                ),
+                            ),
+                            'dummy_select_multiple' => array(
+                                'type' => 'select',
+                                'label' => _('Dummy select Multiple'),   
+                                'description' => _('For testing purposes only, this field has no effect.'),
+                                'multiple' => true,
+                                'options' => array(
+                                    'one' => _('One'),
+                                    'two' => _('Two'),
+                                    'three' => _('Three'),
+                                ),
+                            ),
+                            'dummy_select2' => array(
+                                'type' => 'select2',
+                                'label' => _('Dummy select2 field'),
+                                'description' => _('Searchable dropdown with many options'),
+                                'options' => array(
+                                    'option1' => _('First Option'),
+                                    'option2' => _('Second Option'),
+                                    'option3' => _('Third Option'),
+                                    'option4' => _('Fourth Option'),
+                                    'option5' => _('Fifth Option'),
+                                    'long_option_name_1' => _('Very Long Option Name That Demonstrates Search Functionality'),
+                                    'long_option_name_2' => _('Another Long Option Name For Testing Purposes'),
+                                ),
+                            ),
+                            'dummy_select2_multiple' => array(
+                                'type' => 'select2',
+                                'label' => _('Multiple select2'),
+                                'description' => _('Multiple selection with search'),
+                                'multiple' => true,
+                                'options' => array(
+                                    'tag1' => _('Tag One'),
+                                    'tag2' => _('Tag Two'),
+                                    'tag3' => _('Tag Three'),
+                                    'category1' => _('Category One'),
+                                    'category2' => _('Category Two'),
+                                ),
+                            ),
+                            'advanced_group' => array(
+                                'type' => 'field-group',
+                                'label' => _('Advanced Configuration Group'),
+                                'description' => _('A group of related configuration options'),
+                                'fields' => array(
+                                    'server_host' => array(
+                                        'type' => 'text',
+                                        'label' => _('Server Host'),
+                                        'required' => true,
+                                        'columns' => 7,
+                                        'placeholder' => 'localhost',
+                                    ),
+                                    'server_port' => array(
+                                        'type' => 'number',
+                                        'label' => _('Server Port'),
+                                        'required' => true,
+                                        'columns' => 3,
+                                        'options' => array(
+                                            'min' => 1024,
+                                            'max' => 65535,
+                                        ),
+                                        'default' => 8002,
+                                    ),
+                                    'enable_ssl' => array(
+                                        'type' => 'switch',
+                                        'label' => _('SSL'),
+                                        'columns' => 2,
+                                    ),
+                                ),
+                            ),
+                            'readonly_field' => array(
+                                'type' => 'text',
+                                'label' => _('Read-only field'),
+                                'description' => _('This field cannot be edited'),
+                                'readonly' => true,
+                                'default' => 'This value cannot be changed',
+                            ),
+                            'disabled_field' => array(
+                                'type' => 'text',
+                                'label' => _('Disabled field'),
+                                'description' => _('This field is disabled'),
+                                'disabled' => true,
+                                'default' => 'This field is disabled',
+                            ),
+                            'pattern_field' => array(
+                                'type' => 'text',
+                                'label' => _('Pattern field (letters only)'),
+                                'description' => _('Regular Expression pattern, test with [A-Za-z]+'),
+                                'pattern' => '[A-Za-z]+',
+                                'placeholder' => 'OnlyLetters',
+                            ),
+                        )
+                    ),
                     'grid_connection' => array(
                         'title' => _('Grid Connection'),
                         'description' => _('Select the method for helpers to exchange data with your OpenSimulator grid.'),
@@ -191,62 +476,6 @@ class Installation_Wizard {
                             ),
                         )
                     ),
-                    // 'fields_tests' => array(
-                    //     'title' => _('Field type tests'),
-                    //     'description' => _('Various field type tests'),
-                    //     'fields' => array(
-                    //         'dummy_text' => array(
-                    //             'label' => _('Dummy text field'),
-                    //             'description' => _('For testing purposes only, this field has no effect.'),
-                    //             'type' => 'dummy',
-                    //             'label' => _('Dummy connection'),
-                    //             'description' => _('This is a dummy connection, no real services are connected.'),
-                    //         ),
-                    //         'dummy_int' => array(
-                    //             'label' => _('Dummy integer field'),
-                    //             'description' => _('For testing purposes only, this field has no effect.'),
-                    //             'icon' => '🚫',
-                    //             'type' => 'dummy',
-                    //             'description' => _('This is a dummy field for debug, it does nothing.'),
-                    //         ),
-                    //         'dummy_checkbox' => array(
-                    //             'type' => 'checkbox',
-                    //             'label' => _('Dummy checkbox'),
-                    //             'description' => _('For testing purposes only, this field has no effect.'),
-                    //             'options' => array(
-                    //                 'one' => _('One'),
-                    //                 'two' => _('Two'),
-                    //                 'three' => _('Three'),
-                    //             ),
-                    //         ),
-                    //         'dummy_radio' => array(
-                    //             'type' => 'radio',
-                    //             'label' => _('Dummy radio'),
-                    //             'description' => _('For testing purposes only, this field has no effect.'),
-                    //             'options' => array(
-                    //                 'one' => _('One'),
-                    //                 'two' => _('Two'),
-                    //                 'three' => _('Three'),
-                    //             ),
-                    //         ),
-                    //         'dummy_select' => array(
-                    //             'type' => 'select',
-                    //             'label' => _('Dummy select'),   
-                    //             'description' => _('For testing purposes only, this field has no effect.'),
-                    //             'options' => array(
-                    //                 'one' => _('One'),
-                    //                 'two' => _('Two'),
-                    //                 'three' => _('Three'),
-                    //             ),
-                    //         ),
-                    //         'dummy_switch' => array(
-                    //             'type' => 'switch',
-                    //             'label' => _('Dummy switch'),
-                    //             'description' => _('For testing purposes only, this field has no effect.'),
-                    //             'options' => true, // true is default for switch
-                    //         ),
-                    //     )
-                    // ),
                     'grid_info' => array(
                         'title' => _('Grid Information'),
                         'description' => _('Basic grid configuration'),

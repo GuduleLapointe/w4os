@@ -38,6 +38,20 @@ class OpenSim_Field {
     private $has_error = false;
     private $error_message = '';
 
+    
+    protected $type = 'text';
+    protected $label;
+    protected $required;
+    protected $value;
+    protected $placeholder;
+    protected $description;
+    protected $options;
+    protected $input_classes = array();
+    protected $attributes = array();
+    
+    public static $required_mark = ' <i class="bi bi-asterisk text-danger"></i> ';
+    public static $select_mark = ' › ';
+
     public function __construct($field_id, $field_config = array()) {
         if(empty($field_id)) {
             throw new InvalidArgumentException('Field ID cannot be empty');
@@ -64,6 +78,19 @@ class OpenSim_Field {
             ),
             $field_config
         );
+
+        $this->type = $this->field_config['type'] ?? 'text';
+        $this->label = $this->field_config['label'] ?? '';
+        $this->required = $this->field_config['required'] ?? false;
+        $this->value = $this->get_field_value();
+        $this->placeholder = $this->field_config['placeholder'] ?? null;
+        $this->description = $this->field_config['description'] ?? null;
+        $this->options = $this->field_config['options'] ?? array();
+        $this->required_mark = $this->required ? self::$required_mark : '';
+        $this->input_classes = $input_classes = $this->get_input_classes($type);
+        $this->input_classes = is_string($this->input_classes) ? [ $this->input_classes ] : $this->input_classes;
+
+        $this->set_input_attributes();
     }
 
     /**
@@ -78,25 +105,31 @@ class OpenSim_Field {
      * Render field based on type
      */
     public function render() {
-        $field_type = $this->field_config['type'] ?? 'text';
+        $type = $this->field_config['type'] ?? 'text';
         
-        // Check field conditions first
-        if (!$this->should_show_field()) {
-            return '';
-        }
-        
-        switch ($field_type) {
+        // Handle special field types that don't follow standard pattern
+        switch ($type) {
             case 'select-nested':
                 return $this->render_select_nested();
+                
             case 'select-accordion':
-                return $this->render_accordion();
-            case 'console_credentials':
-                return $this->render_console_credentials();
+                return $this->render_select_accordion();
+                
             case 'db_credentials':
                 return $this->render_db_credentials();
-            case 'file-ini':
+                
+            case 'ini_files':
                 return $this->render_ini_files();
+                
+            case 'field-group':
+                return $this->render_group();
+                
             default:
+                if(!empty($this->field_config['fields'])) {
+                    // Type not set to field-group, but has children, so it's a field group
+                    return $this->render_group();
+                }
+                // Use standard rendering for all other types
                 return $this->render_standard();
         }
     }
@@ -137,39 +170,508 @@ class OpenSim_Field {
     private function render_standard() {
         $type = $this->field_config['type'] ?? 'text';
         $label = $this->field_config['label'] ?? '';
-        $required = !empty($this->field_config['required']);
+        $required = $this->field_config['required'] ?? false;
         $value = $this->get_field_value();
         $placeholder = $this->field_config['placeholder'] ?? '';
-        $description = $this->field_config['description'] ?? 'DEBUG description';
-        $required_mark = $required ? '<span class="text-danger">*</span>' : '';
+        $description = $this->field_config['description'] ?? '';
+        $options = $this->field_config['options'] ?? array();
+        $required_mark = $required ? self::$required_mark : '';
         
-        $html = '<div class="form-group mb-3">';
+        $field_container_classes[] = "form-group mb-3";
+        $columns = $this->field_config['columns'] ?? null;
+        if(is_integer($columns) && $columns > 0 && $columns <= 12) {
+            $field_container_classes[] = 'col-auto col-lg-' . $columns;
+        }
+
+        $html = sprintf(
+            '<div class="%s">',
+            implode(' ', $field_container_classes),
+        );
+
         if ($label) {
-            $html .= '<label class="form-label" for="' . $this->field_id . '">' . do_not_sanitize($label) . $required_mark . '</label>';
+            $html .= sprintf(
+                '<label class="form-label" for="%s">%s%s</label>',
+                $this->field_id,
+                $this->label,
+                $this->required ? self::$required_mark : '',
+            );
         }
         
-        // Add Bootstrap classes based on field state
-        $input_classes = ['form-control'];
+        // // Add Bootstrap classes based on field state
+        // $input_classes = $this->get_input_classes($type);
         if ($this->has_error) {
-            $input_classes[] = 'is-invalid';
+            $this->input_classes[] = 'is-invalid';
+        }
+
+        $input_classes = $this->input_classes;
+        
+        // Render field based on type
+        switch ($type) {
+            case 'textarea':
+                $html .= $this->render_textarea();
+                break;
+                
+            case 'select':
+                $html .= $this->render_select();
+                break;
+                
+            case 'select2':
+                $html .= $this->render_select2();
+                break;
+                
+            case 'radio':
+                $html .= $this->render_radio();
+                break;
+                
+            case 'checkbox':
+                $html .= $this->render_checkbox();
+                break;
+                
+            case 'switch':
+                $html .= $this->render_switch();
+                break;
+                
+            case 'file':
+                $html .= $this->render_file();
+                break;
+                
+            case 'hidden':
+                // For hiddent file, we don't want the container, return only field code
+                return $this->render_hidden();
+                
+            case 'color':
+                $html .= $this->render_color($input_classes, $value, $placeholder, $required);
+                break;
+                
+            default:
+                // Handle all HTML5 input types: text, email, url, tel, password, number, date, time, datetime-local, month, week, color, range, search
+                $html .= $this->render_input();
+                break;
         }
         
-        $html .= '<input type="' . $type . '" class="' . implode(' ', $input_classes) . '" id="' . $this->field_id . '" name="' . $this->field_id . '" ';
-        $html .= 'value="' . do_not_sanitize($value) . '" ';
-        if ($placeholder) {
-            $html .= 'placeholder="' . do_not_sanitize($placeholder) . '" ';
-        }
-        if ($required) {
-            $html .= 'required ';
-        }
-        $html .= '>';
-        
-        if (!empty($this->field_config['description'])) {
-            $html .= '<div class="form-text">' . $this->field_config['description'] . '</div>';
+        // Add description
+        if (!empty($description)) {
+            $html .= '<div class="form-text">' . do_not_sanitize($description) . '</div>';
         }
         
+        $html .= '</div>'; // End form-group
+        
+        return $html;
+    }
+    
+    /**
+     * Get CSS classes for input elements
+     */
+    private function get_input_classes($type) {
+        switch ($type) {
+            case 'checkbox':
+            case 'radio':
+                return ['form-check-input'];
+            case 'select':
+                return ['form-select'];
+            case 'file':
+                return ['form-control'];
+            case 'range':
+                return ['form-range'];
+            case 'color':
+                return ['form-control-color'];
+            default:
+                return ['form-control'];
+        }
+    }
+    
+    /**
+     * Render textarea element
+     */
+    private function render_textarea() {
+        $input_classes = $this->input_classes ?? array();
+        $value = $this->value ?? null;
+        $placeholder = $this->placeholder ?? null;
+        $required = $this->required ?? false;
+        $attributes = $this->input_attributes ?? array();
+
+        $rows = $this->field_config['rows'] ?? 3;
+        
+        $html = sprintf(
+            '<textarea id="%1$s" name="%1$s" class="%2$s" rows="%3$d" placeholder="%4$s" %5$s>%6$s</textarea>',
+            $this->field_id,
+            implode(' ', $input_classes),
+            $rows,
+            do_not_sanitize($placeholder),
+            implode(' ', $attributes),
+            do_not_sanitize($value)
+        );
+        return $html;
+    }
+    
+    /**
+     * Render select element
+     */
+    private function render_select() {
+        $type = $this->type ?? 'select';
+        $multiple = $this->field_config['multiple'] ?? false;
+        $attributes = $this->input_attributes;
+        $value = $this->value ?? null;
+        $required = $this->required ?? false;
+        $options = $this->options ?? array();
+
+        $html = sprintf(
+            '<select id="%s" name="%s" class="%s" %s>',
+            $this->field_id,
+            $this->field_id . ($multiple ? '[]' : ''),
+            implode(' ', $this->input_classes),
+            implode($attributes),
+        );
+        
+        $placeholder = self::$select_mark . (empty($this->placeholder) ? ( $multiple ? _('Select options') : _('Select an option') ) : $this->placeholder);
+
+        // Add empty option if not required and not multiple
+        if (!$required && !$multiple) {
+            $html .= sprintf(
+                '<option value="">%s</option>',
+                $placeholder,
+            );
+        }
+
+        $selected_values = $multiple && is_array($value) ? $value : array($value);
+        
+        foreach ($options as $option_value => $option_label) {
+            $selected = in_array($option_value, $selected_values) ? ' selected' : '';
+            $html .= '<option value="' . do_not_sanitize($option_value) . '"' . $selected . '>' . do_not_sanitize($option_label) . '</option>';
+        }
+        
+        $html .= '</select>';
+        return $html;
+    }
+    
+    /**
+     * Render select2 dropdown with search
+     */
+    private function render_select2() {
+        $multiple = $this->field_config['multiple'] ?? false;
+        $attributes = $this->input_attributes ?? array();
+        $input_classes = $this->input_classes ?? array();
+        $options = $this->options ?? array();
+        $required = $this->required ?? false;
+
+        // Add select2 class
+        $input_classes[] = 'form-control select2';
+
+        $input_classes = array_unique($input_classes);
+
+        $html = sprintf(
+            '<select id="%s" name="%s" class="%s" %s>',
+            $this->field_id,
+            $this->field_id . ($multiple ? '[]' : ''),
+            implode(' ', $input_classes),
+            implode(' ', $attributes),
+        );
+        
+        $placeholder = self::$select_mark . (empty($this->placeholder) ? ( $multiple ? _('Select options') : _('Select an option') ) : $this->placeholder);
+
+        // Add empty option if not required and not multiple
+        if (!$required && !$multiple) {
+            $html .= sprintf(
+                '<option value="">%s</option>',
+                $placeholder,
+            );
+        }
+        
+        $selected_values = $multiple && is_array($value) ? $value : array($value);
+        
+        foreach ($options as $option_value => $option_label) {
+            $selected = in_array($option_value, $selected_values) ? ' selected' : '';
+            $html .= '<option value="' . do_not_sanitize($option_value) . '"' . $selected . '>' . do_not_sanitize($option_label) . '</option>';
+        }
+        
+        $html .= '</select>';
+        
+        // Add select2 initialization script
+        $html .= '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof jQuery !== "undefined" && jQuery.fn.select2) {
+                jQuery("#' . $this->field_id . '").select2({
+                    placeholder: "' . $placeholder . '",
+                    allowClear: ' . ($required ? 'false' : 'true') . '
+                });
+            }
+        });
+        </script>';
+
+        return $html;
+    }
+    
+    /**
+     * Render radio buttons
+     */
+    private function render_radio() {
+        $value = $this->value ?? null;
+        $options = $this->options ?? array();
+        $required = $this->required ?? false;
+        $attributes = $this->input_attributes;
+        $input_classes = $this->input_classes ?? array();
+        $input_classes = ['form-check-input'];
+        
+
+        $html = '';
+        foreach ($options as $option_value => $option_label) {
+            $html .= sprintf(
+                '<div class="form-check">
+                    <input id="%1$s_%2$s" name="%1$s" class="%3$s" type="radio" value="%4$s" %5$s %6$s>
+                    <label class="form-check-label" for="%1$s_%2$s">%7$s</label>
+                </div>',
+                $this->field_id,
+                $option_value,
+                implode(' ', $input_classes),
+                do_not_sanitize($option_value),
+                ($value === $option_value) ? ' checked' : '',
+                implode(' ', $attributes),
+                do_not_sanitize($option_label)
+            );
+        }
+        return $html;
+    }
+    
+    /**
+     * Render checkbox options
+     */
+    private function render_checkbox() {
+        $value = $this->value ?? array();
+        $values = is_array($value) ? $value : array($value);
+        $options = $this->options ?? array();
+        $attributes = $this->input_attributes;
+
+        $html = '';
+        
+        foreach ($options as $option_value => $option_label) {
+            $html .= sprintf(
+            '<div class="form-check">
+                <input class="form-check-input" type="checkbox" id="%1$s_%2$s" name="%1$s[]" value="%3$s" %4$s %5$s>
+                <label class="form-check-label" for="%1$s_%2$s">%6$s</label>
+            </div>',
+            $this->field_id,
+            $option_value,
+            do_not_sanitize($option_value),
+            in_array($option_value, $values) ? ' checked' : '',
+            implode(' ', $attributes),
+            do_not_sanitize($option_label)
+            );
+        }
+        return $html;
+    }
+    
+    /**
+     * Render switch toggle
+     */
+    // private function render_switch($value) {
+    private function render_switch() {
+        $value = $this->value ?? false;
+        $attributes = $this->input_attributes;
+
+        $html = sprintf(
+            '<div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="%1$s" name="%1$s" value="1" %2$s %3$s>
+            </div>',
+            $this->field_id,
+            $value ? 'checked' : '',
+            implode(' ', $attributes)
+        );
+        return $html;
+    }
+    
+    /**
+     * Render file input
+     */
+    private function render_file() {
+        $input_classes = $this->input_classes ?? array();
+        $required = $this->required ?? false;
+        $multiple = $this->field_config['multiple'] ?? false;
+        $attributes = $this->input_attributes;
+
+        $accept = $this->field_config['accept'] ?? '';
+        if ($accept) {
+            $attributes[] = 'accept="' . do_not_sanitize($accept) . '"';
+        }
+        
+        $html = sprintf(
+            '<div class="input-group"><input type="file" class="%s" id="%s" name="%s" %s %s>',
+            implode(' ', $input_classes),
+            $this->field_id,
+            $this->field_id . ($multiple ? '[]' : ''),
+            $required ? 'required' : '',
+            implode(' ', $attributes)
+        );
+        
+        // Add clear button
+        $html .= '<button type="button" class="btn btn-outline-secondary" onclick="clearFileInput(\'' . $this->field_id . '\')" title="' . _('Clear file selection') . '">';
+        $html .= '<i class="bi bi-x"></i>';
+        $html .= '</button>';
         $html .= '</div>';
         
+        return $html;
+    }
+    
+    /**
+     * Render color input with enhanced display
+     */
+    private function render_color($input_classes, $value, $placeholder, $required) {
+        $attributes = $this->get_input_attributes();
+        $color_value = $value ?: '#000000';
+        
+        $html = '<div class="input-group">';
+        $html .= '<input type="color" class="form-control form-control-color" id="' . $this->field_id . '" name="' . $this->field_id . '" ';
+        $html .= 'value="' . do_not_sanitize($color_value) . '"';
+        if ($required) {
+            $html .= ' required';
+        }
+        if ($attributes) {
+            $html .= ' ' . $attributes;
+        }
+        $html .= ' onchange="updateColorValue(\'' . $this->field_id . '\')">';
+        
+        // Text input showing the hex value
+        $html .= '<input type="text" class="form-control" id="' . $this->field_id . '_text" ';
+        $html .= 'value="' . do_not_sanitize($color_value) . '" ';
+        $html .= 'pattern="^#[0-9A-Fa-f]{6}$" ';
+        $html .= 'placeholder="#000000" ';
+        $html .= 'onchange="updateColorPicker(\'' . $this->field_id . '\')">';
+        $html .= '</div>';
+        
+        return $html;
+    }
+    
+    /**
+     * Render standard input element
+     */
+    private function render_input() {
+        
+        if ($this->placeholder) {
+            $this->input_attributes[] = 'placeholder="' . do_not_sanitize($this->placeholder) . '"';
+        }
+        
+        $html = sprintf(
+            '<input id="%1$s" name="%1$s" type="%2$s" class="%3$s" value="%4$s" %5$s>',
+            $this->field_id,
+            $this->type,
+            implode(' ', $this->input_classes),
+            $this->value,
+            $this->get_input_attributes(),
+        );
+
+        return $html;
+    }
+
+    /**
+     * Render hidden field
+     */
+    private function render_hidden() {
+        $html = sprintf(
+            '<input type="hidden" id="%s" name="%s" value="%s">',
+            $this->field_id,
+            $this->field_id,
+            do_not_sanitize($value)
+        );
+        return $html;
+    }
+    
+    /**
+     * Get common attributes for form elements
+     */
+    private function set_input_attributes() {
+        $attributes = $this->input_attributes ?? array();
+
+        if (!empty($this->field_config['readonly'])) {
+            $attributes[] = 'readonly';
+        }
+        if (!empty($this->field_config['disabled'])) {
+            $attributes[] = 'disabled';
+        }
+        if ($this->field_config['multiple'] ?? false) {
+            $attributes[] = 'multiple';
+        }
+        if (!empty($this->field_config['autofocus'])) {
+            $attributes[] = 'autofocus';
+        }
+        if (!empty($this->field_config['required'])) {
+            $attributes[] = 'required';
+        }
+        if (!empty($this->field_config['disabled'])) {
+            $attributes[] = 'disabled';
+        }
+
+        // Add type-specific attributes
+        switch ($this->type) {
+            case 'number':
+            case 'range':
+                $options = $this->options ?? array();
+                if (isset($options['min'])) {
+                    $attributes['min'] = 'min="' . $options['min'] . '"';
+                }
+                if (isset($options['max'])) {
+                    $attributes['max'] = 'max="' . $options['max'] . '"';
+                }
+                if (isset($options['step'])) {
+                    $attributes['step'] = 'step="' . $options['step'] . '"';
+                }
+                break;
+                
+            case 'text':
+            case 'email':
+            case 'url':
+            case 'tel':
+            case 'search':
+            case 'password':
+                $maxlength = $this->field_config['maxlength'] ?? null;
+                $minlength = $this->field_config['minlength'] ?? null;
+                $pattern = $this->field_config['pattern'] ?? null;
+                if ($maxlength) {
+                    $attributes['maxlength'] = 'maxlength="' . $maxlength . '"';
+                }
+                if ($minlength) {
+                    $attributes['minlength'] = 'minlength="' . $minlength . '"';
+                }
+                if ($pattern) {
+                    $attributes['pattern'] = 'pattern="' . do_not_sanitize($pattern) . '"';
+                }
+                break;
+        }
+        
+        if(is_array($attributes)) {
+            $this->input_attributes = $attributes;
+            return implode(' ', $attributes);
+        }
+
+        error_log('[ERROR] input_attributes is not an array: ' . print_r($attributes));
+    }
+
+    private function get_input_attributes() {
+        return implode(' ', $this->input_attributes);
+    }
+    
+    /**
+     * Render field group with nested fields
+     */
+    private function render_group() {
+        $label = $this->field_config['label'] ?? '';
+        $description = $this->field_config['description'] ?? '';
+        $fields = $this->field_config['fields'] ?? array();
+        
+        $html = '<fieldset class="field-group mb-4 card px-4 py-2">';
+        if ($label) {
+            $html .= '<legend class="field-group-legend h5 ps-2 mb-0">' . do_not_sanitize($label) . '</legend>';
+        }
+        if ($description) {
+            $html .= '<div class="field-group-description text-muted mb-3">' . do_not_sanitize($description) . '</div>';
+        }
+        
+        $html .= '<div class="row">';
+        // Render nested fields
+        foreach ($fields as $nested_field_id => $nested_field_config) {
+            $nested_field = new OpenSim_Field($nested_field_id, $nested_field_config);
+            $html .= $nested_field->render();
+        }
+        $html .= '</div>';        
+        $html .= '</fieldset>';
         return $html;
     }
     
@@ -179,10 +681,10 @@ class OpenSim_Field {
     private function render_select_nested() {
         $label = $this->field_config['label'] ?? '';
         $options = $this->field_config['options'] ?? array();
-        $required = !empty($this->field_config['required']);
+        $required = $this->field_config['required'] ?? false;
         $value = $this->get_field_value();
         
-        $required_mark = $required ? '<span class="text-danger">*</span>' : '';
+        $required_mark = $required ? self::$required_mark : '';
         $html = '<div class="config-choice mb-4">';
         if ($label) {
             $html .= '<h5 class="mb-3">' . do_not_sanitize($label) . $required_mark . '</h5>';
@@ -271,10 +773,10 @@ class OpenSim_Field {
     private function render_accordion() {
         $options = $this->field_config['options'] ?? array();
         $label = $this->field_config['label'] ?? '';
-        $required = !empty($this->field_config['required']);
+        $required = $this->field_config['required'] ?? false;
         $value = $this->get_field_value();
         
-        $required_mark = $required ? '<span class="text-danger">*</span>' : '';
+        $required_mark = $required ? self::$required_mark : '';
         
         $html = '<div class="connection-methods mb-4">';
         if ($label) {
@@ -488,7 +990,7 @@ class OpenSim_Field {
         $required_attr = $required ? 'required' : '';
         $readonly_attr = $readonly ? 'readonly' : '';
         $accept_attr = $accept ? 'accept="' . do_not_sanitize($accept) . '"' : '';
-        $required_mark = $required ? '<span class="text-danger">*</span>' : '';
+        $required_mark = $required ? self::$required_mark : '';
         
         $html = '<div class="form-group mb-2">';
         $html .= '<label class="form-label" for="' . $name . '">' . do_not_sanitize($label) . $required_mark . '</label>';

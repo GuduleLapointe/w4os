@@ -132,6 +132,15 @@ class OpenSim_Form {
     public function render_form() {
         Helpers::enqueue_style('helpers-form', 'css/form.css');
         Helpers::enqueue_script('helpers-form', 'js/form.js');
+        
+        // Check if any fields use select2 and enqueue jQuery + Select2 if needed
+        if ($this->has_select2_fields()) {
+            // Enqueue jQuery (required for Select2)
+            Helpers::enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js');
+            // Enqueue Select2
+            Helpers::enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
+            Helpers::enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js');
+        }
 
         if( ! empty( $this->html )) {
             return $this->html;
@@ -825,5 +834,47 @@ class OpenSim_Form {
         $this->completed = $step;
         $_SESSION[$this->form_id]['completed'] = $step;
         $this->refresh_steps();
+    }
+
+    /**
+     * Check if form has any select2 fields that need jQuery
+     */
+    private function has_select2_fields() {
+        if ($this->multistep) {
+            $current_step = $this->get_current_step_config();
+            $fields = $current_step['fields'] ?? array();
+        } else {
+            $fields = $this->fields;
+        }
+        
+        return $this->fields_contain_select2($fields);
+    }
+    
+    /**
+     * Recursively check if fields contain select2 type
+     */
+    private function fields_contain_select2($fields) {
+        foreach ($fields as $field_config) {
+            if (isset($field_config['type']) && $field_config['type'] === 'select2') {
+                return true;
+            }
+            // Check nested fields in groups
+            if (isset($field_config['fields']) && is_array($field_config['fields'])) {
+                if ($this->fields_contain_select2($field_config['fields'])) {
+                    return true;
+                }
+            }
+            // Check nested fields in select-nested options
+            if (isset($field_config['options']) && is_array($field_config['options'])) {
+                foreach ($field_config['options'] as $option) {
+                    if (is_array($option) && isset($option['fields']) && is_array($option['fields'])) {
+                        if ($this->fields_contain_select2($option['fields'])) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
