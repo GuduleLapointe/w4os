@@ -49,7 +49,7 @@ class OpenSim_Form {
             $args = array( 'form_id' => $args );
         }
         if (!is_array($args)) {
-            error_log('[DEBUG] ' . __METHOD__ . ' invalid argument type ' . gettype($args));
+            error_log('[ERROR] ' . __METHOD__ . ' invalid argument type ' . gettype($args));
             throw new InvalidArgumentException('Invalid argument type: ' . gettype($args));
         }
 
@@ -75,8 +75,11 @@ class OpenSim_Form {
         
         // Process form if submitted
         if (!empty($_POST['form_id']) && $_POST['form_id'] == $this->form_id) {
+            error_log('[DEBUG] ' . __METHOD__ . ' post data received ' . print_r($_POST, true));
             $result = $this->process();
             // Form processing handles step advancement internally
+        } else if(!empty($_POST)) {
+            error_log('[DEBUG] ' . __METHOD__ . ' post data not processed ' . print_r($_POST, true));
         }
     }
 
@@ -121,7 +124,9 @@ class OpenSim_Form {
     }
 
     public function render_form() {
-        error_log('[DEBUG] ' . __METHOD__ . ' loading');
+        Helpers::enqueue_style('helpers-form', 'css/form.css');
+        Helpers::enqueue_script('helpers-form', 'js/form.js');
+
         if( ! empty( $this->html )) {
             return $this->html;
         }
@@ -134,7 +139,6 @@ class OpenSim_Form {
                 return '(debug) No step to render';
             }
             $current_step_slug = $this->get_current_step_slug();
-            error_log('[DEBUG] ' . __METHOD__ . ' current step ' . print_r($current_step_slug, true));
             
             $fields = $current_step['fields'] ?? array();
             $step_title = $current_step['title'] ?? '';
@@ -201,15 +205,15 @@ class OpenSim_Form {
 
         $buttons = array();
 
-        if( $current_step_number >0 ) {
-            // Previous button (not on first step)
-            $buttons['previous'] = ($this->multistep && $current_step_number > 0) ? sprintf(
-                '<button type="button" class="me-auto btn btn-outline-secondary" onclick="previousStep()">
+        if( $current_step_number > 0 ) {
+            // Previous button (not on first step) - MUST be a button, not a link
+            $buttons['previous'] = sprintf(
+                '<button type="button" class="me-auto btn btn-outline-secondary" onclick="previousStep();">
                     <i class="bi bi-arrow-left"></i> 
                     %s
                 </button>',
                 _('Previous')
-            ) : '';
+            );
         }
 
         // Back link in the middle
@@ -228,7 +232,7 @@ class OpenSim_Form {
         }
 
         $buttons['reset'] = sprintf(
-            '<button type="button" class="ms-auto btn btn-outline-danger" onclick="resetWizard()">%s</button>',
+            '<button type="button" class="ms-auto btn btn-outline-danger" onclick="resetForm()">%s</button>',
             _('Reset')
         );
         $buttons['submit'] = sprintf(
@@ -246,17 +250,6 @@ class OpenSim_Form {
             $current_step_slug,
             join(' ', $buttons),
         );
-
-        // Add JavaScript function to clean wizard session
-        $html .= '<script>
-        function cleanWizardSession() {
-            fetch("' . $_SERVER['REQUEST_URI'] . '", {
-                method: "POST",
-                headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                body: "action=clean_wizard_session"
-            });
-        }
-        </script>';
 
         $html .= '</div>';
         $html .= '</form>';
@@ -379,7 +372,7 @@ class OpenSim_Form {
         $current_index = array_search($current_step_slug, $step_keys);
         
         if ($current_index === false) {
-            error_log('[DEBUG] ' . __METHOD__ . ' [ERROR] Current step slug not found in steps: ' . $current_step_slug);
+            error_log('[ERROR] ' . __METHOD__ . ' Current step slug not found in steps: ' . $current_step_slug);
             return 0;
         }
         
@@ -407,7 +400,7 @@ class OpenSim_Form {
 
         $step_config = $this->steps[$current_step_slug] ?? false;
         if (!$step_config) {
-            error_log('[DEBUG] ' . __METHOD__ . ' No step configuration found for slug: ' . $current_step_slug);
+            error_log('[ERROR] ' . __METHOD__ . ' No step configuration found for slug: ' . $current_step_slug);
         }        
         return $step_config;
     }
@@ -423,29 +416,25 @@ class OpenSim_Form {
         // Get the step that was just submitted
         $submitted_step_key = $_POST['step_slug'] ?? null;
         if (empty($submitted_step_key)) {
-            error_log('[DEBUG] ' . __METHOD__ . ' [ERROR] No step_slug in POST data');
+            error_log('[ERROR] ' . __METHOD__ . '  No step_slug in POST data');
             return;
         }
         
         $submitted_step = $this->steps[$submitted_step_key] ?? null;
         if (!$submitted_step) {
-            error_log('[DEBUG] ' . __METHOD__ . ' No step configuration found for key: ' . $submitted_step_key);
+            error_log('[ERROR] ' . __METHOD__ . ' No step configuration found for key: ' . $submitted_step_key);
             return;
         }
-        
-        error_log('[DEBUG] ' . __METHOD__ . ' Processing submitted step: ' . $submitted_step_key);
-        
+
         // Get step callback if defined
         $callback = $submitted_step['callback'] ?? null;
         if (!$callback) {
-            error_log('[DEBUG] ' . __METHOD__ . ' No callback defined for step ' . $submitted_step_key . ', advancing automatically');
+            error_log('[ERROR] ' . __METHOD__ . ' No callback defined for step ' . $submitted_step_key . ', advancing automatically');
             // No validation needed, just save form data and advance
             $this->save_step_data($submitted_step_key);
             return;
         }
-        
-        error_log('[DEBUG] ' . __METHOD__ . ' Executing callback: ' . $callback);
-        
+                
         // Execute step validation callback with submitted values
         $submitted_values = $_POST;
         
@@ -454,14 +443,13 @@ class OpenSim_Form {
         } elseif (is_array($this->callback) && method_exists($this->callback[0], $callback)) {
             $result = call_user_func(array($this->callback[0], $callback), $submitted_values);
         } else {
-            error_log('[DEBUG] ' . __METHOD__ . ' callback not found: ' . $callback);
+            error_log('[ERROR] ' . __METHOD__ . ' callback not found: ' . $callback);
             return;
         }
 
         // Handle validation result
         if (is_array($result) && isset($result['success']) && $result['success']) {
             // Validation passed
-            error_log('[DEBUG] ' . __METHOD__ . ' Validation passed, advancing to next step');
             $this->save_step_data($submitted_step_key);
         }
 
@@ -485,7 +473,6 @@ class OpenSim_Form {
      * Advance to next step
      */
     private function advance_step() {
-        error_log('[DEBUG] ' . __METHOD__ . ' loading');
         $step_keys = array_keys($this->steps);
         $current_step_slug = $_SESSION[$this->form_id]['current_step'] ?? $step_keys[0];
         $current_index = array_search($current_step_slug, $step_keys);
@@ -493,27 +480,46 @@ class OpenSim_Form {
         if ($current_index !== false && $current_index < count($step_keys) - 1) {
             $next_step_key = $step_keys[$current_index + 1];
             $_SESSION[$this->form_id]['current_step'] = $next_step_key;
-            error_log('[DEBUG] ' . __METHOD__ . ' Advanced from ' . $current_step_slug . ' to ' . $next_step_key);
+        }
+    }
+
+    /**
+     * Go back to previous step
+     */
+    private function go_back_step() {
+        error_log('[DEBUG] ' . __METHOD__ . ' loading');
+        $step_keys = array_keys($this->steps);
+        $current_step_slug = $_SESSION[$this->form_id]['current_step'] ?? $step_keys[0];
+        $current_index = array_search($current_step_slug, $step_keys);
+        
+        if ($current_index !== false && $current_index > 0) {
+            $previous_step_key = $step_keys[$current_index - 1];
+            $_SESSION[$this->form_id]['current_step'] = $previous_step_key;
+            error_log('[DEBUG] ' . __METHOD__ . ' Went back from ' . $current_step_slug . ' to ' . $previous_step_key);
         } else {
-            error_log('[DEBUG] ' . __METHOD__ . ' Already at last step or step not found');
+            error_log('[DEBUG] ' . __METHOD__ . ' Already at first step or step not found');
         }
     }
 
     public function process() {
-        error_log('[DEBUG] ' . __METHOD__ . ' loading');
         if( empty( $_POST )) {
             // Fail if no POST data
-            error_log('[DEBUG] ' . __METHOD__ . ' called without POST data');
+            error_log('[ERROR] ' . __METHOD__ . ' called without POST data');
             return false;
         }
+        error_log('[DEBUG] ' . __METHOD__ . ' loading');
 
         $values = $_POST;
 
         // TODO: validate form_id, make basic sanitization
 
         if ($this->multistep) {
+            if (isset($_POST['go_back']) && $_POST['go_back'] === '1') {
+                error_log('[DEBUG] ' . __METHOD__ . ' Go back request detected');
+                $this->go_back_step();
+                return array('success' => true); // Return success to avoid showing errors
+            }
             $result = $this->process_step();
-
             if ($result['success']) {
                 $this->advance_step();
             }
@@ -538,7 +544,6 @@ class OpenSim_Form {
 
         // Common to both methods
         if (! $result['success']) {
-            error_log('[DEBUG] ' . __METHOD__ . ' failed, set error data');
             // Validation failed, set errors and stay on current step
             if (isset($result['errors'])) {
                 $this->errors = $result['errors'];

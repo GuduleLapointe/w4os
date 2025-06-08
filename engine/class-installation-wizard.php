@@ -55,15 +55,12 @@ class Installation_Wizard {
     public function get_content() {
         // Handle reset request
         if (isset($_POST['reset_wizard'])) {
+            error_log('[DEBUG] ' . __METHOD__ . ' reset request');
             $this->reset();
             // Redirect to avoid resubmission
             header('Location: ' . $_SERVER['REQUEST_URI']);
             exit;
         }
-        
-        // Enqueue required assets
-        Helpers::enqueue_style('helpers-form', 'css/form.css');
-        Helpers::enqueue_script('helpers-form', 'js/form.js');
         
         return $this->form->render_form();
     }
@@ -79,7 +76,6 @@ class Installation_Wizard {
         }
 
         if(empty($form_config) || ! is_array($form_config)) {
-            // error_log('[DEBUG] Session ' . print_r($_SESSION, true));
             $grid_name = OpenSim::grid_name();
             $login_uri = OpenSim::login_uri();
             $configured = Engine_Settings::configured() || ! empty($login_uri);
@@ -359,7 +355,6 @@ class Installation_Wizard {
      * Validate initial configuration step
      */
     public function process_initial_config($submitted_data) {
-        error_log('[DEBUG] ' . __METHOD__ . ' loading');
         $errors = array();
         $field_errors = array();
         
@@ -378,14 +373,12 @@ class Installation_Wizard {
                 // The config validation is very minimal, as each step will have its own validation
                 case 'current_config':
                     // Theorically, if we reach this point, minimal validation has been done, we can proceed.
-                    error_log('[DEBUG] ' . __METHOD__ . ' ' . $config_method . ' proceed to step 2');
                     break;
                 case 'import_legacy':
                     // TODO: run contants import, minimal config validation and load as work config
                     $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
                     break;
                 case 'ini_import':
-                    error_log('[DEBUG] ' . __METHOD__ . ' ' . $config_method . ' - submitted_data: ' . print_r($submitted_data, true));
                     $errors[] = '[DEBUG] config_method ' . $config_method . ' validation not implemented yet';
                     if(empty($submitted_data['robust_ini']['path']) && empty($submitted_data['robust_ini']['upload'])) {
                         $errors[] = _('Please fill the Robust(.HG).ini file path or upload a file');
@@ -430,7 +423,6 @@ class Installation_Wizard {
      * Process form submission
      */
     public function process_form($form_data) {
-        error_log('[DEBUG] ' . __METHOD__ . ' loading');
         // Validate and process step data
         $this->wizard_data = array_merge($this->wizard_data, $form_data);
         $this->save_session_data();
@@ -451,6 +443,8 @@ class Installation_Wizard {
      * Handle wizard completion
      */
     private function handle_completion() {
+        // TODO: handle completion
+        error_log('[ERROR] ' . __METHOD__ . ' completion not implemented');
         // ...existing completion logic...
         
         // Clean up wizard session data
@@ -459,6 +453,7 @@ class Installation_Wizard {
         
         $return_url = $this->get_return_url();
         if ($return_url) {
+            error_log('[DEBUG] ' . __METHOD__ . ' Are we reaching this point?');
             // Redirect back to WordPress admin
             header('Location: ' . $return_url . '&wizard_completed=1');
             exit;

@@ -152,9 +152,9 @@ class W4OS3_Installation_Wizard {
         printf(
             '<div class="container">
                 <h1>%s</h1>
-                <div class="w4os-wizard-description lg text-center">
-                    <p>%s</p>
-                </div>
+                <p class="lead text-center" style="font-size:1rem;">
+                    %s
+                </p>
                 <p>%s</p>
                 %s
             </div>',
