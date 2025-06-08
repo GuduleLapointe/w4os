@@ -61,12 +61,6 @@ class Installation_Wizard {
             exit;
         }
         
-        // Process form if submitted
-        if (!empty($_POST['form_id'])) {
-            $result = $this->form->process();
-            // Form processing handles step advancement internally
-        }
-        
         // Enqueue required assets
         Helpers::enqueue_style('helpers-form', 'css/form.css');
         Helpers::enqueue_script('helpers-form', 'js/form.js');
@@ -365,7 +359,7 @@ class Installation_Wizard {
      * Validate initial configuration step
      */
     public function process_initial_config($submitted_data) {
-        error_log(__METHOD__ . ' [DEBUG] loading');
+        error_log('[DEBUG] ' . __METHOD__ . ' loading');
         $errors = array();
         $field_errors = array();
         
@@ -384,15 +378,14 @@ class Installation_Wizard {
                 // The config validation is very minimal, as each step will have its own validation
                 case 'current_config':
                     // Theorically, if we reach this point, minimal validation has been done, we can proceed.
-                    error_log(__METHOD__ . ' [DEBUG] ' . $config_method . ' proceed to step 2');
-                    $errors[] = '[DEBUG] config_method ' . $config_method . ' validation not implemented yet';
+                    error_log('[DEBUG] ' . __METHOD__ . ' ' . $config_method . ' proceed to step 2');
                     break;
                 case 'import_legacy':
                     // TODO: run contants import, minimal config validation and load as work config
                     $errors[] = 'DEBUG config_method ' . $config_method . ' validation not implemented yet';
                     break;
                 case 'ini_import':
-                    error_log(__METHOD__ . ' [DEBUG] ' . $config_method . ' - submitted_data: ' . print_r($submitted_data, true));
+                    error_log('[DEBUG] ' . __METHOD__ . ' ' . $config_method . ' - submitted_data: ' . print_r($submitted_data, true));
                     $errors[] = '[DEBUG] config_method ' . $config_method . ' validation not implemented yet';
                     if(empty($submitted_data['robust_ini']['path']) && empty($submitted_data['robust_ini']['upload'])) {
                         $errors[] = _('Please fill the Robust(.HG).ini file path or upload a file');
@@ -423,7 +416,7 @@ class Installation_Wizard {
         // Save step data to wizard data
         $this->wizard_data['initial_config'] = $submitted_data;
         $this->save_session_data();
-        // return array('success' => true);
+        return array('success' => true);
     }
     
     /**
@@ -437,7 +430,7 @@ class Installation_Wizard {
      * Process form submission
      */
     public function process_form($form_data) {
-        error_log(__METHOD__ . ' [DEBUG] loading');
+        error_log('[DEBUG] ' . __METHOD__ . ' loading');
         // Validate and process step data
         $this->wizard_data = array_merge($this->wizard_data, $form_data);
         $this->save_session_data();
