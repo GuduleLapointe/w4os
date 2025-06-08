@@ -341,7 +341,7 @@ class OpenSim_Field {
         $defaults = $this->field_config['default'] ?? array();
         $description = $this->field_config['description'] ?? '';
         
-        $html = '<div class="credentials-section">';
+        $html = '<div class="credentials-section my-4">';
         $html .= '<h6>' . do_not_sanitize($label) . '</h6>';
         
         if ($description) {
@@ -353,7 +353,7 @@ class OpenSim_Field {
         $html .= '<div class="col-md-6">';
         $html .= $this->render_inline_field('console_host', _('Host'), 'text', $defaults['host'] ?? 'localhost', true);
         $html .= '</div>';
-        $html .= '<div class="col-md-6">';
+        $html .= '<div class="col-md-2">';
         $html .= $this->render_inline_field('console_port', _('Port'), 'number', $defaults['port'] ?? '8404', true);
         $html .= '</div>';
         $html .= '</div>';
@@ -382,7 +382,7 @@ class OpenSim_Field {
         $use_default = $this->field_config['use_default'] ?? false;
         $is_main_db = strpos($this->field_id, 'robust.DatabaseService') !== false;
         
-        $html = '<div class="credentials-section">';
+        $html = '<div class="credentials-section my-4">';
         $html .= '<h6>' . do_not_sanitize($label) . '</h6>';
         
         if ($description) {
@@ -408,24 +408,24 @@ class OpenSim_Field {
         
         // Database fields in rows
         $html .= '<div class="row">';
-        $html .= '<div class="col-md-6">';
-        $html .= $this->render_inline_field('db_host', _('Host'), 'text', $defaults['host'] ?? '', true);
+        $html .= '<div class="col-md-4">';
+        $html .= $this->render_inline_field('db_host', _('Host name'), 'text', $defaults['host'] ?? '', true);
         $html .= '</div>';
-        $html .= '<div class="col-md-6">';
+        $html .= '<div class="col-md-2">';
         $html .= $this->render_inline_field('db_port', _('Port'), 'number', $defaults['port'] ?? '3306', true);
         $html .= '</div>';
-        $html .= '</div>';
-        
-        $html .= '<div class="row">';
         $html .= '<div class="col-md-6">';
-        $html .= $this->render_inline_field('db_name', _('Database'), 'text', $defaults['name'] ?? '', true);
+        $html .= $this->render_inline_field('db_name', _('Database name'), 'text', $defaults['name'] ?? '', true);
         $html .= '</div>';
+        // $html .= '</div>';
+        
+        // $html .= '<div class="row">';
         $html .= '<div class="col-md-6">';
         $html .= $this->render_inline_field('db_user', _('Username'), 'text', $defaults['user'] ?? '', true);
         $html .= '</div>';
-        $html .= '</div>';
+        // $html .= '</div>';
         
-        $html .= '<div class="row">';
+        // $html .= '<div class="row">';
         $html .= '<div class="col-md-6">';
         $html .= $this->render_inline_field('db_pass', _('Password'), 'password', $defaults['pass'] ?? '', true);
         $html .= '</div>';

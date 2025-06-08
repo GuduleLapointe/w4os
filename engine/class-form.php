@@ -17,7 +17,7 @@
  *      $args = array(
  *          'id' => unique id
  *          'html' => html code
- *          'callback' => callback to call to process form
+ *          'callback' => callback to use to process form
  * )
  * - render_form()     return the form html code
  * - get_fields()   return the array of defined fields 
@@ -75,6 +75,12 @@ class OpenSim_Form {
         
         // Process form if submitted
         if (!empty($_POST['form_id']) && $_POST['form_id'] == $this->form_id) {
+            // Handle reset request first
+            if (isset($_POST['reset_form'])) {
+                $this->reset_form();
+                return;
+            }
+            
             error_log('[DEBUG] ' . __METHOD__ . ' post data received ' . print_r($_POST, true));
             $result = $this->process();
             // Form processing handles step advancement internally
@@ -232,7 +238,8 @@ class OpenSim_Form {
         }
 
         $buttons['reset'] = sprintf(
-            '<button type="button" class="ms-auto btn btn-outline-danger" onclick="resetForm()">%s</button>',
+            '<button type="submit" name="reset_form" value="1" class="ms-auto btn btn-outline-danger" onclick="return confirm(\'%s\')">%s</button>',
+            _('Are you sure you want to reset the form? All data will be lost.'),
             _('Reset')
         );
         $buttons['submit'] = sprintf(
@@ -256,6 +263,36 @@ class OpenSim_Form {
 
         $this->html = $html;
         return $html;
+    }
+
+    /**
+     * Reset form data while preserving return URL and page name
+     */
+    private function reset_form() {
+        // Preserve return data before clearing session
+        $return_url = $_SESSION[$this->form_id]['return_url'] ?? null;
+        $return_pagename = $_SESSION[$this->form_id]['return_pagename'] ?? null;
+        
+        // Clear form session data
+        unset($_SESSION[$this->form_id]);
+
+        // Restore return data
+        if ($return_url) {
+            $_SESSION[$this->form_id]['return_url'] = $return_url;
+        }
+        if ($return_pagename) {
+            $_SESSION[$this->form_id]['return_pagename'] = $return_pagename;
+        }
+        
+        // Reset current step to first step
+        if ($this->multistep && !empty($this->steps)) {
+            $step_keys = array_keys($this->steps);
+            $_SESSION[$this->form_id]['current_step'] = $step_keys[0];
+        }
+        
+        // Redirect to avoid resubmission
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
     }
 
     /**
@@ -638,7 +675,7 @@ class OpenSim_Form {
         $current_index = array_search($current_step_slug, $step_keys);
         
         $html = '<div class="multistep-progress mt-4">';
-        $html .= '<div class="step-indicators d-flex align-items-stretch justify-content-between">';
+        $html .= '<div class="step-indicators d-flex gap-2 align-items-stretch justify-content-evenly">';
 
         foreach( $step_keys as $index => $step_slug ) {
             $step_number = $index + 1;
@@ -657,7 +694,7 @@ class OpenSim_Form {
             }
 
             $html .= sprintf(
-                '<div class="step-indicator %s" data-step="%s">
+                '<div class="step-indicator d-flex flex-column flex-grow-1 align-self-start align-items-center justify-content-center %s" data-step="%s">
                 <div class="step-number %s">%d</div>
                 <div class="step-title">%s</div>
                 </div>
@@ -671,7 +708,7 @@ class OpenSim_Form {
             
             // Add connector line (except for last step)
             if ($index < count($step_keys) - 1) {
-                $html .= '<div class="step-connector pt-1"><hr></div>';
+                $html .= '<div class="step-connector flex-shrink-1 pt-1"><hr></div>';
             }
         }
         

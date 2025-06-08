@@ -28,40 +28,11 @@ class Installation_Wizard {
     public function get_return_url() {
         return $this->return_url ?? $_SESSION[$this->session_key]['return_url'] ?? null;
     }
-
-    /**
-     * Get reset/cancel button text and URL
-     */
-    public function get_reset_button_config() {
-        $return_url = $this->get_return_url();
-        if ($return_url) {
-            return array(
-                'text' => 'Cancel',
-                'url' => $return_url,
-                'action' => 'cancel'
-            );
-        } else {
-            return array(
-                'text' => 'Reset',
-                'url' => '#',
-                'action' => 'reset'
-            );
-        }
-    }
     
     /**
      * Get wizard content for rendering
      */
     public function get_content() {
-        // Handle reset request
-        if (isset($_POST['reset_wizard'])) {
-            error_log('[DEBUG] ' . __METHOD__ . ' reset request');
-            $this->reset();
-            // Redirect to avoid resubmission
-            header('Location: ' . $_SERVER['REQUEST_URI']);
-            exit;
-        }
-        
         return $this->form->render_form();
     }
     
@@ -162,10 +133,13 @@ class Installation_Wizard {
                     'grid_connection' => array(
                         'title' => _('Grid Connection'),
                         'description' => _('Select the method for helpers to exchange data with your OpenSimulator grid.'),
+                        'callback' => 'process_grid_connection',
                         'fields' => array(
                             'connection_method' => array(
                                 'type' => 'select-nested',
                                 'label' => _('Connection method'),
+                                'required' => true,
+                                'mutual-exclusive' => true,
                                 'options' => array(
                                     'use_console' => array(
                                         'label' => _('Console connection (recommended)'),
@@ -215,58 +189,64 @@ class Installation_Wizard {
                                 'default' => empty($robust_console) && !empty($robust_db) ? 'use_db' : 'use_console',
                                 'required' => true
                             ),
-                            'dummy' => array(
-                                'label' => _('Dummy text field'),
-                                'description' => _('For testing purposes only, this field has no effect.'),
-                                'type' => 'dummy',
-                                'label' => _('Dummy connection'),
-                                'description' => _('This is a dummy connection, no real services are connected.'),
-                            ),
-                            'dummy_int' => array(
-                                'label' => _('Dummy integer field'),
-                                'description' => _('For testing purposes only, this field has no effect.'),
-                                'icon' => '🚫',
-                                'type' => 'dummy',
-                                'description' => _('This is a dummy field for debug, it does nothing.'),
-                            ),
-                            'dummy_checkbox' => array(
-                                'type' => 'checkbox',
-                                'label' => _('Dummy checkbox'),
-                                'description' => _('For testing purposes only, this field has no effect.'),
-                                'options' => array(
-                                    'one' => _('One'),
-                                    'two' => _('Two'),
-                                    'three' => _('Three'),
-                                ),
-                            ),
-                            'dummy_radio' => array(
-                                'type' => 'radio',
-                                'label' => _('Dummy radio'),
-                                'description' => _('For testing purposes only, this field has no effect.'),
-                                'options' => array(
-                                    'one' => _('One'),
-                                    'two' => _('Two'),
-                                    'three' => _('Three'),
-                                ),
-                            ),
-                            'dummy_select' => array(
-                                'type' => 'select',
-                                'label' => _('Dummy select'),   
-                                'description' => _('For testing purposes only, this field has no effect.'),
-                                'options' => array(
-                                    'one' => _('One'),
-                                    'two' => _('Two'),
-                                    'three' => _('Three'),
-                                ),
-                            ),
-                            'dummy_switch' => array(
-                                'type' => 'switch',
-                                'label' => _('Dummy switch'),
-                                'description' => _('For testing purposes only, this field has no effect.'),
-                                'options' => true, // true is default for switch
-                            ),
                         )
                     ),
+                    // 'fields_tests' => array(
+                    //     'title' => _('Field type tests'),
+                    //     'description' => _('Various field type tests'),
+                    //     'fields' => array(
+                    //         'dummy_text' => array(
+                    //             'label' => _('Dummy text field'),
+                    //             'description' => _('For testing purposes only, this field has no effect.'),
+                    //             'type' => 'dummy',
+                    //             'label' => _('Dummy connection'),
+                    //             'description' => _('This is a dummy connection, no real services are connected.'),
+                    //         ),
+                    //         'dummy_int' => array(
+                    //             'label' => _('Dummy integer field'),
+                    //             'description' => _('For testing purposes only, this field has no effect.'),
+                    //             'icon' => '🚫',
+                    //             'type' => 'dummy',
+                    //             'description' => _('This is a dummy field for debug, it does nothing.'),
+                    //         ),
+                    //         'dummy_checkbox' => array(
+                    //             'type' => 'checkbox',
+                    //             'label' => _('Dummy checkbox'),
+                    //             'description' => _('For testing purposes only, this field has no effect.'),
+                    //             'options' => array(
+                    //                 'one' => _('One'),
+                    //                 'two' => _('Two'),
+                    //                 'three' => _('Three'),
+                    //             ),
+                    //         ),
+                    //         'dummy_radio' => array(
+                    //             'type' => 'radio',
+                    //             'label' => _('Dummy radio'),
+                    //             'description' => _('For testing purposes only, this field has no effect.'),
+                    //             'options' => array(
+                    //                 'one' => _('One'),
+                    //                 'two' => _('Two'),
+                    //                 'three' => _('Three'),
+                    //             ),
+                    //         ),
+                    //         'dummy_select' => array(
+                    //             'type' => 'select',
+                    //             'label' => _('Dummy select'),   
+                    //             'description' => _('For testing purposes only, this field has no effect.'),
+                    //             'options' => array(
+                    //                 'one' => _('One'),
+                    //                 'two' => _('Two'),
+                    //                 'three' => _('Three'),
+                    //             ),
+                    //         ),
+                    //         'dummy_switch' => array(
+                    //             'type' => 'switch',
+                    //             'label' => _('Dummy switch'),
+                    //             'description' => _('For testing purposes only, this field has no effect.'),
+                    //             'options' => true, // true is default for switch
+                    //         ),
+                    //     )
+                    // ),
                     'grid_info' => array(
                         'title' => _('Grid Information'),
                         'description' => _('Basic grid configuration'),
@@ -289,16 +269,31 @@ class Installation_Wizard {
                             )
                         )
                     ),
+                    'helpers' => array(
+                        'title' => _('Helpers'),
+                        'description' => _('Helpers are providing or complementing OpenSim services, usually queried directly by the viewer.'),
+                        'fields' => array(
+                        )
+                    ),
+                    'economy' => array(
+                        'title' => _('Economy'),
+                        'description' => _('Manage the money in your grid.'),
+                        // 'condition' => array(
+                        //     'install_mode' => array('console', 'database', 'ini_import', 'modify_existing')
+                        // ),
+                        'fields' => array(
+                        )
+                    ),
                     'validation' => array(
                         'title' => _('Validation'),
                         'description' => _('Validate configuration and test connections'),
                         'fields' => array()
                     ),
-                    'summary' => array(
-                        'title' => _('Installation Summary'),
-                        'description' => _('Review configuration before finalizing'),
-                        'fields' => array()
-                    )
+                    // 'summary' => array(
+                    //     'title' => _('Installation Summary'),
+                    //     'description' => _('Review configuration before finalizing'),
+                    //     'fields' => array()
+                    // )
                 ),
             );
             
@@ -352,7 +347,7 @@ class Installation_Wizard {
     }
 
     /**
-     * Validate initial configuration step
+     * Validate Initial Configuration - step 1
      */
     public function process_initial_config($submitted_data) {
         $errors = array();
@@ -411,7 +406,38 @@ class Installation_Wizard {
         $this->save_session_data();
         return array('success' => true);
     }
-    
+
+    /**
+     * Validate Grid Connection config - step 2
+     */
+    public function process_grid_connection($submitted_data) {
+        $step_slug = 'grid_connection';
+        $errors = array();
+        $field_errors = array();
+        
+        if (empty($submitted_data)) {
+            error_log(__METHOD__ . ' [ERROR] No data received in ' . __FILE__ . ':' . __LINE__);
+            $errors[] = _('System error: no data received');
+        } else if(empty($submitted_data['step_slug']) || $submitted_data['step_slug'] !== $step_slug) {
+            error_log(__METHOD__ . ' [ERROR] Invalid step slug: ' . ($submitted_data['step_slug'] ?? 'empty') . ' in ' . __FILE__ . ':' . __LINE__);
+            $errors[] = _('System error: invalid step slug');
+        } else {
+            $errors[] = __METHOD__ . ' not yet implemented';
+        }
+        if (!empty($errors)) {
+            return array(
+                'success' => false, 
+                'errors' => $errors,
+                'field_errors' => $field_errors
+            );
+        }
+        
+        // Save step data to wizard data
+        $this->wizard_data[$step_slug] = $submitted_data;
+        $this->save_session_data();
+        return array('success' => true);
+    }
+
     /**
      * Save session data
      */
@@ -429,14 +455,6 @@ class Installation_Wizard {
         
         // Return result
         return array('success' => true);
-    }
-    
-    /**
-     * Reset wizard
-     */
-    public function reset() {
-        unset($_SESSION[$this->session_key]);
-        $this->wizard_data = array();
     }
 
     /**
