@@ -822,3 +822,5 @@ function parse_ini_file_decode( $filename, $process_sections = false, $scanner_m
 // (byte)y, (byte)(y >> 8), 0, 0 };
 // return new UUID(bytes, 0);
 // }
+
+require_once(__DIR__ . '/functions-escaping.php');

@@ -1,0 +1,28 @@
+{
+    "name": "magicoli/opensim-engine",
+    "description": "OpenSimulator Engine - Framework-agnostic core functionality for OpenSim grids",
+    "type": "library",
+    "license": "AGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Gudule Lapointe",
+            "email": "gudule@speculoos.world"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "laminas/laminas-escaper": "^2.12",
+        "laminas/laminas-filter": "^2.24"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenSim\\Engine\\": "src/"
+        },
+        "files": [
+            "includes/functions-escaping.php"
+        ]
+    },
+    "suggest": {
+        "ezyang/htmlpurifier": "For advanced HTML sanitization if rich content is needed"
+    }
+}
