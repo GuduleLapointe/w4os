@@ -569,8 +569,12 @@ function w4os_grid_running() {
 	}
 	$url         = w4os_grid_login_uri() . '/get_grid_info';
 	$headers     = @get_headers( $url, true );
-	$status_code = preg_replace( '/.* ([0-9]+) .*/', '$1', $headers['0'] );
-	return ( $status_code == 200 );
+	if($headers) {
+		$status_code = preg_replace( '/.* ([0-9]+) .*/', '$1', $headers['0'] );
+		return ( $status_code == 200 );
+	} else {
+		return false;
+	}
 }
 
 function w4os_status_icon( $bool = null, $ignore_null = false ) {

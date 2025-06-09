@@ -4,7 +4,7 @@
 - fix default model not applied on avatar creation
 - fix some grid uri not properly sanitized
 - new textgen helper script (create dynamic texture from url)
-- update DEVELOPERS.md (add instructions to properly setup submodules)
+- update INSTALLATION-git.md (add instructions to properly setup submodules)
 
 v3 beta features
 *  new avatar menu block

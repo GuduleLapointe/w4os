@@ -1,21 +1,51 @@
-# Installation Instructions for Developers / Night Builds
+# W4OS Project Architecture Rules
 
-To ensure that all submodules are included (especially the helpers submodule), make sure to clone the repository using the `--recurse-submodules` option:
+This WordPress plugin includes the OpenSim Helpers library, which
+iself includes the OpenSim Engine library. Each library could be used as standalone
+or included in a totally unrelated project. Therefore neither helpers or enginer 
+could ever rely on a class, method or function defined in the project including them.
 
-```bash
-cd wp-content/plugins/
-git clone --recurse-submodules https://github.com/GuduleLapointe/w4os.git
-cd w4os
-./setup-git.sh
-wp plugin activate w4os
+w4os/ # WordPress plugin
+└── helpers/ # Viewer helpers, API, minimal web interface
+    ├── bootstrap.php
+    └── engine/ # Pure business logic, configuration management, no direct output
+        └── boostrap.php
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   W4OS Plugin   │    │     Helpers     │    │     Engine      │
+│  (true Web UI)  │────│      (API)      │────│   (Pure Data)   │
+│                 │    │                 │    │                 │
+│ • WP integration│    │ • HTTP handling │    │ • Data process  │
+│ • Admin pages   │    │ • HTML output   │    │ • Database ops  │
+│ • WP hooks      │    │ • Form process  │    │ • OpenSim logic │
+│ • User mgmt     │    │ • API endpoints │    │ • Config mgmt   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-If you've already cloned the repository without submodules, you can initialize and update them with:
+## Core Principles
+- **engine/** and **helpers/** are framework-agnostic standalone components
+- **wordpress/** contains WordPress-specific integration code
+- No WordPress knowledge in engine/helpers (no wp functions, no w4os naming)
 
-```bash
-cd wp-content/plugins/w4os
-git submodule update --init --recursive
-./setup-git.sh
-```
+## Data Flow Rules
+- Use generic session variables (`wizard_data`, not `w4os_wizard_data`)
+- Engine components receive clean data contracts, not framework-specific structures
+- Calling applications handle their own internal logic (migration vs update vs new)
 
-Then follow instructions from step 2 in INSTALLATION.md
+## Naming Conventions
+- Generic components: `Engine_Settings`, `Installation_Wizard`
+- WordPress components: `W4OS_*`, `w4os_*`
+- Session data: generic names that work with any calling framework
+
+## Separation of Concerns
+- **Engine**: Pure business logic, configuration management
+- **Helpers**: Standalone web interface for engine
+- **WordPress**: Integration layer, handles WP-specific features
+
+## Data Contracts
+- Pass only essential data between layers
+- Use arrays with `values`, `return_url`, `timestamp`
+- No framework metadata in generic components
+
+Always apply these rules when suggesting code changes.

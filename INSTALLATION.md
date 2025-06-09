@@ -26,7 +26,7 @@ Please check the [WordPress documentation](https://wordpress.org/) for detailed 
 
 - *Note:** If upgrading from a different distribution (e.g. switching from GitHub to the WordPress Plugin Directory), disable the previous version before activating the new one.
 
-1. Download and activate the latest stable release (for the latest development version, follow the instructions in DEVELOPERS.md).
+1. Download and activate the latest stable release (for the latest development version, follow the instructions in INSTALLATION-git.md).
 2. Visit the `OpenSimulator > Settings` page in your WordPress admin.
    - Enter your grid name and grid URI (e.g. yourgrid.org:8002, without the "http://").
    - Enter your robust database connection details and submit. If you encounter a database connection error, it might be due to a case-sensitivity issue (see https://github.com/GuduleLapointe/w4os/issues/2#issuecomment-923299674).

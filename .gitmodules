@@ -2,5 +2,5 @@
 	path = helpers
 	url = https://github.com/magicoli/opensim-helpers.git
 [submodule "src/olib-dev"]
-	path = src/olib-dev
+	path = dev/olib-dev
 	url = https://github.com/magicoli/olib-dev

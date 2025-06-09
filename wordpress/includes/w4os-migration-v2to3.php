@@ -7,10 +7,11 @@
  * to the standardized OpenSim INI format used by Engine_Settings.
  */
 
-if (!defined('ABSPATH') && !defined('OPENSIM_ENGINE')) {
+if (!defined('ABSPATH') && !defined('OPENSIM_HELPERS')) {
     exit;
 }
 
+// Should not be necessary, loaded by main plugin, but this script is loaded before
 require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
 
 class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {

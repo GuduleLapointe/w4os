@@ -7,11 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '6e3fae29631ef280660b3cdad06f25a8' => $vendorDir . '/symfony/deprecation-contracts/function.php',
-    '535cf38403fe1a8c6aea5654339f2510' => $vendorDir . '/meta-box/meta-box/meta-box.php',
-    '687e88d103d3c7b7e29ca5e836cb2272' => $vendorDir . '/meta-box/mb-settings-page/mb-settings-page.php',
-    'be497f88b773aa5c9974da46821effab' => $vendorDir . '/meta-box/mb-admin-columns/mb-admin-columns.php',
-    'd46e9eb4d08a138d32890bfd33c08c32' => $vendorDir . '/meta-box/meta-box-columns/meta-box-columns.php',
-    'd625401fcd6c5ef99e9ddf76eb29ba78' => $vendorDir . '/meta-box/meta-box-conditional-logic/meta-box-conditional-logic.php',
-    'e689b9619e9752623f82a67f0b829350' => $vendorDir . '/meta-box/meta-box-group/meta-box-group.php',
-    '3cdaf8a7feac7dab25a504ea4957b65a' => $vendorDir . '/woocommerce/action-scheduler/action-scheduler.php',
+    '87fdc51523b5f724994a5a9611e95196' => $vendorDir . '/meta-box/meta-box/meta-box.php',
+    'efaa3666e4bc7accac7f139951ad5ff2' => $vendorDir . '/meta-box/mb-settings-page/mb-settings-page.php',
+    '0ecd749751c875cd58e34c015b76ea9e' => $vendorDir . '/meta-box/mb-admin-columns/mb-admin-columns.php',
+    'e2d6947b2ea48e3ae5458acb46230d3c' => $vendorDir . '/meta-box/meta-box-columns/meta-box-columns.php',
+    'cfa2b7ea8307e97e2108992267456145' => $vendorDir . '/meta-box/meta-box-conditional-logic/meta-box-conditional-logic.php',
+    'a3dfd749691b9b903967ed592633c7a8' => $vendorDir . '/meta-box/meta-box-group/meta-box-group.php',
+    '8b76301f684bc16056649360ea1e68ac' => $vendorDir . '/woocommerce/action-scheduler/action-scheduler.php',
 );

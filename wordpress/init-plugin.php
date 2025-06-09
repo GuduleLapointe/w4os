@@ -28,8 +28,8 @@ define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 // Icon to highlight new features in admin menus
 define( 'W4OS_NEW_ICON', '<span class="dashicons dashicons-smiley" style="color:#00a32a;"></span>' ); // Blue megaphone
 
-// Load engine first
-require_once W4OS_PLUGIN_DIR . 'engine/bootstrap.php';
+// Load helpers first, they take charge of opening the engine
+require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
 
 // Use bridge implementation to OpenSimulator engine
 class W4OS3 {
