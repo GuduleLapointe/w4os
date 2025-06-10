@@ -96,16 +96,16 @@ function w4os_get_option_with_validation($wp_option, $default = null, $ini_key =
  * @return array Array of validation results
  */
 function w4os_test_all_mapped_settings() {
-    if (!class_exists('W4OS_Migration_2to3')) {
-        return ['error' => 'W4OS_Migration_2to3 class not available'];
+    if (!class_exists('W4OS3_Migration_2to3')) {
+        return ['error' => 'W4OS3_Migration_2to3 class not available'];
     }
     
     $results = [];
-    $mapped_keys = W4OS_Migration_2to3::get_mapped_ini_keys();
-    $wp_options = W4OS_Migration_2to3::get_available_options();
+    $mapped_keys = W4OS3_Migration_2to3::get_mapped_ini_keys();
+    $wp_options = W4OS3_Migration_2to3::get_available_options();
     
     foreach ($mapped_keys as $ini_key) {
-        $mapping = W4OS_Migration_2to3::get_mapping_for_key($ini_key);
+        $mapping = W4OS3_Migration_2to3::get_mapping_for_key($ini_key);
         if (!$mapping) continue;
         
         // Find the primary WordPress option for this INI key

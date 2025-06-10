@@ -66,7 +66,6 @@ if ( ! defined( 'W4OS_TXDOM' ) ) {
 
 define( 'W4OS_LOGIN_PAGE', get_home_url( null, get_option( 'w4os_profile_slug' ) ) );
 
-require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 // functions loaded in wordpress/includes/public-functions.php
 
 define( 'W4OS_GRID_LOGIN_URI', w4os_grid_login_uri() );

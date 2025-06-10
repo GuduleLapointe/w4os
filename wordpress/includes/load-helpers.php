@@ -14,6 +14,11 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die();
 }
 
+if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
+	return;
+}
+
+
 // Add Apache rewrite rules for helpers directory
 add_action('init', function() {
 	$plugin_dir = basename(W4OS_PLUGIN_DIR);

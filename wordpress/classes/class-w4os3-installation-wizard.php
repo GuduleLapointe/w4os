@@ -201,8 +201,3 @@ class W4OS3_Installation_Wizard {
     }
 
 }
-
-// Initialize if in WordPress admin
-if (is_admin()) {
-    new W4OS3_Installation_Wizard();
-}

@@ -7,14 +7,14 @@
  * to the standardized OpenSim INI format used by Engine_Settings.
  */
 
-if (!defined('ABSPATH') && !defined('OPENSIM_HELPERS')) {
+if (!defined('W4OS_PLUGIN')) {
     exit;
 }
 
 // Should not be necessary, loaded by main plugin, but this script is loaded before
-require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
+// require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
 
-class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
+class W4OS3_Migration_2to3 extends Helpers_Migration_2to3 {
     /**
      * Complete mapping of INI sections to WordPress options with precedence rules
      * 
@@ -683,7 +683,7 @@ class W4OS_Migration_2to3 extends Helpers_Migration_2to3 {
     
     /**
      * Get available WordPress options for migration
-     * This method is called by W4OS_Migration_2to3::get_available_options()
+     * This method is called by W4OS3_Migration_2to3::get_available_options()
      * 
      * @return array Array of available WordPress options with their current values
      */

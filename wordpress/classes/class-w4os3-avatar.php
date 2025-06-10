@@ -429,7 +429,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// Use OSPDO connection for list table
 		$db_connection = new OSPDO( W4OS_DB_ROBUST );
 
-		$avatarsTable = new W4OS_List_Table(
+		$avatarsTable = new W4OS3_List_Table(
 			$db_connection,
 			'avatars',
 			array(

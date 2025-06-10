@@ -28,6 +28,20 @@ define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 // Icon to highlight new features in admin menus
 define( 'W4OS_NEW_ICON', '<span class="dashicons dashicons-smiley" style="color:#00a32a;"></span>' ); // Blue megaphone
 
+require_once W4OS_PLUGIN_DIR . 'vendor/autoload.php';
+// W4OS autoloader for optional classes
+spl_autoload_register(function ($class) {
+    if (strpos($class, 'W4OS3_') === 0) {
+        $class_name = str_replace('W4OS3_', '', $class);
+        $file = W4OS_PLUGIN_DIR . 'wordpress/classes/class-w4os3-' . strtolower(str_replace('_', '-', $class_name)) . '.php';
+        if (file_exists($file)) {
+            require $file;
+        } else {
+            error_log('[ERROR] W4OS class '. $class . ' missing, file not found: ' . $file);
+        }
+    }
+});
+
 // Load helpers first, they take charge of opening the engine
 require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
 
@@ -48,28 +62,53 @@ class W4OS3 {
     static function init() {
         self::set_key(); // Make sure to call first, so key is available for other functions.
 
-        // Register WordPress hooks and filters
+		self::constants();
+		self::includes();
+		self::init_classes();
+
+		// Register WordPress hooks and filters
         self::register_filters();
         self::register_actions();
         
-        // Initialize WordPress-specific functionality
-        self::init_wordpress_features();
-
+		self::get_ini_config();
+		
+		// Set general use databases
 		$robust_creds          = self::get_credentials( 'robust' );
 		self::$console_enabled = $robust_creds['console']['enabled'] ?? false;
 
-		self::constants();
-		self::includes();
+        self::$robust_db  = new OSPDO( W4OS_DB_ROBUST );
+        self::$assets_db  = self::$robust_db; // TODO: use assetdb set in preferences (in progress)
+        self::$profile_db = self::$robust_db; // TODO: use profiledb set in preferences (in progress)
+	}
 
-		self::get_ini_config();
+	/**
+	 * Init classes thet register WordPress hooks and filters.
+	 * 
+	 * Maybe not all of them need to be initialized here, but 
+	 * this would require a case by case review of each class.
+	 * 
+	 * @since 3.0.0
+	 */
+	private static function init_classes() {
+		if (is_admin()) {
+			// TODO: move in W4OS3_Settings, allow disabling the menu unless
+			// the plugin is not yet configured or config needs an upgrade.
+			new W4OS3_Installation_Wizard();
+			new W4OS3_Migration_2to3();
+		}
 
-        $UserlessAuth = new UserlessAuth();
-        $UserlessAuth->init();
-        $UserMenu = new W4OS3_UserMenu();
+        $Settings = new W4OS3_Settings();
+        $Settings->init();
+
+		$UserMenu = new W4OS3_User_Menu();
         $UserMenu->init();
-        $Instances = new W4OS3_Service();
+		$Userless_Auth = new W4OS3_Userless_Auth();
+        $Userless_Auth->init();
+
+		$Instances = new W4OS3_Service();
         $Instances->init();
-        $AvatarClass = new W4OS3_Avatar();
+
+		$AvatarClass = new W4OS3_Avatar();
         $AvatarClass->init();
         $ModelClass = new W4OS3_Model();
         $ModelClass->init();
@@ -77,7 +116,7 @@ class W4OS3 {
         $FluxClass->init();
         $RegionClass = new W4OS3_Region();
         $RegionClass->init();
-    }
+	}
 
     /**
      * Register WordPress filters
@@ -103,14 +142,6 @@ class W4OS3 {
 
         // add_action( 'init', __CLASS__ . '::example_action' );
         // add_action( 'wp_enqueue_scripts', __CLASS__ . '::enqueue_assets' );
-    }
-
-    /**
-     * Initialize WordPress-specific features
-     */
-    private static function init_wordpress_features() {
-        // Initialize any WordPress-specific functionality
-        // that doesn't fit into standard hooks/filters
     }
 
     static function w4os_css_classes_body( $classes ) {
@@ -498,22 +529,11 @@ class W4OS3 {
 
 		// First we include all the files
 
-		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
-
-        if ( function_exists( 'xmlrpc_encode_request' ) ) {
-            // global $SearchDB, $AssetsDB, $ProfileDB, $OpenSimDB;
-            require_once __DIR__ . '/includes/load-helpers.php';
-        }
-
-		// require_once W4OS_INCLUDES_DIR . 'class-flux.php';
-
-		// Once all files are loaded, we start the classes.
-		$Settings = new W4OS3_Settings();
-		$Settings->init();
-
-		self::$robust_db  = new OSPDO( W4OS_DB_ROBUST );
-		self::$assets_db  = self::$robust_db;
-		self::$profile_db = self::$robust_db;
+		// global $SearchDB, $AssetsDB, $ProfileDB, $OpenSimDB;
+		require_once __DIR__ . '/includes/load-helpers.php';        // Once all files are loaded, we start the classes.
+        
+        // Move to autoloader (only loaded when used):
+        // require_once W4OS_INCLUDES_DIR . 'class-flux.php';
 	}
 
 	public static function account_url() {
@@ -989,52 +1009,50 @@ class W4OS3 {
 // Load WordPress-specific functions and utilities
 require_once __DIR__ . '/includes/public-functions.php';
 require_once __DIR__ . '/includes/admin-functions.php';
-require_once __DIR__ . '/includes/class-list-table.php';
-require_once __DIR__ . '/includes/class-userless-auth.php';
-require_once __DIR__ . '/includes/class-user-menu.php';
 
-require_once __DIR__ . '/class-w4os3-service.php';
-
-// Load WP classes
-require_once __DIR__ . '/class-w4os3-settings.php';
-require_once __DIR__ . '/class-w4os3-model.php';
-require_once __DIR__ . '/class-w4os3-avatar.php';
-require_once __DIR__ . '/class-w4os3-flux.php';
-require_once __DIR__ . '/class-w4os3-region.php';
-require_once __DIR__ . '/class-w4os3-installation-wizard.php';
+// Let autoload load the new W4OS3 classes
+// require_once __DIR__ . '/includes/class-list-table.php';
+// require_once __DIR__ . '/includes/class-userless-auth.php';
+// require_once __DIR__ . '/includes/class-user-menu.php';
+// require_once __DIR__ . '/class-w4os3-service.php';
+// require_once __DIR__ . '/class-w4os3-settings.php';
+// require_once __DIR__ . '/class-w4os3-model.php';
+// require_once __DIR__ . '/class-w4os3-avatar.php';
+// require_once __DIR__ . '/class-w4os3-flux.php';
+// require_once __DIR__ . '/class-w4os3-region.php';
+// require_once __DIR__ . '/class-w4os3-installation-wizard.php';
 
 // Load templates.php only on the front end, exclude admin, feeds, ajax, REST API, jquery, etc.
 if ( w4os_is_front_end() ) {
-	require_once dirname( __DIR__ ) . '/templates/templates.php';
+	require_once W4OS_PLUGIN_DIR . 'templates/templates.php';
 }
 
 // Load legacy code until they are migrated to the new W4OS3 structure.
-// Legacy v1 init
 require_once W4OS_PLUGIN_DIR . 'v1/init.php';
-// Legacy v2 loader
 require_once W4OS_PLUGIN_DIR . 'v2/loader.php';
 
 // Load admin functionality
 if (is_admin()) {
-    require_once W4OS_PLUGIN_DIR . 'v1/admin/admin-init.php';
-    // Load admin test pages (temporary)
-    require_once W4OS_PLUGIN_DIR . 'wordpress/admin/settings-test.php';
+	// Include legacy code (until fully migrated to W4OS3)
+	require_once W4OS_PLUGIN_DIR . 'v1/admin/admin-init.php';
 
-	// Migration v2 to 3
-	// require_once W4OS_PLUGIN_DIR . 'helpers/includes/helpers-migration-v2to3.php';
-	require_once W4OS_PLUGIN_DIR . 'wordpress/includes/w4os-migration-v2to3.php';
-	// Include Debug validation page
+	// Migration test pages and tools (temporary)
+    require_once W4OS_PLUGIN_DIR . 'wordpress/admin/settings-test.php';
 	require_once W4OS_PLUGIN_DIR . '/wordpress/admin/settings-validation.php';
-	// Include Debug validation helpers
 	require_once W4OS_PLUGIN_DIR . '/wordpress/includes/validation-helpers.php';
+	// Temporary workaround, load legacy helpers configuration.
+	// This should be replaced with a proper configuration management system in the future.
+	try {
+	    require_once dirname(__DIR__) . '/helpers/includes/config.php';
+	} catch (Exception $e) {
+	    error_log("[ERROR] Failed to load legacy helpers configuration: " . $e->getMessage());
+	}
+
+	// Migration v2 to 3 (move to autoloader when needed)
+	// require_once W4OS_PLUGIN_DIR . 'helpers/includes/helpers-migration-v2to3.php';
+	// require_once W4OS_PLUGIN_DIR . 'wordpress/includes/w4os-migration-v2to3.php';
+	// require_once W4OS_PLUGIN_DIR . 'wordpress/classes/class-w4os3-migration-2to3.php';
 }
 
-// Temporary workaround, load legacy helpers configuration.
-// This should be replaced with a proper configuration management system in the future.
-// try {
-//     require_once dirname(__DIR__) . '/helpers/includes/config.php';
-// } catch (Exception $e) {
-//     error_log("[ERROR] Failed to load legacy helpers configuration: " . $e->getMessage());
-// }
 
 W4OS3::init();

@@ -85,9 +85,6 @@ class W4OS_Loader {
 		// require_once W4OS_DIR . '/templates/templates.php';
 		require_once W4OS_DIR . '/v2/class-helpers-assets.php';
 
-		if ( is_admin() ) {
-			require_once W4OS_DIR . '/v2/admin-helpers/admin-loader.php';
-		}
 		/**
 		 * The standard plugin classes.
 		 */

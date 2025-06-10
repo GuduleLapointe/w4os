@@ -30,13 +30,13 @@ class W4OS_Settings_Validation_Page {
     public function admin_page() {
         // Run migration if requested
         if (isset($_POST['run_migration']) && check_admin_referer('w4os_validation', 'w4os_validation_nonce')) {
-            $migration_results = W4OS_Migration_2to3::migrate_wordpress_options();
+            $migration_results = W4OS3_Migration_2to3::migrate_wordpress_options();
             echo '<div class="notice notice-success"><p>Migration completed. See results below.</p></div>';
         }
         
         // Get all available WordPress options
-        $wp_options = W4OS_Migration_2to3::get_available_options();
-        $mapped_keys = W4OS_Migration_2to3::get_mapped_ini_keys();
+        $wp_options = W4OS3_Migration_2to3::get_available_options();
+        $mapped_keys = W4OS3_Migration_2to3::get_mapped_ini_keys();
         
         ?>
         <div class="wrap">
@@ -121,7 +121,7 @@ class W4OS_Settings_Validation_Page {
         echo '<tbody>';
         
         foreach ($mapped_keys as $ini_key) {
-            $mapping = W4OS_Migration_2to3::get_mapping_for_key($ini_key);
+            $mapping = W4OS3_Migration_2to3::get_mapping_for_key($ini_key);
             if (!$mapping) continue;
             
             // Get old value using precedence

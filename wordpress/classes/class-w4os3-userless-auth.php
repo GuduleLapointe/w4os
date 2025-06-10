@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class UserlessAuth {
+class W4OS3_Userless_Auth {
     public static $user = null;
     private $login_page;
 

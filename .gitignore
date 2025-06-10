@@ -22,10 +22,6 @@ phpunit.xml
 *.tar.gz
 Thumbs.db
 tmp/
-/vendor/magicoli/opensim-helpers/
-/vendor/magicoli/opensim-rest-php/opensim-rest-cli
-/vendor/magicoli/opensim-rest-php/opensim-rest-cli.php
-/vendor/magicoli/opensim-rest-php/src/
 wp-cli.local.yml
 *.zip
 .vscode/

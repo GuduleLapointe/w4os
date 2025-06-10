@@ -18,7 +18,7 @@
  * @package w4os
 **/
 
-class W4OS3_UserMenu {
+class W4OS3_User_Menu {
     /**
      * Mapping of menu item IDs to their label callback functions.
      *
@@ -307,12 +307,12 @@ class W4OS3_UserMenu {
         if ( ! function_exists( 'register_block_type' ) ) {
             return;
         }
-        $dir = dirname( __FILE__ );
-
+        $dir = W4OS_PLUGIN_DIR . 'wordpress/includes';
+        
         $index_js = 'blocks/avatar-menu/index.js';
         wp_register_script(
             'avatar-menu-block-editor',
-            plugins_url( $index_js, __FILE__ ),
+            plugins_url( $index_js, $dir ),
             [
                 'wp-blocks',
                 'wp-i18n',
@@ -325,7 +325,7 @@ class W4OS3_UserMenu {
         $editor_css = 'blocks/avatar-menu/editor.css';
         wp_register_style(
             'avatar-menu-block-editor',
-            plugins_url( $editor_css, __FILE__ ),
+            plugins_url( $editor_css, $dir ),
             [],
             filemtime( "{$dir}/{$editor_css}" )
         );
@@ -333,7 +333,7 @@ class W4OS3_UserMenu {
         $style_css = 'blocks/avatar-menu/style.css';
         wp_register_style(
             'avatar-menu-block',
-            plugins_url( $style_css, __FILE__ ),
+            plugins_url( $style_css, $dir ),
             [],
             filemtime( "{$dir}/{$style_css}" )
         );

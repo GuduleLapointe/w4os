@@ -269,7 +269,7 @@ class W4OS3_Region extends OpenSim_Region {
 			return;
 		}
 
-		$regionsTable = new W4OS_List_Table(
+		$regionsTable = new W4OS3_List_Table(
 			W4OS3::$robust_db,
 			'regions',
 			array(
