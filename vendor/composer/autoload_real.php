@@ -24,14 +24,15 @@ class ComposerAutoloaderInit281eaf3ef8c4cf2ff5625d8990e25437
 
         require __DIR__ . '/platform_check.php';
 
-        spl_autoload_register(array('ComposerAutoloaderInit281eaf3ef8c4cf2ff5625d8990e25437', 'loadClassLoader'), true, true);
+        spl_autoload_register(array('ComposerAutoloaderInit281eaf3ef8c4cf2ff5625d8990e25437', 'loadClassLoader'), true, false);
         self::$loader = $loader = new \Composer\Autoload\ClassLoader(\dirname(__DIR__));
         spl_autoload_unregister(array('ComposerAutoloaderInit281eaf3ef8c4cf2ff5625d8990e25437', 'loadClassLoader'));
 
         require __DIR__ . '/autoload_static.php';
         call_user_func(\Composer\Autoload\ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437::getInitializer($loader));
 
-        $loader->register(true);
+        $loader->setClassMapAuthoritative(true);
+        $loader->register(false);
 
         $filesToLoad = \Composer\Autoload\ComposerStaticInit281eaf3ef8c4cf2ff5625d8990e25437::$files;
         $requireFile = \Closure::bind(static function ($fileIdentifier, $file) {

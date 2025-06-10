@@ -52,6 +52,9 @@
     "allow-plugins": {
       "composer/installers": true,
       "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+    },
+    "optimize-autoloader": true,
+    "classmap-authoritative": true,
+    "prepend-autoloader": false
   }
 }
