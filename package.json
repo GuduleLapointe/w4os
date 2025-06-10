@@ -4,10 +4,10 @@
   "description": "WordPress interface for OpenSimulator (w4os)",
   "main": "webpack.config.js",
   "workspaces": [
-    "src/olib-dev"
+    "dev/olib-dev"
   ],
   "scripts": {
-    "prepare": "cd src/olib-dev && npm link"
+    "prepare": "cd dev/olib-dev && npm link"
   },
   "workspaces-update": true,
   "repository": {
