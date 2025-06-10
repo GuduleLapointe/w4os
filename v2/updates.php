@@ -134,7 +134,8 @@ function w4os_update_4() {
  */
 function w4os_update_5() {
 	if ( get_option( 'w4os_provide_search' ) == true ) {
-		require_once dirname( __DIR__ ) . '/helpers/includes/config.php';
+		require_once __DIR__ . '/bootstrap.php';
+// 		require_once dirname( __DIR__ ) . '/helpers/includes/config.php';
 		require_once dirname( __DIR__ ) . '/helpers/includes/search.php';
 		if ( $SearchDB ) {
 			$tables = array( 'allparcels', 'classifieds', 'events', 'hostsregister', 'objects', 'parcels', 'parcelsales', 'popularplaces', 'regions' );
