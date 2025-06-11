@@ -116,7 +116,7 @@ if ( ! class_exists( 'Puc_v4p9_DebugBar_Extension', false ) ) :
 							} elseif ( strlen( $body ) > self::RESPONSE_BODY_LENGTH_LIMIT ) {
 								$length = strlen( $body );
 								$body   = substr( $body, 0, self::RESPONSE_BODY_LENGTH_LIMIT )
-									. W4OS::sprintf_safe( "\n(Long string truncated. Total length: %d bytes.)", $length );
+									. sprintf( "\n(Long string truncated. Total length: %d bytes.)", $length );
 							}
 
 							printf( '<dt>Response body:</dt><dd><pre>%s</pre></dd>', esc_html( $body ) );

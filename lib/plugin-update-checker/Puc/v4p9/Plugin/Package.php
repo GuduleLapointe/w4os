@@ -45,7 +45,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Package', false ) ) :
 			} else {
 				// This can happen if the filename points to something that is not a plugin.
 				$this->updateChecker->triggerError(
-					W4OS::sprintf_safe(
+					sprintf(
 						"Can't to read the Version header for '%s'. The filename is incorrect or is not a plugin.",
 						$this->updateChecker->pluginFile
 					),
@@ -130,7 +130,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Package', false ) ) :
 			if ( ! is_file( $this->pluginAbsolutePath ) ) {
 				// This can happen if the plugin filename is wrong.
 				$this->updateChecker->triggerError(
-					W4OS::sprintf_safe(
+					sprintf(
 						"Can't to read the plugin header for '%s'. The file does not exist.",
 						$this->updateChecker->pluginFile
 					),

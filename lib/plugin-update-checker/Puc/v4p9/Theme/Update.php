@@ -65,7 +65,7 @@ if ( ! class_exists( 'Puc_v4p9_Theme_Update', false ) ) :
 				if ( ! isset( $apiResponse->$key ) || empty( $apiResponse->$key ) ) {
 					return new WP_Error(
 						'tuc-invalid-metadata',
-						W4OS::sprintf_safe( 'The theme metadata is missing the required "%s" key.', $key )
+						sprintf( 'The theme metadata is missing the required "%s" key.', $key )
 					);
 				}
 			}

@@ -147,7 +147,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_BitBucketApi', false ) ) :
 		 * @return string
 		 */
 		protected function getDownloadUrl( $ref ) {
-			return W4OS::sprintf_safe(
+			return sprintf(
 				'https://bitbucket.org/%s/%s/get/%s.zip',
 				$this->username,
 				$this->repository,
@@ -237,7 +237,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_BitBucketApi', false ) ) :
 
 			$error = new WP_Error(
 				'puc-bitbucket-http-error',
-				W4OS::sprintf_safe( 'BitBucket API error. Base URL: "%s",  HTTP status code: %d.', $baseUrl, $code )
+				sprintf( 'BitBucket API error. Base URL: "%s",  HTTP status code: %d.', $baseUrl, $code )
 			);
 			do_action( 'puc_api_error', $error, $response, $url, $this->slug );
 

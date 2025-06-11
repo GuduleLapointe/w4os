@@ -49,7 +49,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_UpdateChecker', false ) ) :
 			$slugUsedBy      = apply_filters( $slugCheckFilter, false );
 			if ( $slugUsedBy ) {
 				$this->triggerError(
-					W4OS::sprintf_safe(
+					sprintf(
 						'Plugin slug "%s" is already in use by %s. Slugs must be unique.',
 						htmlentities( $slug ),
 						htmlentities( $slugUsedBy )

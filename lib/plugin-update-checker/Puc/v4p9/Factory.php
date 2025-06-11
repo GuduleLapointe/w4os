@@ -78,7 +78,7 @@ if ( ! class_exists( 'Puc_v4p9_Factory', false ) ) :
 				$id   = $themeDirectory;
 			} else {
 				throw new RuntimeException(
-					W4OS::sprintf_safe(
+					sprintf(
 						'The update checker cannot determine if "%s" is a plugin or a theme. ' .
 						'This is a bug. Please contact the PUC developer.',
 						htmlentities( $fullPath )
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Puc_v4p9_Factory', false ) ) :
 			$checkerClass = self::getCompatibleClassVersion( $checkerClass );
 			if ( $checkerClass === null ) {
 				trigger_error(
-					W4OS::sprintf_safe(
+					sprintf(
 						'PUC %s does not support updates for %ss %s',
 						htmlentities( self::$latestCompatibleVersion ),
 						strtolower( $type ),
@@ -121,7 +121,7 @@ if ( ! class_exists( 'Puc_v4p9_Factory', false ) ) :
 				$apiClass = self::getCompatibleClassVersion( $apiClass );
 				if ( $apiClass === null ) {
 					trigger_error(
-						W4OS::sprintf_safe(
+						sprintf(
 							'PUC %s does not support %s',
 							htmlentities( self::$latestCompatibleVersion ),
 							htmlentities( $service )
@@ -238,7 +238,7 @@ if ( ! class_exists( 'Puc_v4p9_Factory', false ) ) :
 
 			// URI was not found so throw an error.
 			throw new RuntimeException(
-				W4OS::sprintf_safe( 'Unable to locate URI in header of "%s"', htmlentities( $fullPath ) )
+				sprintf( 'Unable to locate URI in header of "%s"', htmlentities( $fullPath ) )
 			);
 		}
 

@@ -196,7 +196,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_GitLabApi', false ) ) :
 
 			$error = new WP_Error(
 				'puc-gitlab-http-error',
-				W4OS::sprintf_safe( 'GitLab API error. URL: "%s",  HTTP status code: %d.', $baseUrl, $code )
+				sprintf( 'GitLab API error. URL: "%s",  HTTP status code: %d.', $baseUrl, $code )
 			);
 			do_action( 'puc_api_error', $error, $response, $url, $this->slug );
 
@@ -222,7 +222,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_GitLabApi', false ) ) :
 			}
 
 			$url = substr( $url, 1 );
-			$url = W4OS::sprintf_safe( '%1$s://%2$s/api/v4/projects/%3$s', $this->repositoryProtocol, $this->repositoryHost, $url );
+			$url = sprintf( '%1$s://%2$s/api/v4/projects/%3$s', $this->repositoryProtocol, $this->repositoryHost, $url );
 
 			if ( ! empty( $this->accessToken ) ) {
 				$queryParams['private_token'] = $this->accessToken;
@@ -258,7 +258,7 @@ if ( ! class_exists( 'Puc_v4p9_Vcs_GitLabApi', false ) ) :
 		 * @return string
 		 */
 		public function buildArchiveDownloadUrl( $ref = 'master' ) {
-			$url = W4OS::sprintf_safe(
+			$url = sprintf(
 				'%1$s://%2$s/api/v4/projects/%3$s/repository/archive.zip',
 				$this->repositoryProtocol,
 				$this->repositoryHost,

@@ -71,7 +71,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Ui', false ) ) :
 						}
 					}
 
-					$viewDetailsLink = W4OS::sprintf_safe(
+					$viewDetailsLink = sprintf(
 						'<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
 						esc_url(
 							network_admin_url(
@@ -79,7 +79,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Ui', false ) ) :
 								'&TB_iframe=true&width=600&height=550'
 							)
 						),
-						esc_attr( W4OS::sprintf_safe( __( 'More information about %s' ), $pluginData['Name'] ) ),
+						esc_attr( sprintf( __( 'More information about %s' ), $pluginData['Name'] ) ),
 						esc_attr( $pluginData['Name'] ),
 						$linkText
 					);
@@ -134,7 +134,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Ui', false ) ) :
 				);
 				if ( ! empty( $linkText ) ) {
 					/** @noinspection HtmlUnknownTarget */
-					$pluginMeta[] = W4OS::sprintf_safe( '<a href="%s">%s</a>', esc_attr( $linkUrl ), $linkText );
+					$pluginMeta[] = sprintf( '<a href="%s">%s</a>', esc_attr( $linkUrl ), $linkText );
 				}
 			}
 			return $pluginMeta;
@@ -217,17 +217,17 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Ui', false ) ) :
 				$details     = '';
 
 				if ( $status == 'no_update' ) {
-					$message = W4OS::sprintf_safe( _x( 'The %s plugin is up to date.', 'the plugin title', 'plugin-update-checker' ), $title );
+					$message = sprintf( _x( 'The %s plugin is up to date.', 'the plugin title', 'plugin-update-checker' ), $title );
 				} elseif ( $status == 'update_available' ) {
-					$message = W4OS::sprintf_safe( _x( 'A new version of the %s plugin is available.', 'the plugin title', 'plugin-update-checker' ), $title );
+					$message = sprintf( _x( 'A new version of the %s plugin is available.', 'the plugin title', 'plugin-update-checker' ), $title );
 				} elseif ( $status === 'error' ) {
-					$message     = W4OS::sprintf_safe( _x( 'Could not determine if updates are available for %s.', 'the plugin title', 'plugin-update-checker' ), $title );
+					$message     = sprintf( _x( 'Could not determine if updates are available for %s.', 'the plugin title', 'plugin-update-checker' ), $title );
 					$noticeClass = 'error notice-error';
 
 					$details = $this->formatManualCheckErrors( get_site_transient( $this->manualCheckErrorTransient ) );
 					delete_site_transient( $this->manualCheckErrorTransient );
 				} else {
-					$message     = W4OS::sprintf_safe( __( 'Unknown update checker status "%s"', 'plugin-update-checker' ), htmlentities( $status ) );
+					$message     = sprintf( __( 'Unknown update checker status "%s"', 'plugin-update-checker' ), htmlentities( $status ) );
 					$noticeClass = 'error notice-error';
 				}
 				printf(
@@ -261,7 +261,7 @@ if ( ! class_exists( 'Puc_v4p9_Plugin_Ui', false ) ) :
 			foreach ( $errors as $item ) {
 				$wpError = $item['error'];
 				/** @var WP_Error $wpError */
-				$output .= W4OS::sprintf_safe(
+				$output .= sprintf(
 					$formatString,
 					$wpError->get_error_message(),
 					$wpError->get_error_code()
