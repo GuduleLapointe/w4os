@@ -1043,7 +1043,9 @@ if (is_admin()) {
 	// Temporary workaround, load legacy helpers configuration.
 	// This should be replaced with a proper configuration management system in the future.
 	try {
-	    require_once dirname(__DIR__) . '/helpers/includes/config.php';
+		if(file_exists(dirname(__DIR__) . '/helpers/includes/config.php')) {
+		    require_once dirname(__DIR__) . '/helpers/includes/config.php';
+		}
 	} catch (Exception $e) {
 	    error_log("[ERROR] Failed to load legacy helpers configuration: " . $e->getMessage());
 	}
