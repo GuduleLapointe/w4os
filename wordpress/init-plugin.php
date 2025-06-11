@@ -25,9 +25,6 @@ define('W4OS_PLUGIN_URL', plugin_dir_url(__DIR__));
 define('W4OS_SLUG', basename( W4OS_PLUGIN_DIR ) );
 define( 'W4OS_PLUGIN', W4OS_SLUG . '/w4os.php' );
 
-// Icon to highlight new features in admin menus
-define( 'W4OS_NEW_ICON', '<span class="dashicons dashicons-smiley" style="color:#00a32a;"></span>' ); // Blue megaphone
-
 require_once W4OS_PLUGIN_DIR . 'vendor/autoload.php';
 // W4OS autoloader for optional classes
 spl_autoload_register(function ($class) {
@@ -44,6 +41,12 @@ spl_autoload_register(function ($class) {
 
 // Load helpers first, they take charge of opening the engine
 require_once W4OS_PLUGIN_DIR . 'helpers/bootstrap.php';
+
+// // Icon to highlight new features in admin menus
+define( 'W4OS_ICON_NEW_FEATURE', ' <span class="dashicons dashicons-smiley" style="color:#cccc00;"></span> ' );
+define( 'W4OS_ICON_TOOLS', ' <span class="dashicons dashicons-admin-tools"></span> ' );
+define( 'W4OS_ICON_WIZARD', ' <span class="dashicons dashicons-admin-settings" style="color:#cccc00;"></span> ' );
+define( 'W4OS_ICON_STAR', ' <span class="dashicons dashicons-star-filled"></span> ' );
 
 // Use bridge implementation to OpenSimulator engine
 class W4OS3 {

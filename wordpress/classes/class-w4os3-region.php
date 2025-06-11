@@ -126,7 +126,7 @@ class W4OS3_Region extends OpenSim_Region {
 		$settings['w4os-regions'] = array(
 			'parent_slug'       => 'w4os',
 			'page_title'        => __( 'Regions', 'w4os' ),
-			'menu_title'        => W4OS_NEW_ICON . ' ' . __( 'Regions', 'w4os' ),
+			'menu_title'        => W4OS_ICON_NEW_FEATURE . __( 'Regions', 'w4os' ),
 			// 'capability'  => 'manage_options',
 			'menu_slug'         => 'w4os-regions',
 			// 'callback'    => array( $this, 'render_settings_page' ),

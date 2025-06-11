@@ -28,7 +28,7 @@ class W4OS3_Installation_Wizard {
         }
 
         // Only show if not configured or if explicitly requested
-        if (!Engine_Settings::configured() || isset($_GET['force_wizard'])) {
+        // if (!Engine_Settings::configured() || isset($_GET['force_wizard'])) {
             // Scan existing childs of 'w4os' menu and use remove_submenu_page('w4os', $child_slug) to remove them
             global $submenu;
             // if (isset($submenu['w4os'])) {
@@ -50,7 +50,7 @@ class W4OS3_Installation_Wizard {
                 array($this, 'render_wizard_page'),
                 1
             );
-        }
+        // }
     }
     
     /**

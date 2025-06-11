@@ -18,11 +18,10 @@ class W4OS_Settings_Test_Page {
     }
     
     public function add_admin_menu() {
-        $tool_icon = '<span class="dashicons dashicons-admin-tools"></span>';
         add_submenu_page(
             'w4os',                    // Parent menu slug
-            'Engine Settings Test',     // Page title
-            $tool_icon . ' Settings Test',    // Menu title with icon
+            'Engine Settings Test (dev)',     // Page title
+            W4OS_ICON_TOOLS . '(dev) Settings Test',    // Menu title with icon
             'manage_options',          // Capability
             'w4os-settings-test',      // Menu slug
             array($this, 'admin_page'), // Callback

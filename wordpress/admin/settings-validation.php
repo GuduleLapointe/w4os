@@ -19,8 +19,8 @@ class W4OS_Settings_Validation_Page {
     public function add_admin_menu() {
         add_submenu_page(
             'w4os',
-            'Settings Validation',
-            'Settings Validation',
+            'Settings Validation (dev)', // Page title
+            W4OS_ICON_TOOLS . '(dev) Settings Validation', // Menu title
             'manage_options',
             'w4os-settings-validation',
             [$this, 'admin_page']

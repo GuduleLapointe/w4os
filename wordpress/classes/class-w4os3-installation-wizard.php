@@ -27,8 +27,9 @@ class W4OS3_Installation_Wizard {
             return;
         }
 
-        // Only show if not configured or if explicitly requested
-        if (!Engine_Settings::configured() || isset($_GET['force_wizard'])) {
+        // TODO: Only show if not configured or if explicitly requested
+        // During development, always show the wizard
+        // if (!Engine_Settings::configured() || isset($_GET['force_wizard'])) {
             // Scan existing childs of 'w4os' menu and use remove_submenu_page('w4os', $child_slug) to remove them
             global $submenu;
             // if (isset($submenu['w4os'])) {
@@ -43,14 +44,14 @@ class W4OS3_Installation_Wizard {
             // Add the installation wizard page to the admin menu
             add_submenu_page(
                 'w4os',
-                'W4OS Installation Wizard',
-                'Installation Wizard',
+                __('W4OS Installation Wizard', 'w4os'), // Page title
+			    W4OS_ICON_WIZARD . __('Installation Wizard', 'w4os'), // Menu title
                 'manage_options',
                 'w4os_installation_wizard',
                 array($this, 'render_wizard_page'),
-                1
+                // 1
             );
-        }
+        // }
     }
     
     /**

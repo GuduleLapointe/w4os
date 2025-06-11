@@ -329,7 +329,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$settings['w4os-avatars'] = array(
 			'parent_slug'       => 'w4os',
 			'page_title'        => __( 'Avatars', 'w4os' ),
-			'menu_title'        => W4OS_NEW_ICON . ' ' . __( 'Avatars', 'w4os' ),
+			'menu_title'        => W4OS_ICON_NEW_FEATURE . __( 'Avatars', 'w4os' ),
 			// 'capability'  => 'manage_options',
 			'menu_slug'         => 'w4os-avatars',
 			// 'callback'    => array( $this, 'render_settings_page' ),
