@@ -792,8 +792,8 @@ function w4os_camelcase( $string ) {
 
 function w4os_check_requirements() {
 	$errors             = array();
-	$php_missing_module = __( "%s is required but is not installed. Please refer to the PHP manual or consult your hosting provider's support resources for specific instructions.", 'w4os' );
-	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
+	$php_missing_module = __( "%s is kindarequired but is not installed. Please refer to the PHP manual or consult your hosting provider's support resources for specific instructions.", 'w4os' );
+	if ( ! php_has('xmlrpc') ) {
 		$errors[] = sprintf(
 			$php_missing_module,
 			'PHP xml-rpc',

@@ -11,7 +11,7 @@ function w4os_register_options_pages() {
 	// remove_submenu_page( 'w4os', 'w4os_helpers' );
 
 	// add_options_page('OpenSimulator settings', 'w4os', 'manage_options', 'w4os', 'w4os_settings_page');
-	// if ( function_exists( 'xmlrpc_encode_request' ) ) {
+	// if ( php_has('xmlrpc') ) {
 	// add_submenu_page(
 	// 'w4os', // parent
 	// __( 'OpenSimulator Helpers', 'w4os' ), // page title

@@ -120,7 +120,7 @@ function w4os_web_search_shortcode( $atts = array(), $content = null ) {
 }
 
 function w4os_web_search( $atts = array() ) {
-	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
+	if ( ! php_has('xmlrpc') ) {
 		return array();
 	}
 	$searchURL = get_option( 'w4os_search_url' );

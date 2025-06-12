@@ -41,7 +41,7 @@ By ensuring that your OpenSimulator grid is up and running properly, you can est
 To ensure smooth operation of the w4os plugin, it's important to verify that your server meets the following requirements:
 
 - **Minimum required php version:** The minimum required PHP version for the plugin is **7.3**. While using PHP version 8.1 or later is recommended for adhering to general PHP best practices, it won't have a functional impact on the plugin itself.
-- Install and enable the following PHP modules. If they are not included in the PHP core, you can use PECL to add them or install the appropriate packages for your system (e.g., php-xmlrpc and php-imagick on Linux).
+- Install and enable the following PHP modules. If they are not included in the PHP core, you can use PECL to add them or install the appropriate packages for your system (e.g., XML RPC and php-imagick on Linux).
 
   - **XMLRPC**: Required by most helpers and highly recommended for full WordPress functionality.
   - **Imagick**: required by profile and web assets server and highly recommended for full WordPress functionality.

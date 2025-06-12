@@ -14,7 +14,7 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die();
 }
 
-if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
+if ( ! php_has('xmlrpc') ) {
 	return;
 }
 

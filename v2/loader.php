@@ -102,7 +102,7 @@ class W4OS_Loader {
 		require_once W4OS_DIR . '/v2/class-avatar-model.php';
 		require_once W4OS_DIR . '/v2/class-avatar-profile.php';
 		require_once W4OS_DIR . '/v2/class-helpers.php';
-		if ( function_exists( 'xmlrpc_encode_request' ) ) {
+		if ( php_has('xmlrpc') ) {
 			// TODO: more accurate dependencies checking
 			require_once W4OS_DIR . '/v2/class-helpers-economy.php';
 			require_once W4OS_DIR . '/v2/class-helpers-search.php';
