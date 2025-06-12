@@ -69,11 +69,12 @@ class W4OS_Economy extends W4OS_Loader {
 	function register_settings_fields( $meta_boxes ) {
 		$prefix = 'w4os_';
 
-		$economy_url    = ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' );
+		$economy_url = Engine_Settings::get(
+			'robust.GridInfoService.economy', 
+			Helpers::url()
+		);
+		// $economy_url    = ( ! empty( W4OS_GRID_INFO['economy'] ) ) ? W4OS_GRID_INFO['economy'] : get_home_url( null, '/economy/' );
 		$use_default_db = get_option( 'w4os_economy_use_default_db', true );
-		// $example_url = 'http://example.org/helpers/economy.php';
-		// $economy_url = get_option( 'w4os_economy_helper_uri' );
-		// $economy_url = get_home_url( null, '/helpers/economy.php' );
 
 		$meta_boxes[] = array(
 			'title'          => __( 'Economy Settings', 'w4os' ),
