@@ -792,20 +792,20 @@ function w4os_camelcase( $string ) {
 
 function w4os_check_requirements() {
 	$errors             = array();
-	$php_missing_module = __( "%s is kindarequired but is not installed. Please refer to the PHP manual or consult your hosting provider's support resources for specific instructions.", 'w4os' );
+	$php_missing_module = __( "%s is needed but is not installed. Please refer to the PHP manual or consult your hosting provider's support resources for specific instructions.", 'w4os' );
 	if ( ! php_has('xmlrpc') ) {
 		$errors[] = sprintf(
 			$php_missing_module,
 			'PHP xml-rpc',
 		);
 	}
-	if ( ! function_exists( 'curl_init' ) ) {
+	if ( ! php_has( 'curl' ) ) {
 		$errors[] = sprintf(
 			$php_missing_module,
 			'PHP curl',
 		);
 	}
-	if ( ! extension_loaded( 'imagick' ) ) {
+	if ( ! php_has( 'imagick' ) ) {
 		$errors[] = sprintf(
 			$php_missing_module,
 			'ImageMagick',
