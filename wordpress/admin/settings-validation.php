@@ -35,7 +35,7 @@ class W4OS_Settings_Validation_Page {
         }
         
         // Get all available WordPress options
-        $wp_options = W4OS3_Migration_2to3::get_available_options();
+        $wp_options = W4OS3_Migration_2to3::get_preview_w4os_options();
         $mapped_keys = W4OS3_Migration_2to3::get_mapped_ini_keys();
         
         ?>

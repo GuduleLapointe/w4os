@@ -638,9 +638,9 @@ class W4OS_Settings_Test_Page {
                     <h2>Migrate WordPress Options</h2>
                     <div class="inside">
                         <p>Migrate WordPress options (w4os_* settings) to Engine Settings format.</p>
-                        <p><strong>Available WordPress Options (<?php echo count(W4OS3_Migration_2to3::get_available_options()); ?> found):</strong></p>
+                        <p><strong>Preview WordPress Options (<?php echo count(W4OS3_Migration_2to3::get_preview_w4os_options()); ?> found):</strong></p>
                         <?php
-                        $available_options = W4OS3_Migration_2to3::get_available_options();
+                        $available_options = W4OS3_Migration_2to3::get_preview_w4os_options();
                         if (!empty($available_options)) {
                             echo "<div style='max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;'>";
                             echo "<ul style='margin: 0;'>";

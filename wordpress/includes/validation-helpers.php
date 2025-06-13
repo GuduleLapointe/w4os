@@ -102,7 +102,7 @@ function w4os_test_all_mapped_settings() {
     
     $results = [];
     $mapped_keys = W4OS3_Migration_2to3::get_mapped_ini_keys();
-    $wp_options = W4OS3_Migration_2to3::get_available_options();
+    $wp_options = W4OS3_Migration_2to3::get_preview_w4os_options();
     
     foreach ($mapped_keys as $ini_key) {
         $mapping = W4OS3_Migration_2to3::get_mapping_for_key($ini_key);

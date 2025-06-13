@@ -78,6 +78,7 @@ class W4OS3_Migration_2to3 extends Helpers_Migration_2to3 {
                 'GuideSource' => ['w4os-guide.source'],
             ],
             'Economy' => [
+                'provider' => ['w4os_currency_provider', 'transform' => 'sanitize_id'],
                 'EconomySlug' => ['w4os_economy_slug'],
                 'PodexRedirectUrl' => ['w4os_podex_redirect_url'],
             ],
@@ -161,10 +162,12 @@ class W4OS3_Migration_2to3 extends Helpers_Migration_2to3 {
     ];
     
     /**
-     * All discovered w4os WordPress options from example.options
-     * This is the complete list based on actual usage in the codebase
+     * A list of w4os WordPress options extracted from live examples.
+     * These are options that could be available, it is
+     * meant to be used for rough preview or debugging. It must never
+     * be used to determine if an option is available or not.
      */
-    private static $all_w4os_options = [
+    private static $debug_wp_options = [
         'w4os_search_url',
         'w4os_grid_name',
         'w4os_login_uri',
@@ -427,7 +430,12 @@ class W4OS3_Migration_2to3 extends Helpers_Migration_2to3 {
         ];
         
         // Get all WordPress options that start with 'w4os'
-        $all_wp_options = self::get_all_w4os_options();
+        // This method should not rely on a filtered list of options,
+        // mapping could refer to any wp option, so we need to ensure
+        // any option key set in mappignn must be looked up in wp options,
+        // either with w4os_get_option() (which itself uses get_option()
+        // ass fallback.
+        $all_wp_options = self::get_all_wp_options();
         $return_values = [];
         // Process each INI file and its sections
         foreach (self::$wp_options_mapping as $ini_file => $file_sections) {
@@ -494,9 +502,46 @@ class W4OS3_Migration_2to3 extends Helpers_Migration_2to3 {
     }
     
     /**
-     * Get all WordPress options that start with 'w4os' plus important core options
+     * Get all WordPress options.
+     * 
+     * The actual values to use for final processing.
+     * Not sure it is necessary to have this method, as the
+     * values can be retrieved directly with get_option()
+     * or w4os_get_option() calls with proper handling.
      */
-    private static function get_all_w4os_options() {
+    public static function get_all_wp_options() {
+        global $wpdb;
+
+        // Get all w4os options from wp_options table
+        $wp_options = $wpdb->get_results(
+            "SELECT option_name, option_value FROM {$wpdb->options} 
+             ORDER BY option_name"
+        );
+
+        foreach ($wp_options as $option) {
+            $wp_options[$option->option_name] = maybe_unserialize($option->option_value);
+        }
+
+        // Also get all options from our known list using w4os_get_option to ensure completeness
+        foreach (self::$debug_wp_options as $option_name) {
+            if (!isset($options[$option_name])) {
+                $value = w4os_get_option($option_name);
+                if ($value !== false) {
+                    $options[$option_name] = $value;
+                }
+            }
+        }
+
+        return $wp_options;
+    }
+    
+    /**
+     * Get all WordPress options that start with 'w4os' plus important core options
+     * 
+     * This is meant for previewing or debugging purposes. It is not meant to be used
+     * to determine if an option is available or not.
+     */
+    public static function get_preview_w4os_options() {
         global $wpdb;
         
         $options = [];
@@ -513,10 +558,10 @@ class W4OS3_Migration_2to3 extends Helpers_Migration_2to3 {
             $options[$option->option_name] = maybe_unserialize($option->option_value);
         }
         
-        // Also get all options from our known list using get_option to ensure completeness
-        foreach (self::$all_w4os_options as $option_name) {
+        // Also get all options from our known list using w4os_get_option to ensure completeness
+        foreach (self::$debug_wp_options as $option_name) {
             if (!isset($options[$option_name])) {
-                $value = get_option($option_name);
+                $value = w4os_get_option($option_name);
                 if ($value !== false) {
                     $options[$option_name] = $value;
                 }
@@ -679,35 +724,6 @@ class W4OS3_Migration_2to3 extends Helpers_Migration_2to3 {
         
         // NOTE: We intentionally skip w4os_credentials (legacy plain text) 
         // as it's irrelevant and should not be stored in the new system
-    }
-    
-    /**
-     * Get available WordPress options for migration
-     * This method is called by W4OS3_Migration_2to3::get_available_options()
-     * 
-     * @return array Array of available WordPress options with their current values
-     */
-    public static function get_available_options() {
-        // This is the way to go. We do not need specific options here.
-        return self::get_all_w4os_options();
-
-        // This was an old, overcomplicated way to get a worst result.
-        // global $wpdb;
-        
-        // $options = [];
-        
-        // // Get all w4os options from wp_options table
-        // $wp_options = $wpdb->get_results(
-        //     "SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE 'w4os%'",
-        //     OBJECT
-        // );
-        
-        // foreach ($wp_options as $option) {
-        //     $value = maybe_unserialize($option->option_value);
-        //     $options[$option->option_name] = $value;
-        // }
-        
-        // return $options;
     }
     
     /**
