@@ -3,7 +3,7 @@
         'name' => 'gudulelapointe/w4os',
         'pretty_version' => '3.x-dev',
         'version' => '3.9999999.9999999.9999999-dev',
-        'reference' => '36340814f7aa5b26e419ecf4678f2170473176f2',
+        'reference' => '78309b78c67c09b25bfe8b53bba447f7f3cf71a2',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'gudulelapointe/w4os' => array(
             'pretty_version' => '3.x-dev',
             'version' => '3.9999999.9999999.9999999-dev',
-            'reference' => '36340814f7aa5b26e419ecf4678f2170473176f2',
+            'reference' => '78309b78c67c09b25bfe8b53bba447f7f3cf71a2',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
