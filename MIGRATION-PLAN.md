@@ -6,7 +6,7 @@ This migration addresses fundamental architectural limitations that have accumul
 
 The immediate catalyst for this restructuring was a user registration issue: OpenSimulator allows multiple avatars to share the same email address, but WordPress does not allow multiple users with the same email. The old architecture tightly coupled WordPress users with avatars, making this a complex problem to solve. However, addressing this revealed deeper structural issues that needed comprehensive resolution.
 
-**Key challenges with the current codebase:**
+**Key challenges with the legacy codebase:**
 - 10+ years of backwards compatibility layers creating technical debt
 - Mixed architectural patterns from merged projects
 - Tight coupling between WordPress users and OpenSim avatars
@@ -20,6 +20,33 @@ The immediate catalyst for this restructuring was a user registration issue: Ope
 - ✅ Enable easier creation of additional modules and features
 - ✅ Significantly improve both user and administrator experience
 - ✅ Allow the project to evolve sustainably for the next decade
+
+**V3 nested modules structure**
+
+w4os relies on several related projects, v3 release will involve changes in most of them. Therefore the development is made in parallel between all the projects to ensure ongoing compatibility and integration.
+
+- **[w4os](http://github.com/GuduleLapointe/w4os/)**: the wordpress plugin providing a full web interface for OpenSimulator. _Depends on helpers and engine, included in w4os releases._
+- **[OpenSim Helpers](https://github.com/magicoli/opensim-helpers)**: essentially the OpenSimulator helpers (API and tools queried directly by the viewer or the simulator, or querying directly the simulator), with additional general use UI elements (splash page, grid info block, registration form...). Can be used either as part of another project like w4os or as standalone complement to OpenSim servers. _Standalone or library, depends solely on engine, included in helpers releases._
+- **[OpenSim Engine](https://github.com/magicoli/opensim-engine)**: the main engine shared between all implementations, provides data manipulation, transformation, validation, storage. It is only a library and doesn't do anything by itself, so it needs to be included in another project like **w4os** or **OpenSim Helpers**. _Library._
+
+w4os, OpenSim Helpers and OpenSim Engine versioning is synchronized as their development is tightly linked, even though each of them has its own repository and can be installed independently.
+
+┌─────────┐
+│  w4os   │ (WordPress Plugin)
+└────┬────┘
+     │ depends on
+┌────▼────┐
+│ helpers │ (API + UI Elements)  
+└────┬────┘
+     │ depends on
+┌────▼────┐
+│ engine  │ (Core Library)
+└─────────┘
+(more detail in DEVELOPERS.md)
+
+- **[OpenSim REST PHP](https://github.com/magicoli/opensim-rest-php)**: a small library providing tools to communicate with OpenSimulator instances and viewers with REST protocol. It also provides a command-line client. The library is included in OpenSim Engine (not the CLI), but the versioning is independent. It is designed to be light and as generic as possible, with few dependencies. _Library: included in OpenSim Engine releases; Binary executable: standalone._
+
+**Purpose of this document:**
 
 This document tracks the migration of code from the legacy v1/v2/v3 folder structure to the new engine/wordpress/helpers architecture.
 
@@ -36,9 +63,24 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
 - wordpress/ - WordPress-specific integration (admin pages, hooks, public features)
 - helpers/ - Direct API endpoints (economy, search, profile helpers)
 
-## Migration Status:
+## Release Milestones
 
-### ✅ Phase 1: Core Engine Foundation (COMPLETED)
+### v2.x Fixes
+Legacy code bugs requiring immediate attention.
+Will be fixed in 3.0 release, will be irrelevant starting from 3.1 release. As v3.0 release approaches and is assumed to be fully backwards compatible, there will be no more 2.x release.
+
+### 🎯 v3.0 Foundation  
+Foundation for v3 architecture. Drop-in replacement with full backward compatibility (functionalty and config files). Includes v2 fixes.
+
+### 🎯 v3.1 Consolidation
+Full modern architecture, all legacy code is removed and legacy config files are ignored or deleted.
+
+### 🎯 v3.2 Advanced Features
+New capabilities.
+
+## v3.0 Foundation
+
+### ✅ v3.0 Phase 1: Core Engine Foundation (COMPLETED)
 - [x] **Engine Settings System** - Complete INI-based configuration management
   - [x] Engine_Settings class with .ini file support
   - [x] Credential encryption/decryption system
@@ -52,7 +94,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [x] Migration validation and testing tools
   - [x] Settings validation page for comparing old vs new values
 
-### ✅ Phase 2: WordPress Integration (COMPLETED)
+### ✅ v3.0 Phase 2: WordPress Integration (COMPLETED)
 - [x] **New Settings Architecture**
   - [x] W4OS3_Settings class with tabbed interface
   - [x] Settings validation and test pages
@@ -68,7 +110,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [x] Migration testing interface with accurate constant counting
   - [x] Constants and WordPress options migration working
 
-### 🔄 Phase 3: Settings & Data Migration (MOSTLY COMPLETED)
+### 🔄 v3.0 Phase 3: Settings & Data Migration (COMPLETED)
 - [x] **Migration Tools Built and Working**
   - [x] Constants migration with transform support
   - [x] WordPress options to INI migration
@@ -91,7 +133,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [x] Consistent file ordering and inclusion
   - [x] JSON value decoding in INI files
 
-### 🔄 Phase 4: INI Import Optimization (IN PROGRESS)
+### 🔄 v3.0 Phase 4: INI Import Optimization (IN PROGRESS)
 - [ ] **INI Import Strategy Alignment**
   - [ ] Review and align INI file importation with constants/WP import strategies
   - [ ] Implement consistent transform patterns for INI imports
@@ -102,7 +144,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Filter out unnecessary OpenSim config to focus on essential parameters
   - [ ] Document parameter usage and dependencies
 
-### 🔄 Phase 5: Installation/Migration Wizard (IN PROGRESS)
+### 🔄 v3.0 Phase 5: Installation/Migration Wizard (IN PROGRESS)
 - [x] **Multi-Step Wizard Framework**
   - [x] Installation_Wizard engine class with step management
   - [x] Session-based wizard state management with rollback capability
@@ -125,7 +167,16 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] INI file parsing and import functionality
   - [ ] Advanced validation for complex configurations
 
-### 📋 Phase 6: WordPress Admin Enhancement (PLANNED)
+### 🔄 v3.0 Release
+  - [ ] All legacy features are working as initially
+  - [ ] Settings conversion is tested and working
+  - [ ] Settings conversion is optional: functionalty is perserved without conversion
+  - [ ] Once converted, working perfectly after removing old config files
+  - [ ] Can be used as a drop-in replacement for legacy 2.x
+
+## v3.1 Consolidation
+
+### 📋 v3.1 Phase 6: WordPress Admin Enhancement (PLANNED)
 - [ ] **Admin Interface Refinement**
   - [ ] Enhanced WordPress admin settings pages
   - [ ] Improved user experience and workflow
@@ -137,14 +188,14 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Avatar management interface for users
   - [ ] User role integration with avatar permissions
 
-### 📋 Phase 7: Console & CLI Tools (PLANNED)
+### 📋 v3.1 Phase 7: Console & CLI Tools (PLANNED)
 - [ ] **Basic Command-Line Console Client**
   - [ ] Alternative to screen bash tool when console connection enabled
   - [ ] Essential OpenSim console commands support
   - [ ] Integration with Engine Settings system
   - [ ] User-friendly CLI interface for grid management
 
-### 📋 Phase 8: Testing & Quality Assurance (PLANNED)
+### 📋 v3.1 Phase 8: Testing & Quality Assurance (PLANNED)
 - [ ] **Unit Testing Framework**
   - [ ] Implement comprehensive unit tests
   - [ ] Migration validation tests
@@ -162,7 +213,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Documentation and user guides
   - [ ] Bug fixes and improvements based on feedback
 
-### 🧹 Phase 9: Legacy Cleanup (PENDING)
+### 🧹 v3.1 Phase 9: Legacy Cleanup (PENDING)
 - [ ] **v1/v2/v3 Deprecation**
   - [x] Remove v3 beta feature toggles
   - [ ] Move remaining v1 and v2 methods and properties
@@ -173,9 +224,16 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Consolidate duplicate functionality
   - [ ] Update file structure documentation
 
-## 🚀 Post-Migration Feature Development (FUTURE)
+### 📋 v3.1 Release
+  - [ ] Old config files can be safely deleted
+  - [ ] No more legacy code is used
+  - [ ] Old v1/, v2/, v3/ and all remaining legacy code are deleted
+  - [ ] Legacy settings pages are replaced by new v3 settings pages
+  - [ ] v3 is fully functional with new features
 
-### 🆕 Phase 10: Helpers Enhancement (FUTURE)
+## 🚀 v3.2 Advanced Features
+
+### 🆕 v3.2 Phase 10: Helpers Enhancement (FUTURE)
 - [ ] **Standalone Helpers Admin Tools**
   - [ ] Helpers settings page/tools interface
   - [ ] Configuration management without WordPress
@@ -185,7 +243,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Advanced search helper features
   - [ ] Profile helper enhancements
 
-### 🆕 Phase 11: Advanced Grid Management (FUTURE)
+### 🆕 v3.2 Phase 11: Advanced Grid Management (FUTURE)
 - [ ] **Web-Based Grid Administration**
   - [ ] Add/enable/start/stop/backup/delete regions
   - [ ] User management (ban users, delete avatars)
@@ -196,7 +254,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Region ownership and permissions
   - [ ] User activity monitoring and controls
 
-### 🆕 Phase 12: "v3" Viewer Features Completion (FUTURE)
+### 🆕 v3.2 Phase 12: "v3" Viewer Features Completion (FUTURE)
 - [ ] **Enhanced Web Search**
   - [ ] Complete web search interface
   - [ ] Advanced search filters and options
@@ -210,7 +268,7 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Enhanced login experience
   - [ ] Better grid connectivity features
 
-### 🆕 Phase 13: Localization & Accessibility (FUTURE)
+### 🆕 v3.2 Phase 13: Localization & Accessibility (FUTURE)
 - [ ] **Multi-Language Support**
   - [ ] Internationalization (i18n) framework
   - [ ] Translation files for major languages
@@ -222,7 +280,11 @@ This document tracks the migration of code from the legacy v1/v2/v3 folder struc
   - [ ] Keyboard navigation enhancements
   - [ ] Accessibility testing and validation
 
-### 🧪 Phase 5: Testing & Validation (ONGOING)
+### 📋 v3.2 Release
+
+No specific plan for v3.2 release yet, to be determined after v3.1 completion.
+
+### 🧪 v3 Testing & Validation (ONGOING)
 - [x] **Migration Testing Tools**
   - [x] Settings comparison validation
   - [x] Constants migration testing
