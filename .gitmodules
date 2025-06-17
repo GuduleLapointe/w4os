@@ -4,3 +4,6 @@
 [submodule "dev/olib-dev"]
 	path = dev/olib-dev
 	url = https://github.com/magicoli/olib-dev
+[submodule "dev/opensim-debian"]
+	path = dev/opensim-debian
+	url = https://github.com/GuduleLapointe/opensim-debian.git
