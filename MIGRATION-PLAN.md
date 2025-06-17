@@ -134,11 +134,13 @@ New capabilities.
   - [x] JSON value decoding in INI files
 
 ### 🔄 v3.0 Phase 4: INI Import Optimization (IN PROGRESS)
-- [ ] **INI Import Strategy Alignment**
+
+**INI Import Strategy Alignment**
   - [ ] Review and align INI file importation with constants/WP import strategies
   - [ ] Implement consistent transform patterns for INI imports
   - [ ] Validate INI import against WordPress and constants migration
-- [ ] **OpenSim Parameters Curation**
+
+**OpenSim Parameters Curation**
   - [ ] Identify core OpenSim parameters actually used by plugin and helpers
   - [ ] Create curated parameter set for plugin, helpers and standalone functionality
   - [ ] Filter out unnecessary OpenSim config to focus on essential parameters
@@ -162,123 +164,141 @@ New capabilities.
   - [x] Console credentials (recommended): validate and import via console connection
   - [x] Full manual installation: database credentials and manual settings configuration
   - [x] Importing live grid INI files: direct import from existing OpenSim configuration
-- [ ] **Additional Features**
+
+**Additional Features**
   - [ ] Console-based settings import after credential validation
   - [ ] INI file parsing and import functionality
   - [ ] Advanced validation for complex configurations
 
 ### 🔄 v3.0 Release
-  - [ ] All legacy features are working as initially
-  - [ ] Settings conversion is tested and working
-  - [ ] Settings conversion is optional: functionalty is perserved without conversion
-  - [ ] Once converted, working perfectly after removing old config files
-  - [ ] Can be used as a drop-in replacement for legacy 2.x
+- [ ] All legacy features are working as initially
+- [ ] Settings conversion is tested and working
+- [ ] Settings conversion is optional: functionalty is perserved without conversion
+- [ ] Once converted, working perfectly after removing old config files
+- [ ] Can be used as a drop-in replacement for legacy 2.x
 
 ## v3.1 Consolidation
 
 ### 📋 v3.1 Phase 6: WordPress Admin Enhancement (PLANNED)
-- [ ] **Admin Interface Refinement**
-  - [ ] Enhanced WordPress admin settings pages
-  - [ ] Improved user experience and workflow
-  - [ ] Better validation and error handling
-  - [ ] Streamlined configuration interface
-- [ ] **User-Avatar Relationship System**
-  - [ ] Complete WordPress user vs avatar links
-  - [ ] Support for one or multiple avatars per user
-  - [ ] Avatar management interface for users
-  - [ ] User role integration with avatar permissions
+[ ] **Admin Interface Refinement**
+- [ ] Enhanced WordPress admin settings pages
+- [ ] Improved user experience and workflow
+- [ ] Better validation and error handling
+- [ ] Streamlined configuration interface
+
+[ ] **User-Avatar Relationship System**
+- [ ] Complete WordPress user vs avatar links
+- [ ] Support for one or multiple avatars per user
+- [ ] Avatar management interface for users
+- [ ] User role integration with avatar permissions
 
 ### 📋 v3.1 Phase 7: Console & CLI Tools (PLANNED)
-- [ ] **Basic Command-Line Console Client**
-  - [ ] Alternative to screen bash tool when console connection enabled
-  - [ ] Essential OpenSim console commands support
-  - [ ] Integration with Engine Settings system
-  - [ ] User-friendly CLI interface for grid management
+
+**Basic Command-Line Console Client**
+- [ ] Alternative to screen bash tool when console connection enabled
+- [ ] Essential OpenSim console commands support
+- [ ] Integration with Engine Settings system
+- [ ] User-friendly CLI interface for grid management
 
 ### 📋 v3.1 Phase 8: Testing & Quality Assurance (PLANNED)
-- [ ] **Unit Testing Framework**
-  - [ ] Implement comprehensive unit tests
-  - [ ] Migration validation tests
-  - [ ] Engine Settings tests
-  - [ ] Database and credential tests
-  - [ ] Helpers functionalties tests
-  - [ ] WordPres plugin functionalties tests
-- [ ] **Live Installation Testing**
-  - [ ] Full migration testing on staging environments
-  - [ ] Performance validation
-  - [ ] Compatibility verification with various OpenSim versions
-- [ ] **Beta Distribution & Feedback**
-  - [ ] Beta release to test users
-  - [ ] Feedback collection and issue tracking
-  - [ ] Documentation and user guides
-  - [ ] Bug fixes and improvements based on feedback
+
+**Unit Testing Framework**
+- [ ] Implement comprehensive unit tests
+- [ ] Migration validation tests
+- [ ] Engine Settings tests
+- [ ] Database and credential tests
+- [ ] Helpers functionalties tests
+- [ ] WordPres plugin functionalties tests
+
+**Live Installation Testing**
+- [ ] Full migration testing on staging environments
+- [ ] Performance validation
+- [ ] Compatibility verification with various OpenSim versions
+
+**Beta Distribution & Feedback**
+- [ ] Beta release to test users
+- [ ] Feedback collection and issue tracking
+- [ ] Documentation and user guides
+- [ ] Bug fixes and improvements based on feedback
 
 ### 🧹 v3.1 Phase 9: Legacy Cleanup (PENDING)
-- [ ] **v1/v2/v3 Deprecation**
-  - [x] Remove v3 beta feature toggles
-  - [ ] Move remaining v1 and v2 methods and properties
-  - [ ] Archive legacy code files
-  - [ ] Update documentation
-- [ ] **Code Organization**
-  - [ ] Move remaining helper APIs
-  - [ ] Consolidate duplicate functionality
-  - [ ] Update file structure documentation
+
+**v1/v2/v3 Deprecation**
+- [x] Remove v3 beta feature toggles
+- [ ] Move remaining v1 and v2 methods and properties
+- [ ] Archive legacy code files
+- [ ] Update documentation
+
+**Code Organization**
+- [ ] Move remaining helper APIs
+- [ ] Consolidate duplicate functionality
+- [ ] Update file structure documentation
 
 ### 📋 v3.1 Release
-  - [ ] Old config files can be safely deleted
-  - [ ] No more legacy code is used
-  - [ ] Old v1/, v2/, v3/ and all remaining legacy code are deleted
-  - [ ] Legacy settings pages are replaced by new v3 settings pages
-  - [ ] v3 is fully functional with new features
+
+- [ ] Old config files can be safely deleted
+- [ ] No more legacy code is used
+- [ ] Old v1/, v2/, v3/ and all remaining legacy code are deleted
+- [ ] Legacy settings pages are replaced by new v3 settings pages
+- [ ] v3 is fully functional with new features
 
 ## 🚀 v3.2 Advanced Features
 
 ### 🆕 v3.2 Phase 10: Helpers Enhancement (FUTURE)
-- [ ] **Standalone Helpers Admin Tools**
-  - [ ] Helpers settings page/tools interface
-  - [ ] Configuration management without WordPress
-  - [ ] Lightweight admin interface for helpers
-- [ ] **Enhanced Helper APIs**
-  - [ ] Improved economy helper functionality
-  - [ ] Advanced search helper features
-  - [ ] Profile helper enhancements
+
+**Standalone Helpers Admin Tools**
+- [ ] Helpers settings page/tools interface
+- [ ] Configuration management without WordPress
+- [ ] Lightweight admin interface for helpers
+
+**Enhanced Helper APIs**
+- [ ] Improved economy helper functionality
+- [ ] Advanced search helper features
+- [ ] Profile helper enhancements
 
 ### 🆕 v3.2 Phase 11: Advanced Grid Management (FUTURE)
-- [ ] **Web-Based Grid Administration**
-  - [ ] Add/enable/start/stop/backup/delete regions
-  - [ ] User management (ban users, delete avatars)
-  - [ ] Grid statistics and monitoring
-  - [ ] Automated backup and maintenance tools
-- [ ] **Advanced User Controls**
-  - [ ] Enhanced avatar management interface
-  - [ ] Region ownership and permissions
-  - [ ] User activity monitoring and controls
 
-### 🆕 v3.2 Phase 12: "v3" Viewer Features Completion (FUTURE)
-- [ ] **Enhanced Web Search**
-  - [ ] Complete web search interface
-  - [ ] Advanced search filters and options
-  - [ ] Search result improvements
-- [ ] **Avatar & Grid Features**
-  - [ ] Avatar stream functionality
-  - [ ] Destination guide completion
-  - [ ] Enhanced grid information display
-- [ ] **Viewer Integration**
-  - [ ] Improved viewer compatibility
-  - [ ] Enhanced login experience
-  - [ ] Better grid connectivity features
+**Web-Based Grid Administration**
+- [ ] Add/enable/start/stop/backup/delete regions
+- [ ] User management (ban users, delete avatars)
+- [ ] Grid statistics and monitoring
+- [ ] Automated backup and maintenance tools
+
+**Advanced User Controls**
+- [ ] Enhanced avatar management interface
+- [ ] Region ownership and permissions
+- [ ] User activity monitoring and controls
+
+### 🆕 v3.2 Phase 12: Advanced Viewer Features (FUTURE)
+
+**Enhanced Web Search**
+- [ ] Complete web search interface
+- [ ] Advanced search filters and options
+- [ ] Search result improvements
+
+**Avatar & Grid Features**
+- [ ] Avatar stream functionality
+- [ ] Destination guide completion
+- [ ] Enhanced grid information display
+
+**Viewer Integration**
+- [ ] Improved viewer compatibility
+- [ ] Enhanced login experience
+- [ ] Better grid connectivity features
 
 ### 🆕 v3.2 Phase 13: Localization & Accessibility (FUTURE)
-- [ ] **Multi-Language Support**
-  - [ ] Internationalization (i18n) framework
-  - [ ] Translation files for major languages
-  - [ ] Localized admin interfaces
-  - [ ] Multi-language user documentation
-- [ ] **Accessibility Improvements**
-  - [ ] WCAG compliance for admin interfaces
-  - [ ] Screen reader compatibility
-  - [ ] Keyboard navigation enhancements
-  - [ ] Accessibility testing and validation
+
+**Multi-Language Support**
+- [x] Internationalization (i18n) framework
+- [ ] Translation files for major languages
+- [ ] Localized admin interfaces
+- [ ] Multi-language user documentation
+
+**Accessibility Improvements**
+- [ ] WCAG compliance for admin interfaces
+- [ ] Screen reader compatibility
+- [ ] Keyboard navigation enhancements
+- [ ] Accessibility testing and validation
 
 ### 📋 v3.2 Release
 
@@ -293,7 +313,8 @@ No specific plan for v3.2 release yet, to be determined after v3.1 completion.
   - [x] Engine Settings test interface
   - [x] WordPress vs Engine Settings comparison
   - [x] Migration result validation
-- [ ] **Production Testing**
+
+**Production Testing**
   - [ ] Full migration testing on staging
   - [ ] Performance validation
   - [ ] Compatibility verification
