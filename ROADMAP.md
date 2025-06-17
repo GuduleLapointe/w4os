@@ -1,122 +1,304 @@
 # w4os Development Roadmap
 
-*This file is auto-generated from GitHub milestones and issues. Do not edit manually.*
-*To update: run `dev/scripts/update-milestones.sh`*
+**Project Details**: https://github.com/users/GuduleLapointe/projects/2
 
-## Overview
+*Last updated: Wed Jun 18 04:21:46 CEST 2025*
 
-- **v2.x Fixes**: 0/2 issues (0% complete)
-- **v3.0 Foundation**: 0/7 issues (0% complete)
-- **v3.1 Consolidation**: 0/5 issues (0% complete)
-- **v3.2 Advanced Features**: 0/11 issues (0% complete)
-
-## Milestone: v2.x Fixes (v2.x)
+## v2.x Fixes (1/3 issues)
 
 ### Additional Issues
 
-- [ ] #88 Cannot  confirm setup if port is not 3306 (bug )
-- [ ] #92 Registration and Avatar Models Not Working After Switching Robust (bug )
+- [ ] Cannot  confirm setup if port is not 3306 #88
+- [x] Registration and Avatar Models Not Working After Switching Robust #92
+- [ ] SearchURL use https if available #109
 
-## Milestone: v3.0 Foundation (v3.0)
+## v3.0 Foundation (0/9 issues)
 
-### v3.0 Phase 1: Core Engine Foundation
+### ⬜ v3.0 Phase 1: Core Engine Foundation #94
 
-{"body":"**Engine Settings System** - Complete INI-based configuration management\n- [x] Engine_Settings class with .ini file support\n- [x] Credential encryption/decryption system\n- [x] Service-based credential storage\n- [x] OpenSim INI parsing integration\n- [x] parse_ini_file_decode() for JSON value handling\n\n**Settings Migration Framework** - Transition from WordPress options to Engine Settings\n- [x] Constants migration (Helpers_Migration_2to3) with transform support\n- [x] WordPress options migration (W4OS_Migration_2to3)\n- [x] Database credential transforms (db_credentials) working correctly\n- [x] Migration validation and testing tools\n- [x] Settings validation page for comparing old vs new values\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":94,"state":"OPEN","title":"v3.0 Phase 1: Core Engine Foundation"}
+**Engine Settings System** - Complete INI-based configuration management
+- [x] Engine_Settings class with .ini file support
+- [x] Credential encryption/decryption system
+- [x] Service-based credential storage
+- [x] OpenSim INI parsing integration
+- [x] parse_ini_file_decode() for JSON value handling
 
-
-### v3.0 Phase 2: WordPress Integration
-
-{"body":"- [x] **New Settings Architecture**\n  - [x] W4OS3_Settings class with tabbed interface\n  - [x] Settings validation and test pages\n  - [x] Migration test tools (settings-test.php, settings-validation.php)\n\n- [x] **Core WordPress Classes**\n  - [x] W4OS3 main class with WordPress integration\n  - [x] W4OS3_Service for OpenSim service connections\n  - [x] W4OS3_Model for avatar model management\n  - [x] WordPress hooks and filters registration\n\n- [x] **Admin Interface**\n  - [x] Engine Settings test page (functional)\n  - [x] Settings validation comparison page\n  - [x] Migration testing interface with accurate constant counting\n  - [x] Constants and WordPress options migration working","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":95,"state":"OPEN","title":"v3.0 Phase 2: WordPress Integration"}
-
-
-### v3.0 Phase 3: Settings & Data Migration
-
-{"body":"- [x] **Migration Tools Built and Working**\n  - [x] Constants migration with transform support\n  - [x] WordPress options to INI migration\n  - [x] Database credential handling with encryption\n  - [x] Testing and validation framework\n  - [x] Fixed db_credentials transform for individual constants (CURRENCY_DB_HOST, etc.)\n  - [x] Precedence-based constant resolution working correctly\n\n- [x] **Core Migration Features Working**\n  - [x] Database credential transforms (db_credentials)\n  - [x] Boolean and string transforms\n  - [x] URI parsing and hostname extraction\n  - [x] Precedence-based option resolution\n  - [x] JSON encoding/decoding for complex values\n\n- [x] **Migration Validation**\n  - [x] Constants migration validated (46 mappings, 20 migrated)\n  - [x] WordPress options migration validated\n  - [x] Credential encryption/decryption working\n\n- [x] **INI File Integration**\n  - [x] OpenSim_Ini class integration for import_ini_file()\n  - [x] Consistent file ordering and inclusion\n  - [x] JSON value decoding in INI files","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":96,"state":"OPEN","title":"v3.0 Phase 3: Settings & Data Migration"}
-
-
-### v3.0 Phase 4: INI Import Optimization
-
-{"body":"- [ ] **INI Import Strategy Alignment**\n  - [ ] Review and align INI file importation with constants/WP import strategies\n  - [ ] Implement consistent transform patterns for INI imports\n  - [ ] Validate INI import against WordPress and constants migration\n- [ ] **OpenSim Parameters Curation**\n  - [ ] Identify core OpenSim parameters actually used by plugin and helpers\n  - [ ] Create curated parameter set for plugin, helpers and standalone functionality\n  - [ ] Filter out unnecessary OpenSim config to focus on essential parameters\n  - [ ] Document parameter usage and dependencies\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":97,"state":"OPEN","title":"v3.0 Phase 4: INI Import Optimization"}
+**Settings Migration Framework** - Transition from WordPress options to Engine Settings
+- [x] Constants migration (Helpers_Migration_2to3) with transform support
+- [x] WordPress options migration (W4OS_Migration_2to3)
+- [x] Database credential transforms (db_credentials) working correctly
+- [x] Migration validation and testing tools
+- [x] Settings validation page for comparing old vs new values
 
 
-### v3.0 Phase 5: Installation/Migration Wizard
+### ⬜ v3.0 Phase 2: WordPress Integration #95
 
-{"body":"- [x] **Multi-Step Wizard Framework**\n  - [x] Installation_Wizard engine class with step management\n  - [x] Session-based wizard state management with rollback capability\n  - [x] Form validation and error handling\n\n- [x] **Dual-Platform Wizard**\n  - [x] Standalone helpers wizard page (install-wizard.php)\n  - [x] WordPress plugin wizard integration\n  - [x] Shared wizard logic between platforms using Engine classes\n\n- [x] **Wizard Features**\n  - [x] Multi-step installation guidance with progress tracking\n  - [x] Configuration validation and testing at each step\n  - [x] Progress tracking and rollback capability\n  - [x] Bootstrap-based UI for helpers, WordPress admin UI for plugin\n\n- [x] **Three Installation Modes**\n  - [x] Console credentials (recommended): validate and import via console connection\n  - [x] Full manual installation: database credentials and manual settings configuration\n  - [x] Importing live grid INI files: direct import from existing OpenSim configuration\n\n- [ ] **Additional Features**\n  - [ ] Console-based settings import after credential validation\n  - [ ] INI file parsing and import functionality\n  - [ ] Advanced validation for complex configurations","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":98,"state":"OPEN","title":"v3.0 Phase 5: Installation/Migration Wizard"}
+**New Settings Architecture**
+- [x] W4OS3_Settings class with tabbed interface
+- [x] Settings validation and test pages
+- [x] Migration test tools (settings-test.php, settings-validation.php)
+
+**Core WordPress Classes**
+- [x] W4OS3 main class with WordPress integration
+- [x] W4OS3_Service for OpenSim service connections
+- [x] W4OS3_Model for avatar model management
+- [x] WordPress hooks and filters registration
+
+**Admin Interface**
+- [x] Engine Settings test page (functional)
+- [x] Settings validation comparison page
+- [x] Migration testing interface with accurate constant counting
+- [x] Constants and WordPress options migration working
 
 
-### v3.0 Release
+### ⬜ v3.0 Phase 3: Settings & Data Migration #96
 
-{"body":"- [ ] All legacy features are working as initially\n- [ ] Settings conversion is tested and working\n- [ ] Settings conversion is optional: functionalty is perserved without conversion\n- [ ] Once converted, working perfectly after removing old config files\n- [ ] Can be used as a drop-in replacement for legacy 2.x\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":99,"state":"OPEN","title":"v3.0 Release"}
+**Migration Tools Built and Working**
+- [x] Constants migration with transform support
+- [x] WordPress options to INI migration
+- [x] Database credential handling with encryption
+- [x] Testing and validation framework
+- [x] Fixed db_credentials transform for individual constants (CURRENCY_DB_HOST, etc.)
+- [x] Precedence-based constant resolution working correctly
+
+**Core Migration Features Working**
+- [x] Database credential transforms (db_credentials)
+- [x] Boolean and string transforms
+- [x] URI parsing and hostname extraction
+- [x] Precedence-based option resolution
+- [x] JSON encoding/decoding for complex values
+
+**Migration Validation**
+- [x] Constants migration validated (46 mappings, 20 migrated)
+- [x] WordPress options migration validated
+- [x] Credential encryption/decryption working
+
+**INI File Integration**
+- [x] OpenSim_Ini class integration for import_ini_file()
+- [x] Consistent file ordering and inclusion
+- [x] JSON value decoding in INI files
+
+
+### ⬜ v3.0 Phase 4: INI file handling (import, save and documentation) #97
+
+**INI Import Strategy Alignment**
+- [ ] Review and align INI file importation with constants/WP import strategies
+- [ ] Implement consistent transform patterns for INI imports
+- [ ] Validate INI import against WordPress and constants migration
+
+**OpenSim Parameters Curation**
+- [ ] Identify core OpenSim parameters actually used by plugin and helpers
+- [ ] Create curated parameter set for plugin, helpers and standalone functionality
+- [ ] Filter out unnecessary OpenSim config to focus on essential parameters
+- [ ] Document parameter usage and dependencies
+
+**Common issues fixes**
+- [ ] https://github.com/GuduleLapointe/w4os/issues/109
+- [ ] https://github.com/GuduleLapointe/opensim-helpers/issues/3
+- [ ] https://github.com/GuduleLapointe/opensim-engine/issues/1
+
+- [ ] SearchURL use https if available #109
+- [ ] Combine search API and WebUI GuduleLapointe/opensim-helpers#3
+- [ ] OpenSim 0.9.3 Support GuduleLapointe/opensim-engine#1
+
+### ⬜ v3.0 Phase 5: Installation/Migration Wizard #98
+
+**Multi-Step Wizard Framework**
+- [x] Installation_Wizard engine class with step management
+- [x] Session-based wizard state management with rollback capability
+- [x] Form validation and error handling
+
+**Dual-Platform Wizard**
+- [x] Standalone helpers wizard page (install-wizard.php)
+- [x] WordPress plugin wizard integration
+- [x] Shared wizard logic between platforms using Engine classes
+
+**Wizard Features**
+- [x] Multi-step installation guidance with progress tracking
+- [x] Configuration validation and testing at each step
+- [x] Progress tracking and rollback capability
+- [x] Bootstrap-based UI for helpers, WordPress admin UI for plugin
+
+**Three Installation Modes**
+- [x] Console credentials (recommended): validate and import via console connection
+- [x] Full manual installation: database credentials and manual settings configuration
+- [x] Importing live grid INI files: direct import from existing OpenSim configuration
+
+**Wizard steps**
+- [x] Wizard step 1: Initial configuration (detected existing config or new install)
+- [ ] #110
+- [ ] Wizard step 3: Grid Info (name, login uri...)
+- [ ] Wizard step 4: Helpers
+- [ ] Wizard step 5: Economy/Currency
+- [ ] Wizard step 6: Validation
+
+- [ ] Wizard step 2: Grid connection (console or db) #110
+
+### ⬜ v3.0 Release #99
+
+- [ ] All legacy features are working as initially
+- [ ] Settings conversion is tested and working
+- [ ] Settings conversion is optional: functionalty is perserved without conversion
+- [ ] Once converted, working perfectly after removing old config files
+- [ ] Can be used as a drop-in replacement for legacy 2.x
+
+- [ ] Cannot  confirm setup if port is not 3306 #88
+- [x] Registration and Avatar Models Not Working After Switching Robust #92
+- [ ] LLCLIENTVIEW exception when using places search with no result GuduleLapointe/opensim-helpers#1
+
+### Additional Issues
+
+- [ ] check databases when settings are updated #51
+
+## v3.1 Consolidation (0/4 issues)
+
+### ⬜ v3.1 Phase 6: WordPress Admin Enhancement #100
+
+**Admin Interface Refinement**
+- [ ] Enhanced WordPress admin settings pages
+- [ ] Improved user experience and workflow
+- [ ] Better validation and error handling
+- [ ] Streamlined configuration interface
+
+**User-Avatar Relationship System**
+- [ ] Complete WordPress user vs avatar links
+- [ ] Support for one or multiple avatars per user
+- [ ] Avatar management interface for users
+- [ ] User role integration with avatar permissions
+- [ ] #48 
+
+- [ ] Automatic login after mail verification #48
+
+### ⬜ v3.1 Phase 7: Console & CLI Tools #101
+
+**Basic Command-Line Console Client**
+- [ ] `opensim-cli` universal CLI executable 
+- [ ] Compile script for portability
+- [ ] Integration with Engine Settings system
+- [ ] User-friendly CLI interface for grid management
+- [ ] Alternative to screen bash tool when console connection enabled
+- [ ] Essential OpenSim console commands support
+
+**Port legacy bash script commands** from `dev/opensim/debian/opensim`
+- [ ] `opensim-cli status`
+- [ ] `opensim-cli <start|stop [now]|restart [now]> [instance1] [instance2] [...]`
+- [ ] `opensim-cli console <args>`
+- [ ] `opensim-cli ban <"Avatar Name"|UUID>`
+
+
+### ⬜ v3.1 Phase 8: Testing & Quality Assurance #102
+
+**Unit Testing Framework**
+- [ ] Implement comprehensive unit tests
+- [ ] Migration validation tests
+- [ ] Engine Settings tests
+- [ ] Database and credential tests
+- [ ] Helpers functionalties tests
+- [ ] WordPres plugin functionalties tests
+
+**Live Installation Testing**
+- [ ] Full migration testing on staging environments
+- [ ] Performance validation
+- [ ] Compatibility verification with various OpenSim versions
+
+**Beta Distribution & Feedback**
+- [ ] Beta release to test users
+- [ ] Feedback collection and issue tracking
+- [ ] Documentation and user guides
+- [ ] Bug fixes and improvements based on feedback
+
+
+### ⬜ v3.1 Phase 9: Legacy Cleanup #103
+
+**v1/v2/v3 Deprecation**
+- [x] Remove v3 beta feature toggles
+- [ ] Move remaining v1 and v2 methods and properties
+- [ ] Archive legacy code files
+- [ ] Update documentation
+
+**Code Organization**
+- [ ] Move remaining helper APIs
+- [ ] Consolidate duplicate functionality
+- [ ] Update file structure documentation
+
+
+## v3.2 Advanced Features (0/11 issues)
+
+### ⬜ v3.2 Phase 10: Helpers Enhancement #105
+
+**Standalone Helpers Admin Tools**
+- [ ] Helpers settings page/tools interface
+- [ ] Configuration management without WordPress
+- [ ] Lightweight admin interface for helpers
+
+**Enhanced Helper APIs**
+- [ ] Improved economy helper functionality
+- [ ] Advanced search helper features
+- [ ] Profile helper enhancements
+- [ ] #86 
+
+**New helpers**
+- [ ] #54 
+
+- [ ] add grid map shortcode and block #54
+- [ ] PHP8 and XML-RPC #86
+
+### ⬜ v3.2 Phase 11: Advanced Grid Management #106
+
+**Web-Based Grid Administration**
+- [ ] Add/enable/start/stop/backup/delete regions
+- [ ] User management (ban users, delete avatars)
+- [ ] Grid statistics and monitoring
+- [ ] Automated backup and maintenance tools
+- [ ] #56 
+- [ ] #61 
+
+**Advanced User Controls**
+- [ ] Enhanced avatar management interface
+- [ ] Region ownership and permissions
+- [ ] User activity monitoring and controls
+- [ ] #60 
+- [ ] #46 
+
+- [ ] New feature: transaction history tab in profile #46
+- [ ] admin notification when server is down #56
+- [ ] Add feature to ban users #60
+- [ ] Add feature: scan for unusual building activity #61
+
+### ⬜ v3.2 Phase 12: Advanced Viewer Features #107
+
+**Enhanced Web Search**
+- [ ] Complete web search interface
+- [ ] Advanced search filters and options
+- [ ] Search result improvements
+
+**Avatar & Grid Features**
+- [ ] Avatar stream functionality (in progress)
+- [ ] Destination guide completion (in progress)
+- [ ] Enhanced grid information display
+
+**Viewer Integration**
+- [ ] Improved viewer compatibility
+- [ ] Enhanced login experience
+- [ ] Better grid connectivity features
+
+
+### ⬜ v3.2 Phase 13: Localization & Accessibility #108
+
+**Multi-Language Support**
+- [x] Internationalization (i18n) framework
+- [ ] Translation files for major languages
+- [ ] Localized admin interfaces
+- [ ] Multi-language user documentation
+
+**Accessibility Improvements**
+- [ ] WCAG compliance for admin interfaces
+- [ ] Screen reader compatibility
+- [ ] Keyboard navigation enhancements
+- [ ] Accessibility testing and validation
 
 
 ### Additional Issues
 
-- [ ] #51 check databases when settings are updated (enhancement )
+- [ ] Automatic login after mail verification #48
 
-## Milestone: v3.1 Consolidation (v3.1)
-
-### v3.1 Phase 6: WordPress Admin Enhancement
-
-{"body":"**Admin Interface Refinement**\n- [ ] Enhanced WordPress admin settings pages\n- [ ] Improved user experience and workflow\n- [ ] Better validation and error handling\n- [ ] Streamlined configuration interface\n\n**User-Avatar Relationship System**\n- [ ] Complete WordPress user vs avatar links\n- [ ] Support for one or multiple avatars per user\n- [ ] Avatar management interface for users\n- [ ] User role integration with avatar permissions\n- [ ] #48 \n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":100,"state":"OPEN","title":"v3.1 Phase 6: WordPress Admin Enhancement"}
-
-
-### v3.1 Phase 7: Console & CLI Tools
-
-{"body":"**Basic Command-Line Console Client**\n- [ ] Alternative to screen bash tool when console connection enabled\n- [ ] Essential OpenSim console commands support\n- [ ] Integration with Engine Settings system\n- [ ] User-friendly CLI interface for grid management\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":101,"state":"OPEN","title":"v3.1 Phase 7: Console & CLI Tools"}
-
-
-### v3.1 Phase 8: Testing & Quality Assurance
-
-{"body":"**Unit Testing Framework**\n- [ ] Implement comprehensive unit tests\n- [ ] Migration validation tests\n- [ ] Engine Settings tests\n- [ ] Database and credential tests\n- [ ] Helpers functionalties tests\n- [ ] WordPres plugin functionalties tests\n\n**Live Installation Testing**\n- [ ] Full migration testing on staging environments\n- [ ] Performance validation\n- [ ] Compatibility verification with various OpenSim versions\n\n**Beta Distribution & Feedback**\n- [ ] Beta release to test users\n- [ ] Feedback collection and issue tracking\n- [ ] Documentation and user guides\n- [ ] Bug fixes and improvements based on feedback\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":102,"state":"OPEN","title":"v3.1 Phase 8: Testing & Quality Assurance"}
-
-
-### v3.1 Phase 9: Legacy Cleanup
-
-{"body":"**v1/v2/v3 Deprecation**\n- [x] Remove v3 beta feature toggles\n- [ ] Move remaining v1 and v2 methods and properties\n- [ ] Archive legacy code files\n- [ ] Update documentation\n\n**Code Organization**\n- [ ] Move remaining helper APIs\n- [ ] Consolidate duplicate functionality\n- [ ] Update file structure documentation\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":103,"state":"OPEN","title":"v3.1 Phase 9: Legacy Cleanup"}
-
-
-### Additional Issues
-
-- [ ] #93 No way to delete an avatar from simulator (enhancement )
-
-## Milestone: v3.2 Advanced Features (v3.2)
-
-### v3.2 Phase 10: Helpers Enhancement
-
-{"body":"**Standalone Helpers Admin Tools**\n- [ ] Helpers settings page/tools interface\n- [ ] Configuration management without WordPress\n- [ ] Lightweight admin interface for helpers\n\n**Enhanced Helper APIs**\n- [ ] Improved economy helper functionality\n- [ ] Advanced search helper features\n- [ ] Profile helper enhancements\n- [ ] #86 \n\n**New helpers**\n- [ ] #54 \n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":105,"state":"OPEN","title":"v3.2 Phase 10: Helpers Enhancement"}
-
-- [ ] #54 add grid map shortcode and block
-- [ ] #86 PHP8 and XML-RPC
-
-### v3.2 Phase 11: Advanced Grid Management
-
-{"body":"**Web-Based Grid Administration**\n- [ ] Add/enable/start/stop/backup/delete regions\n- [ ] User management (ban users, delete avatars)\n- [ ] Grid statistics and monitoring\n- [ ] Automated backup and maintenance tools\n- [ ] #56 \n- [ ] #61 \n\n**Advanced User Controls**\n- [ ] Enhanced avatar management interface\n- [ ] Region ownership and permissions\n- [ ] User activity monitoring and controls\n- [ ] #60 \n- [ ] #46 ","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":106,"state":"OPEN","title":"v3.2 Phase 11: Advanced Grid Management"}
-
-- [ ] #46 New feature: transaction history tab in profile
-- [ ] #56 admin notification when server is down
-- [ ] #60 Add feature to ban users
-- [ ] #61 Add feature: scan for unusual building activity
-
-### v3.2 Phase 12: Advanced Viewer Features
-
-{"body":"**Enhanced Web Search**\n- [ ] Complete web search interface\n- [ ] Advanced search filters and options\n- [ ] Search result improvements\n\n**Avatar & Grid Features**\n- [ ] Avatar stream functionality (in progress)\n- [ ] Destination guide completion (in progress)\n- [ ] Enhanced grid information display\n\n**Viewer Integration**\n- [ ] Improved viewer compatibility\n- [ ] Enhanced login experience\n- [ ] Better grid connectivity features\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":107,"state":"OPEN","title":"v3.2 Phase 12: Advanced Viewer Features"}
-
-
-### v3.2 Phase 13: Localization & Accessibility
-
-{"body":"**Multi-Language Support**\n- [x] Internationalization (i18n) framework\n- [ ] Translation files for major languages\n- [ ] Localized admin interfaces\n- [ ] Multi-language user documentation\n\n**Accessibility Improvements**\n- [ ] WCAG compliance for admin interfaces\n- [ ] Screen reader compatibility\n- [ ] Keyboard navigation enhancements\n- [ ] Accessibility testing and validation\n","labels":[{"id":"MDU6TGFiZWwyMTQ4NjY4ODYz","name":"enhancement","description":"New feature or request","color":"a2eeef"}],"number":108,"state":"OPEN","title":"v3.2 Phase 13: Localization & Accessibility"}
-
-
-### Additional Issues
-
-- [ ] #48 Automatic login after mail verification (enhancement )
-
----
-
-## Links
-
-- 📊 [GitHub Project](https://github.com/GuduleLapointe/w4os/projects) - Live progress tracking
-- 🐛 [GitHub Issues](https://github.com/GuduleLapointe/w4os/issues) - Bug reports and feature requests
-
-*Last updated: mar. 17 juin 2025 09:32:36 CEST*
-*Generated from GitHub milestones and issues*
