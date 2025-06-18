@@ -1,9 +1,9 @@
 [submodule "helpers"]
 	path = helpers
-	url = https://github.com/magicoli/opensim-helpers.git
-[submodule "dev/olib-dev"]
-	path = dev/olib-dev
-	url = https://github.com/magicoli/olib-dev
+	url = https://github.com/GuduleLapointe/opensim-helpers
 [submodule "dev/opensim-debian"]
 	path = dev/opensim-debian
 	url = https://github.com/GuduleLapointe/opensim-debian.git
+[submodule "dev/olib-dev"]
+	path = dev/olib-dev
+	url = https://github.com/magicoli/olib-dev
