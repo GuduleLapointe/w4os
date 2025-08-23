@@ -1,0 +1,43 @@
+[Economy]
+
+    ;; Enables selling things for $0.  Default is true.
+    SellEnabled = true
+
+    ;CurrencyServer = "" ;;  ex.) "https://jogrid.net:8008/"  Default is ""
+    EconomyModule = DTLNSLMoneyModule
+
+    ;
+	;; CA
+    ;CheckServerCert = false
+    ;CACertFilename  = "cacert.crt"
+
+    ;
+    ;; Client Cert
+    ;ClientCertFilename = "region_cert.p12"
+    ;ClientCertPassword = ""
+
+    ;
+    ;; Money Unit fee to upload textures, animations etc.  Default is 0.
+    PriceUpload = 10
+
+    ;; Mesh upload factors
+    ;MeshModelUploadCostFactor = 0.0
+    ;MeshModelUploadTextureCostFactor = 1.0
+    ;MeshModelMinCostFactor = 0.0
+
+    ;; Money Unit fee to create groups.  Default is 0.
+    PriceGroupCreate = 10
+
+	;
+    ;; Avatar Class for HG Avatar
+    ;; {ForeignAvatar, HGAvatar, GuestAvatar, LocalAvatar} HGAvatar
+    ;; HG Avatar is assumed as a specified avatar class. Default is HGAvatar
+    ;; Processing for each avatar class is dependent on Money Server settings.
+    ;HGAvatarAs = "HGAvatar"
+
+    ;
+    ;; in development
+    ;SettlementByWeb   = false
+    ;SettlementURL     = "http://www.jogrid.net"
+    ;SettlementMessage = "Goto the settlement of accounts Web page. (Testing now)"
+

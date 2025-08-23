@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         verbose="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="true">
+  <coverage/>
+  <testsuites>
+    <testsuite name="Prerequisites">
+      <file>tests/PrerequisitesTest.php</file>
+    </testsuite>
+    <testsuite name="Main Tests">
+      <directory>tests</directory>
+      <exclude>tests/PrerequisitesTest.php</exclude>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="PHPUNIT_RUNNING" value="true"/>
+  </php>
+  <logging>
+    <testdoxText outputFile="php://stdout"/>
+  </logging>
+</phpunit>

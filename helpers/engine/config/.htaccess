@@ -1,0 +1,5 @@
+# Deny all web access to config directory
+Require all denied
+# Legacy Apache 2.2 compatibility
+Order deny,allow
+Deny from all

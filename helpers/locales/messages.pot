@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-02 19:44-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: guide.php:88 guide.php:128
+msgid "Destinations Guide"
+msgstr ""
+
+#: guide.php:129 guide.php:154
+msgid "This is a work in progress, please be indulgent."
+msgstr ""
+
+#: guide.php:139
+#, php-format
+msgid "%s destinations"
+msgstr ""
+
+#: guide.php:152
+msgid "Back to categories"
+msgstr ""
+
+#: guide.php:168
+#, php-format
+msgid "%s people"
+msgstr ""
+
+#: guide.php:171
+#, php-format
+msgid "traffic %s"
+msgstr ""
+
+#: guide.php:182
+msgid ""
+"The realm of destinations you seek has eluded our grasp, spirited away by "
+"elusive knomes. Rally the grid managers, let them venture forth to curate a "
+"grand tapestry of remarkable places for your exploration!"
+msgstr ""

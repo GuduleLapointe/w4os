@@ -1,0 +1,421 @@
+{
+    "packages": [
+        {
+            "name": "laminas/laminas-escaper",
+            "version": "2.17.0",
+            "version_normalized": "2.17.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-escaper.git",
+                "reference": "df1ef9503299a8e3920079a16263b578eaf7c3ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/df1ef9503299a8e3920079a16263b578eaf7c3ba",
+                "reference": "df1ef9503299a8e3920079a16263b578eaf7c3ba",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-mbstring": "*",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "conflict": {
+                "zendframework/zend-escaper": "*"
+            },
+            "require-dev": {
+                "infection/infection": "^0.29.8",
+                "laminas/laminas-coding-standard": "~3.0.1",
+                "phpunit/phpunit": "^10.5.45",
+                "psalm/plugin-phpunit": "^0.19.2",
+                "vimeo/psalm": "^6.6.2"
+            },
+            "time": "2025-05-06T19:29:36+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Escaper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Securely and safely escape HTML, HTML attributes, JavaScript, CSS, and URLs",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "escaper",
+                "laminas"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-escaper/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-escaper/issues",
+                "rss": "https://github.com/laminas/laminas-escaper/releases.atom",
+                "source": "https://github.com/laminas/laminas-escaper"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "install-path": "../laminas/laminas-escaper"
+        },
+        {
+            "name": "laminas/laminas-filter",
+            "version": "2.41.0",
+            "version_normalized": "2.41.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-filter.git",
+                "reference": "eaa00111231bf6669826ae84d3abe85b94477585"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/eaa00111231bf6669826ae84d3abe85b94477585",
+                "reference": "eaa00111231bf6669826ae84d3abe85b94477585",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "laminas/laminas-servicemanager": "^3.21.0",
+                "laminas/laminas-stdlib": "^3.19.0",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "conflict": {
+                "laminas/laminas-validator": "<2.10.1",
+                "zendframework/zend-filter": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~3.0",
+                "laminas/laminas-crypt": "^3.12",
+                "laminas/laminas-i18n": "^2.28.1",
+                "laminas/laminas-uri": "^2.12",
+                "pear/archive_tar": "^1.5.0",
+                "phpunit/phpunit": "^10.5.36",
+                "psalm/plugin-phpunit": "^0.19.0",
+                "psr/http-factory": "^1.1.0",
+                "vimeo/psalm": "^5.26.1"
+            },
+            "suggest": {
+                "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
+                "laminas/laminas-i18n": "Laminas\\I18n component for filters depending on i18n functionality",
+                "laminas/laminas-uri": "Laminas\\Uri component, for the UriNormalize filter",
+                "psr/http-factory-implementation": "psr/http-factory-implementation, for creating file upload instances when consuming PSR-7 in file upload filters"
+            },
+            "time": "2025-05-05T02:02:31+00:00",
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "component": "Laminas\\Filter",
+                    "config-provider": "Laminas\\Filter\\ConfigProvider"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Filter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Programmatically filter and normalize data and files",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "filter",
+                "laminas"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-filter/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-filter/issues",
+                "rss": "https://github.com/laminas/laminas-filter/releases.atom",
+                "source": "https://github.com/laminas/laminas-filter"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "install-path": "../laminas/laminas-filter"
+        },
+        {
+            "name": "laminas/laminas-servicemanager",
+            "version": "3.23.0",
+            "version_normalized": "3.23.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-servicemanager.git",
+                "reference": "a8640182b892b99767d54404d19c5c3b3699f79b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/a8640182b892b99767d54404d19c5c3b3699f79b",
+                "reference": "a8640182b892b99767d54404d19c5c3b3699f79b",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-stdlib": "^3.19",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+                "psr/container": "^1.0"
+            },
+            "conflict": {
+                "ext-psr": "*",
+                "laminas/laminas-code": "<4.10.0",
+                "zendframework/zend-code": "<3.3.1",
+                "zendframework/zend-servicemanager": "*"
+            },
+            "provide": {
+                "psr/container-implementation": "^1.0"
+            },
+            "replace": {
+                "container-interop/container-interop": "^1.2.0"
+            },
+            "require-dev": {
+                "composer/package-versions-deprecated": "^1.11.99.5",
+                "friendsofphp/proxy-manager-lts": "^1.0.18",
+                "laminas/laminas-code": "^4.14.0",
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "laminas/laminas-container-config-test": "^0.8",
+                "mikey179/vfsstream": "^1.6.12",
+                "phpbench/phpbench": "^1.3.1",
+                "phpunit/phpunit": "^10.5.36",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.26.1"
+            },
+            "suggest": {
+                "friendsofphp/proxy-manager-lts": "ProxyManager ^2.1.1 to handle lazy initialization of services"
+            },
+            "time": "2024-10-28T21:32:16+00:00",
+            "bin": [
+                "bin/generate-deps-for-config-factory",
+                "bin/generate-factory-for-class"
+            ],
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/autoload.php"
+                ],
+                "psr-4": {
+                    "Laminas\\ServiceManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Factory-Driven Dependency Injection Container",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "PSR-11",
+                "dependency-injection",
+                "di",
+                "dic",
+                "laminas",
+                "service-manager",
+                "servicemanager"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-servicemanager/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-servicemanager/issues",
+                "rss": "https://github.com/laminas/laminas-servicemanager/releases.atom",
+                "source": "https://github.com/laminas/laminas-servicemanager"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "install-path": "../laminas/laminas-servicemanager"
+        },
+        {
+            "name": "laminas/laminas-stdlib",
+            "version": "3.20.0",
+            "version_normalized": "3.20.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-stdlib.git",
+                "reference": "8974a1213be42c3e2f70b2c27b17f910291ab2f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/8974a1213be42c3e2f70b2c27b17f910291ab2f4",
+                "reference": "8974a1213be42c3e2f70b2c27b17f910291ab2f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "conflict": {
+                "zendframework/zend-stdlib": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "^3.0",
+                "phpbench/phpbench": "^1.3.1",
+                "phpunit/phpunit": "^10.5.38",
+                "psalm/plugin-phpunit": "^0.19.0",
+                "vimeo/psalm": "^5.26.1"
+            },
+            "time": "2024-10-29T13:46:07+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Stdlib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "SPL extensions, array utilities, error handlers, and more",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "laminas",
+                "stdlib"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-stdlib/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-stdlib/issues",
+                "rss": "https://github.com/laminas/laminas-stdlib/releases.atom",
+                "source": "https://github.com/laminas/laminas-stdlib"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "install-path": "../laminas/laminas-stdlib"
+        },
+        {
+            "name": "phpxmlrpc/phpxmlrpc",
+            "version": "4.11.1",
+            "version_normalized": "4.11.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/phpxmlrpc.git",
+                "reference": "06b9d7275d637f6859527091a54a5edfe8a16749"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/phpxmlrpc/zipball/06b9d7275d637f6859527091a54a5edfe8a16749",
+                "reference": "06b9d7275d637f6859527091a54a5edfe8a16749",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "php": "^5.4.0 || ^7.0 || ^8.0"
+            },
+            "conflict": {
+                "phpxmlrpc/extras": "<= 1.0.0-beta2",
+                "phpxmlrpc/jsonrpc": "<= 1.0.0-beta1"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "phpunit/phpunit": "^4.8 || ^5.0 || ^8.5.14",
+                "phpunit/phpunit-selenium": "*",
+                "yoast/phpunit-polyfills": "*"
+            },
+            "suggest": {
+                "ext-curl": "Needed for HTTPS, HTTP2 and HTTP 1.1 support, NTLM Auth etc...",
+                "ext-mbstring": "Needed to allow reception of requests/responses in character sets other than ASCII,LATIN-1,UTF-8",
+                "ext-zlib": "Needed for sending compressed requests and receiving compressed responses, if cURL is not available",
+                "phpxmlrpc/extras": "Adds more featured Server classes, including self-documenting and ajax-enabled servers",
+                "phpxmlrpc/jsonrpc": "Adds support for the JSON-RPC protocol"
+            },
+            "time": "2025-01-17T17:04:37+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PhpXmlRpc\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "A php library for building xmlrpc clients and servers",
+            "homepage": "https://gggeek.github.io/phpxmlrpc/",
+            "keywords": [
+                "webservices",
+                "xml-rpc",
+                "xmlrpc"
+            ],
+            "support": {
+                "issues": "https://github.com/gggeek/phpxmlrpc/issues",
+                "source": "https://github.com/gggeek/phpxmlrpc/tree/4.11.1"
+            },
+            "install-path": "../phpxmlrpc/phpxmlrpc"
+        },
+        {
+            "name": "psr/container",
+            "version": "1.1.2",
+            "version_normalized": "1.1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/513e0666f7216c7459170d56df27dfcefe1689ea",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "time": "2021-11-05T16:50:12+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/1.1.2"
+            },
+            "install-path": "../psr/container"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}

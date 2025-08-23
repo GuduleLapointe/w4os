@@ -1,0 +1,195 @@
+::placeholder,
+input::placeholder {
+    display: none;
+    opacity: 0.5;
+}
+/**
+ * Avoid as much as possible using css to style the pages.
+ * Use bootstrap classes instead.
+ * This file is only used to cover what is not possible with bootstrap classes.
+**/
+
+.step-indicator { margin-bottom: 2rem; text-align: center; }
+.step-indicator .step { 
+    display: inline-block; width: 40px; height: 40px; border-radius: 50%; 
+    /* No hardcoded color, use either boostrap variables, either classes added in html */
+    /* background: #e9ecef; color: #6c757d; text-align: center; line-height: 40px;  */
+    margin: 0 5px; font-weight: bold; font-size: 14px;
+}
+/* .step-indicator .step.active { background: #0d6efd; color: white; }
+/* .step-indicator .step.completed { background: #198754; color: white; } */
+
+@media (max-width: 768px) {
+    .step-indicator .step { width: 35px; height: 35px; line-height: 35px; font-size: 12px; }
+}
+
+.step-indicators {
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: space-between; */
+    /* max-width: 600px; */
+    /* margin: 0 auto; */
+}
+
+.step-indicator {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* flex: 1; */
+    /* position: relative; */
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.step-title {
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 80px;
+}
+
+.step-connector {
+    flex: 1;
+}
+
+/* Multiple fields styling */
+.multiple-fields-container {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+.multiple-field-item {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    position: relative;
+}
+
+.multiple-field-controls {
+    flex-shrink: 0;
+    min-width: 40px;
+}
+
+.multiple-field-controls .btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Multiple groups styling */
+.multiple-groups-container {
+    border: 2px dashed #dee2e6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+.multiple-group-item {
+    background-color: white;
+    position: relative;
+}
+
+.group-controls {
+    position: relative;
+    z-index: 1;
+}
+
+.group-controls .btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Color field enhancements for multiple */
+.multiple-field-item .input-group {
+    max-width: none;
+}
+
+.multiple-field-item .form-control-color {
+    width: 50px;
+    height: 38px;
+    flex-shrink: 0;
+}
+
+/* File input styling for multiple */
+.multiple-field-item .input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.multiple-field-item .input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .multiple-field-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    
+    .multiple-field-controls {
+        flex-direction: row;
+        justify-content: flex-end;
+        min-width: auto;
+    }
+    
+    .group-controls {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    
+    .multiple-field-item .input-group {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Disabled state styling */
+.multiple-field-remove:disabled,
+.group-remove:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Focus states */
+.multiple-field-item:focus-within {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.multiple-group-item:focus-within {
+    border-color: #86b7fe;
+}
+
+/* Animation for new fields */
+.multiple-field-item,
+.multiple-group-item {
+    transition: all 0.2s ease-in-out;
+}
+
+.multiple-field-item:hover,
+.multiple-group-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

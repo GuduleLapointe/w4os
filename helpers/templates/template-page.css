@@ -1,0 +1,72 @@
+/*
+ * Template page CSS
+**/
+
+:root {
+}
+
+/* Add this to your CSS file */
+.dropdown-hover:hover .dropdown-menu {
+  display: block;
+}
+
+.block a,
+a.hop-link {
+    text-decoration: none !important;
+}
+
+.cards .accordion-button {
+  border: 0;
+}
+
+.cards .accordion-button:not(.collapsed) {
+  color: inherit;
+  background-color: inherit;
+  box-shadow: none;
+}  
+
+.cards .accordion-button::after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+  transform: rotate(180deg);
+}
+
+.accordion-button:not(.collapsed)::after {
+  color: white;
+  transform: rotate(0);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bs-body-bg: #212529;
+        --bs-body-color: #fff;
+        --bs-border-color: #495057;
+        --bs-gray-50: #343a40;
+        --bs-gray-100: #495057;
+        --bs-gray-300: #6c757d;
+        --bs-gray-400: #868e96;
+        --bs-gray-600: #adb5bd;
+        --bs-heading-color: #fff;
+        --bs-secondary: #adb5bd;
+        --bs-primary-bg-subtle: rgba(13, 110, 253, 0.2);
+    }
+    .bg-light {
+        background-color: var(--bs-gray-50) !important;
+    }
+    .helpers-form {
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+    }
+    
+    .method-accordion {
+        background-color: var(--bs-body-bg);
+        border-color: var(--bs-border-color);
+    }
+    
+    .choice-option {
+        background-color: var(--bs-body-bg) !important;
+        color: var(--bs-body-color);
+        border-color: var(--bs-border-color) !important;
+    }
+}
+
