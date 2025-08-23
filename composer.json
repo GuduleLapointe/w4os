@@ -39,18 +39,10 @@
     }
   ],
   "scripts": {
-    "post-update-cmd": [
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || cp vendor/magicoli/opensim-rest-php/class-rest.php v2/admin-helpers/class-opensim-rest.php"
-    ],
     "bump-version": "vendor/magicoli/php-bump-library/vendor/bin/robo --load-from=vendor/magicoli/php-bump-library/RoboFile.php bump:version"
   },
   "require-dev": {
-    "magicoli/opensim-rest-php": "^1.0",
-    "wp-coding-standards/wpcs": "^3.1",
-    "magicoli/php-bump-library": "^1.0",
-    "phpunit/phpunit": "^11.5",
-    "wp-phpunit/wp-phpunit": "^6.7",
-    "yoast/phpunit-polyfills": "^4.0"
+    "magicoli/php-bump-library": "^1.0"
   },
   "config": {
     "allow-plugins": {

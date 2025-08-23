@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'speculoos/w4os',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '6ece3cdcafb159a0892be7bff8c3f0486ab2b4fd',
+        'pretty_version' => '2.x-dev',
+        'version' => '2.9999999.9999999.9999999-dev',
+        'reference' => 'deda90da86f8977a189f7fe7660bae13f40c7eaf',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -92,9 +92,9 @@
             'dev_requirement' => false,
         ),
         'speculoos/w4os' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '6ece3cdcafb159a0892be7bff8c3f0486ab2b4fd',
+            'pretty_version' => '2.x-dev',
+            'version' => '2.9999999.9999999.9999999-dev',
+            'reference' => 'deda90da86f8977a189f7fe7660bae13f40c7eaf',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -110,9 +110,9 @@
             'dev_requirement' => false,
         ),
         'woocommerce/action-scheduler' => array(
-            'pretty_version' => '3.9.2',
-            'version' => '3.9.2.0',
-            'reference' => 'efbb7953f72a433086335b249292f280dd43ddfe',
+            'pretty_version' => '3.9.3',
+            'version' => '3.9.3.0',
+            'reference' => 'c58cdbab17651303d406cd3b22cf9d75c71c986c',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../woocommerce/action-scheduler',
             'aliases' => array(),
