@@ -19,8 +19,8 @@ check_unpushed_changes() {
     
     cd "$dir"
     
-    # Check if we're in a git repository
-    if [ ! -d ".git" ]; then
+    # Check if we're in a git repository (handle both .git directory and .git file for submodules)
+    if [ ! -d ".git" ] && [ ! -f ".git" ]; then
         echo -e "${RED}Error: $dir is not a git repository${NC}"
         return 1
     fi
