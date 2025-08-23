@@ -1,6 +1,6 @@
-[submodule "helpers"]
-	path = helpers
-	url = https://github.com/magicoli/opensim-helpers.git
-[submodule "src/olib-dev"]
-	path = src/olib-dev
-	url = https://github.com/magicoli/olib-dev
+[submodule "dev/grunt-wp-plugin-tasks"]
+	path = dev/grunt-wp-plugin-tasks
+	url = https://github.com/magicoli/grunt-wp-plugin-tasks
+[submodule "dev/opensim-debian"]
+	path = dev/opensim-debian
+	url = https://github.com/GuduleLapointe/opensim-debian.git

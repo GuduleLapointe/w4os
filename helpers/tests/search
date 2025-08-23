@@ -1,0 +1,103 @@
+#!/bin/bash
+
+SearchURL="https://2do.directory/helpers/query.php"
+GatekeeperURL="http://speculoos.world:8002"
+
+PGM=$(basename $0)
+searchstring="$@"
+
+
+echo "Searching for: $searchstring" > /dev/stderr
+
+url=$SearchURL?gk=$GatekeeperURL
+echo "SearchURL: $url" > /dev/stderr
+
+xml="<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<methodCall>
+    <methodName>dir_places_query</methodName>
+    <params>
+        <param>
+            <value>
+                <struct>
+                    <member>
+                        <name>category</name>
+                        <value><string>-1</string></value>
+                    </member>
+                    <member>
+                        <name>text</name>
+                        <value><string>$searchstring</string></value>
+                    </member>
+                    <member>
+                        <name>flags</name>
+                        <value><string>117441536</string></value>
+                    </member>
+                    <member>
+                        <name>query_start</name>
+                        <value><string>0</string></value>
+                    </member>
+                    <member>
+                        <name>sim_name</name>
+                        <value><string/></value>
+                    </member>
+                </struct>
+            </value>
+        </param>
+    </params>
+</methodCall>"
+
+# Sample responses:
+# Search with no results:
+# <?xml version="1.0" encoding="utf-8"?>
+# <params><param><value><struct>
+#     <member>
+#         <name>success</name>
+#         <value>
+#         <boolean>0</boolean>
+#         </value>
+#     </member>
+#     <member>
+#         <name>errorMessage</name>
+#         <value>
+#         <string>No results</string>
+#         </value>
+#     </member>
+# </struct></value></param></params>
+#
+# Search with results:
+# <?xml version="1.0" encoding="utf-8"?>
+# <params><param><value><struct>
+#    <member>
+#     <name>success</name>
+#     <value>
+#      <boolean>1</boolean>
+#     </value>
+#    </member>
+#    <member>
+#     <name>errorMessage</name>
+#     <value>
+#      <string/>
+#     </value>
+#    </member>
+#    <member>
+#     <name>data</name>
+#     (etc)
+# </struct></value></param></params>
+
+
+# Send POST request with the XML content so that query.php receives it via php://input
+response=$(curl -s -X POST -H "Content-Type: text/xml" --data "$xml" "$url")
+
+# Remove extra spaces between tags without eliminating newlines entirely
+response_oneline="$(echo "$response" | sed ':a;N;$!ba;s/>\s\+</></g')"
+
+# Extract success and errorMessage using sed
+success=$(echo "$response_oneline" | sed -n 's/.*<name>success<\/name>.*<boolean>\([01]\)<\/boolean>.*/\1/p')
+errorMessage=$(echo "$response_oneline" | sed -n 's/.*<name>errorMessage<\/name>.*<string>\(.*\)<\/string>.*/\1/p')
+
+# If errorMessage is "False", change it to empty string.
+if [ "$errorMessage" = "False" ]; then
+    errorMessage=""
+fi
+
+echo "$PGM: Success=$success, Error Message='$errorMessage'"
+

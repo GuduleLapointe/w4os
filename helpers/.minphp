@@ -1,0 +1,5 @@
+............W......... 22 / 22 (100%)
+
+
+File,Line,Column,Type,Message,Source,Severity,Fixable
+"/home/magic/domains/w4os.org/www/helpers/bin/index.php",1,1,warning,"No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.",Internal.NoCodeFound,5,0

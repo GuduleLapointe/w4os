@@ -14,7 +14,7 @@ module.exports = function ( grunt ) {
 	// } );
 
     // Load shared custom tasks in plugin
-    require('./src/olib-dev/grunt-custom-tasks.js')(grunt, pluginName);
+    require('./dev/grunt-wp-plugin-tasks/grunt-custom-tasks.js')(grunt, pluginName);
 
     grunt.util.linefeed = '\n';
 
