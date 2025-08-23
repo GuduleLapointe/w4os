@@ -8,7 +8,7 @@
  *
  * @package opensim-rest-php
  * @category Libraries
- * @version 1.0.5
+ * @version 1.0.6
  * @license AGPLv3
  * @link https://github.com/magicoli/opensim-rest-php
  *
@@ -104,7 +104,9 @@ class OpenSim_Rest {
 		$startSessionResponse = curl_exec( $this->ch );
 		// Check for errors
 		if ( ! $startSessionResponse ) {
-			return new Error( trim( 'Unable to start session ' . curl_error( $this->ch ) ) );
+			// return new Error( trim( 'Unable to start session ' . curl_error( $this->ch ) ) . ' in ' . __FILE__ . ' on line ' . __LINE__ );
+			// The simulator is probably offline, no need to clutter the error log with this.
+			return false;
 		}
 
 		// Parse the session ID from the start session response
@@ -114,7 +116,7 @@ class OpenSim_Rest {
 		}
 
 		if ( empty( $this->sessionID ) ) {
-			return new Error( trim( 'Unable to get a session ID ' . curl_error( $this->ch ) ) );
+			return new Error( trim( 'Unable to get a session ID ' . curl_error( $this->ch ) ) . ' in ' . __FILE__ . ' on line ' . __LINE__ );
 		}
 
 		return $this->sessionID;
