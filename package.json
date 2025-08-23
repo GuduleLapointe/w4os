@@ -4,11 +4,8 @@
   "description": "WordPress interface for OpenSimulator (w4os)",
   "main": "webpack.config.js",
   "workspaces": [
-    "dev/olib-dev"
+    "dev/grunt-wp-plugin-tasks"
   ],
-  "scripts": {
-    "prepare": "cd dev/olib-dev && npm link"
-  },
   "workspaces-update": true,
   "repository": {
     "type": "git",
