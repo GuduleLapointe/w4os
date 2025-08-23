@@ -7,9 +7,24 @@ This directory contains tests for the W4OS - OpenSimulator Web Interface plugin 
 To run all tests:
 
 ```bash
-cd /path/to/w4os-dev
-php tests/run-tests.php
+cd /path/to/w4os-dev/tests
+php run-tests.php
 ```
+
+To run individual test groups:
+
+```bash
+cd /path/to/w4os-dev/tests
+php test-environment.php     # WordPress environment tests
+php test-opensim.php         # OpenSimulator environment tests
+```
+
+## Test Structure
+
+- **`bootstrap.php`** - Loads WordPress and provides SimpleTest framework
+- **`run-tests.php`** - Main test runner that executes all test-*.php files
+- **`test-environment.php`** - WordPress environment tests (database, plugins, etc.)
+- **`test-opensim.php`** - OpenSimulator environment tests (databases, console, services)
 
 ## Test Approach
 
@@ -22,12 +37,15 @@ php tests/run-tests.php
 Based on the essential functionality of W4OS, these are the priority features that should be tested:
 
 ### Basics
-- [x] **Basic Environment Tests** (implemented in `run-tests.php`):
+- [x] **WordPress Environment Tests** (implemented in `test-environment.php`):
     - WordPress functions are loaded
     - Database connectivity works
     - W4OS plugin is loaded and active
     - Site configuration is accessible
-- [ ] Check proper OpenSimulator settings detection and DB connection
+- [x] **OpenSimulator Environment Tests** (implemented in `test-opensim.php`):
+    - OpenSimulator settings detection and parsing
+    - Database connectivity for all configured services
+    - Console connectivity (if enabled)
 
 ### Authentication & User Management
 - [ ] Login with current WordPress user credentials
@@ -58,13 +76,29 @@ Based on the essential functionality of W4OS, these are the priority features th
 
 ## Adding New Tests
 
-To add new tests, edit `run-tests.php` and add test methods using the SimpleTest class:
+To add new test groups, create a new `test-*.php` file:
 
 ```php
-// Example test
+<?php
+/**
+ * Your Test Group Name
+ * Description of what this test group covers
+ * 
+ * Usage: php test-yourname.php
+ */
+
+// Load bootstrap
+require_once __DIR__ . '/bootstrap.php';
+
+echo "Testing your functionality...\n";
+
+// Your tests here
 $test->assert_true( your_condition_here(), 'Description of what you're testing' );
 $test->assert_equals( expected_value, actual_value, 'Test description' );
 $test->assert_not_empty( some_value, 'Test description' );
+
+// Show summary
+$test->summary();
 ```
 
 ## Benefits

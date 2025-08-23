@@ -4,6 +4,11 @@
  * Loads WordPress and sets up the testing environment
  */
 
+// Start session to prevent warnings from plugin code
+if ( session_status() === PHP_SESSION_NONE ) {
+	session_start();
+}
+
 // Load WordPress
 $wp_load_path = dirname( __FILE__, 5 ) . '/wp-load.php';
 
