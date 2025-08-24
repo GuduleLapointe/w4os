@@ -1,8 +1,9 @@
+#!/usr/bin/env php
 <?php
 /**
  * Main test runner for W4OS plugin
  * 
- * Usage: php run-tests.php
+ * Usage: ./run-tests.php or php run-tests.php
  */
 
 echo "

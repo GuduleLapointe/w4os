@@ -15,16 +15,18 @@ To run individual test groups:
 
 ```bash
 cd /path/to/w4os-dev/tests
-php test-environment.php     # WordPress environment tests
-php test-opensim.php         # OpenSimulator environment tests
+php test-00-environment.php  # WordPress environment tests
+php test-01-opensim.php      # OpenSimulator environment tests
 ```
 
 ## Test Structure
 
 - **`bootstrap.php`** - Loads WordPress and provides SimpleTest framework
-- **`run-tests.php`** - Main test runner that executes all test-*.php files
-- **`test-environment.php`** - WordPress environment tests (database, plugins, etc.)
-- **`test-opensim.php`** - OpenSimulator environment tests (databases, console, services)
+- **`run-tests.php`** - Main test runner that executes all test-*.php files in order
+- **`test-00-environment.php`** - WordPress environment tests (database, plugins, etc.)
+- **`test-01-opensim.php`** - OpenSimulator environment tests (databases, console, services)
+
+*Tests are numbered to ensure environment tests run first, followed by OpenSim tests, before any additional feature tests.*
 
 ## Test Approach
 
