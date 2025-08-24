@@ -1,8 +1,10 @@
 # w4os - OpenSimulator Web Interface (dev)
 
-![Stable 2.9.4](https://badgen.net/badge/Stable/2.9.4/00aa00)
-![WordPress 5.3.0 - 6.8.1](https://badgen.net/badge/WordPress/5.3.0%20-%206.8.1/3858e9)
-![Requires PHP 7.3](https://badgen.net/badge/PHP/7.3/7884bf)
+![Version 2.10.0-beta-2](https://img.shields.io/badge/Version-2.10.0--beta--2-00aa00)
+![Stable 2.9.4](https://img.shields.io/badge/Stable-2.9.4-00aa00)
+![WordPress 5.3.0+](https://img.shields.io/badge/WordPress-5.3.0+-3858e9)
+![Requires PHP 7.3+](https://img.shields.io/badge/PHP-7.3+-7884bf)
+![License AGPLv3](https://img.shields.io/badge/License-AGPLv3-blue)
 
 WordPress interface for OpenSimulator (w4os).
 

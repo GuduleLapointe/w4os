@@ -4,8 +4,10 @@ Donate link: https://w4os.org/donate/
 Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
-Tested up to: 6.8.1
+Tested up to: 6.8.2
 Stable tag: 2.9.4
+License: AGPLv3 or later
+License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
 WordPress interface for OpenSimulator (w4os).
 
@@ -223,18 +225,28 @@ or not. In either case, idk&idc.
 
 == Changelog ==
 
-= Unreleased (2.10.0-beta-1) =
-* new textgen helper script (create dynamic texture from url)
-* update DEVELOPERS.md (add instructions to properly setup submodules)
-* fix home page empty in some setups
+= Unreleased (2.10.0-beta-2 =
+* new Avatar menu, in classic menu and as block for WordPress Gutenberg editor
+  - login and register for anonymous users
+  - avatar profile, account settings and logout for logged-in users
+* new Flux feature: enables activity stream in OpenSim viewer and on web profile page
+* new Enhanced user menu system with registration page integration
+* new Textgen helper script (create dynamic texture from url)
+* enhancement Grid_info() method also get foreign grid info
 * fix PHP fatal error (wp-load.php missing in release)
-* fix default model not applied on avatar creation
-* fix some grid uri not properly sanitized
-*  userless authentification (proof of concept, to prepare opensim auth without wp account)
-*  flux display foreign web profile if enabled on remote grid
-*  grid_info() method also get foreign grid info
-*  hide admin bar for temporary users
-*  avatar menu available in classic menu
+* fix Home page empty in some setups
+* fix Default model not applied on avatar creation
+* fix Some grid uri not properly sanitized
+* fix Logout url broken for standard users
+* fix Usermenu regressions introduced with classic menus
+* translation Updated translations for multiple languages
+* translation Fix "Register" button translation issues
+* (dev) Comprehensive modular testing framework with WordPress and OpenSimulator environment validation
+* (dev) Convert helpers from submodule to subtree for better maintenance
+* (dev) Added modular test structure with environment validation
+* (dev) Executable test runner with guaranteed execution order
+* (dev) Update DEVELOPERS.md (add instructions to properly setup submodules)
+* (dev) Userless authentication foundation (proof of concept)
 
 = 2.9.4 =
 * fix avatar mini profile block crashing

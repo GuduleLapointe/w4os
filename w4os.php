@@ -1,15 +1,13 @@
 <?php
 /**
  * Plugin Name:       w4os - OpenSimulator Web Interface (dev)
+ * Plugin URI:        https://w4os.org/
  * Description:       WordPress interface for OpenSimulator (w4os).
- * Version:           2.10.0-beta-1
  * Author:            Speculoos World
  * Author URI:        https://speculoos.world
- * Plugin URI:        https://w4os.org/
- * License:           AGPLv3
- * License URI:       https://www.gnu.org/licenses/agpl-3.0.txt
  * Text Domain:       w4os
  * Domain Path:       /languages/
+ * Version:           2.10.0-beta-2
  *
  * @package GuduleLapointe/w4os
  *
