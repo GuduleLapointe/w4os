@@ -437,6 +437,46 @@ function w4os_create_avatar( $user, $params ) {
 	$model     = trim( ( $params['w4os_model'] ?? '' ) );
 	$password  = stripcslashes( $params['w4os_password_1'] );
 
+	// Sanitize names: remove accents and non-alphanumeric characters
+	$firstname_original = $firstname;
+	$lastname_original = $lastname;
+	
+	$firstname = remove_accents( $firstname );
+	$lastname = remove_accents( $lastname );
+	
+	$firstname = preg_replace( '/[^A-Za-z0-9]/', '', $firstname );
+	$lastname = preg_replace( '/[^A-Za-z0-9]/', '', $lastname );
+	
+	// Ensure names start with a letter
+	if ( strlen( $firstname ) > 0 && is_numeric( $firstname[0] ) ) {
+		$firstname = ltrim( $firstname, '0123456789' );
+	}
+	if ( strlen( $lastname ) > 0 && is_numeric( $lastname[0] ) ) {
+		$lastname = ltrim( $lastname, '0123456789' );
+	}
+	
+	// Capitalize first letter
+	if ( strlen( $firstname ) > 0 ) {
+		$firstname = ucfirst( strtolower( $firstname ) );
+	}
+	if ( strlen( $lastname ) > 0 ) {
+		$lastname = ucfirst( strtolower( $lastname ) );
+	}
+	
+	// Show info message if names were converted
+	if ( $firstname_original !== $firstname && ! empty( $firstname_original ) ) {
+		w4os_user_notice( 
+			sprintf( __( 'First name converted from "%s" to "%s" (removed invalid characters)', 'w4os' ), $firstname_original, $firstname ), 
+			'info' 
+		);
+	}
+	if ( $lastname_original !== $lastname && ! empty( $lastname_original ) ) {
+		w4os_user_notice( 
+			sprintf( __( 'Last name converted from "%s" to "%s" (removed invalid characters)', 'w4os' ), $lastname_original, $lastname ), 
+			'info' 
+		);
+	}
+
 	if ( empty( $model ) ) {
 		$model = W4OS_DEFAULT_AVATAR;
 	}
@@ -767,6 +807,7 @@ function w4os_avatar_creation_form( $user ) {
 
 	wp_enqueue_style( 'w4os-wp-forms', site_url( '/wp-admin/css/forms.min.css' ) );
 	wp_enqueue_style( 'w4os-forms', plugin_dir_url( __DIR__ ) . 'v3/css/forms.css', array(), time() );
+	wp_enqueue_script( 'w4os-avatar-name-validation', plugin_dir_url( __DIR__ ) . 'assets/js/avatar-name-validation.js', array(), time(), true );
 
 	if ( isset( $_REQUEST['w4os_firstname'] ) && isset( $_REQUEST['w4os_lastname'] ) ) {
 		$firstname = sanitize_text_field( $_REQUEST['w4os_firstname'] );
@@ -793,11 +834,11 @@ function w4os_avatar_creation_form( $user ) {
 		'<div class=wrap><table class="form-table">
 		<tr>
 			<th scope="row"><label for="w4os_firstname">%s</label></th>
-			<td><input type="text" class="regular-text" name="w4os_firstname" id="w4os_firstname" value="%s" required /></td>
+			<td><input type="text" class="regular-text" name="w4os_firstname" id="w4os_firstname" value="%s" required pattern="[A-Za-z][A-Za-z0-9]*" title="%s" maxlength="32" /></td>
 		</tr>
 		<tr>
 			<th><label for="w4os_lastname">%s</label></th>
-			<td><input type="text" class="regular-text" name="w4os_lastname" id="w4os_lastname" value="%s" required /></td>
+			<td><input type="text" class="regular-text" name="w4os_lastname" id="w4os_lastname" value="%s" required pattern="[A-Za-z][A-Za-z0-9]*" title="%s" maxlength="32" /></td>
 		</tr>
 		<tr>
 			<th><label for="w4os_password_1">%s</label></th>
@@ -810,8 +851,10 @@ function w4os_avatar_creation_form( $user ) {
 	</table></div>',
 		__( 'First name', 'w4os' ),
 		$firstname,
+		__( 'First name must start with a letter and contain only letters and numbers', 'w4os' ),
 		__( 'Last name', 'w4os' ),
 		$lastname,
+		__( 'Last name must start with a letter and contain only letters and numbers', 'w4os' ),
 		__( 'Confirm your password', 'w4os' ),
 		__( 'Your in-world Avatar password is the same as your password on this website.', 'w4os' ),
 		( W4OS_Model::get_models() ) ? sprintf(
