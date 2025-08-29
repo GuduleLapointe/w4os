@@ -137,6 +137,10 @@ class W4OS3_Avatar extends W4OS {
 				'hook'     => 'admin_head',
 				'callback' => 'remove_avatar_edit_delete_action',
 			),
+			array(
+				'hook'     => 'admin_enqueue_scripts',
+				'callback' => 'enqueue_admin_scripts',
+			),
 		);
 
 		if ( get_option( 'w4os_sync_users' ) ) {
@@ -1159,21 +1163,39 @@ class W4OS3_Avatar extends W4OS {
 	// }
 
 	static function sanitize_name( $value, $field = array(), $oldvalue = null, $object_id = null ) {
-		// return $value;
+		$original = $value;
 		$return = sanitize_text_field( $value );
-		// $return = strtr(utf8_decode($return), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+		
+		// Remove accents first
 		$return = remove_accents( $return );
-
-		$return = substr( preg_replace( '/(' . W4OS_PATTERN_NAME . ')[^[:alnum:]]*/', '$1', $return ), 0, 64 );
-		if ( $value != $return & ! empty( $field['name'] ) ) {
+		
+		// Handle full name format (Firstname Lastname)
+		if ( strpos( $return, ' ' ) !== false ) {
+			// Full name validation
+			$return = substr( preg_replace( '/(' . W4OS_PATTERN_NAME . ')[^[:alnum:] ]*/', '$1', $return ), 0, 64 );
+		} else {
+			// Individual name part validation - ensure it starts with a letter
+			$return = preg_replace( '/[^A-Za-z0-9]/', '', $return );
+			if ( strlen( $return ) > 0 && is_numeric( $return[0] ) ) {
+				// Remove leading numbers
+				$return = ltrim( $return, '0123456789' );
+			}
+			// Capitalize first letter
+			if ( strlen( $return ) > 0 ) {
+				$return = ucfirst( strtolower( $return ) );
+			}
+			$return = substr( $return, 0, 32 ); // Max 32 chars per name part
+		}
+		
+		if ( $original != $return && ! empty( $field['name'] ) && ! empty( $original ) ) {
 			w4os_notice(
 				sprintf(
-					__( '%1$s contains invalid characters, replaced "%2$s" by "%3$s"', 'w4os' ),
+					__( '%1$s converted from "%2$s" to "%3$s" (removed invalid characters)', 'w4os' ),
 					$field['name'],
-					wp_specialchars_decode( strip_tags( stripslashes( $value ) ) ),
+					wp_specialchars_decode( strip_tags( stripslashes( $original ) ) ),
 					esc_attr( $return ),
 				),
-				'warning'
+				'info'
 			);
 		}
 		return $return;
@@ -1926,6 +1948,28 @@ class W4OS3_Avatar extends W4OS {
 
 		wp_cache_set( $cache_key, $success );
 		return;
+	}
+
+	/**
+	 * Enqueue admin scripts for avatar name validation
+	 */
+	static function enqueue_admin_scripts( $hook ) {
+		global $post_type;
+		
+		// Only enqueue on avatar post type pages
+		if ( $post_type === 'avatar' || 
+			 ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'avatar' ) ||
+			 ( isset( $post_type ) && $post_type === 'avatar' ) ||
+			 ( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) === 'avatar' ) ) {
+			
+			wp_enqueue_script( 
+				'w4os-avatar-name-validation', 
+				W4OS_PLUGIN_DIR_URL . 'assets/js/avatar-name-validation.js', 
+				array(), 
+				time(), 
+				true 
+			);
+		}
 	}
 }
 
