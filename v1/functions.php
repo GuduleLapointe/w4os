@@ -1,6 +1,50 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;}
 
+/**
+ * Generate helper URL with appropriate scheme (like home_url but for helpers)
+ * 
+ * @param string $path Optional path to append
+ * @param string $scheme Optional scheme (http/https/null for site default)
+ * @return string Helper URL with proper scheme
+ */
+function helper_url( $path = '', $scheme = null ) {
+	$helpers_slug = get_option( 'w4os_helpers_slug', 'helpers' );
+	$full_path = $helpers_slug . '/' . ltrim( $path, '/' );
+	return home_url( $full_path, $scheme );
+}
+
+/**
+ * Generate gatekeeper URL for OpenSim compatibility
+ * 
+ * @return string Gatekeeper URL with http:// for OpenSim compatibility
+ */
+function gatekeeper_url() {
+	$login_uri = get_option( 'w4os_login_uri' );
+	if ( empty( $login_uri ) ) {
+		return '';
+	}
+	// The gatekeeper (login_uri) should always use http:// for OpenSim compatibility
+	$gatekeeper = preg_match( '#https?://#', $login_uri ) ? $login_uri : 'http://' . $login_uri;
+	return $gatekeeper;
+}
+
+/**
+ * Generate complete search URL with gatekeeper
+ * 
+ * @return string Complete search URL with proper protocol and gatekeeper
+ */
+function search_url() {
+	$login_uri = get_option( 'w4os_login_uri' );
+	if ( empty( $login_uri ) ) {
+		return '';
+	}
+	// Use helper_url to get the search URL with site's protocol
+	$search_url = helper_url( 'query.php' );
+	$gatekeeper = gatekeeper_url();
+	return $search_url . '?gk=' . $gatekeeper;
+}
+
 function w4os_array2table( $array, $class = '', $level = 1 ) {
 	if ( empty( $array ) ) {
 		return;
@@ -368,7 +412,7 @@ function w4os_grid_online( $login_uri = null ) {
 	$status = wp_cache_get( $cache_key, 'w4os' );
 	if ( false === $status ) {
 		$login_uri = $login_uri;
-		$parts     = wp_parse_url( $login_uri );
+		$parts     = parse_url( $login_uri );
 		if ( isset( $parts['host'] ) ) {
 			$fp = @fsockopen( $parts['host'], $parts['port'], $errno, $errstr, 1.0 );
 			return ( $fp ) ? true : false;
@@ -637,7 +681,7 @@ function w4os_sanitize_login_uri( $login_uri ) {
 	$login_uri = ( preg_match( '/^https?:\/\//', $login_uri ) ) ? $login_uri : 'http://' . $login_uri;
 
 	$parts = wp_parse_args(
-		wp_parse_url( $login_uri ),
+		parse_url( $login_uri ),
 		array(
 			'scheme' => 'http',
 			'port'   => preg_match('/osgrid\.org/', $login_uri) ? 80 : 8002,

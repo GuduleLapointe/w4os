@@ -346,7 +346,7 @@ add_action(
 					'name'            => __( 'Search Service', 'w4os' ),
 					'description'     => __( 'Search service used by the viewer. Search can be provided by the simulator core (limited), or by an external service for additional functionalities (like events). Requires OpenSimSearch.Modules.dll.', 'w4os' ),
 					'third_party_url' => ( get_option( 'w4os_provide_search' ) ) ? '' : 'https://github.com/GuduleLapointe/flexible_helper_scripts',
-					'recommended'     => get_option( 'w4os_search_url' ) . '?gk=http://' . get_option( 'w4os_login_uri' ),
+					'recommended'     => search_url(),
 					'os_config'       => array(
 						'OpenSim.ini' => array(
 							'[Search]' => array( 'SearchURL = %1$s' ),

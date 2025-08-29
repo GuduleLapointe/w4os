@@ -40,14 +40,14 @@ if ( get_option( 'w4os_provide_offline_messages' ) == true & ! empty( W4OS_GRID_
 }
 
 if ( get_option( 'w4os_provide_search' ) == true ) {
-	if ( ! empty( get_option( 'w4os_search_url' ) ) ) {
-		$search = parse_url( get_option( 'w4os_search_url' ) )['path'];
+	if ( ! empty( search_url() ) ) {
+		$search = parse_url( search_url() )['path'];
 		if ( preg_match( ":^$search/:", "$url/" ) ) {
 			// error_log("search $search");
 			require 'query.php';
 			die();
 		}
-		$parser = preg_replace( ':^//:', '/', dirname( $search ) . '/parser.php' );
+		$parser = parse_url( helper_url( 'parser.php' ) )['path'];
 		if ( preg_match( ":^$parser/:", "$url/" ) ) {
 			require 'parser.php';
 			die();

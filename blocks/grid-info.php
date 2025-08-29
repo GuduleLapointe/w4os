@@ -121,7 +121,7 @@ function w4os_grid_info( $atts = array() ) {
 	if ( ! function_exists( 'xmlrpc_encode_request' ) ) {
 		return array();
 	}
-	$searchURL = get_option( 'w4os_search_url' );
+	$searchURL = search_url();
 	if ( empty( $searchURL ) ) {
 		return array();
 	}
