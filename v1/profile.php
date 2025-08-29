@@ -681,6 +681,23 @@ function w4os_avatar_creation_form( $user ) {
 		return;
 	}
 
+	// Show success message if avatar was just created
+	if ( isset( $_GET['avatar_created'] ) && $_GET['avatar_created'] == '1' ) {
+		// Get the user's avatar to show the name in success message
+		$avatar = new W4OS_Avatar( $user );
+		if ( $avatar->exists() ) {
+			w4os_user_notice( 
+				W4OS::sprintf_safe( 
+					__( 'Avatar %s created successfully! You can now log in to the virtual world.', 'w4os' ), 
+					$avatar->FirstName . ' ' . $avatar->LastName 
+				), 
+				'success' 
+			);
+		} else {
+			w4os_user_notice( __( 'Avatar created successfully! You can now log in to the virtual world.', 'w4os' ), 'success' );
+		}
+	}
+
 	if ( isset( $_POST['w4os_update_avatar'] ) && isset( $_POST['user_id'] ) ) {
 		// Verify nonce
 		if ( ! wp_verify_nonce( $_POST['nonce'], 'w4os_create_avatar' ) ) {
@@ -689,9 +706,15 @@ function w4os_avatar_creation_form( $user ) {
 			// return w4os_avatar_update_error( __( 'Security check failed', 'w4os' ), 'fail' );
 			// wp_die( 'Security check' );
 		}
-		w4os_profile_fields_save( $_POST['user_id'] );
-		wp_redirect( home_url( $_SERVER['REQUEST_URI'] ) );
-		die( 'Redirecting...' );
+		
+		$result = w4os_profile_fields_save( $_POST['user_id'] );
+		
+		// Redirect to current page without POST data to prevent resubmission
+		$redirect_url = remove_query_arg( array( 'w4os_update_avatar', 'user_id', 'nonce' ) );
+		$redirect_url = add_query_arg( 'avatar_created', '1', $redirect_url );
+		
+		wp_redirect( $redirect_url );
+		exit;
 	}
 
 	global $w4osdb;
