@@ -1,7 +1,7 @@
 <?php if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;}
 
-if ( get_option( 'w4os_provide_search' ) && ! empty( get_option( 'w4os_search_url' ) ) ) {
+if ( get_option( 'w4os_provide_search' ) && ! empty( search_url() ) ) {
 	if ( ! wp_next_scheduled( 'w4os_search_parser_cron' ) ) {
 		add_action(
 			'init',
@@ -29,11 +29,11 @@ function w4os_add_cron_intervals( $schedules ) {
 
 add_action( 'w4os_search_parser_cron', 'w4os_search_parser_exec', 10, 0 );
 function w4os_search_parser_exec( $args = array() ) {
-	$search = get_option( 'w4os_search_url' );
-	$parser = preg_replace( ':^//:', '/', dirname( $search ) . '/parser.php' );
+	$search = search_url();
+	$parser = helper_url( 'parser.php' );
 	$result = file_get_contents( $parser );
 	if ( ! empty( get_option( 'w4os_hypevents_url' ) ) ) {
-		$eventsparser = preg_replace( ':^//:', '/', dirname( $search ) . '/eventsparser.php' );
+		$eventsparser = helper_url( 'eventsparser.php' );
 		$result       = file_get_contents( $eventsparser );
 	}
 	// require(dirname(__DIR__) . '/helpers/parser.php');
