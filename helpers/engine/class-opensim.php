@@ -74,7 +74,7 @@ class OpenSim {
         return $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
     }
 
-    static function sanitize_login_uri( $login_uri ) {
+	static function sanitize_login_uri( $login_uri ) {
 		if ( empty( $login_uri ) ) {
 			return;
 		}
@@ -82,7 +82,7 @@ class OpenSim {
 		$login_uri = ( preg_match( '/^https?:\/\//', $login_uri ) ) ? $login_uri : 'http://' . $login_uri;
 	
 		$parts = OpenSim::parse_args(
-			wp_parse_url( $login_uri ),
+			parse_url( $login_uri ),
 			array(
 				'scheme' => 'http',
 				'port'   => preg_match('/osgrid\.org/', $login_uri) ? 80 : 8002,
@@ -92,9 +92,7 @@ class OpenSim {
 		$login_uri = $parts['scheme'] . '://' . $parts['host'] . ':' . $parts['port'];
 	
 		return $login_uri;
-	}
-
-    public static function parse_args( $args, $defaults ) {
+	}    public static function parse_args( $args, $defaults ) {
         if( empty( $defaults ) ) {
             $defaults = array();
         }
