@@ -123,7 +123,7 @@ function w4os_popular_places( $atts = array() ) {
 	if ( ! php_has('xmlrpc') ) {
 		return array();
 	}
-	$searchURL = get_option( 'w4os_search_url' );
+	$searchURL = helper_url( 'query.php' );
 	if ( empty( $searchURL ) ) {
 		return array();
 	}

@@ -6,10 +6,10 @@ function w4os_register_settings() {
 	// $check_login_uri = 'http://' . (!empty(get_option('w4os_login_uri'))) ? esc_attr(get_option('w4os_login_uri')) : 'http://localhost:8002';
 	$default_loginuri        = ( isset( $grid_info['login'] ) ) ? $grid_info['login'] : '';
 	$default_gridname        = ( isset( $grid_info['gridname'] ) ) ? $grid_info['gridname'] : '';
-	$default_search_url      = ( get_option( 'w4os_provide_search' ) ? str_replace( 'https:', 'http:', get_home_url() ) : 'http://2do.directory' ) . '/helpers/query.php';
-	$default_search_register = ( get_option( 'w4os_provide_search' ) ? str_replace( 'https:', 'http:', get_home_url() ) : 'http://2do.directory' ) . '/helpers/register.php';
+	$default_search_url      = search_url();
+	$default_search_register = helper_url('register.php');
 	$login_uri               = get_option( 'w4os_login_uri', 'yourgrid.org:8002' );
-	$gatekeeperURL           = preg_match( '#https?://#', $login_uri ) ? $login_uri : 'http://' . $login_uri;
+	$gatekeeperURL           = gatekeeper_url();
 
 	// if ( get_option( 'w4os_provide_search' ) || empty( get_option( 'w4os_search_url' ) ) ) {
 	// update_option( 'w4os_search_url', $default_search_url );

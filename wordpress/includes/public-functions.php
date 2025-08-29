@@ -3,6 +3,36 @@ if ( ! defined( 'W4OS_PLUGIN' ) ) {
 	die;
 }
 
+/**
+ * Generate helper URL with appropriate scheme (like home_url but for helpers)
+ * 
+ * @param string $path Optional path to append
+ * @param string $scheme Optional scheme (http/https/null for site default)
+ * @return string Helper URL with proper scheme
+ */
+function helper_url( $path = '', $scheme = null ) {
+	$helpers_slug = get_option( 'w4os_helpers_slug', 'helpers' );
+	$full_path = $helpers_slug . '/' . ltrim( $path, '/' );
+	return home_url( $full_path, $scheme );
+}
+
+/**
+ * Normalize Gatekeeper URL
+ */
+function gatekeeper_url() {
+	if(function_exists('ossearch_get_gatekeeperURL')) {
+		return ossearch_get_gatekeeperURL();
+	}
+
+	$login_uri = get_option( 'w4os_login_uri' );
+	if ( empty( $login_uri ) ) {
+		return '';
+	}
+	// The gatekeeper (login_uri) should always use http:// for OpenSim compatibility
+	$gatekeeper = preg_match( '#https?://#', $login_uri ) ? $login_uri : 'http://' . $login_uri;
+	return $gatekeeper;
+}
+
 function w4os_array2table( $array, $class = '', $level = 1 ) {
 	if ( empty( $array ) ) {
 		return;
@@ -195,7 +225,7 @@ function w4os_update_grid_info( $rechecknow = false ) {
 
 	$grid_info = (array) $xml;
 	if ( get_option( 'w4os_provide_search', false ) ) {
-		$grid_info['SearchURL'] = get_option( 'w4os_search_url' ) . '?gk=http://' . get_option( 'w4os_login_uri' );
+		$grid_info['SearchURL'] = search_url();
 	}
 
 	if ( 'provide' === get_option( 'w4os_profile_page' ) && empty( $grid_info['profile'] ) && defined( 'W4OS_PROFILE_URL' ) ) {
@@ -218,6 +248,32 @@ function w4os_update_grid_info( $rechecknow = false ) {
 	update_option( 'w4os_grid_info', json_encode( $grid_info ) );
 	return $grid_info;
 }
+
+
+/**
+ * Generate SearchURL with appropriate protocol
+ * 
+ * @return string Search URL with proper protocol
+ */
+function search_url() {
+	$login_uri = get_option( 'w4os_login_uri' );
+	
+	if ( empty( $login_uri ) ) {
+		return '';
+	}
+	
+	// Use helper_url to get the search URL with site's protocol
+	$search_url = helper_url( 'query.php' );
+	if(empty($search_url)) {
+		return '';
+	}
+
+	// The gatekeeper (login_uri) should always use http:// for OpenSim compatibility
+	$gatekeeper = gatekeeper_url();
+	
+	return $search_url . '?gk=' . $gatekeeper;
+}
+
 function w4os_settings_url( $page = 'w4os_settings' ) {
 	// get_admin_url( '', 'admin.php?page=' . $page ),
 	$url = esc_url(

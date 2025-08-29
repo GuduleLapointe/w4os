@@ -24,12 +24,12 @@ class W4OS_Search extends W4OS_Loader {
 
 	public function __construct() {
 		$this->login_uri               = get_option( 'w4os_login_uri', 'yourgrid.org:8002' );
-		$this->helpers_internal        = str_replace( 'https:', 'http:', get_home_url() ) . '/' . get_option( 'w4os_helpers_slug', 'helpers' ) . '/';
+		$this->helpers_internal        = helper_url();
 		$this->helpers_external        = 'http://2do.directory/helpers/';
 		$this->helpers                 = ( get_option( 'w4os_provide_search' ) ) ? $this->helpers_internal : $this->helpers_external;
 		$this->default_search_url      = $this->helpers . 'query.php';
 		$this->default_search_register = $this->helpers . 'register.php';
-		$this->gatekeeper              = preg_match( '#https?://#', $this->login_uri ) ? $this->login_uri : 'http://' . $this->login_uri;
+		$this->gatekeeper              = gatekeeper_url();
 	}
 
 	public function init() {

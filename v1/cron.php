@@ -29,8 +29,8 @@ function w4os_add_cron_intervals( $schedules ) {
 
 add_action( 'w4os_search_parser_cron', 'w4os_search_parser_exec', 10, 0 );
 function w4os_search_parser_exec( $args = array() ) {
-	$search = get_option( 'w4os_search_url' );
-	$parser = preg_replace( ':^//:', '/', dirname( $search ) . '/parser.php' );
+	$search = helper_url( 'query.php' );
+	$parser = helper_url( 'parser.php' );
 
 	$beta_options = w4os_get_option('beta', array());
 	$enable_self_signed = $beta_options['enable_self_signed'] ?? false;

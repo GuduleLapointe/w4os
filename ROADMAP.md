@@ -10,7 +10,11 @@
 
 - [ ] Cannot  confirm setup if port is not 3306 #88
 - [x] Registration and Avatar Models Not Working After Switching Robust #92
-- [ ] SearchURL use https if available #109
+- [x] SearchURL use https if available #109
+
+### Enhancements
+
+- [ ] Port W4OS_Search logic to search_url() function (check w4os_provide_search value to choose between internal/external helpers)
 
 ## v3.0 Foundation (0/9 issues)
 

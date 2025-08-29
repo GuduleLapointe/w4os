@@ -884,7 +884,8 @@ class W4OS3 {
 
 		$grid_info = (array) $xml;
 		if ( get_option( 'w4os_provide_search', false ) ) {
-			$grid_info['SearchURL'] = get_option( 'w4os_search_url' ) . '?gk=http://' . get_option( 'w4os_login_uri' );
+			$grid_info['SearchURL'] = search_url();
+			// $grid_info['SearchURL'] = get_option( 'w4os_search_url' ) . '?gk=http://' . get_option( 'w4os_login_uri' );
 		}
 
 		if ( 'provide' === get_option( 'w4os_profile_page' ) && empty( $grid_info['profile'] ) && defined( 'W4OS_PROFILE_URL' ) ) {
@@ -1058,6 +1059,5 @@ if (is_admin()) {
 	// require_once W4OS_PLUGIN_DIR . 'wordpress/includes/w4os-migration-v2to3.php';
 	// require_once W4OS_PLUGIN_DIR . 'wordpress/classes/class-w4os3-migration-2to3.php';
 }
-
 
 W4OS3::init();

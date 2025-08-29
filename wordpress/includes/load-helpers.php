@@ -93,14 +93,14 @@ if ( get_option( 'w4os_provide_offline_messages' ) == true & ! empty( $grid_info
 }
 
 if ( get_option( 'w4os_provide_search' ) == true ) {
-	if ( ! empty( get_option( 'w4os_search_url' ) ) ) {
-		$search = parse_url( get_option( 'w4os_search_url' ) )['path'];
+	if ( ! empty( helper_url( 'query.php' ) ) ) {
+		$search = parse_url( helper_url( 'query.php' ) )['path'];
 		if ( preg_match( ":^$search/:", "$url/" ) ) {
 			// error_log("search $search");
 			require $helpers_dir . 'query.php';
 			die();
 		}
-		$parser = preg_replace( ':^//:', '/', dirname( $search ) . '/parser.php' );
+		$parser = parse_url( helper_url( 'parser.php' ) )['path'];
 		if ( preg_match( ":^$parser/:", "$url/" ) ) {
 			require $helpers_dir . 'parser.php';
 			die();
@@ -115,8 +115,8 @@ if ( get_option( 'w4os_provide_search' ) == true ) {
 		}
 	}
 
-	if ( ! empty( get_option( 'w4os_search_register' ) ) ) {
-		$register = parse_url( get_option( 'w4os_search_register' ) )['path'];
+	if ( ! empty( helper_url( 'register.php' ) ) ) {
+		$register = parse_url( helper_url( 'register.php' ) )['path'];
 		if ( preg_match( ":^$register:", "$url/" ) ) {
 			require $helpers_dir . 'register.php';
 			die();
