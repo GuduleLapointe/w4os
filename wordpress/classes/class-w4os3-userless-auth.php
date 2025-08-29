@@ -115,11 +115,11 @@ class W4OS3_Userless_Auth {
                     ' . wp_nonce_field('login_action') . '
                     <p class="login-firstname">
                         <label for="first_name">First Name:</label>
-                        <input type="text" name="first_name" value="John" required>
+                        <input type="text" name="first_name" value="John" required pattern="[A-Za-z][A-Za-z0-9]*" title="First name must start with a letter and contain only letters and numbers" maxlength="32">
                     </p>
                     <p class="login-lastname">
                         <label for="last_name">Last Name:</label>
-                        <input type="text" name="last_name" value="Doe" class="input" required>
+                        <input type="text" name="last_name" value="Doe" class="input" required pattern="[A-Za-z][A-Za-z0-9]*" title="Last name must start with a letter and contain only letters and numbers" maxlength="32">
                     </p>
                     <p class="login-password">
                         <label for="password">Password:</label>
@@ -128,7 +128,8 @@ class W4OS3_Userless_Auth {
                     <p>
                         <button type="submit" name="submit">Login</button>
                     <p>
-                </form>';
+                </form>
+                <script src="' . W4OS_PLUGIN_DIR_URL . 'assets/js/avatar-name-validation.js"></script>';
     }
 
     private function login() {
