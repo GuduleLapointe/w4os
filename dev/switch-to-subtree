@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -e
+
+# Remove opensim-rest submodule from engine
+cd helpers/engine
+git submodule deinit opensim-rest
+git rm opensim-rest
+rm -rf .git/modules/opensim-rest
+
+# Add as subtree
+git subtree add --prefix=opensim-rest https://github.com/GuduleLapointe/opensim-rest-php master --squash
+
+# Commit and push the engine repo changes
+git add .
+git commit -m "Convert opensim-rest from submodule to subtree"
+git push
+cd ../..
+
+# Update the engine submodule to get the subtree conversion
+git submodule update --remote helpers/engine
+
+# Remove engine submodule from helpers
+cd helpers
+git submodule deinit engine
+git rm engine
+rm -rf .git/modules/engine
+
+# Add as subtree (this will include the opensim-rest subtree)
+git subtree add --prefix=engine https://github.com/GuduleLapointe/opensim-engine master --squash
+
+# Commit and push helpers repo changes
+git add .
+git commit -m "Convert engine from submodule to subtree"
+git push
+cd ..
+
+# Remove helpers submodule
+git submodule deinit helpers
+git rm helpers
+rm -rf .git/modules/helpers
+
+# Add as subtree (includes entire nested structure)
+git subtree add --prefix=helpers https://github.com/GuduleLapointe/opensim-helpers master --squash
