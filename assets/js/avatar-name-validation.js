@@ -32,8 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Validate and clean avatar name part (firstname or lastname)
+     * This function must follow EXACTLY the same logic as PHP w4os_validate_name_part()
+     * 
+     * @param string value The name part to validate
+     * @return string The cleaned/validated name part
      */
     function validateNamePart(value) {
+        const original = value;
+        
         // Remove accents
         let cleaned = removeAccents(value);
         
@@ -42,12 +48,19 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Ensure first character is a letter
         if (cleaned.length > 0 && /[0-9]/.test(cleaned.charAt(0))) {
-            cleaned = cleaned.substring(1);
+            cleaned = cleaned.replace(/^[0-9]+/, '');
         }
         
-        // Capitalize first letter
+        // Fix capitalization only if all caps or all lowercase
         if (cleaned.length > 0) {
-            cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+            if (cleaned === cleaned.toUpperCase()) {
+                // All uppercase -> fix to proper case
+                cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1).toLowerCase();
+            } else if (cleaned === cleaned.toLowerCase()) {
+                // All lowercase -> capitalize first letter
+                cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+            }
+            // Otherwise leave mixed case as-is (DeVito, McAfee, etc.)
         }
         
         return cleaned;
@@ -159,18 +172,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update field if it was changed
                 if (value !== original) {
                     e.target.value = value;
-                    if (original !== value && original.length > 0) {
+                    if (original.length > 0) {
                         showFeedback(input, 'Converted to valid characters', true);
                     }
                 }
                 
                 // Validate
-                if (value.length === 0) {
-                    showFeedback(input, '', true);
-                } else if (validatePattern(value)) {
-                    showFeedback(input, '✓ Valid name format', true);
+                if (validatePattern(value)) {
+                    showFeedback(input, null, true);
                 } else {
-                    showFeedback(input, 'Must start with a letter and contain only letters and numbers', false);
+                    showFeedback(input, 'Names must start with a letter and contain only letters and numbers', false);
                 }
             });
         }

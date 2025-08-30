@@ -323,8 +323,11 @@ function w4os_own_profile_update( $user_id, $old_user_data ) {
 	if ( ! W4OS_DB_CONNECTED ) {
 		return;
 	}
+	if ( ! isset( $_REQUEST['pass1'] ) || empty( $_REQUEST['pass1'] ) ) {
+		return;
+	}
 	if ( $_REQUEST['pass1'] == $_REQUEST['pass2'] ) {
-		w4os_set_avatar_password( $user_id, $_REQUEST['pass1'] );
+		w4os_set_avatar_password( $user_id, $_REQUEST['pass1']);
 	}
 }
 add_action( 'profile_update', 'w4os_own_profile_update', 10, 2 );
@@ -416,6 +419,54 @@ function w4os_update_avatar( $user, $params ) {
 	return $uuid;
 }
 
+/**
+ * Validate and clean avatar name part (firstname or lastname)
+ * This function must follow EXACTLY the same logic as JavaScript validateNamePart()
+ * 
+ * @param string $value The name part to validate
+ * @return string The cleaned/validated name part
+ */
+function w4os_validate_name_part( $value ) {
+	$original = $value;
+	
+	// Remove accents
+	$cleaned = remove_accents( $value );
+	
+	// Remove invalid characters (keep only letters and numbers)
+	$cleaned = preg_replace( '/[^A-Za-z0-9]/', '', $cleaned );
+	
+	// Ensure first character is a letter
+	if ( strlen( $cleaned ) > 0 && is_numeric( $cleaned[0] ) ) {
+		$cleaned = ltrim( $cleaned, '0123456789' );
+	}
+	
+	// Fix capitalization only if all caps or all lowercase
+	if ( strlen( $cleaned ) > 0 ) {
+		if ( $cleaned === strtoupper( $cleaned ) ) {
+			// All uppercase -> fix to proper case
+			$cleaned = ucfirst( strtolower( $cleaned ) );
+		} elseif ( $cleaned === strtolower( $cleaned ) ) {
+			// All lowercase -> capitalize first letter
+			$cleaned = ucfirst( $cleaned );
+		}
+		// Otherwise leave mixed case as-is (DeVito, McAfee, etc.)
+	}
+	
+	// Show notification if there was a change (store as transient)
+	if ( strtolower( $original ) !== strtolower( $cleaned ) ) {
+		w4os_user_notice( 
+			sprintf( 
+				__( 'Name part converted from "%s" to "%s" (removed invalid characters)', 'w4os' ),
+				$original,
+				$cleaned
+			),
+			'info' 
+		);
+	}
+	
+	return $cleaned;
+}
+
 function w4os_create_avatar( $user, $params ) {
 	if ( ! W4OS_DB_CONNECTED ) {
 		return;
@@ -437,45 +488,9 @@ function w4os_create_avatar( $user, $params ) {
 	$model     = trim( ( $params['w4os_model'] ?? '' ) );
 	$password  = stripcslashes( $params['w4os_password_1'] );
 
-	// Sanitize names: remove accents and non-alphanumeric characters
-	$firstname_original = $firstname;
-	$lastname_original = $lastname;
-	
-	$firstname = remove_accents( $firstname );
-	$lastname = remove_accents( $lastname );
-	
-	$firstname = preg_replace( '/[^A-Za-z0-9]/', '', $firstname );
-	$lastname = preg_replace( '/[^A-Za-z0-9]/', '', $lastname );
-	
-	// Ensure names start with a letter
-	if ( strlen( $firstname ) > 0 && is_numeric( $firstname[0] ) ) {
-		$firstname = ltrim( $firstname, '0123456789' );
-	}
-	if ( strlen( $lastname ) > 0 && is_numeric( $lastname[0] ) ) {
-		$lastname = ltrim( $lastname, '0123456789' );
-	}
-	
-	// Capitalize first letter
-	if ( strlen( $firstname ) > 0 ) {
-		$firstname = ucfirst( strtolower( $firstname ) );
-	}
-	if ( strlen( $lastname ) > 0 ) {
-		$lastname = ucfirst( strtolower( $lastname ) );
-	}
-	
-	// Show info message if names were converted
-	if ( $firstname_original !== $firstname && ! empty( $firstname_original ) ) {
-		w4os_user_notice( 
-			sprintf( __( 'First name converted from "%s" to "%s" (removed invalid characters)', 'w4os' ), $firstname_original, $firstname ), 
-			'info' 
-		);
-	}
-	if ( $lastname_original !== $lastname && ! empty( $lastname_original ) ) {
-		w4os_user_notice( 
-			sprintf( __( 'Last name converted from "%s" to "%s" (removed invalid characters)', 'w4os' ), $lastname_original, $lastname ), 
-			'info' 
-		);
-	}
+	// Validate and clean names using the global function
+	$firstname = w4os_validate_name_part( $firstname );
+	$lastname = w4os_validate_name_part( $lastname );
 
 	if ( empty( $model ) ) {
 		$model = W4OS_DEFAULT_AVATAR;
@@ -775,6 +790,17 @@ function w4os_create_avatar( $user, $params ) {
 	w4os_user_notice( W4OS::sprintf_safe( __( 'Avatar %s created successfully.', 'w4os' ), "$firstname $lastname" ), 'success' );
 
 	$check_uuid = w4os_profile_sync( $user ); // refresh opensim data for this user
+	
+	// Redirect after avatar creation to prevent form resubmission
+	if ( isset( $_POST['w4os_update_avatar'] ) ) {
+		// Redirect to clean profile page without any parameters
+		$profile_slug = get_option( 'w4os_profile_slug', 'profile' );
+		$redirect_url = home_url( '/' . $profile_slug . '/' );
+		
+		wp_redirect( $redirect_url );
+		exit;
+	}
+	
 	return $newavatar_uuid;
 }
 
@@ -790,18 +816,6 @@ function w4os_avatar_creation_form( $user ) {
 		return;
 	}
 
-	if ( isset( $_POST['w4os_update_avatar'] ) && isset( $_POST['user_id'] ) ) {
-		// Verify nonce
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'w4os_create_avatar' ) ) {
-			w4os_user_notice( __( 'Security check failed', 'w4os' ), 'fail' );
-			return false;
-			// return w4os_avatar_update_error( __( 'Security check failed', 'w4os' ), 'fail' );
-			// wp_die( 'Security check' );
-		}
-		w4os_profile_fields_save( $_POST['user_id'] );
-		wp_redirect( home_url( $_SERVER['REQUEST_URI'] ) );
-		die( 'Redirecting...' );
-	}
 
 	global $w4osdb;
 

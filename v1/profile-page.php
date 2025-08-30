@@ -31,6 +31,25 @@ if ( ! W4OS_ENABLE_V3 ) {
 	}
 }
 
+// Handle avatar creation form submission regardless of V3 status
+add_action( 'wp_loaded', function() {
+	if ( isset( $_REQUEST['w4os_update_avatar'] ) && isset( $_REQUEST['user_id'] ) ) {
+		$user = get_user_by( 'ID', $_REQUEST['user_id'] );
+		if ( $user ) {
+			w4os_update_avatar(
+				$user,
+				array(
+					'action'          => sanitize_text_field( $_REQUEST['action'] ?? 'update_avatar' ),
+					'w4os_firstname'  => sanitize_text_field( $_REQUEST['w4os_firstname'] ),
+					'w4os_lastname'   => sanitize_text_field( $_REQUEST['w4os_lastname'] ),
+					'w4os_model'      => sanitize_text_field( $_REQUEST['w4os_model'] ?? '' ),
+					'w4os_password_1' => $_REQUEST['w4os_password_1'],
+				)
+			);
+		}
+	}
+});
+
 function w4os_get_user_by_avatar_name( $firstname = '', $lastname = '' ) {
 	if ( W4OS_ENABLE_V3 ) {
 		$avatar = new W4OS3_Avatar( "$firstname.$lastname" );
@@ -168,7 +187,7 @@ add_filter(
 		}
 
 		if ( $error ) {
-			w4os_notice( $error, $class );
+			w4os_notice( $error, $class ?? 'fail' );
 		} else {
 			w4os_notice( join( ', ', $err_codes ) );
 		}
@@ -196,20 +215,6 @@ add_action(
 			return $template;
 		}
 		// echo "post_name " . $wp_query->queried_object->post_name;
-		if ( isset( $_REQUEST['w4os_update_avatar'] ) ) {
-			error_log('DEBUG request: ' . print_r($_REQUEST, true));
-			$user = get_user_by( 'ID', $_REQUEST['user_id'] );
-			$uuid = w4os_update_avatar(
-				$user,
-				array(
-					'action'          => sanitize_text_field( $_REQUEST['action'] ),
-					'w4os_firstname'  => sanitize_text_field( $_REQUEST['w4os_firstname'] ),
-					'w4os_lastname'   => sanitize_text_field( $_REQUEST['w4os_lastname'] ),
-					'w4os_model'      => sanitize_text_field( $_REQUEST['w4os_model'] ),
-					'w4os_password_1' => $_REQUEST['w4os_password_1'],
-				)
-			);
-		}
 
 		$query_firstname = get_query_var( 'profile_firstname' );
 		$query_lastname  = get_query_var( 'profile_lastname' );

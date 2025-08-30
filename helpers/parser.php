@@ -20,6 +20,11 @@
  *   [OpenSimSearch](https://github.com/kcozens/OpenSimSearch)
  **/
 
+if(!file_exists('includes/config.php')) {
+	## DEBUG: die silently, we should probably error log this
+	die();
+}
+
 require_once 'includes/config.php';
 require_once 'includes/search.php';
 dontWait();
