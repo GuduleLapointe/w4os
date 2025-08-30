@@ -1,6 +1,3 @@
 [submodule "dev/grunt-wp-plugin-tasks"]
-	path = dev/grunt-wp-plugin-tasks
-	url = https://github.com/magicoli/grunt-wp-plugin-tasks
-[submodule "dev/opensim-debian"]
-	path = dev/opensim-debian
-	url = https://github.com/GuduleLapointe/opensim-debian.git
+        path = dev/grunt-wp-plugin-tasks
+        url = https://github.com/magicoli/grunt-wp-plugin-tasks
