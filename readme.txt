@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.8.2
-Stable tag: 2.9.4
+Stable tag: 2.10.0-beta-2
 License: AGPLv3 or later
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -21,7 +21,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 
 = Features =
 
-* **Avatar creation**:
+- **Avatar creation**:
   - Opensimulator section in standard wp account page
   - Avatar tab in account dashboard on WooCommerce websites
   - Avatar and website passwords are synchronized
@@ -29,29 +29,29 @@ See Features and Roadmap sections for current and upcoming functionalties.
   - **Public avatar profile**: excerpt of the avatar's profile
   - **Avatar Models**: default outfits to choose from on registration
   - **Reserved names**: avatar whose first name or last name is "Default", "Test", "Admin" or the pattern used for appearance models are disallowed for public (such avatars must be created by admins from Robust console)
-* **Search Engine**: enable in-world search
+- **Search Engine**: enable in-world search
   - **places**
   - **land for sale**
   - **classifieds**
   - **events** (2do.directory integration)
-* Shortcodes
+- Shortcodes
   - **Grid info**: `[grid-info]` shortcode, Gutenberg block and Divi module
   - **Grid status**: `[grid-status]` shortcode, Gutenberg block and Divi module
   - **Grid status**: `[popular-places]` shortcode, Gutenberg block and Divi module
   - **Profile page**: `[avatar-profile]`  shortcode, Gutenberg block and Divi module
-* **Web assets server**: the needed bridge to display in-world images on a website
-* **Currency helpers**: integration with Podex, Gloebit and core money module
-* **Offline messages e-mail forwarding**
-* Manual and cron Grid/WP users sync
-* Auth with avatar credentials (if no matching wp account, create one)
+- **Web assets server**: the needed bridge to display in-world images on a website
+- **Currency helpers**: integration with Podex, Gloebit and core money module
+- **Offline messages e-mail forwarding**
+- Manual and cron Grid/WP users sync
+- Auth with avatar credentials (if no matching wp account, create one)
 
 = v3 Preview features =
 
 Some v3 features are already available, but still in testing. So they are not included
 in the WordPress directory release. To try the new features, you must:
-* Download the latest release from https://github.com/GuduleLapointe/w4os/releases
-* Check "Enable v3 Betat Features" in Admin > OpenSimulator > Settings
-* A couple of new menus will appear, including Settings, Avatars and Flux
+- Download the latest release from https://github.com/GuduleLapointe/w4os/releases
+- Check "Enable v3 Betat Features" in Admin > OpenSimulator > Settings
+- A couple of new menus will appear, including Settings, Avatars and Flux
 
 Be careful, do not enable beta in a production environment.
 And please give us feedback for everything going well or bad.
@@ -66,18 +66,18 @@ See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) fo
 
 = Medium term =
 
-* [x] Destinations guide
-* [x] Web search
-* [-] Multiple avatars for same WordPress user (v3)
-* Improve avatar profile
+- [x] Destinations guide
+- [x] Web search
+- [-] Multiple avatars for same WordPress user (v3)
+- Improve avatar profile
   - Switch to allow web profile
   [x]  Better basic layout
   - Web edit profile
-* 2do HYPEvents project integration <https://2do.pm>
-* Gudz Teleport Board project integration (based on user picks)
+- 2do HYPEvents project integration <https://2do.pm>
+- Gudz Teleport Board project integration (based on user picks)
 [-] Admin Use sim/grid configuration file to fetch settings if on the same host (v3)
-* Admin create users
-* Admin create models (from current own avatar appearance)
+- Admin create users
+- Admin create models (from current own avatar appearance)
 
 = Long term =
 
@@ -85,12 +85,12 @@ See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) fo
   - Admin Start / Stop regions
   - Admin Create region
   - User's own regions control (create, start, stop, backup)
-* WooCommerce integration
+- WooCommerce integration
   - paid accounts
   - regions orders
   - other pay-for services
-* Deactivate (recommended) or delete (experimental) grid user when deleting wp account
-* Split code between OpenSimulator and WordPress specific codes
+- Deactivate (recommended) or delete (experimental) grid user when deleting wp account
+- Split code between OpenSimulator and WordPress specific codes
 
 
 == Screenshots ==
@@ -105,25 +105,25 @@ See [github.com/GuduleLapointe/w4os](https://github.com/GuduleLapointe/w4os/) fo
 
 = Requirements =
 
-* OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
-* Latest WordPdress release
-* PHP 7.3 or later, and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
+- OpenSimulator 0.9.x (0.9.2.2 recommended). 0.8.x and earlier version might work and used to, but are definitely not supported anymore
+- Latest WordPdress release
+- PHP 7.3 or later, and the PHP extensions recommended by WordPress (particularly xmlrpc, curl and ImageMagick )
 
 = OpenSimulator installation =
 
 Please check [OpenSimulator](https://opensimulator.org/) documentation to install and configure your simulator.
 
-* Choose MySQL storage
-* To allow default outfits on registration and web user profiles, you must enable user profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and [UserProfiles] sections)
-* Start  the simulator, create the first (admin) avatar and a first region, and connect in-world to make sure the grid is working properly
+- Choose MySQL storage
+- To allow default outfits on registration and web user profiles, you must enable user profiles in Robust.HG.ini (update [UserProfilesService], [ServiceList] and [UserProfiles] sections)
+- Start  the simulator, create the first (admin) avatar and a first region, and connect in-world to make sure the grid is working properly
 
 = WordPress installation =
 
 Please check the [WordPress documentation](https://wordpress.org/) for detailed instructions on installing and configuring WordPress.
 
-* Permalinks must be enabled (choose any option other than the default "Plain" setting).
-* PHP minimum version: 7.3.
-* The PHP modules `curl`, `xml`, `xml-rpc`, and `imagick` are required for full functionality of the plugin (and are also recommended for WordPress). Without these modules, some important features will not be available.
+- Permalinks must be enabled (choose any option other than the default "Plain" setting).
+- PHP minimum version: 7.3.
+- The PHP modules `curl`, `xml`, `xml-rpc`, and `imagick` are required for full functionality of the plugin (and are also recommended for WordPress). Without these modules, some important features will not be available.
 
 = Plugin Installation and Configuration =
 
@@ -139,7 +139,7 @@ Please check the [WordPress documentation](https://wordpress.org/) for detailed 
 4. Visit `OpenSimulator > Settings > Web assets server` and ensure the option is enabled. (If you have a third-party web assets server running, you can disable this option and enter its full URL below.)
 5. You should now be able to register a new avatar from the website. Customize your site with shortcodes or blocks, such as Grid Info, Grid Status, or Popular Places (see the complete list and descriptions in `OpenSimulator > Settings > Shortcodes`).
 
-* *Some plugin features require updating corresponding parameters in OpenSimulator itself. These options are documented in the interface. Adjust the INI files accordingly and restart OpenSimulator for any changes to take effect.*
+- *Some plugin features require updating corresponding parameters in OpenSimulator itself. These options are documented in the interface. Adjust the INI files accordingly and restart OpenSimulator for any changes to take effect.*
 
 = Avatar models =
 
@@ -147,8 +147,8 @@ Models are displayed on new avatar registration form, to allow chosing an initia
 
 Model avatars can only be used for this purpose. **Under no circumstances** should an avatar belonging to a user be used as a model.
 
-* Visit `OpenSimulator > Settings > Avatar Models` and confirm or customize the naming structure for your models. It will be use to select automatically avatars to display as models in registration form
-* From robust console, create a user named according to these settings (for example, "Female Default", Default John", ...).
+- Visit `OpenSimulator > Settings > Avatar Models` and confirm or customize the naming structure for your models. It will be use to select automatically avatars to display as models in registration form
+- From robust console, create a user named according to these settings (for example, "Female Default", Default John", ...).
     ```
     R.O.B.U.S.T. # create user Default John
     Password: ************************ (use a strong password)
@@ -162,7 +162,7 @@ Model avatars can only be used for this purpose. **Under no circumstances** shou
   - The rest of the name will be displayed in the form, so make it relevant
   - You can leave Email and User ID blank
   - **Leave Model Name blank** (you are creating a model, not using an existing model to create a user)
-* Connect in-world as each avatar and change outfit
+- Connect in-world as each avatar and change outfit
   - Any worn clothing or attachment will be passed to the new avatars. Be sure to wear only transfer/copy items
   - Take a snapshot to set model avatar profile picture
   - Disconnect the model avatar after modifications, to make sure changes will be taken in account immediately
@@ -225,338 +225,363 @@ or not. In either case, idk&idc.
 
 == Changelog ==
 
-= Unreleased (2.10.0-beta-2 =
-* new Avatar menu, in classic menu and as block for WordPress Gutenberg editor
+= 2.10.0-beta-2 (2025-08-30) =
+
+⚠️ This is a **beta release**. Please backup both your WordPress website and OpenSimulator databases before updating. Test thoroughly in a development environment first.
+
+**Major New Features:**
+- new Avatar menu, in classic menu and as block for WordPress Gutenberg editor
   - login and register for anonymous users
   - avatar profile, account settings and logout for logged-in users
-* new Flux feature: enables activity stream in OpenSim viewer and on web profile page
-* new Enhanced user menu system with registration page integration
-* new Textgen helper script (create dynamic texture from url)
-* enhancement Grid_info() method also get foreign grid info
-* fix PHP fatal error (wp-load.php missing in release)
-* fix Home page empty in some setups
-* fix Default model not applied on avatar creation
-* fix Some grid uri not properly sanitized
-* fix Logout url broken for standard users
-* fix Usermenu regressions introduced with classic menus
-* translation Updated translations for multiple languages
-* translation Fix "Register" button translation issues
-* (dev) Comprehensive modular testing framework with WordPress and OpenSimulator environment validation
-* (dev) Convert helpers from submodule to subtree for better maintenance
-* (dev) Added modular test structure with environment validation
-* (dev) Executable test runner with guaranteed execution order
-* (dev) Update DEVELOPERS.md (add instructions to properly setup submodules)
-* (dev) Userless authentication foundation (proof of concept)
+- new Flux feature: enables activity stream in OpenSim viewer and on web profile page
+- new Enhanced user menu system with registration page integration
+- new Textgen helper script (create dynamic texture from url)
+
+**Important Bug Fixes:**
+- fix SearchURL to use HTTPS when available (#109)
+- fix avatar name validation and character conversion (#112)  
+- fix avatar creation redirect and page loading issues (#114)
+- fix PHP fatal error (wp-load.php missing in release)
+- fix Home page empty in some setups
+- fix Default model not applied on avatar creation
+- fix Some grid uri not properly sanitized
+- fix Logout url broken for standard users
+- fix Usermenu regressions introduced with classic menus
+
+**Enhancements:**
+- enhancement Grid_info() method also get foreign grid info
+- enhancement name validation preserves mixed case (DeVito, McAfee)
+- enhancement validation consistency between frontend and backend
+- enhancement Better user feedback during avatar creation process
+
+**Translation Updates:**
+- translation Updated translations for multiple languages
+- translation Fix "Register" button translation issues
+
+**Development & Testing:**
+- (dev) Comprehensive modular testing framework with WordPress and OpenSimulator environment validation
+- (dev) Convert helpers from submodule to subtree for better maintenance
+- (dev) Added modular test structure with environment validation
+- (dev) Executable test runner with guaranteed execution order
+- (dev) Update DEVELOPERS.md (add instructions to properly setup submodules)
+- (dev) Userless authentication foundation (proof of concept)
+
+**V3 Beta Features:**
+- enhancement better flux single post and archive display
+- flux author column after title
+- fix profile tabs empty (regression interoduced in 796a1c2f)
+
+*Thanks to [@mteedev](https://github.com/mteedev) for detailed bug reports.*
 
 = 2.9.4 =
-* fix avatar mini profile block crashing
-* fix all menu titles replaced in some themes on profile page
+- fix avatar mini profile block crashing
+- fix all menu titles replaced in some themes on profile page
 
 v3 beta features
-* enhancement better flux single post and archive display
-* flux author column after title
-* fix profile tabs empty (regression interoduced in 796a1c2f)
+- enhancement better flux single post and archive display
+- flux author column after title
+- fix profile tabs empty (regression interoduced in 796a1c2f)
 
 = 2.9.3 =
-* fix profile not displayed in block (regression)
-* fix profile custom template not always working
-* fix arrays passed as if they were strings in w4os_array2table
-* fix crash on wp core profile save
+- fix profile not displayed in block (regression)
+- fix profile custom template not always working
+- fix arrays passed as if they were strings in w4os_array2table
+- fix crash on wp core profile save
 
 v3 beta features
-* new activity feed, allow avatars to post statuses on their profile page
-* new profile page, including tabs and activity feed
-* new in-world feed profile tab
-* handles GridInfoService web_profile_url (with ?name= argument)
+- new activity feed, allow avatars to post statuses on their profile page
+- new profile page, including tabs and activity feed
+- new in-world feed profile tab
+- handles GridInfoService web_profile_url (with ?name= argument)
 
 = 2.9.1 =
-* fix admin header shown in SL viewer embed and modal
-* fix permissions issues with $option_group
-* fix crash if W4OS_NULL_KEY is called too early
-* fix hop teleport links
+- fix admin header shown in SL viewer embed and modal
+- fix permissions issues with $option_group
+- fix crash if W4OS_NULL_KEY is called too early
+- fix hop teleport links
 
 v3 beta features (available from github or w4os website releases):
-* new Connections settings page
-* new encrypt simulators credentials
-* enhanced Avatars list with modal profile preview
-* enhanced fetch database credentials from console if console is enabled
-* enhanced fetch ini config from console if available
-* enhanced settings API
+- new Connections settings page
+- new encrypt simulators credentials
+- enhanced Avatars list with modal profile preview
+- enhanced fetch database credentials from console if console is enabled
+- enhanced fetch ini config from console if available
+- enhanced settings API
 
 = 2.9.0 =
-* fix crash on fresh install caused by calls to opensim db while it is not yet configured
-* fix avatar-profile shortcode crashing php on fresh install
-* fix avatar registration fail on other pages than canonical profile (issue #72)
-* fix password verification on profile avatar registration form
-* fix user notices not displayed on profile page
-* fix avatar registration form layout
-* fix requirements alert shown only on w4os status page
-* fix minor PHP warnings on fresh install
-* don't load templates.php for feeds and admin pages (fix #52)
+- fix crash on fresh install caused by calls to opensim db while it is not yet configured
+- fix avatar-profile shortcode crashing php on fresh install
+- fix avatar registration fail on other pages than canonical profile (issue #72)
+- fix password verification on profile avatar registration form
+- fix user notices not displayed on profile page
+- fix avatar registration form layout
+- fix requirements alert shown only on w4os status page
+- fix minor PHP warnings on fresh install
+- don't load templates.php for feeds and admin pages (fix #52)
 
 Transitional release, progressively integrate upcoming v3 features as beta
 Do not enabe v3 beta features in production environment
 
 v3 beta features (available from github or w4os website releases):
-* option in classic settings to enable v3 beta features
-* new v3 settings page (limited, main options still in classic settings page)
-* new v3 avatars admin page, including
+- option in classic settings to enable v3 beta features
+- new v3 settings page (limited, main options still in classic settings page)
+- new v3 avatars admin page, including
   - avatar list: sortable, filterable, searchable
   - avatar settings (placeholder, not implemented)
   - avatar model settings, replacing classic avatar models settings page
-* new v3 regions admin page, including
+- new v3 regions admin page, including
   - region list: sortable, filterable, searchable
   - region settings (placeholder, not implemented)
-* ensure backwards compatibility if v3 features are not enabled
+- ensure backwards compatibility if v3 features are not enabled
 
 = 2.8 =
-* fix database credential not shown in settings
-* fix PHP Fatal error:  Uncaught Error: Call to undefined method MetaBoxSupportArr::to_depth (updated metabox dependencies)
-* Tested up to 6.7-RC1
+- fix database credential not shown in settings
+- fix PHP Fatal error:  Uncaught Error: Call to undefined method MetaBoxSupportArr::to_depth (updated metabox dependencies)
+- Tested up to 6.7-RC1
 
 = 2.7.9 =
-* updated Economy settings instructions
-* fix Offline Message url instructions for Robust (we used 'message' variable, which Firestorm Viewer seems to use for another purpose)
-* offline message : move sender info after the message for better display in mailbox list
+- updated Economy settings instructions
+- fix Offline Message url instructions for Robust (we used 'message' variable, which Firestorm Viewer seems to use for another purpose)
+- offline message : move sender info after the message for better display in mailbox list
 
 = 2.7.8 =
-* fix scheduled jobs list growing indefinitely
-* fix w4os_get_urls_statuses and w4os_sync_users scheduled action failng (not properly registered)
-* fix empty content passed to ImageMagic
-* fix PHP Fatal error  Zero size image string passed to Imagick
-* fix deprecation warnings Optional parameter  declared before required parameter
+- fix scheduled jobs list growing indefinitely
+- fix w4os_get_urls_statuses and w4os_sync_users scheduled action failng (not properly registered)
+- fix empty content passed to ImageMagic
+- fix PHP Fatal error  Zero size image string passed to Imagick
+- fix deprecation warnings Optional parameter  declared before required parameter
 
 = 2.7.7 =
-* Tested up to WP 6.6.1 (fix #78)
-* don't process template content if original language page is not found
-* minor dev changes
+- Tested up to WP 6.6.1 (fix #78)
+- don't process template content if original language page is not found
+- minor dev changes
 
 = 2.7.6 =
-* fix eventsparser crashing (undefined varfiable $array)
-* (dev) get helpers as submodule instead of composer dependency
+- fix eventsparser crashing (undefined varfiable $array)
+- (dev) get helpers as submodule instead of composer dependency
 
 = 2.7.5 =
-* tested up to WP 6.5
+- tested up to WP 6.5
 
 = 2.7.3 =
-* updated INSTALLATION.md, link to githup pages in README
-* updated libraries
+- updated INSTALLATION.md, link to githup pages in README
+- updated libraries
 
 = 2.7.2 =
-* added permalink option for helpers slug
+- added permalink option for helpers slug
 
 = 2.7.1 =
-* added clearer instructions for missing requirements on status page
-* fix web search output unnecessary closing tag
+- added clearer instructions for missing requirements on status page
+- fix web search output unnecessary closing tag
 
 = 2.7 =
-* new web search block (experimental)
-* new destinations guide (experimental)
-* added bases for localization
-* added helpers/guide.php
-* fix avatar creation form not displayed for new accounts
-* search settings: only show the applicable SearchURL to avoid confusions
-* use dialog modal box for avatar creation form when form container is too small
+- new web search block (experimental)
+- new destinations guide (experimental)
+- added bases for localization
+- added helpers/guide.php
+- fix avatar creation form not displayed for new accounts
+- search settings: only show the applicable SearchURL to avoid confusions
+- use dialog modal box for avatar creation form when form container is too small
 
 = 2.6.4 =
-* fix W4OS_DIR not defined when database is not configured
+- fix W4OS_DIR not defined when database is not configured
 
 = 2.6.3 =
-* Not stable: bugs introduced in this version were fixed in 2.6.4
-* fix regression in 41dfe8e 2.6.2 (some admin menus missing)
-* fixed profile displayed twice when profile page is personalized with Divi Builder
+- Not stable: bugs introduced in this version were fixed in 2.6.4
+- fix regression in 41dfe8e 2.6.2 (some admin menus missing)
+- fixed profile displayed twice when profile page is personalized with Divi Builder
 
 = 2.6.2 =
-* Not stable: bugs introduced in this version were fixed in 2.6.4
-* added terms of service checkbox
+- Not stable: bugs introduced in this version were fixed in 2.6.4
+- added terms of service checkbox
 
 = 2.6.0 =
-* prevent fatal errors with wrongly formatted translations or any other sprintf() error
-* added support for WPML and Polylang (other translation plugin don't need it)
-* added Italian and Portuguese translations (to already present French, Dutch, German and Welsh)
-* added admin bar menu
-* Popular Places block displays now only local results and exclude land for sale by default, added options to override
-* helpers: show only local results in popular places
+- prevent fatal errors with wrongly formatted translations or any other sprintf() error
+- added support for WPML and Polylang (other translation plugin don't need it)
+- added Italian and Portuguese translations (to already present French, Dutch, German and Welsh)
+- added admin bar menu
+- Popular Places block displays now only local results and exclude land for sale by default, added options to override
+- helpers: show only local results in popular places
 
 = 2.5 =
 
 Stable release, includes updates from 2.4.2 to 2.4.7, mainly:
-* optimized Grid Status, Grid Info, Popular Places and Avatar Profile Gutenberg block
-* added "mini profile" option to avatar profile
-* added Divi modules for Grid Status, Grid Info, Popular Places and Avatar Profile
-* added option to define avatar models by a custom list in addition to name rules
-* added Gloebit configuration instructions
-* reorganized settings in several page
-* fix potential crash due to incorrectly formatted translations
-* and a bunch of other fixes and enhancements detailed below
+- optimized Grid Status, Grid Info, Popular Places and Avatar Profile Gutenberg block
+- added "mini profile" option to avatar profile
+- added Divi modules for Grid Status, Grid Info, Popular Places and Avatar Profile
+- added option to define avatar models by a custom list in addition to name rules
+- added Gloebit configuration instructions
+- reorganized settings in several page
+- fix potential crash due to incorrectly formatted translations
+- and a bunch of other fixes and enhancements detailed below
 
 = 2.4.7 =
-* fix crash caused by translation on nl and de pages
-* fix popular-place page would crash if mpty answer given by the helper
+- fix crash caused by translation on nl and de pages
+- fix popular-place page would crash if mpty answer given by the helper
 
 = 2.4.6 =
-* added Gloebit configuration instructions
-* added link to economy binaries download
+- added Gloebit configuration instructions
+- added link to economy binaries download
 
 = 2.4.5 =
-* added "mini profile" option to avatar block
-* added Grid Status, Grid Info and Avatar Profile Divi module
-* fixed Grid Status, Grid Info and Avatar Profile Gutenberg block
-* reorganized Search Engine, Economy and Offline Messages settings
-* clarified profile page settings
-* fixed Podex redirect message broken
+- added "mini profile" option to avatar block
+- added Grid Status, Grid Info and Avatar Profile Divi module
+- fixed Grid Status, Grid Info and Avatar Profile Gutenberg block
+- reorganized Search Engine, Economy and Offline Messages settings
+- clarified profile page settings
+- fixed Podex redirect message broken
 
 = 2.4.4 =
-* added title level option to Popular Places block, shortcode and Divi module
+- added title level option to Popular Places block, shortcode and Divi module
 
 = 2.4.3 =
-* added Popular Places Divi Builder module
-* added separate web assets server settings page
-* added separate Shortcode admin page
-* added [popular-places] to Shortcode page
-* renamed shortcodes for clarity and constistency:
+- added Popular Places Divi Builder module
+- added separate web assets server settings page
+- added separate Shortcode admin page
+- added [popular-places] to Shortcode page
+- renamed shortcodes for clarity and constistency:
   - [grid-info] instead of [gridinfo]
   - [grid-status] instead of [gridstatus]
   - [avatar-profile] instead of [gridprofile]
   - Legacy shortcodes kept for backwards compatibility
-* added warning when attempting to edit profile page (or any page generated by w4os) with Divi Builder.
-* prettier and more efficient db credentials options in settings page (getting ready for optimized use in the future)
+- added warning when attempting to edit profile page (or any page generated by w4os) with Divi Builder.
+- prettier and more efficient db credentials options in settings page (getting ready for optimized use in the future)
 
 = 2.4.2 =
-* added option to define avatar models with a custom list in addition to name rule
-* update available models dynamically on models settings page
-* fix settings action link displayed in the wrong plugin row on plugin page
+- added option to define avatar models with a custom list in addition to name rule
+- update available models dynamically on models settings page
+- fix settings action link displayed in the wrong plugin row on plugin page
 
 = 2.4.1 =
-* fix fatal error when updating from WP directory ("MetaBoxUpdaterOption" not found)
+- fix fatal error when updating from WP directory ("MetaBoxUpdaterOption" not found)
 
 = 2.4 =
-* new Avatar Models settings page, including list of available avatars
-* added defaults for plugin-provider or external search engines
-* added troubleshooting guide
-* added instructions for nginx users
-* optimized assets rendering from cache
-* fix profile and avatar models pictures broken
-* fix regression arguments not accepted for query.php
-* fix invalid DATA_SRV_ example variable when gridname contains invalid characters
-* fix helpers nginx icompatibility (use REQUEST_URI instead of REDIRECT_URL)
-* fix helpers settings hints missing http:// protocol for gatekeeper
-* fix no result if gatekeeper is passed without http:// protocol
-* fix search and register url settings
+- new Avatar Models settings page, including list of available avatars
+- added defaults for plugin-provider or external search engines
+- added troubleshooting guide
+- added instructions for nginx users
+- optimized assets rendering from cache
+- fix profile and avatar models pictures broken
+- fix regression arguments not accepted for query.php
+- fix invalid DATA_SRV_ example variable when gridname contains invalid characters
+- fix helpers nginx icompatibility (use REQUEST_URI instead of REDIRECT_URL)
+- fix helpers settings hints missing http:// protocol for gatekeeper
+- fix no result if gatekeeper is passed without http:// protocol
+- fix search and register url settings
 
 = 2.3.10 > 2.3.15 =
-* restored WooCommerce Account Dashboard avatar section
-* fix array_unique(): Argument #1 ($array) must be of type array, null given on plugin first activation
-* fix Undefined constant "W4OS_PROFILE_URL" fatal error
-* fix wrong event time in in-world search (UTC shown instead of grid time)
-* fix w4os_profile_sync() fatal error when profiles are disabled
-* fix fatal error when wp object is passed as user_id
-* minor fixes (profile page title, profile image, profile text display)
+- restored WooCommerce Account Dashboard avatar section
+- fix array_unique(): Argument #1 ($array) must be of type array, null given on plugin first activation
+- fix Undefined constant "W4OS_PROFILE_URL" fatal error
+- fix wrong event time in in-world search (UTC shown instead of grid time)
+- fix w4os_profile_sync() fatal error when profiles are disabled
+- fix fatal error when wp object is passed as user_id
+- minor fixes (profile page title, profile image, profile text display)
 
 = 2.3.9 =
-* new search helper
-* new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)
-* new currency helpers
-* new Popular Places block and [popular-places] shortcode
-* new events parser (fetch events from 2do.pm or another HYPEvents server)
-* added password reset link to profile page
-* added prebuilt binaries for opensim 0.9.1 and 0.9.2
-* added currency conversion rate setting
-* separate helpers settings page
-* updated translations
-* fix userprofile table queried even if not present (issue #64) when User Profiles are not enabled on robust
-* fix fatal error Argument #2 ($haystack) must be of type array, bool given (issue #64)
-* fix offline messages not forwarded by mail (opensim db not properly loaded by helpers)
-* fix profile picture aspect ratio (4/3, as in viewer)
-* fix fatal error in helpers for poorly encoded unicode text sources
-* fix fatal errors in helpers when database is not connected
-* fix #57 password not updated on grid when using password recovery in WordPdress
-* fix fatal error and warnings with popular-places shortcode
-* avoid fatal error if php xml-rpc is not installed, show error notice instead
-* helpers migrated from old mysqli db connection method to PDO
-* dropped aurora and OpenSim 0.6 support
+- new search helper
+- new offline messages helper. Messages are stored in OfflineMessageModule V2 format, so one can switch between core and external service (fix #47)
+- new currency helpers
+- new Popular Places block and [popular-places] shortcode
+- new events parser (fetch events from 2do.pm or another HYPEvents server)
+- added password reset link to profile page
+- added prebuilt binaries for opensim 0.9.1 and 0.9.2
+- added currency conversion rate setting
+- separate helpers settings page
+- updated translations
+- fix userprofile table queried even if not present (issue #64) when User Profiles are not enabled on robust
+- fix fatal error Argument #2 ($haystack) must be of type array, bool given (issue #64)
+- fix offline messages not forwarded by mail (opensim db not properly loaded by helpers)
+- fix profile picture aspect ratio (4/3, as in viewer)
+- fix fatal error in helpers for poorly encoded unicode text sources
+- fix fatal errors in helpers when database is not connected
+- fix #57 password not updated on grid when using password recovery in WordPdress
+- fix fatal error and warnings with popular-places shortcode
+- avoid fatal error if php xml-rpc is not installed, show error notice instead
+- helpers migrated from old mysqli db connection method to PDO
+- dropped aurora and OpenSim 0.6 support
 
 = 2.2.10 =
-* new web assets server
-* new profile page
-* new config instructions for new grid users
-* new blocks support
-* new grid and wordpress users sync
-* new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
-* new admin can create avatars for existing users
-* new grid info settings are fetched from Robust server if set or localhost:8002
-* new check grid info url validity (cron and manual)
+- new web assets server
+- new profile page
+- new config instructions for new grid users
+- new blocks support
+- new grid and wordpress users sync
+- new grid based authentication; if wp user exists, password is reset to grid password; if not, a new wp user is created
+- new admin can create avatars for existing users
+- new grid info settings are fetched from Robust server if set or localhost:8002
+- new check grid info url validity (cron and manual)
 
-* added option to replace name by avatar name in users list
-* added profile image to gridprofile
-* added assets permalink settings
-* added states in admin pages list for known urls (from grid_info)
-* added lost password and register links on login page
-* added buttons to create missing pages on status dashboard
-* added Born and Last Seen columns to users list
-* added hop:// link to login uri
-* added in-world profile link to profile page
-* added Partner, Wants, Skills and RL to web profile
+- added option to replace name by avatar name in users list
+- added profile image to gridprofile
+- added assets permalink settings
+- added states in admin pages list for known urls (from grid_info)
+- added lost password and register links on login page
+- added buttons to create missing pages on status dashboard
+- added Born and Last Seen columns to users list
+- added hop:// link to login uri
+- added in-world profile link to profile page
+- added Partner, Wants, Skills and RL to web profile
 
-* removed Avatar section from WooCommerce account page until fixed
-* removed W4OS Grid Info and W4OS Grid Status widgets (now available as blocks)
-* fix duplicate admin notices
-* fix squished profile picture
-* fix avatar not created, or not created at first attempt
-* fix inventory items not transferred to new avatars
-* fix errors not displayed on avatar creation page
-* fix avatar model not shown if default account never connected
-* fix missing error messages on login page
-* fix user login broken if w4os_login_page is set to profile and OpenSim database is not connected
-* fix a couple of fatal errors
-* fix slow assets, store cached images in upload folder to serve them directly by the web server
-* fix Fatal error Call to undefined function each()
+- removed Avatar section from WooCommerce account page until fixed
+- removed W4OS Grid Info and W4OS Grid Status widgets (now available as blocks)
+- fix duplicate admin notices
+- fix squished profile picture
+- fix avatar not created, or not created at first attempt
+- fix inventory items not transferred to new avatars
+- fix errors not displayed on avatar creation page
+- fix avatar model not shown if default account never connected
+- fix missing error messages on login page
+- fix user login broken if w4os_login_page is set to profile and OpenSim database is not connected
+- fix a couple of fatal errors
+- fix slow assets, store cached images in upload folder to serve them directly by the web server
+- fix Fatal error Call to undefined function each()
 
-* show a link to profile page instead of the form in profile shortcode
-* responsive profile display for smartphones
-* show image placeholder if profile picture not set
-* added imagick to the recommended php extensions
-* lighter template for profiles when loaded from the viewer
-* guess new avatar name from user_login if first name and last name not provided
-* replace wp avatar picture with in-world profile picture if set
-* use version provided by .version if present
-* More comprehensive database connection error reporting
+- show a link to profile page instead of the form in profile shortcode
+- responsive profile display for smartphones
+- show image placeholder if profile picture not set
+- added imagick to the recommended php extensions
+- lighter template for profiles when loaded from the viewer
+- guess new avatar name from user_login if first name and last name not provided
+- replace wp avatar picture with in-world profile picture if set
+- use version provided by .version if present
+- More comprehensive database connection error reporting
 
 = 2.1 =
-* added login form to gridprofile shortcode when not connected instead of login message
-* added w4os-shortcode classes
-* added screenshots
-* fix fatal error when trying to display  WooCommerce Avatar tab form in My Account
-* fix localisation not loading
-* shorter "Avatar" label, removed uuid in gridprofile shortcode
+- added login form to gridprofile shortcode when not connected instead of login message
+- added w4os-shortcode classes
+- added screenshots
+- fix fatal error when trying to display  WooCommerce Avatar tab form in My Account
+- fix localisation not loading
+- shorter "Avatar" label, removed uuid in gridprofile shortcode
 
 = 2.0.8 =
-* Now distributed via WordPress plugins directory
-* Official git repository changed to GitHub
-* renamed plugin as W4OS - OpenSimulator Web Interface
-* fix other WP plugins directory requirements
-* fix localizations not loading
-* fix regression, automatic updates restored. Users with version 2.0 to 2.0.3 will need to reinstall the plugin from source. Sorry.
-* use plugin dir to detect slug instead of hardcoded value
-* renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility
+- Now distributed via WordPress plugins directory
+- Official git repository changed to GitHub
+- renamed plugin as W4OS - OpenSimulator Web Interface
+- fix other WP plugins directory requirements
+- fix localizations not loading
+- fix regression, automatic updates restored. Users with version 2.0 to 2.0.3 will need to reinstall the plugin from source. Sorry.
+- use plugin dir to detect slug instead of hardcoded value
+- renamed [w4os_profile] shortcode as [gridprofile] for consistency. w4os_profile is kept for backwards compatibility
 
 = 1.2.12 =
-* fix #2 Database check fails if mysql is case insensitive
-* fix #4  Database connection error triggered if userprofile table is absent
-* fix #10 invalid JSON response when adding [w4os_profile] shortcode element
-* fix wrong letter cases in auth table name
-* fix only show profile form for current user
-* better css loading
-* only check once if w4os db is connected
-* added login page link to message displayed when trying to see profile while not connected
-* more detailed error messages for avatar creation
+- fix #2 Database check fails if mysql is case insensitive
+- fix #4  Database connection error triggered if userprofile table is absent
+- fix #10 invalid JSON response when adding [w4os_profile] shortcode element
+- fix wrong letter cases in auth table name
+- fix only show profile form for current user
+- better css loading
+- only check once if w4os db is connected
+- added login page link to message displayed when trying to see profile while not connected
+- more detailed error messages for avatar creation
 
 = 1.1.4 =
-* added changelog, banners and icons to view details
-* fix "Yes" and "No" translations
-* fix typo in banners and icons urls, can't believe I didn't see this before...
-* fixed conflict with other extensions settings pages
-* changed update server library to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
+- added changelog, banners and icons to view details
+- fix "Yes" and "No" translations
+- fix typo in banners and icons urls, can't believe I didn't see this before...
+- fixed conflict with other extensions settings pages
+- changed update server library to [frogerme's WP Plugin Update Server](https://github.com/froger-me/wp-plugin-update-server)
 
 = Previous =
-* For full change history see [GitHub repository](https://github.com/GuduleLapointe/w4os/commits/master)
+- For full change history see [GitHub repository](https://github.com/GuduleLapointe/w4os/commits/master)

@@ -1,27 +1,52 @@
 ## Changelog
 
-### Unreleased (2.10.0-beta-2)
+### 2.10.0-beta-2 (2025-08-30)
+
+⚠️ This is a **beta release**. Please backup both your WordPress website and OpenSimulator databases before updating. Test thoroughly in a development environment first.
+
+**Major New Features:**
 - new Avatar menu, in classic menu and as block for WordPress Gutenberg editor
   - login and register for anonymous users
   - avatar profile, account settings and logout for logged-in users
 - new Flux feature: enables activity stream in OpenSim viewer and on web profile page
 - new Enhanced user menu system with registration page integration
 - new Textgen helper script (create dynamic texture from url)
-- enhancement Grid_info() method also get foreign grid info
+
+**Important Bug Fixes:**
+- fix SearchURL to use HTTPS when available (#109)
+- fix avatar name validation and character conversion (#112)  
+- fix avatar creation redirect and page loading issues (#114)
 - fix PHP fatal error (wp-load.php missing in release)
 - fix Home page empty in some setups
 - fix Default model not applied on avatar creation
 - fix Some grid uri not properly sanitized
 - fix Logout url broken for standard users
 - fix Usermenu regressions introduced with classic menus
+
+**Enhancements:**
+- enhancement Grid_info() method also get foreign grid info
+- enhancement name validation preserves mixed case (DeVito, McAfee)
+- enhancement validation consistency between frontend and backend
+- enhancement Better user feedback during avatar creation process
+
+**Translation Updates:**
 - translation Updated translations for multiple languages
 - translation Fix "Register" button translation issues
+
+**Development & Testing:**
 - (dev) Comprehensive modular testing framework with WordPress and OpenSimulator environment validation
 - (dev) Convert helpers from submodule to subtree for better maintenance
 - (dev) Added modular test structure with environment validation
 - (dev) Executable test runner with guaranteed execution order
 - (dev) Update DEVELOPERS.md (add instructions to properly setup submodules)
 - (dev) Userless authentication foundation (proof of concept)
+
+**V3 Beta Features:**
+- enhancement better flux single post and archive display
+- flux author column after title
+- fix profile tabs empty (regression interoduced in 796a1c2f)
+
+*Thanks to [@mteedev](https://github.com/mteedev) for detailed bug reports.*
 
 ### 2.9.4
 - fix avatar mini profile block crashing

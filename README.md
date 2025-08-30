@@ -47,7 +47,7 @@ See Features and Roadmap sections for current and upcoming functionalties.
 Some v3 features are already available, but still in testing. So they are not included
 in the WordPress directory release. To try the new features, you must:
 - Download the latest release from https://github.com/GuduleLapointe/w4os/releases
-- Check "Enable v3 Betat Features" in Admin > OpenSimulator > Settings
+- Check "Enable v3 Beta Features" in Admin > OpenSimulator > Settings
 - A couple of new menus will appear, including Settings, Avatars and Flux
 
 Be careful, do not enable beta in a production environment.
