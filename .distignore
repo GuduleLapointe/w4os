@@ -64,3 +64,4 @@ setup-git.sh
 /helpers/tests/
 /helpers/install.php
 /dev/
+/dev/**
