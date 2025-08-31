@@ -580,6 +580,33 @@ function os_cache_set( $key, $value, $expire = 0 ) {
 	$oshelpers_cache[$key] = $value;
 }
 
+function connectionstring_to_dotnet_array( $connectionstring ) {
+	$parts = explode( ';', $connectionstring );
+	$creds = array();
+	foreach ( $parts as $part ) {
+		$pair              = explode( '=', $part );
+		$creds[ $pair[0] ] = $pair[1] ?? '';
+	}
+	if( preg_match( '/:[0-9]+$/', $creds['Data Source'] ) ) {
+		$host = explode( ':', $creds['Data Source'] );
+		$creds['Data Source'] = $host[0];
+		$creds['Port'] = empty( $host[1] || $host[1] == 3306 ) ? null : $creds['Port'];
+	}
+	return $creds;
+}
+
+function connectionstring_to_array( $connectionstring ) {
+	$creds = connectionstring_to_dotnet_array( $connectionstring );
+	$result = array(
+		'host' => $creds['Data Source'],
+		'port' => $creds['Port'] ?? null,
+		'name' => $creds['Database'],
+		'user' => $creds['User ID'],
+		'pass' => $creds['Password'],
+	);
+	return $result;
+}
+
 /**
  * OpenSim source to help further attempts to allow Hypergrid search results.
  * Infouuid is a fake parcelid resolving to region handle and (region-level?)

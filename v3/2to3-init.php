@@ -633,16 +633,6 @@ class W4OS3 {
 		return true;
 	}
 
-	public static function connectionstring_to_array( $connectionstring ) {
-		$parts = explode( ';', $connectionstring );
-		$creds = array();
-		foreach ( $parts as $part ) {
-			$pair              = explode( '=', $part );
-			$creds[ $pair[0] ] = $pair[1] ?? '';
-		}
-		return $creds;
-	}
-
 	public static function update_credentials( $serverURI, $credentials ) {
 
 		$console_enabled = self::validate_console_creds( $credentials['console'] );
@@ -658,16 +648,7 @@ class W4OS3 {
 				$result = explode( ' : ', $result );
 				$result = array_pop( $result );
 				// $result = preg_replace( '/.*Data Source=', 'host=', $result );
-				$data = self::connectionstring_to_array( $result );
-				$db   = array_filter(
-					array(
-						'host' => $data['Data Source'],
-						'port' => $data['Port'] ?? 3306,
-						'name' => $data['Database'],
-						'user' => $data['User ID'],
-						'pass' => $data['Password'],
-					)
-				);
+				$db = array_filter(connectionstring_to_array( $result ));
 				
 				// Validate localhost with custom port before any modifications
 				if ( $db['host'] === 'localhost' && ! empty( $db['port'] ) && $db['port'] != '3306' ) {

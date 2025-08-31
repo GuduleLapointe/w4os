@@ -406,6 +406,85 @@ class W4OS3_Settings {
 		return $creds;
 	}
 
+	/**
+	 * Check if the current console configuration differs from stored credentials.
+	 * This detects when configuration has changed after a server restart.
+	 */
+	public static function check_config_drift() {
+		// Only check if V3 console mode is enabled
+		if ( ! W4OS3::$console_enabled ) {
+			return;
+		}
+
+		// Get current stored credentials
+		$login_uri = get_option( 'w4os_login_uri' );
+		if ( empty( $login_uri ) ) {
+			return;
+		}
+
+		$stored_credentials = W4OS3::get_credentials( $login_uri );
+		if ( empty( $stored_credentials ) || empty( $stored_credentials['console'] ) ) {
+			return;
+		}
+		
+		// Keep only relevant DB fields
+		$stored_config = array_filter(array_intersect_key(
+			$stored_credentials['db'] ?? array(),
+			array(
+				'host' => null,
+				'port' => null,
+				'name' => null,
+				'user' => null,
+				'pass' => null,
+			)
+		));
+
+		// Get current configuration from console
+		try {
+			$session = new W4OS3();
+			$result  = $session->console( $stored_credentials['console'], 'config get DatabaseService ConnectionString' );
+			
+			if ( $result && is_array( $result ) ) {
+				$result = array_shift( $result );
+				$result = explode( ' : ', $result );
+				$result = array_pop( $result );
+				
+				$live_config = array_filter(connectionstring_to_array( $result ));
+
+				$drift_detected = ( $live_config !== $stored_config );
+				
+				if( $drift_detected ) {
+
+					// Use w4os_admin_notice to display the configuration drift warning
+					$message = __( 'Current Robust instance database configuration differs from the W4OS stored settings.', 'w4os' );
+
+					if ( $_GET['page'] ?? null === 'w4os-settings' ) {
+						$message .= ' ' . __( 'Click Save Changes button to refresh W4OS configuration.', 'w4os' );
+					} else {
+						$message .= ' ' . sprintf( 
+							__( 'Go to the %ssettings%s page to refresh configuration.', 'w4os' ),
+							'<a href="' . admin_url( 'admin.php?page=w4os-settings' ) . '">',
+							'</a>'
+						);
+					}
+
+					$message .= '<pre>DEBUG stored: ' . print_r( $stored_config, true ) . ' live: ' . print_r( $live_config, true ) . '</pre>';
+
+					w4os_admin_notice( $message, 'warning' );
+				}
+				
+				return array(
+					'drift_detected' => $drift_detected,
+					'stored_config' => $stored_config,
+					'live_config' => $live_config
+				);
+			}
+		} catch ( Exception $e ) {
+			// Silently fail - console connection issues shouldn't break the admin
+			error_log( 'W4OS config drift check failed: ' . $e->getMessage() );
+		}
+	}
+
 	public static function format_error( $error ) {
 		if ( empty( $error ) ) {
 			return '';
@@ -427,6 +506,11 @@ class W4OS3_Settings {
 			return;
 		}
 		$menu_slug = preg_replace( '/^.*_page_/', '', sanitize_key( $screen->id ) );
+
+		// Check for configuration drift on w4os-settings page
+		if ( $menu_slug === 'w4os-settings' ) {
+			self::check_config_drift();
+		}
 
 		$settings = self::get_settings( $menu_slug );
 		if ( ! $settings ) {

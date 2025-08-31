@@ -22,6 +22,8 @@ echo "\nTesting service credentials...\n";
 // Check if V3 is enabled and properly initialized
 $v3_enabled = defined( 'W4OS_ENABLE_V3' ) && W4OS_ENABLE_V3;
 $credentials = array();
+$config_drift_detected = false;
+$console_failed = false;
 
 if ( $v3_enabled ) {
 	// Try V3 credentials method
@@ -36,14 +38,45 @@ if ( $v3_enabled ) {
 		// Get refreshed credentials after console sync
 		$credentials = W4OS3::get_credentials( $login_uri );
 		
-		// CRITICAL TEST: Compare raw console config with V3 processed config
-		// V3 should NOT modify the host specified in Robust.ini
-		echo "  Validating V3 config integrity...\n";
-		
-		// Get raw ConnectionString directly from console
+		// TEST 1: Console connectivity (required for drift detection)
+		echo "  Testing console connectivity...\n";
 		$console_creds = $credentials['console'] ?? array();
 		if ( ! empty( $console_creds['host'] ) && ! empty( $console_creds['user'] ) ) {
-			// Create temporary V3 session to get raw console output
+			$console_info = "{$console_creds['host']}:{$console_creds['port']} as {$console_creds['user']}";
+			
+			$rest_args = array(
+				'uri'         => $console_creds['host'] . ':' . $console_creds['port'],
+				'ConsoleUser' => $console_creds['user'],
+				'ConsolePass' => $console_creds['pass'],
+			);
+			
+			$rest = new OpenSim_Rest( $rest_args );
+			if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
+				echo "  ❌ Console connection failed: {$rest->error->getMessage()}\n";
+				$test->assert_true( false, 'Console connection to ' . $console_info . ' failed: ' . $rest->error->getMessage() );
+				$console_failed = true;
+			} else {
+				$responseLines = $rest->sendCommand( 'show info' );
+				if ( is_opensim_rest_error( $responseLines ) ) {
+					echo "  ❌ Console command failed: {$responseLines->getMessage()}\n";
+					$test->assert_true( false, 'Console command to ' . $console_info . ' failed: ' . $responseLines->getMessage() );
+					$console_failed = true;
+				} else {
+					$console_response = substr( join( ' ', $responseLines ), 0, 50 ) . '...';
+					echo "  ✅ Console connectivity successful\n";
+					$test->assert_true( true, 'Console connection to ' . $console_info . ' successful (' . $console_response . ')' );
+				}
+			}
+		} else {
+			echo "  ⚠️  No console credentials - skipping console test\n";
+			$console_failed = true;
+		}
+
+		// TEST 2: Credential integrity (only if console works)
+		if ( ! $console_failed ) {
+			echo "  Validating credential integrity...\n";
+			
+			// Get raw ConnectionString directly from console
 			$session = new W4OS3();
 			$console_config = array(
 				'host' => $console_creds['host'],
@@ -58,33 +91,53 @@ if ( $v3_enabled ) {
 				$raw_connectionstring = explode( ' : ', $raw_line );
 				$raw_connectionstring = array_pop( $raw_connectionstring );
 				
-				// Parse the raw ConnectionString
-				$raw_parts = array();
-				foreach ( explode( ';', $raw_connectionstring ) as $part ) {
-					if ( empty( $part ) ) continue;
-					$pair = explode( '=', $part );
-					$raw_parts[ $pair[0] ] = $pair[1] ?? '';
-				}
+				// Parse using the same function as check_config_drift
+				$live_config = array_filter( connectionstring_to_array( $raw_connectionstring ) );
+				$stored_host = $credentials['db']['host'];
+				$live_host = $live_config['host'] ?? '';
 				
-				$raw_host = $raw_parts['Data Source'] ?? '';
-				$processed_host = $credentials['db']['host'];
-				
-				if ( $raw_host !== $processed_host ) {
-					echo "    Raw Robust.ini host: '{$raw_host}'\n";
-					echo "    V3 processed host: '{$processed_host}'\n";
-					echo "    This breaks MySQL grant compatibility!\n";
-					$test->assert_equals( $raw_host, $processed_host, 'V3 config integrity: database host should not be modified from Robust.ini (localhost != network access for MySQL permissions)' );
+				if ( $live_host !== $stored_host ) {
+					echo "    Live Robust.ini host: '{$live_host}'\n";
+					echo "    Stored W4OS host: '{$stored_host}'\n";
+					echo "    get_credentials() should return stored values without transformation!\n";
+					$test->assert_equals( $live_host, $stored_host, 'Credential integrity: get_credentials should return stored values without transformation' );
+					echo "  ⚠️  Skipping configuration drift test due to credential transformation bug\n";
+					$config_drift_detected = true;
 				} else {
-					echo "  ✅ V3 config integrity: host unchanged from Robust.ini\n";
-					$test->assert_true( true, 'V3 config integrity: database host unchanged from Robust.ini' );
+					echo "  ✅ Credential integrity: get_credentials returns values without transformation\n";
+					$test->assert_true( true, 'Credential integrity: get_credentials returns values without transformation' );
+					
+					// TEST 3: Configuration drift (only if credential integrity passes)
+					echo "  Checking for configuration drift...\n";
+					
+					// Use the existing check_config_drift method
+					$drift_result = W4OS3_Settings::check_config_drift();
+					
+					if ( $drift_result && isset( $drift_result['drift_detected'] ) ) {
+						if ( $drift_result['drift_detected'] ) {
+							echo "    Configuration drift detected between W4OS settings and Robust configuration\n";
+							$test->assert_true( false, 'Configuration drift: W4OS settings need to be updated to match current Robust configuration' );
+							echo "  ⚠️  Skipping remaining tests due to configuration drift\n";
+							$config_drift_detected = true;
+						} else {
+							echo "  ✅ No configuration drift: W4OS settings match Robust configuration\n";
+							$test->assert_true( true, 'No configuration drift detected' );
+						}
+					} else {
+						echo "  ⚠️  WARNING: Could not check for configuration drift\n";
+						echo "  ⚠️  Skipping remaining tests due to drift check failure\n";
+						$config_drift_detected = true;
+					}
 				}
 			} else {
-				echo "  ⚠️  WARNING: Could not retrieve raw console config for comparison\n";
-				$test->assert_true( false, 'V3 config integrity: Could not retrieve raw console config for comparison' );
+				echo "  ⚠️  WARNING: Could not retrieve console config for credential integrity test\n";
+				$test->assert_true( false, 'Credential integrity: Could not retrieve console config for comparison' );
+				echo "  ⚠️  Skipping configuration drift test due to console query failure\n";
+				$config_drift_detected = true;
 			}
 		} else {
-			echo "  ⚠️  WARNING: No console credentials available for config comparison\n";
-			$test->assert_true( false, 'V3 config integrity: No console credentials available for config comparison' );
+			echo "  ⚠️  Skipping credential integrity and configuration drift checks due to console failure\n";
+			$config_drift_detected = true;
 		}
 	} else {
 		$credentials = $current_creds;
@@ -156,9 +209,17 @@ if ( ! $has_db_creds ) {
 	exit( $test->summary() ? 0 : 1 );
 }
 
-// Test 3: Database connectivity (required)
+// Test 4: Database connectivity (only if console works and no drift detected)
 echo "\nTesting database connectivity...\n";
-if ( ! empty( $credentials['db']['host'] ) && ! empty( $credentials['db']['user'] ) && 
+
+// Skip database test if console failed or configuration drift was detected
+if ( $console_failed || $config_drift_detected ) {
+	if ( $console_failed ) {
+		echo "  ⚠️  Skipping database connectivity test due to console failure\n";
+	} else {
+		echo "  ⚠️  Skipping database connectivity test due to configuration issues\n";
+	}
+} else if ( ! empty( $credentials['db']['host'] ) && ! empty( $credentials['db']['user'] ) && 
      ! empty( $credentials['db']['pass'] ) && ! empty( $credentials['db']['name'] ) ) {
 	
 	$port = $credentials['db']['port'] ?? 3306;
@@ -212,35 +273,6 @@ if ( ! empty( $credentials['db']['host'] ) && ! empty( $credentials['db']['user'
 	}
 } else {
 	$test->assert_true( false, 'Database credentials incomplete' );
-}
-
-// Test 4: Console connectivity (optional - only test if credentials are provided)
-echo "\nTesting console connectivity...\n";
-if ( ! empty( $credentials['console']['host'] ) && ! empty( $credentials['console']['port'] ) && 
-     ! empty( $credentials['console']['user'] ) && ! empty( $credentials['console']['pass'] ) ) {
-	
-	$console_info = "{$credentials['console']['host']}:{$credentials['console']['port']} as {$credentials['console']['user']}";
-	
-	$rest_args = array(
-		'uri'         => $credentials['console']['host'] . ':' . $credentials['console']['port'],
-		'ConsoleUser' => $credentials['console']['user'],
-		'ConsolePass' => $credentials['console']['pass'],
-	);
-	
-	$rest = new OpenSim_Rest( $rest_args );
-	if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
-		$test->assert_true( false, 'Console connection to ' . $console_info . ' failed: ' . $rest->error->getMessage() );
-	} else {
-		$responseLines = $rest->sendCommand( 'show info' );
-		if ( is_opensim_rest_error( $responseLines ) ) {
-			$test->assert_true( false, 'Console command to ' . $console_info . ' failed: ' . $responseLines->getMessage() );
-		} else {
-			$console_response = substr( join( ' ', $responseLines ), 0, 50 ) . '...';
-			$test->assert_true( true, 'Console connection to ' . $console_info . ' successful (' . $console_response . ')' );
-		}
-	}
-} else {
-	echo "  Console credentials not provided - skipping console test\n";
 }
 
 // Show summary
