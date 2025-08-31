@@ -57,6 +57,7 @@ if ( defined( 'W4OS_SLUG' ) ) {
 		require_once plugin_dir_path( __FILE__ ) . 'v3/2to3-init.php';
 	} else {
 		define( 'W4OS_ENABLE_V3', false );
+		require_once plugin_dir_path( __FILE__ ) . 'helpers/engine/opensim-rest/class-rest.php';
 	}
 
 	// Legacy v1 and v2 inits. Both should be removed when v3 transition is complete.

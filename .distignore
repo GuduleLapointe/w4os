@@ -65,3 +65,6 @@ setup-git.sh
 /helpers/install.php
 /dev/
 /dev/**
+helpers/engine/opensim-rest/opensim-rest-cli.php
+helpers/engine/opensim-rest/bin/opensim-rest-cli
+helpers/engine/opensim-rest/dev/

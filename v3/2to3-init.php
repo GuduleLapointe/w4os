@@ -318,7 +318,7 @@ class W4OS3 {
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-userless-auth.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-usermenu.php';
-		require_once W4OS_PLUGIN_DIR . 'v2/admin-helpers/class-opensim-rest.php';
+		require_once W4OS_PLUGIN_DIR . 'helpers/engine/opensim-rest/class-rest.php';
 
 		// Load v3 features if enabled
 		if ( W4OS_ENABLE_V3 ) {
