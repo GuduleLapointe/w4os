@@ -25,7 +25,19 @@ $credentials = array();
 
 if ( $v3_enabled ) {
 	// Try V3 credentials method
-	$credentials = W4OS3::get_credentials( $login_uri );
+	$login_uri = get_option( 'w4os_login_uri' );
+	
+	// Force credential sync from console for V3 testing
+	// This ensures we get the current ConnectionString from Robust.ini
+	echo "  Forcing V3 credential sync from console...\n";
+	$current_creds = W4OS3::get_credentials( $login_uri );
+	if ( ! empty( $current_creds ) ) {
+		W4OS3::update_credentials( $login_uri, $current_creds );
+		// Get refreshed credentials after console sync
+		$credentials = W4OS3::get_credentials( $login_uri );
+	} else {
+		$credentials = $current_creds;
+	}
 }
 
 // If V3 failed or is disabled, fall back to legacy credentials
