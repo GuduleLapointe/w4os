@@ -668,6 +668,13 @@ class W4OS3 {
 						'pass' => $data['Password'],
 					)
 				);
+				
+				// Validate localhost with custom port before any modifications
+				if ( $db['host'] === 'localhost' && ! empty( $db['port'] ) && $db['port'] != '3306' ) {
+					// This is a configuration issue in Robust.ini - log it
+					error_log( 'W4OS V3: Robust.ini has localhost with custom port ' . $db['port'] . ' - MySQL will ignore port and use socket connection' );
+				}
+				
 				if ( $db['host'] == 'localhost' && $credentials['host'] != $_SERVER['SERVER_ADDR'] ) {
 					$db['host'] = $credentials['host'];
 				}

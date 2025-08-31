@@ -362,6 +362,15 @@ class W4OS_Settings extends W4OS_Loader {
 			$credentials                = array_map( 'esc_attr', $_POST['w4os_robust-db'] );
 			$credentials['use_default'] = isset( $credentials['use_default'] ) ? $credentials['use_default'] : false;
 
+			// Not necessary, we want it in the description live in v3 mode, on page load, wether the form is submitted or not.
+			// // Validate localhost with custom port configuration
+			// if ( ! $credentials['use_default'] && 
+			//      isset( $credentials['host'] ) && $credentials['host'] === 'localhost' && 
+			//      isset( $credentials['port'] ) && ! empty( $credentials['port'] ) && $credentials['port'] != '3306' ) {
+			// 	w4os_admin_notice( __( 'Warning: MySQL uses a socket when set to localhost and ignores the custom port. Use 127.0.0.1 or the host address to allow TCP connections with a custom port.', 'w4os' ), 'error' );
+			// 	return; // Don't save invalid configuration
+			// }
+
 			update_option( 'w4os_db_use_default', $credentials['use_default'] );
 			if ( ! $credentials['use_default'] ) {
 				update_option( 'w4os_db_host', $credentials['host'] );
@@ -579,6 +588,17 @@ class W4OS_Settings extends W4OS_Loader {
 		if ( ! empty( $output ) ) {
 			$output = '<div class="w4osdb-field-group w4osdb-field-input">' . $output . '</div>';
 		}
+		
+		// Add localhost+custom port warning
+		$host = isset( $values['host'] ) ? $values['host'] : 'localhost';
+		$port = isset( $values['port'] ) ? $values['port'] : '3306';
+		$use_default = isset( $values['use_default'] ) ? $values['use_default'] : false;
+		
+		if ( ! $use_default && $host === 'localhost' && $port != '3306' ) {
+			$warning_message = __( 'Warning: MySQL uses a socket when set to localhost and ignores the custom port. Use 127.0.0.1 or the host address to allow TCP connections with a custom port.', 'w4os' );
+			$output .= '<div class="notice notice-warning inline"><p>' . esc_html( $warning_message ) . '</p></div>';
+		}
+		
 		return $output;
 	}
 

@@ -359,13 +359,19 @@ class W4OS3_Settings {
 		// Check database credentials
 		// TODO: replace with W4OS3::validate_db_credentials
 		if ( ! empty( $creds['db']['host'] ) && ! empty( $creds['db']['user'] ) && ! empty( $creds['db']['pass'] && ! empty( $creds['db']['name'] ) ) ) {
-			@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
-			if ( $db_conn && ! $db_conn->connect_error ) {
-				$creds['db']['status'] = true;
-				$db_conn->close();
-			} else {
+			// Check for localhost with custom port configuration issue
+			if ( $creds['db']['host'] === 'localhost' && ! empty( $creds['db']['port'] ) && $creds['db']['port'] != '3306' ) {
 				$creds['db']['status'] = false;
-				$creds['db']['error']  = $db_conn->connect_error ?? __( 'Unknown DB connection error', 'w4os' );
+				$creds['db']['error']  = __( 'Warning: MySQL uses a socket when set to localhost and ignores the custom port. Use 127.0.0.1 or the host address to allow TCP connections with a custom port.', 'w4os' );
+			} else {
+				@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
+				if ( $db_conn && ! $db_conn->connect_error ) {
+					$creds['db']['status'] = true;
+					$db_conn->close();
+				} else {
+					$creds['db']['status'] = false;
+					$creds['db']['error']  = $db_conn->connect_error ?? __( 'Unknown DB connection error', 'w4os' );
+				}
 			}
 		} else {
 			$creds['db']['status'] = null;
