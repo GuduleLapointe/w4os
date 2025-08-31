@@ -106,9 +106,7 @@ echo "  Failed: {$total_failed}
 ";
 
 if ( $total_failed > 0 ) {
-	echo "
-All Failed Tests:
-";
+	echo PHP_EOL . "⚠️  Failed Tests:" . PHP_EOL;
 	foreach ( $all_failed_tests as $i => $failed_test ) {
 		echo "  " . ($i + 1) . ". {$failed_test}
 ";

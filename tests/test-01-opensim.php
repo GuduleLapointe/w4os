@@ -35,6 +35,57 @@ if ( $v3_enabled ) {
 		W4OS3::update_credentials( $login_uri, $current_creds );
 		// Get refreshed credentials after console sync
 		$credentials = W4OS3::get_credentials( $login_uri );
+		
+		// CRITICAL TEST: Compare raw console config with V3 processed config
+		// V3 should NOT modify the host specified in Robust.ini
+		echo "  Validating V3 config integrity...\n";
+		
+		// Get raw ConnectionString directly from console
+		$console_creds = $credentials['console'] ?? array();
+		if ( ! empty( $console_creds['host'] ) && ! empty( $console_creds['user'] ) ) {
+			// Create temporary V3 session to get raw console output
+			$session = new W4OS3();
+			$console_config = array(
+				'host' => $console_creds['host'],
+				'port' => $console_creds['port'],
+				'user' => $console_creds['user'],
+				'pass' => $console_creds['pass'],
+			);
+			
+			$raw_result = $session->console( $console_config, 'config get DatabaseService ConnectionString' );
+			if ( $raw_result && is_array( $raw_result ) ) {
+				$raw_line = array_shift( $raw_result );
+				$raw_connectionstring = explode( ' : ', $raw_line );
+				$raw_connectionstring = array_pop( $raw_connectionstring );
+				
+				// Parse the raw ConnectionString
+				$raw_parts = array();
+				foreach ( explode( ';', $raw_connectionstring ) as $part ) {
+					if ( empty( $part ) ) continue;
+					$pair = explode( '=', $part );
+					$raw_parts[ $pair[0] ] = $pair[1] ?? '';
+				}
+				
+				$raw_host = $raw_parts['Data Source'] ?? '';
+				$processed_host = $credentials['db']['host'];
+				
+				if ( $raw_host !== $processed_host ) {
+					echo "    Raw Robust.ini host: '{$raw_host}'\n";
+					echo "    V3 processed host: '{$processed_host}'\n";
+					echo "    This breaks MySQL grant compatibility!\n";
+					$test->assert_equals( $raw_host, $processed_host, 'V3 config integrity: database host should not be modified from Robust.ini (localhost != network access for MySQL permissions)' );
+				} else {
+					echo "  ✅ V3 config integrity: host unchanged from Robust.ini\n";
+					$test->assert_true( true, 'V3 config integrity: database host unchanged from Robust.ini' );
+				}
+			} else {
+				echo "  ⚠️  WARNING: Could not retrieve raw console config for comparison\n";
+				$test->assert_true( false, 'V3 config integrity: Could not retrieve raw console config for comparison' );
+			}
+		} else {
+			echo "  ⚠️  WARNING: No console credentials available for config comparison\n";
+			$test->assert_true( false, 'V3 config integrity: No console credentials available for config comparison' );
+		}
 	} else {
 		$credentials = $current_creds;
 	}
