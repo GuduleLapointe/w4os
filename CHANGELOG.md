@@ -1,5 +1,26 @@
 ## Changelog
 
+### Unreleased
+
+**Important Bug Fixes:**
+- fix MySQL non-standard ports not properly tested to validate DB credentials #88
+- fix MySQL not handling custom port when set to localhost (added warning)
+- fix improper localhost conversion to host name, potentially causing grant issues
+
+**V3 Beta Features:**
+- add Robust configuration drift detection when console is enabled
+  - Automatically detects when grid configuration differs from plugin stored settings
+  - Warns administrators when stored credentials don't match current Robust.ini settings
+- enhancement Improved database connection validation and error reporting
+
+**Development & Testing:**
+- (dev) Add OpenSim REST library as subtree for better maintenance
+- (dev) Add comprehensive V3 credentials integrity testing
+- (dev) Consolidated connection string parsing functions for consistency
+- (dev) Restructure test suite with proper test sequence validation
+- (dev) Improve test output formatting and failure reporting
+- (dev) Add configuration drift detection to prevent credential transformation bugs
+
 ### 2.10.0-beta-2 (2025-08-30)
 
 ⚠️ This is a **beta release**. Please backup both your WordPress website and OpenSimulator databases before updating. Test thoroughly in a development environment first.
