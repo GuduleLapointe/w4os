@@ -16,12 +16,78 @@ echo "\nTesting grid configuration...\n";
 $login_uri = w4os_grid_login_uri();
 $test->assert_not_empty( $login_uri, 'Grid login URI ' . $login_uri );
 
-// Test 2: Get main service credentials using W4OS3::get_credentials()
+// Test 2: Get main service credentials using appropriate method based on V3 status
 echo "\nTesting service credentials...\n";
-$credentials = W4OS3::get_credentials( $login_uri );
-$test->assert_not_empty( $credentials, 'Service credentials retrieved' );
 
+// Check if V3 is enabled and properly initialized
+$v3_enabled = defined( 'W4OS_ENABLE_V3' ) && W4OS_ENABLE_V3;
+$credentials = array();
+
+if ( $v3_enabled ) {
+	// Try V3 credentials method
+	$credentials = W4OS3::get_credentials( $login_uri );
+}
+
+// If V3 failed or is disabled, fall back to legacy credentials
 if ( empty( $credentials ) ) {
+	$credentials = array(
+		'db' => array(
+			'host' => get_option( 'w4os_db_host' ),
+			'port' => get_option( 'w4os_db_port', '3306' ),
+			'name' => get_option( 'w4os_db_database' ),
+			'user' => get_option( 'w4os_db_user' ),
+			'pass' => get_option( 'w4os_db_pass' ),
+		),
+		'console' => array(
+			'host' => null,
+			'port' => null,
+			'user' => null,
+			'pass' => null,
+		)
+	);
+}
+
+// Check if we have at least database credentials
+$has_db_creds = !empty( $credentials['db']['host'] ) && 
+                !empty( $credentials['db']['user'] ) && 
+                !empty( $credentials['db']['pass'] ) && 
+                !empty( $credentials['db']['name'] );
+
+// Display credential details (excluding password)
+if ( $has_db_creds ) {
+	$method = $v3_enabled ? 'V3' : 'legacy';
+	echo "  Credentials retrieved using {$method} method:\n";
+	printf( "  Database:" . PHP_EOL
+		. "\thost\t: %s" . PHP_EOL 
+		. "\tport\t: %s" . PHP_EOL
+		. "\tname\t: %s" . PHP_EOL
+		. "\tuser\t: %s" . PHP_EOL
+		. "\tpass\t: %s" . PHP_EOL,
+		$credentials['db']['host'],
+		$credentials['db']['port'] ?? '3306',
+		$credentials['db']['name'],
+		$credentials['db']['user'],
+		str_repeat( '*', strlen( $credentials['db']['pass'] ) )
+	);
+	if ( !empty( $credentials['console']['host'] ) ) {
+		printf( "  Console:" . PHP_EOL
+			. "\thost\t: %s" . PHP_EOL 
+			. "\tport\t: %s" . PHP_EOL
+			. "\tuser\t: %s" . PHP_EOL
+			. "\tpass\t: %s" . PHP_EOL,
+			$credentials['console']['host'],
+			$credentials['console']['port'] ?? 'nil',
+			$credentials['console']['user'],
+			str_repeat( '*', strlen( $credentials['console']['pass'] ) )
+		);
+	} else {
+		echo "    Console: not configured\n";
+	}
+}
+
+$test->assert_true( $has_db_creds, 'Service credentials retrieved' );
+
+if ( ! $has_db_creds ) {
 	echo "  No credentials found - skipping connection tests\n";
 	$test->summary();
 	exit( $test->summary() ? 0 : 1 );
@@ -35,19 +101,50 @@ if ( ! empty( $credentials['db']['host'] ) && ! empty( $credentials['db']['user'
 	$port = $credentials['db']['port'] ?? 3306;
 	$db_info = "{$credentials['db']['host']}:{$port}/{$credentials['db']['name']} as {$credentials['db']['user']}";
 	
-	@$db_conn = new mysqli( 
-		$credentials['db']['host'], 
-		$credentials['db']['user'], 
-		$credentials['db']['pass'], 
-		$credentials['db']['name'], 
-		$port 
+	// Debug: Show exactly what parameters we're using
+	echo "    host:\t{$credentials['db']['host']}\n";
+	echo "    user:\t{$credentials['db']['user']}\n";
+	echo "    database:\t{$credentials['db']['name']}\n";
+	echo "    port:\t{$port}\n";
+	
+	// Use the same connection method as the plugin (WPDB with host:port format)
+	$host_with_port = $credentials['db']['host'] . ( empty( $credentials['db']['port'] ) ? '' : ':' . $credentials['db']['port'] );
+	echo "  Using WPDB connection to: {$host_with_port}\n";
+	
+	// Important note: When host is 'localhost', MySQL client ignores port and uses socket connection
+	// For proper port testing, use 127.0.0.1 instead of localhost
+	if ( $credentials['db']['host'] === 'localhost' && $credentials['db']['port'] !== '3306' ) {
+		echo "  ⚠️  WARNING: 'localhost' connections use socket, port {$credentials['db']['port']} will be ignored!\n";
+		echo "      If you need to use port {$credentials['db']['port']}, change host to '127.0.0.1'\n";
+	}
+	
+	// Create WPDB instance exactly like the plugin does
+	$test_db = new WPDB(
+		$credentials['db']['user'],
+		$credentials['db']['pass'],
+		$credentials['db']['name'],
+		$host_with_port
 	);
 	
-	if ( $db_conn && ! $db_conn->connect_error ) {
-		$test->assert_true( true, 'Database connection to ' . $db_info . ' successful' );
-		$db_conn->close();
+	// Also check the actual plugin's database connection for comparison
+	global $w4osdb;
+	
+	// First check if the connection was established
+	if ( $test_db && $test_db->check_connection( false ) ) {
+		// Additional test: try to actually query the database to verify it's really connected
+		$test_query = $test_db->get_var( "SELECT 1" );
+		if ( $test_query === '1' ) {
+			$test->assert_true( true, 'Database connection to ' . $db_info . ' successful (using WPDB)' );
+			
+			// Additional warning if localhost is used with non-standard port
+			if ( $credentials['db']['host'] === 'localhost' && $credentials['db']['port'] !== '3306' ) {
+				$test->assert_true( false, 'Configuration error: with localhost, custom port is ignored by mysql, use 127.0.0.1 or default port' );
+			}
+		} else {
+			$test->assert_true( false, 'Database connection to ' . $db_info . ' established but query failed' );
+		}
 	} else {
-		$error_msg = $db_conn->connect_error ?? 'Unknown DB connection error';
+		$error_msg = $test_db->last_error ?? 'Connection check failed';
 		$test->assert_true( false, 'Database connection to ' . $db_info . ' failed: ' . $error_msg );
 	}
 } else {
