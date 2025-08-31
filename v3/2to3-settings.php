@@ -468,8 +468,6 @@ class W4OS3_Settings {
 						);
 					}
 
-					$message .= '<pre>DEBUG stored: ' . print_r( $stored_config, true ) . ' live: ' . print_r( $live_config, true ) . '</pre>';
-
 					w4os_admin_notice( $message, 'warning' );
 				}
 				

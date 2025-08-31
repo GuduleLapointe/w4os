@@ -237,7 +237,7 @@ if ( $console_failed || $config_drift_detected ) {
 	
 	// Important note: When host is 'localhost', MySQL client ignores port and uses socket connection
 	// For proper port testing, use 127.0.0.1 instead of localhost
-	if ( $credentials['db']['host'] === 'localhost' && $credentials['db']['port'] !== '3306' ) {
+	if ( $credentials['db']['host'] === 'localhost' && ! empty( $credentials['db']['port'] ) && $credentials['db']['port'] !== '3306' ) {
 		echo "  ⚠️  WARNING: 'localhost' connections use socket, port {$credentials['db']['port']} will be ignored!\n";
 		echo "      If you need to use port {$credentials['db']['port']}, change host to '127.0.0.1'\n";
 	}
@@ -261,7 +261,7 @@ if ( $console_failed || $config_drift_detected ) {
 			$test->assert_true( true, 'Database connection to ' . $db_info . ' successful (using WPDB)' );
 			
 			// Additional warning if localhost is used with non-standard port
-			if ( $credentials['db']['host'] === 'localhost' && $credentials['db']['port'] !== '3306' ) {
+			if ( $credentials['db']['host'] === 'localhost' && ! empty( $credentials['db']['port'] ) && $credentials['db']['port'] !== '3306' ) {
 				$test->assert_true( false, 'Configuration error: with localhost, custom port is ignored by mysql, use 127.0.0.1 or default port' );
 			}
 		} else {

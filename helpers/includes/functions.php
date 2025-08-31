@@ -584,13 +584,15 @@ function connectionstring_to_dotnet_array( $connectionstring ) {
 	$parts = explode( ';', $connectionstring );
 	$creds = array();
 	foreach ( $parts as $part ) {
-		$pair              = explode( '=', $part );
-		$creds[ $pair[0] ] = $pair[1] ?? '';
+		if(!empty($part) && preg_match( '/=/', $part ) ) {
+			$pair              = explode( '=', $part );
+			$creds[ $pair[0] ] = $pair[1] ?? '';
+		}
 	}
 	if( preg_match( '/:[0-9]+$/', $creds['Data Source'] ) ) {
 		$host = explode( ':', $creds['Data Source'] );
 		$creds['Data Source'] = $host[0];
-		$creds['Port'] = empty( $host[1] || $host[1] == 3306 ) ? null : $creds['Port'];
+		$creds['Port'] = (int)$host[1];
 	}
 	return $creds;
 }
