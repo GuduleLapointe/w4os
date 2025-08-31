@@ -267,7 +267,7 @@ class OSPDO extends PDO {
         if( preg_match( '/:[0-9]+$/', $creds['Data Source'] ?? '' ) ) {
             $host = explode( ':', $creds['Data Source'] );
             $creds['Data Source'] = $host[0];
-            $creds['Port'] = empty( $host[1] ) || $host[1] == 3306 ? null : $host[1];
+            $creds['Port'] = (int)$host[1];
         }
         switch ( $provider ) {
             // TODO: test pgsql before enabling
