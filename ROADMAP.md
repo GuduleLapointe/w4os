@@ -4,13 +4,15 @@
 
 *Last updated: Wed Jun 18 04:21:46 CEST 2025*
 
-## v2.x Fixes (1/3 issues)
+## v2.x Fixes (1/4 issues)
 
 ### Additional Issues
 
 - [ ] Cannot  confirm setup if port is not 3306 #88
 - [x] Registration and Avatar Models Not Working After Switching Robust #92
-- [x] SearchURL use https if available #109
+- [x] SearchURL use https if available #109 (fixed in 52bdd83 and d7b7fcb)
+- [x] Registration ending to empty page #114 (fixed in ba190fd)
+- [x] Forbidden character allowed in avatar registration #112 (Fixed in 037431eb and ac6652a0)
 
 ### Enhancements
 
