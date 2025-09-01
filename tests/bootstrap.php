@@ -19,6 +19,20 @@ if ( ! file_exists( $wp_load_path ) ) {
 echo "Loading WordPress from: {$wp_load_path}\n";
 require_once $wp_load_path;
 
+// Detect branch version: V3 is default, V2 is the exception
+global $is_v3_branch, $is_v2_branch, $is_v2_transitional;
+$is_v3_branch = defined( 'W4OS_VERSION' ) && version_compare( W4OS_VERSION, '3.0', '>=' );
+$is_v2_branch = ! $is_v3_branch;
+$is_v2_transitional = $is_v2_branch && defined( 'W4OS_ENABLE_V3' ) && W4OS_ENABLE_V3;
+
+if ( $is_v3_branch ) {
+	echo "Detected: V3 branch (version " . W4OS_VERSION . ")\n";
+} elseif ( $is_v2_transitional ) {
+	echo "Detected: V2 branch with transitional features enabled\n";
+} else {
+	echo "Detected: V2 branch (legacy mode)\n";
+}
+
 // Simple test framework
 class SimpleTest {
 	private $tests_run = 0;
@@ -31,11 +45,17 @@ class SimpleTest {
 		if ( $condition ) {
 			$this->tests_passed++;
 			echo "✓ PASS: {$message}\n";
+			return true;
 		} else {
 			$this->tests_failed++;
 			$this->failed_tests[] = $message;
 			echo "✗ FAIL: {$message}\n";
+			return false;
 		}
+	}
+
+	public function assert_false( $condition, $message = '' ) {
+		return $this->assert_true( ! $condition, $message );
 	}
 
 	public function assert_equals( $expected, $actual, $message = '' ) {
@@ -43,11 +63,13 @@ class SimpleTest {
 		if ( $expected === $actual ) {
 			$this->tests_passed++;
 			echo "✓ PASS: {$message}\n";
+			return true;
 		} else {
 			$this->tests_failed++;
 			$error_details = "(expected: " . var_export($expected, true) . ", got: " . var_export($actual, true) . ")";
 			$this->failed_tests[] = $message . " " . $error_details;
 			echo "✗ FAIL: {$message} {$error_details}\n";
+			return false;
 		}
 	}
 
@@ -56,10 +78,12 @@ class SimpleTest {
 		if ( ! empty( $value ) ) {
 			$this->tests_passed++;
 			echo "✓ PASS: {$message}\n";
+			return true;
 		} else {
 			$this->tests_failed++;
 			$this->failed_tests[] = $message . " (value was empty)";
 			echo "✗ FAIL: {$message} (value was empty)\n";
+			return false;
 		}
 	}
 

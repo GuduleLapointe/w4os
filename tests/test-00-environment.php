@@ -49,10 +49,10 @@ foreach ( $active_plugins as $plugin ) {
 $test->assert_true( $w4os_active, 'W4OS plugin is in active plugins list' );
 
 // Test 6: Database tables
-echo "\nTesting database tables...\n";
+echo "\nTesting WordPress database tables...\n";
 $tables = $wpdb->get_results( "SHOW TABLES" );
 $table_count = count( $tables );
-$test->assert_true( $table_count > 0, 'Database tables exist (' . $table_count . ' tables found)' );
+$test->assert_true( $table_count > 0, $table_count . ' tables found)' );
 
 // Show summary
 $test->summary();
