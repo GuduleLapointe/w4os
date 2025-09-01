@@ -51,7 +51,7 @@ echo "Testing Profiles..." . PHP_EOL;
 echo PHP_EOL;
 echo "Fetching Login configuration..." . PHP_EOL;
 
-$login_page_option = get_option( 'w4os_login_page' );
+$login_page_option = w4os_get_option( 'w4os_login_page' );
 $test->assert_not_empty( $login_page_option, 'Login Page option = ' . var_export( $login_page_option, true ) );
 // $test->assert_true( true, 'w4os_login_page option = ' . var_export( $login_page_option, true ) );
 
@@ -76,7 +76,7 @@ echo PHP_EOL;
 echo "Testing Profile page..." . PHP_EOL;
 
 # Get the profile page URL
-$profile_page_option = get_option( 'w4os_profile_page' );
+$profile_page_option = w4os_get_option( 'w4os_profile_page' );
 $test->assert_not_empty( $profile_page_option, 'Profile Page option = ' . var_export( $profile_page_option, true ) );
 
 // if($profile_page_option === 'provide') {
