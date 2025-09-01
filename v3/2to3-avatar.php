@@ -565,7 +565,7 @@ class W4OS3_Avatar {
 				return trim( $item->FirstName . ' ' . $item->LastName );
 			}
 			return __( 'Invalid Avatar Object', 'w4os' );
-		} elseif ( opensim_isuuid( $item ) ) {
+		} elseif ( is_uuid( $item ) ) {
 			$uuid = $item;
 			global $w4osdb;
 			$query  = "SELECT CONCAT(FirstName, ' ', LastName) AS Name FROM UserAccounts WHERE PrincipalID = %s";

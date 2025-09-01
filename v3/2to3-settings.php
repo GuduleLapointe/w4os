@@ -422,6 +422,8 @@ class W4OS3_Settings {
 			return;
 		}
 
+		$compare_keys = array_flip( array( 'host', 'port', 'name', 'user', 'pass' ) );
+
 		$stored_credentials = W4OS3::get_credentials( $login_uri );
 		if ( empty( $stored_credentials ) || empty( $stored_credentials['console'] ) ) {
 			return;
@@ -430,13 +432,7 @@ class W4OS3_Settings {
 		// Keep only relevant DB fields
 		$stored_config = array_filter(array_intersect_key(
 			$stored_credentials['db'] ?? array(),
-			array(
-				'host' => null,
-				'port' => null,
-				'name' => null,
-				'user' => null,
-				'pass' => null,
-			)
+			$compare_keys,
 		));
 
 		// Get current configuration from console
@@ -449,13 +445,12 @@ class W4OS3_Settings {
 				$result = explode( ' : ', $result );
 				$result = array_pop( $result );
 				
-				$live_config = array_filter(connectionstring_to_array( $result ));
+				$live_config = connectionstring_to_array( $result );
+				$live_config = array_filter(array_intersect_key( $live_config, $compare_keys ));
 
 				$drift_detected = ( $live_config !== $stored_config );
-				
-				if( $drift_detected ) {
 
-					// Use w4os_admin_notice to display the configuration drift warning
+				if( $drift_detected ) {
 					$message = __( 'Current Robust instance database configuration differs from the W4OS stored settings.', 'w4os' );
 
 					if ( $_GET['page'] ?? null === 'w4os-settings' ) {
@@ -468,13 +463,15 @@ class W4OS3_Settings {
 						);
 					}
 
-					w4os_admin_notice( $message, 'warning' );
+					// Cannot send admin notice here, as this method is called in contexts where admin_notices should not be displayed
 				}
-				
+
 				return array(
-					'drift_detected' => $drift_detected,
-					'stored_config' => $stored_config,
-					'live_config' => $live_config
+					'success' => ! $drift_detected, 	 // v3 compatibility
+					'message' => $message ?? null,		 // v3 compatibility
+					'drift_detected' => $drift_detected, // v2 compatibility
+					'stored_config' => $stored_config,	 // v2 compatibility
+					'live_config' => $live_config,	 	 // v2 compatibility
 				);
 			}
 		} catch ( Exception $e ) {

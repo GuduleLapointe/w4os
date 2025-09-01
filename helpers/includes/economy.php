@@ -32,10 +32,10 @@ function noserver_save_transaction( $sourceId, $destId, $amount, $type, $flags, 
 	if ( ! is_numeric( $amount ) ) {
 		return;
 	}
-	if ( ! opensim_isuuid( $sourceId ) ) {
+	if ( ! is_uuid( $sourceId ) ) {
 		$sourceId = NULL_KEY;
 	}
-	if ( ! opensim_isuuid( $destId ) ) {
+	if ( ! is_uuid( $destId ) ) {
 		$destId = NULL_KEY;
 	}
 
@@ -71,7 +71,7 @@ function noserver_save_transaction( $sourceId, $destId, $amount, $type, $flags, 
 function noserver_get_balance( $agentID ) {
 	global $CurrencyDB;
 
-	if ( ! opensim_isuuid( $agentID ) ) {
+	if ( ! is_uuid( $agentID ) ) {
 		return -1;
 	}
 
@@ -104,10 +104,10 @@ function currency_save_transaction( $sourceId, $destId, $amount, $type, $flags, 
 	if ( ! is_numeric( $amount ) ) {
 		return;
 	}
-	if ( ! opensim_isuuid( $sourceId ) ) {
+	if ( ! is_uuid( $sourceId ) ) {
 		$sourceId = NULL_KEY;
 	}
-	if ( ! opensim_isuuid( $destId ) ) {
+	if ( ! is_uuid( $destId ) ) {
 		$destId = NULL_KEY;
 	}
 
@@ -151,7 +151,7 @@ function currency_save_transaction( $sourceId, $destId, $amount, $type, $flags, 
 }
 
 function currency_set_currency_balance( $agentID, $amount, &$deprecated = null ) {
-	if ( ! opensim_isuuid( $agentID ) or ! is_numeric( $amount ) ) {
+	if ( ! is_uuid( $agentID ) or ! is_numeric( $amount ) ) {
 		return false;
 	}
 
@@ -183,7 +183,7 @@ function currency_set_currency_balance( $agentID, $amount, &$deprecated = null )
 }
 
 function currency_update_simulator_balance( $agentID, $amount = -1, $secureID = null ) {
-	if ( ! opensim_isuuid( $agentID ) ) {
+	if ( ! is_uuid( $agentID ) ) {
 		return false;
 	}
 
@@ -195,7 +195,7 @@ function currency_update_simulator_balance( $agentID, $amount = -1, $secureID = 
 	}
 
 	// XML RPC to Region Server
-	if ( ! opensim_isuuid( $secureID, true ) ) {
+	if ( ! is_uuid( $secureID, true ) ) {
 		return false;
 	}
 
@@ -245,10 +245,10 @@ function currency_move_money( $agentID, $destID, $amount, $type, $flags, $desc, 
 
 	// TODO: Shouldn't we execute both balance updates only if all of the four
 	// conditions are met and none of them if any of the checks fails?
-	if ( opensim_isuuid( $agentID ) and $agentID != NULL_KEY ) {
+	if ( is_uuid( $agentID ) and $agentID != NULL_KEY ) {
 		currency_set_currency_balance( $agentID, -$amount );
 	}
-	if ( opensim_isuuid( $destID ) and $destID != NULL_KEY ) {
+	if ( is_uuid( $destID ) and $destID != NULL_KEY ) {
 		currency_set_currency_balance( $destID, $amount );
 	}
 
@@ -256,7 +256,7 @@ function currency_move_money( $agentID, $destID, $amount, $type, $flags, $desc, 
 }
 
 function currency_add_money( $agentID, $amount, $secureID = null ) {
-	if ( ! opensim_isuuid( $agentID ) ) {
+	if ( ! is_uuid( $agentID ) ) {
 		return false;
 	}
 
@@ -269,7 +269,7 @@ function currency_add_money( $agentID, $amount, $secureID = null ) {
 	//
 	// XML RPC to Region Server
 	//
-	if ( ! opensim_isuuid( $secureID, true ) ) {
+	if ( ! is_uuid( $secureID, true ) ) {
 		return false;
 	}
 
@@ -309,7 +309,7 @@ function currency_add_money( $agentID, $amount, $secureID = null ) {
 // by Milo
 //
 function currency_send_money( $agentID, $amount, $secretCode = null ) {
-	if ( ! opensim_isuuid( $agentID ) ) {
+	if ( ! is_uuid( $agentID ) ) {
 		return false;
 	}
 
@@ -354,7 +354,7 @@ function currency_send_money( $agentID, $amount, $secretCode = null ) {
 
 function currency_get_balance( $agentID, $secureID = null ) {
 	$cash = -1;
-	if ( ! opensim_isuuid( $agentID ) ) {
+	if ( ! is_uuid( $agentID ) ) {
 		return (int) $cash;
 	}
 
@@ -363,7 +363,7 @@ function currency_get_balance( $agentID, $secureID = null ) {
 		return (int) $cash;
 	}
 
-	if ( ! opensim_isuuid( $secureID, true ) ) {
+	if ( ! is_uuid( $secureID, true ) ) {
 		return (int) $cash;
 	}
 
@@ -477,7 +477,7 @@ function currency_xmlrpc_call( $host, $port, $uri, $request ) {
  */
 function opensim_get_avatar_session( $agentID, &$deprecated = null ) {
 	global $OpenSimDB;
-	if ( ! opensim_isuuid( $agentID ) ) {
+	if ( ! is_uuid( $agentID ) ) {
 		return null;
 	}
 
@@ -498,7 +498,7 @@ function opensim_get_avatar_session( $agentID, &$deprecated = null ) {
 function opensim_set_current_region( $agentID, $regionid, &$deprecated = null ) {
 	global $OpenSimDB;
 
-	if ( ! opensim_isuuid( $agentID ) or ! opensim_isuuid( $regionid ) ) {
+	if ( ! is_uuid( $agentID ) or ! is_uuid( $regionid ) ) {
 		return false;
 	}
 
@@ -512,7 +512,7 @@ function opensim_set_current_region( $agentID, $regionid, &$deprecated = null ) 
 
 function opensim_get_server_info( $userid, &$deprecated = null ) {
 	global $OpenSimDB;
-	if ( ! opensim_isuuid( $userid ) ) {
+	if ( ! is_uuid( $userid ) ) {
 		return array();
 	}
 
@@ -536,12 +536,12 @@ function opensim_get_server_info( $userid, &$deprecated = null ) {
 
 function opensim_check_secure_session( $agentID, $regionid, $secure, &$deprecated = null ) {
 	global $OpenSimDB;
-	if ( ! opensim_isuuid( $agentID ) or ! opensim_isuuid( $secure ) ) {
+	if ( ! is_uuid( $agentID ) or ! is_uuid( $secure ) ) {
 		return false;
 	}
 
 	$sql = "SELECT UserID FROM Presence WHERE UserID='$agentID' AND SecureSessionID='$secure'";
-	if ( opensim_isuuid( $regionid ) ) {
+	if ( is_uuid( $regionid ) ) {
 		$sql = $sql . " AND RegionID='$regionid'";
 	}
 
@@ -559,7 +559,7 @@ function opensim_check_secure_session( $agentID, $regionid, $secure, &$deprecate
 
 function opensim_check_region_secret( $regionID, $secret, &$deprecated = null ) {
 	global $OpenSimDB;
-	if ( ! opensim_isuuid( $regionID ) ) {
+	if ( ! is_uuid( $regionID ) ) {
 		return false;
 	}
 
