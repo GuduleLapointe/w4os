@@ -255,7 +255,11 @@ class W4OS3 {
 
 		$rest_args = $this->get_console_config( $instance );
 		if ( empty( $rest_args ) ) {
-			error_log( "Console not set for $instance, that's OK" );
+			if(!is_string($instance)) {
+				error_log( "WARNING: no args for instance, and \$instance was not passed as a string, that might be an issue" );
+				return;
+			}
+			error_log( "Console not set for $instance, that might be OK" );
 			return;
 		}
 
