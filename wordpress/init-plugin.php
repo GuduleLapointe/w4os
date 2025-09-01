@@ -662,47 +662,32 @@ class W4OS3 {
 	// 	return $creds;
 	// }
 
+	public static function get_db_credentials_from_console( $credentials, $section = 'DatabaseService', $option = 'ConnectionString' ) {
+		$credentials['console']['enabled'] = true;
+		$session                           = new W4OS3();
+		$result                            = $session->console( $credentials['console'], "config get $section $option" );
+		if ( $result && is_array( $result ) ) {
+			$result = array_shift( $result );
+			$result = explode( ' : ', $result );
+			$result = array_pop( $result );
+			// $result = preg_replace( '/.*Data Source=', 'host=', $result );
+			$credentials['db'] = array_filter(connectionstring_to_array( $result ));
+		}
+		return $credentials['db'] ?? array();
+	}
+
 	public static function update_credentials( $serverURI, $credentials ) {
 
 		$console_enabled = self::validate_console_creds( $credentials['console'] );
 
 		$credentials['console']['enabled'] = ( $console_enabled ) ? true : false;
 		if ( $console_enabled ) {
-			$credentials['console']['enabled'] = true;
-			$session                           = new W4OS3();
-			$command                           = 'config get DatabaseService ConnectionString';
-			$result                            = $session->console( $credentials['console'], 'config get DatabaseService ConnectionString' );
-			if ( $result && is_array( $result ) ) {
-				$result = array_shift( $result );
-				$result = explode( ' : ', $result );
-				$result = array_pop( $result );
-				// $result = preg_replace( '/.*Data Source=', 'host=', $result );
-				$data = OSPDO::connectionstring_to_array( $result );
-				$db   = array_filter(
-					array(
-						'type' => null, // default to mysql
-						'host' => $data['Data Source'],
-						'port' => $data['Port'] ?? 3306,
-						'name' => $data['Database'],
-						'user' => $data['User ID'],
-						'pass' => $data['Password'],
-						'enabled' => false, // is set after validation
-						// 'use_default' => false, // optional
-						// 'enabled' => true, // Added dynamically after connection validation
-					)
-				);
-				// Do not replace localhost with the server address, localhost might be
-				// the only allowed address for the database connection.
-				// if ( $db['host'] == 'localhost' && $credentials['host'] != $_SERVER['SERVER_ADDR'] ) {
-				// 	$db['host'] = $credentials['host'];
-				// }
-				$credentials['db'] = $db;
-			}
+			$credentials['db'] = W4OS3::get_db_credentials_from_console( $credentials );
 		}
 
 		$credentials['db']['enabled'] = OpenSim::validate_db_credentials( $credentials['db'] );
 
-		error_log( __FUNCTION__ . ' ' . $serverURI . ' ' . print_r( $credentials, true ) );
+		// error_log( 'DEBUG ' . __FUNCTION__ . ' ' . $serverURI . ' ' . print_r( $credentials, true ) );
 
 		$options               = self::decrypt( get_option( 'w4os-credentials' ) );
 		$options               = get_option( 'w4os-credentials' );
