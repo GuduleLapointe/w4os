@@ -133,10 +133,10 @@ class OSPDO extends PDO {
         $trace = $trace['file'] . ':' . $trace['line'];
 
         $statement = $this->prepare($query, $options);
-        $result = $statement->execute($params);
+        $success = $statement->execute($params);
 
-        if ($result) {
-            return $result;
+        if ($success) {
+            return $statement;
         }
 
         error_log('Error ' . $statement->errorCode() . ' ' . $statement->errorInfo()[2] . ' ' . $trace);
