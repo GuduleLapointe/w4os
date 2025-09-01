@@ -24,7 +24,7 @@ class W4OS3 {
 	public static $robust_db;
 	public static $assets_db;
 	public static $profile_db;
-	private $console               = null;
+	private static $console        = null;
 	public static $console_enabled = null;
 	public static $db_enabled      = null;
 	public static $ini             = null;
@@ -127,12 +127,12 @@ class W4OS3 {
 			return self::$ini;
 		}
 		$ini = array();
-		if ( ! $this->get_console_config( $instance ) ) {
+		if ( ! self::get_console_config( $instance ) ) {
 			// Console is not configured, ignore it.
 			return $ini;
 		}
 
-		$response = $this->console( $instance, 'config get' );
+		$response = self::console( $instance, 'config get' );
 		if ( $response === false ) {
 			error_log( __FUNCTION__ . ' response false' );
 			return $ini;
@@ -198,22 +198,22 @@ class W4OS3 {
 		return $ini;
 	}
 
-	public function console( $instance = 'robust', $command = null ) {
-		if ( ! is_array( $instance ) && ! $this->get_console_config( $instance ) ) {
+	public static function console( $instance = 'robust', $command = null ) {
+		if ( ! is_array( $instance ) && ! self::get_console_config( $instance ) ) {
 			return false;
 		}
 
-		$console = $this->console_connect( $instance );
+		$console = self::console_connect( $instance );
 		if ( $console === false ) {
 			return false;
 		}
 
-		if ( ! $this->console || is_wp_error( $this->console ) ) {
-			return $this->console;
+		if ( ! self::$console || is_wp_error( self::$console ) ) {
+			return self::$console;
 		}
 
-		if ( $this->console && ! empty( $command ) ) {
-			$response = $this->console->sendCommand( $command );
+		if ( self::$console && ! empty( $command ) ) {
+			$response = self::$console->sendCommand( $command );
 			if ( is_opensim_rest_error( $response ) ) {
 				$error = new WP_Error( 'console_command_failed', $response->getMessage() );
 			} else {
@@ -222,7 +222,7 @@ class W4OS3 {
 		}
 	}
 
-	private function get_console_config( $instance = 'robust' ) {
+	private static function get_console_config( $instance = 'robust' ) {
 		if ( is_array( $instance ) ) {
 			$console_prefs = $instance;
 		} else {
@@ -248,12 +248,12 @@ class W4OS3 {
 		return $config;
 	}
 
-	public function console_connect( $instance = 'robust' ) {
-		if ( $this->console !== null ) {
-			return $this->console;
+	public static function console_connect( $instance = 'robust' ) {
+		if ( self::$console !== null ) {
+			return self::$console;
 		}
 
-		$rest_args = $this->get_console_config( $instance );
+		$rest_args = self::get_console_config( $instance );
 		if ( empty( $rest_args ) ) {
 			if(!is_string($instance)) {
 				error_log( "WARNING: no args for instance, and \$instance was not passed as a string, that might be an issue" );
@@ -266,16 +266,16 @@ class W4OS3 {
 		$rest = new OpenSim_Rest( $rest_args );
 		if ( isset( $rest->error ) && is_opensim_rest_error( $rest->error ) ) {
 			$error         = new WP_Error( 'console_connection_failed', $rest->error->getMessage() );
-			$this->console = $error;
+			self::$console = $error;
 			return $error;
 		} else {
 			$response = $rest->sendCommand( 'show info' );
 			if ( is_opensim_rest_error( $response ) ) {
 				$error         = new WP_Error( 'console_command_failed', $response->getMessage() );
-				$this->console = $error;
+				self::$console = $error;
 				return $error;
 			} else {
-				$this->console = $rest;
+				self::$console = $rest;
 				return $response;
 			}
 		}
@@ -639,8 +639,7 @@ class W4OS3 {
 
 	public static function get_db_credentials_from_console( $credentials, $section = 'DatabaseService', $option = 'ConnectionString' ) {
 		$credentials['console']['enabled'] = true;
-		$session                           = new W4OS3();
-		$result                            = $session->console( $credentials['console'], "config get $section $option" );
+		$result                            = self::console( $credentials['console'], "config get $section $option" );
 		if ( $result && is_array( $result ) ) {
 			$result = array_shift( $result );
 			$result = explode( ' : ', $result );
