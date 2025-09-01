@@ -388,6 +388,80 @@ class W4OS3_Settings {
 		return $creds;
 	}
 
+	/**
+	 * Check if the current console configuration differs from stored credentials.
+	 * This detects when configuration has changed after a server restart.
+	 */
+	public static function check_config_drift() {
+		// Only check if V3 console mode is enabled
+		if ( ! W4OS3::$console_enabled ) {
+			return;
+		}
+
+		// Get current stored credentials
+		$login_uri = get_option( 'w4os_login_uri' );
+		if ( empty( $login_uri ) ) {
+			return;
+		}
+
+		$compare_keys = array_flip( array( 'host', 'port', 'name', 'user', 'pass' ) );
+
+		$stored_credentials = W4OS3::get_credentials( $login_uri );
+		if ( empty( $stored_credentials ) || empty( $stored_credentials['console'] ) ) {
+			return;
+		}
+		
+		// Keep only relevant DB fields
+		$stored_config = array_filter(array_intersect_key(
+			$stored_credentials['db'] ?? array(),
+			$compare_keys,
+		));
+
+		// Get current configuration from console
+		try {
+			$session = new W4OS3();
+			$result  = $session->console( $stored_credentials['console'], 'config get DatabaseService ConnectionString' );
+			
+			if ( $result && is_array( $result ) ) {
+				$result = array_shift( $result );
+				$result = explode( ' : ', $result );
+				$result = array_pop( $result );
+				
+				$live_config = connectionstring_to_array( $result );
+				$live_config = array_filter(array_intersect_key( $live_config, $compare_keys ));
+
+				$drift_detected = ( $live_config !== $stored_config );
+
+				if( $drift_detected ) {
+					$message = __( 'Current Robust instance database configuration differs from the W4OS stored settings.', 'w4os' );
+
+					if ( $_GET['page'] ?? null === 'w4os-settings' ) {
+						$message .= ' ' . __( 'Click Save Changes button to refresh W4OS configuration.', 'w4os' );
+					} else {
+						$message .= ' ' . sprintf( 
+							__( 'Go to the %ssettings%s page to refresh configuration.', 'w4os' ),
+							'<a href="' . admin_url( 'admin.php?page=w4os-settings' ) . '">',
+							'</a>'
+						);
+					}
+
+					// Cannot send admin notice here, as this method is called in contexts where admin_notices should not be displayed
+				}
+
+				return array(
+					'success' => ! $drift_detected, 	 // v3 compatibility
+					'message' => $message ?? null,		 // v3 compatibility
+					'drift_detected' => $drift_detected, // v2 compatibility
+					'stored_config' => $stored_config,	 // v2 compatibility
+					'live_config' => $live_config,	 	 // v2 compatibility
+				);
+			}
+		} catch ( Exception $e ) {
+			// Silently fail - console connection issues shouldn't break the admin
+			error_log( 'W4OS config drift check failed: ' . $e->getMessage() );
+		}
+	}
+
 	public static function format_error( $error ) {
 		if ( empty( $error ) ) {
 			return '';
@@ -640,18 +714,18 @@ class W4OS3_Settings {
 						%14$s %15$s
 					</div>',
 					esc_attr( $args['id'] ),
-					esc_html__( 'Database', 'w4os' ),
+					esc_html__( 'Database', 'w4os' ?? null ),
 					$field_name,
 					esc_html__( 'Hostname', 'w4os' ),
-					esc_attr( $creds['db']['host'] ),
+					esc_attr( $creds['db']['host'] ?? null),
 					esc_html__( 'Port', 'w4os' ),
-					esc_attr( $creds['db']['port'] ),
+					esc_attr( $creds['db']['port'] ?? null),
 					esc_html__( 'Database name', 'w4os' ),
-					esc_attr( $creds['db']['name'] ),
+					esc_attr( $creds['db']['name'] ?? null),
 					esc_html__( 'User', 'w4os' ),
-					esc_attr( $creds['db']['user'] ),
+					esc_attr( $creds['db']['user'] ?? null),
 					esc_html__( 'Password', 'w4os' ),
-					esc_attr( $creds['db']['pass'] ),
+					esc_attr( $creds['db']['pass'] ?? null),
 					w4os_status_icon( $creds['db']['status'] ),
 					self::format_error( $creds['db']['error'] ),
 					$dbreadonly,
