@@ -406,7 +406,7 @@ class Engine_Settings {
         if ($connection_string) {
             // Parse the connection string to see if it has credentials
             if (class_exists('OSPDO')) {
-                $parsed = OSPDO::connectionstring_to_array($connection_string);
+                $parsed = connectionstring_to_array($connection_string);
                 
                 // If it has credentials, return as-is
                 if (!empty($parsed['user']) && !empty($parsed['pass'])) {

@@ -250,7 +250,7 @@ class W4OS_Settings_Validation_Page {
         // Special handling for connection strings - decrypt and parse both values
         if (is_string($new_value) && strpos($new_value, 'Data Source=') !== false) {
             // New value is a connection string, parse it to array
-            $new_parsed = OSPDO::connectionstring_to_array_to_array($new_value);
+            $new_parsed = connectionstring_to_array_to_array($new_value);
             
             // Old value might be encrypted credentials, try to decrypt and compare
             if (is_string($old_value) && class_exists('W4OS3')) {

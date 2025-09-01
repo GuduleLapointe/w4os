@@ -84,7 +84,7 @@ class Helpers {
 
         $connectionstring = self::get_option( 'DatabaseService.ConnectionString', false);
         if( $connectionstring ) {
-            $creds = self::connectionstring_to_array( $connectionstring );
+            $creds = connectionstring_to_array( $connectionstring );
             $dsn = sprintf(
                 'mysql:host=%s;dbname=%s',
                 $creds['host'] . ( empty( $creds['port'] ) ? '' : ':' . $creds['port'] ),

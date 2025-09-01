@@ -128,13 +128,13 @@ function w4os_test_all_mapped_settings() {
 function build_connection_string_from_info($db_info) {
     if (is_string($db_info)) {
         // Already a connection string, parse and return parsed format
-        return OSPDO::connectionstring_to_array($db_info);
+        return connectionstring_to_array($db_info);
     }
     
     if (is_array($db_info) && class_exists('OSPDO')) {
         // Use OSPDO to build connection string then parse back to array for comparison
         $connection_string = OSPDO::array_to_connectionstring($db_info);
-        return OSPDO::connectionstring_to_array($connection_string);
+        return connectionstring_to_array($connection_string);
     }
     
     if (is_array($db_info)) {
@@ -188,7 +188,7 @@ function compare_values_enhanced($old_value, $new_value, $key = '') {
     // Special handling for connection strings
     if (stripos($key, 'connectionstring') !== false || stripos($key, 'db') !== false) {
         $old_parsed = build_connection_string_from_info($old_value);
-        $new_parsed = OSPDO::connectionstring_to_array($new_value);
+        $new_parsed = connectionstring_to_array($new_value);
         
         return ($old_parsed === $new_parsed) ? 'match' : 'differ';
     }
