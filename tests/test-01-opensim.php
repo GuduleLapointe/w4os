@@ -48,7 +48,7 @@ if( $is_v3_branch || $is_v2_transitional ) {
 			'user' => w4os_get_option( 'w4os_db_user' ),
 			'pass' => w4os_get_option( 'w4os_db_pass' ),
 		),
-	);
+	);	
 	$console_enabled = false;
 }
 // $credentials = array();

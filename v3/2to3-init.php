@@ -633,33 +633,27 @@ class W4OS3 {
 		return true;
 	}
 
+	public static function get_db_credentials_from_console( $credentials, $section = 'DatabaseService', $option = 'ConnectionString' ) {
+		$credentials['console']['enabled'] = true;
+		$session                           = new W4OS3();
+		$result                            = $session->console( $credentials['console'], "config get $section $option" );
+		if ( $result && is_array( $result ) ) {
+			$result = array_shift( $result );
+			$result = explode( ' : ', $result );
+			$result = array_pop( $result );
+			// $result = preg_replace( '/.*Data Source=', 'host=', $result );
+			$credentials['db'] = array_filter(connectionstring_to_array( $result ));
+		}
+		return $credentials['db'] ?? array();
+	}
+
 	public static function update_credentials( $serverURI, $credentials ) {
 
 		$console_enabled = self::validate_console_creds( $credentials['console'] );
 
 		$credentials['console']['enabled'] = ( $console_enabled ) ? true : false;
 		if ( $console_enabled ) {
-			$credentials['console']['enabled'] = true;
-			$session                           = new W4OS3();
-			$command                           = 'config get DatabaseService ConnectionString';
-			$result                            = $session->console( $credentials['console'], 'config get DatabaseService ConnectionString' );
-			if ( $result && is_array( $result ) ) {
-				$result = array_shift( $result );
-				$result = explode( ' : ', $result );
-				$result = array_pop( $result );
-				// $result = preg_replace( '/.*Data Source=', 'host=', $result );
-				$db = array_filter(connectionstring_to_array( $result ));
-				
-				// Validate localhost with custom port before any modifications
-				if ( $db['host'] === 'localhost' && ! empty( $db['port'] ) && $db['port'] != '3306' ) {
-					// This is a configuration issue in Robust.ini - log it
-					error_log( 'W4OS V3: Robust.ini has localhost with custom port ' . $db['port'] . ' - MySQL will ignore port and use socket connection' );
-				}
-				
-				// Respect the user's choice of database host from Robust.ini
-				// Do not modify the host value - if they set localhost, they mean localhost
-				$credentials['db'] = $db;
-			}
+			$credentials['db'] = W4OS3::get_db_credentials_from_console( $credentials );
 		}
 
 		$credentials['db']['enabled'] = self::validate_db_credentials( $credentials['db'] );
