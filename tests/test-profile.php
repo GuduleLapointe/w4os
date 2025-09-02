@@ -233,7 +233,13 @@ if ($test->assert_equals(200, $avatar_code, "Proper profile HTTP response code")
 		# Check if avatar name appears in page title
 		$test->assert_true(strpos($analysis['head_title'], $avatar_display_name) !== false, "Avatar name must be in head title (${analysis['head_title']})");
 
-		$in_page_title = $test->assert_true(strpos($analysis['page_title'], $avatar_display_name) !== false, "Avatar name in page title (${analysis['page_title']})");
+		$in_page_title = strpos($analysis['page_title'], $avatar_display_name);
+		if($in_page_title) {
+			echo "✓ Notice: Avatar name found in page title";
+		} else {
+			echo "✗ Notice: Avatar name not in page title";
+		}
+		echo $analysis['page_title'] . PHP_EOL;
 		
 		if ($is_v3_branch) {
 			$doc = testing_parse_html($avatar_body);

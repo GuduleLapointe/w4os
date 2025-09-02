@@ -42,15 +42,26 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	 * Initialize the class. Register actions and filters.
 	 */
 	public function init() {
+		// Initialize slug and profile page URL
+		self::$slug = get_option( 'w4os_profile_slug', 'profile' );
+		self::$profile_page_url = get_home_url( null, self::$slug );
+		
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
 		// Add rewrite rules for the profile page as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
 		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
+		
+		// Handle rewrite rules flush when needed
+		add_action( 'init', array( $this, 'maybe_flush_rewrite_rules' ) );
+		
+		// Use wp hook instead of parse_request - wp hook runs after query vars are parsed
+		add_action( 'wp', array( $this, 'parse_profile_request' ) );
 		
 		// DEBUG ONLY force flush permalink rules
 		// add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
 
 		add_filter( 'query_vars', array( $this, 'add_profile_query_vars' ) );
 		
+		// Template include remains for template selection
 		add_action( 'template_include', array( $this, 'template_include' ) );
 		add_filter( 'the_title', array( $this, 'the_title' ) );
 		add_filter( 'pre_get_document_title', array( $this, 'document_title' ) );
@@ -60,70 +71,98 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	}
 
 	/**
-	 * Template include filter to setup profile page.
+	 * Parse profile request and set proper HTTP status
+	 * Using 'wp' hook to ensure query vars are available
 	 */
-	public function template_include( $template ) {
-		$this->setup_profile();
-		return $template;
-	}
-
-	/**
-	 * Set page title for profile page.
-	 */
-	public function setup_profile() {
+	public function parse_profile_request() {
 		global $wp_query;
 
 		$pagename = W4OS3::get_localized_post_slug();
-
-		if( $pagename === self::$slug ) {
-			$this->is_profile_page = true;
-		} else {
-			return;
+		if( $pagename !== self::$slug ) {
+			return; // Not the profile page
 		}
+
+		$this->is_profile_page = true;
 
 		$query_firstname = get_query_var( 'profile_firstname' );
 		$query_lastname  = get_query_var( 'profile_lastname' );
 		$query_name = get_query_var( 'name' );
-		$pattern = '^' . self::$slug . '/([^/]+)\.([^/\.\?&]+)(\?.*)?';
 
+		// Handle name parameter format
 		if( ! empty( $query_name ) && preg_match('/\./', $query_name) ) {
 			$parts = explode('@', $query_name);
 			if( count( $parts ) > 1 ) {
 				$grid = $parts[1];
 				$query_name = $parts[0];
-
-				die();
+				// TODO: Handle cross-grid avatars
 			}
 			$parts = explode( '.', $query_name );
 			$query_firstname = $parts[0];
 			$query_lastname = $parts[1];
 		}
 
+		// If no avatar specified, this is a user profile page
 		if ( empty( $query_firstname ) || empty( $query_lastname ) ) {
-			// $user = get_current_user();
-			// if ( $user ) {
 			if ( is_user_logged_in() ) {
 				$uuid = w4os_profile_sync( wp_get_current_user() );
 				if ( $uuid ) {
-						$page_title = __( 'My Profile', 'w4os' );
+					$this->page_title = __( 'My Profile', 'w4os' );
 				} else {
-					$page_title = __( 'Create My Avatar', 'w4os' );
+					$this->page_title = __( 'Create My Avatar', 'w4os' );
 				}
 			} else {
-				$page_title = __( 'Log in', 'w4os' );
+				$this->page_title = __( 'Log in', 'w4os' );
 			}
+			$this->head_title = $this->page_title . ' – ' . get_bloginfo( 'name' );
+			return; // Valid page, no 404 needed
+		}
+
+		// Try to load the avatar
+		$avatar_name = "$query_firstname.$query_lastname";
+		$avatar = new W4OS3_Avatar( $avatar_name );
+		
+		if( $avatar->UUID ) {
+			// Avatar found - valid page
+			$this->profile = $avatar;
+			$this->page_title = $avatar->AvatarName;
+			$this->head_title = $avatar->AvatarName . ' – ' . get_bloginfo( 'name' );
 		} else {
-			$avatar = new W4OS3_Avatar( "$query_firstname.$query_lastname" );
-			if( $avatar->UUID ) {
-				$page_title  = $avatar->AvatarName;
-			} else {
-				$not_found  = true;
-				$page_title = __( 'Avatar not found', 'w4os' );
+			// Avatar not found - set 404 status
+			header('HTTP/1.0 404 Not Found');
+
+			$this->profile = false;
+			$this->page_title = __( 'Avatar not found', 'w4os' );
+			$this->head_title = __( 'Avatar not found', 'w4os' ) . ' – ' . get_bloginfo( 'name' );
+		}
+	}
+
+	/**
+	 * Template include filter - now just for template selection.
+	 * The main profile setup is handled in parse_profile_request.
+	 */
+	public function template_include( $template ) {
+		// Only call setup_profile if parse_profile_request hasn't run yet
+		if ( ! $this->is_profile_page ) {
+			$this->setup_profile();
+		}
+		return $template;
+	}
+
+	/**
+	 * Fallback profile setup for template compatibility.
+	 * The main logic is now in parse_profile_request.
+	 */
+	public function setup_profile() {
+		$pagename = W4OS3::get_localized_post_slug();
+		if( $pagename === self::$slug ) {
+			$this->is_profile_page = true;
+			
+			// If parse_profile_request hasn't set titles yet, do basic setup
+			if ( empty( $this->page_title ) ) {
+				$this->page_title = __( 'Profile', 'w4os' );
+				$this->head_title = $this->page_title . ' – ' . get_bloginfo( 'name' );
 			}
 		}
-		$this->profile = $avatar ?? false;
-		$this->page_title = $page_title;
-		$this->head_title = $page_title . ' – ' . get_bloginfo( 'name' );
 	}
 
 	static function avatar_get_option( $option, $default = false ) {
@@ -315,6 +354,19 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// 	$target,
 		// 	'top'
 		// );
+	}
+
+	/**
+	 * Handle rewrite rules flush when needed
+	 * Following the pattern from v1/init.php
+	 */
+	public function maybe_flush_rewrite_rules() {
+		if ( get_option( 'w4os_flush_rewrite_rules' ) || get_option( 'w4os_rewrite_version' ) != W4OS_VERSION ) {
+			wp_cache_flush();
+			add_action( 'init', 'flush_rewrite_rules' );
+			update_option( 'w4os_flush_rewrite_rules', false );
+			update_option( 'w4os_rewrite_version', W4OS_VERSION );
+		}
 	}
 
 	public function add_profile_query_vars( $vars ) {
