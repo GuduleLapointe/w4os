@@ -329,3 +329,19 @@ function testing_analyze_html_content($html_content) {
         'html_length' => strlen($html_content)
     );
 }
+
+/**
+ * Check if a string matches any of the given patterns
+ * Supports both string and regex patterns (regex patterns start with '/')
+ * 
+ * @param string $text The text to search in
+ * @param array $patterns Array of patterns (strings or regex patterns starting with '/')
+ * @return bool True if any pattern matches
+ */
+function testing_matches_any_pattern($text, $patterns) {
+    return !empty(array_filter($patterns, function($pattern) use ($text) {
+        return strpos($pattern, '/') === 0 
+            ? preg_match($pattern, $text)
+            : strpos($text, $pattern) !== false;
+    }));
+}
