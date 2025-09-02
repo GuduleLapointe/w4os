@@ -142,9 +142,16 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	 */
 	public function template_include( $template ) {
 		// Only call setup_profile if parse_profile_request hasn't run yet
-		if ( ! $this->is_profile_page ) {
-			$this->setup_profile();
+		// if ( ! $this->is_profile_page ) {
+		// 	$this->setup_profile();
+		// }
+		
+		// For 404 cases (invalid avatars), let WordPress handle it with standard 404 template
+		if ( $this->is_profile_page && $this->profile === false ) {
+			error_log('DEBUG ' . __METHOD__ . '() loading 404 template for profile page ' . get_404_template());
+			return get_404_template();
 		}
+		error_log('DEBUG ' . __METHOD__ . '() loading standard template for profile page ' . $template);
 		return $template;
 	}
 

@@ -321,9 +321,21 @@ if($test->assert_not_empty($invalid_body, "Response output not empty for Avatar 
     if ($analysis['success']) {
         $test->assert_true(strpos($analysis['head_title'], $not_found_string) !== false, "Proper head title for Avatar Not Found page (${analysis['head_title']})");
         
-        # Check that the page title (in displayed content) contains the not found message
-        $in_page_title = strpos($analysis['page_title'], $not_found_string) !== false;
-        $test->assert_true($in_page_title, "Page title for non-existing profile must contain '$not_found_string' (got: '${analysis['page_title']}')");
+        # Check that the page title (in displayed content) contains appropriate not found message
+        $custom_not_found = strpos($analysis['page_title'], $not_found_string) !== false;
+        
+        $default_404_patterns = [
+            'Page not found',
+            'Not Found', 
+            '404',
+            'Oops',
+            '/No .* Found/' // regex pattern
+        ];
+        
+        $default_404 = testing_matches_any_pattern($analysis['page_title'], $default_404_patterns);
+        
+        $in_page_title = $custom_not_found || $default_404;
+        $test->assert_true($in_page_title, "Page title must contain 'Avatar not found' or default 404 message (got: '${analysis['page_title']}')");
         
         # Check that no valid avatar name pattern appears in main content
         $has_avatar_pattern = preg_match('/\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b/', $analysis['main_content'], $matches);
