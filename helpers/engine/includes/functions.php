@@ -1153,4 +1153,17 @@ function connectionstring_to_array( $connectionstring, $provider = 'mysql' ) {
 // return new UUID(bytes, 0);
 // }
 
+/**
+ * Simple in-memory caching functions for OpenSim helpers
+ */
+function os_cache_get( $key, $default = null ) {
+	global $oshelpers_cache;
+	return isset( $oshelpers_cache[$key] ) ? $oshelpers_cache[$key] : $default;
+}
+
+function os_cache_set( $key, $value, $expire = 0 ) {
+	global $oshelpers_cache;
+	$oshelpers_cache[$key] = $value;
+}
+
 require_once(__DIR__ . '/functions-escaping.php');
