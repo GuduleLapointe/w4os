@@ -314,12 +314,16 @@ $invalid_body = file_get_contents($invalid_url, false, stream_context_get_defaul
 
 $not_found_string = 'Avatar not found';
 
-if($test->assert_not_empty($invalid_body, "Response body not empty for Avatar Not Found page")) {
+if($test->assert_not_empty($invalid_body, "Response output not empty for Avatar Not Found page")) {
     # Parse HTML content and check for "Avatar not found" message
     $analysis = testing_analyze_html_content($invalid_body);
     
     if ($analysis['success']) {
         $test->assert_true(strpos($analysis['head_title'], $not_found_string) !== false, "Proper head title for Avatar Not Found page (${analysis['head_title']})");
+        
+        # Check that the page title (in displayed content) contains the not found message
+        $in_page_title = strpos($analysis['page_title'], $not_found_string) !== false;
+        $test->assert_true($in_page_title, "Page title for non-existing profile must contain '$not_found_string' (got: '${analysis['page_title']}')");
         
         # Check that no valid avatar name pattern appears in main content
         $has_avatar_pattern = preg_match('/\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b/', $analysis['main_content'], $matches);
