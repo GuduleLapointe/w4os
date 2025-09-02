@@ -267,29 +267,56 @@ $invalid_url = rtrim($profile_base_url, '/') . '/invalid.avatar/';
 
 echo PHP_EOL;
 echo "Testing proper error handling and display for invalid avatar profile page $invalid_url" . PHP_EOL;
-$invalid_response = wp_remote_get($invalid_url);
-$error_message = is_wp_error($invalid_response) ? $invalid_response->get_error_message() : '(none)';
-$invalid_code = wp_remote_retrieve_response_code($invalid_response);
 
-# In V2 mode, invalid profiles might return 200 instead of 404 due to fallback behavior
+// Primary test using get_headers() - no WordPress/extension dependencies
+$opts = array(
+	'http' => array(
+		'max_redirects'=>1,
+		'ignore_errors'=>1
+	),
+    'ssl' => [
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+    ],
+);
+stream_context_get_default($opts);
+$headers = get_headers($invalid_url, 1);
+// get response code from headers
+$header_code = null;
+if ($headers && is_array($headers)) {
+	$status_line = $headers[0];
+	if (preg_match('#HTTP/\d+\.\d+\s+(\d+)#', $status_line, $matches)) {
+		$header_code = (int)$matches[1];
+	}
+}
+$test->assert_equals(404, $header_code, "Proper Avatar Not Found HTTP response code from get_headers() = " . var_export($header_code, true));
 
-# Test what users actually get - expect 200 based on Apache logs
-$test->assert_equals(404, $invalid_code, "Expect 404 Not found response for invalid proofile page");
-echo "   Error message: $error_message" . PHP_EOL;
+// Secondary test using exec(curl) - track curl binary vs PHP lib discrepancy  
+$cmd = 'curl -skI ' . escapeshellarg($invalid_url);
+exec($cmd, $output, $return_var);
+// Parse output to find HTTP status line
+$exec_code = null;
+foreach ($output as $line) {
+	if (preg_match('#HTTP/\d+\.\d+\s+(\d+)#', $line, $matches)) {
+		$exec_code = (int)$matches[1];
+		break;
+	}
+}
+$test->assert_equals(404, $exec_code, "Proper Avatar Not Found HTTP response code from exec(curl) = " . var_export($exec_code, true));
 
-# Check current behavior for invalid profile page
-$invalid_body = wp_remote_retrieve_body($invalid_response);
+# Check current behavior for Avatar Not Found page - get content using same SSL context
+$invalid_body = file_get_contents($invalid_url, false, stream_context_get_default());
 
 $not_found_string = 'Avatar not found';
 
-if($test->assert_not_empty($invalid_body, "Response body for invalid profile page")) {
+if($test->assert_not_empty($invalid_body, "Response body for Avatar Not Found page")) {
     $doc = new DOMDocument();
     @$doc->loadHTML($invalid_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $xpath = new DOMXPath($doc);
     $title_nodes = $xpath->query('//title');
     $title_content = $title_nodes->length > 0 ? $title_nodes->item(0)->textContent : '';
     $has_title_not_found = (strpos($title_content, $not_found_string) !== false);
-    $test->assert_true($has_title_not_found, "$not_found_string title in invalid profile page properties");
+    $test->assert_true($has_title_not_found, "$not_found_string title in Avatar Not Found page properties");
 
     # Test current buggy behavior: body content should include the not found string message
     # Extract main content area excluding header, footer, nav elements
@@ -302,11 +329,11 @@ if($test->assert_not_empty($invalid_body, "Response body for invalid profile pag
     }
 
     $has_body_not_found = (strpos($main_content, $not_found_string) !== false);
-    $test->assert_true($has_body_not_found, "$not_found_string appears in invalid profile page main content");
+    $test->assert_true($has_body_not_found, "$not_found_string appears in Avatar Not Found page main content");
 } else {
     echo "   ⚠️  Cannot test empty content - skipping head and body content tests" . PHP_EOL;
-    // $test->assert_false(true, "$not_found_string title in invalid profile page properties (skipped - empty response)");
-    // $test->assert_false(true, "$not_found_string appears in invalid profile page main content (skipped - empty response)");
+    // $test->assert_false(true, "$not_found_string title in Avatar Not Found page properties (skipped - empty response)");
+    // $test->assert_false(true, "$not_found_string appears in Avatar Not Found page main content (skipped - empty response)");
 }
 
 	// Show summary
