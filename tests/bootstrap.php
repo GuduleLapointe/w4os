@@ -138,3 +138,98 @@ class SimpleTest {
 
 // Global test instance
 $test = new SimpleTest();
+
+/**
+ * DOM Analysis Helper Functions
+ * These functions provide reliable HTML content analysis using DOMDocument
+ * instead of unreliable string matching.
+ */
+
+/**
+ * Parse HTML content into a DOMDocument with error suppression
+ * @param string $html_content The HTML content to parse
+ * @return DOMDocument|false The parsed document or false on error
+ */
+function testing_parse_html($html_content) {
+	if (empty($html_content)) {
+		return false;
+	}
+	
+	$doc = new DOMDocument();
+	// Suppress warnings for malformed HTML
+	$old_setting = libxml_use_internal_errors(true);
+	$success = $doc->loadHTML($html_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+	libxml_use_internal_errors($old_setting);
+	
+	return $success ? $doc : false;
+}
+
+/**
+ * Extract title content from HTML
+ * @param string $html_content The HTML content
+ * @return string|false The title content or false if not found
+ */
+function testing_get_html_title($html_content) {
+	$doc = testing_parse_html($html_content);
+	if (!$doc) {
+		return false;
+	}
+	
+	$xpath = new DOMXPath($doc);
+	$title_nodes = $xpath->query('//title');
+	
+	return $title_nodes->length > 0 ? trim($title_nodes->item(0)->textContent) : false;
+}
+
+/**
+ * Extract main content from HTML, excluding header/footer/nav elements
+ * @param string $html_content The HTML content
+ * @return string The main content text
+ */
+function testing_get_main_content($html_content) {
+	$doc = testing_parse_html($html_content);
+	if (!$doc) {
+		return '';
+	}
+	
+	$xpath = new DOMXPath($doc);
+	
+	// Get body content but exclude header, footer, nav elements
+	$body_nodes = $xpath->query('//body//text()[not(ancestor::header) and not(ancestor::footer) and not(ancestor::nav) and not(ancestor::title)]');
+	
+	$main_content = '';
+	foreach ($body_nodes as $node) {
+		$main_content .= $node->textContent . ' ';
+	}
+	
+	return trim($main_content);
+}
+
+/**
+ * Check if text contains a specific string (case-insensitive)
+ * @param string $haystack The text to search in
+ * @param string $needle The text to search for
+ * @return bool True if found, false otherwise
+ */
+function testing_content_contains($haystack, $needle) {
+	return stripos($haystack, $needle) !== false;
+}
+
+/**
+ * Analyze HTML content for specific elements and text
+ * @param string $html_content The HTML content to analyze
+ * @param string $search_text The text to search for
+ * @return array Analysis results with title_contains, content_contains, title_text, content_length
+ */
+function testing_analyze_html_content($html_content, $search_text) {
+	$title = testing_get_html_title($html_content);
+	$content = testing_get_main_content($html_content);
+	
+	return array(
+		'title_contains' => $title ? testing_content_contains($title, $search_text) : false,
+		'content_contains' => testing_content_contains($content, $search_text),
+		'title_text' => $title ?: '',
+		'content_length' => strlen($content),
+		'has_content' => !empty($content)
+	);
+}
