@@ -4,9 +4,28 @@
  * Loads WordPress and sets up the testing environment
  */
 
-// Start session to prevent warnings from plugin code
+// Start session FIRST to prevent warnings
 if ( session_status() === PHP_SESSION_NONE ) {
 	session_start();
+}
+
+// Load .env file if it exists for per-site configuration
+$env_file = __DIR__ . '/.env';
+if (file_exists($env_file)) {
+	$env_lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	foreach ($env_lines as $line) {
+		if (strpos(trim($line), '#') === 0) {
+			continue; // Skip comments
+		}
+		if (strpos($line, '=') !== false) {
+			list($key, $value) = explode('=', $line, 2);
+			$key = trim($key);
+			$value = trim($value, '"\''); // Remove quotes
+			putenv("$key=$value");
+			$_ENV[$key] = $value;
+		}
+	}
+	echo "Loaded environment configuration from .env\n";
 }
 
 // Load WordPress

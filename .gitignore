@@ -26,3 +26,4 @@ wp-cli.local.yml
 *.zip
 .vscode/
 /engine/config/
+.env

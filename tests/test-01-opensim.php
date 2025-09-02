@@ -36,19 +36,19 @@ if( $is_v3_branch || $is_v2_transitional ) {
 } else {
 	echo "  Using V2 legacy settings..." . PHP_EOL;
 
-	$login_uri = get_option( 'w4os_login_uri' );
+	$login_uri = w4os_get_option( 'w4os_login_uri' );
 	if( ! $test->assert_not_empty( $login_uri, 'Grid login URI ' . $login_uri )) {
 		exit( $test->summary() ? 0 : 1 );
 	}
 	$credentials = array(
 		'db' => array(
-			'host' => get_option( 'w4os_db_host' ),
-			'port' => get_option( 'w4os_db_port' ),
-			'name' => get_option( 'w4os_db_database' ),
-			'user' => get_option( 'w4os_db_user' ),
-			'pass' => get_option( 'w4os_db_pass' ),
+			'host' => w4os_get_option( 'w4os_db_host' ),
+			'port' => w4os_get_option( 'w4os_db_port' ),
+			'name' => w4os_get_option( 'w4os_db_database' ),
+			'user' => w4os_get_option( 'w4os_db_user' ),
+			'pass' => w4os_get_option( 'w4os_db_pass' ),
 		),
-	);
+	);	
 	$console_enabled = false;
 }
 // $credentials = array();
@@ -93,7 +93,7 @@ if ( $console_enabled ) {
 	}
 
 	$live_db_config = W4OS3::get_db_credentials_from_console( $credentials['console'] );
-	$live_host = "z" . $live_db_config['host'] ?? '';
+	$live_host = $live_db_config['host'] ?? '';
 	$stored_host = $credentials['db']['host'] ?? '';
 
 	if ( $live_host === 'localhost' && ! $test->assert_equals( $live_host, $stored_host, 'Credential integrity: get_credentials should preseve localhost value' ) ) {

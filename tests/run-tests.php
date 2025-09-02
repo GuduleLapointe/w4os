@@ -49,6 +49,10 @@ foreach ( $test_files as $test_file ) {
 ";
 	
 	// Parse summary from output
+	$tests_run = 0;
+	$tests_passed = 0;
+	$tests_failed = 0;
+	
 	if ( preg_match( '/Total tests: (\d+)/', $test_output, $matches ) ) {
 		$tests_run = (int) $matches[1];
 		$total_run += $tests_run;
@@ -64,6 +68,16 @@ foreach ( $test_files as $test_file ) {
 		$total_failed += $tests_failed;
 	}
 	
+	// If return code is non-zero but no test summary found, treat as fatal error
+	if ( $return_code !== 0 && $tests_run === 0 ) {
+		echo "❌ FATAL ERROR: Test {$test_name} crashed with exit code {$return_code}" . PHP_EOL;
+		$tests_run = 1;
+		$tests_failed = 1;
+		$total_run += 1;
+		$total_failed += 1;
+		$all_failed_tests[] = "[{$test_name}] Fatal error (exit code {$return_code})";
+	}
+	
 	// Extract failed tests
 	if ( preg_match_all( '/\d+\. (.+)/', $test_output, $matches ) ) {
 		foreach ( $matches[1] as $failed_test ) {
@@ -74,9 +88,9 @@ foreach ( $test_files as $test_file ) {
 	$all_tests[] = array(
 		'name' => $test_name,
 		'return_code' => $return_code,
-		'tests_run' => isset( $tests_run ) ? $tests_run : 0,
-		'tests_passed' => isset( $tests_passed ) ? $tests_passed : 0,
-		'tests_failed' => isset( $tests_failed ) ? $tests_failed : 0
+		'tests_run' => $tests_run,
+		'tests_passed' => $tests_passed,
+		'tests_failed' => $tests_failed
 	);
 	
 	echo "
