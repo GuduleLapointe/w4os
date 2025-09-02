@@ -312,6 +312,7 @@ class W4OS3 {
 
 	public static function includes() {
 		// Transition classes will be loaded here.
+		require_once W4OS_PLUGIN_DIR . 'helpers/engine/bootstrap.php';
 
 		// First we include all the files
 		require_once W4OS_INCLUDES_DIR . '2to3-settings.php';
@@ -322,7 +323,6 @@ class W4OS3 {
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-models.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-userless-auth.php';
 		require_once W4OS_INCLUDES_DIR . 'helpers/2to3-helper-usermenu.php';
-		require_once W4OS_PLUGIN_DIR . 'helpers/engine/opensim-rest/class-rest.php';
 
 		// Load v3 features if enabled
 		if ( W4OS_ENABLE_V3 ) {

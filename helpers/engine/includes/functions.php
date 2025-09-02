@@ -1046,6 +1046,26 @@ function isSuccess( $response ) {
 	if ( $response === true || $response === false ) {
 		return $response;
 	}
+	if ( is_object( $response ) ) {
+		// Check for $e property (PHP exception object) - if present, it's an error
+		if ( isset( $response->e ) && $response->e instanceof Exception ) {
+			return false;
+		}
+		// Check for $error property (error array)
+		if ( isset( $response->error ) && is_array( $response->error ) ) {
+			return ! empty( $response->error['success'] ) ? $response->error['success'] : false;
+		}
+		// Check for ready property (common in database objects)
+		if ( isset( $response->ready ) ) {
+			return $response->ready;
+		}
+		// If it's a WP_Error object
+		if ( function_exists( 'is_wp_error' ) && is_wp_error( $response ) ) {
+			return false;
+		}
+		// Default for objects: assume success unless proven otherwise
+		return true;
+	}
 	if ( is_array( $response ) ) {
 		return ! empty( $response['success'] ) && $response['success'] === true;
 	} elseif ( is_string( $response ) ) {
@@ -1063,6 +1083,24 @@ function isSuccess( $response ) {
 }
 
 function isError( $response ) {
+	if ( is_object( $response ) ) {
+		// Check for $e property (PHP exception object)
+		if ( isset( $response->e ) && $response->e instanceof Exception ) {
+			return true;
+		}
+		// Check for $error property (error array)
+		if ( isset( $response->error ) && is_array( $response->error ) ) {
+			return ! empty( $response->error['success'] ) ? ! $response->error['success'] : true;
+		}
+		// Check for ready property (common in database objects)
+		if ( isset( $response->ready ) ) {
+			return ! $response->ready;
+		}
+		// If it's a WP_Error object
+		if ( is_wp_error( $response ) ) {
+			return true;
+		}
+	}
 	return ! isSuccess( $response );
 }
 

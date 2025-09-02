@@ -91,7 +91,7 @@ class W4OS_Loader {
 		/**
 		 * The standard plugin classes.
 		 */
-		require_once W4OS_DIR . '/helpers/engine/includes/functions.php';
+		require_once W4OS_DIR . '/helpers/engine/bootstrap.php';
 		require_once W4OS_DIR . '/v2/class-w4os.php';
 		require_once W4OS_DIR . '/v2/class-db.php';
 		require_once W4OS_DIR . '/v2/class-i18n.php';
