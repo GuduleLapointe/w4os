@@ -1,6 +1,6 @@
 # w4os - OpenSimulator Web Interface (dev)
 
-![Version 2.10.0-beta-2](https://img.shields.io/badge/Version-2.10.0--beta--2-00aa00)
+![Version 2.10.0-beta-3](https://img.shields.io/badge/Version-2.10.0--beta--3-00aa00)
 ![Stable 2.9.4](https://img.shields.io/badge/Stable-2.9.4-00aa00)
 ![WordPress 5.3.0+](https://img.shields.io/badge/WordPress-5.3.0+-3858e9)
 ![Requires PHP 7.3+](https://img.shields.io/badge/PHP-7.3+-7884bf)

@@ -7,7 +7,7 @@
  * Author URI:        https://speculoos.world
  * Text Domain:       w4os
  * Domain Path:       /languages/
- * Version:           2.10.0-beta-2
+ * Version:           2.10.0-beta-3
  *
  * @package GuduleLapointe/w4os
  *

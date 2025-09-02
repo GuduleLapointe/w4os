@@ -5,7 +5,7 @@ Tags: OpenSimulator, Second Life, web interface, hypergrid, standalone
 Requires at least: 5.3.0
 Requires PHP: 7.3
 Tested up to: 6.8.2
-Stable tag: 2.10.0-beta-2
+Stable tag: 2.10.0-beta-3
 License: AGPLv3 or later
 License URI: https://www.gnu.org/licenses/agpl-3.0.txt
 
@@ -226,6 +226,8 @@ or not. In either case, idk&idc.
 == Changelog ==
 
 = Unreleased =
+
+= 2.10.0-beta-3 =
 
 **Important Bug Fixes:**
 - fix MySQL non-standard ports not properly tested to validate DB credentials #88

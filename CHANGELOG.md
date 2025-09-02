@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+### v2.10.0-beta-3 (2025-09-02)
+
 **Important Bug Fixes:**
 - fix MySQL non-standard ports not properly tested to validate DB credentials #88
 - fix MySQL not handling custom port when set to localhost (added warning)
