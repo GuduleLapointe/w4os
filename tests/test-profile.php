@@ -118,14 +118,19 @@ echo "Testing Profile page..." . PHP_EOL;
 $profile_page_option = w4os_get_option( 'w4os_profile_page' );
 $test->assert_not_empty( $profile_page_option, 'Profile Page option = ' . var_export( $profile_page_option, true ) );
 
-# Get profile base URL using W4OS3 method
+# Get profile base URL using appropriate method for V2/V3
 $profile_base_url = '';
-if (class_exists('W4OS3_Avatar')) {
+if( $is_v3_branch || $is_v2_transitional ) {
     $profile_base_url = W4OS3_Avatar::profile_url();
-} elseif (function_exists('w4os_profile_url')) {
-    $profile_base_url = w4os_profile_url();
+} else {
+    // For V2, construct base URL from profile slug option
+    $profile_slug = get_option('w4os_profile_slug', 'profile');
+    $profile_base_url = get_home_url(null, $profile_slug);
 }
-$test->assert_not_empty( $profile_base_url, 'Profile base URL = ' . var_export( $profile_base_url, true ) );
+if(! $test->assert_not_empty( $profile_base_url, 'Profile base URL = ' . var_export( $profile_base_url, true ) ) ) {
+	echo "❌ Cannot proceed without a valid profile base URL" . PHP_EOL;
+	exit( $test->summary() ? 0 : 1 );
+}
 
 echo PHP_EOL;
 echo "Getting the list of avatars..." . PHP_EOL;
@@ -266,7 +271,10 @@ $invalid_response = wp_remote_get($invalid_url);
 $error_message = is_wp_error($invalid_response) ? $invalid_response->get_error_message() : '(none)';
 $invalid_code = wp_remote_retrieve_response_code($invalid_response);
 
-$test->assert_equals(404, $invalid_code, "'404 Not Found' returned for invalid profile page");
+# In V2 mode, invalid profiles might return 200 instead of 404 due to fallback behavior
+
+# Test what users actually get - expect 200 based on Apache logs
+$test->assert_equals(404, $invalid_code, "Expect 404 Not found response for invalid proofile page");
 echo "   Error message: $error_message" . PHP_EOL;
 
 # Check current behavior for invalid profile page
@@ -274,27 +282,32 @@ $invalid_body = wp_remote_retrieve_body($invalid_response);
 
 $not_found_string = 'Avatar not found';
 
-# Test that title shows not found string (this should pass in current state)
-$doc = new DOMDocument();
-@$doc->loadHTML($invalid_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-$xpath = new DOMXPath($doc);
-$title_nodes = $xpath->query('//title');
-$title_content = $title_nodes->length > 0 ? $title_nodes->item(0)->textContent : '';
-$has_title_not_found = (strpos($title_content, $not_found_string) !== false);
-$test->assert_true($has_title_not_found, "$not_found_string title in invalid profile page properties");
+if($test->assert_not_empty($invalid_body, "Response body for invalid profile page")) {
+    $doc = new DOMDocument();
+    @$doc->loadHTML($invalid_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $xpath = new DOMXPath($doc);
+    $title_nodes = $xpath->query('//title');
+    $title_content = $title_nodes->length > 0 ? $title_nodes->item(0)->textContent : '';
+    $has_title_not_found = (strpos($title_content, $not_found_string) !== false);
+    $test->assert_true($has_title_not_found, "$not_found_string title in invalid profile page properties");
 
-# Test current buggy behavior: body content should include the not found string message
-# Extract main content area excluding header, footer, nav elements
-$main_content = '';
+    # Test current buggy behavior: body content should include the not found string message
+    # Extract main content area excluding header, footer, nav elements
+    $main_content = '';
 
-# Get body content but exclude header, footer, nav elements
-$body_nodes = $xpath->query('//body//text()[not(ancestor::header) and not(ancestor::footer) and not(ancestor::nav) and not(ancestor::title)]');
-foreach ($body_nodes as $node) {
-    $main_content .= $node->textContent . ' ';
+    # Get body content but exclude header, footer, nav elements
+    $body_nodes = $xpath->query('//body//text()[not(ancestor::header) and not(ancestor::footer) and not(ancestor::nav) and not(ancestor::title)]');
+    foreach ($body_nodes as $node) {
+        $main_content .= $node->textContent . ' ';
+    }
+
+    $has_body_not_found = (strpos($main_content, $not_found_string) !== false);
+    $test->assert_true($has_body_not_found, "$not_found_string appears in invalid profile page main content");
+} else {
+    echo "   ⚠️  Cannot test empty content - skipping head and body content tests" . PHP_EOL;
+    // $test->assert_false(true, "$not_found_string title in invalid profile page properties (skipped - empty response)");
+    // $test->assert_false(true, "$not_found_string appears in invalid profile page main content (skipped - empty response)");
 }
-
-$has_body_not_found = (strpos($main_content, $not_found_string) !== false);
-$test->assert_true($has_body_not_found, "$not_found_string appears in invalid profile page main content");
 
 	// Show summary
 $test->summary();
