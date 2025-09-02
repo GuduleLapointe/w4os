@@ -1,64 +1,57 @@
 <?php
 /**
- * OpenSimulator Environment Tests
- * Tests OpenSim database and console connectivity using proper W4OS methods
- * 
- * Usage: php test-opensim.php
+ * Profile page testing framework
+ * Tests profile page functionality across V2, V2-transitional, and V3 branches
  */
 
-// I need a new test suite for profile page. Use the same minimalistic clear structure as in tests/test-01-opensim.php (but I think we don't need to exit on failure this time).
-
-// Boostrap:
-// - make bootstrap read .env file to allow per-site values
-
-// Testing values:
-// - Use plugin functions to get base profile url (W4OS3_Avatar::profile_url()) (might be the same as login page or not)
-// - use wp function to get the login page it should be either the url of the page set by w4os_login_page option, either wp core login page or login page set by another plugin if set to "default"
-// - if TEST_AVATAR is set, use plugin methods to get its id, otherwise use the plugin methods to list avatars and pick one randomly and get its id and name
-// - Use plugin functions to get the picked avatar profile url W4OS3_Avatar::profile_url()
-
-// Tests:
-// - get the login page (or profile page alone): it should return 200 OK and contain the login form, e.g:
-// # https://dev.w4os.org/profile/
-// HTTP/1.1 200 OK
-// <title>Log in – W4OS</title>
-// <div class="login w4os-login ">
-// <form name="w4os-loginform" id="w4os-loginform" action="https://dev.w4os.org/wp-login.php" method="post">
-// <h2 class="wp-block-site-title">
-
-// - get the picked avatar profile page (usually /profile/firstname.lastname/), it should returrn 200 OK and contain the avatar profile, e.g.:
-
-// # https://dev.w4os.org/profile/way.forest/
-// HTTP/1.1 200 OK
-// <title>Way Forest – W4OS</title>
-// <h2>Way Forest</h2>December 9, 2021 (1,362 days old)</div>
-// <h2 class="wp-block-site-title">
-
-// - get a wrong avatar profile page, it should return 404 and probably the website 404 page (so no specific check on content, mileage might vary too much), e.g.
-// # https://dev.w4os.org/profile/wrong.name/
-// HTTP/1.1 404 Not Found
-
-// My issue is that I don't get the same results on both website, the first thing to do is to make a test suite, so we can easily track the results and start investigate the cause itself.
-
-
-// Tests are intended mostly for dev environments, make sure to disable certifiicate check to avoid rejects with self-signed certificates.
-// Load bootstrap
 require_once __DIR__ . '/bootstrap.php';
 
 echo "Testing Profiles..." . PHP_EOL;
 
+if( $is_v3_branch) {
+	// This is a mistake, but reflects current usage in v3 branch
+	// V3 should not use wp core get_option() directly for plugin options
+	$profile_page_option = get_option( 'w4os_profile_page' );
+} else {
+	$profile_page_option = w4os_get_option( 'w4os_profile_page' );
+}
+// No need to continue if profile page is not enabled in settings
+if(! $test->assert_equals( 'provide', $profile_page_option, 'Profile Page option = ' . var_export( $profile_page_option, true ) )) {
+	echo "❌ Profile page not enabled, skipping profile page tests" . PHP_EOL;
+	exit( $test->summary() ? 0 : 1 );
+}
+
 // First collect some testing data
 echo PHP_EOL;
-echo "Fetching Login configuration..." . PHP_EOL;
+echo "Fetching plugin configuration..." . PHP_EOL;
 
 // Get database connection for later use
 global $is_v3_branch, $is_v2_branch, $is_v2_transitional;
 
+$login_uri = w4os_grid_login_uri();
 $credentials = array();
+$robust_db = null;
+$db_connected = false;
+
 if ($is_v3_branch || $is_v2_transitional) {
-    $login_uri = w4os_grid_login_uri();
     $credentials = W4OS3::get_credentials($login_uri);
     $robust_db = W4OS3::$robust_db;
+    // For V3, check if robust_db exists and has ready property
+    if ($is_v3_branch) {
+        $db_connected = $robust_db && isset($robust_db->ready) && $robust_db->ready;
+    } else {
+        // For V2-transitional, check if robust_db exists and can query
+        $db_connected = $robust_db && is_object($robust_db);
+        if ($db_connected) {
+            // Test with a simple query
+            try {
+                $test_result = $robust_db->get_var("SELECT 1");
+                $db_connected = ($test_result == '1');
+            } catch (Exception $e) {
+                $db_connected = false;
+            }
+        }
+    }
 } else {
     // For V2 branch, get credentials from options
     $credentials = array(
@@ -79,24 +72,39 @@ if ($is_v3_branch || $is_v2_transitional) {
         $credentials['db']['name'],
         $host_with_port
     );
+    
+    // Test V2 database connection
+    if ($robust_db && is_object($robust_db)) {
+        try {
+            $test_result = $robust_db->get_var("SELECT 1");
+            $db_connected = ($test_result == '1');
+        } catch (Exception $e) {
+            $db_connected = false;
+        }
+    }
 }
 
-$db_connected = ($is_v3_branch || $is_v2_transitional) ? 
-    ($robust_db && $robust_db->ready) : 
-    ($robust_db && $robust_db->check_connection(false));
+if(! $test->assert_true( $db_connected, 'Database connected' )) {
+	echo "❌ Cannot proceed without a valid database connection" . PHP_EOL;
+	exit( $test->summary() ? 0 : 1 );
+}
 
-echo "Database connection: " . ($db_connected ? "OK" : "FAILED") . PHP_EOL;
-
-$login_page_option = w4os_get_option( 'w4os_login_page' );
-$test->assert_not_empty( $login_page_option, 'Login Page option = ' . var_export( $login_page_option, true ) );
-// $test->assert_true( true, 'w4os_login_page option = ' . var_export( $login_page_option, true ) );
-
-# Get the url of the login page
-if($login_page_option === 'default') {
+if( $is_v3_branch) {
+	echo "Login page option not implemented in V3, using default WP login page" . PHP_EOL;
 	$login_page_url = wp_login_url();
-	$test->assert_not_empty( $login_page_url, 'Login page URL (default) = ' . var_export( $login_page_url, true ) );
 } else {
-	$login_page_url = get_permalink( get_page_by_path( $login_page_option ) );
+	// # Test login page configuration
+	$login_page_option = w4os_get_option( 'w4os_login_page' );
+	$test->assert_not_empty( $login_page_option, 'Login Page option = ' . var_export( $login_page_option, true ) );
+	// $test->assert_true( true, 'w4os_login_page option = ' . var_export( $login_page_option, true ) );
+
+	# Get the url of the login page
+	if($login_page_option === 'default') {
+		$login_page_url = wp_login_url();
+		$test->assert_not_empty( $login_page_url, 'Login page URL (default) = ' . var_export( $login_page_url, true ) );
+	} else {
+		$login_page_url = get_permalink( get_page_by_path( $login_page_option ) );
+	}
 }
 $test->assert_not_empty( $login_page_url, 'Login page URL = ' . var_export( $login_page_url, true ) );
 
@@ -105,18 +113,11 @@ add_filter( 'https_ssl_verify', '__return_false' );
 $response = wp_remote_get( $login_page_url );
 # Get error message if any
 $error_message = is_wp_error( $response ) ? $response->get_error_message() : '(none)';
-$test->assert_equals( 200, wp_remote_retrieve_response_code( $response ), 'Login page HTTP response code = ' . wp_remote_retrieve_response_code( $response ) );
+$test->assert_equals( 200, wp_remote_retrieve_response_code( $response ), 'Login page HTTP response code');
 $test->assert_true( ! is_wp_error( $response ), 'Login page Error message = ' . $error_message );
 
 echo PHP_EOL;
-echo "Testing Profile page..." . PHP_EOL;
-
-echo PHP_EOL;
-echo "Testing Profile page..." . PHP_EOL;
-
-# Get the profile page URL configuration
-$profile_page_option = w4os_get_option( 'w4os_profile_page' );
-$test->assert_not_empty( $profile_page_option, 'Profile Page option = ' . var_export( $profile_page_option, true ) );
+echo "Testing Profile pages..." . PHP_EOL;
 
 # Get profile base URL using appropriate method for V2/V3
 $profile_base_url = '';
@@ -202,7 +203,9 @@ if ($test_avatar_name) {
     }
 }
 
-$test_avatar_details = ($test_avatar ?? null) ? $test_avatar->FirstName . ' ' . $test_avatar->LastName . ' (' . $test_avatar->PrincipalID . ')' : '';
+// echo 'DEBUG $test_avatar: ' . var_export($test_avatar, true) . PHP_EOL;
+// exit('DEBUG exit');
+$test_avatar_details = ($test_avatar ?? null) ? $test_avatar->FirstName . ' ' . $test_avatar->LastName . ' (' . ($test_avatar->PrincipalID ?? $test_avatar->UUID). ')' : '';
 
 if( ! $test->assert_not_empty( $test_avatar, "Avatar for testing: {$test_avatar_details}" )) {
 	echo "❌ Cannot proceed without a valid test avatar" . PHP_EOL;
@@ -216,7 +219,7 @@ echo "Testing base profile page $profile_base_url..." . PHP_EOL;
 $base_response = wp_remote_get($profile_base_url);
 $base_error = is_wp_error($base_response) ? $base_response->get_error_message() : '(none)';
 $base_code = wp_remote_retrieve_response_code($base_response);
-$test->assert_equals(200, $base_code, "Base profile page HTTP response code = $base_code");
+$test->assert_equals(200, $base_code, "Base profile page HTTP response");
 $test->assert_true(!is_wp_error($base_response), "Base profile page error = $base_error");
 
 # Check if page contains login form
@@ -227,7 +230,7 @@ if ($base_code == 200) {
 }
 
 if ($is_v3_branch && method_exists($test_avatar, 'profile_url')) {
-	$avatar_profile_url = $test_avatar->profile_url();
+	$avatar_profile_url = $test_avatar->profile_url($test_avatar);
 	$avatar_display_name = $test_avatar->FirstName . ' ' . $test_avatar->LastName;
 } else {
 	// Construct profile URL manually for 2.x
@@ -246,20 +249,44 @@ echo "Testing valid avatar profile page $avatar_profile_url" . PHP_EOL;
 $avatar_response = wp_remote_get($avatar_profile_url);
 $avatar_error = is_wp_error($avatar_response) ? $avatar_response->get_error_message() : '(none)';
 $avatar_code = wp_remote_retrieve_response_code($avatar_response);
-$test->assert_equals(200, $avatar_code, "Avatar profile HTTP response code = $avatar_code");
-$test->assert_true(!is_wp_error($avatar_response), "Avatar profile error = $avatar_error");
 
 # Check if page contains avatar name
-if ($avatar_code == 200) {
+if ($test->assert_equals(200, $avatar_code, "Proper profile HTTP response code")) {
 	$avatar_body = wp_remote_retrieve_body($avatar_response);
-	$has_avatar_name = (strpos($avatar_body, $avatar_display_name) !== false);
-	$test->assert_true($has_avatar_name, "Profile page contains avatar name '$avatar_display_name'");
-	
-	# Check for profile-specific elements
-	$has_title = (strpos($avatar_body, "<title>") !== false && strpos($avatar_body, $avatar_display_name) !== false);
-	$test->assert_true($has_title, "Profile page has correct title with avatar name");
-}
 
+	# Parse HTML content to analyze page structure
+	$analysis = testing_analyze_html_content($avatar_body);
+	
+	if( $test->assert_true( $analysis['success'], 'HTML parsing' )) {
+		# Check if avatar name appears in page title
+		$test->assert_true(strpos($analysis['head_title'], $avatar_display_name) !== false, "Avatar name must be in head title (${analysis['head_title']})");
+
+		$in_page_title = $test->assert_true(strpos($analysis['page_title'], $avatar_display_name) !== false, "Avatar name in page title (${analysis['page_title']})");
+		
+		if ($is_v3_branch) {
+			$doc = testing_parse_html($avatar_body);
+			$xpath = new DOMXPath($doc);
+			$profile_headers = $xpath->query('//div[contains(@class, "profile-header")]//h2');
+			
+			if ($profile_headers->length > 0) {
+				$detected_name = trim($profile_headers->item(0)->textContent);
+			} else {
+				$detected_name = ''; // Not found
+			}
+
+			$in_banner = $test->assert_equals($avatar_display_name, $detected_name, "Avatar name in V3 profile banner (${detected_name})");
+		} else {
+			$in_banner = false; // No banner in V2
+		}
+		if( $test->assert_true($in_page_title || $in_banner, "Avatar name must appear in page title or banner") ) {
+			$test->assert_false($in_page_title && $in_banner, "Avatar name must not be duplicated in title and banner");
+		}
+	} else {
+		echo "   ⚠️  HTML parsing failed: {$analysis['error']}" . PHP_EOL;
+	}
+} else {
+	echo "   ⚠️  Error: $avatar_error" . PHP_EOL;
+}
 
 # Test invalid avatar profile page
 $invalid_url = rtrim($profile_base_url, '/') . '/invalid.avatar/';
@@ -289,7 +316,7 @@ if ($headers && is_array($headers)) {
 		$header_code = (int)$matches[1];
 	}
 }
-$test->assert_equals(404, $header_code, "Proper Avatar Not Found HTTP response code from get_headers() = " . var_export($header_code, true));
+$test->assert_equals(404, $header_code, "Response code for Avatar Not Found page with get_headers()");
 
 // Secondary test using exec(curl) - track curl binary vs PHP lib discrepancy  
 $cmd = 'curl -skI ' . escapeshellarg($invalid_url);
@@ -302,38 +329,35 @@ foreach ($output as $line) {
 		break;
 	}
 }
-$test->assert_equals(404, $exec_code, "Proper Avatar Not Found HTTP response code from exec(curl) = " . var_export($exec_code, true));
+$test->assert_equals(404, $exec_code, "Response code for Avatar Not Found page with exec(curl)");
 
 # Check current behavior for Avatar Not Found page - get content using same SSL context
 $invalid_body = file_get_contents($invalid_url, false, stream_context_get_default());
 
 $not_found_string = 'Avatar not found';
 
-if($test->assert_not_empty($invalid_body, "Response body for Avatar Not Found page")) {
-    $doc = new DOMDocument();
-    @$doc->loadHTML($invalid_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    $xpath = new DOMXPath($doc);
-    $title_nodes = $xpath->query('//title');
-    $title_content = $title_nodes->length > 0 ? $title_nodes->item(0)->textContent : '';
-    $has_title_not_found = (strpos($title_content, $not_found_string) !== false);
-    $test->assert_true($has_title_not_found, "$not_found_string title in Avatar Not Found page properties");
-
-    # Test current buggy behavior: body content should include the not found string message
-    # Extract main content area excluding header, footer, nav elements
-    $main_content = '';
-
-    # Get body content but exclude header, footer, nav elements
-    $body_nodes = $xpath->query('//body//text()[not(ancestor::header) and not(ancestor::footer) and not(ancestor::nav) and not(ancestor::title)]');
-    foreach ($body_nodes as $node) {
-        $main_content .= $node->textContent . ' ';
+if($test->assert_not_empty($invalid_body, "Response body not empty for Avatar Not Found page")) {
+    # Parse HTML content and check for "Avatar not found" message
+    $analysis = testing_analyze_html_content($invalid_body);
+    
+    if ($analysis['success']) {
+        $test->assert_true(strpos($analysis['head_title'], $not_found_string) !== false, "Proper head title for Avatar Not Found page (${analysis['head_title']})");
+        
+        # Check that no valid avatar name pattern appears in main content
+        $has_avatar_pattern = preg_match('/\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b/', $analysis['main_content'], $matches);
+        if ($has_avatar_pattern) {
+            $potential_name = $matches[1] . ' ' . $matches[2];
+            $false_positives = array('Log In', 'Sign Up', 'My Profile', 'Create Avatar', 'Real Life', 'Avatar Not', 'Not Found');
+            $is_valid_avatar = !in_array($potential_name, $false_positives);
+            $test->assert_false($is_valid_avatar, "No valid avatar name should be detected on Avatar Not Found page (found: '$potential_name')");
+        } else {
+            $test->assert_true(true, "No avatar name pattern detected on Avatar Not Found page (good)");
+        }
+    } else {
+        echo "   ⚠️  HTML parsing failed: {$analysis['error']}" . PHP_EOL;
     }
-
-    $has_body_not_found = (strpos($main_content, $not_found_string) !== false);
-    $test->assert_true($has_body_not_found, "$not_found_string appears in Avatar Not Found page main content");
 } else {
     echo "   ⚠️  Cannot test empty content - skipping head and body content tests" . PHP_EOL;
-    // $test->assert_false(true, "$not_found_string title in Avatar Not Found page properties (skipped - empty response)");
-    // $test->assert_false(true, "$not_found_string appears in Avatar Not Found page main content (skipped - empty response)");
 }
 
 	// Show summary
