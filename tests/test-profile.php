@@ -233,15 +233,16 @@ if ($test->assert_equals(200, $avatar_code, "Proper profile HTTP response code")
 		# Check if avatar name appears in page title
 		$test->assert_true(strpos($analysis['head_title'], $avatar_display_name) !== false, "Avatar name must be in head title (${analysis['head_title']})");
 
-		$in_page_title = strpos($analysis['page_title'], $avatar_display_name);
-		if($in_page_title) {
-			echo "✓ Notice: Avatar name found in page title";
-		} else {
-			echo "✗ Notice: Avatar name not in page title";
-		}
-		echo $analysis['page_title'] . PHP_EOL;
+		$in_page_title = strpos($analysis['page_title'], $avatar_display_name) !== false;
 		
 		if ($is_v3_branch) {
+			# In v3, name could appear in banner or title, so we only notify if not in page title
+			if($in_page_title) {
+				echo "✓ Notice: Avatar name found in page title";
+			} else {
+				echo "✗ Notice: Avatar name not in page title";
+			}
+			echo " (" . $analysis['page_title'] . ")" . PHP_EOL;
 			$doc = testing_parse_html($avatar_body);
 			$xpath = new DOMXPath($doc);
 			$profile_headers = $xpath->query('//div[contains(@class, "profile-header")]//h2');
@@ -253,11 +254,12 @@ if ($test->assert_equals(200, $avatar_code, "Proper profile HTTP response code")
 			}
 
 			$in_banner = $test->assert_equals($avatar_display_name, $detected_name, "Avatar name in V3 profile banner (${detected_name})");
+			if( $test->assert_true($in_page_title || $in_banner, "Avatar name must appear in page title or banner") ) {
+				$test->assert_false($in_page_title && $in_banner, "Avatar name must not be duplicated in title and banner");
+			}
 		} else {
-			$in_banner = false; // No banner in V2
-		}
-		if( $test->assert_true($in_page_title || $in_banner, "Avatar name must appear in page title or banner") ) {
-			$test->assert_false($in_page_title && $in_banner, "Avatar name must not be duplicated in title and banner");
+			# In V2, name should appear in page title, there is no banner
+			$test->assert_true($in_page_title, "Avatar name ($avatar_display_name)  must appear in page title (${analysis['page_title']})");
 		}
 	} else {
 		echo "   ⚠️  HTML parsing failed: {$analysis['error']}" . PHP_EOL;
