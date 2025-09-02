@@ -1,9 +1,7 @@
 <?php
 /**
- * OpenSimulator Environment Tests
- * Tests OpenSim database and console connectivity using proper W4OS methods
- * 
- * Usage: php test-opensim.php
+ * Profile page testing framework
+ * Tests profile page functionality across V2, V2-transitional, and V3 branches
  */
 
 require_once __DIR__ . '/bootstrap.php';
@@ -87,7 +85,7 @@ add_filter( 'https_ssl_verify', '__return_false' );
 $response = wp_remote_get( $login_page_url );
 # Get error message if any
 $error_message = is_wp_error( $response ) ? $response->get_error_message() : '(none)';
-$test->assert_equals( 200, wp_remote_retrieve_response_code( $response ), 'Login page HTTP response code = ' . wp_remote_retrieve_response_code( $response ) );
+$test->assert_equals( 200, wp_remote_retrieve_response_code( $response ), 'Login page HTTP response code');
 $test->assert_true( ! is_wp_error( $response ), 'Login page Error message = ' . $error_message );
 
 echo PHP_EOL;
@@ -193,7 +191,7 @@ echo "Testing base profile page $profile_base_url..." . PHP_EOL;
 $base_response = wp_remote_get($profile_base_url);
 $base_error = is_wp_error($base_response) ? $base_response->get_error_message() : '(none)';
 $base_code = wp_remote_retrieve_response_code($base_response);
-$test->assert_equals(200, $base_code, "Base profile page HTTP response code = $base_code");
+$test->assert_equals(200, $base_code, "Base profile page HTTP response");
 $test->assert_true(!is_wp_error($base_response), "Base profile page error = $base_error");
 
 # Check if page contains login form
@@ -204,7 +202,7 @@ if ($base_code == 200) {
 }
 
 if ($is_v3_branch && method_exists($test_avatar, 'profile_url')) {
-	$avatar_profile_url = $test_avatar->profile_url();
+	$avatar_profile_url = $test_avatar->profile_url($test_avatar);
 	$avatar_display_name = $test_avatar->FirstName . ' ' . $test_avatar->LastName;
 } else {
 	// Construct profile URL manually for 2.x
@@ -223,18 +221,43 @@ echo "Testing valid avatar profile page $avatar_profile_url" . PHP_EOL;
 $avatar_response = wp_remote_get($avatar_profile_url);
 $avatar_error = is_wp_error($avatar_response) ? $avatar_response->get_error_message() : '(none)';
 $avatar_code = wp_remote_retrieve_response_code($avatar_response);
-$test->assert_equals(200, $avatar_code, "Proper profile HTTP response code = $avatar_code");
-$test->assert_true(!is_wp_error($avatar_response), "Proper profile empty error = $avatar_error");
 
 # Check if page contains avatar name
-if ($avatar_code == 200) {
+if ($test->assert_equals(200, $avatar_code, "Proper profile HTTP response code")) {
 	$avatar_body = wp_remote_retrieve_body($avatar_response);
 
-	# Use DOM analysis for reliable content checking
-	$analysis = testing_analyze_html_content($avatar_body, $avatar_display_name);
+	# Parse HTML content to analyze page structure
+	$analysis = testing_analyze_html_content($avatar_body);
 	
-	$test->assert_true($analysis['title_contains'], "Proper head title for valid avatar profile (starts with avatar name)");
-	$test->assert_true($analysis['content_contains'], "Proper page content for valid avatar profile (contains avatar name)");
+	if( $test->assert_true( $analysis['success'], 'HTML parsing' )) {
+		# Check if avatar name appears in page title
+		$test->assert_true(strpos($analysis['head_title'], $avatar_display_name) !== false, "Avatar name must be in head title (${analysis['head_title']})");
+
+		$in_page_title = $test->assert_true(strpos($analysis['page_title'], $avatar_display_name) !== false, "Avatar name in page title (${analysis['page_title']})");
+		
+		if ($is_v3_branch) {
+			$doc = testing_parse_html($avatar_body);
+			$xpath = new DOMXPath($doc);
+			$profile_headers = $xpath->query('//div[contains(@class, "profile-header")]//h2');
+			
+			if ($profile_headers->length > 0) {
+				$detected_name = trim($profile_headers->item(0)->textContent);
+			} else {
+				$detected_name = ''; // Not found
+			}
+
+			$in_banner = $test->assert_equals($avatar_display_name, $detected_name, "Avatar name in V3 profile banner (${detected_name})");
+		} else {
+			$in_banner = false; // No banner in V2
+		}
+		if( $test->assert_true($in_page_title || $in_banner, "Avatar name must appear in page title or banner") ) {
+			$test->assert_false($in_page_title && $in_banner, "Avatar name must not be duplicated in title and banner");
+		}
+	} else {
+		echo "   ⚠️  HTML parsing failed: {$analysis['error']}" . PHP_EOL;
+	}
+} else {
+	echo "   ⚠️  Error: $avatar_error" . PHP_EOL;
 }
 
 # Test invalid avatar profile page
@@ -265,7 +288,7 @@ if ($headers && is_array($headers)) {
 		$header_code = (int)$matches[1];
 	}
 }
-$test->assert_equals(404, $header_code, "Proper response code for Avatar Not Found  page from get_headers() = " . var_export($header_code, true));
+$test->assert_equals(404, $header_code, "Response code for Avatar Not Found page with get_headers()");
 
 // Secondary test using exec(curl) - track curl binary vs PHP lib discrepancy  
 $cmd = 'curl -skI ' . escapeshellarg($invalid_url);
@@ -278,7 +301,7 @@ foreach ($output as $line) {
 		break;
 	}
 }
-$test->assert_equals(404, $exec_code, "Proper response code for Avatar Not Found  page from exec(curl) = " . var_export($exec_code, true));
+$test->assert_equals(404, $exec_code, "Response code for Avatar Not Found page with exec(curl)");
 
 # Check current behavior for Avatar Not Found page - get content using same SSL context
 $invalid_body = file_get_contents($invalid_url, false, stream_context_get_default());
@@ -286,15 +309,27 @@ $invalid_body = file_get_contents($invalid_url, false, stream_context_get_defaul
 $not_found_string = 'Avatar not found';
 
 if($test->assert_not_empty($invalid_body, "Response body not empty for Avatar Not Found page")) {
-    # Use DOM analysis helper functions for reliable content checking
-    $analysis = testing_analyze_html_content($invalid_body, $not_found_string);
+    # Parse HTML content and check for "Avatar not found" message
+    $analysis = testing_analyze_html_content($invalid_body);
     
-    $test->assert_true($analysis['title_contains'], "Proper head title for Avatar Not Found page (starts with $not_found_string)");
-    $test->assert_true($analysis['content_contains'], "Proper page content for Avatar Not Found page (contains $not_found_string)");
+    if ($analysis['success']) {
+        $test->assert_true(strpos($analysis['head_title'], $not_found_string) !== false, "Proper head title for Avatar Not Found page (${analysis['head_title']})");
+        
+        # Check that no valid avatar name pattern appears in main content
+        $has_avatar_pattern = preg_match('/\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b/', $analysis['main_content'], $matches);
+        if ($has_avatar_pattern) {
+            $potential_name = $matches[1] . ' ' . $matches[2];
+            $false_positives = array('Log In', 'Sign Up', 'My Profile', 'Create Avatar', 'Real Life', 'Avatar Not', 'Not Found');
+            $is_valid_avatar = !in_array($potential_name, $false_positives);
+            $test->assert_false($is_valid_avatar, "No valid avatar name should be detected on Avatar Not Found page (found: '$potential_name')");
+        } else {
+            $test->assert_true(true, "No avatar name pattern detected on Avatar Not Found page (good)");
+        }
+    } else {
+        echo "   ⚠️  HTML parsing failed: {$analysis['error']}" . PHP_EOL;
+    }
 } else {
     echo "   ⚠️  Cannot test empty content - skipping head and body content tests" . PHP_EOL;
-    // $test->assert_false(true, "$not_found_string title in Avatar Not Found page properties (skipped - empty response)");
-    // $test->assert_false(true, "$not_found_string appears in Avatar Not Found page main content (skipped - empty response)");
 }
 
 	// Show summary

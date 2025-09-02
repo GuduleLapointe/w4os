@@ -17,6 +17,6 @@ require_once dirname(__DIR__) . '/bootstrap.php';
 
 // Ensure test environment is properly configured
 if (!Engine_Settings::configured()) {
-    echo "WARNING: Engine not configured. Some tests may fail.\n";
-    echo "Configure OpenSim settings before running tests.\n";
+    echo "WARNING: Engine not configured. Some tests may fail." . PHP_EOL;
+    echo "Configure OpenSim settings before running tests." . PHP_EOL;
 }

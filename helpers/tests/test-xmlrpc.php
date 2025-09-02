@@ -13,7 +13,7 @@ $functions_available = function_exists('xmlrpc_encode') &&
                        php_has('xmlrpc')  && 
                        function_exists('xmlrpc_is_fault');
 
-echo "XML-RPC functions available: " . ($functions_available ? "Yes" : "No") . "\n";
+echo "XML-RPC functions available: " . ($functions_available ? "Yes" : "No") . PHP_EOL;
 
 // Test encoding/decoding
 $data = [
@@ -23,11 +23,11 @@ $data = [
 ];
 
 $encoded = xmlrpc_encode($data);
-echo "Encoded data: " . (is_string($encoded) ? "Success" : "Failed") . "\n";
+echo "Encoded data: " . (is_string($encoded) ? "Success" : "Failed") . PHP_EOL;
 
 // Test creating a server
 $server = xmlrpc_server_create();
-echo "Create server: " . ($server ? "Success" : "Failed") . "\n";
+echo "Create server: " . ($server ? "Success" : "Failed") . PHP_EOL;
 
 // Test registering a method
 function test_method($method_name, $params, $app_data) {
@@ -35,6 +35,6 @@ function test_method($method_name, $params, $app_data) {
 }
 
 $register_result = xmlrpc_server_register_method($server, 'test.method', 'test_method');
-echo "Register method: " . ($register_result ? "Success" : "Failed") . "\n";
+echo "Register method: " . ($register_result ? "Success" : "Failed") . PHP_EOL;
 
-echo "\nXML-RPC compatibility layer test completed\n";
+echo "\nXML-RPC compatibility layer test completed" . PHP_EOL;
