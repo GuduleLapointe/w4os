@@ -6,6 +6,12 @@
 - fix MySQL non-standard ports not properly tested to validate DB credentials #88
 - fix MySQL not handling custom port when set to localhost (added warning)
 - fix improper localhost conversion to host name, potentially causing grant issues
+- **fix Profile 404 Status Codes (Issue #118)**: Invalid avatars now return proper 404 HTTP status codes
+  - Backported proven 3.x solution using header('HTTP/1.0 404 Not Found') to 2.x branch
+  - Fixed inconsistent behavior where first call returned 404 but subsequent calls returned 200
+  - Uses early 'wp' hook detection instead of late template_include processing
+  - Proper WordPress 404 template hierarchy for invalid avatar pages
+  - SEO compliant: Search engines correctly index/ignore pages based on status
 
 **V3 Beta Features:**
 - add Robust configuration drift detection when console is enabled

@@ -30,7 +30,7 @@ global $is_v3_branch, $is_v2_branch, $is_v2_transitional;
 
 $login_uri = w4os_grid_login_uri();
 $credentials = array();
-if ($is_v3_branch || $is_v2_transitional) {
+if ($is_v3_branch) {
     $credentials = W4OS3::get_credentials($login_uri);
     $robust_db = W4OS3::$robust_db;
 	$db_connected = $robust_db && $robust_db->connected;
@@ -245,7 +245,7 @@ if ($test->assert_equals(200, $avatar_code, "Proper profile HTTP response code")
 
 		$in_page_title = strpos($analysis['page_title'], $avatar_display_name) !== false;
 		
-		if ($is_v3_branch) {
+		if ($is_v3_branch || $is_v2_transitional) {
 			# In v3, name could appear in banner or title, so we only notify if not in page title
 			if($in_page_title) {
 				echo "✓ Notice: Avatar name found in page title";

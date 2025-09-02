@@ -29,6 +29,34 @@ if ( ! W4OS_ENABLE_V3 ) {
 		$query_vars[] = 'name';
 		return $query_vars;
 	}
+
+	// Add 'wp' hook to handle 404 status before WordPress finalizes page status (backported from 3.x)
+	add_action( 'wp', 'w4os_profile_parse_request' );
+	function w4os_profile_parse_request() {
+		$profile_slug = get_option( 'w4os_profile_slug', 'profile' );
+		$pagename = get_query_var( 'pagename' );
+		
+		// Only handle profile pages
+		if ( $pagename !== $profile_slug ) {
+			return;
+		}
+
+		$query_firstname = get_query_var( 'profile_firstname' );
+		$query_lastname  = get_query_var( 'profile_lastname' );
+
+		// If avatar name is provided, check if it exists
+		if ( ! empty( $query_firstname ) && ! empty( $query_lastname ) ) {
+			$avatar_user = w4os_get_user_by_avatar_name( $query_firstname, $query_lastname );
+			
+			if ( ! $avatar_user ) {
+				// Avatar not found - set 404 status early in the process
+				// global $wp_query;
+				// $wp_query->set_404();
+				// status_header( 404 );
+				header('HTTP/1.0 404 Not Found');
+			}
+		}
+	}
 }
 
 // Handle avatar creation form submission regardless of V3 status
@@ -251,6 +279,7 @@ add_action(
 			} else {
 				$not_found  = true;
 				$page_title = __( 'Avatar not found', 'w4os' );
+				// 404 status already set in wp hook - don't set again here
 			}
 		}
 
@@ -300,12 +329,10 @@ add_action(
 			}
 		}
 
-		if ( @$not_found ) {
-			// header("Status: 404 Not Found");
-			$wp_query->set_404();
-			status_header( 404 );
-			get_template_part( 404 );
-			exit();
+		// Check if this is a 404 case (set earlier in wp hook) or legacy not_found flag
+		if ( is_404() || ( $not_found ?? false ) ) {
+			// Use proper 404 template handling (backported from 3.x)
+			return get_404_template();
 		}
 
 		$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
