@@ -12,7 +12,9 @@ WordPress interface for OpenSimulator (w4os).
 
 Ready to use WordPress interface for [OpenSimulator](http://opensimulator.org/). Provides user registration, default avatar model choice, login info, statistics and a web assets server for grids or standalone simulators.
 
-Full installation instructions: (https://gudulelapointe.github.io/w4os/INSTALLATION.html)
+[Full installation instructions](https://gudulelapointe.github.io/w4os/INSTALLATION.html)
+
+[Theme compatibility list](THEME-COMPATIBILITY.md)
 
 See Features and Roadmap sections for current and upcoming functionalties.
 
