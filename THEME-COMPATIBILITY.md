@@ -25,6 +25,10 @@ Excellent display out of the box
 
 Status: ALL PASSED
 
+## ✅ Unos
+
+Status: ALL PASSED
+
 ## ✅ GeneratePress Theme
 
 Status: ALL PASSED
@@ -53,5 +57,8 @@ Failed Tests:
 Failed Tests:
   1. Avatar name must be in head title (Profile – W4OS)
   2. Proper head title for Avatar Not Found page (Profile – W4OS)
+  3. Gutenberg blocks not supported
 
-Divi doesn't recognize Gutenberg blocks by default, although they can still be used in Divi Builder with their shortcode. The complimentary plugin, [w4os Divi Theme adapter](https://github.com/GuduleLapointe/w4os-divi) adds full support for Divi-style blocks.
+We used to love Divi, but they live in their own world, with few regards to integration and WP standards, which makes very difficult to adapt the plugin for full compatibility with their theme.
+
+Some support is provided with the complimentary plugin, [w4os Divi Theme adapter](https://github.com/GuduleLapointe/w4os-divi) though, but we cannot guarantee support for any issue. Contributions are welcome if you want to complete the adapter, we will gratefully integrate your additions.

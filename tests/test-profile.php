@@ -341,7 +341,12 @@ if($test->assert_not_empty($invalid_body, "Response output not empty for Avatar 
             'Not Found', 
             '404',
             'Oops',
-            '/No .* Found/' // regex pattern
+            '/No .* Found/', // regex pattern
+            esc_html_x( 'Page not found', '404 error message', 'twentytwentyfive' ),
+            esc_html_e( 'Nothing here', 'twentytwentyone' ),
+            esc_html__( 'Nothing found', 'unos' ),
+            esc_html__( 'Nothing found', 'et_builder' ),
+            esc_html__( 'No results found.', 'et_builder' ),
         ];
         
         $default_404 = testing_matches_any_pattern($analysis['page_title'], $default_404_patterns);
