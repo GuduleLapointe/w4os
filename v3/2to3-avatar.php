@@ -34,6 +34,7 @@ class W4OS3_Avatar {
 	public $profile_url;
 	private $data;
 	private $is_profile_page = false;
+	private $profile;
 	
 	private static $base_query = "SELECT * FROM (
 		SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen

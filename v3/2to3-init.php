@@ -722,18 +722,20 @@ class W4OS3 {
 	}
 
 	/**
-	 * Calculate a unique site key. Uuse to encrypt and decrypt sensitive data like connection credentials.
+	 * Calculate a unique site key. Used to encrypt and decrypt sensitive data like connection credentials.
 	 *
 	 * - unique and persistent (i.e. the same key is generated every time).
 	 * - not stored in the database, generated on the fly.
 	 * - depends on W4OS_LOGIN_URI and an additional secret key specific to the plugin.
 	 *
+	 * TODO: replace with a more reliable way to set a really permanent key.
+	 * 
 	 * @return string The site key
 	 */
 	private function set_key() {
 		$login_uri = get_option( 'w4os_login_uri', home_url() );
 		$grid_info = self::grid_info();
-		$combine   = array( $login_uri, $grid_info['gridnick'], $grid_info['platform'] );
+		$combine   = array_filter(array( $login_uri, $grid_info['gridnick'] ?? null, $grid_info['platform'] ?? null ));
 		$key       = md5( sanitize_title( implode( ' ', $combine ) ) );
 		self::$key = $key;
 	}
