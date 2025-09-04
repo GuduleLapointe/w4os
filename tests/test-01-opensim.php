@@ -142,7 +142,7 @@ $db_info = sprintf("%s:%s/%s as %s",
 printf( "  Database %s\n", $db_info );
 
 // For debugging, show only non-sensitive parts of credentials
-$custom_port_with_localhost = ($credentials['db']['host'] ?? '') === 'localhost' && ($credentials['db']['port'] ?? '3306' ) != '3306';
+$custom_port_with_localhost = ($credentials['db']['host'] ?? '') === 'localhost' && ($credentials['db']['port'] ?: '3306' ) != '3306';
 if( ! $test->assert_false( $custom_port_with_localhost, 'Check if localhost is used with a custom port' ) ) {
 	// We don't abort, just warn
 	echo "    ⚠️  WARNING: 'localhost' connections use socket, port {$credentials['db']['port']} will be ignored!" . PHP_EOL;
