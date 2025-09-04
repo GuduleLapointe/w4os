@@ -39,23 +39,27 @@ Status: ALL PASSED
 
 ## Astra Theme
 
-Failed Tests:
-  1. Page title must contain 'Avatar not found' or default 404 message (got: '')
+Status: ALL PASSED
 
 ## Neve Theme
 
-Failed Tests:
+Status: ALL PASSED (v3 or v2 with v3 features enabled)
+Failed Tests: (v2 only)
   1. Page title must contain 'Avatar not found' or default 404 message (got: '')
 
 ## The7 Theme
 
-Failed Tests:
+Status: ALL PASSED (v3 or v2 with v3 features enabled)
+Failed Tests: (v2 only)
   1. Page title must contain 'Avatar not found' or default 404 message (got: 'Profile')
 
 ## Divi Theme: compatible (with additional plugin)
 
-Failed Tests:
-  1. Gutenberg blocks not supported
+Status: ALL PASSED (v3 or v2 with v3 features enabled)
+Failed Tests: (v2 only)
+  1. [test-profile] Avatar name (Way Forest)  must appear in page title ()
+Failed Tests: (v2 and v3)
+  2. Gutenberg blocks not supported
 
 We used to love Divi, but they live in their own world, with few regards to integration and WP standards, which makes very difficult to adapt the plugin for full compatibility with their theme.
 
