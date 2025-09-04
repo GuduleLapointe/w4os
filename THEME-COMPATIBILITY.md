@@ -55,9 +55,7 @@ Failed Tests:
 ## Divi Theme: compatible (with additional plugin)
 
 Failed Tests:
-  1. Avatar name must be in head title (Profile – W4OS)
-  2. Proper head title for Avatar Not Found page (Profile – W4OS)
-  3. Gutenberg blocks not supported
+  1. Gutenberg blocks not supported
 
 We used to love Divi, but they live in their own world, with few regards to integration and WP standards, which makes very difficult to adapt the plugin for full compatibility with their theme.
 
