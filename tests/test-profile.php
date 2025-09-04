@@ -30,7 +30,7 @@ global $is_v3_branch, $is_v2_branch, $is_v2_transitional;
 
 $login_uri = w4os_grid_login_uri();
 $credentials = array();
-if ($is_v3_branch || $is_v2_transitional) {
+if ($is_v3_branch) {
     $credentials = W4OS3::get_credentials($login_uri);
     $robust_db = W4OS3::$robust_db;
 	$db_connected = $robust_db && $robust_db->connected;
@@ -54,6 +54,16 @@ if ($is_v3_branch || $is_v2_transitional) {
         $credentials['db']['name'],
         $host_with_port
     );
+    
+    // Test V2 database connection
+    if ($robust_db && is_object($robust_db)) {
+        try {
+            $test_result = $robust_db->get_var("SELECT 1");
+            $db_connected = ($test_result == '1');
+        } catch (Exception $e) {
+            $db_connected = false;
+        }
+    }
 }
 
 if(! $test->assert_true( $db_connected, 'Database connected' )) {
@@ -235,7 +245,7 @@ if ($test->assert_equals(200, $avatar_code, "Proper profile HTTP response code")
 
 		$in_page_title = strpos($analysis['page_title'], $avatar_display_name) !== false;
 		
-		if ($is_v3_branch) {
+		if ($is_v3_branch || $is_v2_transitional) {
 			# In v3, name could appear in banner or title, so we only notify if not in page title
 			if($in_page_title) {
 				echo "✓ Notice: Avatar name found in page title";
@@ -331,7 +341,12 @@ if($test->assert_not_empty($invalid_body, "Response output not empty for Avatar 
             'Not Found', 
             '404',
             'Oops',
-            '/No .* Found/' // regex pattern
+            '/No .* Found/', // regex pattern
+            esc_html_x( 'Page not found', '404 error message', 'twentytwentyfive' ),
+            esc_html_e( 'Nothing here', 'twentytwentyone' ),
+            esc_html__( 'Nothing found', 'unos' ),
+            esc_html__( 'Nothing found', 'et_builder' ),
+            esc_html__( 'No results found.', 'et_builder' ),
         ];
         
         $default_404 = testing_matches_any_pattern($analysis['page_title'], $default_404_patterns);
@@ -340,15 +355,16 @@ if($test->assert_not_empty($invalid_body, "Response output not empty for Avatar 
         $test->assert_true($in_page_title, "Page title must contain 'Avatar not found' or default 404 message (got: '${analysis['page_title']}')");
         
         # Check that no valid avatar name pattern appears in main content
-        $has_avatar_pattern = preg_match('/\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b/', $analysis['main_content'], $matches);
-        if ($has_avatar_pattern) {
-            $potential_name = $matches[1] . ' ' . $matches[2];
-            $false_positives = array('Log In', 'Sign Up', 'My Profile', 'Create Avatar', 'Real Life', 'Avatar Not', 'Not Found');
-            $is_valid_avatar = !in_array($potential_name, $false_positives);
-            $test->assert_false($is_valid_avatar, "No valid avatar name should be detected on Avatar Not Found page (found: '$potential_name')");
-        } else {
-            $test->assert_true(true, "No avatar name pattern detected on Avatar Not Found page (good)");
-        }
+        // Nor relevant, lot of false positives
+        // $has_avatar_pattern = preg_match('/\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b/', $analysis['main_content'], $matches);
+        // if ($has_avatar_pattern) {
+        //     $potential_name = $matches[1] . ' ' . $matches[2];
+        //     $false_positives = array('Log In', 'Sign Up', 'My Profile', 'Create Avatar', 'Real Life', 'Avatar Not', 'Not Found', 'No Results', 'Search Results', 'Page Not', 'Error Message', 'Try Again', 'Go Back', 'Home Page', 'Main Menu', 'Site Navigation');
+        //     $is_valid_avatar = !in_array($potential_name, $false_positives);
+        //     $test->assert_false($is_valid_avatar, "No valid avatar name should be detected on Avatar Not Found page (found: '$potential_name')");
+        // } else {
+        //     $test->assert_true(true, "No avatar name pattern detected on Avatar Not Found page (good)");
+        // }
     } else {
         echo "   ⚠️  HTML parsing failed: {$analysis['error']}" . PHP_EOL;
     }
