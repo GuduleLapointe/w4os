@@ -37,6 +37,9 @@ foreach ( $test_files as $test_file ) {
 	echo "Running {$test_name}...
 ";
 	
+	// Check if this is a required prerequisite test
+	$is_prerequisite = strpos( $test_name, '-required' ) !== false;
+	
 	// Execute the test file and capture output
 	$output = array();
 	$return_code = 0;
@@ -46,6 +49,7 @@ foreach ( $test_files as $test_file ) {
 	$test_output = implode( "
 ", $output );
 	echo $test_output . "
+
 ";
 	
 	// Parse summary from output
@@ -93,6 +97,15 @@ foreach ( $test_files as $test_file ) {
 		'tests_failed' => $tests_failed
 	);
 	
+	// If this is a prerequisite test and it failed, stop here
+	if ( $is_prerequisite && ( $return_code !== 0 || $tests_failed > 0 ) ) {
+		echo "❌ PREREQUISITE TEST FAILED: {$test_name}
+";
+		echo "Stopping test execution - remaining tests will likely fail without prerequisites
+";
+		break;
+	}
+
 	echo "
 ";
 }
