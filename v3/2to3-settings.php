@@ -364,7 +364,7 @@ class W4OS3_Settings {
 				$creds['db']['status'] = false;
 				$creds['db']['error']  = __( 'Warning: MySQL uses a socket when set to localhost and ignores the custom port. Use 127.0.0.1 or the host address to allow TCP connections with a custom port.', 'w4os' );
 			} else {
-				@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] );
+				@$db_conn = new mysqli( $creds['db']['host'], $creds['db']['user'], $creds['db']['pass'], $creds['db']['name'], $creds['db']['port'] ?: 3306 );
 				if ( $db_conn && ! $db_conn->connect_error ) {
 					$creds['db']['status'] = true;
 					$db_conn->close();

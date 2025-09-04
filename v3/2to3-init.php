@@ -895,6 +895,7 @@ class W4OS3 {
 			error_log( __FUNCTION__ . ' missing arguments ' . print_r( $db_creds, true ) );
 			return null;
 		}
+		$db_creds['port'] = (int)( $db_creds['port'] ?: 3306 );
 		@$db_conn = new mysqli( $db_creds['host'], $db_creds['user'], $db_creds['pass'], $db_creds['name'], $db_creds['port'] );
 		if ( $db_conn && ! $db_conn->connect_error ) {
 			$db_conn->close();
