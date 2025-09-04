@@ -661,8 +661,6 @@ class W4OS3 {
 
 		$credentials['db']['enabled'] = self::validate_db_credentials( $credentials['db'] );
 
-		error_log( __FUNCTION__ . ' ' . $serverURI . ' ' . print_r( $credentials, true ) );
-
 		$options               = self::decrypt( get_option( 'w4os-credentials' ) );
 		$options               = get_option( 'w4os-credentials' );
 		$options[ $serverURI ] = self::encrypt( $credentials );
