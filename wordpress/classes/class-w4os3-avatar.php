@@ -64,7 +64,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// Template include remains for template selection
 		add_action( 'template_include', array( $this, 'template_include' ) );
 		add_filter( 'the_title', array( $this, 'the_title' ) );
-		add_filter( 'pre_get_document_title', array( $this, 'document_title' ) );
+		add_filter( 'pre_get_document_title', array( $this, 'document_title' ), 20 );
 		// add_filter( 'document_title_parts', array( $this, 'document_title_parts' ) ); // Keep it for reference, probably not needed with pre_get_document_title filter above
 		add_filter( 'body_class', array( $this, 'body_class' ) );
 		add_filter( 'post_class', array( $this, 'post_class' ) );
