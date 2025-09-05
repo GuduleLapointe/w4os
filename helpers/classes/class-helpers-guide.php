@@ -31,6 +31,7 @@ class OpenSim_Helpers_Guide {
 	private $page_title;
 	private $head_title;
 	private $disclaimer = null; // Disclaimer text, can be set to null if not needed
+	// static $rendered = false;	// Temporary workaround
 
 	public function __construct( $source = null ) {
 		$this->locale = set_helpers_locale();
@@ -57,29 +58,19 @@ class OpenSim_Helpers_Guide {
 			Engine_Settings::log_migration_required();
 			$this->source = OPENSIM_GUIDE_SOURCE;
 		}
-
-		// We don't output HTML from constructor anymore, the caller decides:
-		// 		if( $guide = new OpenSim_Helpers_Guide( $this->source ) ) {
-		// 			$guide->output_page(); // Output full HTML page, including <html> tags
-		// 		    $guide->output_html(); // Output only the guide block
-		// 		    $html = $guide->build_html(); // Return guide block for further processing
-		// 		}
 	}
 
 	public function output_page() {
 		$this->fullHTML = true;
 		$this->output_html();
 	}
-
+	
 	public function output_html() {
-		if ( empty( $fullHTML ) ) {
-			echo $this->build_html();
-		}
+		echo $this->build_html();
 	}
 
 	public function build_html() {
 		$this->load_destinations( $this->source );
-
 		$content = $this->html_prefix();
 
 		if ( count( $this->destinations ) === 1 ) {
@@ -100,21 +91,18 @@ class OpenSim_Helpers_Guide {
 		}
 
 		$content .= $this->html_suffix();
-
-		return fix_utf_encoding($content);
+		$content = fix_utf_encoding($content);
+		return $content;
 	}
 
 	private function load_destinations( $source ) {
 		if(empty($source)) {
 			die_knomes( 'No source provided for destinations guide.' );
 		}
-		$fileContent = null;
-		// Check if the source is a URL or a file path
-		if ( filter_var( $source, FILTER_VALIDATE_URL ) ) {
-			$fileContent = file_get_contents( $source );
-		} elseif ( file_exists( $source ) ) {
-			$fileContent = file_get_contents( $source );
-		}
+
+		// Apply security validation
+		$source = $this->filter_url( $source );
+		$fileContent = $this->filter_content( $source );
 
 		$lines = explode( "\n", $fileContent );
 
@@ -288,7 +276,7 @@ class OpenSim_Helpers_Guide {
 		}
 		// TODO: use enqueue_style(), but it might need the templates
 		$css_url = Helpers::url('css/guide.css');
-		error_log( '[DEBUG] css url: ' . $css_url );
+
 		$content .= sprintf(
 			'<link rel="stylesheet" type="text/css" href="%s">',
 			$css_url
@@ -341,5 +329,189 @@ class OpenSim_Helpers_Guide {
 			return $this->public_url;
 		}
 		return $this->public_url . '?' . http_build_query( $args );
+	}
+
+	/**
+	 * Validate URL for security (filter IPs, invalid patterns)
+	 * 
+	 * @param string $source        Source URL to validate
+	 * @return string Validated source URL
+	 */
+	private function filter_url( $source ) {
+		if ( empty( $source ) ) {
+			error_log( __METHOD__ . ": No source URL provided" );
+			die_knomes("No source URL provided", 400 );
+		}
+
+		// Check for dangerous patterns
+		$dangerous_patterns = array(
+			'localhost',
+			'127.0.0.1',
+			'::1',
+			'0.0.0.0',
+			'169.254.', // AWS metadata service
+			'10.',      // Private networks
+			'172.',     // Private networks  
+			'192.168.', // Private networks
+			'file://',
+			'ftp://',
+			'gopher://',
+			'dict://',
+			'ldap://',
+		);
+
+		$url_lower = strtolower( $source );
+		foreach ( $dangerous_patterns as $pattern ) {
+			if ( strpos( $url_lower, $pattern ) !== false ) {
+				error_log( __METHOD__ . ": URL rejected - contains dangerous pattern '$pattern': $source" );
+				die_knomes("Source URL rejected", 400 );
+			}
+		}
+
+		// For URLs, validate scheme and check IP resolution
+		if ( filter_var( $source, FILTER_VALIDATE_URL ) ) {
+			$parsed = parse_url( $source );
+
+			if ( ! in_array( $parsed['scheme'], array( 'http', 'https' ) ) ) {
+				error_log( __METHOD__ . ": URL rejected - invalid scheme '{$parsed['scheme']}': $source" );
+				die_knomes("Invalid URL scheme", 400 );
+			}
+
+			if ( isset( $parsed['host'] ) ) {
+				$ip = gethostbyname( $parsed['host'] );
+				if ( ! filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) ) {
+					error_log( __METHOD__ . ": URL rejected - resolves to private or reserved IP '$ip': $source" );
+					die_knomes("Source URL resolves to private IP", 403 );
+				}
+			}
+		} else {
+			// For local files, check path safety
+			$real_path = realpath( $source );
+			if ( $real_path === false || ! file_exists( $real_path ) ) {
+				error_log( __METHOD__ . ": Local file does not exist: $source" );
+				die_knomes("Source file not found", 404 );
+			}
+
+			// Only allow files in safe directories
+			$safe_directories = array( realpath( __DIR__ ), realpath( __DIR__ . '/../' ) );
+			$path_allowed = false;
+			foreach ( $safe_directories as $safe_dir ) {
+				if ( strpos( $real_path, $safe_dir ) === 0 ) {
+					$path_allowed = true;
+					break;
+				}
+			}
+
+			if ( ! $path_allowed ) {
+				error_log( __METHOD__ . ": Local file path not allowed: $source" );
+				die_knomes("Access denied", 403 );
+			}
+		}
+
+		return $source;
+	}
+
+	/**
+	 * Validate content and return filtered source content
+	 * 
+	 * @param string $source_url URL or file path to fetch and validate
+	 * @return string Validated content
+	 */
+	private function filter_content( $source_url ) {
+		$content = null;
+
+		// Get content
+		if ( filter_var( $source_url, FILTER_VALIDATE_URL ) ) {
+			// Use engine function for headers (associative format)
+			$headers = os_get_headers( $source_url, true );
+			if ( $headers === false ) {
+				die_knomes("Failed to get headers from source", 502 );
+			}
+
+			// Check content type
+			if ( isset( $headers['content-type'] ) ) {
+				$content_type_lower = strtolower( trim( explode( ';', $headers['content-type'] )[0] ) );
+				$valid_types = array( 'text/plain', 'text/csv', 'text/tab-separated-values', 'application/octet-stream' );
+				
+				if ( ! in_array( $content_type_lower, $valid_types ) && strpos( $content_type_lower, 'text/' ) !== 0 ) {
+					error_log( __METHOD__ . "Invalid content-type '" . $headers['content-type'] . "' from URL: $source_url" );
+					die_knomes("Invalid content-type from source URL", 415 );
+				}
+			}
+
+			// Use engine function for content
+			$content = os_file_get_contents( $source_url );
+			if ( $content === false ) {
+				die_knomes("Failed to fetch content from source", 502 );
+			}
+
+			if ( strlen( $content ) > 1048576 ) {
+				error_log( __METHOD__ . "Content too large (" . strlen( $content ) . " bytes) from URL: $source_url" );
+				die_knomes("Content too large from source", 413 );
+			}
+		} else {
+			// Local file
+			try {
+				set_error_handler( function( $errno, $errstr ) {
+					throw new Exception( $errstr, $errno );
+				} );
+				$content = file_get_contents( $source_url );
+				restore_error_handler();
+			} catch ( Exception $e ) {
+				restore_error_handler();
+				error_log( __METHOD__ . "Error reading local file: " . $e->getMessage() . " from: $source_url" );
+				die_knomes("Failed to read local file", 500 );
+			}
+			if ( $content === false ) {
+				error_log( __METHOD__ . "Failed to read local file: $source_url" );
+				die_knomes("Failed to read source file", 500 );
+			}
+		}
+
+		// Validate content format
+		if ( ! mb_check_encoding( $content, 'UTF-8' ) && ! mb_check_encoding( $content, 'ASCII' ) ) {
+			error_log( __METHOD__ . "Invalid text encoding (" . mb_detect_encoding( $content ) . ") from: $source_url" );
+			die_knomes("Invalid text encoding from source URL", 415 );
+		}
+
+		if ( empty( trim( $content ) ) ) {
+			error_log( __METHOD__ . "Empty content from: $source_url" );
+			die_knomes("Empty source content", 204 );
+		}
+
+		// Strict format validation
+		$lines = explode( "\n", $content );
+		$line_number = 0;
+
+		$filtered = array();
+		foreach ( $lines as $line ) {
+			$line_number++;
+			$line = trim( $line );
+
+			// Skip empty lines and comments
+			if ( empty( $line ) || substr( $line, 0, 1 ) === '#' || substr( $line, 0, 2 ) === '//' ) {
+				// Skipping silently comments and empty lines
+				continue;
+			}
+
+			// Validate line format
+			if ( strpos( $line, '|' ) === false ) {
+				// Category, only truncate excessively long lines
+				$line = substr( $line, 0, 100 );
+			} elseif ( $line === '|' ) {
+				// Standalone pipe is a valid separator line
+				// Keep as-is
+			} else {
+				// Destination line - validate pipe-separated format
+				$parts = explode( '|', $line );
+				if ( count( $parts ) < 2 || empty( trim( $parts[0] ) ) ) {
+					error_log( __METHOD__ . "Invalid line format at line $line_number" );
+					die_knomes("Invalid content format at line $line_number", 415 );
+				}
+			}
+			$filtered[] = $line;
+		}
+		$content = implode( "\n", $filtered );
+		return $content;
 	}
 }

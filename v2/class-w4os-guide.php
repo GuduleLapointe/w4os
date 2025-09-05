@@ -215,7 +215,7 @@ class W4OS_Guide extends W4OS_Loader {
 		global $wp;
 
 		if ( array_key_exists( 'guide_source', $wp->query_vars ) ) {
-			require_once W4OS_DIR . '/helpers/guide.php';
+			// require_once W4OS_DIR . '/helpers/guide.php';
 
 			$source  = w4os_get_option( 'w4os-guide:source' );
 			$guide   = new OpenSim_Helpers_Guide( $source );

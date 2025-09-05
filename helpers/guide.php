@@ -17,12 +17,14 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
+if(defined('W4OS_PLUGIN')) {
+	error_log('[ERROR] guide.php should not be included from W4OS plugin');
+	die();
+}
 if($destinations_guide = new OpenSim_Helpers_Guide()) {
     // If the guide is enabled, we can proceed
     $destinations_guide->output_page();
 } else {
     // If the guide is not enabled, we return a 404 error
-    header('HTTP/1.0 404 Not Found');
-    echo 'Destination guide is not enabled.';
-    exit;
+	die_knomes('Not found', 404);
 }
