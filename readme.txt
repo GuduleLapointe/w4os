@@ -226,6 +226,15 @@ or not. In either case, idk&idc.
 == Changelog ==
 
 = Unreleased =
+- fix SSRF vulnerability in guide.php with comprehensive URL validation
+- fix database connection crashing when leaving default port
+- fix head title conflicts with themes and SEO plugins (backport from 3.x)
+- fix minor warnings when using wp-cli
+- (dev) add URL helper functions (os_get_headers, os_file_get_contents) for restrictive hosting environments  
+- (dev) add database connection failure caching and exception handling
+- (dev) add ExceptionHandling trait for unified error handling
+- (dev) fix tests misinterpreting no mysql port (use default) as a custom port
+- (dev) enhancement tests dependency checking
 
 = 2.10.0-beta-3 =
 
