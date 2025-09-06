@@ -76,9 +76,6 @@ if ($avatar_settings) {
     $forward_messages = $test->assert_equals( $forward_messages, 'true', 'Forward enabled');
 }
 
-echo "DEBUG STOP";
-exit($test->summary() ? 0 : 1);
-
 
 // Test 5: Test direct offline.php accessibility
 echo "\nTesting offline.php direct access..." . PHP_EOL;
@@ -90,6 +87,9 @@ $plugin_dir = basename(dirname(__DIR__));
 $direct_url = $home_url . '/' . $wp_content_dir . '/plugins/' . $plugin_dir . '/helpers/offline.php';
 
 $test->assert_true(true, 'Direct URL: ' . $direct_url);
+
+echo "DEBUG STOP";
+exit($test->summary() ? 0 : 1);
 
 // Test with empty request (should fail gracefully)
 $direct_response = wp_remote_post($direct_url, array(
