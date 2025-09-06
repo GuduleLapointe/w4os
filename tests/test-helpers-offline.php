@@ -22,42 +22,13 @@ if(!$test->assert_not_empty($test_avatar_name, "TEST_OFFLINE_AVATAR env exists (
     exit($test->summary() ? 0 : 1);
 }
 
-$login_uri = w4os_grid_login_uri();
-if (!$test->assert_not_empty($login_uri, 'Grid login URI ' . $login_uri)) {
+$robust_db = testing_get_db('robust');
+if (!$test->assert_true($robust_db, 'Database connection established')) {
+    echo "❌ Cannot proceed without database connection" . PHP_EOL;
     exit($test->summary() ? 0 : 1);
 }
 
-$credentials = array();
-if ($is_v3_branch || $is_v2_transitional) {
-    $credentials = W4OS3::get_credentials($login_uri);
-    $robust_db = W4OS3::$robust_db;
-    $db_connected = $robust_db && $robust_db->connected;
-} else {
-    $credentials = array(
-        'db' => array(
-            'host' => w4os_get_option('w4os_db_host'),
-            'port' => w4os_get_option('w4os_db_port'),
-            'name' => w4os_get_option('w4os_db_database'),
-            'user' => w4os_get_option('w4os_db_user'),
-            'pass' => w4os_get_option('w4os_db_pass'),
-        ),
-    );
-    $host_with_port = $credentials['db']['host'] . (empty($credentials['db']['port']) ? '' : ':' . $credentials['db']['port']);
-    $robust_db = new WPDB(
-        $credentials['db']['user'],
-        $credentials['db']['pass'],
-        $credentials['db']['name'],
-        $host_with_port
-    );
-    $db_connected = $robust_db && $robust_db->check_connection(false);
-}
-
-if (!$test->assert_true($db_connected, 'Database connection established')) {
-    echo "    ❌ Cannot proceed without database connection" . PHP_EOL;
-    exit($test->summary() ? 0 : 1);
-}
-
-// Test 2: Check required tables exist
+// Test 2: Check required database tables
 echo "\nTesting required database tables..." . PHP_EOL;
 
 $required_tables = array(
@@ -76,14 +47,8 @@ if(!empty($missing_tables)) {
     exit($test->summary() ? 0 : 1);
 }
 
-$avatar_parts = explode(' ', $test_avatar_name, 2);
-if (count($avatar_parts) == 2) {
-    $avatar_query = "SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE FirstName = %s AND LastName = %s AND active = 1";
-    $TEST_OFFLINE_AVATAR = $robust_db->get_row($robust_db->prepare($avatar_query, $avatar_parts[0], $avatar_parts[1]));
-}
-
-$avatar_name = $TEST_OFFLINE_AVATAR ? $TEST_OFFLINE_AVATAR->FirstName . ' ' . $TEST_OFFLINE_AVATAR->LastName : 'none';
-if (!$test->assert_not_empty($TEST_OFFLINE_AVATAR, 'Test avatar found: ' . $avatar_name)) {
+$avatar = testing_get_avatar('TEST_OFFLINE_AVATAR', false);
+if (!$test->assert_not_empty($avatar, 'Test offline avatar: ' . $avatar->oneline)) {
     echo "    ❌ Cannot proceed without test avatar" . PHP_EOL;
     exit($test->summary() ? 0 : 1);
 }
@@ -96,7 +61,7 @@ exit($test->summary() ? 0 : 1);
 echo "\nTesting avatar email preferences..." . PHP_EOL;
 
 $settings_query = "SELECT imviaemail, email FROM usersettings WHERE useruuid = %s";
-$avatar_settings = $robust_db->get_row($robust_db->prepare($settings_query, $TEST_OFFLINE_AVATAR->PrincipalID));
+$avatar_settings = $robust_db->get_row($robust_db->prepare($settings_query, $avatar->PrincipalID));
 
 $has_email_settings = !empty($avatar_settings);
 $test->assert_true($has_email_settings, 'Avatar has settings record');
@@ -167,7 +132,7 @@ $timestamp = time();
 
 $test_xml = '<?xml version="1.0" encoding="utf-8"?>
 <GridInstantMessage>
-    <toAgentID>' . $TEST_OFFLINE_AVATAR->PrincipalID . '</toAgentID>
+    <toAgentID>' . $avatar->PrincipalID . '</toAgentID>
     <fromAgentID>' . $sender_uuid . '</fromAgentID>
     <fromAgentName>Test System</fromAgentName>
     <message>' . htmlspecialchars($message_text) . '</message>
@@ -179,7 +144,7 @@ $test_xml = '<?xml version="1.0" encoding="utf-8"?>
 // Count messages before
 $count_before = $robust_db->get_var($robust_db->prepare(
     "SELECT COUNT(*) FROM im_offline WHERE PrincipalID = %s",
-    $TEST_OFFLINE_AVATAR->PrincipalID
+    $avatar->PrincipalID
 ));
 
 // Test SaveMessage request
@@ -200,7 +165,7 @@ $test->assert_equals(200, $save_code, 'SaveMessage response code');
 // Check if message was saved
 $count_after = $robust_db->get_var($robust_db->prepare(
     "SELECT COUNT(*) FROM im_offline WHERE PrincipalID = %s",
-    $TEST_OFFLINE_AVATAR->PrincipalID
+    $avatar->PrincipalID
 ));
 
 $message_saved = $count_after > $count_before;
@@ -210,7 +175,7 @@ $test->assert_true($message_saved, 'Message saved to database (count: ' . $count
 echo "\nTesting RetrieveMessages functionality..." . PHP_EOL;
 
 $retrieve_xml = '<?xml version="1.0" encoding="utf-8"?>
-<Guid>' . $TEST_OFFLINE_AVATAR->PrincipalID . '</Guid>';
+<Guid>' . $avatar->PrincipalID . '</Guid>';
 
 $retrieve_response = wp_remote_post($direct_url . '/RetrieveMessages/', array(
     'body' => $retrieve_xml,
@@ -229,7 +194,7 @@ $test->assert_equals(200, $retrieve_code, 'RetrieveMessages response code');
 // Check if messages were retrieved and deleted
 $count_final = $robust_db->get_var($robust_db->prepare(
     "SELECT COUNT(*) FROM im_offline WHERE PrincipalID = %s",
-    $TEST_OFFLINE_AVATAR->PrincipalID
+    $avatar->PrincipalID
 ));
 
 $messages_retrieved = $count_final < $count_after;
