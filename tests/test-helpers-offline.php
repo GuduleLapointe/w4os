@@ -78,54 +78,40 @@ if ($avatar_settings) {
 
 
 // Test 5: Test direct offline.php accessibility
-echo "\nTesting offline.php direct access..." . PHP_EOL;
+echo PHP_EOL;
+echo "Testing offline.php direct access..." . PHP_EOL;
 
-// Construct direct URL path
-$home_url = get_home_url();
-$wp_content_dir = basename(WP_CONTENT_DIR);
-$plugin_dir = basename(dirname(__DIR__));
-$direct_url = $home_url . '/' . $wp_content_dir . '/plugins/' . $plugin_dir . '/helpers/offline.php';
-
-$test->assert_true(true, 'Direct URL: ' . $direct_url);
-
-echo "DEBUG STOP";
-exit($test->summary() ? 0 : 1);
-
-// Test with empty request (should fail gracefully)
-$direct_response = wp_remote_post($direct_url, array(
-    'body' => '',
-    'timeout' => 10,
-    'sslverify' => false
-));
-
-$direct_error = is_wp_error($direct_response) ? $direct_response->get_error_message() : '(none)';
-$direct_code = wp_remote_retrieve_response_code($direct_response);
-$direct_body = wp_remote_retrieve_body($direct_response);
-
-$test->assert_false(is_wp_error($direct_response), 'Direct access error: ' . $direct_error);
-$test->assert_true($direct_code > 0, 'Direct access response code: ' . $direct_code);
+$helpers_dir = dirname(__DIR__) . '/helpers';
+$helpers_dir_uri = str_replace(ABSPATH, '', $helpers_dir);
+$direct_url = home_url($helpers_dir_uri . '/offline.php');
+if($test->assert_not_empty($direct_url, 'Direct URL ' . $direct_url)) {
+    $response = testing_get_headers($direct_url);
+    $response_code = $response['Response-Code'] ?? 'N/A';
+    $test->assert_equals(200, $response_code, 'Direct URL response code');
+} else {
+    echo "    ❌ Skipping offline.php direct access test" . PHP_EOL;
+}
 
 // Test 6: Test helper URL accessibility (if function exists)
-echo "\nTesting get_helpers_url accessibility..." . PHP_EOL;
+echo PHP_EOL;
+echo "Testing get_helpers_url accessibility..." . PHP_EOL;
 
-if (function_exists('get_helpers_url')) {
-    $helper_url = get_helpers_url('offline.php');
-    $test->assert_not_empty($helper_url, 'Helper URL: ' . $helper_url);
-    
-    $helper_response = wp_remote_post($helper_url, array(
-        'body' => '',
-        'timeout' => 10,
-        'sslverify' => false
-    ));
-    
-    $helper_error = is_wp_error($helper_response) ? $helper_response->get_error_message() : '(none)';
-    $helper_code = wp_remote_retrieve_response_code($helper_response);
-    
-    $test->assert_false(is_wp_error($helper_response), 'Helper URL access error: ' . $helper_error);
-    $test->assert_true($helper_code > 0, 'Helper URL response code: ' . $helper_code);
-} else {
-    $test->assert_true(true, 'get_helpers_url() function not available, skipping helper URL test');
+if(!$test->assert_true(function_exists('helper_url'), 'helper_url() function exists')) {
+    echo "    ❌ Aborting tests" . PHP_EOL;
+    exit($test->summary() ? 0 : 1);
 }
+
+$helper_url = helper_url('offline.php');
+if($test->assert_not_empty($helper_url, 'Helper URL ' . $helper_url)) {
+    $response = testing_get_headers($helper_url);
+    $response_code = $response['Response-Code'] ?? 'N/A';
+    $test->assert_equals(200, $response_code, 'Helper URL response code');
+} else {
+    echo "    ❌ Skipping get_helpers_url() test" . PHP_EOL;
+}
+
+echo "DEBUG STOP" . PHP_EOL;
+exit($test->summary() ? 0 : 1);
 
 // Test 7: Test SaveMessage functionality
 echo "\nTesting SaveMessage functionality..." . PHP_EOL;

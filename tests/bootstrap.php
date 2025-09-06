@@ -484,3 +484,31 @@ function testing_get_avatar( $env_var = null, $random = true ) {
 	}
 	return $test_avatar;
 }
+
+function testing_get_headers( $url, $associative = false, $context = null ) {
+	if(empty($url)) {
+		return false;
+	}
+	$opts = array(
+		'http' => array(
+			'max_redirects'=>1,
+			'ignore_errors'=>1
+		),
+		'ssl' => [
+			'verify_peer' => false,
+			'verify_peer_name' => false,
+		],
+	);
+	stream_context_get_default($opts);
+	$headers = get_headers($url, 1);
+	// get response code from headers
+	$header_code = null;
+	if ($headers && is_array($headers)) {
+		$status_line = $headers[0];
+		if (preg_match('#HTTP/\d+\.\d+\s+(\d+)#', $status_line, $matches)) {
+			$header_code = (int)$matches[1];
+		}
+	}
+	$headers['Response-Code'] = $header_code;
+	return $headers;
+}
