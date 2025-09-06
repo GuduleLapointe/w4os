@@ -34,11 +34,11 @@ echo "\nTesting required database tables..." . PHP_EOL;
 $required_tables = array(
     'UserAccounts',
     'usersettings',
-    'im_offline'
+    'im_offline',
 );
 foreach ($required_tables as $table) {
     $table_name = $robust_db->get_var("SHOW TABLES LIKE '$table'");
-    if(!$test->assert_not_empty($table_name, "$table table exists")) {
+    if(!$test->assert_not_empty($table_name, "table '$table' exists")) {
         $missing_tables[] = $table;
     }
 }
@@ -53,10 +53,6 @@ if (!$test->assert_not_empty($avatar, 'Test offline avatar: ' . $avatar->oneline
     exit($test->summary() ? 0 : 1);
 }
 
-echo "DEBUG STOP";
-exit($test->summary() ? 0 : 1);
-
-
 // Test 4: Check avatar email preferences
 echo "\nTesting avatar email preferences..." . PHP_EOL;
 
@@ -69,11 +65,20 @@ $test->assert_true($has_email_settings, 'Avatar has settings record');
 $email_enabled = false;
 $email_address = '';
 if ($avatar_settings) {
-    $email_enabled = $avatar_settings->imviaemail === 'true';
-    $email_address = $avatar_settings->email;
-    $test->assert_true(true, 'Email forwarding: ' . ($email_enabled ? 'enabled' : 'disabled'));
-    $test->assert_true(true, 'Email address: ' . ($email_address ?: 'none'));
+    
+    $email_address = $avatar_settings->email ?? null;
+    // $test->assert_true(true, 'Email forwarding: ' . ($email_enabled ? 'enabled' : 'disabled'));
+    if($test->assert_not_empty($email_address, "Avatar email address ($email_address)")) {
+        $forward_messages = $avatar_settings->imviaemail ?? false;
+    } else {
+        echo "    ⚠️  Avatar has no email address configured, skipping email forwarding test" . PHP_EOL;
+    }
+    $forward_messages = $test->assert_equals( $forward_messages, 'true', 'Forward enabled');
 }
+
+echo "DEBUG STOP";
+exit($test->summary() ? 0 : 1);
+
 
 // Test 5: Test direct offline.php accessibility
 echo "\nTesting offline.php direct access..." . PHP_EOL;
