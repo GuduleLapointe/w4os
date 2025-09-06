@@ -345,3 +345,142 @@ function testing_matches_any_pattern($text, $patterns) {
             : strpos($text, $pattern) !== false;
     }));
 }
+
+function testing_get_db( $service = 'robust' ) {
+	global $is_v3_branch, $is_v2_branch;
+
+	$login_uri = w4os_grid_login_uri();
+	
+	$credentials = array();
+	if ($is_v3_branch) {
+		$credentials = W4OS3::get_credentials($login_uri);
+		$robust_db = W4OS3::$robust_db;
+		$db_connected = $robust_db && $robust_db->connected;
+	} else {
+		// For V2 branch, get credentials from options
+		$credentials = array(
+			'db' => array(
+				'host' => w4os_get_option('w4os_db_host'),
+				'port' => w4os_get_option('w4os_db_port'),
+				'name' => w4os_get_option('w4os_db_database'),
+				'user' => w4os_get_option('w4os_db_user'),
+				'pass' => w4os_get_option('w4os_db_pass'),
+			),
+		);
+		
+		// Create WPDB connection like in opensim test
+		$host_with_port = $credentials['db']['host'] . (empty($credentials['db']['port']) ? '' : ':' . $credentials['db']['port']);
+		$robust_db = new WPDB(
+			$credentials['db']['user'],
+			$credentials['db']['pass'],
+			$credentials['db']['name'],
+			$host_with_port
+		);
+		
+		// Test V2 database connection
+		if ($robust_db && is_object($robust_db)) {
+			try {
+				$test_result = $robust_db->get_var("SELECT 1");
+				$db_connected = ($test_result == '1');
+			} catch (Exception $e) {
+				$db_connected = false;
+			}
+		}
+	}
+
+	if (!$db_connected) {
+		return false;
+	}
+
+	return $robust_db;
+}
+
+function testing_get_avatars() {
+	global $test;
+
+	if(! $robust_db = testing_get_db( 'robust' ) ) {
+		return false;
+	}
+
+	$avatars = $robust_db->get_results("SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE active=1 LIMIT 50");
+	echo "Available avatars in database: " . (is_array($avatars) ? count($avatars) : "none") . PHP_EOL;
+	if(! $test->assert_not_empty( $avatars, 'Avatar list fetched from database' )) {
+		echo "❌ Cannot fetch avatar list - database connection failed" . PHP_EOL;
+		if ($robust_db && isset($robust_db->last_error)) {
+			echo "    Error: " . $robust_db->last_error . PHP_EOL;
+		}
+	}
+
+	return $avatars;
+}
+
+function testing_get_avatar( $env_var = null, $random = true ) {
+	global $test, $is_v3_branch, $is_v2_branch, $avatars;
+
+	# Get test avatar - from env var or pick one randomly
+	$test_avatar_name = getenv($env_var ?: 'TEST_AVATAR');
+	$test_avatar = null;
+
+	# Fetch avatar list first (needed for both branches)
+	$avatars = testing_get_avatars();
+
+	if ($test_avatar_name) {
+		echo "Using .env TEST_AVATAR: $test_avatar_name" . PHP_EOL;
+		
+		// Find avatar by name in the fetched list
+		$found_avatar = null;
+		if ($avatars) {
+			foreach ($avatars as $avatar) {
+				$full_name = $avatar->FirstName . ' ' . $avatar->LastName;
+				if ($full_name === $test_avatar_name) {
+					$found_avatar = $avatar;
+					break;
+				}
+			}
+		}
+		
+		if( ! $test->assert_not_empty( $found_avatar, 'Test avatar found in database = ' . var_export( $test_avatar_name, true ) )) {
+			echo "❌ Cannot proceed without a valid test avatar" . PHP_EOL;
+			exit( $test->summary() ? 0 : 1 );
+		}
+
+		if ($is_v3_branch && class_exists('W4OS3_Avatar')) {
+			$test_avatar = new W4OS3_Avatar($found_avatar->PrincipalID);
+		} else {
+			$test_avatar = (object)[
+				'PrincipalID' => $found_avatar->PrincipalID,
+				'FirstName' => $found_avatar->FirstName,
+				'LastName' => $found_avatar->LastName
+			];
+		}
+	} else {
+		echo "Selecting random avatar..." . PHP_EOL;
+		
+		if ($avatars && count($avatars) > 0) {
+			$random_avatar = $avatars[array_rand($avatars)];
+			$test_avatar_name = $random_avatar->FirstName . ' ' . $random_avatar->LastName;
+			echo "Selected random avatar: $test_avatar_name" . PHP_EOL;
+			
+			if ($is_v3_branch && class_exists('W4OS3_Avatar')) {
+				$test_avatar = new W4OS3_Avatar($random_avatar->PrincipalID);
+			} else {
+				$test_avatar = (object)[
+					'PrincipalID' => $random_avatar->PrincipalID,
+					'FirstName' => $random_avatar->FirstName,
+					'LastName' => $random_avatar->LastName
+				];
+			}
+		} else {
+			echo "❌ No avatars available for testing" . PHP_EOL;
+		}
+	}
+
+	if($test_avatar) {
+		$test_avatar->oneline = sprintf( "%s %s (%s)", 
+			$test_avatar->FirstName ?? 'Unknown', 
+			$test_avatar->LastName ?? 'Unknown', 
+			$test_avatar->PrincipalID ?? ($test_avatar->UUID ?? 'Unknown')
+		);
+	}
+	return $test_avatar;
+}

@@ -28,45 +28,9 @@ echo "Fetching plugin configuration..." . PHP_EOL;
 // Get database connection for later use
 global $is_v3_branch, $is_v2_branch, $is_v2_transitional;
 
-$login_uri = w4os_grid_login_uri();
-$credentials = array();
-if ($is_v3_branch) {
-    $credentials = W4OS3::get_credentials($login_uri);
-    $robust_db = W4OS3::$robust_db;
-	$db_connected = $robust_db && $robust_db->connected;
-} else {
-    // For V2 branch, get credentials from options
-    $credentials = array(
-        'db' => array(
-            'host' => w4os_get_option('w4os_db_host'),
-            'port' => w4os_get_option('w4os_db_port'),
-            'name' => w4os_get_option('w4os_db_database'),
-            'user' => w4os_get_option('w4os_db_user'),
-            'pass' => w4os_get_option('w4os_db_pass'),
-        ),
-    );
-    
-    // Create WPDB connection like in opensim test
-    $host_with_port = $credentials['db']['host'] . (empty($credentials['db']['port']) ? '' : ':' . $credentials['db']['port']);
-    $robust_db = new WPDB(
-        $credentials['db']['user'],
-        $credentials['db']['pass'],
-        $credentials['db']['name'],
-        $host_with_port
-    );
-    
-    // Test V2 database connection
-    if ($robust_db && is_object($robust_db)) {
-        try {
-            $test_result = $robust_db->get_var("SELECT 1");
-            $db_connected = ($test_result == '1');
-        } catch (Exception $e) {
-            $db_connected = false;
-        }
-    }
-}
+$robust_db = testing_get_db( 'robust' );
 
-if(! $test->assert_true( $db_connected, 'Database connected' )) {
+if(! $test->assert_true( $robust_db, 'Database connected' )) {
 	echo "❌ Cannot proceed without a valid database connection" . PHP_EOL;
 	exit( $test->summary() ? 0 : 1 );
 }
@@ -118,78 +82,9 @@ if(! $test->assert_not_empty( $profile_base_url, 'Profile base URL = ' . var_exp
 echo PHP_EOL;
 echo "Getting the list of avatars..." . PHP_EOL;
 
-# Fetch avatar list first (needed for both branches)
-$avatars = null;
-if ($db_connected && $robust_db) {
-    $avatars = $robust_db->get_results("SELECT PrincipalID, FirstName, LastName FROM UserAccounts WHERE active=1 LIMIT 50");
-    echo "Available avatars in database: " . (is_array($avatars) ? count($avatars) : "none") . PHP_EOL;
-} else {
-    echo "❌ Cannot fetch avatar list - database connection failed" . PHP_EOL;
-    if ($robust_db && isset($robust_db->last_error)) {
-        echo "    Error: " . $robust_db->last_error . PHP_EOL;
-    }
-}
+$test_avatar = testing_get_avatar();
 
-# Get test avatar - from env var or pick one randomly
-$test_avatar_name = getenv('TEST_AVATAR');
-$test_avatar = null;
-
-if ($test_avatar_name) {
-    echo "Using .env TEST_AVATAR: $test_avatar_name" . PHP_EOL;
-    
-    // Find avatar by name in the fetched list
-    $found_avatar = null;
-    if ($avatars) {
-        foreach ($avatars as $avatar) {
-            $full_name = $avatar->FirstName . ' ' . $avatar->LastName;
-            if ($full_name === $test_avatar_name) {
-                $found_avatar = $avatar;
-                break;
-            }
-        }
-    }
-    
-	if( ! $test->assert_not_empty( $found_avatar, 'Test avatar found in database = ' . var_export( $test_avatar_name, true ) )) {
-		echo "❌ Cannot proceed without a valid test avatar" . PHP_EOL;
-		exit( $test->summary() ? 0 : 1 );
-	}
-
-	if ($is_v3_branch && class_exists('W4OS3_Avatar')) {
-		$test_avatar = new W4OS3_Avatar($found_avatar->PrincipalID);
-	} else {
-		$test_avatar = (object)[
-			'PrincipalID' => $found_avatar->PrincipalID,
-			'FirstName' => $found_avatar->FirstName,
-			'LastName' => $found_avatar->LastName
-		];
-	}
-} else {
-    echo "Selecting random avatar..." . PHP_EOL;
-    
-    if ($avatars && count($avatars) > 0) {
-        $random_avatar = $avatars[array_rand($avatars)];
-        $test_avatar_name = $random_avatar->FirstName . ' ' . $random_avatar->LastName;
-        echo "Selected random avatar: $test_avatar_name" . PHP_EOL;
-        
-        if ($is_v3_branch && class_exists('W4OS3_Avatar')) {
-            $test_avatar = new W4OS3_Avatar($random_avatar->PrincipalID);
-        } else {
-            $test_avatar = (object)[
-                'PrincipalID' => $random_avatar->PrincipalID,
-                'FirstName' => $random_avatar->FirstName,
-                'LastName' => $random_avatar->LastName
-            ];
-        }
-    } else {
-        echo "❌ No avatars available for testing" . PHP_EOL;
-    }
-}
-
-// echo 'DEBUG $test_avatar: ' . var_export($test_avatar, true) . PHP_EOL;
-// exit('DEBUG exit');
-$test_avatar_details = ($test_avatar ?? null) ? $test_avatar->FirstName . ' ' . $test_avatar->LastName . ' (' . ($test_avatar->PrincipalID ?? $test_avatar->UUID). ')' : '';
-
-if( ! $test->assert_not_empty( $test_avatar, "Avatar for testing: {$test_avatar_details}" )) {
+if( ! $test->assert_not_empty( $test_avatar, "Avatar for testing: {$test_avatar->oneline}" )) {
 	echo "❌ Cannot proceed without a valid test avatar" . PHP_EOL;
 	exit( $test->summary() ? 0 : 1 );
 }
@@ -343,14 +238,13 @@ if($test->assert_not_empty($invalid_body, "Response output not empty for Avatar 
             'Oops',
             '/No .* Found/', // regex pattern
             esc_html_x( 'Page not found', '404 error message', 'twentytwentyfive' ),
-            esc_html_e( 'Nothing here', 'twentytwentyone' ),
+            esc_html__( 'Nothing here', 'twentytwentyone' ),
             esc_html__( 'Nothing found', 'unos' ),
             esc_html__( 'Nothing found', 'et_builder' ),
             esc_html__( 'No results found.', 'et_builder' ),
         ];
         
         $default_404 = testing_matches_any_pattern($analysis['page_title'], $default_404_patterns);
-        
         $in_page_title = $custom_not_found || $default_404;
         $test->assert_true($in_page_title, "Page title must contain 'Avatar not found' or default 404 message (got: '${analysis['page_title']}')");
         
