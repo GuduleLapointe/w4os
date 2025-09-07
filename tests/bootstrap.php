@@ -417,8 +417,9 @@ function testing_get_avatars() {
 function testing_get_avatar( $env_var = null, $random = true ) {
 	global $test, $is_v3_branch, $is_v2_branch, $avatars;
 
+	$env_var = $env_var ?: 'TEST_AVATAR';
 	# Get test avatar - from env var or pick one randomly
-	$test_avatar_name = getenv($env_var ?: 'TEST_AVATAR');
+	$test_avatar_name = defined( $env_var ) ? constant( $env_var ) : getenv( $env_var );
 	$test_avatar = null;
 
 	# Fetch avatar list first (needed for both branches)
@@ -453,7 +454,7 @@ function testing_get_avatar( $env_var = null, $random = true ) {
 				'LastName' => $found_avatar->LastName
 			];
 		}
-	} else {
+	} else if ($random) {
 		echo "Selecting random avatar..." . PHP_EOL;
 		
 		if ($avatars && count($avatars) > 0) {
