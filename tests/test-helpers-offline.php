@@ -15,6 +15,14 @@ echo "\nTesting OpenSim database connection..." . PHP_EOL;
 
 global $is_v3_branch, $is_v2_branch, $is_v2_transitional;
 
+$sender = testing_get_avatar('TEST_OFFLINE_SENDER', false);
+$sender = $sender ?? testing_get_avatar();
+
+if(!$test->assert_not_empty($sender, "Sender avatar ($sender->oneline)")) {
+    echo "    ❌ Cannot proceed without sender avatar" . PHP_EOL;
+    exit($test->summary() ? 0 : 1);
+}
+
 echo "\nFetching test avatar..." . PHP_EOL;
 $test_avatar_name = getenv('TEST_OFFLINE_AVATAR');
 if(!$test->assert_not_empty($test_avatar_name, "TEST_OFFLINE_AVATAR env exists ($test_avatar_name)")) {
@@ -56,26 +64,25 @@ if (!$test->assert_not_empty($avatar, 'Test offline avatar: ' . $avatar->oneline
 // Test 4: Check avatar email preferences
 echo "\nTesting avatar email preferences..." . PHP_EOL;
 
-$settings_query = "SELECT imviaemail, email FROM usersettings WHERE useruuid = %s";
+$settings_query = "SELECT * FROM usersettings WHERE useruuid = %s";
 $avatar_settings = $robust_db->get_row($robust_db->prepare($settings_query, $avatar->PrincipalID));
+echo "Avatar settings: ". var_export($avatar_settings, true) . PHP_EOL;
+$test->assert_true(!empty($avatar_settings), 'Avatar has settings record');
 
-$has_email_settings = !empty($avatar_settings);
-$test->assert_true($has_email_settings, 'Avatar has settings record');
-
-$email_enabled = false;
-$email_address = '';
-if ($avatar_settings) {
-    
-    $email_address = $avatar_settings->email ?? null;
-    // $test->assert_true(true, 'Email forwarding: ' . ($email_enabled ? 'enabled' : 'disabled'));
-    if($test->assert_not_empty($email_address, "Avatar email address ($email_address)")) {
-        $forward_messages = $avatar_settings->imviaemail ?? false;
-    } else {
-        echo "    ⚠️  Avatar has no email address configured, skipping email forwarding test" . PHP_EOL;
-    }
-    $forward_messages = $test->assert_equals( $forward_messages, 'true', 'Forward enabled');
+if (!$avatar_settings) {
+    echo "    ❌ Could not fetch avatar settings, aborting tests" . PHP_EOL;
+    exit($test->summary() ? 0 : 1);
 }
 
+$email_address = $avatar_settings->email ?? null;
+if($test->assert_not_empty($email_address, "Avatar email address ($email_address)")) {
+    $forward_messages = $avatar_settings->imviaemail ?? false;
+} else {
+    echo "    ❌ Cannot proceed with avatar without email address, aborting tests" . PHP_EOL;
+    exit($test->summary() ? 0 : 1);
+}
+
+$forward_messages = $test->assert_equals( $forward_messages, 'true', 'Forward enabled');
 
 // Test 5: Test direct offline.php accessibility
 echo PHP_EOL;
@@ -110,22 +117,23 @@ if($test->assert_not_empty($helper_url, 'Helper URL ' . $helper_url)) {
     echo "    ❌ Skipping get_helpers_url() test" . PHP_EOL;
 }
 
-echo "DEBUG STOP" . PHP_EOL;
-exit($test->summary() ? 0 : 1);
+// echo "DEBUG STOP" . PHP_EOL;
+// exit($test->summary() ? 0 : 1);
 
 // Test 7: Test SaveMessage functionality
 echo "\nTesting SaveMessage functionality..." . PHP_EOL;
 
 // Generate test message XML
-$sender_uuid = '00000000-0000-0000-0000-000000000001'; // System UUID
+$sender_name = strip_tags($sender->FirstName . ' ' . $sender->LastName);
+
 $message_text = 'Test offline message from automated test suite at ' . date('Y-m-d H:i:s');
 $timestamp = time();
 
 $test_xml = '<?xml version="1.0" encoding="utf-8"?>
 <GridInstantMessage>
     <toAgentID>' . $avatar->PrincipalID . '</toAgentID>
-    <fromAgentID>' . $sender_uuid . '</fromAgentID>
-    <fromAgentName>Test System</fromAgentName>
+    <fromAgentID>' . $sender->PrincipalID . '</fromAgentID>
+    <fromAgentName>' . $sender_name . '</fromAgentName>
     <message>' . htmlspecialchars($message_text) . '</message>
     <dialog>0</dialog>
     <offline>1</offline>
@@ -206,7 +214,7 @@ if ($message_saved) {
 // Test 9: Email functionality (informational only)
 echo "\nTesting email functionality..." . PHP_EOL;
 
-if ($email_enabled && !empty($email_address)) {
+if ($forward_messages && !empty($email_address)) {
     $test->assert_true(true, 'Email forwarding configured for test avatar');
     
     // We don't actually test email sending in automated tests
