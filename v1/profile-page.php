@@ -156,7 +156,7 @@ add_filter(
 		}
 
 		if ( $error ) {
-			w4os_notice( $error, $class );
+			w4os_notice( $error, $class ?? null );
 		} else {
 			w4os_notice( join( ', ', $err_codes ) );
 		}

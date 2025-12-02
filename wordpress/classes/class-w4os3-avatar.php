@@ -45,22 +45,22 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// Initialize slug and profile page URL
 		self::$slug = get_option( 'w4os_profile_slug', 'profile' );
 		self::$profile_page_url = get_home_url( null, self::$slug );
-		
+
 		add_filter( 'w4os_settings', array( $this, 'register_w4os_settings' ), 10, 3 );
 		// Add rewrite rules for the profile page as $profile_page_url/$firstname.$lastname or $profile_page_url/?name=$firstname.$lastname
 		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
-		
+
 		// Handle rewrite rules flush when needed
 		add_action( 'init', array( $this, 'maybe_flush_rewrite_rules' ) );
-		
+
 		// Use wp hook instead of parse_request - wp hook runs after query vars are parsed
 		add_action( 'wp', array( $this, 'parse_profile_request' ) );
-		
+
 		// DEBUG ONLY force flush permalink rules
 		// add_action( 'init', 'flush_rewrite_rules' ); // DEBUG ONLY
 
 		add_filter( 'query_vars', array( $this, 'add_profile_query_vars' ) );
-		
+
 		// Template include remains for template selection
 		add_action( 'template_include', array( $this, 'template_include' ) );
 		add_filter( 'the_title', array( $this, 'the_title' ) );
@@ -120,7 +120,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// Try to load the avatar
 		$avatar_name = "$query_firstname.$query_lastname";
 		$avatar = new W4OS3_Avatar( $avatar_name );
-		
+
 		if( $avatar->UUID ) {
 			// Avatar found - valid page
 			$this->profile = $avatar;
@@ -145,13 +145,13 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// if ( ! $this->is_profile_page ) {
 		// 	$this->setup_profile();
 		// }
-		
+
 		// For 404 cases (invalid avatars), let WordPress handle it with standard 404 template
 		if ( $this->is_profile_page && $this->profile === false ) {
 			error_log('DEBUG ' . __METHOD__ . '() loading 404 template for profile page ' . get_404_template());
 			return get_404_template();
 		}
-		error_log('DEBUG ' . __METHOD__ . '() loading standard template for profile page ' . $template);
+		// error_log('DEBUG ' . __METHOD__ . '() loading standard template for profile page ' . $template);
 		return $template;
 	}
 
@@ -163,7 +163,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		$pagename = W4OS3::get_localized_post_slug();
 		if( $pagename === self::$slug ) {
 			$this->is_profile_page = true;
-			
+
 			// If parse_profile_request hasn't set titles yet, do basic setup
 			if ( empty( $this->page_title ) ) {
 				$this->page_title = __( 'Profile', 'w4os' );
@@ -176,7 +176,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// if( ! preg_match( '/:/', $option )) {
 		// 	$option = 'w4os-avatars:' . $option;
 		// }
-		
+
 		$settings = w4os_get_option( 'w4os-avatars:settings', array() );
 		if ( isset( $settings[$option] ) ) {
 			$value = $settings[$option];
@@ -188,7 +188,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 
 	/**
 	 * Disable title if requested page is profile
-	 * 
+	 *
 	 * Get the original pagename if this one is a translation
 	 * Compare original pagename and self::$slug
 	 */
@@ -218,7 +218,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		}
 		return $title;
 	}
-	
+
 	// Keep it for reference, probably not needed with pre_get_document_title filter above
 	// public function document_title_parts( $title ) {
 	// 	if ( ! $this->is_profile_page ) {
@@ -242,7 +242,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		}
 
 		$query = self::$base_query;
-		
+
 		if( is_uuid($args ) ) {
 			$uuid = $args;
 		} else if ( is_array( $args ) ) {
@@ -347,7 +347,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	 */
 	public function add_rewrite_rules() {
 		$target = 'index.php?pagename=' . self::$slug . '&profile_firstname=$matches[1]&profile_lastname=$matches[2]&profile_args=$matches[3]';
-		
+
 		// Rewrite rule for $profile_page_url/$firstname.$lastname
 		add_rewrite_rule(
 			'^' . self::$slug . '/(.+?)\.(.+?)(\?.*)?$',
@@ -498,8 +498,8 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 				'table'         => 'UserAccounts',
 				'query'         => "SELECT * FROM (
 					SELECT *, CONCAT(FirstName, ' ', LastName) AS avatarName, GREATEST(Login, Logout) AS last_seen
-					FROM UserAccounts 
-					LEFT JOIN userprofile ON PrincipalID = userUUID 
+					FROM UserAccounts
+					LEFT JOIN userprofile ON PrincipalID = userUUID
 					LEFT JOIN GridUser ON PrincipalID = UserID
 				) AS subquery",
 				'admin_columns' => array(
@@ -760,7 +760,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 	/**
 	 * Create a thumb image from profileImage. Store it in transient.
 	 * Crop it as a square and resize to max 100px.
-	 * 
+	 *
 	 */
 	public function get_thumb() {
 		$transient_key = 'w4os-avatar-thumb-' . $this->UUID;
@@ -988,7 +988,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		// Redirect if external
 		if ( ! empty( $this->externalProfileURL ) ) {
 			wp_redirect( $this->externalProfileURL );
-			// printf( 
+			// printf(
 			// 	__( 'External profile page, redirecting to %s', 'w4os' ),
 			// 	'<a href="' . $this->externalProfileURL . '">' . $this->externalProfileURL . '</a>',
 			// );
@@ -996,7 +996,7 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		}
 
 		global $wpdb, $w4osdb;
-		
+
 		$content            = '';
 		$can_list_users     = ( current_user_can( 'list_users' ) ) ? 'true' : 'false';
 
@@ -1016,11 +1016,11 @@ class W4OS3_Avatar extends OpenSim_Avatar {
 		if ( empty( $_GET['name'] ) ) {
 			$this->profileImageHtml = W4OS3::img( $this->profileImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
 			$this->profileFirstImageHtml = W4OS3::img( $this->profileFirstImage, array( 'alt' => $this->AvatarName, 'class' => 'profile' ) );
-	
+
 			if ( ! w4os_empty( $this->profilePartner ) ) {
 				$partner = new W4OS3_Avatar( $this->profilePartner );
 			}
-			
+
 			$header = '<div class="profile-header">'
 			. $this->profileImageHtml
 			. '<div>'
