@@ -32,15 +32,19 @@ function w4os_gridauth( $user, $username, $password ) {
 		}
 
 		// Hash password in PHP to avoid exposing it in SQL logs
-		$password_md5 = md5( $password );
+		// Remove any escaping that may have been added by PHP/form handling
+		$password_md5 = md5( stripslashes( $password ) );
 
-		$avatar_query = "SELECT *
-    FROM UserAccounts LEFT JOIN auth ON PrincipalID = UUID
-    WHERE active = 1 AND Email != ''
-    AND $match
-    AND passwordHash = md5(concat('$password_md5',':', passwordSalt))
-    ;";
-		$avatar_row   = $w4osdb->get_row( $avatar_query );
+		// Use wpdb->prepare() to safely handle the query with proper escaping
+		$avatar_query = $w4osdb->prepare(
+			"SELECT *
+			FROM UserAccounts LEFT JOIN auth ON PrincipalID = UUID
+			WHERE active = 1 AND Email != ''
+			AND $match
+			AND passwordHash = md5(concat(%s,':', passwordSalt))",
+			$password_md5
+		);
+		$avatar_row = $w4osdb->get_row( $avatar_query );
 		if ( is_wp_error( $avatar_row ) ) {
 			return $user;
 		}
